@@ -1,0 +1,6 @@
+# Ignore cache folder
+cache/
+
+# Ignore upload folder
+upload/
+
