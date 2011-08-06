@@ -1,3 +1,7 @@
 # Ignore cache folder
 cache/
 
+# Ignore db config files
+config.inc.php
+config_archive.inc.php
+
