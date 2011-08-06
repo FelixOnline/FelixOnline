@@ -1,0 +1,121 @@
+<html>
+<head>
+	<title>jQuery Captify Demo (v1.1.3)</title>
+	<link rel="stylesheet" type="text/css" href="sample.css?t=1" />
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="captify.tiny.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('img.captify').captify({});
+	});
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<h1><strong>jQuery Captify</strong> Plugin <span class="ver">v1.1.3</span></h1>
+		
+		<p>
+			<a href="http://plugins.jquery.com/project/captify">Captify</a> is a plugin for <a href="http://jquery.com">jQuery</a> written by <a href="http://thirdroute.com">Brian Reavis</a> (<a href="http://twitter.com/brianreavis">@brianreavis</a>) to display simple, pretty
+			image captions that appear on rollover. It has been tested on Firefox, Chrome, Safari, and the <a href="http://www.howtocreate.co.uk/wrongWithIE/">wretched Internet Explorer</a>. Captify was inspired by 
+			<a href="http://plugins.jquery.com/project/imagecaptions">ImageCaptions</a>, another jQuery plugin for displaying captions like these. 			
+		</p>
+		<p>
+			The goal of Captify is to be easy to use, small/simple, and completely ready for use in production environments (unlike ImageCaptions at the moment). Also, it's only <strong>2.3kb</strong>!
+		</p>
+		<p>
+			What do you think? Feel free to drop by <a href="http://thirdroute.com">my blog</a> and/or <a href="http://twitter.com/brianreavis">follow me on twitter</a>!
+		</p>
+		
+		<h2>Samples:</h2>
+		<h3>Using the ALT-attribute method:</h3>
+		<div class="images">
+        	<a href="http://www.flickr.com/photos/bcreavis/3193019489/" title="Aspen Leaf by Brian Reavis, on Flickr"><img class="captify" src="http://farm4.static.flickr.com/3474/3193019489_0aa8b64251_m.jpg" width="240" height="160" alt="Aspen Leaf" /></a>
+            <a href="http://www.flickr.com/photos/bcreavis/3536128020/" title="Today, we part. by Brian Reavis, on Flickr"><img class="captify" src="http://farm4.static.flickr.com/3409/3536128020_e0dd795b52_m.jpg" width="240" height="160" alt="Today, we part." /></a>
+            <a href="http://www.flickr.com/photos/bcreavis/3668618835/" title="Aspen Leaves by Brian Reavis, on Flickr"><img class="captify" src="http://farm4.static.flickr.com/3070/3668618835_81eb171a10_m.jpg" width="240" height="160" alt="Aspen Leaves" /></a>
+            <a href="http://www.flickr.com/photos/bcreavis/3494531439/" title="Out the window... by Brian Reavis, on Flickr"><img class="captify" src="http://farm4.static.flickr.com/3623/3494531439_51d44fe5c0_m.jpg" width="240" height="160" alt="Out the window..." /></a>
+			<br class="c" />
+		</div>
+		<code>&lt;img src="theimage.jpg" <strong>class="captify" alt="Caption Text"</strong> /&gt;</code>
+	
+		<h3>DIV-linked-by-REL-attribute Method:</h3>
+		<div class="images">
+        	<a href="http://www.flickr.com/photos/bcreavis/3836585009/" title="Gannett Summit Ridge by Brian Reavis, on Flickr"><img class="captify" src="http://farm4.static.flickr.com/3454/3836585009_d2727fbf8d.jpg" width="500" height="375" rel="caption1" alt="Gannett Summit Ridge" /></a>
+            <div id="caption1">
+                <a href="http://flickr.com"><span style="color: #00a2ff">Flick</span><span style="color: #ff0084">r</span></a> 
+                <span style="color: #454545">&mdash;</span> Gannett Peak, Wyoming
+            </div>
+		</div>
+		
+		<br class="c" />
+		<code style="line-height: 225%">&lt;img src="theimage.jpg" <strong>class="captify" rel="caption1"</strong> /&gt;<br />
+		<strong>&lt;div id="caption1"&gt; Whatever caption you like &lt;/div&gt;</strong></code>
+	
+	
+		<h2>How do I use it?</h2>
+		<p>First off, if you haven't downloaded it already, <a href="http://plugins.jquery.com/files/captify-1.1.3.zip">download Captify here</a>.</p>
+		
+<pre><code>$(function(){
+	$('img.captify').captify({
+		<span class="comment">// all of these options are... optional</span>
+		<span class="comment">// ---</span>
+		<span class="comment">// speed of the mouseover effect</span>
+		speedOver: 'fast',
+		<span class="comment">// speed of the mouseout effect</span>
+		speedOut: 'normal',
+		<span class="comment">// how long to delay the hiding of the caption after mouseout (ms)</span>
+		hideDelay: 500,	
+		<span class="comment">// 'fade', 'slide', 'always-on'</span>
+		animation: 'slide',		
+		<span class="comment">// text/html to be placed at the beginning of every caption</span>
+		prefix: '',		
+		<span class="comment">// opacity of the caption on mouse over</span>
+		opacity: '0.7',					
+		<span class="comment">// the name of the CSS class to apply to the caption box</span>
+		className: 'caption-bottom',	
+		<span class="comment">// position of the caption (top or bottom)</span>
+		position: 'bottom',
+		<span class="comment">// caption span % of the image</span>
+		spanWidth: '100%'
+	});
+});</code></pre>
+
+		<p>This javascript above should be wrapped in a <span style="font-family: monospace">&lt;script&gt;</span> tag and then be placed in the <span style="font-family: monospace">&lt;head&gt;</span>
+		of your document, after you've 
+		included <strong>jquery.js</strong> and <strong>captify.tiny.js</strong>.</p>
+		
+		<p><span class="note">Note:</span> Also, you need to copy-and-paste the necessary items out of the <a href="sample.css">sample stylesheet</a> into
+		your own website's stylesheet. When you open it up, you'll see what needs to be copied right away.</p>
+		
+		<p>One side-effect of the captions is that the captified images become wrapped in divs that float left. If you have text clinging to their right side,
+		clear the float by adding this line right after the image:</p>
+		<code style="line-height: 225%">&lt;br class="c" /&gt;</code>
+		
+		<p>If you don't want to take that route, just take out this block from the stylesheet, and that'll 
+		do the trick too :)</p>
+		
+<pre><code>.caption-wrapper {
+	float: left;
+}</code></pre>
+	
+		<h3>Update (February 28, 2009) v1.1:</h3>
+		<p>
+			With some great help from Dan Ryan, Captify got some love&hellip;
+			<ul>
+				<li>Captions now can slide in from the bottom or top.</li>
+				<li><strong>New animation options.</strong> Now, in addition to 'slide', there 
+				is 'fade' and 'always-on'.</li>
+				<li>Slight adjustments + bug fixes.</li>
+			</ul>
+		</p>
+    
+        <h3>Update (November 30, 2009) v1.1.3:</h3>
+		<p>
+			<ul>
+				<li>Compressed version generated using Google's Closure JS Compiler.</li>
+                <li>No more runaway animations&hellip;</li>
+				<li>Code style fixes</li>
+			</ul>
+		</p>
+	</div>
+</body>
+</html>

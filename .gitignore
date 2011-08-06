@@ -1,0 +1,15 @@
+# Ignore preview folder
+preview/
+
+# Ignore api folder
+api/
+
+# Ignore mobile folder
+mobile/
+
+# Ignore archive folder
+archive/
+
+# Ignore engine folder
+engine/
+

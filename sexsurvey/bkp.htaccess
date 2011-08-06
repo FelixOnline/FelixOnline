@@ -1,0 +1,3 @@
+RewriteEngine On 
+RewriteCond %{SERVER_PORT} 80 
+RewriteRule ^(.*)$ https://dougal.union.ic.ac.uk/media/felix/sexsurvey/$1 [R,L]

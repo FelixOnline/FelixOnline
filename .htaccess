@@ -1,0 +1,71 @@
+ErrorDocument 404 /404.php
+
+php_value output_handler ob_gzhandler
+
+# compress text, html, javascript, css, xml:
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+
+#####################################################
+# CONFIGURE media caching
+#
+Header unset ETag
+FileETag None
+<FilesMatch "(?i)^.*\.(ico|flv|jpg|jpeg|png|gif|js|css)$">
+Header unset Last-Modified
+#Header set Expires "Fri, 21 Dec 2016 00:00:00 GMT"
+Header set Expires "access plus 1 hour"
+Header set Cache-Control "public, no-transform"
+</FilesMatch>
+#
+#####################################################
+
+Header set Access-Control-Allow-Origin "*"
+
+Options +FollowSymlinks
+RewriteEngine on
+
+#RewriteCond %{HTTP_HOST} ^felixonline\.co\.uk$
+#RewriteRule (.*) http://www.felixonline.co.uk/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^www.felixonline\.co\.uk$ [NC]
+RewriteRule ^(.*)$ http://felixonline.co.uk/$1/ [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule ^(.*)$ http://felixonline.co.uk/$1/ [L,R=301]
+
+RewriteBase  /
+
+# If requested resource exists as a file or directory, skip next 17 rules
+RewriteCond %{DOCUMENT_ROOT}/$1 -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/$1 -d [OR]
+RewriteCond %{REQUEST_URI} (.*)/engine/(.*)$
+RewriteRule (.*) - [S=20]
+#
+RewriteRule ^user/([a-zA-Z0-9_-]+)/([0-9]+)/$ ?id=$1&p=$2 [QSA]
+RewriteRule ^user/([a-zA-Z0-9_-]+)/$ ?id=$1 [QSA]
+RewriteRule ^issuearchive/issue/([0-9]+)/$ ?issuearchive=true&issue=$1 [QSA]
+RewriteRule ^issuearchive/decade/([0-9]+)/$ ?issuearchive=true&d=$1 [QSA]
+RewriteRule ^issuearchive/year/([0-9]+)/$ ?issuearchive=true&y=$1 [QSA]
+RewriteRule ^issuearchive/$ ?issuearchive=true [QSA]
+RewriteRule ^media/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/.*$ ?media=$1&name=$2 [QSA]
+RewriteRule ^media/photo/$ ?media=photo [QSA]
+RewriteRule ^media/video/$ ?media=video [QSA]
+RewriteRule ^media/radio/$ ?media=radio [QSA]
+RewriteRule ^media/.*$ ?media=true [QSA]
+RewriteRule ^search/$ ?search=true [QSA]
+RewriteRule ^publications/$ ?publications=true [QSA]
+RewriteRule ^contact/$ ?contact=true [QSA]
+RewriteRule ^phoenix/$ ?page=phoenix [QSA]
+RewriteRule ^phoenix/([a-zA-Z0-9_-]+)/$ ?page=phoenix&subpage=$1 [QSA]
+RewriteRule ^summerball/$ ?page=summerball [QSA]
+RewriteRule ^([a-zA-Z0-9_-]+)/$ ?cat=$1 [QSA]
+RewriteRule ^([a-zA-Z0-9_-]+)/([0-9]+)/$ ?cat=$1&p=$2 [QSA]
+RewriteRule ^([a-zA-Z0-9_-]+)/([0-9]+)/([a-zA-Z0-9_-]+)/.*$ ?article=$2 [QSA]
