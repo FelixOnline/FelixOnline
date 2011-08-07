@@ -24,6 +24,7 @@
 	define('NUMBER_OF_PAGES_IN_PAGE_LIST',14);
 	define('NUMBER_OF_POPULAR_ARTICLES_USER',5);
 	define('NUMBER_OF_POPULAR_COMMENTS_USER',5);
+    define('IMAGE_URL', 'http://img.felixonline.co.uk/');
 
 	/* Media Page */
 	define('NUMBER_OF_ALBUMS_FRONT_PAGE',4);
