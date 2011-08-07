@@ -18,18 +18,18 @@
 	define('EXTRANEWS_COLS',16); // do not exceed columns in top_extrapage_cat
 	define('ONLINE_USERS_INTERVAL','60 MINUTE');
 	define('ARTICLES_PER_CAT_PAGE',8);
-	define('ARTICLES_PER_SECOND_CAT_PAGE',10); 
-	define('ARTICLES_PER_USER_PAGE',8); 
-	define('ARTICLES_PER_SECOND_USER_PAGE',10); 
-	define('NUMBER_OF_PAGES_IN_PAGE_LIST',14); 
-	define('NUMBER_OF_POPULAR_ARTICLES_USER',5); 
-	define('NUMBER_OF_POPULAR_COMMENTS_USER',5); 
-	
+	define('ARTICLES_PER_SECOND_CAT_PAGE',10);
+	define('ARTICLES_PER_USER_PAGE',8);
+	define('ARTICLES_PER_SECOND_USER_PAGE',10);
+	define('NUMBER_OF_PAGES_IN_PAGE_LIST',14);
+	define('NUMBER_OF_POPULAR_ARTICLES_USER',5);
+	define('NUMBER_OF_POPULAR_COMMENTS_USER',5);
+
 	/* Media Page */
-	define('NUMBER_OF_ALBUMS_FRONT_PAGE',4); 
-	define('NUMBER_OF_ALBUMS_PER_FULL_PAGE',12); 
+	define('NUMBER_OF_ALBUMS_FRONT_PAGE',4);
+	define('NUMBER_OF_ALBUMS_PER_FULL_PAGE',12);
 	define('IMAGE_BASE_URL', '/home/www/htdocs/media/felix/gallery/gallery_images/images/');
-	
+
 	/* RSS */
 	define('RSS_IMG',(STANDARD_URL.DEFAULT_IMG_URI));
 	define('RSS_NAME','Felix Online RSS Feed');
@@ -38,7 +38,7 @@
 	define('RSS_AUTHOR','Felix');
 	define('RSS_SUBJECT','News for students and staff at Imperial College London');
 	define('RSS_ARTICLES',30);
-	
+
 	/* ARTICLE */
 	define('PREVIEW_LENGTH',170); // characters in preview before truncation
 	define('TEASER_LENGTH',200); // similar but article teaser field, not first part of text1
@@ -48,7 +48,7 @@
 	define('MIN_ARTICLE_TEASER_LENGTH',20); //
 	define('MIN_ARTICLE_SECT_LENGTH',4); //
 	define('MAX_ARTICLE_SECT_LENGTH',100000); //
-	
+
 	/* IMAGE */
 	define('IMG_QUALITY_PERCENT',100);
 	define('SIDEBAR_TOP5_WIDTH',140);
@@ -65,7 +65,7 @@
 	define('ARTICLE_IMG1_WIDTH',300);
 	define('ARTICLE_IMG2_WIDTH',300);
 	define('IMG_EXPIRY_HOURS',12);
-	
+
 	/* POLL */
 	define('POLL_TITLE_MIN_LENGTH',10);
 	define('POLL_GRAPH_WIDTH',280);
@@ -74,7 +74,7 @@
 	define('POLL_EXT_GRAPH_HEIGHT',300);
 	define('POLL_SUBMIT_VALUE','Vote Now!');
 	define('POLL_TITLE_BREAK_LENGTH',28);
-	
+
 	/* EMAIL */
 	define('EMAIL_FROM_ADDR','Felix Online <no-reply@imperial.ac.uk>'); // can't just 'make one up'... must be a valid address if @imperial.ac.uk!
 	define('EMAIL_REPLYTO_ADDR','no-reply@imperial.ac.uk');
@@ -83,7 +83,7 @@
 	define('EMAIL_COMMENT_AUTHOR',true);
 	define('EMAIL_COMMENT_COMMENTERS',true);
 	define('EMAIL_EXTCOMMENT_NOTIFYADDR','jk708@ic.ac.uk, felix@imperial.ac.uk'); // comma-separated list of addresses to notify when a new external comment needs approval
-	
+
 	/* SITE CONSTANTS */
 	$icip = array('155.198','129.31.','146.169'); # 7 characters
 	$d = array(
@@ -120,8 +120,8 @@
 	"vpn.ic.ac.uk" => "VPN",
 	"wlan.ic.ac.uk" => "College Wireless"
 	);
-	
+
 	/* ENGINE CONSTANTS */
-	define('NUMBER_OF_ARTICLES_PER_PAGE',10); 
-	
+	define('NUMBER_OF_ARTICLES_PER_PAGE',10);
+
 ?>
