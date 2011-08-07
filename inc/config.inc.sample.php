@@ -5,4 +5,8 @@
     $pass = "DB_PASSWORD";
     $cid = mysql_connect($host,$user,$pass);
     $dbok = mysql_select_db($db,$cid);
+
+	define('STANDARD_URL','http://felixonline.co.uk/');
+	define('BASE_URL','http://felixonline.co.uk/');
+	define('ADMIN_URL','http://felixonline.co.uk/engine/');
 ?>

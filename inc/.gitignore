@@ -3,5 +3,6 @@ cache/
 
 # Ignore db config files
 config.inc.php
+config.local.php
 config_archive.inc.php
 

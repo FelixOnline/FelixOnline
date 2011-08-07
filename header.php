@@ -45,7 +45,7 @@
 		$header .= $ext;
   ?>
   <title><?php echo $header;?></title>
-  <base href="http://felixonline.co.uk/">
+  <base href="<?php echo BASE_URL; ?>">
   <meta name="description" content="Felix Online is the online companion to Felix, the student newspaper of Imperial College London.">
   <meta name="author" content="Jonathan Kim">
   
@@ -102,9 +102,9 @@
 			<div id="topBar" class="grid_16">
 				<div class="grid_9 links first">
 					<ul>
-						<li class="first"><a href="/" <?php if(!(isset($_GET['media']) || isset($_GET['issuearchive']))) echo 'class="selected"';?>>Felix Online</a></li>
-						<li><a href="media/" <?php if(isset($_GET['media'])) echo 'class="selected"';?>>Media</a></li>
-						<li class="last"><a href="issuearchive/" <?php if(isset($_GET['issuearchive'])) echo 'class="selected"';?>>Issue Archive</a></li>
+						<li class="first"><a href="<?php echo BASE_URL; ?>" <?php if(!(isset($_GET['media']) || isset($_GET['issuearchive']))) echo 'class="selected"';?>>Felix Online</a></li>
+						<li><a href="<?php echo BASE_URL; ?>media/" <?php if(isset($_GET['media'])) echo 'class="selected"';?>>Media</a></li>
+						<li class="last"><a href="<?php echo BASE_URL; ?>issuearchive/" <?php if(isset($_GET['issuearchive'])) echo 'class="selected"';?>>Issue Archive</a></li>
 						<!--<li><a href="publications/">Other Publications</a></li>
 						<li class="last"><a href="http://m.felixonline.co.uk">Mobile</a></li>-->
 					</ul>
@@ -190,11 +190,11 @@
 		</div>
 		<div class="grid_8 bigFelix">
 			<?php if ($_GET['media']) {?>
-			<a href="/media/">
+			<a href="<?php echo BASE_URL; ?>media/">
 			<?php } else if ($_GET['issuearchive']) { ?>
-			<a href="/issuearchive/">
+			<a href="<?php echo BASE_URL; ?>issuearchive/">
 			<?php } else { ?>
-			<a href="/">
+			<a href="<?php echo BASE_URL; ?>">
 			<?php } ?>
 				<h1 <?php if ($_GET['media']) echo 'class="media"'; else if($_GET['issuearchive']) echo 'class="archive"';?>>
 					FELIX

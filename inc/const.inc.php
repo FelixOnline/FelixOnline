@@ -1,8 +1,5 @@
 <?php
 	/* SYSTEM */
-	define('STANDARD_URL','http://felixonline.co.uk/');
-	define('BASE_URL','http://felixonline.co.uk/');
-	define('ADMIN_URL','http://felixonline.co.uk/engine/');
 	define('SESSION_LENGTH',7200);
 	define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk');
 	define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/');
