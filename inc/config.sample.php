@@ -1,6 +1,6 @@
 <?php
     /*
-     * Create a config.local.php with the information below to run on a local dev machine
+     * Create a config.inc.php with the information below to run on a local dev machine
      */
 
     $db = "DB_TABLE";
@@ -17,5 +17,5 @@
     define('BASE_URL','http://felixonline.co.uk/');
     define('ADMIN_URL','http://felixonline.co.uk/engine/');
 
-    define('DEVELOPMENT_FLAG', false); // if set to true css and js won't be minified etc..
+    define('PRODUCTION_FLAG', true); // if set to true css and js will be minified etc..
 ?>
