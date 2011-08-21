@@ -6,4 +6,7 @@ Getting started:
 
 Always clone from preview section of the felix site (git clone felix/preview/.git) and ONLY EVER push to that repo. You can then check that your changes work on the server and then ssh into the main section and pull from preview (git pull preview master)
 
+Make your own config.inc.php to connect to your local database. There is a config.sample.php in the inc/ folder so use that as a base.
+
+Currently the repo ignores the mobile, api and engine repos so to add them to your local copy just clone them. At the moment I am considering them as individual repos that can be used independently of each other but in the future I may make them git submodules.  
 
