@@ -1,0 +1,9 @@
+Welcome to the FelixOnline source code!
+
+Maintained by Jonathan Kim (jkimbo@gmail.com) and Chris Birkett
+
+Getting started:
+
+Always clone from preview section of the felix site (git clone felix/preview/.git) and ONLY EVER push to that repo. You can then check that your changes work on the server and then ssh into the main section and pull from preview (git pull preview master)
+
+
