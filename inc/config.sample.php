@@ -10,6 +10,9 @@
     $cid = mysql_connect($host,$user,$pass);
     $dbok = mysql_select_db($db,$cid);
 
+    /* Forces charset to be utf8 */
+    mysql_set_charset('utf8',$cid);
+
     /*
      * Change these urls to your local versions, e.g http://localhost/felix
      */

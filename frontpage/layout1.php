@@ -7,7 +7,6 @@
 
 ?>
 
-
 <div class="grid_8 pull_4 featCont layout1">
     <?php
 
@@ -31,7 +30,6 @@
             <h2><a href="<?php echo article_url($article); ?>"><?php echo get_article_title($article);?></a></h2>
             <?php $num_comments = get_article_comments($article); ?>
             <div class="subHeader">
-                <p><?php //echo get_article_teaser($article); ?></p>
                 <p><?php echo get_article_preview_trunc($article, 50); ?></p>
                 <div id="storyMeta" class="<?php if(!$num_comments) echo 'extra'; ?>">
                     <ul class="metaList">
@@ -82,7 +80,7 @@
         </div>
         <div id="secondStoryPic">
             <a href="<?php echo article_url($article);?>">
-                <img id="secondStoryPhoto" alt="<?php echo get_img_title(get_img_id($article,1));?>" src="../inc/timthumb.php?src=../<?php echo get_img_uri(get_img_id($article, 1));?>&h=160px&w=220px&zc=1&a=t" width="220px" height="160px">
+                <img id="secondStoryPhoto" alt="<?php echo get_img_title(get_img_id($article,1));?>" src="<?php echo get_img_url(get_img_id($article, 1), 220, 160);?>" width="220px" height="160px">
             </a>
         </div>
     </div>
@@ -104,7 +102,7 @@
         </div>
         <div id="secondStoryPic">
             <a href="<?php echo article_url($article);?>">
-                <img id="secondStoryPhoto" alt="<?php echo get_img_title(get_img_id($article,1));?>" src="../inc/timthumb.php?src=../<?php echo get_img_uri(get_img_id($article, 1));?>&h=160px;&w=220px&zc=1&a=t" width="220px" height="160px" >
+                <img id="secondStoryPhoto" alt="<?php echo get_img_title(get_img_id($article,1));?>" src="<?php echo get_img_url(get_img_id($article, 1), 220, 160);?>" width="220px" height="160px" >
             </a>
         </div>
     </div>
@@ -123,10 +121,10 @@
 
         <!-- Pictures -->
         <div id="thirdStoryPic" class="grid_3 alpha">
-            <a href="<?php echo article_url($A4);?>"><img id="thirdStoryPhoto" alt="<?php echo get_img_title(get_img_id($A4,1));?>" src="../inc/timthumb.php?src=../<?php echo get_img_uri(get_img_id($A4, 1));?>&w=210px&h=130px&zc=1&a=t" width="210px" height="130px"></a>
+            <a href="<?php echo article_url($A4);?>"><img id="thirdStoryPhoto" alt="<?php echo get_img_title(get_img_id($A4,1));?>" src="<?php echo get_img_url(get_img_id($A4, 1), 210, 130);?>" width="210px" height="130px"></a>
         </div>
         <div id="thirdStoryPic" class="grid_3 omega">
-            <a href="<?php echo article_url($A5);?>"><img id="thirdStoryPhoto" alt="<?php echo get_img_title(get_img_id($A5,1));?>" src="../inc/timthumb.php?src=../<?php echo get_img_uri(get_img_id($A5, 1));?>&w=210px&h=130px&zc=1&a=t" width="210px" height="130px"></a>
+            <a href="<?php echo article_url($A5);?>"><img id="thirdStoryPhoto" alt="<?php echo get_img_title(get_img_id($A5,1));?>" src="<?php echo get_img_url(get_img_id($A5, 1), 210, 130);?>" width="210px" height="130px"></a>
         </div>
         <div class="clear"></div>
 
@@ -186,7 +184,7 @@
         ?>
         <a href="<?php echo article_url($F1); ?>">
             <div id="imgcont">
-                <img alt="<?php echo get_img_title(get_img_id($F1,1));?>" src="../inc/timthumb.php?src=../<?php echo get_img_uri(get_img_id($F1, 1));?>&w=290px&zc=1" width="290px">
+                <img alt="<?php echo get_img_title(get_img_id($F1,1));?>" src="<?php echo get_img_url(get_img_id($F1, 1), 290, 190);?>" width="290px">
             </div>
             <h4><?php echo get_article_title($F1);?></h4>
         </a>
@@ -223,7 +221,7 @@
         <div class="twitterbox">
             <h4>Twitter</h4>
             <div id="twitheader">
-                <a href="http://twitter.com/feliximperial" title="Felix Imperial"><img src="/img/felixtwitter.jpg" width="50px" id="felixTwitterlogo"/></a>
+                <a href="http://twitter.com/feliximperial" title="Felix Imperial"><img src="img/felixtwitter.jpg" width="50px" id="felixTwitterlogo"/></a>
                 <h5>Felix Imperial</h5>
                 <p><a href="http://twitter.com/feliximperial" target="_blank" title="Felix Twitter account">@feliximperial</a> - South Kensington</p>
                 <div class="clear"></div>

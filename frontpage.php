@@ -6,7 +6,6 @@
 
 		<!-- News banner -->
 		<!-- <div class="grid_12 banner">
-			<p>What did you think of the Summer Ball? Whether you went or not, we want to <a href="<?php echo STANDARD_URL; ?>summerball/">hear from you!</a></p>
 		</div> -->
 		<!-- End of news banner -->
 
@@ -52,7 +51,7 @@
 			<div class="border <?php echo get_article_category_cat($a1);?>">
 				<h3><a href="<?php echo get_article_category_cat($a1);?>/"><?php echo get_article_category($a1);?></a></h3>
 				<a href="<?php echo article_url($a1);?>">
-					<img id="featuredBarPhoto" alt="<?php echo get_img_title(get_img_id($a1,1));?>" src="../inc/timthumb.php?src=../<?php echo get_img_uri(get_img_id($a1, 1));?>&h=120px&w=220px&zc=1&a=t" width="220px" height="120px">
+					<img id="featuredBarPhoto" alt="<?php echo get_img_title(get_img_id($a1,1)); ?>" src="<?php echo get_img_url(get_img_id($a1, 1), 220, 120);?>" width="220px" height="120px">
 				</a>
 				<h4><a href="<?php echo article_url($a1);?>"><?php echo get_article_title($a1);?></a></h4>
 				<p><?php echo get_article_preview_trunc($a1,10);?></p>

@@ -1,15 +1,15 @@
-<?php 
+<?php
 	/*
 		TODO:
 			Sort out image hiding/alignment mess
 	*/
-	
+
 	global $gallerypage;
 	$gallerypage = false;
-	
+
 	$noArticleE = false;
 	$articleMissE = false;
-	
+
 	// IDEA: inline function calling instead of assinging sections to variables? Or use article class
 	if ($_GET['article'] == '') {
 		$noArticleE = true;
@@ -17,7 +17,7 @@
 		$article = $_GET['article'];
 		$sql = "SELECT * FROM `article` WHERE id='$article' AND text1 IS NOT NULL";
 		$result = mysql_query($sql);
-		if (!$result){ 
+		if (!$result){
 			$articleMissE = true;
 		} else {
 			$row = mysql_fetch_array( $result );
@@ -35,23 +35,22 @@
 			}
 			$num_comments = get_article_comments($article);
 			$article_URL = article_url($article);
-			
+
 			hit_article($article);
 			log_page_visit($article);
 		}
 	}
-	
+
 ?>
 
 <script>
 	var article = "<?php echo $article; ?>";
-</script	
+</script
 
 	<!-- Article wrapper -->
 	<div class="container_12">
-	
-		<?php if($gallerypage) {  
-			
+
+		<?php if($gallerypage) {
 			// get photo gallery based on id
 			$sql = "SELECT * FROM `media_photo_images` WHERE albumID='".$gallerypage."' ORDER BY id ASC";
 			$result = mysql_query($sql);
@@ -63,7 +62,7 @@
 			<div class="articleInfo grid_12">
 				<p><?php echo output_in_english_authors(get_article_authors_uname($article)); ?></p>
 				<p><span class="<?php echo $category;?>"><a href="<?php echo $category;?>/"><?php echo $category_display;?></a></span> - <?php echo date("l F j, Y", $date);?></p>
-				<?php 
+				<?php
 					if (is_logged_in()) {
 						$allowed = false;
 						if(check_if_section_editor($uname, $article))  // if user is editor of section article is in
@@ -86,7 +85,7 @@
 			</div>
 		</div>
 		<?php } ?>
-		
+
 		<!-- Sidebar -->
 		<div class="sidebar grid_4 push_8">
 			<?php
@@ -107,7 +106,7 @@
 				<?php } else { ?>
 				<h3>Featured <span class="<?php echo $category;?>"><?php echo $category_display;?></span> Stories</h3>
 				<ul>
-					<?php 
+					<?php
 						for ($i=1;$i<5;$i++) {
 							if ($i==1) {
 					?>
@@ -128,17 +127,17 @@
 				</ul>
 				<?php } ?>
 			</div>
-			<?php 
-				include_once('sidebar/socialLinks.php'); 
+			<?php
+				include_once('sidebar/socialLinks.php');
 				include_once('sidebar/mostPopular.php');
 				include_once('sidebar/mediaBox.php');
 				include_once('sidebar/fbActivity.php');
 			?>
 		</div>
 		<!-- End of sidebar -->
-		
+
 		<div class="article grid_8 pull_4 alpha <?php echo $category;?> instapaper_body">
-		
+
 		<?php
 		if ($articleMissE) {
 			echo "<h5 class='grid_8'>Opps! We couldn't find that article. Please return to the homepage and try again.</h5>";
@@ -157,19 +156,19 @@
 					<a href="user/<?php echo $authorID;?>/" title="<?php echo $author;?>"><img id="articlePic" alt="<?php echo $author;?>" src="../inc/timthumb.php?src=../<?php echo get_img_uri(get_user_pic($authorID));?>&h=160px&w=220px&zc=1"></a>
 				</div>
 			<?php } else { ?>
-			
-			<?php if($gallerypage) { 
+
+			<?php if($gallerypage) {
 				} else { ?>
 			<!-- Normal header -->
 			<h2 class="grid_8 instapaper_title"><?php echo $title; ?></h2>
-			<?php if ($category != 'phoenix') { ?>	 
+			<?php if ($category != 'phoenix') { ?>
 			<div class="subHeader grid_8"><?php echo $teaser; ?></div>
 			<?php } } } ?>
 			<?php if(!$gallerypage) { ?>
 			<div class="articleInfo grid_8">
 				<p><?php echo output_in_english_authors(get_article_authors_uname($article)); ?></p>
 				<p><span class="<?php echo $category;?>"><a href="<?php echo $category;?>/"><?php echo $category_display;?></a></span> - <?php echo date("l F j, Y", $date);?></p>
-				<?php 
+				<?php
 					if (is_logged_in()) {
 						$allowed = false;
 						if(check_if_section_editor($uname, $article))  // if user is editor of section article is in
@@ -192,16 +191,16 @@
 					<ul>
 						<div id="sharebuttons">
 							<li id="facebookLike">
-								
+
 							</li>
 							<li id="twitterShare">
-								
+
 							</li>
 							<li id="googleShare">
 								<g:plusone size="medium"></g:plusone>
 							</li>
 							<li id="diggShare">
-								
+
 							</li>
 						</div>
 					</ul>
@@ -213,7 +212,7 @@
 				</ul>
 			</div>
 			<!-- End of Sidebar 2 -->
-			
+
 			<!-- Content -->
 			<div class="content grid_6 pull_2 omega">
 				<?php
@@ -221,14 +220,12 @@
 					if ($image != ''){
 						if ($image == 183 || $image == 742) {
 						} else {?>
-						
-						<?php if ($category == 'phoenix') { ?>	 
-						
+						<?php if ($category == 'phoenix') { ?>
 							<div id="imgCont" >
-								<?php 
+								<?php
 										echo '<img id="articlePic" class="horizontal" alt="'.$image_title.'" src="../inc/timthumb.php?src=../'.get_img_uri(get_img_id($article, 1)).'&w=460px&zc=1&a=t">';
 								?>
-								<?php 
+								<?php
 								$caption = get_img_caption(get_img_id($article, 1));
 								$attr = get_img_attr(get_img_id($article, 1));
 								$attr_link = get_img_attr_link(get_img_id($article, 1));
@@ -244,24 +241,23 @@
 								</div>
 								<?php } ?>
 							</div>
-						
+
 						<?php } else { ?>
-						
 						<?php
-								$size = getimagesize(get_img_uri(get_img_id($article, 1))); // $size[0] = width, $size[1] = height
+								$size = getimagesize(get_img_url(get_img_id($article, 1))); // $size[0] = width, $size[1] = height
 								$scale = $size[0]/460;
 								$check = $size[1]/$scale;
-								if ($check > 400) 
+								if ($check > 400)
 									$tall = true;
 						?>
 						<div id="imgCont" <?php if($tall) echo "class='right'";?>>
-							<?php 
+							<?php
 								if($tall)
-									echo '<img id="articlePic" class="vertical" alt="'.$image_title.'" src="/inc/timthumb.php?src=../'.get_img_uri(get_img_id($article, 1)).'&w=240px&zc=1&a=t">';
-								else 
-									echo '<img id="articlePic" class="horizontal" alt="'.$image_title.'" src="/inc/timthumb.php?src=../'.get_img_uri(get_img_id($article, 1)).'&w=460px&zc=1&a=t">';
+									echo '<img id="articlePic" class="vertical" alt="'.$image_title.'" src="'.get_img_url(get_img_id($article, 1), 240).'">';
+								else
+									echo '<img id="articlePic" class="horizontal" alt="'.$image_title.'" src="'.get_img_url(get_img_id($article, 1), 460).'">';
 							?>
-							<?php 
+							<?php
 							$caption = get_img_caption(get_img_id($article, 1));
 							$attr = get_img_attr(get_img_id($article, 1));
 							$attr_link = get_img_attr_link(get_img_id($article, 1));
@@ -278,28 +274,28 @@
 							<?php } ?>
 						</div>
 				<?php } } }
-				} else 
+				} else
 					if ($image != ''){
 					if ($image != get_user_pic($authorID)) { // if article image is not the author's image
 						if ($image == 183 || $image == 742) { // if default images do nothing
 						} else { ?>
-						
+
 						<?php
 								$size = getimagesize(get_img_uri(get_img_id($article, 1))); // $size[0] = width, $size[1] = height
 								$scale = $size[0]/460;
 								$check = $size[1]/$scale;
-								if ($check > 400) 
+								if ($check > 400)
 									$tall = true;
 						?>
 							<div id="imgCont" <?php if($tall) echo "class='right'";?>>
-								<?php 
+								<?php
 									if($tall)
 										//echo '<img id="articlePic" class="vertical" alt="'.$image_title.'" src="../inc/timthumb.php?src=../'.get_img_uri(get_img_id($article, 1)).'&h=400px&zc=1&a=t">';
 										echo '<img id="articlePic" class="vertical" alt="'.$image_title.'" src="../inc/timthumb.php?src=../'.get_img_uri(get_img_id($article, 1)).'&w=240px&zc=1&a=t">';
-									else 
+									else
 										echo '<img id="articlePic" class="horizontal" alt="'.$image_title.'" src="../inc/timthumb.php?src=../'.get_img_uri(get_img_id($article, 1)).'&w=460px&zc=1&a=t">';
 								?>
-								<?php 
+								<?php
 								$caption = get_img_caption(get_img_id($article, 1));
 								$attr = get_img_attr(get_img_id($article, 1));
 								$attr_link = get_img_attr_link(get_img_id($article, 1));
@@ -315,15 +311,15 @@
 								</div>
 								<?php } ?>
 							</div>
-				<?php  } 
-					} 
+				<?php  }
+					}
 					}
 				?>
-				
+
 				<?php echo $content; ?>
 			</div>
 			<!-- End of content -->
-			
+
 			<div class="articleShare grid_8">
 				<ul>
 					<li><div id="shareText">Share: </div></li>
@@ -338,7 +334,7 @@
 							<g:plusone size="medium"></g:plusone>
 						</div>
 					</li>
-					<li> 
+					<li>
 						<div id="facebookLike2">
 							<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
 							<fb:like show_faces="false" width="300" font="arial" send=true></fb:like>
@@ -347,10 +343,10 @@
 				</ul>
 			</div>
 			<div class="clear"></div>
-			
+
 			<!-- Comments -->
 			<?php
-				
+
 				$sql = "SELECT * FROM (".
 					" SELECT comment.id,comment.user,name,comment,UNIX_TIMESTAMP(comment.timestamp) AS timestamp FROM `comment` LEFT JOIN `user` ON (comment.user=user.user) WHERE article=$article AND active=1".
 					" UNION SELECT comment_ext.id,'extuser0',comment_ext.name,comment_ext.comment,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP != '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=0".
@@ -363,7 +359,7 @@
 			<div class="grid_8 comments" id="commentHeader">
 				<h3>Comments <span>(<?php echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?>)</span></h3>
 				<a href="<?php echo curPageURLNonSecure().'#commentForm';?>" id="postComment">Post a comment</a>
-				
+
 				<!-- Comment container -->
 				<div id="commentCont">
 					<?php
@@ -373,11 +369,11 @@
 						<div class="comment">
 							<div class="commentInfo">
 								<p id="commentUser">
-								<?php 
+								<?php
 									if ($commenter = $row['name']) {  // Check if commenter has a name
 										if ($row['user'] == 'extuser0' || $row['user'] == 'extuser1' || $row['user'] == 'extuser2') { // If commenter has name but is not registered then just output commenter name
 											echo $commenter;
-										} else { // If commenter has name and is registered then provide link to user?> 
+										} else { // If commenter has name and is registered then provide link to user?>
 											<a href="user/<?php echo $row['user'];?>/"><?php echo $commenter; ?></a>
 											<?php if(in_array($row['user'], get_article_authors_uname($article))) echo '<span>(Author)</span>'; ?>
 								<?php 	}
@@ -385,7 +381,7 @@
 										echo 'Anonymous';
 									} ?>
 								</p>
-								<span id="commentDate"><?php echo date('l F d Y H:i',$row['timestamp']); //22 September 2010 14:28:49?></span> 
+								<span id="commentDate"><?php echo date('l F d Y H:i',$row['timestamp']); //22 September 2010 14:28:49?></span>
 							</div>
 							<p>
 								<?php if($reply = comment_is_reply($row['id'], $row['user'])) { ?><a href="<?php echo curPageURLNonSecure().'#comment'.$reply; ?>" id="replyLink">@<?php echo get_comment_author($reply, $row['user']);?></a>: <?php } ?>
@@ -394,10 +390,10 @@
 						</div>
 						<div class="commentAction" id="<?php echo $row['id'];?>">
 							<ul>
-								<li><?php 
+								<li><?php
 									if (!is_logged_in()) {?>
 										<a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" class="likeComment">Like</a>
-									<?php } else { 
+									<?php } else {
 										if (user_like_comment($row['id'], is_logged_in())) echo 'Liked'; // if user has already liked or disliked comment then remove link
 										else {?>
 											<a href="<?php echo curPageURLNonSecure();?>#" id="like">Like</a>
@@ -405,11 +401,11 @@
 									<span id="likecounter">(<?php echo get_likes($row['id']);?>)</span>
 								</li>
 									<li><?php if (!is_logged_in()) { ?>
-										<a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" class="dislikeComment">Dislike</a> 
-									<?php } else { 
+										<a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" class="dislikeComment">Dislike</a>
+									<?php } else {
 										if (user_like_comment($row['id'], is_logged_in())) echo 'Disliked';
 										else {?>
-										<a href="<?php echo curPageURLNonSecure();?>#" id="dislike">Dislike</a> 
+										<a href="<?php echo curPageURLNonSecure();?>#" id="dislike">Dislike</a>
 									<?php } }?>
 									<span id="dislikecounter">(<?php echo get_dislikes($row['id']);?>)</span>
 								</li>
@@ -419,26 +415,26 @@
 						</div>
 						<div class="clear"></div>
 					</div>
-					
+
 					<?php } ?>
 				</div>
-				
+
 				<!-- Comment form -->
 				<div id="commentForm">
-					
+
 					<script type="text/javascript">
 						var RecaptchaOptions = {
 							theme : 'clean'
 						};
 					</script>
-					<?php 
-					
+					<?php
+
 					// Error diplaying
 					if ($errorinsert)
 						echo '<div class="commenterror">System error - please email <a href="mailto"felix@imperial.ac.uk@>felix@imperial.ac.uk</a>!</div>';
 					if ($errorduplicate)
 						echo '<div class="commenterror">Duplicate comment submitted.</div>';
-					
+
 					if (!$uname) { ?>
 						<h5>Comment anonymously or <a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox">Log in</a></h5>
 					<?php } else { ?>
@@ -470,7 +466,7 @@
 							echo '<label for="recaptcha_response_field" class="error" id="captchaStatus"></label>';
 							?>
 						<?php } ?>
-						<input type="submit" value="Post your comment" id="submit" name="<?php if($uname) echo 'articlecomment'; else echo 'articlecomment_ext';?>"/> 
+						<input type="submit" value="Post your comment" id="submit" name="<?php if($uname) echo 'articlecomment'; else echo 'articlecomment_ext';?>"/>
 					</form>
 				</div>
 			</div>
@@ -480,33 +476,33 @@
 		<!-- End of article content -->
 		<?php } ?>
 		<div class="clear"></div>
-		
+
 	</div>
 	<!-- End of article wrapper -->
-	
+
 	<!-- Email article div -->
 	<div id="emailArticle">
 		<form action="#" id="emailArticleForm" method="post">
 			<h3>Email article</h3>
 			<h6><?php echo get_article_title($article);?></h6>
-			
+
 			<label for="email">To:</label>
 			<input id="email" name="email"/>
 			<div id="emailInfo">(Seperate multiple address with a comma)</div>
 
-			
+
 			<label for="name">Your name:</label>
 			<input id="name" name="name" <?php if(is_logged_in()) echo 'value="'.get_vname_by_uname_db($uname).'"';?>/>
 			<div class="clear"></div>
-			
+
 			<label for="emailSender">Your email:</label>
 			<input id="emailSender" name="emailSender" <?php if(is_logged_in()) echo 'value="'.get_user_email($uname).'"';?>/>
 			<div class="clear"></div>
-			
+
 			<label for="note" id="noteLabel">Add note: <span>(optional)</span></label>
 			<textarea name="note" id="note"></textarea>
 			<div class="clear"></div>
-			
+
 			<input type="submit" id="submit" value="Send Email" />
 		</form>
 	</div>

@@ -115,17 +115,12 @@ function get_article_preview_trunc($id, $wordlimit) {
 
     $string = strip_tags($string);
 
-    //if(strlen($string) <= $limit) return $string;
-    //else $string = substr($string, 0, $limit) . ' <a href="'.article_url($id).'" title="Read more">...</a>';
-
     $append = '';
     $words = explode(" ",$string);
     if(count($words) > $wordlimit) {
       $append = ' ... <br/><a href="'.article_url($id).'" title="Read more" id="readmorelink">Read more</a>';
     }
     return implode(" ",array_splice($words,0,$wordlimit)) . $append;
-
-    //return $string;
 }
 
 function get_article_text($id,$text=1) { // Article DONE
@@ -223,8 +218,10 @@ function get_img_url($id, $width = '', $height = '') {
                 $uri = str_replace('img/upload/', '', $uri);
                 if($height) {
                     return IMAGE_URL.$width.'/'.$height.'/'.$uri;
-                } else {
+                } else if($width) {
                     return IMAGE_URL.$width.'/'.$uri;
+                } else {
+                    return IMAGE_URL.'upload/'.$uri;
                 }
             } else
                 return IMAGE_URL.DEFAULT_IMG_URI;

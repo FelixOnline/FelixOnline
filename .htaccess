@@ -34,14 +34,18 @@ RewriteEngine on
 
 #RewriteCond %{HTTP_HOST} ^felixonline\.co\.uk$
 #RewriteRule (.*) http://www.felixonline.co.uk/$1 [R=301,L]
-RewriteCond %{HTTP_HOST} ^www.felixonline\.co\.uk$ [NC]
-RewriteRule ^(.*)$ http://felixonline.co.uk/$1/ [R=301,L]
+#RewriteCond %{HTTP_HOST} ^www.felixonline\.co\.uk$ [NC]
+#RewriteRule ^(.*)$ http://felixonline.co.uk/$1/ [R=301,L]
+
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !(.*)/$
-RewriteRule ^(.*)$ http://felixonline.co.uk/$1/ [L,R=301]
+#RewriteRule ^(.*)$ http://felixonline.co.uk/$1/ [L,R=301]
 
-RewriteBase  /
+#RewriteBase  /
 
 # If requested resource exists as a file or directory, skip next 17 rules
 RewriteCond %{DOCUMENT_ROOT}/$1 -f [OR]
