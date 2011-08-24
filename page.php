@@ -115,7 +115,7 @@
 										<h5><?php echo get_article_title(${c.$i});?></h5>
 										<div class="featuredPic">
 											<a href="<?php echo article_url(${c.$i}); ?>">
-												<img id="featuredPhoto" alt="<?php echo get_img_title(get_img_id(${c.$i},1));?>" src="../inc/timthumb.php?src=../<?php echo get_img_uri(get_img_id(${c.$i}, 1));?>&h=100px&w=150px&zc=1&a=t">
+                                                <img id="featuredPhoto" alt="<?php echo get_img_title(get_img_id(${c.$i},1));?>" src="<?php echo get_img_url(get_img_id(${c.$i}, 1), 150, 100); ?>">
 											</a>
 										</div>
 									</a>
@@ -223,7 +223,7 @@
 						<?php if ($category == 'phoenix') { ?>
 							<div id="imgCont" >
 								<?php
-										echo '<img id="articlePic" class="horizontal" alt="'.$image_title.'" src="../inc/timthumb.php?src=../'.get_img_uri(get_img_id($article, 1)).'&w=460px&zc=1&a=t">';
+										echo '<img id="articlePic" class="horizontal" alt="'.$image_title.'" src="'.get_img_url(get_img_id($article, 1), 460).'">';
 								?>
 								<?php
 								$caption = get_img_caption(get_img_id($article, 1));
