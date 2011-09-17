@@ -16,7 +16,7 @@
     /* turn off error reporting */
     error_reporting(0);
     /* to turn on error reporting uncomment line: */
-    //error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+    //error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
     /*
      * Change these urls to your local versions, e.g http://localhost/felix
