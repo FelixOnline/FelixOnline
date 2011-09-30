@@ -48,10 +48,10 @@ function get_short_article_desc($id) { // Article DONE
     global $dbok,$cid;
     if ($dbok) {
         $sql = "SELECT short_desc FROM `article` WHERE id=$id";
-        if ($desc = mysql_result(mysql_query($sql,$cid),0))
-            return $desc;
-        else
-            return trim(get_article_preview($id, 80));
+        //if ($desc = mysql_result(mysql_query($sql,$cid),0))
+            //return $desc;
+        //else
+        return trim(get_article_preview($id, 80));
     }
 }
 
