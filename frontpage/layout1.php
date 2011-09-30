@@ -19,7 +19,7 @@
         list($A0,$A1,$A2,$A3,$A4,$A5,$A6,$A7,$A8) = $sectionA;
         // Section b
         $sql = "SELECT `1`,`2`,`3`,`4`,`5` FROM `frontpage` WHERE layout='1' AND section='b'";
-        $sectionB = array_slice(mysql_fetch_array(mysql_query($sql,$cid)), 0, -1);
+        $sectionB = array_unique(mysql_fetch_array(mysql_query($sql,$cid)));
     ?>
     <!-- Top story -->
     <div class="grid_8 alpha topstory">
@@ -55,9 +55,20 @@
         <h5>In this Issue</h5>
         <?php foreach($sectionB as $i => $b) { ?>
             <div class="thisIssueCont <?php if($i == 0) echo 'top';?>">
-                <a href="<?php echo article_url($b);?>"><img alt="<?php echo get_img_title(get_img_id($b,1));?>" src="<?php echo get_img_url(get_img_id($b, 1), 140, 140);?>" width="140px" height="140px" class="captify" rel="caption2"/><br class="c"/></a>
-                <div class="caption1"><a href="<?php echo article_url($b);?>"><?php echo get_short_article_title($b);?></a></div>
-                <div id="caption2"><a href="<?php echo article_url($b);?>"><?php echo get_short_article_desc($b); ?></a></div>
+                <a href="<?php echo article_url($b);?>">
+                    <img alt="<?php echo get_img_title(get_img_id($b,1));?>" src="<?php echo get_img_url(get_img_id($b, 1), 140, 140);?>" width="140px" height="140px" class="captify" rel="caption2"/>
+                    <br class="c"/>
+                </a>
+                <div class="caption1">
+                    <a href="<?php echo article_url($b);?>">
+                        <?php echo get_short_article_title($b);?>
+                    </a>
+                </div>
+                <div id="caption2">
+                    <a href="<?php echo article_url($b);?>">
+                        <?php echo get_short_article_desc($b); ?>
+                    </a>
+                </div>
             </div>
         <?php } ?>
     </div>

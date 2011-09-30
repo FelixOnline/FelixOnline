@@ -83,7 +83,7 @@ function get_article_preview($id, $length=170) { // Article DONE
         if (strlen($content) <= $length)
             return strip_tags($content);
         else
-            return substr(preg_replace($search,'',$content),0,strrpos(substr($content,0,$length),' ')).' <a href="page.php?article='.$id.'" title="Read more">...</a>';
+            return substr(preg_replace($search,'',$content),0,strrpos(substr($content,0,$length),' ')).' <a href="'.article_url($id).'" title="Read more">...</a>';
     }
 }
 
