@@ -96,25 +96,25 @@ $(document).ready(function() {
     }).filter(':first').click();
 	
 	//Captify plugin
-	$('img.captify').captify({
-		speedOver: 100,
-		// speed of the mouseout effect
-		speedOut: 100,
-		// how long to delay the hiding of the caption after mouseout (ms)
-		hideDelay: 50,	
-		// 'fade', 'slide', 'always-on'
-		animation: 'slide',		
-		// text/html to be placed at the beginning of every caption
-		prefix: '',		
-		// opacity of the caption on mouse over
-		opacity: '0.7',					
-		// the name of the CSS class to apply to the caption box
-		className: 'caption-bottom',	
-		// position of the caption (top or bottom)
-		position: 'bottom',
-		// caption span % of the image
-		spanWidth: '100%'
-	});
+    $('img.captify').captify({
+        speedOver: 100,
+        // speed of the mouseout effect
+        speedOut: 100,
+        // how long to delay the hiding of the caption after mouseout (ms)
+        hideDelay: 50,	
+        // 'fade', 'slide', 'always-on'
+        animation: 'slide',		
+        // text/html to be placed at the beginning of every caption
+        prefix: '',		
+        // opacity of the caption on mouse over
+        opacity: '0.7',					
+        // the name of the CSS class to apply to the caption box
+        className: 'caption-bottom',	
+        // position of the caption (top or bottom)
+        position: 'bottom',
+        // caption span % of the image
+        spanWidth: '100%'
+    });
 
 	$('.likeComment').bind('click', function() {
 		//$('#facebox #loginForm').prepend('Test');
