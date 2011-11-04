@@ -50,7 +50,8 @@ RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
 # If requested resource exists as a file or directory, skip next 17 rules
 RewriteCond %{DOCUMENT_ROOT}/$1 -f [OR]
 RewriteCond %{DOCUMENT_ROOT}/$1 -d [OR]
-RewriteCond %{REQUEST_URI} (.*)/engine/(.*)$
+RewriteCond %{REQUEST_URI} (.*)/engine/(.*)$ [OR]
+RewriteCond %{REQUEST_URI} (.*)/api/(.*)$
 RewriteRule (.*) - [S=20]
 #
 RewriteRule ^user/([a-zA-Z0-9_-]+)/([0-9]+)/$ ?id=$1&p=$2 [QSA]
