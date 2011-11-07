@@ -45,7 +45,7 @@
 
 <script>
 	var article = "<?php echo $article; ?>";
-</script
+</script>
 
 	<!-- Article wrapper -->
 	<div class="container_12">
@@ -136,7 +136,7 @@
 		</div>
 		<!-- End of sidebar -->
 
-		<div class="article grid_8 pull_4 alpha <?php echo $category;?> instapaper_body">
+		<div class="article grid_8 pull_4 alpha <?php echo $category;?> instapaper_body hentry">
 
 		<?php
 		if ($articleMissE) {
@@ -149,20 +149,19 @@
 			<!-- Comment header -->
 			<?php if ($category == 'comment') { ?>
 				<div class="grid_5">
-					<h2 class="instapaper_title"><?php echo $title; ?></h2>
+					<h2 class="instapaper_title entry-title"><?php echo $title; ?></h2>
 					<div class="subHeader"><?php echo $teaser; ?></div>
 				</div>
 				<div class="grid_3 alpha omega" id="commentArticlePic">
 					<a href="user/<?php echo $authorID;?>/" title="<?php echo $author;?>"><img id="articlePic" alt="<?php echo $author;?>" src="../inc/timthumb.php?src=../<?php echo get_img_uri(get_user_pic($authorID));?>&h=160px&w=220px&zc=1"></a>
 				</div>
 			<?php } else { ?>
-
-			<?php if($gallerypage) {
-				} else { ?>
-			<!-- Normal header -->
-			<h2 class="grid_8 instapaper_title"><?php echo $title; ?></h2>
-			<?php if ($category != 'phoenix') { ?>
-			<div class="subHeader grid_8"><?php echo $teaser; ?></div>
+                <?php if($gallerypage) {
+                    } else { ?>
+                <!-- Normal header -->
+                <h2 class="grid_8 instapaper_title entry-title"><?php echo $title; ?></h2>
+                <?php if ($category != 'phoenix') { ?>
+                <div class="subHeader grid_8"><?php echo $teaser; ?></div>
 			<?php } } } ?>
 			<?php if(!$gallerypage) { ?>
 			<div class="articleInfo grid_8">
@@ -185,7 +184,7 @@
 			<!-- End of article header -->
 			<?php } ?>
 			<!-- Sidebar 2 -->
-			<div class="sidebar2 grid_2 push_6">
+			<div class="sidebar2 grid_2 push_6 entry-unrelated">
 				<div id="sharebuttonsCont">
 					<h6>Sharing</h6>
 					<ul>
@@ -214,7 +213,7 @@
 			<!-- End of Sidebar 2 -->
 
 			<!-- Content -->
-			<div class="content grid_6 pull_2 omega">
+			<div class="content grid_6 pull_2 omega entry-content">
 				<?php
 				if ($category != 'comment') {
 					if ($image != ''){
