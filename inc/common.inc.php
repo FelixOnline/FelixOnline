@@ -1981,11 +1981,10 @@ function getRelativeTime($date) {
     $diff = round($diff/7);
     if ($diff<4)
         return $diff . " week" . plural($diff) . " ago";
-    return "on " . date("F j, Y", strtotime($date));
+    return "on " . date("F j, Y", $date);
 }
 
 function trunc_text($string, $wordlimit = 100){
-
     $words = explode(" ",$string);
     //if(count($words) > $wordlimit) {
       //$append = ' ... <br/><a href="'.article_url($id).'" title="Read more" id="readmorelink">Read more</a>';
@@ -1995,7 +1994,6 @@ function trunc_text($string, $wordlimit = 100){
 
 
 function get_google_weather() {
-
     $requestAddress = "http://www.google.com/ig/api?weather=SW72BB&hl=en";
     // Downloads weather data based on location - I used my zip code.
     $xml_str = file_get_contents($requestAddress,0);
