@@ -1,6 +1,7 @@
 <?php
 	/* SYSTEM */
 	define('SESSION_LENGTH',7200);
+	define('COOKIE_LENGTH', 2592000); // cookie length (30 days) (60*60*24*30)
 	define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk');
 	define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/');
 	define('ROOT_USERS','felix,cjb07,rsp07,jk708'); // separate with commas, no spaces

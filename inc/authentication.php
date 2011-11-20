@@ -21,7 +21,6 @@ if ($_SERVER['SERVER_NAME'] == AUTHENTICATION_SERVER) { // if current server is 
     if ($_POST['login']) { // if someone is trying to log in
         if (pam_auth($_POST['username'], $_POST['password'])) { // authenticate user using global function pam_auth - returns true if user is Imperial student, false if not (Union server only)
             set_session($session, $_POST['username']); // assign the username to the session
-            //$loc = strpos($_GET['goto'],'?') ? ('Location: '.$_GET['goto'].'&session='.$session) : ('Location: '.$_GET['goto'].'?session='.$session);
             if(strpos($_GET['goto'], '?')) { // if $_GET['goto'] contains a ?
                 $loc = ('Location: '.$_GET['goto'].'&session='.$session); // location becomes $_GET['goto'] url with session_id appended
             } else {
@@ -49,10 +48,12 @@ if ($_SERVER['SERVER_NAME'] == AUTHENTICATION_SERVER) { // if current server is 
     }
 }
 
-if (($session = $_GET['session']) && is_session_recent($session) && ($_GET['login'] != 'FAIL')) {
-    login(get_user_from_session($session));
+/* Login after authenticated on auth server */
+if (($session = $_GET['session']) && is_session_recent($session) && ($_GET['login'] != 'FAIL')) { // check if session is recent
+    login(get_user_from_session($session)); // login user
     if (isset($_GET['remember'])) {
-        setcookie('felixonline', $_SESSION['felix']['uname'], time()+60*60*24*30, "/");
+        setcookie('felixonline', $_SESSION['felix']['uname'], time()+COOKIE_LENGTH, "/");
+        setcookie('felixonlinesession', $session, time()+COOKIE_LENGTH, "/");
     }
 }
 
@@ -61,11 +62,11 @@ if (($session = $_GET['session']) && is_session_recent($session) && ($_GET['logi
  * Store the session id in cookie and then check for last 30 days
  * Mysql , time created and time last used
  */
-if(isset($_COOKIE['felixonline'])) {
+if(isset($_COOKIE['felixonline']) && isset($_COOKIE['felixonlinesession']) && is_session_cookie_recent($_COOKIE['felixonlinesession'])) {
     re_login($_COOKIE['felixonline']); // re_login the user
 }
 
-/* Loggin out */
+/* Logout */
 if ($_POST['logout']) {
     logout();
 }
