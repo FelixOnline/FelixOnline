@@ -36,6 +36,7 @@
 	if(!defined('NUMBER_OF_POPULAR_ARTICLES_USER')) define('NUMBER_OF_POPULAR_ARTICLES_USER',5); // max number of popular articles on user page
 	if(!defined('NUMBER_OF_POPULAR_COMMENTS_USER')) define('NUMBER_OF_POPULAR_COMMENTS_USER',5); // max number of popular comments on user page
     if(!defined('IMAGE_URL'))                       define('IMAGE_URL', 'http://img.felixonline.co.uk/'); // image url 
+    if(!defined('LOCAL'))                           define('LOCAL', false); // if true then site is hosted locally - don't use pam_auth etc. 
 
 	/* Media Page */
 	if(!defined('NUMBER_OF_ALBUMS_FRONT_PAGE'))     define('NUMBER_OF_ALBUMS_FRONT_PAGE',4); // number of media items on front page
