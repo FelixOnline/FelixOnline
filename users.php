@@ -1,13 +1,9 @@
 <?php 
-
 	/*
 		TODO:
 			Add images to all front page images
 			Add hover text underline for the read more link
-			
 	*/
-	
-	//require_once('inc/common.inc.php'); 
 	
 	$error = false;
 	

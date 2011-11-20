@@ -11,6 +11,7 @@
     if(!defined('ADMIN_URL'))                       define('ADMIN_URL','http://felixonline.co.uk/engine/'); // url of engine page
     if(!defined('PRODUCTION_FLAG'))                 define('PRODUCTION_FLAG', true); // if set to true css and js will be minified etc.. [TODO]
 	if(!defined('SESSION_LENGTH'))                  define('SESSION_LENGTH',7200); // session length
+	if(!defined('COOKIE_LENGTH'))                   define('COOKIE_LENGTH', 2592000); // cookie length (30 days) (60*60*24*30)
 	if(!defined('AUTHENTICATION_SERVER'))           define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk'); // authentication server
 	if(!defined('AUTHENTICATION_PATH'))             define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/'); // authentication path
 	if(!defined('ROOT_USERS'))                      define('ROOT_USERS','felix,cjb07,rsp07,jk708'); // separate with commas, no spaces
@@ -98,38 +99,38 @@
 	/* SITE CONSTANTS */
 	$icip = array('155.198','129.31.','146.169'); # 7 characters
 	$d = array(
-	"media.su.ic.ac.uk" => "Media group",
-	"ad.ic.ac.uk" => "Administration",
-	"ma.ic.ac.uk" => "Maths",
-	"et.ic.ac.uk" => "Environmental Science & Technology",
-	"ph.ic.ac.uk" => "Physics",
-	"sc.ic.ac.uk" => "Physics",
-	"ce.ic.ac.uk" => "Chemical Engineering",
-	"cv.ic.ac.uk" => "Civil Engineering",
-	"lib.ic.ac.uk" => "Library",
-	"sk.med.ic.ac.uk" => "Medicine (South Kensington)",
-	"med.ic.ac.uk" => "Medicine (all campuses except South Kensington)",
-	"tanaka.ic.ac.uk" => "Business School",
-	"mt.ic.ac.uk" => "Materials",
-	"mdr.ic.ac.uk" => "Biology", #?
-	"bio.ic.ac.uk" => "Biology",
-	"ch.ic.ac.uk" => "Chemistry",
-	"doc.ic.ac.uk" => "Computing",
-	"hor.ic.ac.uk" => "Halls of Residence",
-	"is.ic.ac.uk" => "Institute of Security, Science & Technology",
-	"me.ic.ac.uk" => "Mechanical Engineering",
-	"ee.ic.ac.uk" => "Electrical and Electronic Engineering",
-	"net.ic.ac.uk" => "Network",
-	"ae.ic.ac.uk" => "Aeronautical Engineering",
-	"hu.ic.ac.uk" => "Humanities",
-	"ese.ic.ac.uk" => "Earth Science & Engineering",
-	"rsm.ic.ac.uk" => "Royal School of Mines",
-	"saf.ic.ac.uk" => "Sir Alexander Fleming",
-	"bc.ic.ac.uk" => "Molecular Biosciences",
-	"union.ic.ac.uk" => "Union",
-	"su.ic.ac.uk" => "Union",
-	"vpn.ic.ac.uk" => "VPN",
-	"wlan.ic.ac.uk" => "College Wireless"
+        "media.su.ic.ac.uk" => "Media group",
+        "ad.ic.ac.uk" => "Administration",
+        "ma.ic.ac.uk" => "Maths",
+        "et.ic.ac.uk" => "Environmental Science & Technology",
+        "ph.ic.ac.uk" => "Physics",
+        "sc.ic.ac.uk" => "Physics",
+        "ce.ic.ac.uk" => "Chemical Engineering",
+        "cv.ic.ac.uk" => "Civil Engineering",
+        "lib.ic.ac.uk" => "Library",
+        "sk.med.ic.ac.uk" => "Medicine (South Kensington)",
+        "med.ic.ac.uk" => "Medicine (all campuses except South Kensington)",
+        "tanaka.ic.ac.uk" => "Business School",
+        "mt.ic.ac.uk" => "Materials",
+        "mdr.ic.ac.uk" => "Biology", #?
+        "bio.ic.ac.uk" => "Biology",
+        "ch.ic.ac.uk" => "Chemistry",
+        "doc.ic.ac.uk" => "Computing",
+        "hor.ic.ac.uk" => "Halls of Residence",
+        "is.ic.ac.uk" => "Institute of Security, Science & Technology",
+        "me.ic.ac.uk" => "Mechanical Engineering",
+        "ee.ic.ac.uk" => "Electrical and Electronic Engineering",
+        "net.ic.ac.uk" => "Network",
+        "ae.ic.ac.uk" => "Aeronautical Engineering",
+        "hu.ic.ac.uk" => "Humanities",
+        "ese.ic.ac.uk" => "Earth Science & Engineering",
+        "rsm.ic.ac.uk" => "Royal School of Mines",
+        "saf.ic.ac.uk" => "Sir Alexander Fleming",
+        "bc.ic.ac.uk" => "Molecular Biosciences",
+        "union.ic.ac.uk" => "Union",
+        "su.ic.ac.uk" => "Union",
+        "vpn.ic.ac.uk" => "VPN",
+        "wlan.ic.ac.uk" => "College Wireless"
 	);
 
 	/* ENGINE CONSTANTS */

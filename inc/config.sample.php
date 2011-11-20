@@ -26,4 +26,5 @@
     define('ADMIN_URL','http://felixonline.co.uk/engine/');
 
     define('PRODUCTION_FLAG', true); // if set to true css and js will be minified etc..
+    define('LOCAL', false); // if true then site is hosted locally - don't use pam_auth etc. 
 ?>

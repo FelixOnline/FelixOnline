@@ -1,6 +1,11 @@
 <?php
 
-/* TODO: sort this MESS OUT */
+/* 
+ * Common function files
+ *
+ * TODO: sort this MESS OUT 
+ * 
+ */
 
 require_once('config.inc.php');
 require_once('article.inc.php');
@@ -322,29 +327,31 @@ function get_img_attr_link($id) {
 }
 
 function curPageURL() {
- $pageURL = 'http';
- if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
- $pageURL .= "://";
- if ($_SERVER["SERVER_PORT"] != "80") {
-  $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
- } else {
-  $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
- }
- return $pageURL;
+    $pageURL = 'http';
+    if ($_SERVER["HTTPS"] == "on") {
+        $pageURL .= "s";
+    }
+    $pageURL .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80") {
+        $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+    } else {
+        $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    }
+    return $pageURL;
 }
 
 function curPageURLSecure() {
- $pageURL = 'https://';
- if ($_SERVER["SERVER_PORT"] != "80") {
-  $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
- } else {
-  $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
- }
- return $pageURL;
+    $pageURL = 'https://';
+    if ($_SERVER["SERVER_PORT"] != "80") {
+        $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+    } else {
+        $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    }
+    return $pageURL;
 }
 
 function curPageURLNonSecure() {
- return 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    return 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 }
 
 function login($username) {
@@ -419,27 +426,35 @@ function get_vname_admin() {
 }
 
 function get_vname_by_uname_ldap($uname) {
-    $ds=ldap_connect("addressbook.ic.ac.uk");
-    $r=ldap_bind($ds);
-    $justthese = array("gecos");
-    $sr=ldap_search($ds, "ou=People, ou=everyone, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
-    $info = ldap_get_entries($ds, $sr);
-    if ($info["count"] > 0)
-        return $info[0]['gecos'][0];
-    else
-        return false;
+    if(!LOCAL) { // if on union server
+        $ds=ldap_connect("addressbook.ic.ac.uk");
+        $r=ldap_bind($ds);
+        $justthese = array("gecos");
+        $sr=ldap_search($ds, "ou=People, ou=everyone, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
+        $info = ldap_get_entries($ds, $sr);
+        if ($info["count"] > 0)
+            return $info[0]['gecos'][0];
+        else
+            return false;
+    } else {
+        return $uname;
+    }
 }
 
 function get_user_info_by_uname_ldap($uname) {
-    $ds=ldap_connect("addressbook.ic.ac.uk");
-    $r=ldap_bind($ds);
-    $justthese = array("o");
-    $sr=ldap_search($ds, "ou=People, ou=shibboleth, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
-    $info = ldap_get_entries($ds, $sr);
-    if ($info["count"] > 0)
-        return $info[0]['o'][0];
-    else
-        return false;
+    if(!LOCAL) { // if on union server
+        $ds=ldap_connect("addressbook.ic.ac.uk");
+        $r=ldap_bind($ds);
+        $justthese = array("o");
+        $sr=ldap_search($ds, "ou=People, ou=shibboleth, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
+        $info = ldap_get_entries($ds, $sr);
+        if ($info["count"] > 0)
+            return $info[0]['o'][0];
+        else
+            return false;
+    } else {
+        return $uname;
+    }
 }
 
 function get_vname_by_uname_db($uname) {
@@ -481,15 +496,19 @@ function get_role_name($id) {
 }
 
 function get_forename($uname) {
-    $ds=ldap_connect("addressbook.ic.ac.uk");
-    $r=ldap_bind($ds);
-    $justthese = array("givenname");
-    $sr=ldap_search($ds, "o=Imperial College, c=GB", "uid=$uname", $justthese);
-    $info = ldap_get_entries($ds, $sr);
-    if ($info["count"] > 0)
-        return $info[0][givenname][0];
-    else
+    if(!LOCAL) {
+        $ds=ldap_connect("addressbook.ic.ac.uk");
+        $r=ldap_bind($ds);
+        $justthese = array("givenname");
+        $sr=ldap_search($ds, "o=Imperial College, c=GB", "uid=$uname", $justthese);
+        $info = ldap_get_entries($ds, $sr);
+        if ($info["count"] > 0)
+            return $info[0][givenname][0];
+        else
+            return $uname;
+    } else {
         return $uname;
+    }
 }
 
 function convert_to_columns($content, $columns) {
@@ -540,6 +559,21 @@ function is_session_recent($session) {
     if (mysql_num_rows($result)) {
         $session_age = mysql_result($result,0);
         return ($session_age <= SESSION_LENGTH);
+    }
+    else
+        return false;
+}
+
+/*
+ * Check if session id stored in cookie is recent
+ */
+function is_session_cookie_recent($session) {
+    global $cid;
+    $sql = "SELECT TIMESTAMPDIFF(SECOND,timestamp,NOW()) AS timediff FROM `login` WHERE session_id='$session' AND valid=1 ORDER BY timediff ASC LIMIT 1";
+    $result = mysql_query($sql,$cid);
+    if (mysql_num_rows($result)) {
+        $session_age = mysql_result($result,0);
+        return ($session_age <= COOKIE_LENGTH);
     }
     else
         return false;
@@ -640,7 +674,6 @@ function insert_comment($article,$user,$comment,$replyName,$replyComment) {
     } else {
         return false;
     }
-
 }
 
 function email_article_comment($article_id,$user,$comment,$commentid,$name=NULL) {
@@ -1542,97 +1575,97 @@ function get_authors() {
 }
 
 function clean_text($text) {
- $search = array(
- '&',
- '<',
- '>',
- '"',
- chr(212),
- chr(213),
- chr(210),
- chr(211),
- chr(209),
- chr(208),
- chr(201),
- chr(145),
- chr(146),
- chr(147),
- chr(148),
- chr(151),
- chr(150),
- chr(133)
- );
- $replace = array(
- '&amp;',
- '&lt;',
- '&gt;',
- '&quot;',
- '&8216;',
- '&8217;',
- '&8220;',
- '&8221;',
- '&8211;',
- '&8212;',
- '&8230;',
- '&8216;',
- '&8217;',
- '&8220;',
- '&8221;',
- '&8211;',
- '&8212;',
- '&8230;'
- );
- return str_replace($search,$replace,$text);
+    $search = array(
+        '&',
+        '<',
+        '>',
+        '"',
+        chr(212),
+        chr(213),
+        chr(210),
+        chr(211),
+        chr(209),
+        chr(208),
+        chr(201),
+        chr(145),
+        chr(146),
+        chr(147),
+        chr(148),
+        chr(151),
+        chr(150),
+        chr(133)
+    );
+    $replace = array(
+        '&amp;',
+        '&lt;',
+        '&gt;',
+        '&quot;',
+        '&8216;',
+        '&8217;',
+        '&8220;',
+        '&8221;',
+        '&8211;',
+        '&8212;',
+        '&8230;',
+        '&8216;',
+        '&8217;',
+        '&8220;',
+        '&8221;',
+        '&8211;',
+        '&8212;',
+        '&8230;'
+    );
+    return str_replace($search,$replace,$text);
 }
 
 function unclean_text($text) {
- $replace = array(
- '&',
- '<',
- '>',
- '"',
- chr(212),
- "'",
- "'",
- "'",
- //chr(210),
- //chr(211),
- chr(209),
- '-',
- chr(201),
- chr(145),
- chr(146),
- chr(147),
- chr(148),
- chr(151),
- chr(150),
- chr(133),
- "'",
- "'"
- );
- $search = array(
- '&amp;',
- '&lt;',
- '&gt;',
- '&quot;',
- '&8216;',
- '&8217;',
- '&8220;',
- '&8221;',
- '&8211;',
- '&8212;',
- '&8230;',
- '&8216;',
- '&8217;',
- '&8220;',
- '&8221;',
- '&8211;',
- '&8212;',
- '&8230;',
- '&rsquo;',
- '&lsquo;'
- );
- return str_replace($search,$replace,$text);
+    $replace = array(
+        '&',
+        '<',
+        '>',
+        '"',
+        chr(212),
+        "'",
+        "'",
+        "'",
+        //chr(210),
+        //chr(211),
+        chr(209),
+        '-',
+        chr(201),
+        chr(145),
+        chr(146),
+        chr(147),
+        chr(148),
+        chr(151),
+        chr(150),
+        chr(133),
+        "'",
+        "'"
+    );
+    $search = array(
+        '&amp;',
+        '&lt;',
+        '&gt;',
+        '&quot;',
+        '&8216;',
+        '&8217;',
+        '&8220;',
+        '&8221;',
+        '&8211;',
+        '&8212;',
+        '&8230;',
+        '&8216;',
+        '&8217;',
+        '&8220;',
+        '&8221;',
+        '&8211;',
+        '&8212;',
+        '&8230;',
+        '&rsquo;',
+        '&lsquo;'
+    );
+    return str_replace($search,$replace,$text);
 }
 
 function article_delete($id) {
@@ -2232,50 +2265,48 @@ function shortcodes ($input) {
 }
 
 function sbfeedback () {
+    if(ldap_get_name($_POST['username'])) {
+        $vname = ldap_get_name($_POST['username']);
+        // multiple recipients
+        $to  = 'felix@imperial.ac.uk';
 
-        if(ldap_get_name($_POST['username'])) {
-            $vname = ldap_get_name($_POST['username']);
-            // multiple recipients
-            $to  = 'felix@imperial.ac.uk';
+        // subject
+        $subject = '[summerball] '.$vname.' left some feedback';
 
-            // subject
-            $subject = '[summerball] '.$vname.' left some feedback';
+        // message
+        $message = '
+          <p><b>'.$vname.' ('.$_POST['username'].') has left some feedback on the summer ball</b></p>
+          <p><b>Did you go to the summer ball:</b> '.$_POST['didyou'].
+          '<p><b>Comment:</b></p>
+          <p>'.$_POST['comment'].'</p>
+          <p><b>Keep my name anonymous: </b>
+        ';
 
-            // message
-            $message = '
-              <p><b>'.$vname.' ('.$_POST['username'].') has left some feedback on the summer ball</b></p>
-              <p><b>Did you go to the summer ball:</b> '.$_POST['didyou'].
-              '<p><b>Comment:</b></p>
-              <p>'.$_POST['comment'].'</p>
-              <p><b>Keep my name anonymous: </b>
-            ';
-
-            if($_POST['anon'] == 'on') {
-                $message .= 'Yes';
-            } else {
-                $message .= 'No';
-            }
-
-            $message .= '</p><p>xxx<p>';
-
-            // To send HTML mail, the Content-type header must be set
-            $headers  = 'MIME-Version: 1.0' . "\r\n";
-            $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-
-            // Additional headers
-            $headers .= "From: ".EMAIL_FROM_ADDR."\r\n" .
-            'Reply-To: '.EMAIL_REPLYTO_ADDR."\r\n" .
-            'X-Mailer: PHP/' . phpversion();
-
-            // Mail it
-            mail($to, $subject, $message, $headers);
-
-            header("Location: ".STANDARD_URL."summerball/?success=true"); /* Redirect browser */
-            /* Make sure that code below does not get executed when we redirect. */
-            exit;
+        if($_POST['anon'] == 'on') {
+            $message .= 'Yes';
         } else {
-
-            return false;
+            $message .= 'No';
         }
+
+        $message .= '</p><p>xxx<p>';
+
+        // To send HTML mail, the Content-type header must be set
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+        // Additional headers
+        $headers .= "From: ".EMAIL_FROM_ADDR."\r\n" .
+        'Reply-To: '.EMAIL_REPLYTO_ADDR."\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+
+        // Mail it
+        mail($to, $subject, $message, $headers);
+
+        header("Location: ".STANDARD_URL."summerball/?success=true"); /* Redirect browser */
+        /* Make sure that code below does not get executed when we redirect. */
+        exit;
+    } else {
+        return false;
+    }
 }
 ?>
