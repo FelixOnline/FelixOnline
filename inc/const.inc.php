@@ -6,6 +6,10 @@
      */
 
 	/* SYSTEM */
+    if(!defined('STANDARD_URL'))                    define('STANDARD_URL','http://felixonline.co.uk/'); // standard site url
+    if(!defined('BASE_URL'))                        define('BASE_URL','http://felixonline.co.uk/'); // site url [TODO: merge with STANDARD_URL]
+    if(!defined('ADMIN_URL'))                       define('ADMIN_URL','http://felixonline.co.uk/engine/'); // url of engine page
+    if(!defined('PRODUCTION_FLAG'))                 define('PRODUCTION_FLAG', true); // if set to true css and js will be minified etc.. [TODO]
 	if(!defined('SESSION_LENGTH'))                  define('SESSION_LENGTH',7200); // session length
 	if(!defined('AUTHENTICATION_SERVER'))           define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk'); // authentication server
 	if(!defined('AUTHENTICATION_PATH'))             define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/'); // authentication path
@@ -23,19 +27,19 @@
 	if(!defined('ROTATOR_MAX_CHARS'))               define('ROTATOR_MAX_CHARS',50); // [depreciated]
 	if(!defined('EXTRANEWS_COLS'))                  define('EXTRANEWS_COLS',16); // do not exceed columns in top_extrapage_cat [depreciated]
 	if(!defined('ONLINE_USERS_INTERVAL'))           define('ONLINE_USERS_INTERVAL','60 MINUTE'); // [depreciated]
-	if(!defined('ARTICLES_PER_CAT_PAGE'))           define('ARTICLES_PER_CAT_PAGE',8);
-	if(!defined('ARTICLES_PER_SECOND_CAT_PAGE'))    define('ARTICLES_PER_SECOND_CAT_PAGE',10);
-	if(!defined('ARTICLES_PER_USER_PAGE'))          define('ARTICLES_PER_USER_PAGE',8);
-	if(!defined('ARTICLES_PER_SECOND_USER_PAGE'))   define('ARTICLES_PER_SECOND_USER_PAGE',10);
-	if(!defined('NUMBER_OF_PAGES_IN_PAGE_LIST'))    define('NUMBER_OF_PAGES_IN_PAGE_LIST',14);
-	if(!defined('NUMBER_OF_POPULAR_ARTICLES_USER')) define('NUMBER_OF_POPULAR_ARTICLES_USER',5);
-	if(!defined('NUMBER_OF_POPULAR_COMMENTS_USER')) define('NUMBER_OF_POPULAR_COMMENTS_USER',5);
+	if(!defined('ARTICLES_PER_CAT_PAGE'))           define('ARTICLES_PER_CAT_PAGE',8); // number of articles on the first category page
+	if(!defined('ARTICLES_PER_SECOND_CAT_PAGE'))    define('ARTICLES_PER_SECOND_CAT_PAGE',10); // number of articles on the second category page
+	if(!defined('ARTICLES_PER_USER_PAGE'))          define('ARTICLES_PER_USER_PAGE',8); // number of articles on user page
+	if(!defined('ARTICLES_PER_SECOND_USER_PAGE'))   define('ARTICLES_PER_SECOND_USER_PAGE',10); // number of articles on the second user page
+	if(!defined('NUMBER_OF_PAGES_IN_PAGE_LIST'))    define('NUMBER_OF_PAGES_IN_PAGE_LIST',14); // [TODO]
+	if(!defined('NUMBER_OF_POPULAR_ARTICLES_USER')) define('NUMBER_OF_POPULAR_ARTICLES_USER',5); // max number of popular articles on user page
+	if(!defined('NUMBER_OF_POPULAR_COMMENTS_USER')) define('NUMBER_OF_POPULAR_COMMENTS_USER',5); // max number of popular comments on user page
     if(!defined('IMAGE_URL'))                       define('IMAGE_URL', 'http://img.felixonline.co.uk/'); // image url 
 
 	/* Media Page */
-	define('NUMBER_OF_ALBUMS_FRONT_PAGE',4);
-	define('NUMBER_OF_ALBUMS_PER_FULL_PAGE',12);
-	define('IMAGE_BASE_URL', '/home/www/htdocs/media/felix/gallery/gallery_images/images/');
+	if(!defined('NUMBER_OF_ALBUMS_FRONT_PAGE'))     define('NUMBER_OF_ALBUMS_FRONT_PAGE',4); // number of media items on front page
+	if(!defined('NUMBER_OF_ALBUMS_FRONT_PAGE'))     define('NUMBER_OF_ALBUMS_PER_FULL_PAGE',12); // number of media items on a full page
+	if(!defined('NUMBER_OF_ALBUMS_FRONT_PAGE'))     define('IMAGE_BASE_URL', '/home/www/htdocs/media/felix/gallery/gallery_images/images/'); // base image url [depreciated]
 
 	/* RSS */
 	define('RSS_IMG',(STANDARD_URL.DEFAULT_IMG_URI));
