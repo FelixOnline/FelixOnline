@@ -1,30 +1,36 @@
 <?php
+    /*
+     * Site constants
+     * 
+     * To change constants define them in config.inc.php
+     */
+
 	/* SYSTEM */
-	define('SESSION_LENGTH',7200);
-	define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk');
-	define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/');
-	define('ROOT_USERS','felix,cjb07,rsp07,jk708'); // separate with commas, no spaces
-	define('DEFAULT_IMG_URI','img/felix_400x400.jpg');
-	define('DEFAULT_ARTICLE_IMG_ID',183);
-	define('ARTICLE_URL_ID_PREFIX',(STANDARD_URL.'?article='));
-	define('TICKER_ARTICLES',10);
-	define('MOST_POPULAR_INTERVAL',7); // commented - look at comments over previous ... days
-	define('MOST_VIEWED_SEARCHBACK',500); // viewed
-	define('POPULAR_ARTICLES',5); // used for commented and viewed
-	define('MOST_COMMENTED_HEADING',"Most commented stories");
-	define('MOST_VIEWED_HEADING',"Most viewed stories");
-	define('FRONTPAGE_EXTRA_STORIES',2);
-	define('ROTATOR_MAX_CHARS',50);
-	define('EXTRANEWS_COLS',16); // do not exceed columns in top_extrapage_cat
-	define('ONLINE_USERS_INTERVAL','60 MINUTE');
-	define('ARTICLES_PER_CAT_PAGE',8);
-	define('ARTICLES_PER_SECOND_CAT_PAGE',10);
-	define('ARTICLES_PER_USER_PAGE',8);
-	define('ARTICLES_PER_SECOND_USER_PAGE',10);
-	define('NUMBER_OF_PAGES_IN_PAGE_LIST',14);
-	define('NUMBER_OF_POPULAR_ARTICLES_USER',5);
-	define('NUMBER_OF_POPULAR_COMMENTS_USER',5);
-    define('IMAGE_URL', 'http://img.felixonline.co.uk/');
+	if(!defined('SESSION_LENGTH'))                  define('SESSION_LENGTH',7200); // session length
+	if(!defined('AUTHENTICATION_SERVER'))           define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk'); // authentication server
+	if(!defined('AUTHENTICATION_PATH'))             define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/'); // authentication path
+	if(!defined('ROOT_USERS'))                      define('ROOT_USERS','felix,cjb07,rsp07,jk708'); // separate with commas, no spaces
+	if(!defined('DEFAULT_IMG_URI'))                 define('DEFAULT_IMG_URI','img/felix_400x400.jpg'); // default image [TODO]
+	if(!defined('DEFAULT_ARTICLE_IMG_ID'))          define('DEFAULT_ARTICLE_IMG_ID',183); // default image id [depreciated]
+	if(!defined('ARTICLE_URL_ID_PREFIX'))           define('ARTICLE_URL_ID_PREFIX',(STANDARD_URL.'?article=')); // article url prefix [depreciated]
+	if(!defined('TICKER_ARTICLES'))                 define('TICKER_ARTICLES',10); // number of articles in ticker [depreciated]
+	if(!defined('MOST_POPULAR_INTERVAL'))           define('MOST_POPULAR_INTERVAL',7); // commented - look at comments over previous ... days
+	if(!defined('MOST_VIEWED_SEARCHBACK'))          define('MOST_VIEWED_SEARCHBACK',500); // viewed [TODO]
+	if(!defined('POPULAR_ARTICLES'))                define('POPULAR_ARTICLES',5); // used for commented and viewed
+	if(!defined('MOST_COMMENTED_HEADING'))          define('MOST_COMMENTED_HEADING',"Most commented stories"); // heading for most commented [depreciated]
+	if(!defined('MOST_VIEWED_HEADING'))             define('MOST_VIEWED_HEADING',"Most viewed stories"); // heading for most viewed [depreciated]
+	if(!defined('FRONTPAGE_EXTRA_STORIES'))         define('FRONTPAGE_EXTRA_STORIES',2); // number of extra frontpage stories [depreciated]
+	if(!defined('ROTATOR_MAX_CHARS'))               define('ROTATOR_MAX_CHARS',50); // [depreciated]
+	if(!defined('EXTRANEWS_COLS'))                  define('EXTRANEWS_COLS',16); // do not exceed columns in top_extrapage_cat [depreciated]
+	if(!defined('ONLINE_USERS_INTERVAL'))           define('ONLINE_USERS_INTERVAL','60 MINUTE'); // [depreciated]
+	if(!defined('ARTICLES_PER_CAT_PAGE'))           define('ARTICLES_PER_CAT_PAGE',8);
+	if(!defined('ARTICLES_PER_SECOND_CAT_PAGE'))    define('ARTICLES_PER_SECOND_CAT_PAGE',10);
+	if(!defined('ARTICLES_PER_USER_PAGE'))          define('ARTICLES_PER_USER_PAGE',8);
+	if(!defined('ARTICLES_PER_SECOND_USER_PAGE'))   define('ARTICLES_PER_SECOND_USER_PAGE',10);
+	if(!defined('NUMBER_OF_PAGES_IN_PAGE_LIST'))    define('NUMBER_OF_PAGES_IN_PAGE_LIST',14);
+	if(!defined('NUMBER_OF_POPULAR_ARTICLES_USER')) define('NUMBER_OF_POPULAR_ARTICLES_USER',5);
+	if(!defined('NUMBER_OF_POPULAR_COMMENTS_USER')) define('NUMBER_OF_POPULAR_COMMENTS_USER',5);
+    if(!defined('IMAGE_URL'))                       define('IMAGE_URL', 'http://img.felixonline.co.uk/'); // image url 
 
 	/* Media Page */
 	define('NUMBER_OF_ALBUMS_FRONT_PAGE',4);
