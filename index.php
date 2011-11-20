@@ -1,5 +1,5 @@
 <?php
-    require_once('mobiledetect.php');
+    //require_once('mobiledetect.php');
     require_once('inc/common.inc.php');
     require_once('inc/authentication.php');
 ?>

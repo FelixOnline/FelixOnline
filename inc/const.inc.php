@@ -2,8 +2,8 @@
 	/* SYSTEM */
 	define('SESSION_LENGTH',7200);
 	define('COOKIE_LENGTH', 2592000); // cookie length (30 days) (60*60*24*30)
-	define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk');
-	define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/');
+	if(!defined('AUTHENTICATION_SERVER')) define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk');
+	if(!defined('AUTHENTICATION_PATH')) define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/');
 	define('ROOT_USERS','felix,cjb07,rsp07,jk708'); // separate with commas, no spaces
 	define('DEFAULT_IMG_URI','img/felix_400x400.jpg');
 	define('DEFAULT_ARTICLE_IMG_ID',183);
