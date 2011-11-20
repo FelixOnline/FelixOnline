@@ -442,15 +442,19 @@ function get_vname_by_uname_ldap($uname) {
 }
 
 function get_user_info_by_uname_ldap($uname) {
-    $ds=ldap_connect("addressbook.ic.ac.uk");
-    $r=ldap_bind($ds);
-    $justthese = array("o");
-    $sr=ldap_search($ds, "ou=People, ou=shibboleth, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
-    $info = ldap_get_entries($ds, $sr);
-    if ($info["count"] > 0)
-        return $info[0]['o'][0];
-    else
-        return false;
+    if(!LOCAL) { // if on union server
+        $ds=ldap_connect("addressbook.ic.ac.uk");
+        $r=ldap_bind($ds);
+        $justthese = array("o");
+        $sr=ldap_search($ds, "ou=People, ou=shibboleth, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
+        $info = ldap_get_entries($ds, $sr);
+        if ($info["count"] > 0)
+            return $info[0]['o'][0];
+        else
+            return false;
+    } else {
+        return $uname;
+    }
 }
 
 function get_vname_by_uname_db($uname) {

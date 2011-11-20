@@ -18,12 +18,12 @@
 <?php include('header.php'); ?>
 
 <?php if ($_GET['media']) {
-        include_once('media.php');
-        } else if ($_GET['issuearchive']) {
-            include_once('archive.php');
-        } else if ($_GET['publications']) {
-            include_once('publications.php');
-        } else {
+    include_once('media.php');
+    } else if ($_GET['issuearchive']) {
+        include_once('archive.php');
+    } else if ($_GET['publications']) {
+        include_once('publications.php');
+    } else {
 ?>
 
 <?php include('navigation.php'); ?>
@@ -39,7 +39,7 @@
             include_once('section.php');
             break;
         case "id":
-            include_once('user.php');
+            include_once('users.php');
             break;
         case "media":
             include_once('media.php');
@@ -63,7 +63,6 @@
             include_once('404.php');
             break;
     }
-
 ?>
 
 <?php } // end of media page statement?>
