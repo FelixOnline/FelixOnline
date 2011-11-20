@@ -16,25 +16,24 @@
     $errorinsert = false; // error on insert flag
     $errorduplicate = false; // error on duplicate flag
 
-    // user comment
+    /* User comment */
     if ($_POST['articlecomment']) {
         $comment = mysql_real_escape_string(get_correct_utf8_mysql_string($_POST['comment'])); // get comment
         $replyName = mysql_real_escape_string($_POST['replyName']); // get name of comment that the comment is replying to
         $replyComment = mysql_real_escape_string($_POST['replyComment']); // get comment id of comment that the comment is replying to
         $uname = is_logged_in(); // get current user
-
         if (!comment_exists($article,$uname,$comment)) { // if comment doesn't exist
             if ($id = insert_comment($article,$uname,$comment,$replyName,$replyComment)) { // insert comment into database
-                // redirect to comment
                 header('Location: '.full_article_url($article).'#comment'.$id); // redirect user to article page with comment anchor tag
             } else { // if insertion fails (lol)
                 $errorinsert = true;
             }
-        } else // if comment exists
+        } else { // if comment exists
             $errorduplicate = true;
+        }
     }
 
-    // external comment
+    /* External comment */
     else if ($_POST['articlecomment_ext']) {
         $comment = mysql_real_escape_string(get_correct_utf8_mysql_string($_POST['comment'])); // get comment
         $name = mysql_real_escape_string(get_correct_utf8_mysql_string($_POST['name'])); // get name of commenter

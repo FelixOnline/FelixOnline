@@ -693,11 +693,22 @@ function insert_comment($article,$user,$comment,$replyName,$replyCommentID) {
     return $commentid; // return comment id
 }
 
-function email_article_comment($article_id,$user,$comment,$commentid,$name=NULL) {
+/*
+ * Email authors of article new comment
+ *
+ * $article         - id of article that the comment relates to
+ * $user            - username of commenter
+ * $comment         - text of comment submitted
+ * $commentid       - id of comment
+ * $name            - name of commenter [defaults to NULL if none provided]
+ *
+ * Returns true...always [TODO]
+ */
+function email_article_comment($article,$user,$comment,$commentid,$name=NULL) {
     global $cid;
 
     // Get authors email address and names
-    $authors = get_article_authors_uname($article_id);
+    $authors = get_article_authors_uname($article);
     $to = array();
     foreach($authors as $author) {
         $to['vname'][] = get_vname_by_uname_db($author);
@@ -721,14 +732,14 @@ function email_article_comment($article_id,$user,$comment,$commentid,$name=NULL)
         $subject .= 'Someone';
     }
 
-    $body .= ' has posted a comment on "<a href="'.BASE_URL.article_url($article_id).'#'.$commentid.'/">'.get_article_title($article_id).'</a>" <br/><br/>';
+    $body .= ' has posted a comment on "<a href="'.BASE_URL.article_url($article).'#'.$commentid.'/">'.get_article_title($article_id).'</a>" <br/><br/>';
     $body .= '"'.stripslashes(str_replace('\r\n',"\n",str_replace(array('\\\\\\','&lt;','&gt;','\\&quot;','&amp;','Â'),array('','<','>','"','&',''),$comment))).'"'."<br/><br/>";
-    $body .= "<a href='".BASE_URL.article_url($article_id).'#'.$commentid."'>View Comment</a><br/><br/>";
+    $body .= "<a href='".BASE_URL.article_url($article).'#'.$commentid."'>View Comment</a><br/><br/>";
     //$body .= "<a href='".BASE_URL."engine/?page=comment&action=trash&c=".$commentid."'>Trash comment</a><br/><br/>";
     $body .= "Lots of love,<br/>";
     $body .= "Felix<br/>";
 
-    $subject .= ' has commented on '.get_article_title($article_id);
+    $subject .= ' has commented on '.get_article_title($article);
 
     // To send HTML mail, the Content-type header must be set
     $headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -753,7 +764,6 @@ function email_comment_reply($article_id,$user,$comment,$commentid,$name=NULL,$r
     $result = mysql_query($sql,$cid);
 
     if(mysql_num_rows($result)) { // if replied to comment was done by user then send email to user
-
         $orig_user= mysql_result($result,0);
         $to = get_user_email_full($orig_user);
 
