@@ -23,7 +23,7 @@
         $replyComment = mysql_real_escape_string($_POST['replyComment']); // get comment id of comment that the comment is replying to
         $uname = is_logged_in(); // get current user
 
-        if (!check_comment_exists($article,$uname,$comment)) { // if comment doesn't exist
+        if (!comment_exists($article,$uname,$comment)) { // if comment doesn't exist
             if ($id = insert_comment($article,$uname,$comment,$replyName,$replyComment)) { // insert comment into database
                 // redirect to comment
                 header('Location: '.full_article_url($article).'#comment'.$id); // redirect user to article page with comment anchor tag

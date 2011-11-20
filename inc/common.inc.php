@@ -645,35 +645,52 @@ function update_login_name($user,$name) {
     return($user && $name && mysql_query($sql,$cid));
 }
 
-function check_comment_exists($article,$user,$comment) {
+/*
+ * Comments
+ */
+
+/*
+ * Check if comment exists in database
+ *
+ * $article - id of article that comment relates to
+ * $user    - username of commenter 
+ * $comment - text of comment submitted
+ *
+ * Returns the number of rows that the query will return
+ *  i.e. 0 for none found. >0 if found
+ *
+ * TODO
+ *  - Make similar check of external comments
+ */
+function comment_exists($article,$user,$comment) {
     global $cid;
     $sql = "SELECT id FROM `comment` WHERE article=$article AND user='$user' AND comment='$comment' AND `active`=1";
     return (mysql_num_rows(mysql_query($sql,$cid)));
 }
 
-function insert_comment($article,$user,$comment,$replyName,$replyComment) {
+/*
+ * Insert comment into database (Imperial user)
+ *
+ * $article         - id of article that the comment relates to
+ * $user            - username of commenter
+ * $comment         - text of comment submitted
+ * $replyName       - commenter's name of comment that this comment is replying to
+ * $replyCommentID    - id of comment that this comment is replying to
+ *
+ * Returns id of inserted comment
+ */
+function insert_comment($article,$user,$comment,$replyName,$replyCommentID) {
     global $cid;
 
-    if($replyComment) { // if reply url (comment replying to was made by a user) then email that user
-        // insert into comment database
-        $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('$article','$user','$comment','$replyComment')";
-        // email user
-    } else {
-        $sql = "INSERT INTO `comment` (article,user,comment) VALUES ('$article','$user','$comment')";
-    }
+    $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('$article','$user','$comment','$replyCommentID')"; // insert comment comment into database
+    mysql_query($sql,$cid) or die(mysql_error()); // execute mysql query
+    $commentid = mysql_insert_id(); // get id of inserted comment
 
-    mysql_query($sql,$cid) or die(mysql_error());
-    $id = mysql_insert_id();
+    if($replyCommentID) // if comment is replying to a comment 
+        email_comment_reply($article,$user,$comment,$commentid,$name,$replyCommentID); // email the user of that comment
 
-    $commentid = mysql_insert_id();
-    if($replyComment)
-        email_comment_reply($article,$user,$comment,$commentid,$name,$replyComment);
-
-    if(email_article_comment($article,$user,$comment,$commentid)) {
-        return $id;
-    } else {
-        return false;
-    }
+    email_article_comment($article,$user,$comment,$commentid); // email comment to authors of article
+    return $commentid; // return comment id
 }
 
 function email_article_comment($article_id,$user,$comment,$commentid,$name=NULL) {
@@ -779,7 +796,6 @@ function email_comment_reply($article_id,$user,$comment,$commentid,$name=NULL,$r
         return true;
     } else
         return false;
-
 }
 
 function insert_comment_ext($article,$name,$comment,$replyName,$replyComment) {
@@ -976,6 +992,9 @@ function get_comment_author($id, $user) {
     return $output;
 }
 
+/*
+ * 
+ */
 function hit_article($id) {
     global $cid;
     $sql = "UPDATE `article` SET hits=hits+1 WHERE id=$id";
