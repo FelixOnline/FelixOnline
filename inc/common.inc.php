@@ -684,7 +684,7 @@ function email_article_comment($article_id,$user,$comment,$commentid,$name=NULL)
     $to = array();
     foreach($authors as $author) {
         $to['vname'][] = get_vname_by_uname_db($author);
-        if(!($email = get_user_email($author))) {
+        if(!($email = get_user_email($author)) && !LOCAL) {
             $email = ldap_get_mail($author);
         }
         $to['email'][] = $email;
