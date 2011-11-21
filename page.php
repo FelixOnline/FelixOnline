@@ -345,7 +345,7 @@
 
 			<!-- Comments -->
 			<?php
-
+                // TODO
 				$sql = "SELECT * FROM (".
 					" SELECT comment.id,comment.user,name,comment,UNIX_TIMESTAMP(comment.timestamp) AS timestamp FROM `comment` LEFT JOIN `user` ON (comment.user=user.user) WHERE article=$article AND active=1".
 					" UNION SELECT comment_ext.id,'extuser0',comment_ext.name,comment_ext.comment,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP != '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=0".
@@ -361,9 +361,9 @@
 
 				<!-- Comment container -->
 				<div id="commentCont">
-					<?php
+				<?php
 					while ($row = mysql_fetch_array($result)) {
-					?>
+				?>
 					<div class="singleComment" id="comment<?php echo $row['id'];?>">
 						<div class="comment">
 							<div class="commentInfo">
