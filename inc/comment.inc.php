@@ -2,7 +2,21 @@
 
 /*
  * Comment class
- *  Deals with comment submission
+ * Deals with both comment retrieval and comment submission
+ *
+ * Examples
+ *      // Get comment
+ *      $comment = new Comment();
+ *      $comment->init(300,false);
+ *      echo $comment->getContent(); 
+ *
+ *      // Submit comment
+ *      $comment = new Comment();
+ *      $comment->setExternal(false);
+ *      $comment->setArticle(100);
+ *      $comment->setContent('Hello world');
+ *      $comment->setAuthor('jk708');
+ *      if($comment->insert()) echo 'Success!';
  */
 class Comment {
 	private $id; // id of comment
@@ -90,41 +104,33 @@ class Comment {
         }
     }
 
-	public function print_this() {
-		print_r($this);
-	}
-
     /*
      * Getter functions
      */
-    public function getID() {
-        return $this->id;
-    }
-    public function getArticle() {
-        return $this->article;
-    }
-    public function getContent() {
-        return html_entity_decode(nl2br($this->content));
-    }
-    public function getAuthor() {
-        return $this->author;
-    }
+    public function getID()         { return $this->id; }
+    public function getArticle()    { return $this->article; }
+    public function getContent()    { return html_entity_decode(nl2br($this->content)); }
+    public function getAuthor()     { return $this->author; }
 
     /*
      * Setter functions
      */
 
     /*
-     * Set object ID
+     * Private: Set object ID
      *
      * $id - id of comment
      *
      * Returns comment object
      */
-    public function setId($id) {
+    private function setId($id) {
         $this->id = $id;
         return $this;
     }
+
+	public function print_this() {
+		print_r($this);
+	}
 }
 
 ?>
