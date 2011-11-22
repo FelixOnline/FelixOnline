@@ -26,11 +26,11 @@ class Comment {
 	private $extAuthor; // name of author of comment [external]
     private $reply; // id of comment that this comment is replying to
     private $external; // if comment is external or not
-    private $time;
-    private $active;
-    private $ip;
-    private $pending;
-    private $spam;
+    private $time; // unix timestamp of comment submission time
+    private $active; // whether comment is active
+    private $ip; // ip of commenter [external]
+    private $pending; // if comment is pending [external]
+    private $spam; // if comment is spam [external]
 	
     /*
      * Constructor for Comment class
@@ -43,7 +43,7 @@ class Comment {
      * Public: Initialise object with comment id. Only used when dealing with an existing comment.
      *
      * $id          - ID of comment
-     * $external    - Boolean on whether comment is external or not
+     * $external    - Boolean on whether comment is external or not. True if it is an external comment, false if not
      *
      * Returns comment object
      */
@@ -83,6 +83,19 @@ class Comment {
             } else {
                 return false;
             }
+        }
+    }
+
+    /*
+     * Public: Check if comment is from author of article
+     *
+     * Returns true if is author. False if not.
+     */
+    public function ifByAuthor() {
+        if(in_array($this->intAuthor, get_article_authors_uname($this->article)) ) {
+            return true;
+        } else {
+            return false;
         }
     }
 	
