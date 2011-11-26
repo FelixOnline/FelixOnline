@@ -62,6 +62,9 @@
 	define('MIN_ARTICLE_SECT_LENGTH',4); //
 	define('MAX_ARTICLE_SECT_LENGTH',100000); //
 
+    /* COMMENTS */
+    if(!defined('EXTERNAL_COMMENT_ID'))         define('EXTERNAL_COMMENT_ID', 80000000); // external comment id start
+
 	/* IMAGE */
 	define('IMG_QUALITY_PERCENT',100);
 	define('SIDEBAR_TOP5_WIDTH',140);
