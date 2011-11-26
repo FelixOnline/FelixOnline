@@ -367,65 +367,15 @@
 				<!-- Comment container -->
 				<div id="commentCont">
 				<?php
+                    require_once('core/comment.inc.php');
 					while ($row = mysql_fetch_array($result)) {
-				?>
-					<div class="singleComment" id="comment<?php echo $row['id'];?>">
-						<div class="comment">
-							<div class="commentInfo">
-								<p id="commentUser">
-								<?php
-									if ($commenter = $row['name']) {  // Check if commenter has a name
-										if ($row['user'] == 'extuser0' || $row['user'] == 'extuser1' || $row['user'] == 'extuser2') { // If commenter has name but is not registered then just output commenter name
-											echo $commenter;
-										} else { // If commenter has name and is registered then provide link to user?>
-											<a href="user/<?php echo $row['user'];?>/"><?php echo $commenter; ?></a>
-											<?php if(in_array($row['user'], get_article_authors_uname($article))) echo '<span>(Author)</span>'; ?>
-								<?php 	}
-									} else { // If commenter has no name then just state anonymous
-										echo 'Anonymous';
-									} ?>
-								</p>
-								<span id="commentDate"><?php echo date('l F d Y H:i',$row['timestamp']); //22 September 2010 14:28:49?></span>
-							</div>
-							<p>
-								<?php if($reply = comment_is_reply($row['id'], $row['user'])) { ?><a href="<?php echo curPageURLNonSecure().'#comment'.$reply; ?>" id="replyLink">@<?php echo get_comment_author($reply, $row['user']);?></a>: <?php } ?>
-								<?php echo html_entity_decode(nl2br($row['comment'])); ?>
-							</p>
-						</div>
-						<div class="commentAction" id="<?php echo $row['id'];?>">
-							<ul>
-								<li><?php
-									if (!is_logged_in()) {?>
-										<a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" class="likeComment">Like</a>
-									<?php } else {
-										if (user_like_comment($row['id'], is_logged_in())) echo 'Liked'; // if user has already liked or disliked comment then remove link
-										else {?>
-											<a href="<?php echo curPageURLNonSecure();?>#" id="like">Like</a>
-									<?php } } ?>
-									<span id="likecounter">(<?php echo get_likes($row['id']);?>)</span>
-								</li>
-									<li><?php if (!is_logged_in()) { ?>
-										<a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" class="dislikeComment">Dislike</a>
-									<?php } else {
-										if (user_like_comment($row['id'], is_logged_in())) echo 'Disliked';
-										else {?>
-										<a href="<?php echo curPageURLNonSecure();?>#" id="dislike">Dislike</a>
-									<?php } }?>
-									<span id="dislikecounter">(<?php echo get_dislikes($row['id']);?>)</span>
-								</li>
-								<li><a href="<?php echo curPageURLNonSecure().'#comment'.$row['id'];?>" id="commentLink">Link</a></li>
-								<li class="last"><a href="<?php echo curPageURLNonSecure().'#comment'.$row['id']; ?>" id="<?php echo $row['id'];?>" class="replyToComment">Reply to</a></li>
-							</ul>
-						</div>
-						<div class="clear"></div>
-					</div>
-
-					<?php } ?>
+                        $comment = new Comment($row['id']);
+                        include('views/comment.php');
+					} ?>
 				</div>
 
 				<!-- Comment form -->
 				<div id="commentForm">
-
 					<script type="text/javascript">
 						var RecaptchaOptions = {
 							theme : 'clean'

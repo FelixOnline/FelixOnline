@@ -18,7 +18,6 @@
                     </a>
             <?php 
                 } 
-
                 if($comment->byAuthor()) {
                     echo '<span>(Author)</span>'; 
                 }
@@ -31,7 +30,7 @@
                 // Add link to reply comment
                 if($reply = $comment->getReply()) { ?>
                     <a href="<?php echo curPageURLNonSecure().'#comment'.$reply->getID(); ?>" id="replyLink">
-                        @<?php echo $comment->getName();?>
+                        @<?php echo $reply->getName();?>
                     </a>: 
                 <?php } ?>
             <?php 
@@ -52,8 +51,8 @@
                 <?php } } ?>
                 <span id="likecounter">(<?php echo get_likes($comment->getID());?>)</span>
             </li>
-                <li><?php if (!is_logged_in()) { ?>
-                    <a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" class="dislikeComment">Dislike</a>
+            <li><?php if (!is_logged_in()) { ?>
+                <a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" class="dislikeComment">Dislike</a>
                 <?php } else {
                     if (user_like_comment($comment->getID(), is_logged_in())) echo 'Disliked';
                     else {?>

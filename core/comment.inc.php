@@ -26,11 +26,12 @@ class Comment {
 	private $extAuthor; // name of author of comment [external]
     private $reply; // id of comment that this comment is replying to [TODO] be comment object
     private $external; // if comment is external or not
-    private $time; // unix timestamp of comment submission time
+    private $timestamp; // unix timestamp of comment submission time
     private $active; // whether comment is active
     private $ip; // ip of commenter [external]
     private $pending; // if comment is pending [external]
     private $spam; // if comment is spam [external]
+    public $query; 
 	
     /*
      * Constructor for Comment class
@@ -50,14 +51,14 @@ class Comment {
             } else {
                 $this->external = false;
             }
-            if(!$external) { // if comment is internal
+            if(!$this->external) { // if comment is internal
                 $sql = "SELECT `article`,`user`,`comment`,UNIX_TIMESTAMP(`timestamp`),`active`,`reply` FROM `comment` WHERE id=$id";
                 if($rsc = $this->dbquery($sql)) {
                     list(
                         $this->article,
                         $this->user,
                         $this->content,
-                        $this->time,
+                        $this->timestamp,
                         $this->active,
                         $this->reply,
                     ) = mysql_fetch_array($rsc);
@@ -76,7 +77,7 @@ class Comment {
                         $this->article,
                         $this->name,
                         $this->content,
-                        $this->time,
+                        $this->timestamp,
                         $this->active,
                         $this->ip,
                         $this->pending,
@@ -143,8 +144,11 @@ class Comment {
      */
     public function getID()         { return $this->id; }
     public function getArticle()    { return $this->article; }
-    public function getContent()    { return html_entity_decode(nl2br($this->content)); }
+    public function getContent()    { 
+        return html_entity_decode(nl2br(trim($this->content))); 
+    }
     public function getUser()       { return $this->username; }
+    public function getTimestamp()  { return $this->timestamp; }
 
     /*
      * Public: Get commenter's name
