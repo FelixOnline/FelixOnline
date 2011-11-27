@@ -75,6 +75,8 @@
                 if($id = insert_comment_external($article,$name,$comment,$replyName,$replyComment)) {
                     // redirect to comment
                     header('Location: '.full_article_url($article).'#comment'.$id);
+                } else {
+                    header('Location: '.full_article_url($article).'#commentForm');
                 }
             }
         } else {
