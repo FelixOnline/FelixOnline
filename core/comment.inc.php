@@ -31,7 +31,6 @@ class Comment {
     private $ip; // ip of commenter [external]
     private $pending; // if comment is pending [external]
     private $spam; // if comment is spam [external]
-    public $query; 
 	
     /*
      * Constructor for Comment class
@@ -144,11 +143,15 @@ class Comment {
      */
     public function getID()         { return $this->id; }
     public function getArticle()    { return $this->article; }
+    public function getUser()       { return $this->username; }
+    public function getTimestamp()  { return $this->timestamp; }
+
+    /*
+     * Public: Get comment content
+     */
     public function getContent()    { 
         return html_entity_decode(nl2br(trim($this->content))); 
     }
-    public function getUser()       { return $this->username; }
-    public function getTimestamp()  { return $this->timestamp; }
 
     /*
      * Public: Get commenter's name

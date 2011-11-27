@@ -64,6 +64,9 @@
 
     /* COMMENTS */
     if(!defined('EXTERNAL_COMMENT_ID'))         define('EXTERNAL_COMMENT_ID', 80000000); // external comment id start
+    if(!defined('RECAPTCHA_PUBLIC_KEY'))        define('RECAPTCHA_PUBLIC_KEY', "6LdbYL4SAAAAAKufkLBCRiEmbTRawSFaWDDJwQwB");
+    if(!defined('RECAPTCHA_PRIVATE_KEY'))       define('RECAPTCHA_PRIVATE_KEY', "6LdbYL4SAAAAAOAUmQ4QSXUbSYm1LIkgbvqZBWXU");
+    if(!defined('AKISMET_API_KEY'))             define('AKISMET_API_KEY', '4c2ddc0022f0');
 
 	/* IMAGE */
 	define('IMG_QUALITY_PERCENT',100);

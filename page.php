@@ -322,7 +322,9 @@
 
 			<div class="articleShare grid_8">
 				<ul>
-					<li><div id="shareText">Share: </div></li>
+                    <li>
+                        <div id="shareText">Share: </div>
+                    </li>
 					<li>
 						<div id="twitterShare2">
 							<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
@@ -364,65 +366,20 @@
 				<h3>Comments <span>(<?php echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?>)</span></h3>
 				<a href="<?php echo curPageURLNonSecure().'#commentForm';?>" id="postComment">Post a comment</a>
 
-				<!-- Comment container -->
+				<!-- Comments container -->
 				<div id="commentCont">
 				<?php
                     require_once('core/comment.inc.php');
 					while ($row = mysql_fetch_array($result)) {
                         $comment = new Comment($row['id']);
-                        include('views/comment.php');
-					} ?>
+                        include('views/comments/comment.php');
+                    }
+                ?>
 				</div>
+                
+                <!-- Comment form -->
+                <?php include('views/comments/commentForm.php'); ?>
 
-				<!-- Comment form -->
-				<div id="commentForm">
-					<script type="text/javascript">
-						var RecaptchaOptions = {
-							theme : 'clean'
-						};
-					</script>
-					<?php
-
-					// Error diplaying
-					if ($errorinsert)
-						echo '<div class="commenterror">System error - please email <a href="mailto"felix@imperial.ac.uk@>felix@imperial.ac.uk</a>!</div>';
-					if ($errorduplicate)
-						echo '<div class="commenterror">Duplicate comment submitted.</div>';
-
-					if (!$uname) { ?>
-						<h5>Comment anonymously or <a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox">Log in</a></h5>
-					<?php } else { ?>
-						<h5>Leave a comment as <a href="user/<?php echo $uname;?>/" title="Profile Page"><?php echo get_vname();?></a></h5>
-					<?php } ?>
-					<form method="post" action="<?php echo curPageURLNonSecure();?>">
-						<?php if (!$uname) { ?>
-							<label for="name">Name: </label><input name="name" id="name"/>
-							<div class="clear"></div>
-						<?php } else { ?>
-							<input type="hidden" value="<?php echo $uname; ?>"/>
-						<?php } ?>
-						<div id="comentbox">
-							<label for="comment" id="commentLabel">Comment: </label>
-							<div class="clear"></div>
-							<textarea name="comment" id="comment" rows="4" class="required"></textarea>
-							<label for="comment" class="error">Please write a comment</label>
-						</div>
-						<div class="clear"></div>
-						<?php if (!$uname) { ?>
-							<label for="capatca">To prove you are human: </label>
-							<div class="clear"></div>
-							<?php
-							require_once('inc/recaptchalib.php');
-							$publickey = "6LdbYL4SAAAAAKufkLBCRiEmbTRawSFaWDDJwQwB";
-							//$privatekey = "6LdbYL4SAAAAAOAUmQ4QSXUbSYm1LIkgbvqZBWXU";
-							echo recaptcha_get_html($publickey);
-							//A.This div notifies the user whether the Recaptcha was Successful or not
-							echo '<label for="recaptcha_response_field" class="error" id="captchaStatus"></label>';
-							?>
-						<?php } ?>
-						<input type="submit" value="Post your comment" id="submit" name="<?php if($uname) echo 'articlecomment'; else echo 'articlecomment_ext';?>"/>
-					</form>
-				</div>
 			</div>
 			<!-- End of comments -->
 			<div class="clear"></div>

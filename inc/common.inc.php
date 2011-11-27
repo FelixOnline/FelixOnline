@@ -8,7 +8,7 @@
  */
 
 require_once('config.inc.php');
-require_once('article.inc.php');
+//require_once('article.inc.php');
 require_once('const.inc.php');
 require_once('rss.inc.php');
 
