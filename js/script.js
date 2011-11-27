@@ -148,18 +148,18 @@ $(document).ready(function() {
 	$("#commentForm #comment").charCount();
 	
 	//Comment form validation
-	$("#commentForm form").submit(function() {
-		var commentText = $("#commentForm #comment").val();
-		if(!commentText) {
-			$("#commentForm label.error").show();
-			return false;
-		} else {
-			$("#commentForm label.error").hide();
-			if(!validateCaptcha()) {
-				return false;
-			}	
-		}
-	});
+    $("#commentForm form").submit(function() {
+        var commentText = $("#commentForm #comment").val();
+        if(!commentText) {
+            $("#commentForm label.error").show();
+            return false;
+        } else {
+            $("#commentForm label.error").hide();
+            //if(!validateCaptcha()) {
+                //return false;
+            //}	
+        }
+    });
 	
 	function validateCaptcha() {
 		challengeField = $("input#recaptcha_challenge_field").val();

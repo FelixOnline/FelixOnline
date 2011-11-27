@@ -22,6 +22,7 @@
 
     if ($errorrecapatcha) { // failed recapatcha
         echo '<div class="commenterror">Failed reCapatcha.</div>';
+        echo '<script>location.href=location.href + "#commentForm";</script>';
     }
 
     if (!$uname) { ?>
@@ -32,7 +33,7 @@
     <form method="post" action="<?php echo curPageURLNonSecure();?>">
         <?php if (!$uname) { ?>
             <label for="name">Name: </label>
-            <input name="name" id="name"/>
+            <input name="name" id="name" value="<?php if(isset($_POST['name'])) echo $_POST['name'];?>"/>
             <div class="clear"></div>
         <?php } else { ?>
             <input type="hidden" value="<?php echo $uname; ?>"/>
@@ -40,7 +41,7 @@
         <div id="comentbox">
             <label for="comment" id="commentLabel">Comment: </label>
             <div class="clear"></div>
-            <textarea name="comment" id="comment" rows="4" class="required"></textarea>
+            <textarea name="comment" id="comment" rows="4" class="required"><?php if(isset($_POST['comment'])) echo $_POST['comment']; ?></textarea>
             <label for="comment" class="error">Please write a comment</label>
         </div>
         <div class="clear"></div>

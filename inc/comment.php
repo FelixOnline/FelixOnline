@@ -43,7 +43,7 @@
         require_once('recaptchalib.php');
          
         //B. Recaptcha Looks for the POST to confirm 
-        $resp = recaptcha_check_answer (RECAPTCHA_PRIVATE_KEY,
+        $resp = recaptcha_check_answer(RECAPTCHA_PRIVATE_KEY,
                                         $_SERVER["REMOTE_ADDR"],
                                         $_POST["recaptcha_challenge_field"],
                                         $_POST["recaptcha_response_field"]);

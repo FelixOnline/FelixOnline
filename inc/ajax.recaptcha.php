@@ -4,6 +4,8 @@
 **    @Date Modified: 6/01/09
 **    Instructions: Place this code in a file called "ajax.recaptcha.php"
 */
+
+require_once('const.inc.php');
  
 //A. Load the Recaptcha Libary
 require_once('recaptchalib.php');
