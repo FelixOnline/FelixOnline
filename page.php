@@ -369,7 +369,6 @@
 				<!-- Comments container -->
 				<div id="commentCont">
 				<?php
-                    require_once('core/comment.inc.php');
 					while ($row = mysql_fetch_array($result)) {
                         $comment = new Comment($row['id']);
                         include('views/comments/comment.php');

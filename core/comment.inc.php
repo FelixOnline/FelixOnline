@@ -139,7 +139,7 @@ class Comment {
      */
     public function getID()         { return $this->id; }
     public function getArticle()    { return $this->article; }
-    public function getUser()       { return $this->username; }
+    public function getUser()       { return $this->user; }
     public function getTimestamp()  { return $this->timestamp; }
 
     /*
@@ -263,7 +263,11 @@ class Comment {
      */
     public function insert() {
         if(!$this->external) { // if internal
-            $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('".$this->article."','".$this->user."','".$this->comment."','".$this->reply->getID()."')"; // insert comment into database
+            if($this->reply) {
+                $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('".$this->article."','".$this->user."','".$this->content."','".$this->reply->getID()."')"; // insert comment into database
+            } else {
+                $sql = "INSERT INTO `comment` (article,user,comment) VALUES ('".$this->article."','".$this->user."','".$this->content."')"; // insert comment into database
+            }
             $rsc = $this->dbquery($sql);
             $this->id = mysql_insert_id(); // get id of inserted comment
 
@@ -295,7 +299,7 @@ class Comment {
      * Utility functions
      */
 
-	public function print_this() {
+	public function printThis() {
 		print_r($this);
 	}
 }

@@ -27,7 +27,7 @@
         if ($newComment->commentExists()) { // if comment already exists
             $errorduplicate = true;
         } else {
-            if($id = $comment->insert()) { 
+            if($id = $newComment->insert()) { 
                 header('Location: '.full_article_url($article).'#comment'.$id); // redirect user to article page with comment anchor tag
             } else {
                 $errorinsert = true;
