@@ -14,7 +14,7 @@
  *      $comment->setExternal(false);
  *      $comment->setArticle(100);
  *      $comment->setContent('Hello world');
- *      $comment->setAuthor('jk708');
+ *      $comment->setUser('jk708');
  *      if($comment->insert()) echo 'Success!';
  */
 class Comment {
@@ -23,9 +23,8 @@ class Comment {
 	private $content; // content of comment
     private $name; // name of author of comment
 	private $user; // username of author of comment [internal] [TODO] be user object
-	private $extAuthor; // name of author of comment [external]
-    private $reply; // id of comment that this comment is replying to [TODO] be comment object
-    private $external; // if comment is external or not
+    private $reply; // comment object of the comment this comment is replying to
+    private $external = false; // if comment is external or not. Default false
     private $timestamp; // unix timestamp of comment submission time
     private $active; // whether comment is active
     private $ip; // ip of commenter [external]
@@ -45,12 +44,8 @@ class Comment {
 	public function __construct($id=NULL) {
         if($id != NULL) {
             $this->id = $id;
-            if($id >= EXTERNAL_COMMENT_ID) { // if id is greater than, or equal to, external comment id start
-                $this->external = true;
-            } else {
-                $this->external = false;
-            }
-            if(!$this->external) { // if comment is internal
+            if($id < EXTERNAL_COMMENT_ID) { // if id is less than external comment id start
+                $this->external = false; // comment is internal
                 $sql = "SELECT `article`,`user`,`comment`,UNIX_TIMESTAMP(`timestamp`),`active`,`reply` FROM `comment` WHERE id=$id";
                 if($rsc = $this->dbquery($sql)) {
                     list(
@@ -70,6 +65,7 @@ class Comment {
                     return false;
                 }
             } else {
+                $this->external = true; // comment is external
                 $sql = "SELECT `article`,`name`,`comment`,UNIX_TIMESTAMP(`timestamp`),`active`,`IP`,`pending`,`reply`,`spam` FROM `comment_ext` WHERE id=$id";
                 if($rsc = $this->dbquery($sql)) {
                     list(
@@ -192,10 +188,112 @@ class Comment {
      *
      * Returns comment object
      */
-    private function setId($id) {
+    private function setID($id) {
         $this->id = $id;
         return $this;
     }
+
+    /*
+     * Public: Set comment as external or not
+     *
+     * $external - flag for if comment is external or not
+     *
+     * Returns TODO
+     */
+    public function setExternal($external) {
+        $this->external = $external;
+    }
+
+    /*
+     * Public: Set comment article
+     *
+     * $article - id of article
+     *
+     * Returns TODO
+     */
+    public function setArticle($article) {
+        $this->article = $article;
+    }
+
+    /*
+     * Public: Set comment content
+     *
+     * $content - comment content (no need to be escaped etc)
+     *
+     * Returns TODO
+     */
+    public function setContent($content) {
+        $this->content = mysql_real_escape_string(get_correct_utf8_mysql_string($content));
+    }
+
+    /*
+     * Public: Set user
+     *
+     * $username - username of user commenting
+     */
+    public function setUser($username) {
+        $this->user = $username;
+    }
+
+    /*
+     * Public: Set reply of comment
+     *
+     * $reply - id of comment that this comment is replying to
+     */
+    public function setReply($reply) {
+        $this->reply = new Comment(mysql_real_escape_string($reply));
+    }
+
+    /*
+     * Public: Check if comment already exists
+     *
+     * Returns the number of rows that the query will return
+     *  i.e. 0 for none found. >0 if found
+     */
+    public function commentExists() {
+        $sql = "SELECT id FROM `comment` WHERE article=".$this->article." AND user='".$this->user."' AND comment='".$this->content."' AND `active`=1";
+        if($rsc = $this->dbquery($sql)) {
+            return mysql_num_rows($rsc);
+        }
+    }
+
+    /* * Public: Insert new comment into database
+     *
+     * Returns id of new comment
+     */
+    public function insert() {
+        if(!$this->external) { // if internal
+            $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('".$this->article."','".$this->user."','".$this->comment."','".$this->reply->getID()."')"; // insert comment into database
+            $rsc = $this->dbquery($sql);
+            $this->id = mysql_insert_id(); // get id of inserted comment
+
+            if($this->reply) { // if comment is replying to a comment 
+                email_comment_reply(
+                    $this->article,
+                    $this->user,
+                    $this->content,
+                    $this->id,
+                    $this->name,
+                    $this->reply->getID()
+                ); // email the user of that comment
+            }
+
+            email_article_comment(
+                $this->article,
+                $this->user,
+                $this->content,
+                $this->id
+            ); // email comment to authors of article
+            return $this->id; // return new comment id
+        } else { // if external comment
+
+        }
+    }
+
+
+    /*
+     * Utility functions
+     */
 
 	public function print_this() {
 		print_r($this);

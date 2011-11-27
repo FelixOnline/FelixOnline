@@ -650,7 +650,7 @@ function update_login_name($user,$name) {
  */
 
 /*
- * Check if comment exists in database
+ * Depreciated: Check if comment exists in database
  *
  * $article - id of article that comment relates to
  * $user    - username of commenter 

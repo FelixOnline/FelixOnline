@@ -12,20 +12,26 @@
     $errorduplicate = false; // error on duplicate flag
     $errorrecapatcha = false; // error on recapatcha fail
 
+    $newComment = new Comment();
+
     /* User comment */
     if ($_POST['articlecomment']) {
-        $comment = mysql_real_escape_string(get_correct_utf8_mysql_string($_POST['comment'])); // get comment
-        $replyName = mysql_real_escape_string($_POST['replyName']); // get name of comment that the comment is replying to
-        $replyComment = mysql_real_escape_string($_POST['replyComment']); // get comment id of comment that the comment is replying to
-        $uname = is_logged_in(); // get current user
-        if (!comment_exists($article,$uname,$comment)) { // if comment doesn't exist
-            if ($id = insert_comment($article,$uname,$comment,$replyName,$replyComment)) { // insert comment into database
+        $newComment->setExternal(false);
+        $newComment->setArticle($article);
+        $newComment->setContent($_POST['comment']);
+        $newComment->setUser(is_logged_in());
+        if(isset($_POST['replyComment'])) {
+            $newComment->setReply($_POST['replyComment']);
+        }
+        //$replyName = mysql_real_escape_string($_POST['replyName']); // get name of comment that the comment is replying to
+        if ($newComment->commentExists()) { // if comment already exists
+            $errorduplicate = true;
+        } else {
+            if($id = $comment->insert()) { 
                 header('Location: '.full_article_url($article).'#comment'.$id); // redirect user to article page with comment anchor tag
-            } else { // if insertion fails (lol)
+            } else {
                 $errorinsert = true;
             }
-        } else { // if comment exists
-            $errorduplicate = true;
         }
     }
 
