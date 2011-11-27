@@ -27,13 +27,6 @@
         </div>
         <p>
             <?php 
-                // Add link to reply comment
-                if($reply = $comment->getReply()) { ?>
-                    <a href="<?php echo curPageURLNonSecure().'#comment'.$reply->getID(); ?>" id="replyLink">
-                        @<?php echo $reply->getName();?>
-                    </a>: 
-                <?php } ?>
-            <?php 
                 // Comment content 
                 echo $comment->getContent(); 
             ?>

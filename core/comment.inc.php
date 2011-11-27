@@ -36,8 +36,7 @@ class Comment {
      * If initialised with an id then store relevant data
      * Do nothing if not
      *
-     * $id          - ID of comment
-     * $external    - Boolean on whether comment is external or not. True if it is an external comment, false if not
+     * $id - ID of comment
      *
      * Returns comment object. Returns false if something goes wrong.
      */
@@ -145,8 +144,15 @@ class Comment {
     /*
      * Public: Get comment content
      */
-    public function getContent()    { 
-        return html_entity_decode(nl2br(trim($this->content))); 
+    public function getContent() { 
+        $output = '';
+        // Add link to reply comment
+        if($this->reply) { 
+            $output .= '<a href="'.curPageURLNonSecure().'#comment'.$this->reply->getID().'" id="replyLink">';
+            $output .= '@'.$this->reply->getName().':</a> '; 
+        } 
+        $output .= html_entity_decode(nl2br(trim($this->content))); 
+        return $output;
     }
 
     /*
@@ -236,6 +242,15 @@ class Comment {
     }
 
     /*
+     * Public: Set name of commenter (external only)
+     *
+     * $name - name of commenter
+     */
+    public function setName($name) {
+        $this->name = mysql_real_escape_string(get_correct_utf8_mysql_string($name));
+    }
+
+    /*
      * Public: Set reply of comment
      *
      * $reply - id of comment that this comment is replying to
@@ -251,13 +266,18 @@ class Comment {
      *  i.e. 0 for none found. >0 if found
      */
     public function commentExists() {
-        $sql = "SELECT id FROM `comment` WHERE article=".$this->article." AND user='".$this->user."' AND comment='".$this->content."' AND `active`=1";
+        if(!$this->external) {
+            $sql = "SELECT id FROM `comment` WHERE article=".$this->article." AND user='".$this->user."' AND comment='".$this->content."' AND `active`=1";
+        } else {
+            $sql = "SELECT id FROM `comment_ext` WHERE article=".$this->article." AND name='".$this->name."' AND comment='".$this->content."'";
+        }
         if($rsc = $this->dbquery($sql)) {
             return mysql_num_rows($rsc);
         }
     }
 
-    /* * Public: Insert new comment into database
+    /* 
+     * Public: Insert new comment into database
      *
      * Returns id of new comment
      */
@@ -288,9 +308,61 @@ class Comment {
                 $this->content,
                 $this->id
             ); // email comment to authors of article
+
             return $this->id; // return new comment id
         } else { // if external comment
+            // check spam using akismet
+            require_once('inc/akismet.class.php');
 
+            $akismet = new Akismet(STANDARD_URL, AKISMET_API_KEY);
+            $akismet->setCommentAuthor($this->name);
+            //$akismet->setCommentAuthorEmail($email);
+            //$akismet->setCommentAuthorURL($url);
+            $akismet->setCommentContent($this->comment);
+            $akismet->setPermalink(full_article_url($this->article));
+
+            if($akismet->isCommentSpam()) { // if comment is spam
+                if($this->reply) { // if reply url
+                    $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$this->name."','".$this->content."',0,'".$_SERVER['REMOTE_ADDR']."',0,'".$this->reply->getID()."',1)";
+                } else {
+                    $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,spam) VALUES ('".$this->article."','".$this->name."','".$this->content."',0,'".$_SERVER['REMOTE_ADDR']."',0,1)";
+                }
+                $rsc = $this->dbquery($sql);
+                $this->id = mysql_insert_id(); // get id of inserted comment
+
+                // insert comment ip into comment_spam
+                $sql = "INSERT IGNORE INTO `comment_spam` (IP, date) VALUES ('".$_SERVER['REMOTE_ADDR']."', DATE_ADD(NOW(), INTERVAL 2 MONTH))";
+                $rsc = $this->dbquery($sql);
+
+                return 'spam';
+            } else {
+                if($this->reply) { // if reply
+                    $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply) VALUES ('".$this->article."','".$this->name."','".$this->content."',1,'".$_SERVER['REMOTE_ADDR']."',1,'".$this->reply->getID()."')";
+                } else {
+                    $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending) VALUES ('".$this->article."','".$this->name."','".$this->content."',1,'".$_SERVER['REMOTE_ADDR']."',1)";
+                }
+                $rsc = $this->dbquery($sql);
+                $this->id = mysql_insert_id(); // get id of inserted comment
+
+                $email = new Email();
+                $email->setTo(EMAIL_EXTCOMMENT_NOTIFYADDR);
+                $email->setSubject('New comment to approve on "'.get_article_title($this->article).'"');
+
+                ob_start();
+                $comment = $this;
+                include('views/emails/new_external_comment.php');
+                $message = ob_get_contents();
+                ob_end_clean();
+
+                $email->setContent($message);
+
+                if($email->send()) {
+                    return $this->id;
+                } else {
+                    return false;
+                }
+                return $this->id;
+            }
         }
     }
 

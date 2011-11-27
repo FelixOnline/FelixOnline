@@ -10,6 +10,7 @@
 require_once('config.inc.php');
 //require_once('article.inc.php');
 require_once('const.inc.php');
+require_once('core/email.inc.php');
 require_once('core/comment.inc.php');
 require_once('rss.inc.php');
 

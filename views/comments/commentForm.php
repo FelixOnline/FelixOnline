@@ -14,14 +14,21 @@
     // Error diplaying
     if ($errorinsert) { // error on inserting comment
         echo '<div class="commenterror">System error - please email <a href="mailto"felix@imperial.ac.uk@>felix@imperial.ac.uk</a>!</div>';
+        echo '<script>location.href=location.href + "#commentForm";</script>';
     }
 
     if ($errorduplicate) { // comment is a duplicate
         echo '<div class="commenterror">Duplicate comment submitted.</div>';
+        echo '<script>location.href=location.href + "#commentForm";</script>';
     }
 
     if ($errorrecapatcha) { // failed recapatcha
-        echo '<div class="commenterror">Failed reCapatcha.</div>';
+        echo '<div class="commenterror">Failed reCapatcha. Please try again.</div>';
+        echo '<script>location.href=location.href + "#commentForm";</script>';
+    }
+
+    if ($errorspam) { // failed spam catch
+        echo '<div class="commenterror">This comment has been flagged as spam.</div>';
         echo '<script>location.href=location.href + "#commentForm";</script>';
     }
 
