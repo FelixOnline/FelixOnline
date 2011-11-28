@@ -167,7 +167,7 @@ class Comment {
     }
 
     /*
-     * Public: Get comment reply
+     * Public: Get comment object of the comment this comment is replying to
      *
      * Returns comment object of reply. Returns false if no reply
      */
@@ -176,6 +176,19 @@ class Comment {
             return $this->reply;
         } else {
             return false;
+        }
+    }
+
+    /*
+     * Public: Get comment replying to's id
+     *
+     * Returns the id of the comment this comment is replying to
+     */
+    public function getReplyID() {
+        if($this->reply) {
+            return $this->reply->getID();
+        } else {
+            return NULL;
         }
     }
 
@@ -279,32 +292,26 @@ class Comment {
      */
     public function insert() {
         if(!$this->external) { // if internal
-            if($this->reply) {
-                $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('".$this->article."','".$this->user."','".$this->content."','".$this->reply->getID()."')"; // insert comment into database
-            } else {
-                $sql = "INSERT INTO `comment` (article,user,comment) VALUES ('".$this->article."','".$this->user."','".$this->content."')"; // insert comment into database
-            }
+            $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('".$this->article."','".$this->user."','".$this->content."','".$this->getReplyID()."')"; // insert comment into database
             $rsc = $this->dbquery($sql);
             $this->id = mysql_insert_id(); // get id of inserted comment
 
-            if($this->reply) { // if comment is replying to a comment 
-                if(!$this->reply->isExternal()) { // replied to comment is not external
-                    /* Send email */
-                    $email = new Email();
-                    $email->setTo(get_user_email_full($this->reply->getUser()));
-                    $email->setSubject($this->getName().' has replied to your comment on '.get_article_title($this->article));
+            if($this->reply && !$this->reply->isExternal()) { // if comment is replying to a comment 
+                /* Send email */
+                $email = new Email();
+                $email->setTo(get_user_email_full($this->reply->getUser()));
+                $email->setSubject($this->getName().' has replied to your comment on '.get_article_title($this->article));
 
-                    ob_start();
-                    $comment = $this->reply;
-                    $reply = $this;
-                    include('views/emails/comment_reply_notification.php');
-                    $message = ob_get_contents();
-                    ob_end_clean();
+                ob_start();
+                $comment = $this->reply;
+                $reply = $this;
+                include('views/emails/comment_reply_notification.php');
+                $message = ob_get_contents();
+                ob_end_clean();
 
-                    $email->setContent($message);
+                $email->setContent($message);
 
-                    $email->send();
-                }
+                $email->send();
             }
 
             email_article_comment(
@@ -322,16 +329,11 @@ class Comment {
             $akismet = new Akismet(STANDARD_URL, AKISMET_API_KEY);
             $akismet->setCommentAuthor($this->name);
             //$akismet->setCommentAuthorEmail($email);
-            //$akismet->setCommentAuthorURL($url);
             $akismet->setCommentContent($this->comment);
             $akismet->setPermalink(full_article_url($this->article));
 
             if($akismet->isCommentSpam()) { // if comment is spam
-                if($this->reply) { // if reply url
-                    $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$this->name."','".$this->content."',0,'".$_SERVER['REMOTE_ADDR']."',0,'".$this->reply->getID()."',1)";
-                } else {
-                    $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,spam) VALUES ('".$this->article."','".$this->name."','".$this->content."',0,'".$_SERVER['REMOTE_ADDR']."',0,1)";
-                }
+                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$this->name."','".$this->content."',0,'".$_SERVER['REMOTE_ADDR']."',0,'".$this->getReplyID()."',1)";
                 $rsc = $this->dbquery($sql);
                 $this->id = mysql_insert_id(); // get id of inserted comment
 
@@ -341,11 +343,7 @@ class Comment {
 
                 return 'spam';
             } else {
-                if($this->reply) { // if reply
-                    $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply) VALUES ('".$this->article."','".$this->name."','".$this->content."',1,'".$_SERVER['REMOTE_ADDR']."',1,'".$this->reply->getID()."')";
-                } else {
-                    $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending) VALUES ('".$this->article."','".$this->name."','".$this->content."',1,'".$_SERVER['REMOTE_ADDR']."',1)";
-                }
+                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply) VALUES ('".$this->article."','".$this->name."','".$this->content."',1,'".$_SERVER['REMOTE_ADDR']."',1,'".$this->getReplyID()."')";
                 $rsc = $this->dbquery($sql);
                 $this->id = mysql_insert_id(); // get id of inserted comment
 
