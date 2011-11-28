@@ -39,9 +39,9 @@
     if(!defined('LOCAL'))                           define('LOCAL', false); // if true then site is hosted locally - don't use pam_auth etc. 
 
 	/* Media Page */
-	if(!defined('NUMBER_OF_ALBUMS_FRONT_PAGE'))     define('NUMBER_OF_ALBUMS_FRONT_PAGE',4); // number of media items on front page
-	if(!defined('NUMBER_OF_ALBUMS_FRONT_PAGE'))     define('NUMBER_OF_ALBUMS_PER_FULL_PAGE',12); // number of media items on a full page
-	if(!defined('NUMBER_OF_ALBUMS_FRONT_PAGE'))     define('IMAGE_BASE_URL', '/home/www/htdocs/media/felix/gallery/gallery_images/images/'); // base image url [depreciated]
+	if(!defined('NUMBER_OF_ALBUMS_FRONT_PAGE'))     	define('NUMBER_OF_ALBUMS_FRONT_PAGE',4); // number of media items on front page
+	if(!defined('NUMBER_OF_ALBUMS_PER_FULL_PAGE'))    	define('NUMBER_OF_ALBUMS_PER_FULL_PAGE',12); // number of media items on a full page
+	if(!defined('IMAGE_BASE_URL'))     			define('IMAGE_BASE_URL', '/home/www/htdocs/media/felix/gallery/gallery_images/images/'); // base image url [depreciated]
 
 	/* RSS */
 	define('RSS_IMG',(STANDARD_URL.DEFAULT_IMG_URI));
