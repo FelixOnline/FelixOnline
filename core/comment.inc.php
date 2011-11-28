@@ -159,14 +159,10 @@ class Comment {
      * Public: Get commenter's name
      */
     public function getName() {
-        if($this->isExternal()) { // if commenter is external
-            if($this->name) { // if external commenter has a name
-                return $this->name;
-            } else {
-                return 'Anonymous'; // else return Anonymous
-            }
+        if($this->name) { // if external commenter has a name
+            return $this->name;
         } else {
-            return $this->name; // return username
+            return 'Anonymous'; // else return Anonymous
         }
     }
 
@@ -292,14 +288,23 @@ class Comment {
             $this->id = mysql_insert_id(); // get id of inserted comment
 
             if($this->reply) { // if comment is replying to a comment 
-                email_comment_reply(
-                    $this->article,
-                    $this->user,
-                    $this->content,
-                    $this->id,
-                    $this->name,
-                    $this->reply->getID()
-                ); // email the user of that comment
+                if(!$this->reply->isExternal()) { // replied to comment is not external
+                    /* Send email */
+                    $email = new Email();
+                    $email->setTo(get_user_email_full($this->reply->getUser()));
+                    $email->setSubject($this->getName().' has replied to your comment on '.get_article_title($this->article));
+
+                    ob_start();
+                    $comment = $this->reply;
+                    $reply = $this;
+                    include('views/emails/comment_reply_notification.php');
+                    $message = ob_get_contents();
+                    ob_end_clean();
+
+                    $email->setContent($message);
+
+                    $email->send();
+                }
             }
 
             email_article_comment(
@@ -344,6 +349,7 @@ class Comment {
                 $rsc = $this->dbquery($sql);
                 $this->id = mysql_insert_id(); // get id of inserted comment
 
+                /* Send email */
                 $email = new Email();
                 $email->setTo(EMAIL_EXTCOMMENT_NOTIFYADDR);
                 $email->setSubject('New comment to approve on "'.get_article_title($this->article).'"');
@@ -361,7 +367,6 @@ class Comment {
                 } else {
                     return false;
                 }
-                return $this->id;
             }
         }
     }

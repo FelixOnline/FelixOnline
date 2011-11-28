@@ -5,12 +5,12 @@
  * Requires $comment as comment object
  */
 ?>
-<p>A new comment on the post "<?php echo get_article_title($comment->article); ?>" is waiting for your approval. </br>
-<?php echo full_article_url($comment->article); ?>
+<p>A new comment on the post "<?php echo get_article_title($comment->getArticle()); ?>" is waiting for your approval. </br>
+<?php echo full_article_url($comment->getArticle()); ?>
 </p>
 
 <p>
-    Author: <?php echo stripslashes($comment->name); ?> (IP: <?php echo $_SERVER['REMOTE_ADDR'];?>)</br>
+    Author: <?php echo stripslashes($comment->getName()); ?> (IP: <?php echo $_SERVER['REMOTE_ADDR'];?>)</br>
     Whois: http://ip-whois-lookup.com/lookup.php?ip=<?php echo $_SERVER['REMOTE_ADDR']; ?>
 </p>
 
