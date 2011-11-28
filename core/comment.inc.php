@@ -369,7 +369,6 @@ class Comment {
         }
     }
 
-
     /*
      * Utility functions
      */
