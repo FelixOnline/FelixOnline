@@ -353,11 +353,12 @@
                 $ctime = $ctime[1] + $ctime[0];
                 $cstarttime = $ctime;
                 // TODO
-				$sql = "SELECT * FROM (".
-					" SELECT comment.id,comment.user,name,comment,UNIX_TIMESTAMP(comment.timestamp) AS timestamp FROM `comment` LEFT JOIN `user` ON (comment.user=user.user) WHERE article=$article AND active=1". // select all internal comments and users of those comments
-					" UNION SELECT comment_ext.id,'extuser0',comment_ext.name,comment_ext.comment,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP != '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=0". // select external comments that have been approved and not from current ip
-					" UNION SELECT comment_ext.id,'extuser1',comment_ext.name,comment_ext.comment,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP = '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=1". // select external comments that are pending and are from current ip
-					" UNION SELECT comment_ext.id,'extuser2',comment_ext.name,comment_ext.comment,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP = '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=0". // select external comments that have been approve and are from current ip
+				$sql = "SELECT id,timestamp FROM (".
+					" SELECT comment.id,UNIX_TIMESTAMP(comment.timestamp) AS timestamp FROM `comment` WHERE article=$article AND active=1". // select all internal comments 
+                    " UNION SELECT comment_ext.id,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND pending=0 AND spam=0". // select external comments that are not spam
+					//" UNION SELECT comment_ext.id,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP != '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=0". // select external comments that have been approved and not from current ip
+                    " UNION SELECT comment_ext.id,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP = '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=1". // select external comments that are pending and are from current ip
+					//" UNION SELECT comment_ext.id,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP = '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=0". // select external comments that have been approve and are from current ip
 					") AS t ORDER BY timestamp ASC LIMIT 500";
 				if (!$result = mysql_query($sql,$cid))
 					echo mysql_error();

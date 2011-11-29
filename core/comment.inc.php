@@ -142,7 +142,7 @@ class Comment {
     public function getTimestamp()  { return $this->timestamp; }
 
     /*
-     * Public: Get comment content
+     * Public: Get comment content with reply link
      */
     public function getContent() { 
         $output = '';
@@ -153,6 +153,28 @@ class Comment {
         } 
         $output .= html_entity_decode(nl2br(trim($this->content))); 
         return $output;
+    }
+
+    /*
+     * Public: Check if comment is rejected
+     */
+    public function isRejected() {
+        if(!$this->external && !$this->active || $this->external && !$this->active && !$this->pending) { // if comment that is rejected
+            return true; 
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * Public: Check if comment is pending approval
+     */
+    public function isPending() {
+        if($this->external && $this->active && $this->pending && $this->ip == $_SERVER['REMOTE_ADDR']) { // if comment is pending for this ip address
+            return true;
+        } else {
+            return false;
+        } 
     }
 
     /*
