@@ -3390,6 +3390,16 @@ blockquote span {
 	float: left;
 }
 
+.singleComment.rejected .comment {
+    width: 620px;
+}
+
+.singleComment.rejected .comment p {
+    font-size: 12px;
+    font-style: italic;
+    color: #999;
+}
+
 .commentInfo {
 	margin-bottom: 10px;
 }
@@ -3398,6 +3408,7 @@ blockquote span {
 	display: block;
 	font-weight: bold;
 	font-size: 14px;
+    font-style: normal;
 }
 
 .commentInfo #commentUser span {

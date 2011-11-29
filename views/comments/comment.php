@@ -31,7 +31,7 @@
             </p>
             <span id="commentDate"><?php echo date('l F d Y H:i',$comment->getTimestamp()); ?></span>
         </div>
-        <p>
+        <p class="content">
             <?php 
                 if($comment->isRejected()) { // if internal comment that is rejected ?>
                     <span id="error">This comment did not follow our commenting policy [hyper-linked] and has been rejected</span>
