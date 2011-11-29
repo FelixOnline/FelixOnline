@@ -3390,7 +3390,7 @@ blockquote span {
 	float: left;
 }
 
-.singleComment.rejected .comment, .singleComent.pending .comment {
+.singleComment.rejected .comment, .singleComment.pending .comment {
     width: 620px;
 }
 
@@ -3404,7 +3404,8 @@ blockquote span {
     color: #5A8BBF;
 }
 
-.singleComment.pending {
+.singleComment.pending .content {
+    color: #999;
 }
 
 .singleComment.pending #commentPending {
