@@ -58,8 +58,6 @@
             <?php
                 require_once('inc/recaptchalib.php');
                 echo recaptcha_get_html(RECAPTCHA_PUBLIC_KEY);
-                //A.This div notifies the user whether the Recaptcha was Successful or not
-                echo '<label for="recaptcha_response_field" class="error" id="captchaStatus"></label>';
             ?>
         <?php } ?>
         <input type="submit" value="Post your comment" id="submit" name="<?php if($uname) echo 'articlecomment'; else echo 'articlecomment_ext';?>"/>

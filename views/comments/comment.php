@@ -6,12 +6,6 @@
      */
 ?>
 <div class="singleComment<?php if($comment->isPending()) echo ' pending'; if($comment->isRejected()) echo ' rejected'; ?>" id="comment<?php echo $comment->getID();?>">
-    <?php 
-        if($comment->isPending()) { ?>
-        <div id="commentPending">
-            This comment is awaiting approval and will appear shortly if it follows our commenting policy [hyper-linked].If you have an Imperial ID, you can avoid this delay by logging in [hyper-linked] before commenting
-        </div>
-    <?php } ?>
     <div class="comment">
         <div class="commentInfo">
             <p id="commentUser">
@@ -33,8 +27,8 @@
         </div>
         <p class="content">
             <?php 
-                if($comment->isRejected()) { // if internal comment that is rejected ?>
-                    <span id="error">This comment did not follow our commenting policy [hyper-linked] and has been rejected</span>
+                if($comment->isRejected()) { // if internal comment that is rejected TODO ?>
+                    <span id="error">This comment did not follow our <a href="COMMENTING_POLICY">commenting policy</a> and has been rejected</span>
             <?php } else { 
                     // Comment content 
                     echo $comment->getContent(); 
@@ -42,7 +36,7 @@
             ?>
         </p>
     </div>
-    <?php if(!$comment->isRejected()) { // if internal comment that is rejected ?>
+    <?php if(!$comment->isRejected() && !$comment->isPending()) { // if internal comment that is rejected ?>
     <div class="commentAction" id="<?php echo $comment->getID();?>">
         <ul>
             <li><?php
@@ -70,4 +64,10 @@
     </div>
     <?php } ?>
     <div class="clear"></div>
+    <?php 
+        if($comment->isPending()) { ?>
+        <div id="commentPending">
+            This comment is awaiting approval and will appear shortly if it follows our commenting policy [hyper-linked]. If you have an Imperial ID, you can avoid this delay by logging in [hyper-linked] before commenting.
+        </div>
+    <?php } ?>
 </div>
