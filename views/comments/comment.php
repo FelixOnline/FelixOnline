@@ -27,8 +27,8 @@
         </div>
         <p class="content">
             <?php 
-                if($comment->isRejected()) { // if internal comment that is rejected TODO ?>
-                    <span id="error">This comment did not follow our <a href="COMMENTING_POLICY">commenting policy</a> and has been rejected</span>
+                if($comment->isRejected()) { // if comment rejected ?>
+                    <span id="error">This comment did not follow our <a href="<?php echo curPageURLNonSecure(); ?>#commentPolicy" rel="facebox">commenting policy</a> and has been rejected</span>
             <?php } else { 
                     // Comment content 
                     echo $comment->getContent(); 
@@ -67,7 +67,7 @@
     <?php 
         if($comment->isPending()) { ?>
         <div id="commentPending">
-            This comment is awaiting approval and will appear shortly if it follows our commenting policy [hyper-linked]. If you have an Imperial ID, you can avoid this delay by logging in [hyper-linked] before commenting.
+        This comment is awaiting approval and will appear shortly if it follows our <a href="<?php echo curPageURLNonSecure(); ?>#commentPolicy" rel="facebox">commenting policy</a>. If you have an Imperial ID, you can avoid this delay by <a href="<?php echo curPageURLNonSecure(); ?>#loginBox" rel="facebox">logging in</a> before commenting.
         </div>
     <?php } ?>
 </div>

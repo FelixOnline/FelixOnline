@@ -35,7 +35,7 @@
     if (!$uname) { ?>
         <h5>Comment anonymously or <a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox">log in</a></h5>
         <div id="info">
-            <p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and moderated later. Read our commenting policy [hyper-linked] for more information.</p>
+            <p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and moderated later. Read our <a href="<?php echo curPageURLNonSecure(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
         </div>
     <?php } else { ?>
         <h5>Leave a comment as <a href="user/<?php echo $uname;?>/" title="Profile Page"><?php echo get_vname();?></a></h5>
@@ -65,4 +65,19 @@
         <?php } ?>
         <input type="submit" value="Post your comment" id="submit" name="<?php if($uname) echo 'articlecomment'; else echo 'articlecomment_ext';?>"/>
     </form>
+    <!-- Commenting Policy -->
+    <div id="commentPolicy">
+        <div id="commentPolicyPopUp">
+            <h3>Commenting Policy</h3> 
+            <p>Felix is fully supportive of fierce and frank discussions. We will generally allow comments that are on-topic and avoid personal attacks; criticising a someone's decisions is allowed, criticising their weight, for example, is not.</p>
+            <p>Comments may be deleted/rejected if they:</p>
+            <ul>
+                <li>are off-topic</li>
+                <li>contain ad-hominem attacks</li>
+                <li>are potentially libellous</li>
+                <li>use excessively foul language</li>
+                <li>are obviously spam</li>
+            </ul>
+        </div>
+    </div>
 </div>
