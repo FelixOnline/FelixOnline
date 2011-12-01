@@ -3476,6 +3476,15 @@ blockquote span {
 	border-top: 2px solid #318BA1;
 }
 
+#commentForm #info {
+    font-size: 12px;
+    line-height: 15px;
+    color: #666;
+    font-style: italic;
+    padding-top: 6px;
+    padding-right: 5px;
+}
+
 #commentForm form{
 	width: 620px;
 	margin-top: 10px;

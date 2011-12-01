@@ -1,8 +1,22 @@
 <?php
-
 /*
  * Comment class
  * Deals with both comment retrieval and comment submission
+ *
+ * Comment flags:
+ *      Internal:
+ *          active - comment is active or not
+ *
+ *      External:
+ *          active | pending | spam  
+ *             0   |    0    |   0      rejected comment
+ *             1   |    0    |   0      approved comment
+ *             1   |    1    |   0      pending comment
+ *             0   |    0    |   1      spam comment
+ *             0   |    1    |   0      INVALID
+ *             1   |    0    |   1      INVALID
+ *             0   |    1    |   1      INVALID
+ *             1   |    1    |   1      INVALID
  *
  * Examples
  *      // Get comment
@@ -14,7 +28,7 @@
  *      $comment->setExternal(false);
  *      $comment->setArticle(100);
  *      $comment->setContent('Hello world');
- *      $comment->setUser('jk708');
+ *      $comment->setUser('felix');
  *      if($comment->insert()) echo 'Success!';
  */
 class Comment {
