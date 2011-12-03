@@ -43,14 +43,14 @@
 	}
 	
 	function like_comment_ajax($user, $comment) {
-		like_comment($comment,$user,1);
-		$count = get_likes($comment);
+        $comment = new Comment($comment);
+        $count = $comment->likeComment($user);
 		echo $count;
 	}
 	
 	function dislike_comment_ajax($user, $comment) {
-		like_comment($comment,$user,0);
-		$count = get_dislikes($comment);
+        $comment = new Comment($comment);
+        $count = $comment->dislikeComment($user);
 		echo $count;
 	}
 	

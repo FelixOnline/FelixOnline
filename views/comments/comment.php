@@ -43,23 +43,27 @@
                 if (!is_logged_in()) {?>
                     <a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" class="likeComment">Like</a>
                 <?php } else {
-                    if (user_like_comment($comment->getID(), is_logged_in())) echo 'Liked'; // if user has already liked or disliked comment then remove link
+                    if ($comment->userLikedComment(is_logged_in())) echo 'Liked'; // if user has already liked or disliked comment then remove link
                     else {?>
                         <a href="<?php echo curPageURLNonSecure();?>#" id="like">Like</a>
                 <?php } } ?>
-                <span id="likecounter">(<?php echo get_likes($comment->getID());?>)</span>
+                    <span id="likecounter">(<?php echo $comment->getLikes(); ?>)</span>
             </li>
             <li><?php if (!is_logged_in()) { ?>
                 <a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" class="dislikeComment">Dislike</a>
                 <?php } else {
-                    if (user_like_comment($comment->getID(), is_logged_in())) echo 'Disliked';
+                    if ($comment->userLikedComment(is_logged_in())) echo 'Disliked';
                     else {?>
                     <a href="<?php echo curPageURLNonSecure();?>#" id="dislike">Dislike</a>
                 <?php } }?>
-                <span id="dislikecounter">(<?php echo get_dislikes($comment->getID());?>)</span>
+                    <span id="dislikecounter">(<?php echo $comment->getDislikes(); ?>)</span>
             </li>
-            <li><a href="<?php echo curPageURLNonSecure().'#comment'.$comment->getID();?>" id="commentLink">Link</a></li>
-            <li class="last"><a href="<?php echo curPageURLNonSecure().'#comment'.$comment->getID(); ?>" id="<?php echo $comment->getID();?>" class="replyToComment">Reply to</a></li>
+            <li>
+                <a href="<?php echo curPageURLNonSecure().'#comment'.$comment->getID();?>" id="commentLink">Link</a>
+            </li>
+            <li class="last">
+                <a href="<?php echo curPageURLNonSecure().'#comment'.$comment->getID(); ?>" id="<?php echo $comment->getID();?>" class="replyToComment">Reply to</a>
+            </li>
         </ul>
     </div>
     <?php } ?>

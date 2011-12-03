@@ -44,6 +44,8 @@ class Comment {
     private $ip; // ip of commenter [external]
     private $pending; // if comment is pending [external]
     private $spam; // if comment is spam [external]
+    private $likes; // number of comment likes
+    private $dislikes; // number of comment dislikes
 	
     /*
      * Constructor for Comment class
@@ -59,7 +61,7 @@ class Comment {
             $this->id = $id;
             if($id < EXTERNAL_COMMENT_ID) { // if id is less than external comment id start
                 $this->external = false; // comment is internal
-                $sql = "SELECT `article`,`user`,`comment`,UNIX_TIMESTAMP(`timestamp`),`active`,`reply` FROM `comment` WHERE id=$id";
+                $sql = "SELECT `article`,`user`,`comment`,UNIX_TIMESTAMP(`timestamp`),`active`,`reply`,`likes`,`dislikes` FROM `comment` WHERE id=$id";
                 if($rsc = $this->dbquery($sql)) {
                     list(
                         $this->article,
@@ -68,6 +70,8 @@ class Comment {
                         $this->timestamp,
                         $this->active,
                         $this->reply,
+                        $this->likes,
+                        $this->dislikes
                     ) = mysql_fetch_array($rsc);
                     if($this->reply) {
                         $this->reply = new Comment($this->reply); // initialise new comment as reply
@@ -79,7 +83,7 @@ class Comment {
                 }
             } else {
                 $this->external = true; // comment is external
-                $sql = "SELECT `article`,`name`,`comment`,UNIX_TIMESTAMP(`timestamp`),`active`,`IP`,`pending`,`reply`,`spam` FROM `comment_ext` WHERE id=$id";
+                $sql = "SELECT `article`,`name`,`comment`,UNIX_TIMESTAMP(`timestamp`),`active`,`IP`,`pending`,`reply`,`spam`,`likes`,`dislikes` FROM `comment_ext` WHERE id=$id";
                 if($rsc = $this->dbquery($sql)) {
                     list(
                         $this->article,
@@ -91,6 +95,8 @@ class Comment {
                         $this->pending,
                         $this->reply,
                         $this->spam,
+                        $this->likes,
+                        $this->dislikes
                     ) = mysql_fetch_array($rsc);
                     if($this->reply) {
                         $this->reply = new Comment($this->reply); // initialise new comment as reply
@@ -102,6 +108,67 @@ class Comment {
             }
         }
 	}
+
+    /*
+     * Getter functions
+     */
+    public function getID()         { return $this->id; }
+    public function getArticle()    { return $this->article; }
+    public function getUser()       { return $this->user; }
+    public function getTimestamp()  { return $this->timestamp; }
+    public function getLikes()      { return $this->likes; }
+    public function getDislikes()   { return $this->dislikes; }
+
+    /*
+     * Public: Get comment content with reply link
+     */
+    public function getContent() { 
+        $output = '';
+        // Add link to reply comment
+        if($this->reply) { 
+            $output .= '<a href="'.curPageURLNonSecure().'#comment'.$this->reply->getID().'" id="replyLink">';
+            $output .= '@'.$this->reply->getName().':</a> '; 
+        } 
+        $output .= html_entity_decode(nl2br(trim($this->content))); 
+        return $output;
+    }
+
+    /*
+     * Public: Get commenter's name
+     */
+    public function getName() {
+        if($this->name) { // if external commenter has a name
+            return $this->name;
+        } else {
+            return 'Anonymous'; // else return Anonymous
+        }
+    }
+
+    /*
+     * Public: Get comment object of the comment this comment is replying to
+     *
+     * Returns comment object of reply. Returns false if no reply
+     */
+    public function getReply() {
+        if($this->reply) {
+            return $this->reply;
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * Public: Get comment replying to's id
+     *
+     * Returns the id of the comment this comment is replying to
+     */
+    public function getReplyID() {
+        if($this->reply) {
+            return $this->reply->getID();
+        } else {
+            return NULL;
+        }
+    }
 
     /*
      * Public: Check if comment is from author of article
@@ -148,28 +215,6 @@ class Comment {
     }
 
     /*
-     * Getter functions
-     */
-    public function getID()         { return $this->id; }
-    public function getArticle()    { return $this->article; }
-    public function getUser()       { return $this->user; }
-    public function getTimestamp()  { return $this->timestamp; }
-
-    /*
-     * Public: Get comment content with reply link
-     */
-    public function getContent() { 
-        $output = '';
-        // Add link to reply comment
-        if($this->reply) { 
-            $output .= '<a href="'.curPageURLNonSecure().'#comment'.$this->reply->getID().'" id="replyLink">';
-            $output .= '@'.$this->reply->getName().':</a> '; 
-        } 
-        $output .= html_entity_decode(nl2br(trim($this->content))); 
-        return $output;
-    }
-
-    /*
      * Public: Check if comment is rejected
      */
     public function isRejected() {
@@ -192,40 +237,16 @@ class Comment {
     }
 
     /*
-     * Public: Get commenter's name
-     */
-    public function getName() {
-        if($this->name) { // if external commenter has a name
-            return $this->name;
-        } else {
-            return 'Anonymous'; // else return Anonymous
-        }
-    }
-
-    /*
-     * Public: Get comment object of the comment this comment is replying to
+     * Public: Check if current user has liked or disliked the comment
      *
-     * Returns comment object of reply. Returns false if no reply
-     */
-    public function getReply() {
-        if($this->reply) {
-            return $this->reply;
-        } else {
-            return false;
-        }
-    }
-
-    /*
-     * Public: Get comment replying to's id
+     * $user - username of current user
      *
-     * Returns the id of the comment this comment is replying to
+     * Returns true or false
      */
-    public function getReplyID() {
-        if($this->reply) {
-            return $this->reply->getID();
-        } else {
-            return NULL;
-        }
+    public function userLikedComment($user) {
+        $sql = "SELECT COUNT(*) FROM `comment_like` WHERE user='$user' AND comment=".$this->id;
+        $rsc = $this->dbquery($sql);
+        return mysql_result($rsc,0);
     }
 
     /*
@@ -405,6 +426,59 @@ class Comment {
         }
     }
 
+    /*
+     * Public: Like comment
+     *
+     * $user - string username of user liking comment
+     *
+     * Returns number of likes
+     */
+    public function likeComment($user) {
+        if(!$this->userLikedComment($user)) { // check user hasn't already liked the comment
+            $sql = "INSERT INTO `comment_like` (user,comment,binlike) VALUES ('$user','".$this->id."','1')";
+            $rsc = $this->dbquery($sql);
+
+            $this->likes += 1;
+            if(!$this->external) { // internal comment
+                $sql = "UPDATE `comment` "; 
+            } else {
+                $sql = "UPDATE `comment_ext` ";
+            }
+            $sql .= "SET likes = ".$this->likes." WHERE id = ".$this->id;
+            $rsc = $this->dbquery($sql);
+
+            return $this->likes;
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * Public: Dislike comment
+     *
+     * $user - string username of user disliking comment
+     *
+     * Returns number of dislikes
+     */
+    public function dislikeComment($user) {
+        if(!$this->userLikedComment($user)) { // check user hasn't already liked the comment
+            $sql = "INSERT INTO `comment_like` (user,comment,binlike) VALUES ('$user','".$this->id."','0')";
+            $rsc = $this->dbquery($sql);
+
+            $this->dislikes += 1;
+            if(!$this->external) { // internal comment
+                $sql = "UPDATE `comment` "; 
+            } else {
+                $sql = "UPDATE `comment_ext` ";
+            }
+            $sql .= "SET dislikes = ".$this->dislikes." WHERE id = ".$this->id;
+            $rsc = $this->dbquery($sql);
+
+            return $this->dislikes;
+        } else {
+            return false;
+        }
+    }
     /*
      * Utility functions
      */
