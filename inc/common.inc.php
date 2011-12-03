@@ -1162,8 +1162,7 @@ function like_comment($comment,$user,$bool) {
             return true;
         else
             die(mysql_error());
-    }
-    else
+    } else
         return false;
 }
 

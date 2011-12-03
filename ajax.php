@@ -1,5 +1,4 @@
 <?php
-	
 	require_once('inc/common.inc.php'); 
 	
 	// PHP file to post to using ajax requests
