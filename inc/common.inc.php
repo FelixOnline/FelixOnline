@@ -2164,6 +2164,12 @@ function get_video_desc($id) {
     return mysql_result(mysql_query($sql,$cid),0);
 }
 
+function get_video_site($id) {
+    global $cid;
+    $sql = "SELECT site FROM `media_video` WHERE id=$id";
+    return mysql_result(mysql_query($sql,$cid),0);
+}
+
 /**
  *
  * @create a roman numeral from a number

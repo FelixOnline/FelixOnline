@@ -15,7 +15,7 @@
     include('header.php');
 
     if ($_GET['media']) {
-        include_once('media.php');
+        include_once('mediapage.php');
     } else if ($_GET['issuearchive']) {
         include_once('archive.php');
     } else if ($_GET['publications']) {

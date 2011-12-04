@@ -94,8 +94,6 @@
 		<div class="clear"></div>
 		<p class="grid_12" >Coming soon...</p>
 		
-		
-		
 		<?php } ?>
 		
 	</div>
