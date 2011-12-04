@@ -8,8 +8,10 @@
  */
 
 require_once('config.inc.php');
-require_once('article.inc.php');
+//require_once('article.inc.php');
 require_once('const.inc.php');
+require_once('core/email.inc.php');
+require_once('core/comment.inc.php');
 require_once('rss.inc.php');
 
 function global_text($sect,$return) { // 0 stripped value, 1 array
@@ -650,7 +652,7 @@ function update_login_name($user,$name) {
  */
 
 /*
- * Check if comment exists in database
+ * Depreciated: Check if comment exists in database
  *
  * $article - id of article that comment relates to
  * $user    - username of commenter 
@@ -1160,8 +1162,7 @@ function like_comment($comment,$user,$bool) {
             return true;
         else
             die(mysql_error());
-    }
-    else
+    } else
         return false;
 }
 
