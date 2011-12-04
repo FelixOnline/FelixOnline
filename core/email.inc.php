@@ -82,18 +82,33 @@ class Email {
     public function send() {
         foreach($this->to as $key => $email) {
             if(LOCAL) { // if on local machine
-                $file = $this->emailFolder.date('Y-m-d H:i:s').' '.$this->subject.' '.$key.'.txt';
-                $fh = fopen($file, 'w') or die("can't open file");
-                $body = 'TO: '.$email."\r\n";
-                $body .= 'SUBJECT: '.$this->subject."\r\n";
-                $body .= "CONTENT: \r\n";
-                $body .= $this->content;
-                fwrite($fh, $body);
-                fclose($fh);
+                $this->logEmail($key, $email);
             } else { 
                 mail($email, $this->subject, $this->content, $this->headers);
             }
+
+            /* if logging emails */
+            if(LOG_EMAILS == true && !LOCAL) {
+                $this->logEmail($key, $email);
+            }
         }
+    }
+
+    /*
+     * Private: Log email into file
+     *
+     * $key - identifier for email when sending multiple
+     * $email - email address
+     */
+    private function logEmail($key, $email) {
+        $file = $this->emailFolder.date('Y-m-d H:i:s').' '.$this->subject.' '.$key.'.txt';
+        $fh = fopen($file, 'w');
+        $body = 'TO: '.$email."\r\n";
+        $body .= 'SUBJECT: '.$this->subject."\r\n";
+        $body .= "CONTENT: \r\n";
+        $body .= $this->content;
+        fwrite($fh, $body);
+        fclose($fh);
     }
 
 	public function printThis() {
