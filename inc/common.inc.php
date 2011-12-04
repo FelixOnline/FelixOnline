@@ -393,6 +393,8 @@ function logout() {
     $_SESSION['felix']['loggedin'] = false;
     if(isset($_COOKIE['felixonline']))
         setcookie("felixonline", "", time(), "/");
+    if(isset($_COOKIE['felixonlinesession']))
+        setcookie("felixonlinesession", "", time(), "/");
 }
 
 function logout_admin() {
