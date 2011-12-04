@@ -126,7 +126,7 @@
 									</tr>
 									<tr>
 										<td><label for="remember">Remember Me: </label></td>
-										<td><input type="checkbox" name="remember" id="rememberButton" value="rememberme" /></td>
+										<td><input type="checkbox" name="remember" id="rememberButton" value="rememberme" checked="checked" /></td>
 									</tr>
 									<tr>
 										<td></td><td><input type="submit" value="Login (SSL)" name="login" id="submit"/></td>
