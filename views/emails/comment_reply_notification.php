@@ -25,7 +25,7 @@ $firstname = explode(' ', get_vname_by_uname_db($comment->getUser()));
 </p>
 
 <p>
-    <a href="<?php echo full_article_url($reply->getID()).'#comment'.$reply->getID(); ?>">View Comment</a>
+    <a href="<?php echo full_article_url($reply->getArticle()).'#comment'.$reply->getID(); ?>">View Comment</a>
 </p>
 
 <p>Lots of love,</br>

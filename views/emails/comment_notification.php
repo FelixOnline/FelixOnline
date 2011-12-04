@@ -7,7 +7,7 @@
 ?>
 <p>
 <?php if(!$comment->isExternal()) { ?>
-    <a href="<?php echo STANDARD_URL.'user/'.$comment->getUser();?>"><?php echo $comment->getName(); ?></a>
+    <a href="<?php echo STANDARD_URL.'user/'.$comment->getUser();?>/"><?php echo $comment->getName(); ?></a>
 <?php } else { ?>
     <?php echo $comment->getName(); ?>
 <?php } ?>
@@ -18,7 +18,7 @@
 </p>
 
 <p>
-    <a href="<?php echo full_article_url($comment->getID()).'#comment'.$comment->getID(); ?>">View Comment</a>
+    <a href="<?php echo full_article_url($comment->getArticle()).'#comment'.$comment->getID(); ?>">View Comment</a>
 </p>
 
 <p>Lots of love,
