@@ -61,7 +61,6 @@ class Email {
      * Public: Set content of email
      *
      * $content - content string (html)
-     *
      */
     public function setContent($content) {
         $this->content = $content;

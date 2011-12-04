@@ -129,7 +129,7 @@ class Comment {
             $output .= '<a href="'.curPageURLNonSecure().'#comment'.$this->reply->getID().'" id="replyLink">';
             $output .= '@'.$this->reply->getName().':</a> '; 
         } 
-        $output .= html_entity_decode(nl2br(trim($this->content))); 
+        $output .= nl2br(trim($this->content)); 
         return $output;
     }
 
@@ -297,7 +297,7 @@ class Comment {
      * Returns content
      */
     public function setContent($content) {
-        $this->content = mysql_real_escape_string(get_correct_utf8_mysql_string($content));
+        $this->content = $content;
         return $this->content;
     }
 
@@ -361,8 +361,9 @@ class Comment {
      * Returns id of new comment
      */
     public function insert() {
+        $content = mysql_real_escape_string(get_correct_utf8_mysql_string($this->content));
         if(!$this->external) { // if internal
-            $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('".$this->article."','".$this->user."','".$this->content."','".$this->getReplyID()."')"; // insert comment into database
+            $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('".$this->article."','".$this->user."','".$content."','".$this->getReplyID()."')"; // insert comment into database
             $rsc = $this->dbquery($sql);
             $this->id = mysql_insert_id(); // get id of inserted comment
 
@@ -385,7 +386,7 @@ class Comment {
             $akismet->setPermalink(full_article_url($this->article));
 
             if($akismet->isCommentSpam()) { // if comment is spam
-                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$this->name."','".$this->content."',0,'".$_SERVER['REMOTE_ADDR']."',0,'".$this->getReplyID()."',1)";
+                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$this->name."','".$content."',0,'".$_SERVER['REMOTE_ADDR']."',0,'".$this->getReplyID()."',1)";
                 $rsc = $this->dbquery($sql);
                 $this->id = mysql_insert_id(); // get id of inserted comment
 
@@ -395,7 +396,7 @@ class Comment {
 
                 return 'spam';
             } else {
-                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply) VALUES ('".$this->article."','".$this->name."','".$this->content."',1,'".$_SERVER['REMOTE_ADDR']."',1,'".$this->getReplyID()."')";
+                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply) VALUES ('".$this->article."','".$this->name."','".$content."',1,'".$_SERVER['REMOTE_ADDR']."',1,'".$this->getReplyID()."')";
                 $rsc = $this->dbquery($sql);
                 $this->id = mysql_insert_id(); // get id of inserted comment
 
