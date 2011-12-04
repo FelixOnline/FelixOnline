@@ -399,11 +399,8 @@ class Comment {
                 $rsc = $this->dbquery($sql);
                 $this->id = mysql_insert_id(); // get id of inserted comment
 
-                if($this->emailExternalComment()) {
-                    return $this->id;
-                } else {
-                    return false;
-                }
+                $this->emailExternalComment();
+                return $this->id;
             }
         }
     }
