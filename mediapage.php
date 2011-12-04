@@ -71,7 +71,11 @@
 				<div class="grid_3 videocont video-block play">
 					<a href="media/video/<?=$row['id']?>/<?=urlise_text($row['title'])?>" class="mosaic-overlay">&nbsp;</a>
 					<div class="mosaic-backdrop">
-						<img src="http://i.ytimg.com/vi/<?=$row['video_id']?>/0.jpg" width="210px"/>
+                        <?php if($row['site'] == 'youtube') { ?>
+                            <img src="http://i.ytimg.com/vi/<?=$row['video_id']?>/0.jpg" width="210px"/>
+                        <?php } else {?>
+                            <img src="<?php echo $row['thumbnail'];?>" width="210px" />     
+                        <?php } ?>
 						<h5><?=$row['title']?></h5>
 					</div>
 				</div>

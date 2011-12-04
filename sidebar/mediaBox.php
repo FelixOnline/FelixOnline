@@ -28,7 +28,11 @@
 			$row = mysql_fetch_array( $result );
 		?>
 		<a href="media/video/<?=$row['id']?>/<?=urlise_text($row['title'])?>/">
-			<img src="http://i.ytimg.com/vi/<?=$row['video_id']?>/0.jpg" width="258px"/>
+            <?php if($row['site'] == 'youtube') { ?>
+                <img src="http://i.ytimg.com/vi/<?=$row['video_id']?>/0.jpg" width="258px"/>
+            <?php } else {?>
+                <img src="<?php echo $row['thumbnail'];?>" width="258px" />     
+            <?php } ?>
 			<p><?php echo $row['title'];?></p>
 		</a>
 	</div>
