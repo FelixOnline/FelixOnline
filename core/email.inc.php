@@ -82,7 +82,7 @@ class Email {
     public function send() {
         foreach($this->to as $key => $email) {
             if(LOCAL) { // if on local machine
-                $file = $this->emailFolder.date('Y-m-d H:i:s').' '.$this->subject.'.txt';
+                $file = $this->emailFolder.date('Y-m-d H:i:s').' '.$this->subject.' '.$key.'.txt';
                 $fh = fopen($file, 'w') or die("can't open file");
                 $body = 'TO: '.$email."\r\n";
                 $body .= 'SUBJECT: '.$this->subject."\r\n";
@@ -90,12 +90,15 @@ class Email {
                 $body .= $this->content;
                 fwrite($fh, $body);
                 fclose($fh);
-                return true;
             } else { 
-                return mail($email, $this->subject, $this->content, $this->headers);
+                mail($email, $this->subject, $this->content, $this->headers);
             }
         }
     }
+
+	public function printThis() {
+		print_r($this);
+	}
 }
 
 ?>

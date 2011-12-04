@@ -431,7 +431,7 @@ class Comment {
 
         $email->setContent($message);
 
-        return $email->send();
+        $email->send();
     }
 
     /*
