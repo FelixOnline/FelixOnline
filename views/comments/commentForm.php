@@ -35,7 +35,7 @@
     if (!$uname) { ?>
         <h5>Comment anonymously or <a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox">log in</a></h5>
         <div id="info">
-            <p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and moderated later. Read our <a href="<?php echo curPageURLNonSecure(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
+            <p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and are moderated later. Read our <a href="<?php echo curPageURLNonSecure(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
         </div>
     <?php } else { ?>
         <h5>Leave a comment as <a href="user/<?php echo $uname;?>/" title="Profile Page"><?php echo get_vname();?></a></h5>

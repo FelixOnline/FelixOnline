@@ -258,11 +258,11 @@ class Comment {
      *
      * $id - id of comment
      *
-     * Returns comment object
+     * Returns id 
      */
     private function setID($id) {
         $this->id = $id;
-        return $this;
+        return $this->id;
     }
 
     /*
@@ -270,10 +270,11 @@ class Comment {
      *
      * $external - flag for if comment is external or not
      *
-     * Returns TODO
+     * Returns external flag
      */
     public function setExternal($external) {
         $this->external = $external;
+        return $this->external;
     }
 
     /*
@@ -281,10 +282,11 @@ class Comment {
      *
      * $article - id of article
      *
-     * Returns TODO
+     * Returns id of article
      */
     public function setArticle($article) {
         $this->article = $article;
+        return $this->article;
     }
 
     /*
@@ -292,37 +294,48 @@ class Comment {
      *
      * $content - comment content (no need to be escaped etc)
      *
-     * Returns TODO
+     * Returns content
      */
     public function setContent($content) {
         $this->content = mysql_real_escape_string(get_correct_utf8_mysql_string($content));
+        return $this->content;
     }
 
     /*
      * Public: Set user
      *
      * $username - username of user commenting
+     *
+     * Returns user
      */
     public function setUser($username) {
         $this->user = $username;
+        $this->name = get_vname_by_uname_db($this->user);
+        return $this->user;
     }
 
     /*
      * Public: Set name of commenter (external only)
      *
      * $name - name of commenter
+     *
+     * Returns name
      */
     public function setName($name) {
         $this->name = mysql_real_escape_string(get_correct_utf8_mysql_string($name));
+        return $this->name;
     }
 
     /*
      * Public: Set reply of comment
      *
      * $reply - id of comment that this comment is replying to
+     *
+     * Returns reply id
      */
     public function setReply($reply) {
         $this->reply = new Comment(mysql_real_escape_string($reply));
+        return $this->reply;
     }
 
     /*
@@ -333,12 +346,12 @@ class Comment {
      */
     public function commentExists() {
         if(!$this->external) {
-            $sql = "SELECT id FROM `comment` WHERE article=".$this->article." AND user='".$this->user."' AND comment='".$this->content."' AND `active`=1";
+            $sql = "SELECT COUNT(*) FROM `comment` WHERE article=".$this->article." AND user='".$this->user."' AND comment='".$this->content."' AND `active`=1";
         } else {
-            $sql = "SELECT id FROM `comment_ext` WHERE article=".$this->article." AND name='".$this->name."' AND comment='".$this->content."'";
+            $sql = "SELECT COUNT(*) FROM `comment_ext` WHERE article=".$this->article." AND name='".$this->name."' AND comment='".$this->content."'";
         }
         if($rsc = $this->dbquery($sql)) {
-            return mysql_num_rows($rsc);
+            return mysql_result($rsc,0);
         }
     }
 
@@ -354,29 +367,11 @@ class Comment {
             $this->id = mysql_insert_id(); // get id of inserted comment
 
             if($this->reply && !$this->reply->isExternal()) { // if comment is replying to a comment 
-                /* Send email */
-                $email = new Email();
-                $email->setTo(get_user_email_full($this->reply->getUser()));
-                $email->setSubject($this->getName().' has replied to your comment on '.get_article_title($this->article));
-
-                ob_start();
-                $comment = $this->reply;
-                $reply = $this;
-                include('views/emails/comment_reply_notification.php');
-                $message = ob_get_contents();
-                ob_end_clean();
-
-                $email->setContent($message);
-
-                $email->send();
+                $this->emailReply();
             }
 
-            email_article_comment(
-                $this->article,
-                $this->user,
-                $this->content,
-                $this->id
-            ); // email comment to authors of article
+            /* email authors of article */
+            $this->emailAuthors();
 
             return $this->id; // return new comment id
         } else { // if external comment
@@ -404,26 +399,78 @@ class Comment {
                 $rsc = $this->dbquery($sql);
                 $this->id = mysql_insert_id(); // get id of inserted comment
 
-                /* Send email */
-                $email = new Email();
-                $email->setTo(EMAIL_EXTCOMMENT_NOTIFYADDR);
-                $email->setSubject('New comment to approve on "'.get_article_title($this->article).'"');
-
-                ob_start();
-                $comment = $this;
-                include('views/emails/new_external_comment.php');
-                $message = ob_get_contents();
-                ob_end_clean();
-
-                $email->setContent($message);
-
-                if($email->send()) {
+                if($this->emailExternalComment()) {
                     return $this->id;
                 } else {
                     return false;
                 }
             }
         }
+    }
+
+    /*
+     * Private: Email authors of article
+     */
+    private function emailAuthors() {
+        $email = new Email();
+        $authors = get_article_authors_uname($this->article);
+        foreach($authors as $author) {
+            if(!($emailAddress = get_user_email($author)) && !LOCAL) {
+                $emailAddress = ldap_get_mail($author);
+            }
+            $email->setTo($emailAddress);
+        }
+
+        $email->setSubject($this->getName().' has commented on '.get_article_title($this->article));
+
+        ob_start();
+        $comment = $this;
+        include('views/emails/comment_notification.php');
+        $message = ob_get_contents();
+        ob_end_clean();
+
+        $email->setContent($message);
+
+        return $email->send();
+    }
+
+    /*
+     * Private: Email comment author with reply
+     */
+    private function emailReply() {
+        $email = new Email();
+        $email->setTo(get_user_email_full($this->reply->getUser()));
+        $email->setSubject($this->getName().' has replied to your comment on '.get_article_title($this->article));
+
+        ob_start();
+        $comment = $this->reply;
+        $reply = $this;
+        include('views/emails/comment_reply_notification.php');
+        $message = ob_get_contents();
+        ob_end_clean();
+
+        $email->setContent($message);
+
+        return $email->send();
+    }
+
+    /*
+     * Private: Email felix on new external comment
+     */
+    private function emailExternalComment() {
+        /* Send email */
+        $email = new Email();
+        $email->setTo(EMAIL_EXTCOMMENT_NOTIFYADDR);
+        $email->setSubject('New comment to approve on "'.get_article_title($this->article).'"');
+
+        ob_start();
+        $comment = $this;
+        include('views/emails/new_external_comment.php');
+        $message = ob_get_contents();
+        ob_end_clean();
+
+        $email->setContent($message);
+        return $email->send();
     }
 
     /*
