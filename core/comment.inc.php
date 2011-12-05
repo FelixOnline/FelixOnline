@@ -410,8 +410,11 @@ class Comment {
      * Private: Email authors of article
      */
     private function emailAuthors() {
-        $email = new Email();
         $authors = get_article_authors_uname($this->article);
+        if(in_array($this->user, $authors)) { // if author of comment is one of the authors
+            $authors = array_diff($authors, array($this->user)); // remove them from the author list
+        }
+        $email = new Email();
         foreach($authors as $author) {
             if(!($emailAddress = get_user_email($author)) && !LOCAL) {
                 $emailAddress = ldap_get_mail($author);
