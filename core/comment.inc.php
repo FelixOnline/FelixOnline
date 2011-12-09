@@ -448,7 +448,7 @@ class Comment {
         ob_start();
         $comment = $this->reply;
         $reply = $this;
-        include('views/emails/comment_reply_notification.php');
+        include(BASE_DIRECTORY.'/views/emails/comment_reply_notification.php');
         $message = ob_get_contents();
         ob_end_clean();
 
@@ -468,7 +468,7 @@ class Comment {
 
         ob_start();
         $comment = $this;
-        include('views/emails/new_external_comment.php');
+        include(BASE_DIRECTORY.'/views/emails/new_external_comment.php');
         $message = ob_get_contents();
         ob_end_clean();
 
