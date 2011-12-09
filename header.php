@@ -15,86 +15,84 @@
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <meta name="keywords" content="felix, student news, student newspaper, felix online, imperial college union, imperial college, felixonline"/>
-  <?php
-    $article = $_GET['article'];
-    $header = '';
-    if ($article != '') {
-        $header .= get_article_title($article).' - '.get_article_category($article).' - ';
-    } else if(isset($_GET['cat']) && get_category_label_by_cat($_GET['cat'])) {
-        $header .= get_category_label_by_cat($_GET['cat']).' - ';
-    } else if(isset($_GET['id']) && check_user($_GET['id'])) {
-        $header .= get_vname_by_uname_db($_GET['id']).' - ';
-    } else if(isset($_GET['issuearchive'])) {
-        $header .= 'Issue Archive - ';
-    } else if(isset($_GET['media'])) {
-        if($_GET['media']=='photo' && isset($_GET['name']))
-            $header .= get_album_name($_GET['name']).' - ';
-        if($_GET['media']=='video' && isset($_GET['name']))
-            $header .= get_video_name($_GET['name']).' - ';
-        $header .= 'Media - ';
-    } else {
-        $ext = ' - The student voice of Imperial College London';
-    }
-
-    $header .= 'Felix Online';
-    if($ext)
-        $header .= $ext;
-  ?>
-  <title><?php echo $header;?></title>
-  <base href="<?php echo BASE_URL; ?>">
-  <meta name="description" content="Felix Online is the online companion to Felix, the student newspaper of Imperial College London.">
-  <meta name="author" content="Jonathan Kim">
-
-  <meta name="google-site-verification" content="V5LPwqv0BzMHvfMOIZvSjjJ-8tJc4Mi1A-L2AEbby50" />
-
-  <meta property="og:site_name" content="Felix Online"/>
-  <meta property="fb:page_id" content="206951902659704" />
-  <?php
-    if(isset($_GET['article'])) { ?>
-  <meta property="og:image" content="http://felixonline.co.uk/inc/timthumb.php?src=/<?php echo get_img_uri(get_img_id($article, 1)); ?>&w=100px&zc=1&a=t"/>
-  <meta property="og:title" content="<?php echo get_article_title($article).' - '.get_article_category($article).' - '.'Felix Online'; ?>"/>
-  <meta property="og:url" content="http://felixonline.co.uk/<?php echo article_url($article); ?>"/>
-  <meta property="og:type" content="article"/>
-  <meta property="og:description" content="<?php echo get_article_teaser($article);?>"/>
+    <meta name="keywords" content="felix, student news, student newspaper, felix online, imperial college union, imperial college, felixonline"/>
     <?php
-        } else if($_GET['media'] == 'video' && isset($_GET['name'])) { ?>
-        <meta property="og:description" content="<?php echo get_video_desc($_GET['name']);?>"/>
-        <meta property="og:image" content="http://i.ytimg.com/vi/<?=get_video_id($_GET['name'])?>/0.jpg"/>
+        $article = $_GET['article'];
+        $header = '';
+        if ($article != '') {
+            $header .= get_article_title($article).' - '.get_article_category($article).' - ';
+        } else if(isset($_GET['cat']) && get_category_label_by_cat($_GET['cat'])) {
+            $header .= get_category_label_by_cat($_GET['cat']).' - ';
+        } else if(isset($_GET['id']) && check_user($_GET['id'])) {
+            $header .= get_vname_by_uname_db($_GET['id']).' - ';
+        } else if(isset($_GET['issuearchive'])) {
+            $header .= 'Issue Archive - ';
+        } else if(isset($_GET['media'])) {
+            if($_GET['media']=='photo' && isset($_GET['name']))
+                $header .= get_album_name($_GET['name']).' - ';
+            if($_GET['media']=='video' && isset($_GET['name']))
+                $header .= get_video_name($_GET['name']).' - ';
+            $header .= 'Media - ';
+        } else {
+            $ext = ' - The student voice of Imperial College London';
+        }
+
+        $header .= 'Felix Online';
+        if($ext)
+            $header .= $ext;
+    ?>
+    <title><?php echo $header;?></title>
+    <base href="<?php echo BASE_URL; ?>">
+    <meta name="description" content="Felix Online is the online companion to Felix, the student newspaper of Imperial College London.">
+    <meta name="author" content="Jonathan Kim">
+
+    <meta name="google-site-verification" content="V5LPwqv0BzMHvfMOIZvSjjJ-8tJc4Mi1A-L2AEbby50" />
+
+    <meta property="og:site_name" content="Felix Online"/>
+    <meta property="fb:page_id" content="206951902659704" />
+    <?php
+        if(isset($_GET['article'])) { ?>
+            <meta property="og:image" content="http://felixonline.co.uk/inc/timthumb.php?src=/<?php echo get_img_uri(get_img_id($article, 1)); ?>&w=100px&zc=1&a=t"/>
+            <meta property="og:title" content="<?php echo get_article_title($article).' - '.get_article_category($article).' - '.'Felix Online'; ?>"/>
+            <meta property="og:url" content="http://felixonline.co.uk/<?php echo article_url($article); ?>"/>
+            <meta property="og:type" content="article"/>
+            <meta property="og:description" content="<?php echo get_article_teaser($article);?>"/>
+    <?php } else if($_GET['media'] == 'video' && isset($_GET['name'])) { ?>
+            <meta property="og:description" content="<?php echo get_video_desc($_GET['name']);?>"/>
+            <meta property="og:image" content="http://i.ytimg.com/vi/<?=get_video_id($_GET['name'])?>/0.jpg"/>
     <?php } else if($_GET['media'] == 'photo' && isset($_GET['name'])) { ?>
-        <?php if(get_album_desc($_GET['name'])) { ?>
-        <meta property="og:description" content="<?php echo get_album_desc($_GET['name']);?>"/>
-        <?php } ?>
-        <meta property="og:title" content="<?php echo get_album_name($_GET['name']).' - Media - Felix Online'; ?>"/>
-        <meta property="og:image" content="http://felixonline.co.uk/inc/timthumb.php?src=/gallery/gallery_images/images/<?=get_album_image($_GET['name'])?>&w=50px&zc=1&a=t"/>
+            <?php if(get_album_desc($_GET['name'])) { ?>
+                <meta property="og:description" content="<?php echo get_album_desc($_GET['name']);?>"/>
+            <?php } ?>
+            <meta property="og:title" content="<?php echo get_album_name($_GET['name']).' - Media - Felix Online'; ?>"/>
+            <meta property="og:image" content="http://felixonline.co.uk/inc/timthumb.php?src=/gallery/gallery_images/images/<?=get_album_image($_GET['name'])?>&w=50px&zc=1&a=t"/>
     <?php } else { ?>
-    <!-- Normal Facebook meta tags -->
-     <meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>
-  <?php } ?>
+            <!-- Normal Facebook meta tags -->
+            <meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>
+    <?php } ?>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-  <link rel="shortcut icon" href="favicon.ico">
+    <!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+    <link rel="shortcut icon" href="favicon.ico">
 
-  <!-- CSS : implied media="all" -->
-  <link id="main_css" rel="stylesheet" href="css/style.css">
+    <!-- CSS : implied media="all" -->
+    <link id="main_css" rel="stylesheet" href="css/style.css">
 
-  <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-12220150-1']);
-      _gaq.push(['_trackPageview']);
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-12220150-1']);
+        _gaq.push(['_trackPageview']);
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
     </script>
-
 </head>
 <body>
 	<div id="topBarCont">

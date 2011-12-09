@@ -1,5 +1,4 @@
 <?php
-
 	/*
 		TODO:
 			Sort out image hiding/alignment mess
@@ -41,7 +40,6 @@
 			log_page_visit($article);
 		}
 	}
-
 ?>
 
 <script>

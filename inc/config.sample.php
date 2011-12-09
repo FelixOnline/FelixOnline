@@ -21,11 +21,11 @@
     /*
      * Change these urls to your local versions, e.g http://localhost/felix
      */
-    //define('STANDARD_URL','http://localhost/felix/');
-    //define('BASE_URL','http://localhost/felix/');
-    //define('ADMIN_URL','http://localhost/felix/engine/');
-	//define('AUTHENTICATION_SERVER','localhost'); // authentication server
-	//define('AUTHENTICATION_PATH','http://localhost/felix/'); // authentication path
+    define('STANDARD_URL','http://localhost/felix/');
+    define('BASE_URL','http://localhost/felix/');
+    define('ADMIN_URL','http://localhost/felix/engine/');
+    define('AUTHENTICATION_SERVER','localhost'); // authentication server
+    define('AUTHENTICATION_PATH','http://localhost/felix/'); // authentication path
 
     define('PRODUCTION_FLAG', true); // if set to true css and js will be minified etc..
     define('LOCAL', false); // if true then site is hosted locally - don't use pam_auth etc. 

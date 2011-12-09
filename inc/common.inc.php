@@ -1,9 +1,11 @@
 <?php
 
 /* 
- * Common function files
+ * Sets up the Felix Online environment 
  *
- * TODO: sort this MESS OUT 
+ * TODO: 
+ *      sort this MESS OUT 
+ *      add authentication script 
  * 
  */
 
@@ -760,6 +762,9 @@ function email_article_comment($article,$user,$comment,$commentid,$name=NULL) {
     return true;
 }
 
+/*
+ * Depreciated
+ */
 function email_comment_reply($article_id,$user,$comment,$commentid,$name=NULL,$replyComment) {
     global $cid;
 
@@ -823,7 +828,6 @@ function insert_comment_ext($article,$name,$comment,$replyName,$replyComment) {
         }
         return true;
     } else {
-
         if($replyComment) { // if reply url
             $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply) VALUES ('$article','$name','$comment',1,'".$_SERVER['REMOTE_ADDR']."',1,'$replyComment')";
         } else {
