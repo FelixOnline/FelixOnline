@@ -17,7 +17,7 @@ $firstname = explode(' ', get_vname_by_uname_db($comment->getUser()));
     } else { ?>
         <a href="<?php echo STANDARD_URL.'user/'.$reply->getUser(); ?>"><?php echo $reply->getName(); ?></a>
 <?php } ?>
- has replied to your comment on <a href="<?php echo full_article_url($reply->getArticle()).'#comment'.$reply->getID(); ?>"><?php echo get_article_title($reply->getID()); ?></a> with: 
+ has replied to your comment on "<a href="<?php echo full_article_url($reply->getArticle()).'#comment'.$reply->getID(); ?>"><?php echo get_article_title($reply->getArticle()); ?></a>" with: 
 </p>
 
 <p>
