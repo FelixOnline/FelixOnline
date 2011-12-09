@@ -427,7 +427,7 @@ class Comment {
             ob_start();
             $comment = $this;
             $user = $author;
-            include('views/emails/comment_notification.php');
+            include(BASE_DIRECTORY.'/views/emails/comment_notification.php');
             $message = ob_get_contents();
             ob_end_clean();
 

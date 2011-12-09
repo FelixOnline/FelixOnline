@@ -31,7 +31,7 @@ class Email {
         'Reply-To: '.EMAIL_REPLYTO_ADDR."\r\n" .
         'X-Mailer: PHP/' . phpversion();
 
-        $this->emailFolder = 'emails/';
+        $this->emailFolder = BASE_DIRECTORY.'/emails/';
     }
 
     /*
