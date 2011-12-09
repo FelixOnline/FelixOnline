@@ -3,10 +3,14 @@
  * New comment notification (to authors) email template
  * 
  * Requires $comment as comment object
+ * and $user as username of person the email is being sent to
  */
+
+$name = explode(' ', get_vname_by_uname_db($user)); 
 ?>
+<p>Hi <?php echo $name[0]; ?></p>
 <p>
-<?php if(!$comment->isExternal()) { ?>
+<?php if(!$comment->isExternal()) { // if internal comment ?>
     <a href="<?php echo STANDARD_URL.'user/'.$comment->getUser();?>/"><?php echo $comment->getName(); ?></a>
 <?php } else { ?>
     <?php echo $comment->getName(); ?>

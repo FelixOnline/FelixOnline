@@ -18,6 +18,7 @@ class Email {
     private $content; // html content of email
     private $headers; // headers for email
     private $emailFolder; // folder to store emails in
+    private $uniqueid; // unique id for email. Used when logging emails to files
 
     /*
      * Constructor for Email class
@@ -61,9 +62,38 @@ class Email {
      * Public: Set content of email
      *
      * $content - content string (html)
+     *
+     * Returns content
      */
     public function setContent($content) {
         $this->content = $content;
+        return $this->content;
+    }
+
+    /*
+     * Public: Prepend content of email
+     * Useful for adding welcome messages etc.
+     *
+     * $message - html string of message
+     *
+     * Returns new message content
+     */
+    public function prependContent($message) {
+        $this->content = $message . $this->content;
+        return $this->content;
+    }
+
+    /*
+     * Public: Append content of email
+     * Add message to the end of an email
+     *
+     * $message - html string of message
+     *
+     * Returns new message content
+     */
+    public function appendContent($message) {
+        $this->content = $this->content . $message;
+        return $this->content;
     }
 
     /*
@@ -73,6 +103,10 @@ class Email {
      */
     public function setHeaders($headers) {
         $this->headers = $headers;
+    }
+
+    public function setUniqueID($id) {
+        $this->uniqueid = $id;
     }
 
     /*
@@ -100,7 +134,7 @@ class Email {
      * $email - email address
      */
     private function logEmail($key, $email) {
-        $file = $this->emailFolder.date('Y-m-d H:i:s').' '.$this->subject.' '.$key.'.txt';
+        $file = $this->emailFolder.date('Y-m-d H:i:s').' '.$this->subject.' '.$key.' '.$this->uniqueid.'.txt';
         $fh = fopen($file, 'w');
         $body = 'TO: '.$email."\r\n";
         $body .= 'SUBJECT: '.$this->subject."\r\n";

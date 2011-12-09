@@ -407,32 +407,34 @@ class Comment {
     }
 
     /*
-     * Private: Email authors of article
+     * Public: Email authors of article
      */
-    private function emailAuthors() {
+    public function emailAuthors() {
         $authors = get_article_authors_uname($this->article);
         if(in_array($this->user, $authors)) { // if author of comment is one of the authors
             $authors = array_diff($authors, array($this->user)); // remove them from the author list
         }
-        $email = new Email();
         foreach($authors as $author) {
             if(!($emailAddress = get_user_email($author)) && !LOCAL) {
                 $emailAddress = ldap_get_mail($author);
             }
+            $email = new Email();
             $email->setTo($emailAddress);
+            $email->setUniqueID($author);
+
+            $email->setSubject($this->getName().' has commented on "'.get_article_title($this->article).'"');
+
+            ob_start();
+            $comment = $this;
+            $user = $author;
+            include('views/emails/comment_notification.php');
+            $message = ob_get_contents();
+            ob_end_clean();
+
+            $email->setContent($message);
+
+            $email->send();
         }
-
-        $email->setSubject($this->getName().' has commented on '.get_article_title($this->article));
-
-        ob_start();
-        $comment = $this;
-        include('views/emails/comment_notification.php');
-        $message = ob_get_contents();
-        ob_end_clean();
-
-        $email->setContent($message);
-
-        $email->send();
     }
 
     /*
@@ -441,7 +443,7 @@ class Comment {
     private function emailReply() {
         $email = new Email();
         $email->setTo(get_user_email_full($this->reply->getUser()));
-        $email->setSubject($this->getName().' has replied to your comment on '.get_article_title($this->article));
+        $email->setSubject($this->getName().' has replied to your comment on "'.get_article_title($this->article).'"');
 
         ob_start();
         $comment = $this->reply;
@@ -527,6 +529,7 @@ class Comment {
             return false;
         }
     }
+
     /*
      * Utility functions
      */
@@ -534,6 +537,22 @@ class Comment {
 	public function printThis() {
 		print_r($this);
 	}
+
+    private function log($name, $content) {
+        $file = 'emails/'.date('Y-m-d H:i:s').' '.$name.'.txt';
+        $fh = fopen($file, 'a');
+        if(is_string($content)) {
+            $body = $content."\r\n";
+        } else {
+            ob_start();
+            print_r($content);
+            $content = ob_get_contents();
+            ob_end_clean();
+            $body = $content."\r\n";
+        }
+        fwrite($fh, $body);
+        fclose($fh);
+    }
 }
 
 ?>
