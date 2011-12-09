@@ -59,6 +59,7 @@ class Comment {
      */
 	public function __construct($id=NULL) {
         global $db;
+        $db->cache_queries = true;
         if($id != NULL) {
             $this->id = $id;
             if($id < EXTERNAL_COMMENT_ID) { // if id is less than external comment id start
@@ -72,6 +73,7 @@ class Comment {
                     $this->reply = new Comment($this->reply); // initialise new comment as reply
                 }
                 $this->name = get_vname_by_uname_db($this->user);
+                $db->cache_queries = false;
                 return $this;
             } else {
                 $this->external = true; // comment is external
@@ -83,6 +85,7 @@ class Comment {
                 if($this->reply) {
                     $this->reply = new Comment($this->reply); // initialise new comment as reply
                 }
+                $db->cache_queries = false;
                 return $this;
             }
         }
