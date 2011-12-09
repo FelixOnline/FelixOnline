@@ -3,12 +3,15 @@
      * Create a config.inc.php with the information below to run on a local dev machine
      */
 
-    $db = "DB_TABLE";
+    $dbname = "DB_TABLE";
     $host = "localhost";
     $user = "DB_USER";
     $pass = "DB_PASSWORD";
     $cid = mysql_connect($host,$user,$pass);
-    $dbok = mysql_select_db($db,$cid);
+    $dbok = mysql_select_db($dbname,$cid);
+
+    /* Initialise ezSQL database connection */
+    $db = new ezSQL_mysql($user,$pass,$dbname,$host);
 
     /* Forces charset to be utf8 */
     mysql_set_charset('utf8',$cid);

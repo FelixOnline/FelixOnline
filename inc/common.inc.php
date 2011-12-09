@@ -9,6 +9,8 @@
  * 
  */
 
+require_once(dirname(__FILE__).'/ez_sql_core.php');
+require_once(dirname(__FILE__).'/ez_sql_mysql.php');
 require_once(dirname(__FILE__).'/config.inc.php');
 //require_once('article.inc.php');
 require_once(dirname(__FILE__).'/const.inc.php');

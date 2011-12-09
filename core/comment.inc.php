@@ -46,6 +46,7 @@ class Comment {
     private $spam; // if comment is spam [external]
     private $likes; // number of comment likes
     private $dislikes; // number of comment dislikes
+    private $db; // grab global $db variable for database connection
 	
     /*
      * Constructor for Comment class
@@ -57,54 +58,32 @@ class Comment {
      * Returns comment object. Returns false if something goes wrong.
      */
 	public function __construct($id=NULL) {
+        global $db;
         if($id != NULL) {
             $this->id = $id;
             if($id < EXTERNAL_COMMENT_ID) { // if id is less than external comment id start
                 $this->external = false; // comment is internal
-                $sql = "SELECT `article`,`user`,`comment`,UNIX_TIMESTAMP(`timestamp`),`active`,`reply`,`likes`,`dislikes` FROM `comment` WHERE id=$id";
-                if($rsc = $this->dbquery($sql)) {
-                    list(
-                        $this->article,
-                        $this->user,
-                        $this->content,
-                        $this->timestamp,
-                        $this->active,
-                        $this->reply,
-                        $this->likes,
-                        $this->dislikes
-                    ) = mysql_fetch_array($rsc);
-                    if($this->reply) {
-                        $this->reply = new Comment($this->reply); // initialise new comment as reply
-                    }
-                    $this->name = get_vname_by_uname_db($this->user);
-                    return $this;
-                } else {
-                    return false;
+                $sql = "SELECT `article`,`user`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`reply`,`likes`,`dislikes` FROM `comment` WHERE id=$id";
+                $comment = $db->get_row($sql);
+                foreach($comment as $key => $value) {
+                    $this->{$key} = $value; // store each row into object
                 }
+                if($this->reply) {
+                    $this->reply = new Comment($this->reply); // initialise new comment as reply
+                }
+                $this->name = get_vname_by_uname_db($this->user);
+                return $this;
             } else {
                 $this->external = true; // comment is external
-                $sql = "SELECT `article`,`name`,`comment`,UNIX_TIMESTAMP(`timestamp`),`active`,`IP`,`pending`,`reply`,`spam`,`likes`,`dislikes` FROM `comment_ext` WHERE id=$id";
-                if($rsc = $this->dbquery($sql)) {
-                    list(
-                        $this->article,
-                        $this->name,
-                        $this->content,
-                        $this->timestamp,
-                        $this->active,
-                        $this->ip,
-                        $this->pending,
-                        $this->reply,
-                        $this->spam,
-                        $this->likes,
-                        $this->dislikes
-                    ) = mysql_fetch_array($rsc);
-                    if($this->reply) {
-                        $this->reply = new Comment($this->reply); // initialise new comment as reply
-                    }
-                    return $this;
-                } else {
-                    return false;
+                $sql = "SELECT `article`,`name`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`IP`,`pending`,`reply`,`spam`,`likes`,`dislikes` FROM `comment_ext` WHERE id=$id";
+                $comment = $db->get_row($sql);
+                foreach($comment as $key => $value) {
+                    $this->{$key} = $value; // store each row into object
                 }
+                if($this->reply) {
+                    $this->reply = new Comment($this->reply); // initialise new comment as reply
+                }
+                return $this;
             }
         }
 	}
