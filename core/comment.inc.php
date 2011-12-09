@@ -226,9 +226,10 @@ class Comment {
      * Returns true or false
      */
     public function userLikedComment($user) {
+        global $db;
         $sql = "SELECT COUNT(*) FROM `comment_like` WHERE user='$user' AND comment=".$this->id;
-        $rsc = $this->dbquery($sql);
-        return mysql_result($rsc,0);
+        $count = $db->get_var($sql);
+        return $count;
     }
 
     /*

@@ -43,7 +43,7 @@
                 if (!is_logged_in()) {?>
                     <a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" class="likeComment">Like</a>
                 <?php } else {
-                    if ($comment->userLikedComment(is_logged_in())) echo 'Liked'; // if user has already liked or disliked comment then remove link
+                    if ($liked = $comment->userLikedComment(is_logged_in())) echo 'Liked'; // if user has already liked or disliked comment then remove link
                     else {?>
                         <a href="<?php echo curPageURLNonSecure();?>#" id="like">Like</a>
                 <?php } } ?>
@@ -52,7 +52,7 @@
             <li><?php if (!is_logged_in()) { ?>
                 <a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" class="dislikeComment">Dislike</a>
                 <?php } else {
-                    if ($comment->userLikedComment(is_logged_in())) echo 'Disliked';
+                    if ($liked) echo 'Disliked';
                     else {?>
                     <a href="<?php echo curPageURLNonSecure();?>#" id="dislike">Dislike</a>
                 <?php } }?>

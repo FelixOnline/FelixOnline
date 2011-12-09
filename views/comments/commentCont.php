@@ -1,8 +1,4 @@
 <?php
-    $ctime = microtime();
-    $ctime = explode(' ', $ctime);
-    $ctime = $ctime[1] + $ctime[0];
-    $cstarttime = $ctime;
     $sql = "SELECT id,timestamp FROM (".
         " SELECT comment.id,UNIX_TIMESTAMP(comment.timestamp) AS timestamp FROM `comment` WHERE article=$article AND active=1". // select all internal comments 
         " UNION SELECT comment_ext.id,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND pending=0 AND spam=0". // select external comments that are not spam
@@ -20,21 +16,16 @@
     <!-- Comments container -->
     <div id="commentCont">
         <?php
+            $db->timer_start('comment');
             while ($row = mysql_fetch_array($result)) {
                 $comment = new Comment($row['id']);
-                include('views/comments/comment.php');
+                include('views/comments/commentSingle.php');
             }
+            $ctotaltime = $db->timer_elapsed('comment');
+            echo '<!-- Comments where generated in ' .$ctotaltime. ' seconds.-->';
         ?>
     </div>
     
     <!-- Comment form -->
     <?php include('views/comments/commentForm.php'); ?>
 </div>
-<?php
-      $ctime = microtime();
-      $ctime = explode(" ", $ctime);
-      $ctime = $ctime[1] + $ctime[0];
-      $cendtime = $ctime;
-      $ctotaltime = ($cendtime - $cstarttime);
-      echo '<!-- Comments where generated in ' .$ctotaltime. ' seconds.-->';
-?>
