@@ -21,9 +21,7 @@
     } else if ($_GET['publications']) {
         include_once('publications.php');
     } else {
-
         include('navigation.php');
-
         //  Change display dependant on $_GET variable
         $get = array_shift(array_keys($_GET));
         switch ($get) {
@@ -58,8 +56,6 @@
                 include_once('404.php');
                 break;
         }
-
     } // end of media page statement
-
     include('footer.php'); 
 ?>
