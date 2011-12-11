@@ -52,7 +52,7 @@ class Article {
         $this->db->cache_queries = true;
         if($id !== NULL) { // if creating an already existing article object
             $this->id = $id;
-            $sql = "SELECT `title`,`short_title`,`teaser`,`author`,`approvedby`,`category`,UNIX_TIMESTAMP(`date`) as date,UNIX_TIMESTAMP(`published`) as publishdate,`hidden`,`text1`,`text2`,`img1`,`img2`,`img2lr`,`hits` FROM `article` AS a INNER JOIN `category` AS cat ON (a.category=cat.id) WHERE a.id=$id";
+            $sql = "SELECT `title`,`short_title`,`teaser`,`author`,`approvedby`,`category`,UNIX_TIMESTAMP(`date`) as date,UNIX_TIMESTAMP(`published`) as publishdate,`hidden`,`text1`,`text2`,`img1`,`img2`,`img2lr`,`hits` FROM `article` WHERE id=".$this->id;
             $article = $this->db->get_row($sql);
             foreach($article as $key => $value) { 
                 $this->{$key} = $value; // store each value into object
@@ -67,6 +67,7 @@ class Article {
      * Getter functions 
      */	
     public function getID()             { return $this->id; }
+	public function getTitle()          { return $this->title; }
 	public function getAuthor()         { return $this->author; }
 	public function getApprovedby()     { return $this->approvedby; }
 	public function getHits()           { return $this->hits; }
@@ -136,9 +137,10 @@ class Article {
 	
 	public function getTeaser() {
 		if ($this->teaser)
-			return str_replace('<br/>','',preg_replace($this->search,'',$this->teaser));
+            return str_replace('<br/>','',strip_tags($this->teaser));
+			//return str_replace('<br/>','',preg_replace($this->search,'',$this->teaser));
 		else {
-			$text = $this->get_text(1);
+			$text = $this->getText(1);
 			return trim(substr(strip_tags($text),0,strrpos(substr(strip_tags($text),0,TEASER_LENGTH),' '))).'...';
 		}
 	}
@@ -157,9 +159,6 @@ class Article {
 		return $this->$var;
 	}
 	
-	public function getTitle() {
-		return $this->title;
-	}
 
     /*
      * Public: Get number of comments on article
