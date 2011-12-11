@@ -41,7 +41,7 @@ class Comment {
     private $external = false; // if comment is external or not. Default false
     private $timestamp; // unix timestamp of comment submission time
     private $active; // whether comment is active
-    private $ip; // ip of commenter [external]
+    private $IP; // ip of commenter [external]
     private $pending; // if comment is pending [external]
     private $spam; // if comment is spam [external]
     private $likes; // number of comment likes
@@ -212,7 +212,7 @@ class Comment {
      * Public: Check if comment is pending approval
      */
     public function isPending() {
-        if($this->external && $this->active && $this->pending && $this->ip == $_SERVER['REMOTE_ADDR']) { // if comment is pending for this ip address
+        if($this->external && $this->active && $this->pending && $this->IP == $_SERVER['REMOTE_ADDR']) { // if comment is pending for this ip address
             return true;
         } else {
             return false;
@@ -357,6 +357,7 @@ class Comment {
 
             return $this->id; // return new comment id
         } else { // if external comment
+            $name = $this->db->escape($this->name);
             // check spam using akismet
             require_once('inc/akismet.class.php');
 
@@ -367,7 +368,6 @@ class Comment {
             $akismet->setPermalink(full_article_url($this->article));
 
             if($akismet->isCommentSpam()) { // if comment is spam
-                $name = $this->db->escape($this->name);
                 $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$name."','".$content."',0,'".$_SERVER['REMOTE_ADDR']."',0,'".$this->getReplyID()."',1)";
                 $this->db->query($sql);
                 $this->id = $this->db->insert_id; // get id of inserted comment

@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Article class
+ * Deals with both article retrieval and article submission
+ */
 class Article {
 	private $id; // id of article
 	private $title; // title of article
@@ -21,6 +25,7 @@ class Article {
 	private $img2; // image.id (optional)
 	private $img2lr; // img2 l/r [depreciated? TODO]
 	private $hits; // never write to this
+    private $num_comments; // number of comments
 	private $search = array('@<>@',
 		'@<script[^>]*?>.*?</script>@siU',  // javascript
 		'@<style[^>]*?>.*?</style>@siU',    // style tags
@@ -72,10 +77,10 @@ class Article {
      */
     public function getCategoryCat() {
         if(!$this->category_cat) {
-
-        } else {
-            return $this->category_cat;
+            $sql = "SELECT `cat` FROM `category` WHERE id = ".$this->category;
+            $this->category_cat = $this->db->get_var($sql);
         }
+        return $this->category_cat;
     }
 
     /*
@@ -83,10 +88,10 @@ class Article {
      */
     public function getCategoryLabel() {
         if(!$this->category_label) {
-
-        } else {
-            return $this->category_label;
+            $sql = "SELECT `label` FROM `category` WHERE id = ".$this->category;
+            $this->category_label = $this->db->get_var($sql);
         }
+        return $this->category_label;
     }
 
     /*
@@ -157,12 +162,25 @@ class Article {
 	}
 
     /*
+     * Public: Get number of comments on article
+     *
+     * Returns int
+     */
+    public function getNumComments() {
+        if(!$this->num_comments) {
+            $sql = "SELECT SUM(count) AS count FROM (SELECT article,COUNT(*) AS count FROM `comment` WHERE article=".$this->id." AND `active`=1 GROUP BY article UNION ALL SELECT article,COUNT(*) AS count FROM `comment_ext` WHERE article=$id AND `active`=1 AND `pending`=0 GROUP BY article) AS t GROUP BY article";
+            $this->num_comments = $this->db->get_var($sql);
+        }
+        return $this->num_comments;
+    }
+
+    /*
      * Public: Get full article url
      *
      * Returns string
      */
     public function getURL() {
-
+        return STANDARD_URL.$this->constructURL();
     }
 
     /*
@@ -171,12 +189,10 @@ class Article {
      * Returns string
      */
     private function constructURL() {
-        $cat = get_article_category_cat($this->id);
-
+        $cat = $this->getCategoryCat();
         $title = strtolower($this->title); // Make title lowercase
         $title= preg_replace('/[^\w\d_ -]/si', '', $title); // Remove special characters
         $dashed = str_replace( " ", "-", $title); // Replace spaces with hypens
-
         $output = $cat.'/'.$this->id.'/'.$dashed.'/'; // output: CAT/ID/TITLE/
         return $output;
     }

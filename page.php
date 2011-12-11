@@ -48,7 +48,6 @@
 
 	<!-- Article wrapper -->
 	<div class="container_12">
-
 		<?php if($gallerypage) {
 			// get photo gallery based on id
 			$sql = "SELECT * FROM `media_photo_images` WHERE albumID='".$gallerypage."' ORDER BY id ASC";
