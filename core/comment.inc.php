@@ -55,7 +55,7 @@ class Comment {
      *
      * $id - ID of comment
      *
-     * Returns comment object. Returns false if something goes wrong.
+     * Returns comment object.
      */
 	public function __construct($id=NULL) {
         global $db;
