@@ -20,6 +20,17 @@
 	$db->use_disk_cache = true;
 	$db->cache_dir = 'inc/ezsql_cache'; // Specify a cache dir. Path is taken from calling script
 
+    /*
+     * To actually cache queries put this before any queries that you want to cache:
+     *
+     * $db->cache_queries = true;
+     *  // db queries go here
+     * $db->cache_queries = false;
+     *
+     * This will make sure that only the queries between the two commands will be cached.
+     * ***Only cache queries if they are unlikely to change within the cache timeout***
+     */
+
     /* Forces charset to be utf8 */
     mysql_set_charset('utf8',$db->dbh);
 
