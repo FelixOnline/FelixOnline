@@ -10,11 +10,11 @@
 	$noArticleE = false;
 	$articleMissE = false;
 
-	// IDEA: inline function calling instead of assinging sections to variables? Or use article class
 	if ($_GET['article'] == '') {
 		$noArticleE = true;
 	} else {
 		$article = $_GET['article'];
+        $articleC = new Article($_GET['article']); // initialise new article
 		$sql = "SELECT * FROM `article` WHERE id='$article' AND text1 IS NOT NULL";
 		$result = mysql_query($sql);
 		if (!$result){
