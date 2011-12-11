@@ -135,16 +135,21 @@ class Article {
 		return $this->short_title;
 	}
 	
+    /*
+     * Public: Get article teaser
+     *
+     * Returns string
+     */
 	public function getTeaser() {
-		if ($this->teaser)
+		if ($this->teaser) {
             return str_replace('<br/>','',strip_tags($this->teaser));
 			//return str_replace('<br/>','',preg_replace($this->search,'',$this->teaser));
-		else {
+        } else {
 			$text = $this->getText(1);
 			return trim(substr(strip_tags($text),0,strrpos(substr(strip_tags($text),0,TEASER_LENGTH),' '))).'...';
 		}
 	}
-	
+
 	public function getText($text_id=1) {
 		global $cid;
 		$var = text.$text_id;
