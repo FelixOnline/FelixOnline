@@ -59,13 +59,14 @@ class Comment {
      */
 	public function __construct($id=NULL) {
         global $db;
-        $db->cache_queries = true;
+        $this->db = $db;
+        $this->db->cache_queries = true;
         if($id != NULL) {
             $this->id = $id;
             if($id < EXTERNAL_COMMENT_ID) { // if id is less than external comment id start
                 $this->external = false; // comment is internal
                 $sql = "SELECT `article`,`user`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`reply`,`likes`,`dislikes` FROM `comment` WHERE id=$id";
-                $comment = $db->get_row($sql);
+                $comment = $this->db->get_row($sql);
                 foreach($comment as $key => $value) {
                     $this->{$key} = $value; // store each row into object
                 }
@@ -73,19 +74,19 @@ class Comment {
                     $this->reply = new Comment($this->reply); // initialise new comment as reply
                 }
                 $this->name = get_vname_by_uname_db($this->user);
-                $db->cache_queries = false;
+                $this->db->cache_queries = false;
                 return $this;
             } else {
                 $this->external = true; // comment is external
                 $sql = "SELECT `article`,`name`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`IP`,`pending`,`reply`,`spam`,`likes`,`dislikes` FROM `comment_ext` WHERE id=$id";
-                $comment = $db->get_row($sql);
+                $comment = $this->db->get_row($sql);
                 foreach($comment as $key => $value) {
                     $this->{$key} = $value; // store each row into object
                 }
                 if($this->reply) {
                     $this->reply = new Comment($this->reply); // initialise new comment as reply
                 }
-                $db->cache_queries = false;
+                $this->db->cache_queries = false;
                 return $this;
             }
         }
@@ -179,7 +180,7 @@ class Comment {
     }
 	
     /*
-     * Private: Process a database query
+     * Depreciated: Process a database query
      *
      * $sql - SQL command as a string
      *
@@ -226,9 +227,8 @@ class Comment {
      * Returns true or false
      */
     public function userLikedComment($user) {
-        global $db;
         $sql = "SELECT COUNT(*) FROM `comment_like` WHERE user='$user' AND comment=".$this->id;
-        $count = $db->get_var($sql);
+        $count = $this->db->get_var($sql);
         return $count;
     }
 
@@ -305,7 +305,7 @@ class Comment {
      * Returns name
      */
     public function setName($name) {
-        $this->name = mysql_real_escape_string(get_correct_utf8_mysql_string($name));
+        $this->name = $name;
         return $this->name;
     }
 
@@ -333,9 +333,7 @@ class Comment {
         } else {
             $sql = "SELECT COUNT(*) FROM `comment_ext` WHERE article=".$this->article." AND name='".$this->name."' AND comment='".$this->content."'";
         }
-        if($rsc = $this->dbquery($sql)) {
-            return mysql_result($rsc,0);
-        }
+        return $this->db->get_var($sql);
     }
 
     /* 
@@ -344,11 +342,11 @@ class Comment {
      * Returns id of new comment
      */
     public function insert() {
-        $content = mysql_real_escape_string(get_correct_utf8_mysql_string($this->content));
+        $content = $this->db->escape($this->content);
         if(!$this->external) { // if internal
             $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('".$this->article."','".$this->user."','".$content."','".$this->getReplyID()."')"; // insert comment into database
-            $rsc = $this->dbquery($sql);
-            $this->id = mysql_insert_id(); // get id of inserted comment
+            $this->db->query($sql); // execute query
+            $this->id = $this->db->insert_id; // get id of inserted comment
 
             if($this->reply && !$this->reply->isExternal()) { // if comment is replying to a comment 
                 $this->emailReply();
@@ -369,19 +367,19 @@ class Comment {
             $akismet->setPermalink(full_article_url($this->article));
 
             if($akismet->isCommentSpam()) { // if comment is spam
-                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$this->name."','".$content."',0,'".$_SERVER['REMOTE_ADDR']."',0,'".$this->getReplyID()."',1)";
-                $rsc = $this->dbquery($sql);
-                $this->id = mysql_insert_id(); // get id of inserted comment
+                $name = $this->db->escape($this->name);
+                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$name."','".$content."',0,'".$_SERVER['REMOTE_ADDR']."',0,'".$this->getReplyID()."',1)";
+                $this->db->query($sql);
+                $this->id = $this->db->insert_id; // get id of inserted comment
 
-                // insert comment ip into comment_spam
-                $sql = "INSERT IGNORE INTO `comment_spam` (IP, date) VALUES ('".$_SERVER['REMOTE_ADDR']."', DATE_ADD(NOW(), INTERVAL 2 MONTH))";
-                $rsc = $this->dbquery($sql);
+                $sql = "INSERT IGNORE INTO `comment_spam` (IP, date) VALUES ('".$_SERVER['REMOTE_ADDR']."', DATE_ADD(NOW(), INTERVAL 2 MONTH))"; // insert comment ip into comment_spam
+                $this->db->query($sql);
 
                 return 'spam';
             } else {
-                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply) VALUES ('".$this->article."','".$this->name."','".$content."',1,'".$_SERVER['REMOTE_ADDR']."',1,'".$this->getReplyID()."')";
-                $rsc = $this->dbquery($sql);
-                $this->id = mysql_insert_id(); // get id of inserted comment
+                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply) VALUES ('".$this->article."','".$name."','".$content."',1,'".$_SERVER['REMOTE_ADDR']."',1,'".$this->getReplyID()."')";
+                $this->db->query($sql);
+                $this->id = $this->db->insert_id; // get id of inserted comment
 
                 $this->emailExternalComment();
                 return $this->id;
@@ -469,7 +467,7 @@ class Comment {
     public function likeComment($user) {
         if(!$this->userLikedComment($user)) { // check user hasn't already liked the comment
             $sql = "INSERT INTO `comment_like` (user,comment,binlike) VALUES ('$user','".$this->id."','1')";
-            $rsc = $this->dbquery($sql);
+            $this->db->query($sql);
 
             $this->likes += 1;
             if(!$this->external) { // internal comment
@@ -478,7 +476,7 @@ class Comment {
                 $sql = "UPDATE `comment_ext` ";
             }
             $sql .= "SET likes = ".$this->likes." WHERE id = ".$this->id;
-            $rsc = $this->dbquery($sql);
+            $this->db->query($sql);
 
             return $this->likes;
         } else {
@@ -496,7 +494,7 @@ class Comment {
     public function dislikeComment($user) {
         if(!$this->userLikedComment($user)) { // check user hasn't already liked the comment
             $sql = "INSERT INTO `comment_like` (user,comment,binlike) VALUES ('$user','".$this->id."','0')";
-            $rsc = $this->dbquery($sql);
+            $this->db->query($sql);
 
             $this->dislikes += 1;
             if(!$this->external) { // internal comment
@@ -505,7 +503,7 @@ class Comment {
                 $sql = "UPDATE `comment_ext` ";
             }
             $sql .= "SET dislikes = ".$this->dislikes." WHERE id = ".$this->id;
-            $rsc = $this->dbquery($sql);
+            $this->db->query($sql);
 
             return $this->dislikes;
         } else {
