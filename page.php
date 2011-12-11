@@ -147,8 +147,12 @@
 			<!-- Comment header -->
 			<?php if ($category == 'comment') { ?>
 				<div class="grid_5">
-					<h2 class="instapaper_title entry-title"><?php echo $title; ?></h2>
-					<div class="subHeader"><?php echo $teaser; ?></div>
+                    <h2 class="instapaper_title entry-title">
+                        <?php echo $articleC->getTitle(); ?>
+                    </h2>
+                    <div class="subHeader">
+                        <?php echo $articleC->getTeaser(); ?>
+                    </div>
 				</div>
 				<div class="grid_3 alpha omega" id="commentArticlePic">
 					<a href="user/<?php echo $authorID;?>/" title="<?php echo $author;?>"><img id="articlePic" alt="<?php echo $author;?>" src="../inc/timthumb.php?src=../<?php echo get_img_uri(get_user_pic($authorID));?>&h=160px&w=220px&zc=1"></a>
