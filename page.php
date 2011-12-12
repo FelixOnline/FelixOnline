@@ -53,13 +53,23 @@
 			$sql = "SELECT * FROM `media_photo_images` WHERE albumID='".$gallerypage."' ORDER BY id ASC";
 			$result = mysql_query($sql);
 		?>
-		<div class="article gallery">
-			<!-- Normal header -->
-			<h2 class="grid_12"><?php echo $title; ?></h2>
-			<div class="clear"></div>
-			<div class="articleInfo grid_12">
-				<p><?php echo output_in_english_authors(get_article_authors_uname($article)); ?></p>
-				<p><span class="<?php echo $category;?>"><a href="<?php echo $category;?>/"><?php echo $category_display;?></a></span> - <?php echo date("l F j, Y", $date);?></p>
+            <div class="article gallery">
+                <!-- Normal header -->
+                <h2 class="grid_12">
+                    <?php echo $this->getTitle(); ?>
+                </h2>
+                <div class="clear"></div>
+                <div class="articleInfo grid_12">
+                    <p>
+                        <?php echo output_in_english_authors(get_article_authors_uname($article)); ?>
+                    </p>
+                    <p>
+                        <span class="<?php echo $category;?>">
+                            <a href="<?php echo $category;?>/">
+                                <?php echo $category_display;?>
+                            </a>
+                        </span> - <?php echo date("l F j, Y", $date);?>
+                    </p>
 				<?php
 					if (is_logged_in()) {
 						$allowed = false;
@@ -69,19 +79,20 @@
 							$allowed = true;
 
 						if ($allowed) { ?>
-					<span id="editpage"><a href="/preview/engine/?page=addarticle&article=<?php echo $article;?>">Edit Page</a></span>
+					        <span id="editpage"><a href="/preview/engine/?page=addarticle&article=<?php echo $article;?>">Edit Page</a></span>
 				<?php	}
 					}
 				?>
-			</div>
-			<div class="clear"></div>
-			<div id="photogallery" class="grid_12">
-				<ul>
-		<?php while($row = mysql_fetch_array($result)){ ?>
-				<img src="/gallery/gallery_images/timthumb.php?src=/gallery/gallery_images/images/<?php echo $row['imageName'];?>&h=510px&zc=0" title="<?php echo $row['imageTitle']; ?>" height="310" alt="<?php echo $row['imageCaption']; ?>"/>
-		<?php } ?>
-			</div>
-		</div>
+                </div>
+                <div class="clear"></div>
+                <div id="photogallery" class="grid_12">
+                    <ul>
+                    <?php while($row = mysql_fetch_array($result)){ ?>
+                            <img src="/gallery/gallery_images/timthumb.php?src=/gallery/gallery_images/images/<?php echo $row['imageName'];?>&h=510px&zc=0" title="<?php echo $row['imageTitle']; ?>" height="310" alt="<?php echo $row['imageCaption']; ?>"/>
+                    <?php } ?>
+                    </ul>
+                </div>
+            </div>
 		<?php } ?>
 
 		<!-- Sidebar -->
@@ -161,9 +172,13 @@
                 <?php if($gallerypage) {
                     } else { ?>
                 <!-- Normal header -->
-                <h2 class="grid_8 instapaper_title entry-title"><?php echo $title; ?></h2>
+                <h2 class="grid_8 instapaper_title entry-title">
+                    <?php echo $articleC->getTitle(); ?>
+                </h2>
                 <?php if ($category != 'phoenix') { ?>
-                <div class="subHeader grid_8"><?php echo $teaser; ?></div>
+                <div class="subHeader grid_8">
+                    <?php echo $articleC->getTeaser(); ?>
+                </div>
 			<?php } } } ?>
 			<?php if(!$gallerypage) { ?>
 			<div class="articleInfo grid_8">
