@@ -9,7 +9,8 @@ class Article {
 	private $title; // title of article
 	private $short_title;
 	private $teaser;
-	private $author; // username of author
+	private $author; // username of author [depreciated in favour of authors
+	private $authors; // array of authors of article 
 	private $approvedby;
 	private $category; // category.id
     private $category_cat; // category cat (short version)
@@ -52,7 +53,7 @@ class Article {
         $this->db->cache_queries = true;
         if($id !== NULL) { // if creating an already existing article object
             $this->id = $id;
-            $sql = "SELECT `title`,`short_title`,`teaser`,`author`,`approvedby`,`category`,UNIX_TIMESTAMP(`date`) as date,UNIX_TIMESTAMP(`published`) as publishdate,`hidden`,`text1`,`text2`,`img1`,`img2`,`img2lr`,`hits` FROM `article` WHERE id=".$this->id;
+            $sql = "SELECT `title`,`short_title`,`teaser`,`approvedby`,`category`,UNIX_TIMESTAMP(`date`) as date,UNIX_TIMESTAMP(`published`) as publishdate,`hidden`,`text1`,`text2`,`img1`,`img2`,`img2lr`,`hits` FROM `article` WHERE id=".$this->id;
             $article = $this->db->get_row($sql);
             foreach($article as $key => $value) { 
                 $this->{$key} = $value; // store each value into object
@@ -68,10 +69,23 @@ class Article {
      */	
     public function getID()             { return $this->id; }
 	public function getTitle()          { return $this->title; }
-	public function getAuthor()         { return $this->author; }
 	public function getApprovedby()     { return $this->approvedby; }
 	public function getHits()           { return $this->hits; }
 	public function getCategory()       { return $this->category; }
+
+    /*
+     * Public: Get array of authors of article
+     *
+     * Returns array
+     */
+    public function getAuthors() { 
+        $sql = "SELECT article_author.author as author FROM `article_author` INNER JOIN `article` ON (article_author.article=article.id) WHERE article.id=".$this->id;
+        $authors = $this->db->get_results($sql);
+        foreach($authors as $author) {
+            $this->authors[] = $author->author;
+        }
+        return $this->authors; 
+    }
 
     /*
      * Public: Get label of article category
