@@ -57,7 +57,7 @@
             <div class="article gallery">
                 <!-- Normal header -->
                 <h2 class="grid_12">
-                    <?php echo $this->getTitle(); ?>
+                    <?php echo $articleC->getTitle(); ?>
                 </h2>
                 <div class="clear"></div>
                 <div class="articleInfo grid_12">
