@@ -16,6 +16,7 @@ require_once(dirname(__FILE__).'/ez_sql_core.php');
 require_once(dirname(__FILE__).'/ez_sql_mysql.php');
 require_once(dirname(__FILE__).'/config.inc.php');
 require_once(dirname(__FILE__).'/const.inc.php');
+require_once(dirname(__FILE__).'/../core/baseModel.class.php');
 require_once(dirname(__FILE__).'/../core/article.inc.php');
 require_once(dirname(__FILE__).'/../core/email.inc.php');
 require_once(dirname(__FILE__).'/../core/comment.inc.php');

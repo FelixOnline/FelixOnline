@@ -15,6 +15,7 @@
 	} else {
 		$article = $_GET['article'];
         $articleC = new Article($_GET['article']); // initialise new article
+
 		$sql = "SELECT * FROM `article` WHERE id='$article' AND text1 IS NOT NULL";
 		$result = mysql_query($sql);
 		if (!$result){

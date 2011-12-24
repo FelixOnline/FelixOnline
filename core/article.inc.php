@@ -1,40 +1,42 @@
 <?php
-
 /*
  * Article class
  * Deals with both article retrieval and article submission
+ *
+ * Fields:
+ *      id              - id of article 
+ *      title           - title of article 
+ *      short_title     - short title of article for boxes on front page [optional]
+ *      teaser          - article teaser 
+ *      author          - first author of article, superseded by article_author table [depreciated] 
+ *      category        - id of category article is in
+ *      date            - timestamp when article was added to site
+ *      approvedby      - user who approved the article to be published
+ *      published       - timestamp when article was published
+ *      hidden          - if article is hidden from engine
+ *      text1           - id of main article text
+ *      img1            - id of main article image
+ *      text2           - id of second article text [depreciated]
+ *      img2            - id of second image text [depreciated]
+ *      img2lr          - not quite sure [TODO]
+ *      hits            - number of views the article has had
+ *      short_desc      - short description of article for boxes on front page [optional]
  */
-class Article {
-	private $id; // id of article
-	private $title; // title of article
-	private $short_title;
-	private $teaser;
-	private $author; // username of author [depreciated in favour of authors
+class Article extends BaseModel {
 	private $authors; // array of authors of article 
-	private $approvedby;
-	private $category; // category.id
     private $category_cat; // category cat (short version)
     private $category_label; // category label
-	private $date; // article unix timestamp
-	private $publishdate; // unix timestamp
-    private $hidden; // if article is hidden or not
-	private $text1; // text_story.id
-	private $text2; // text_story.id (optional)
     private $image; // image id
     private $image_title; // image title
-	private $img1; // image.id
-	private $img2; // image.id (optional)
-	private $img2lr; // img2 l/r [depreciated? TODO]
-	private $hits; // never write to this
     private $num_comments; // number of comments
 	private $search = array('@<>@',
-		'@<script[^>]*?>.*?</script>@siU',  // javascript
-		'@<style[^>]*?>.*?</style>@siU',    // style tags
-		'@<embed[^>]*?>.*?</embed>@siU',    // embed
-		'@<object[^>]*?>.*?</object>@siU',    // object
-		'@<iframe[^>]*?>.*?</iframe>@siU',    // iframe      
-		'@<![\s\S]*?--[ \t\n\r]*>@',        // multi-line comments including CDATA
-		'@</?[^>]*>*@' 		  // html tags
+        '@<script[^>]*?>.*?</script>@siU',  // javascript
+        '@<style[^>]*?>.*?</style>@siU',    // style tags
+        '@<embed[^>]*?>.*?</embed>@siU',    // embed
+        '@<object[^>]*?>.*?</object>@siU',    // object
+        '@<iframe[^>]*?>.*?</iframe>@siU',    // iframe      
+        '@<![\s\S]*?--[ \t\n\r]*>@',        // multi-line comments including CDATA
+        '@</?[^>]*>*@' 		  // html tags
 	);
     private $db; // database object
 	
@@ -50,29 +52,18 @@ class Article {
         /* initialise db connection and store it in object */
         global $db;
         $this->db = $db;
-        $this->db->cache_queries = true;
+        //$this->db->cache_queries = true;
         if($id !== NULL) { // if creating an already existing article object
             $this->id = $id;
             $sql = "SELECT `title`,`short_title`,`teaser`,`approvedby`,`category`,UNIX_TIMESTAMP(`date`) as date,UNIX_TIMESTAMP(`published`) as publishdate,`hidden`,`text1`,`text2`,`img1`,`img2`,`img2lr`,`hits` FROM `article` WHERE id=".$this->id;
-            $article = $this->db->get_row($sql);
-            foreach($article as $key => $value) { 
-                $this->{$key} = $value; // store each value into object
-            }
+            parent::__construct($this->db->get_row($sql));
+            //$this->db->cache_queries = false;
             return $this;
         } else {
             // initialise new article
         }
 	}
 	
-    /*
-     * Getter functions 
-     */	
-    public function getID()             { return $this->id; }
-	public function getTitle()          { return $this->title; }
-	public function getApprovedby()     { return $this->approvedby; }
-	public function getHits()           { return $this->hits; }
-	public function getCategory()       { return $this->category; }
-
     /*
      * Public: Get array of authors of article
      *
@@ -109,25 +100,6 @@ class Article {
         return $this->category_label;
     }
 
-    /*
-     * Public: Get article submission date
-     *
-     * Returns UNIX_TIMESTAMP
-     */
-    public function getDate() { 
-        return $this->date; 
-    }
-    
-    /*
-     * Public: Get publish date of article
-     *
-     * Returns UNIX_TIMESTAMP
-     */    
-	public function getPublishdate() {
-		return $this->publishdate;
-	}
-
-
 	public function getImgID($img_id=1) {
 		$var = img.$img_id;
 		return $this->$var;
@@ -143,10 +115,6 @@ class Article {
 			return $content;
 		else
 			return substr($content,0,strrpos(substr($content,0,PREVIEW_LENGTH),' ')).'...';
-	}
-	
-	public function getShortTitle() {
-		return $this->short_title;
 	}
 	
     /*
@@ -178,7 +146,6 @@ class Article {
 		return $this->$var;
 	}
 	
-
     /*
      * Public: Get number of comments on article
      *

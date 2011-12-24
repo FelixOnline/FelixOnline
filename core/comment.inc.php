@@ -63,7 +63,7 @@ class Comment {
         $this->db->cache_queries = true;
         if($id != NULL) {
             $this->id = $id;
-            if($id < EXTERNAL_COMMENT_ID) { // if id is less than external comment id start
+            if($id < EXTERNAL_COMMENT_ID) { // if comment is internal
                 $this->external = false; // comment is internal
                 $sql = "SELECT `article`,`user`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`reply`,`likes`,`dislikes` FROM `comment` WHERE id=$id";
                 $comment = $this->db->get_row($sql);

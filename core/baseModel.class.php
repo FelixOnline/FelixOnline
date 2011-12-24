@@ -5,15 +5,12 @@
  * Creates dynamic getter functions for model fields
  */
 class BaseModel {
-    private $fields = array(); // array that holds all the database fields
+    private $fields; // array that holds all the database fields
 
-    function __construct() {
-        $this->fields = array(
-                'id' => 12,
-                'title' => 'Greatest Hits',
-                'description' => 'The greatest hits from the best band in the world!',
-                'another_variable' => 'Hi'
-            );
+    function __construct($dbObject) {
+        foreach($dbObject as $key => $value) {
+            $this->fields[$key] = $value;
+        }
     }
 
     /* 
