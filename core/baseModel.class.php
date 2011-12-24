@@ -11,6 +11,7 @@ class BaseModel {
         foreach($dbObject as $key => $value) {
             $this->fields[$key] = $value;
         }
+        return $this->fields;
     }
 
     /* 

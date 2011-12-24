@@ -26,7 +26,7 @@
         $get = array_shift(array_keys($_GET));
         switch ($get) {
             case "article":
-                include_once('page.php');
+                include_once('views/article/articleSingle.html.php');
                 break;
             case "cat":
                 include_once('section.php');

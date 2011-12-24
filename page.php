@@ -201,6 +201,7 @@
 			</div>
 			<!-- End of article header -->
 			<?php } ?>
+
 			<!-- Sidebar 2 -->
 			<div class="sidebar2 grid_2 push_6 entry-unrelated">
 				<div id="sharebuttonsCont">

@@ -54,8 +54,8 @@ class Article extends BaseModel {
         $this->db = $db;
         //$this->db->cache_queries = true;
         if($id !== NULL) { // if creating an already existing article object
-            $sql = "SELECT `id`,`title`,`short_title`,`teaser`,`approvedby`,`category`,UNIX_TIMESTAMP(`date`) as date,UNIX_TIMESTAMP(`published`) as publishdate,`hidden`,`text1`,`text2`,`img1`,`img2`,`img2lr`,`hits` FROM `article` WHERE id=".$id;
-            parent::__construct($this->db->get_row($sql));
+            $sql = "SELECT `id`,`title`,`short_title`,`teaser`,`author`,`approvedby`,`category`,UNIX_TIMESTAMP(`date`) as date,UNIX_TIMESTAMP(`published`) as publishdate,`hidden`,`text1`,`text2`,`img1`,`img2`,`img2lr`,`hits` FROM `article` WHERE id=".$id;
+            $this->fields = parent::__construct($this->db->get_row($sql));
             //$this->db->cache_queries = false;
             return $this;
         } else {
@@ -69,7 +69,7 @@ class Article extends BaseModel {
      * Returns array
      */
     public function getAuthors() { 
-        $sql = "SELECT article_author.author as author FROM `article_author` INNER JOIN `article` ON (article_author.article=article.id) WHERE article.id=".$this->id;
+        $sql = "SELECT article_author.author as author FROM `article_author` INNER JOIN `article` ON (article_author.article=article.id) WHERE article.id=".$this->getId();
         $authors = $this->db->get_results($sql);
         foreach($authors as $author) {
             $this->authors[] = $author->author;
@@ -78,11 +78,33 @@ class Article extends BaseModel {
     }
 
     /*
-     * Public: Get label of article category
+     * Public: Get list of authors in english
+     *
+     * Returns html string of article authors
+     */
+    public function getAuthorsEnglish() {
+        $array = $this->getAuthors();
+        // sanity check
+        if (!$array || !count ($array))
+            return '';
+        // change array into linked usernames
+        foreach ($array as $key => $value) {
+            $full_array[$key] = '<a href="user/'.$value.'/">'.get_vname_by_uname_db($value).'</a>';
+        }
+        // get last element
+        $last = array_pop ($full_array);
+        // if it was the only element - return it
+        if (!count ($full_array))
+            return $last;
+        return implode (', ', $full_array).' and '.$last;
+    }
+
+    /*
+     * Public: Get cat of article category
      */
     public function getCategoryCat() {
         if(!$this->category_cat) {
-            $sql = "SELECT `cat` FROM `category` WHERE id = ".$this->category;
+            $sql = "SELECT `cat` FROM `category` WHERE id = ".$this->getCategory();
             $this->category_cat = $this->db->get_var($sql);
         }
         return $this->category_cat;
@@ -93,21 +115,12 @@ class Article extends BaseModel {
      */
     public function getCategoryLabel() {
         if(!$this->category_label) {
-            $sql = "SELECT `label` FROM `category` WHERE id = ".$this->category;
+            $sql = "SELECT `label` FROM `category` WHERE id = ".$this->getCategory();
             $this->category_label = $this->db->get_var($sql);
         }
         return $this->category_label;
     }
 
-	public function getImgID($img_id=1) {
-		$var = img.$img_id;
-		return $this->$var;
-	}
-	
-	public function getImg2lr() {
-		return $this->img2lr;
-	}
-	
 	public function getPreview() {
 		$content = preg_replace($this->search,'',$this->get_text(1));
 		if (strlen($content) <= PREVIEW_LENGTH)
@@ -121,9 +134,9 @@ class Article extends BaseModel {
      *
      * Returns string
      */
-	public function getTeaser() {
-		if ($this->teaser) {
-            return str_replace('<br/>','',strip_tags($this->teaser));
+	public function getTeaserFull() {
+		if ($this->getTeaser()) {
+            return str_replace('<br/>','',strip_tags($this->getTeaser()));
 			//return str_replace('<br/>','',preg_replace($this->search,'',$this->teaser));
         } else {
 			$text = $this->getText(1);
@@ -174,10 +187,10 @@ class Article extends BaseModel {
      */
     private function constructURL() {
         $cat = $this->getCategoryCat();
-        $title = strtolower($this->title); // Make title lowercase
+        $title = strtolower($this->getTitle()); // Make title lowercase
         $title= preg_replace('/[^\w\d_ -]/si', '', $title); // Remove special characters
         $dashed = str_replace( " ", "-", $title); // Replace spaces with hypens
-        $output = $cat.'/'.$this->id.'/'.$dashed.'/'; // output: CAT/ID/TITLE/
+        $output = $cat.'/'.$this->getId().'/'.$dashed.'/'; // output: CAT/ID/TITLE/
         return $output;
     }
 
