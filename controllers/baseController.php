@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * Base Controller
+ */
 class BaseController {
     protected $theme; // placeholder for theme class
 

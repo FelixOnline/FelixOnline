@@ -16,9 +16,9 @@ require_once(BASE_DIRECTORY.'/inc/const.inc.php');
  * Models
  */
 require_once(BASE_DIRECTORY.'/core/baseModel.class.php');
-require_once(BASE_DIRECTORY.'/core/article.inc.php');
-require_once(BASE_DIRECTORY.'/core/email.inc.php');
-require_once(BASE_DIRECTORY.'/core/comment.inc.php');
+require_once(BASE_DIRECTORY.'/core/article.class.php');
+require_once(BASE_DIRECTORY.'/core/email.class.php');
+require_once(BASE_DIRECTORY.'/core/comment.class.php');
 require_once(BASE_DIRECTORY.'/core/theme.class.php');
 
 /*
