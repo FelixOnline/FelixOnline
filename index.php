@@ -6,8 +6,9 @@
 // set up Felix Online environment
 require_once('bootstrap.php');
 
-$theme = new Theme('classic');
-
+/*
+ * Routes
+ */
 $urls = array(
     '/' => 'IndexController',
     '/user/(?P<user>[a-zA-Z0-9_-]+)' => 'UserController',

@@ -4,8 +4,10 @@ class BaseController {
     protected $theme; // placeholder for theme class
 
     function __construct() {
-        global $theme;
-        $this->theme = $theme;
+        /*
+         * Set theme here so that it can be overridden by a controller if necessary
+         */
+        $this->theme = new Theme('classic');
     }
 }
 ?>

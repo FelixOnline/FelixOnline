@@ -5,7 +5,7 @@
  * Creates dynamic getter functions for model fields
  */
 class BaseModel {
-    private $fields; // array that holds all the database fields
+    protected $fields; // array that holds all the database fields
 
     function __construct($dbObject) {
         foreach($dbObject as $key => $value) {
