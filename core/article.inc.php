@@ -131,6 +131,7 @@ class Article extends BaseModel {
 	
     /*
      * Public: Get article teaser
+     * TODO
      *
      * Returns string
      */
