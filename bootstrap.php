@@ -20,6 +20,7 @@ require_once(BASE_DIRECTORY.'/core/article.class.php');
 require_once(BASE_DIRECTORY.'/core/email.class.php');
 require_once(BASE_DIRECTORY.'/core/comment.class.php');
 require_once(BASE_DIRECTORY.'/core/theme.class.php');
+require_once(BASE_DIRECTORY.'/core/resourceManager.class.php');
 
 /*
  * Controllers
@@ -27,7 +28,7 @@ require_once(BASE_DIRECTORY.'/core/theme.class.php');
 require_once(BASE_DIRECTORY.'/controllers/baseController.php');
 require_once(BASE_DIRECTORY.'/controllers/articleController.php');
 require_once(BASE_DIRECTORY.'/controllers/archiveController.php');
-require_once(BASE_DIRECTORY.'/controllers/indexController.php');
+require_once(BASE_DIRECTORY.'/controllers/frontpageController.php');
 require_once(BASE_DIRECTORY.'/controllers/categoryController.php');
 require_once(BASE_DIRECTORY.'/controllers/mediaController.php');
 require_once(BASE_DIRECTORY.'/controllers/pageController.php');

@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends BaseController {
+class FrontpageController extends BaseController {
     function GET($matches) {
         $this->theme->render('frontpage');
     } 

@@ -10,7 +10,7 @@ require_once('bootstrap.php');
  * Routes
  */
 $urls = array(
-    '/' => 'IndexController',
+    '/' => 'FrontpageController',
     '/user/(?P<user>[a-zA-Z0-9_-]+)' => 'UserController',
     '/user/(?P<user>[a-zA-Z0-9_-]+)/(?P<page>[0-9]+)' => 'UserController',
     '/media/(?P<type>[a-zA-Z0-9_-]+)' => 'MediaController',
