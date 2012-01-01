@@ -77,10 +77,9 @@
     <link rel="shortcut icon" href="favicon.ico">
 
     <!-- CSS files -->
-    <?php 
-        foreach($this->resources->getCSS() as $key => $value) { ?>
+    <?php foreach($this->resources->getCSS() as $key => $value) { ?>
             <link id="<?php echo $key;?>" rel="stylesheet" href="<?php echo $value; ?>">
-    <?php }; ?>
+    <?php } ?>
 
     <script type="text/javascript">
         var _gaq = _gaq || [];

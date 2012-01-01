@@ -9,10 +9,13 @@ class ResourceManager {
     private $cssPath; // path for css files
     private $jsPath; // path for JavaScript files
 
-    function __construct($css, $js, $theme) {
-        $this->addCSS($css);
-        $this->addJS($js);
-        $this->theme = $theme;
+    function __construct($css, $js) {
+        if($css) {
+            $this->addCSS($css);
+        }
+        if($js) {
+            $this->addJS($js);
+        }
         $this->cssPath = 'css/';
         $this->jsPath = 'js/';
     }
@@ -27,7 +30,7 @@ class ResourceManager {
     public function addCSS($css) {
         if(is_array($css)) {
             foreach($css as $key => $value) {
-                $this->css[$key] = $value;
+                array_push($this->css, $value);
             }
             return $this->css;
         } else {
@@ -45,8 +48,32 @@ class ResourceManager {
     public function addJS($js) {
         if(is_array($js)) {
             foreach($js as $key => $value) {
-                $this->js[$key] = $value;
+                array_push($this->js, $value);
             }
+            return $this->js;
+        } else {
+            throw new Exception("Adding js files is not an array");
+        }
+    }
+
+    /*
+     * Public: Replace css files
+     */
+    public function replaceCSS($css) {
+        if(is_array($css)) {
+            $this->css = $css;
+            return $this->css;
+        } else {
+            throw new Exception("Adding js files is not an array");
+        }
+    }
+
+    /*
+     * Public: Replace js files
+     */
+    public function replaceJS($js) {
+        if(is_array($js)) {
+            $this->js = $js;
             return $this->js;
         } else {
             throw new Exception("Adding js files is not an array");
@@ -105,10 +132,10 @@ class ResourceManager {
     private function getFilename($file, $type) {
         switch($type) {
             case 'css':
-                return STANDARD_URL.$this->theme->getName().'/'.$this->cssPath.$file;
+                return STANDARD_URL.'themes/'.THEME_NAME.'/'.$this->cssPath.$file;
                 break;
             case 'js':
-                return STANDARD_URL.$this->theme->getName().'/'.$this->jsPath.$file;
+                return STANDARD_URL.'themes/'.THEME_NAME.'/'.$this->jsPath.$file;
                 break;
         }
     }
