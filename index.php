@@ -6,6 +6,8 @@
 // set up Felix Online environment
 require_once('bootstrap.php');
 
+$currentuser = new CurrentUser();
+
 /*
  * Routes
  */

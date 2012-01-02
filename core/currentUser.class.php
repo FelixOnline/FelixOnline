@@ -10,7 +10,7 @@ class CurrentUser extends User {
         session_name("felix"); // set session name
         session_start(); // start session
         $this->session = session_id(); // store session id into $session variable
-        isLoggedIn();
+        $this->isLoggedIn();
     }
 
     public function isLoggedIn() {

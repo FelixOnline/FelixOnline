@@ -60,7 +60,7 @@
 					</ul>
 				</div>
 				<div class="grid_3 login omega">
-					<?php if(!is_logged_in()) { ?>
+					<?php if(!$currentuser->isLoggedIn()) { ?>
 						<a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" id="loginButtonA"><div id="loginbutton">Login</div></a>
 						<div id="loginBox">
 							<?php echo '<form action="'.AUTHENTICATION_PATH."?session=".$_SESSION["felix"]["name"]."&goto=".str_replace(array("&login=FAIL",$session_param1,$session_param2),array('','',''),curPageURLNonSecure()).'" id="loginForm" method="post">';?>
@@ -84,11 +84,9 @@
 								</table>
 							</form>
 						</div>
-					<?php } else {
-						$uname = is_logged_in();
-						?>
+					<?php } else { ?>
 						<div id="loginName">
-						<?php if (get_user_role($uname)>0)
+						<?php //if (get_user_role($uname)>0)
 							echo '<a href="/engine/" title="Admin Page"><img src="img/wrench.png"/></a>'; ?>
 						<a href="user/<?php echo $uname; ?>/" title="Profile Page"><?php echo get_vname();?></a>
 						</div>
