@@ -8,8 +8,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
     <meta name="keywords" content="felix, student news, student newspaper, felix online, imperial college union, imperial college, felixonline"/>
+    <meta name="description" content="Felix Online is the online companion to Felix, the student newspaper of Imperial College London.">
+    <meta name="author" content="Jonathan Kim">
+    <meta name="google-site-verification" content="V5LPwqv0BzMHvfMOIZvSjjJ-8tJc4Mi1A-L2AEbby50" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <base href="<?php echo STANDARD_URL; ?>">
+
+    <!-- Title -->
     <?php
     /*
         $article = $_GET['article'];
@@ -37,17 +44,22 @@
             $header .= $ext;
     */
     ?>
-    <title><?php echo $header;?></title>
-    <base href="<?php echo STANDARD_URL; ?>">
+    <title>
+        <?php if(array_key_exists('title', $header)) {
+            echo $header['title'];
+        } else {
+            echo 'Felix Online - The student voice of Imperial College London';
+        } ?> 
+    </title>
 
-    <meta name="description" content="Felix Online is the online companion to Felix, the student newspaper of Imperial College London.">
-    <meta name="author" content="Jonathan Kim">
-
-    <meta name="google-site-verification" content="V5LPwqv0BzMHvfMOIZvSjjJ-8tJc4Mi1A-L2AEbby50" />
-
+    <!-- Facebook -->
     <meta property="og:site_name" content="Felix Online"/>
     <meta property="fb:page_id" content="206951902659704" />
-
+    <?php 
+        if(array_key_exists('meta', $header)) {
+            echo $header['meta'];
+        } 
+    ?>
     <?php
         /*
         if(isset($_GET['article'])) { ?>
@@ -71,8 +83,6 @@
         
     <?php } */ ?>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
     <link rel="shortcut icon" href="favicon.ico">
 
@@ -80,21 +90,8 @@
     <?php foreach($this->resources->getCSS() as $key => $value) { ?>
             <link id="<?php echo $key;?>" rel="stylesheet" href="<?php echo $value; ?>">
     <?php } ?>
-
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-12220150-1']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
 </head>
 <body>
-    <?php /*
 	<div id="topBarCont">
 		<div class="container_16">
 			<div id="topBar" class="grid_16">
@@ -216,4 +213,3 @@
 		<div class="clear"></div>
 		<!-- End header 2 -->
 	</div>
-     */ ?>
