@@ -17,33 +17,6 @@
     <base href="<?php echo STANDARD_URL; ?>">
 
     <!-- Title -->
-    <?php
-    /*
-        $article = $_GET['article'];
-        $header = '';
-        if ($article != '') {
-            $header .= get_article_title($article).' - '.get_article_category($article).' - ';
-        } else if(isset($_GET['cat']) && get_category_label_by_cat($_GET['cat'])) {
-            $header .= get_category_label_by_cat($_GET['cat']).' - ';
-        } else if(isset($_GET['id']) && check_user($_GET['id'])) {
-            $header .= get_vname_by_uname_db($_GET['id']).' - ';
-        } else if(isset($_GET['issuearchive'])) {
-            $header .= 'Issue Archive - ';
-        } else if(isset($_GET['media'])) {
-            if($_GET['media']=='photo' && isset($_GET['name']))
-                $header .= get_album_name($_GET['name']).' - ';
-            if($_GET['media']=='video' && isset($_GET['name']))
-                $header .= get_video_name($_GET['name']).' - ';
-            $header .= 'Media - ';
-        } else {
-            $ext = ' - The student voice of Imperial College London';
-        }
-
-        $header .= 'Felix Online';
-        if($ext)
-            $header .= $ext;
-    */
-    ?>
     <title>
         <?php if(array_key_exists('title', $header)) {
             echo $header['title'];
@@ -60,28 +33,6 @@
             echo $header['meta'];
         } 
     ?>
-    <?php
-        /*
-        if(isset($_GET['article'])) { ?>
-            <meta property="og:image" content="http://felixonline.co.uk/inc/timthumb.php?src=/<?php echo get_img_uri(get_img_id($article, 1)); ?>&w=100px&zc=1&a=t"/>
-            <meta property="og:title" content="<?php echo get_article_title($article).' - '.get_article_category($article).' - '.'Felix Online'; ?>"/>
-            <meta property="og:url" content="http://felixonline.co.uk/<?php echo article_url($article); ?>"/>
-            <meta property="og:type" content="article"/>
-            <meta property="og:description" content="<?php echo get_article_teaser($article);?>"/>
-    <?php } else if($_GET['media'] == 'video' && isset($_GET['name'])) { ?>
-            <meta property="og:description" content="<?php echo get_video_desc($_GET['name']);?>"/>
-            <meta property="og:image" content="http://i.ytimg.com/vi/<?=get_video_id($_GET['name'])?>/0.jpg"/>
-    <?php } else if($_GET['media'] == 'photo' && isset($_GET['name'])) { ?>
-            <?php if(get_album_desc($_GET['name'])) { ?>
-                <meta property="og:description" content="<?php echo get_album_desc($_GET['name']);?>"/>
-            <?php } ?>
-            <meta property="og:title" content="<?php echo get_album_name($_GET['name']).' - Media - Felix Online'; ?>"/>
-            <meta property="og:image" content="http://felixonline.co.uk/inc/timthumb.php?src=/gallery/gallery_images/images/<?=get_album_image($_GET['name'])?>&w=50px&zc=1&a=t"/>
-    <?php } else { ?>
-            <!-- Normal Facebook meta tags -->
-            <meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>
-        
-    <?php } */ ?>
 
     <!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
     <link rel="shortcut icon" href="favicon.ico">
@@ -92,16 +43,20 @@
     <?php } ?>
 </head>
 <body>
-	<div id="topBarCont">
+	<div id="topBarCont" class="clearfix">
 		<div class="container_16">
 			<div id="topBar" class="grid_16">
 				<div class="grid_9 links first">
 					<ul>
-						<li class="first"><a href="<?php echo STANDARD_URL; ?>" <?php if(!(isset($_GET['media']) || isset($_GET['issuearchive']))) echo 'class="selected"';?>>Felix Online</a></li>
-						<li><a href="<?php echo STANDARD_URL; ?>media/" <?php if(isset($_GET['media'])) echo 'class="selected"';?>>Media</a></li>
-						<li class="last"><a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if(isset($_GET['issuearchive'])) echo 'class="selected"';?>>Issue Archive</a></li>
-						<!--<li><a href="publications/">Other Publications</a></li>
-						<li class="last"><a href="http://m.felixonline.co.uk">Mobile</a></li>-->
+                        <li class="first">
+                            <a href="<?php echo STANDARD_URL; ?>" <?php if($this->isPage('frontpage')) echo 'class="selected"';?>>Felix Online</a>
+                            </li>
+                        <li>
+                            <a href="<?php echo STANDARD_URL; ?>media/" <?php if($this->isPage('media')) echo 'class="selected"';?>>Media</a>
+                        </li>
+                        <li class="last">
+                            <a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if($this->isPage('issuearchive')) echo 'class="selected"';?>>Issue Archive</a>
+                        </li>
 					</ul>
 				</div>
 				<div class="grid_3 login omega">
@@ -163,7 +118,6 @@
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div class="clear"></div>
 		</div>
 	</div>
 

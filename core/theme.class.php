@@ -7,6 +7,7 @@ class Theme {
     private $name; // theme name
     private $directory; // theme directory
     private $url;
+    private $page; // current page
 
     function __construct($name) {
         $this->name = $name;
@@ -21,9 +22,25 @@ class Theme {
 
     /*
      * Render specific template
+     * TODO check if specific template files exist
      */
-    public function render($view) {
-        include($this->directory.'/'.$view.'.php');
+    public function render($page, $matches) {
+        $this->page = $page;
+        switch($page) {
+            case 'frontpage':
+                include($this->directory.'/'.$page.'.php');
+                break;
+            case 'article':
+                break;
+        }
+    }
+
+    /*
+     * Check if current view is $query
+     */
+    public function isPage($query) {
+        if($query == $this->page) return true;
+        else return false; 
     }
 }
 ?>

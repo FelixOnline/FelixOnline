@@ -2,8 +2,8 @@
     
 class ArticleController extends BaseController {
     function GET($matches) {
-        var_dump($matches);
         echo 'article';
+        $this->theme->render('article', $matches);
     }
 }
 
