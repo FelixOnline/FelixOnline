@@ -30,6 +30,9 @@ class Theme {
             case 'frontpage':
                 include($this->directory.'/'.$page.'.php');
                 break;
+            case 'category':
+                include($this->directory.'/'.$page.'.php');
+                break;
             case 'article':
                 break;
         }

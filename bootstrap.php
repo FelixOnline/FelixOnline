@@ -16,24 +16,18 @@ require_once(BASE_DIRECTORY.'/inc/const.inc.php');
  * Models
  */
 require_once(BASE_DIRECTORY.'/core/baseModel.class.php');
-require_once(BASE_DIRECTORY.'/core/article.class.php');
-require_once(BASE_DIRECTORY.'/core/email.class.php');
-require_once(BASE_DIRECTORY.'/core/comment.class.php');
-require_once(BASE_DIRECTORY.'/core/theme.class.php');
-require_once(BASE_DIRECTORY.'/core/resourceManager.class.php');
+require_once(BASE_DIRECTORY.'/core/user.class.php');
+foreach (glob(BASE_DIRECTORY.'/core/*.php') as $filename) {
+    require_once($filename);
+}
 
 /*
  * Controllers
  */
 require_once(BASE_DIRECTORY.'/controllers/baseController.php');
-require_once(BASE_DIRECTORY.'/controllers/articleController.php');
-require_once(BASE_DIRECTORY.'/controllers/archiveController.php');
-require_once(BASE_DIRECTORY.'/controllers/frontpageController.php');
-require_once(BASE_DIRECTORY.'/controllers/categoryController.php');
-require_once(BASE_DIRECTORY.'/controllers/mediaController.php');
-require_once(BASE_DIRECTORY.'/controllers/pageController.php');
-require_once(BASE_DIRECTORY.'/controllers/searchController.php');
-require_once(BASE_DIRECTORY.'/controllers/userController.php');
+foreach (glob(BASE_DIRECTORY.'/controllers/*.php') as $filename) {
+    require_once($filename);
+}
 
 require_once(BASE_DIRECTORY.'/inc/authentication.php');
 require_once(BASE_DIRECTORY.'/inc/rss.inc.php');
