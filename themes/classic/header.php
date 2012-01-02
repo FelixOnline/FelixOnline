@@ -61,7 +61,9 @@
 				</div>
 				<div class="grid_3 login omega">
 					<?php if(!$currentuser->isLoggedIn()) { ?>
-						<a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" id="loginButtonA"><div id="loginbutton">Login</div></a>
+                        <a href="<?php echo curPageURLNonSecure();?>#loginBox" rel="facebox" id="loginButtonA">
+                            <div id="loginbutton">Login</div>
+                        </a>
 						<div id="loginBox">
 							<?php echo '<form action="'.AUTHENTICATION_PATH."?session=".$_SESSION["felix"]["name"]."&goto=".str_replace(array("&login=FAIL",$session_param1,$session_param2),array('','',''),curPageURLNonSecure()).'" id="loginForm" method="post">';?>
 								<h3>Login to Felix Online</h3>

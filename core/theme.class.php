@@ -24,7 +24,7 @@ class Theme {
      * Render specific template
      * TODO check if specific template files exist
      */
-    public function render($page, $matches) {
+    public function render($page, $matches = NULL) {
         global $currentuser;
         $this->page = $page;
         switch($page) {
