@@ -24,31 +24,30 @@
             ORDER BY timestamp DESC LIMIT ".RECENT_COMMENTS;
             $recent_comments = $db->get_results($sql);
             foreach($recent_comments as $key => $object) {
-                var_dump($object);
+                $comment = new Comment($object->id);
         ?>
             <li <?php //if($i == $commentlimit) echo 'class="last"';?>>
                 <p id="article">
-                    On <a href="<?php echo article_url($row['article']); ?>"><?php echo get_article_title($row['article']);?></a>
+                    On <a href="<?php //echo article_url($row['article']); ?>"><?php //echo get_article_title($row['article']);?></a>
                 </p>
                 <p id="comment">
                     <span id="endcomment">
-                        <?php echo trim_text(html_entity_decode(nl2br($row['comment'])), 120);?>
+                        <?php echo Utility::trimText($comment->getContent(), 120);?>
                     </span>
                 </p>
                 <p id="commentinfo">
-                    <a href="<?php echo article_url($row['article']); ?>#comment<?php echo $row['id'];?>" title="Go to comment">
-                        <?php echo getRelativeTime($row['timestamp']);?>
+                    <a href="<?php //echo article_url($row['article']); ?>#comment<?php //echo $row['id'];?>" title="Go to comment">
+                        <?php echo getRelativeTime($comment->getTimestamp());?>
                     </a> 
                     <span id="commenter">
-                        <?php if ($commenter = $row['name']) {  // Check if commenter has a name
-                            if ($row['user'] == 'extuser0' || $row['user'] == 'extuser1' || $row['user'] == 'extuser2') { // If commenter has name but is not registered then just output commenter name
-                                echo $commenter;
-                        } else { // If commenter has name and is registered then provide link to user?> 
-                            <a href="user/<?php echo $row['user'];?>/"><?php echo $commenter; ?></a>
-                        <?php }
-                        } else { // If commenter has no name then just state anonymous
-                            echo 'Anonymous';
-                        } ?>
+                        <?php
+                            if($comment->isExternal()) { // external comment
+                                echo $comment->getName();
+                            } else { ?>
+                                <a href="user/<?php echo $comment->getUser();?>/">
+                                    <?php echo $comment->getName(); ?>
+                                </a>
+                        <?php } ?> 
                     </span>
                 </p>
             </li>

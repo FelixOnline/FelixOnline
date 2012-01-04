@@ -73,7 +73,7 @@ class Comment {
                 if($this->reply) {
                     $this->reply = new Comment($this->reply); // initialise new comment as reply
                 }
-                $this->name = get_vname_by_uname_db($this->user);
+                //$this->name = get_vname_by_uname_db($this->user);
                 $this->db->cache_queries = false;
                 return $this;
             } else {

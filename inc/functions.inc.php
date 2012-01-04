@@ -91,4 +91,15 @@ function getRelativeTime($date) {
     return "on " . date("F j, Y", $date);
 }
 
+/*
+ * If number is plural then return 's'
+ *
+ * $num - number to check
+ *
+ * Return string
+ */
+function plural($num) {
+    if ($num != 1)
+        return "s";
+}
 ?>
