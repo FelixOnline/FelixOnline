@@ -2,7 +2,7 @@
     <div class="container_12">
         <div class="grid_12 footer">
             <div class="grid_6 alpha">
-            <img src="<?php echo $this->directory; ?>/img/title-small.jpg"/>
+                <img src="<?php echo $this->directory; ?>/img/title-small.jpg"/>
             </div>
             <div class="grid_6 details alpha">
                 <p>Felix, Beit Quad, Prince Consort Road, London SW7 2BB</p>

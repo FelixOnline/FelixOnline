@@ -25,7 +25,7 @@ class Theme {
      * TODO check if specific template files exist
      */
     public function render($page, $matches = NULL) {
-        global $currentuser;
+        global $currentuser, $db;
         $this->page = $page;
         switch($page) {
             case 'frontpage':

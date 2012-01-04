@@ -1,11 +1,11 @@
-/* 
-	Author: J.Kim
-*/
+/*
+ * Author: J.Kim
+ */
 
 $(document).ready(function() {
 	
 	// Reload css to fix @font face issue in IE8
-	$('#main_css')[0].href=$('#main_css')[0].href;
+	//$('#main_css')[0].href=$('#main_css')[0].href;
 	
 	/* Phoenix box */
 	$('#phoenixcont .acts').hover(function(){
