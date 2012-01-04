@@ -22,6 +22,7 @@
 	if(!defined('MOST_POPULAR_INTERVAL'))           define('MOST_POPULAR_INTERVAL',7); // commented - look at comments over previous ... days
 	if(!defined('MOST_VIEWED_SEARCHBACK'))          define('MOST_VIEWED_SEARCHBACK',500); // viewed [TODO]
 	if(!defined('POPULAR_ARTICLES'))                define('POPULAR_ARTICLES',5); // used for commented and viewed
+	if(!defined('RECENT_COMMENTS'))                 define('RECENT_COMMENTS',5); // number of recent comments to display
 	if(!defined('MOST_COMMENTED_HEADING'))          define('MOST_COMMENTED_HEADING',"Most commented stories"); // heading for most commented [depreciated]
 	if(!defined('MOST_VIEWED_HEADING'))             define('MOST_VIEWED_HEADING',"Most viewed stories"); // heading for most viewed [depreciated]
 	if(!defined('FRONTPAGE_EXTRA_STORIES'))         define('FRONTPAGE_EXTRA_STORIES',2); // number of extra frontpage stories [depreciated]

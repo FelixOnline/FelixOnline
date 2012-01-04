@@ -4,20 +4,11 @@
  */
 
 /*
- * Get current page url
- *
- * Returns string
- */
-function currentPageURL() {
-    return 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-}
-
-/*
  * Hide email behind javascript
  *
  * $email - email address to hide
  */
-function hide_email($email) {
+function hideEmail($email) {
     $character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
     $key = str_shuffle($character_set); $cipher_text = '';
     $id = 'e'.rand(1,999999999);
@@ -72,6 +63,32 @@ function romanNumerals($num) {
 
     /*** return the res ***/
     return $res;
+}
+
+/*
+ * Get relative time from timestamp
+ *
+ * $date - unix timestamp
+ *
+ * Returns string
+ */
+function getRelativeTime($date) {
+    $diff = time() - $date;
+    if ($diff<60)
+        return $diff . " second" . plural($diff) . " ago";
+    $diff = round($diff/60);
+    if ($diff<60)
+        return $diff . " minute" . plural($diff) . " ago";
+    $diff = round($diff/60);
+    if ($diff<24)
+        return $diff . " hour" . plural($diff) . " ago";
+    $diff = round($diff/24);
+    if ($diff<7)
+        return $diff . " day" . plural($diff) . " ago";
+    $diff = round($diff/7);
+    if ($diff<4)
+        return $diff . " week" . plural($diff) . " ago";
+    return "on " . date("F j, Y", $date);
 }
 
 ?>

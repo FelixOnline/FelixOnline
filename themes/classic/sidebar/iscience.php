@@ -17,9 +17,19 @@
 	<ul>
         <?php for($i=0; $i<3; $i++) { ?>
             <li <?php if($i==2) echo 'class="last"';?>>
-                <h5><a href="<?php echo $arrFeeds[$i]['link'];?>"><?php echo $arrFeeds[$i]['title'];?></a></h5>
-                <p><?php echo $arrFeeds[$i]['desc'];?></p>
-                <p><span><?php echo getRelativeTime(strtotime($arrFeeds[$i]['date']));?></span></p>
+                <h5>
+                    <a href="<?php echo $arrFeeds[$i]['link'];?>">
+                        <?php echo $arrFeeds[$i]['title'];?>
+                    </a>
+                </h5>
+                <p>
+                    <?php echo $arrFeeds[$i]['desc'];?>
+                </p>
+                <p>
+                    <span>
+                        <?php echo getRelativeTime(strtotime($arrFeeds[$i]['date']));?>
+                    </span>
+                </p>
             </li>
         <?php } ?>
     </ul>
