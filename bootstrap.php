@@ -11,6 +11,7 @@ require_once(BASE_DIRECTORY.'/inc/ez_sql_mysql.php');
 require_once(BASE_DIRECTORY.'/glue.php');
 require_once(BASE_DIRECTORY.'/inc/config.inc.php');
 require_once(BASE_DIRECTORY.'/inc/const.inc.php');
+require_once(BASE_DIRECTORY.'/inc/functions.inc.php');
 
 /*
  * Models

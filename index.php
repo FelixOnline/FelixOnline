@@ -26,7 +26,7 @@ $urls = array(
 try { // try mapping request to urls
     glue::stick($urls);
 } catch (Exception $e) { // if it fails then send a 404 response
-    $theme->render('404'); // TODO
+    //$theme->render('404'); // TODO
 }
 
     /*
