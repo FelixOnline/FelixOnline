@@ -1,3 +1,19 @@
+<!-- Footer -->
+    <div class="container_12">
+        <div class="grid_12 footer">
+            <div class="grid_6 alpha">
+            <img src="<?php echo $this->directory; ?>/img/title-small.jpg"/>
+            </div>
+            <div class="grid_6 details alpha">
+                <p>Felix, Beit Quad, Prince Consort Road, London SW7 2BB</p>
+                <p>Email: <?php echo hide_email('felix@imperial.ac.uk');?> Tel: 020 7594 8072 Fax: 020 7594 8065</p>
+                <p>Webdesign by <a href="http://felixonline.co.uk/user/jk708/">Jonathan Kim</a> and <a href="http://www.cjbirkett.co.uk/" target="_BLANK">Chris Birkett</a></p>
+                <p>&copy; Felix Imperial <?php echo romanNumerals(date('Y')); ?> <a href="#topBarCont">Top of page</a></p>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
     <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.5.2.min.js"%3E%3C/script%3E'))</script>
