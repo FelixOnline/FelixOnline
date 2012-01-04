@@ -61,7 +61,7 @@
 				</div>
 				<div class="grid_3 login omega">
 					<?php if(!$currentuser->isLoggedIn()) { ?>
-                        <a href="<?php echo currentPageURL();?>#loginBox" rel="facebox" id="loginButtonA">
+                        <a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox" id="loginButtonA">
                             <div id="loginbutton">Login</div>
                         </a>
                         <?php include($this->directory.'/loginBox.php'); ?>
