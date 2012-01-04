@@ -54,7 +54,7 @@ RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
 # If requested resource exists as a file or directory, skip next 17 rules
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php
+RewriteRule . index.php
 
 #RewriteCond %{DOCUMENT_ROOT}/$1 -f [OR]
 #RewriteCond %{DOCUMENT_ROOT}/$1 -d [OR]
