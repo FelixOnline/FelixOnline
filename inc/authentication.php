@@ -6,10 +6,6 @@
  *
  */
 
-/* TODO */
-if (strstr($_SERVER['HTTP_HOST'],"union.ic.ac.uk") !== false)
-    header("Location: ".STANDARD_URL.substr($_SERVER['REQUEST_URI'],(1+strrpos($_SERVER['REQUEST_URI'],"/"))));
-
 session_name("felix"); // set session name
 session_start(); // start session
 $session = session_id(); // store session id into $session variable

@@ -30,7 +30,7 @@ foreach (glob(BASE_DIRECTORY.'/controllers/*.php') as $filename) {
     require_once($filename);
 }
 
-require_once(BASE_DIRECTORY.'/inc/authentication.php');
-require_once(BASE_DIRECTORY.'/inc/rss.inc.php');
+//require_once(BASE_DIRECTORY.'/inc/authentication.php');
+//require_once(BASE_DIRECTORY.'/inc/rss.inc.php');
 
 ?>
