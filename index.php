@@ -36,7 +36,7 @@ try { // try mapping request to urls
     if($_SERVER['SERVER_NAME'] == AUTHENTICATION_SERVER) {
         glue::stick($urls, RELATIVE_PATH);
     } else {
-        throw new Exception('Cannot find url');
+        throw new Exception($e);
     }
     //$theme->render('404'); // TODO
 }

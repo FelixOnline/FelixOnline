@@ -8,8 +8,10 @@ class BaseModel {
     protected $fields; // array that holds all the database fields
 
     function __construct($dbObject) {
-        foreach($dbObject as $key => $value) {
-            $this->fields[$key] = $value;
+        if($dbObject) {
+            foreach($dbObject as $key => $value) {
+                $this->fields[$key] = $value;
+            }
         }
         return $this->fields;
     }

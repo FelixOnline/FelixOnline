@@ -43,7 +43,6 @@
          *
          */
         static function stick ($urls, $base = NULL) {
-
             $method = strtoupper($_SERVER['REQUEST_METHOD']);
             $path = $_SERVER['REQUEST_URI'];
 

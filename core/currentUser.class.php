@@ -28,7 +28,7 @@ class CurrentUser extends User {
      */
     public function isLoggedIn() {
         if($_SESSION['felix']['loggedin']){
-            //parent::__construct($_SESSION['felix']['uname']);
+            return true;
         } else {
             return false;
         }
@@ -40,10 +40,31 @@ class CurrentUser extends User {
     public function setUser($username) {
         $username = strtolower($username);
         parent::__construct($username);
+        /* update user details */
+        $this->updateName();
+        $sql = "INSERT INTO `user` (user,name,visits,ip) VALUES ('$username','".$this->getName()."',1,'".$_SERVER['REMOTE_ADDR']."') ON DUPLICATE KEY UPDATE name='".$this->getName()."',visits=visits+1,ip='".$_SERVER['REMOTE_ADDR']."',timestamp=NOW()";
+        return $this->db->query($sql);
     }
 
     public function getSession() {
         return $this->session;
+    }
+
+    /*
+     * Update user's name from ldap
+     */
+    private function updateName() {
+        if(!LOCAL) {
+            $ds = ldap_connect("addressbook.ic.ac.uk");
+            $r = ldap_bind($ds);
+            $justthese = array("gecos");
+            $sr = ldap_search($ds, "ou=People, ou=everyone, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
+            $info = ldap_get_entries($ds, $sr);
+            if ($info["count"] > 0)
+                $this->setName($info[0]['gecos'][0]);
+            else
+                return false;
+        }
     }
 }
 ?>

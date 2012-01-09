@@ -11,6 +11,7 @@
     if(!defined('ADMIN_URL'))                       define('ADMIN_URL','http://felixonline.co.uk/engine/'); // url of engine page
     if(!defined('PRODUCTION_FLAG'))                 define('PRODUCTION_FLAG', true); // if set to true css and js will be minified etc.. [TODO]
 	if(!defined('SESSION_LENGTH'))                  define('SESSION_LENGTH',7200); // session length
+	if(!defined('LOGIN_CHECK_LENGTH'))              define('LOGIN_CHECK_LENGTH',300); // length to allow login check (5mins)
 	if(!defined('COOKIE_LENGTH'))                   define('COOKIE_LENGTH', 2592000); // cookie length (30 days) (60*60*24*30)
 	if(!defined('AUTHENTICATION_SERVER'))           define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk'); // authentication server
 	if(!defined('AUTHENTICATION_PATH'))             define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/'); // authentication path

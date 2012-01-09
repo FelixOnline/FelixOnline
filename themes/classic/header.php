@@ -69,7 +69,7 @@
 						<div id="loginName">
 						<?php //if (get_user_role($uname)>0)
 							echo '<a href="/engine/" title="Admin Page"><img src="img/wrench.png"/></a>'; ?>
-						<a href="user/<?php echo $uname; ?>/" title="Profile Page"><?php echo get_vname();?></a>
+						<a href="user/<?php echo $uname; ?>/" title="Profile Page"><?php echo $currentuser->getName();?></a>
 						</div>
 						<form method="post" style="display: inline;">
 							<input type="submit" value="Logout" id="logoutbutton" name="logout">
