@@ -1,12 +1,3 @@
-<?php
-    /*
-        TODO:
-            Make about us editable in back end
-
-    */
-
-?>
-
 <div class="grid_8 pull_4 featCont layout1">
     <?php
 

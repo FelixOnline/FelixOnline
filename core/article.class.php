@@ -26,7 +26,8 @@ class Article extends BaseModel {
 	private $authors; // array of authors of article 
     private $category_cat; // category cat (short version)
     private $category_label; // category label
-    private $image; // image id
+    private $content; // article content
+    private $image; // image class
     private $image_title; // image title
     private $num_comments; // number of comments
 	private $search = array('@<>@',
@@ -120,14 +121,24 @@ class Article extends BaseModel {
         return $this->category_label;
     }
 
-	public function getPreview() {
-		$content = preg_replace($this->search,'',$this->get_text(1));
-		if (strlen($content) <= PREVIEW_LENGTH)
-			return $content;
-		else
-			return substr($content,0,strrpos(substr($content,0,PREVIEW_LENGTH),' ')).'...';
-	}
-	
+    /*
+     * Public: Get category url
+     */
+    public function getCategoryURL() {
+        return STANDARD_URL.$this->getCategoryCat().'/';
+    }
+
+    /*
+     * Public: Get article content
+     */
+    public function getContent() {
+        if(!$this->content) {
+            $sql = "SELECT `content` FROM `text_story` WHERE id = ".$this->getText1();
+            $this->content = $this->db->get_var($sql);
+        }
+        return $this->content;
+    }
+
     /*
      * Public: Get article teaser
      * TODO
@@ -144,20 +155,33 @@ class Article extends BaseModel {
 		}
 	}
 
-	public function getText($text_id=1) {
-		global $cid;
-		$var = text.$text_id;
-		$sql = "SELECT content FROM `article` INNER JOIN `text_story` ON (article.text$text_id=text_story.id) WHERE article.id=$this->id";
-		$rsc = mysql_query($sql,$cid);
-		list($content) = mysql_fetch_array($rsc);
-		return $content;
-	}
-	
-	public function getTextID($text_id=1) {
-		$var = text.$text_id;
-		return $this->$var;
-	}
-	
+    /*
+     * Public: Get article preview with word limit
+     *
+     * $limit - word limit
+     */
+    public function getPreview($limit) {
+        $string = strip_tags($this->getContent());
+        $words = explode(" ",$string);
+        if(count($words) > $limit) {
+          $append = ' ... <br/><a href="'.$this->getURL().'" title="Read more" id="readmorelink">Read more</a>';
+        }
+        return implode(" ",array_splice($words,0,$limit)) . $append;
+    }
+
+    /*
+     * Public: Get short description
+     *
+     * $limit - character limit for description [defaults to 80]
+     */
+    public function getShortDesc($limit = 80) {
+        if($this->fields['short_desc']) {
+            return substr($this->fields['short_desc'], 0, $limit);
+        } else {
+            return substr(strip_tags($this->getContent()), 0, $limit);
+        }
+    }
+
     /*
      * Public: Get number of comments on article
      *
@@ -165,10 +189,34 @@ class Article extends BaseModel {
      */
     public function getNumComments() {
         if(!$this->num_comments) {
-            $sql = "SELECT SUM(count) AS count FROM (SELECT article,COUNT(*) AS count FROM `comment` WHERE article=".$this->id." AND `active`=1 GROUP BY article UNION ALL SELECT article,COUNT(*) AS count FROM `comment_ext` WHERE article=$id AND `active`=1 AND `pending`=0 GROUP BY article) AS t GROUP BY article";
+            $sql = "SELECT SUM(count) AS count 
+                FROM (
+                    SELECT article,COUNT(*) AS count 
+                    FROM `comment` 
+                    WHERE article=".$this->getId()." 
+                    AND `active`=1 
+                    GROUP BY article 
+                    UNION ALL 
+                    SELECT article,COUNT(*) AS count 
+                    FROM `comment_ext` 
+                    WHERE article=".$this->getId()." 
+                    AND `active`=1 
+                    AND `pending`=0 
+                    GROUP BY article
+                ) AS t GROUP BY article";
             $this->num_comments = $this->db->get_var($sql);
         }
         return $this->num_comments;
+    }
+
+    /*
+     * Public: Get image class
+     */
+    public function getImage() {
+        if(!$this->image) {
+            $this->image = new Image($this->getImg1());
+        }
+        return $this->image;
     }
 
     /*
