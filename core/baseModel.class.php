@@ -5,7 +5,7 @@
  * Creates dynamic getter functions for model fields
  */
 class BaseModel {
-    protected $fields; // array that holds all the database fields
+    protected $fields = array(); // array that holds all the database fields
 
     function __construct($dbObject) {
         if($dbObject) {
@@ -18,10 +18,37 @@ class BaseModel {
 
     /* 
      * Create dynamic functions 
+     * TODO match set functions
      */
     function __call($method,$arguments) {
         $meth = $this->from_camel_case(substr($method,3,strlen($method)-3));
-        return array_key_exists($meth,$this->fields) ? $this->fields[$meth] : false;
+        $verb = substr($method, 0, 3);
+        switch($verb) {
+            case 'get':
+                if(array_key_exists($meth, $this->fields)) {
+                    return $this->fields[$meth];
+                } else {
+                    throw new Exception($meth." field doesn't exist");
+                }
+                break;
+            case 'set':
+                if(array_key_exists($meth, $this->fields)) {
+                    $this->fields[$meth] = $arguments[0];
+                    return $this->fields[$meth];
+                } else {
+                    throw new Exception($meth." field doesn't exist");
+                }
+                break;
+            default:
+                throw new Exception($verb." is not a recognised verb");
+        }
+    }
+
+    /*
+     * Save all fields to database TODO
+     */
+    public function save() {
+        
     }
   
     /* 
