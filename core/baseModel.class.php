@@ -6,8 +6,12 @@
  */
 class BaseModel {
     protected $fields = array(); // array that holds all the database fields
+    protected $db;
 
     function __construct($dbObject) {
+        /* initialise db connection and store it in object */
+        global $db;
+        $this->db = $db;
         if($dbObject) {
             foreach($dbObject as $key => $value) {
                 $this->fields[$key] = $value;
@@ -48,7 +52,47 @@ class BaseModel {
      * Save all fields to database TODO
      */
     public function save() {
-        
+        $arrayLength = count($this->fields);
+        $sql = "INSERT INTO `";
+        $sql .= strtolower(get_class($this));
+        $sql .= "` (";
+        $i = 1; // counter
+        foreach($this->fields as $key => $value) {
+            if($i == $arrayLength) {
+                $sql .= $key;
+            } else {
+                $sql .= $key.', ';
+            }
+            $i++;
+        } 
+        $sql .= ") VALUES (";
+        $i = 1;
+        foreach($this->fields as $key => $value) {
+            if($value) {
+                if(is_numeric($value)) {
+                    $sql .= $value;
+                } else {
+                    $sql .= "'".$value."'";
+                }
+            } else {
+                $sql .= "''";
+            }
+            if($i != $arrayLength) {
+                $sql .= ", ";
+            }
+            $i++;
+        } 
+        $sql .= ") ";
+        $sql .= "ON DUPLICATE KEY UPDATE ";
+        $i = 1;
+        foreach($this->fields as $key => $value) {
+            $sql .= $key."='".$value."'";
+            if($i != $arrayLength) {
+                $sql .= ", ";
+            }
+            $i++;
+        }
+        return $this->db->query($sql);
     }
   
     /* 

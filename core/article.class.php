@@ -38,7 +38,7 @@ class Article extends BaseModel {
         '@<![\s\S]*?--[ \t\n\r]*>@',        // multi-line comments including CDATA
         '@</?[^>]*>*@' 		  // html tags
 	);
-    private $db; // database object
+    protected $db;
 	
     /*
      * Constructor for Article class
@@ -49,13 +49,12 @@ class Article extends BaseModel {
      * Returns article object
      */
 	function __construct($id=NULL) {
-        /* initialise db connection and store it in object */
         global $db;
         $this->db = $db;
         //$this->db->cache_queries = true;
         if($id !== NULL) { // if creating an already existing article object
-            $sql = "SELECT `id`,`title`,`short_title`,`teaser`,`author`,`approvedby`,`category`,UNIX_TIMESTAMP(`date`) as date,UNIX_TIMESTAMP(`published`) as publishdate,`hidden`,`text1`,`text2`,`img1`,`img2`,`img2lr`,`hits` FROM `article` WHERE id=".$id;
-            $this->fields = parent::__construct($this->db->get_row($sql));
+            $sql = "SELECT `id`,`title`,`short_title`,`teaser`,`author`,`approvedby`,`category`,UNIX_TIMESTAMP(`date`) as date,UNIX_TIMESTAMP(`published`) as published,`hidden`,`text1`,`text2`,`img1`,`img2`,`img2lr`,`hits` FROM `article` WHERE id=".$id;
+            parent::__construct($this->db->get_row($sql));
             //$this->db->cache_queries = false;
             return $this;
         } else {

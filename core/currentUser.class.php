@@ -42,7 +42,20 @@ class CurrentUser extends User {
         parent::__construct($username);
         /* update user details */
         $this->updateName();
-        $sql = "INSERT INTO `user` (user,name,visits,ip) VALUES ('$username','".$this->getName()."',1,'".$_SERVER['REMOTE_ADDR']."') ON DUPLICATE KEY UPDATE name='".$this->getName()."',visits=visits+1,ip='".$_SERVER['REMOTE_ADDR']."',timestamp=NOW()";
+        $sql = "INSERT INTO `user` 
+            (user,name,visits,ip) 
+            VALUES (
+                '$username',
+                '".$this->getName()."',
+                1,
+                '".$_SERVER['REMOTE_ADDR']."'
+            ) 
+            ON DUPLICATE KEY 
+            UPDATE 
+                name='".$this->getName()."',
+                visits=visits+1,
+                ip='".$_SERVER['REMOTE_ADDR']."',
+                timestamp=NOW()";
         return $this->db->query($sql);
     }
 
