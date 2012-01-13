@@ -142,3 +142,7 @@
 		<div class="clear"></div>
 		<!-- End header 2 -->
 	</div>
+    
+    <!-- Navigation -->
+    <?php include($this->directory.'/navigation.php'); ?>
+    <!-- End of navigation -->
