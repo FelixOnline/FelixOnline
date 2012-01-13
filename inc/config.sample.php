@@ -19,6 +19,7 @@
 	$db->cache_timeout = 24; // Note: this is hours
 	$db->use_disk_cache = true;
 	$db->cache_dir = 'inc/ezsql_cache'; // Specify a cache dir. Path is taken from calling script
+    $db->show_errors();
 
     /*
      * To actually cache queries put this before any queries that you want to cache:
@@ -42,11 +43,12 @@
     /*
      * Change these urls to your local versions, e.g http://localhost/felix
      */
-    define('STANDARD_URL','http://localhost/felix/');
+    define('STANDARD_URL','http://felixonline.local/');
     define('BASE_URL','http://localhost/felix/');
     define('ADMIN_URL','http://localhost/felix/engine/');
     define('AUTHENTICATION_SERVER','localhost'); // authentication server
     define('AUTHENTICATION_PATH','http://localhost/felix/'); // authentication path
+	define('RELATIVE_PATH','/felix'); // relative path from root
 
     define('PRODUCTION_FLAG', false); // if set to true css and js will be minified etc..
     define('LOCAL', true); // if true then site is hosted locally - don't use pam_auth etc. 
