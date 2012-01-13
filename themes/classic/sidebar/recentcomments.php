@@ -26,9 +26,9 @@
             foreach($recent_comments as $key => $object) {
                 $comment = new Comment($object->id);
         ?>
-            <li <?php //if($i == $commentlimit) echo 'class="last"';?>>
+            <li <?php if($key+1 == count($recent_comments)) echo 'class="last"';?>>
                 <p id="article">
-                    On <a href="<?php //echo article_url($row['article']); ?>"><?php //echo get_article_title($row['article']);?></a>
+                    On <a href="<?php echo $comment->getArticle()->getURL(); ?>"><?php echo $comment->getArticle()->getTitle();?></a>
                 </p>
                 <p id="comment">
                     <span id="endcomment">
@@ -36,7 +36,7 @@
                     </span>
                 </p>
                 <p id="commentinfo">
-                    <a href="<?php //echo article_url($row['article']); ?>#comment<?php //echo $row['id'];?>" title="Go to comment">
+                    <a href="<?php echo $comment->getArticle()->getURL(); ?>#comment<?php echo $comment->getId();?>" title="Go to comment">
                         <?php echo getRelativeTime($comment->getTimestamp());?>
                     </a> 
                     <span id="commenter">

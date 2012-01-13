@@ -30,6 +30,14 @@ $urls = array(
     '/logout' => 'AuthController',
 );
 
+/*
+ * Include Controllers
+ */
+require_once(BASE_DIRECTORY.'/controllers/baseController.php');
+foreach (glob(BASE_DIRECTORY.'/controllers/*.php') as $filename) {
+    require_once($filename);
+}
+
 try { // try mapping request to urls
     glue::stick($urls);
 } catch (Exception $e) { // if it fails then send a 404 response

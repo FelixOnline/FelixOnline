@@ -3,6 +3,21 @@
  * Comment class
  * Deals with both comment retrieval and comment submission
  *
+ * Fields:
+ *      id
+ *      article
+ *      user
+ *      comment
+ *      timestamp
+ *      active
+ *      reply
+ *      likes
+ *      dislikes
+ *
+ *      IP
+ *      pending
+ *      spam
+ *
  * Comment flags:
  *      Internal:
  *          active - comment is active or not
@@ -31,22 +46,11 @@
  *      $comment->setUser('felix');
  *      if($comment->insert()) echo 'Success!';
  */
-class Comment {
-	private $id; // id of comment
-	private $article; // article id comment is on
-	private $content; // content of comment
-    private $name; // name of author of comment
-	private $user; // username of author of comment [internal] [TODO] be user object
-    private $reply; // comment object of the comment this comment is replying to
+class Comment extends BaseModel {
+	private $article; // article class comment is on
+	private $reply; // comment class of reply
     private $external = false; // if comment is external or not. Default false
-    private $timestamp; // unix timestamp of comment submission time
-    private $active; // whether comment is active
-    private $IP; // ip of commenter [external]
-    private $pending; // if comment is pending [external]
-    private $spam; // if comment is spam [external]
-    private $likes; // number of comment likes
-    private $dislikes; // number of comment dislikes
-    private $db; // grab global $db variable for database connection
+    protected $db;
 	
     /*
      * Constructor for Comment class
@@ -60,71 +64,30 @@ class Comment {
 	public function __construct($id=NULL) {
         global $db;
         $this->db = $db;
-        $this->db->cache_queries = true;
         if($id != NULL) {
-            $this->id = $id;
             if($id < EXTERNAL_COMMENT_ID) { // if comment is internal
                 $this->external = false; // comment is internal
-                $sql = "SELECT `article`,`user`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`reply`,`likes`,`dislikes` FROM `comment` WHERE id=$id";
-                $comment = $this->db->get_row($sql);
-                foreach($comment as $key => $value) {
-                    $this->{$key} = $value; // store each row into object
-                }
-                if($this->reply) {
-                    $this->reply = new Comment($this->reply); // initialise new comment as reply
-                }
+                $sql = "SELECT id, `article`,`user`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`reply`,`likes`,`dislikes` FROM `comment` WHERE id=$id";
+                parent::__construct($this->db->get_row($sql));
                 //$this->name = get_vname_by_uname_db($this->user);
-                $this->db->cache_queries = false;
                 return $this;
             } else {
                 $this->external = true; // comment is external
-                $sql = "SELECT `article`,`name`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`IP`,`pending`,`reply`,`spam`,`likes`,`dislikes` FROM `comment_ext` WHERE id=$id";
-                $comment = $this->db->get_row($sql);
-                foreach($comment as $key => $value) {
-                    $this->{$key} = $value; // store each row into object
-                }
-                if($this->reply) {
-                    $this->reply = new Comment($this->reply); // initialise new comment as reply
-                }
-                $this->db->cache_queries = false;
+                $sql = "SELECT id, `article`,`name`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`IP`,`pending`,`reply`,`spam`,`likes`,`dislikes` FROM `comment_ext` WHERE id=$id";
+                parent::__construct($this->db->get_row($sql));
                 return $this;
             }
         }
 	}
 
     /*
-     * Getter functions
+     * Public: Get article class that comment is on
      */
-    public function getID()         { return $this->id; }
-    public function getArticle()    { return $this->article; }
-    public function getUser()       { return $this->user; }
-    public function getTimestamp()  { return $this->timestamp; }
-    public function getLikes()      { return $this->likes; }
-    public function getDislikes()   { return $this->dislikes; }
-
-    /*
-     * Public: Get comment content with reply link
-     */
-    public function getContent() { 
-        $output = '';
-        // Add link to reply comment
-        if($this->reply) { 
-            $output .= '<a href="'.curPageURLNonSecure().'#comment'.$this->reply->getID().'" id="replyLink">';
-            $output .= '@'.$this->reply->getName().':</a> '; 
-        } 
-        $output .= nl2br(trim($this->content)); 
-        return $output;
-    }
-
-    /*
-     * Public: Get commenter's name
-     */
-    public function getName() {
-        if($this->name) { // if external commenter has a name
-            return $this->name;
-        } else {
-            return 'Anonymous'; // else return Anonymous
+    public function getArticle() { 
+        if(!$this->article) {
+            $this->article = new Article($this->fields['article']);
         }
+        return $this->article;
     }
 
     /*
@@ -133,7 +96,10 @@ class Comment {
      * Returns comment object of reply. Returns false if no reply
      */
     public function getReply() {
-        if($this->reply) {
+        if($this->fields['reply']) {
+            if(!$this->reply) {
+                $this->reply = new Comment($this->fields['reply']); // initialise new comment as reply
+            }
             return $this->reply;
         } else {
             return false;
@@ -141,15 +107,27 @@ class Comment {
     }
 
     /*
-     * Public: Get comment replying to's id
-     *
-     * Returns the id of the comment this comment is replying to
+     * Public: Get comment content with reply link
      */
-    public function getReplyID() {
-        if($this->reply) {
-            return $this->reply->getID();
+    public function getContent() { 
+        $output = '';
+        // Add link to reply comment
+        if($this->getReply()) { 
+            $output .= '<a href="'.curPageURLNonSecure().'#comment'.$this->getReply()->getID().'" id="replyLink">';
+            $output .= '@'.$this->getReply()->getName().':</a> '; 
+        } 
+        $output .= nl2br(trim($this->fields['content'])); 
+        return $output;
+    }
+
+    /*
+     * Public: Get commenter's name
+     */
+    public function getName() {
+        if($this->fields['name']) { // if external commenter has a name
+            return $this->fields['name'];
         } else {
-            return NULL;
+            return 'Anonymous'; // else return Anonymous
         }
     }
 
@@ -159,7 +137,7 @@ class Comment {
      * Returns true if is author. False if not.
      */
     public function byAuthor() {
-        if(in_array($this->user, get_article_authors_uname($this->article)) ) {
+        if(in_array($this->getUser(), get_article_authors_uname($this->getArticle()->getId())) ) {
             return true;
         } else {
             return false;
@@ -201,7 +179,8 @@ class Comment {
      * Public: Check if comment is rejected
      */
     public function isRejected() {
-        if(!$this->external && !$this->active || $this->external && !$this->active && !$this->pending) { // if comment that is rejected
+        if(!$this->external && !$this->getActive() 
+           || $this->getExternal() && !$this->getActive() && !$this->getPending()) { // if comment that is rejected
             return true; 
         } else {
             return false;
@@ -212,7 +191,7 @@ class Comment {
      * Public: Check if comment is pending approval
      */
     public function isPending() {
-        if($this->external && $this->active && $this->pending && $this->IP == $_SERVER['REMOTE_ADDR']) { // if comment is pending for this ip address
+        if($this->getExternal() && $this->getActive() && $this->getPending() && $this->getIP() == $_SERVER['REMOTE_ADDR']) { // if comment is pending for this ip address
             return true;
         } else {
             return false;
@@ -227,61 +206,9 @@ class Comment {
      * Returns true or false
      */
     public function userLikedComment($user) {
-        $sql = "SELECT COUNT(*) FROM `comment_like` WHERE user='$user' AND comment=".$this->id;
+        $sql = "SELECT COUNT(*) FROM `comment_like` WHERE user='$user' AND comment=".$this->getId();
         $count = $this->db->get_var($sql);
         return $count;
-    }
-
-    /*
-     * Setter functions
-     */
-
-    /*
-     * Private: Set object ID
-     *
-     * $id - id of comment
-     *
-     * Returns id 
-     */
-    private function setID($id) {
-        $this->id = $id;
-        return $this->id;
-    }
-
-    /*
-     * Public: Set comment as external or not
-     *
-     * $external - flag for if comment is external or not
-     *
-     * Returns external flag
-     */
-    public function setExternal($external) {
-        $this->external = $external;
-        return $this->external;
-    }
-
-    /*
-     * Public: Set comment article
-     *
-     * $article - id of article
-     *
-     * Returns id of article
-     */
-    public function setArticle($article) {
-        $this->article = $article;
-        return $this->article;
-    }
-
-    /*
-     * Public: Set comment content
-     *
-     * $content - comment content (no need to be escaped etc)
-     *
-     * Returns content
-     */
-    public function setContent($content) {
-        $this->content = $content;
-        return $this->content;
     }
 
     /*
@@ -295,30 +222,6 @@ class Comment {
         $this->user = $username;
         $this->name = get_vname_by_uname_db($this->user);
         return $this->user;
-    }
-
-    /*
-     * Public: Set name of commenter (external only)
-     *
-     * $name - name of commenter
-     *
-     * Returns name
-     */
-    public function setName($name) {
-        $this->name = $name;
-        return $this->name;
-    }
-
-    /*
-     * Public: Set reply of comment
-     *
-     * $reply - id of comment that this comment is replying to
-     *
-     * Returns reply id
-     */
-    public function setReply($reply) {
-        $this->reply = new Comment(mysql_real_escape_string($reply));
-        return $this->reply;
     }
 
     /*

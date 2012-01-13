@@ -390,7 +390,6 @@ include($this->directory.'/header.php'); // replace this with function
                     <p>
                         <?php echo $editorial->getPreview(245); ?> ...
                     </p>
-                    <span><a href="<?php echo $editorial->getURL();?>" title="Read more" id="readmorelink">Read more</a></span>
             </div>
         </div>
         <!-- End of editorial -->
