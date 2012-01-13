@@ -140,6 +140,10 @@ class Article extends BaseModel {
     }
 
     /*
+     * Private: Clean content
+     */
+
+    /*
      * Public: Get article teaser
      * TODO
      *
@@ -157,10 +161,11 @@ class Article extends BaseModel {
 
     /*
      * Public: Get article preview with word limit
+     * Shortens article content to word limit
      *
-     * $limit - word limit
+     * $limit - word limit [defaults to 50]
      */
-    public function getPreview($limit) {
+    public function getPreview($limit = 50) {
         $string = strip_tags($this->getContent());
         $words = explode(" ",$string);
         if(count($words) > $limit) {
@@ -171,6 +176,8 @@ class Article extends BaseModel {
 
     /*
      * Public: Get short description
+     * If a short description is specified in the database then use that. 
+     * Otherwise limit article content to a certain character length
      *
      * $limit - character limit for description [defaults to 80]
      */

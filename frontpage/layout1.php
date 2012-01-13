@@ -176,6 +176,7 @@
             </li>
         </ul>
     </div>
+
     <div class="grid_8 alpha omega" id="featuredarticles">
         <h3>Featured Articles</h3>
         <?php $article = 791;
