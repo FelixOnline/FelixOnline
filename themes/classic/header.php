@@ -38,7 +38,7 @@
     <link rel="shortcut icon" href="favicon.ico">
 
     <!-- CSS files -->
-    <?php foreach($this->resources->getCSS() as $key => $value) { ?>
+    <?php foreach($theme->resources->getCSS() as $key => $value) { ?>
             <link id="<?php echo $key;?>" rel="stylesheet" href="<?php echo $value; ?>">
     <?php } ?>
 </head>
@@ -49,13 +49,13 @@
 				<div class="grid_9 links first">
 					<ul class="clearfix">
                         <li class="first">
-                            <a href="<?php echo STANDARD_URL; ?>" <?php if($this->isPage('frontpage')) echo 'class="selected"';?>>Felix Online</a>
+                            <a href="<?php echo STANDARD_URL; ?>" <?php if($theme->isPage('frontpage')) echo 'class="selected"';?>>Felix Online</a>
                             </li>
                         <li>
-                            <a href="<?php echo STANDARD_URL; ?>media/" <?php if($this->isPage('media')) echo 'class="selected"';?>>Media</a>
+                            <a href="<?php echo STANDARD_URL; ?>media/" <?php if($theme->isPage('media')) echo 'class="selected"';?>>Media</a>
                         </li>
                         <li class="last">
-                            <a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if($this->isPage('issuearchive')) echo 'class="selected"';?>>Issue Archive</a>
+                            <a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if($theme->isPage('issuearchive')) echo 'class="selected"';?>>Issue Archive</a>
                         </li>
 					</ul>
 				</div>
@@ -64,7 +64,7 @@
                         <a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox" id="loginButtonA">
                             <div id="loginbutton">Login</div>
                         </a>
-                        <?php include($this->directory.'/loginBox.php'); ?>
+                        <?php include(THEME_DIRECTORY.'/loginBox.php'); ?>
 					<?php } else { ?>
 						<div id="loginName">
 						<?php //if (get_user_role($uname)>0)
@@ -144,5 +144,5 @@
 	</div>
     
     <!-- Navigation -->
-    <?php include($this->directory.'/navigation.php'); ?>
+    <?php include(THEME_DIRECTORY.'/navigation.php'); ?>
     <!-- End of navigation -->

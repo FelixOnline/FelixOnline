@@ -69,7 +69,12 @@ class Article extends BaseModel {
      * Returns array
      */
     public function getAuthors() { 
-        $sql = "SELECT article_author.author as author FROM `article_author` INNER JOIN `article` ON (article_author.article=article.id) WHERE article.id=".$this->getId();
+        $sql = "SELECT 
+                article_author.author as author 
+                FROM `article_author` 
+                INNER JOIN `article` 
+                ON (article_author.article=article.id) 
+                WHERE article.id=".$this->getId();
         $authors = $this->db->get_results($sql);
         foreach($authors as $author) {
             $this->authors[] = $author->author;
@@ -103,9 +108,11 @@ class Article extends BaseModel {
      * Public: Get cat of article category
      */
     public function getCategoryCat() {
-        if(!$this->category_cat) {
-            $sql = "SELECT `cat` FROM `category` WHERE id = ".$this->getCategory();
-            $this->category_cat = $this->db->get_var($sql);
+        if(!$this->category_cat || !$this->category_label) {
+            $sql = "SELECT `cat`,label FROM `category` WHERE id = ".$this->getCategory();
+            $cat = $this->db->get_row($sql);
+            $this->category_cat = $cat->cat;
+            $this->category_label = $cat->label;
         }
         return $this->category_cat;
     }
@@ -114,9 +121,11 @@ class Article extends BaseModel {
      * Public: Get label of article category
      */
     public function getCategoryLabel() {
-        if(!$this->category_label) {
-            $sql = "SELECT `label` FROM `category` WHERE id = ".$this->getCategory();
-            $this->category_label = $this->db->get_var($sql);
+        if(!$this->category_label || !$this->category_cat) {
+            $sql = "SELECT cat,`label` FROM `category` WHERE id = ".$this->getCategory();
+            $cat = $this->db->get_row($sql);
+            $this->category_label = $cat->label;
+            $this->category_cat = $cat->cat;
         }
         return $this->category_label;
     }

@@ -1,7 +1,6 @@
 <!-- Footer -->
     <div class="container_12">
-        <div class="grid_12 footer">
-            <div class="grid_6 alpha">
+        <div class="grid_12 footer"> <div class="grid_6 alpha">
                 <img src="<?php echo STANDARD_URL.'themes/'.$this->name; ?>/img/title-small.jpg"/>
             </div>
             <div class="grid_6 details alpha">
