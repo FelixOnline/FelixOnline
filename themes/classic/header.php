@@ -47,7 +47,7 @@
 		<div class="container_16">
 			<div id="topBar" class="grid_16">
 				<div class="grid_9 links first">
-					<ul>
+					<ul class="clearfix">
                         <li class="first">
                             <a href="<?php echo STANDARD_URL; ?>" <?php if($this->isPage('frontpage')) echo 'class="selected"';?>>Felix Online</a>
                             </li>

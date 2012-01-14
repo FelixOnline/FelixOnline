@@ -473,4 +473,40 @@ $timing->log('after header');
     <!-- End of front page articles -->
     <?php $timing->log('end of frontpage'); ?>
 </div>
+
+<!-- Featured bar -->
+<div class="container_12 clearfix">
+    <?php
+    $sql = "SELECT id,cat,label,top_slider_1 as top FROM `category` 
+            WHERE active=1 
+            AND hidden=0
+            AND id>0 
+            ORDER BY id ASC";
+    $cats = $db->get_results($sql);
+    foreach($cats as $key => $cat) {
+        $article = new Article($cat->top);
+    ?>
+        <div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
+            <div class="border <?php echo $cat->cat;?>">
+                <h3>
+                    <a href="<?php echo STANDARD_URL.$cat->cat;?>/">
+                        <?php echo $cat->label;?>
+                    </a>
+                </h3>
+                <a href="<?php echo $article->getURL();?>">
+                    <img id="featuredBarPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 120);?>" width="220px" height="120px">
+                </a>
+                <h4>
+                    <a href="<?php echo $article->getURL();?>">
+                        <?php echo $article->getTitle();?>
+                    </a>
+                </h4>
+                <p>
+                    <?php echo $article->getPreview(10);?>
+                </p>
+            </div>
+        </div>
+    <?php } ?>
+</div>
+<!-- End of featured bar -->
 <?php include($this->directory.'/footer.php'); ?>
