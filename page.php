@@ -259,7 +259,6 @@
 								</div>
 								<?php } ?>
 							</div>
-
 						<?php } else { ?>
 						<?php
 								$size = getimagesize(get_img_url(get_img_id($article, 1))); // $size[0] = width, $size[1] = height

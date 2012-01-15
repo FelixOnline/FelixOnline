@@ -1,10 +1,6 @@
 <?php
 $timing->log('article page');
 
-$article = new Article($data['id']); // todo
-
-$theme->appendData(array('article' => $article));
-
 $header = array(
     'title' => $article->getTitle().' - '.$article->getCategoryLabel().' - '.'Felix Online',
     'meta' => '<meta property="og:image" content="'.$article->getImage()->getURL(100).'"/>
@@ -14,7 +10,7 @@ $header = array(
     <meta property="og:description" content="'.$article->getTeaser().'"/>'
 );
 
-include(THEME_DIRECTORY.'/header.php'); // replace this with function
+$theme->render('header');
 ?>
 <!-- Article wrapper -->
 <div class="container_12">
@@ -40,7 +36,7 @@ include(THEME_DIRECTORY.'/header.php'); // replace this with function
         </div>
         <div class="articleInfo grid_8">
             <p>
-                <?php //echo output_in_english_authors(get_article_authors_uname($article)); ?>
+                <?php echo $article->getAuthorsEnglish(); //echo output_in_english_authors(get_article_authors_uname($article)); ?>
             </p>
             <p>
                 <span class="<?php echo $article->getCategoryCat();?>">
@@ -65,6 +61,168 @@ include(THEME_DIRECTORY.'/header.php'); // replace this with function
             ?>
         </div>
         <!-- End of article header -->
+
+        <!-- Sidebar 2 -->
+        <div class="sidebar2 grid_2 push_6 entry-unrelated">
+            <div id="sharebuttonsCont">
+                <h6>Sharing</h6>
+                <ul>
+                    <div id="sharebuttons">
+                        <li id="facebookLike">
+
+                        </li>
+                        <li id="twitterShare">
+
+                        </li>
+                        <li id="googleShare">
+                            <g:plusone size="medium"></g:plusone>
+                        </li>
+                        <li id="diggShare">
+
+                        </li>
+                    </div>
+                </ul>
+            </div>
+            <ul class="metaList">
+                <li id="comments">
+                    <a href="<?php echo Utility::currentPageURL().'#commentHeader';?>">
+                        <?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo STANDARD_URL; ?>print.php?article=<?php echo $article->getId();?>" target="_blank">Print Article</a>
+                </li> <!-- TODO -->
+            </ul>
+        </div>
+        <!-- End of Sidebar 2 -->
+
+        <!-- Content -->
+        <div class="content grid_6 pull_2 omega entry-content">
+            <?php if($image = $article->getImage()) { ?>
+                <div id="imgCont" class="<?php if($image->isTall()) echo "right";?>">
+                    <?php if($image->isTall()) { ?>
+                        <img id="articlePic" class="vertical" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(240);?>">
+                    <?php } else { ?>
+                        <img id="articlePic" class="horizontal" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(460);?>">
+                    <?php } ?>
+                    <?php if ( $image->getCaption() || $image->getAttribution()) { ?>
+                        <div id="imageCaption">
+                            <?php if ($image->getCaption()) { ?> 
+                                <span><?php echo $image->getCaption();?></span>
+                            <?php } ?>
+                            <?php if($image->getAttribution()) { ?>
+                                <div id="imageAttr">
+                                    <?php if($image->getCaption()) echo ' - ';?>
+                                    <?php if($image->getAttrLink()) { ?>
+                                        <a href="<?php echo $image->getAttrLink(); ?>">
+                                    <?php } ?>
+                                        Credit: <?php echo $image->getAttribution();?>
+                                    <?php if($image->getAttrLink()) echo '</a>'?>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
+                </div>
+            <?php } ?>
+            <?php
+                echo $article->getContent();
+            ?>
+        </div>
+        <!-- End of content -->
+
+        <!-- Article share -->
+        <div class="articleShare grid_8">
+            <ul>
+                <li>
+                    <div id="shareText">Share: </div>
+                </li>
+                <li>
+                    <div id="twitterShare2">
+                        <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                    </div>
+                </li>
+                <li>
+                    <div id="diggShare2">
+                        <!--<a class="DiggThisButton DiggCompact"></a>-->
+                        <g:plusone size="medium"></g:plusone>
+                    </div>
+                </li>
+                <li>
+                    <div id="facebookLike2">
+                        <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+                        <fb:like show_faces="false" width="300" font="arial" send=true></fb:like>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- End of article share -->
+
+        <?php $timing->log('beginning of comments');?>
+        <!-- Comments -->
+        <div class="grid_8 comments" id="commentHeader">
+            <h3>Comments <span>(<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>)</span></h3>
+            <!-- Comments container -->
+            <div id="commentCont">
+                <?php
+                    $comments = $article->getComments();
+                    foreach($comments as $key => $object) {
+                        $comment = new Comment($object->id); 
+                        $theme->render('comment', array('comment' => $comment));
+                    }
+                ?>
+            </div>
+            <!-- End of comments container -->
+            
+            <!-- Comment form -->
+            <div id="commentForm">
+                <script type="text/javascript">
+                    var RecaptchaOptions = {
+                        theme : 'clean'
+                    };
+                </script>
+                <?php if (!$currentuser->isLoggedIn()) { ?>
+                    <h5>Comment anonymously or <a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox">log in</a></h5>
+                    <div id="info">
+                        <p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and are moderated later. Read our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
+                    </div>
+                <?php } else { ?>
+                    <h5>Leave a comment as <a href="<?php echo $currentuser->getURL();?>/" title="Profile Page"><?php echo $currentuser->getName();?></a></h5>
+                <?php } ?>
+                <form method="post" action="<?php echo Utility::currentPageURL();?>">
+                    <?php if (!$currentuser->isLoggedIn()) { ?>
+                        <label for="name">Name: </label>
+                        <input name="name" id="name" value="<?php if(isset($_POST['name'])) echo $_POST['name'];?>"/>
+                        <div class="clear"></div>
+                    <?php } else { ?>
+                        <input type="hidden" value="<?php echo $currentuser->getUser(); ?>"/>
+                    <?php } ?>
+                    <div id="comentbox" class="clearfix">
+                        <label for="comment" id="commentLabel">Comment: </label>
+                        <div class="clear"></div>
+                        <textarea name="comment" id="comment" rows="4" class="required"><?php if(isset($_POST['comment'])) echo $_POST['comment']; ?></textarea>
+                        <label for="comment" class="error">Please write a comment</label>
+                    </div>
+                    <?php if (!$currentuser->isLoggedIn()) { ?>
+                        <label for="capatca">To prove you are human: </label>
+                        <div class="clear"></div>
+                        <?php
+                            require_once(BASE_DIRECTORY.'/inc/recaptchalib.php');
+                            echo recaptcha_get_html(RECAPTCHA_PUBLIC_KEY);
+                        ?>
+                    <?php } ?>
+                    <input type="submit" value="Post your comment" id="submit" name="<?php if($currentuser->isLoggedIn()) echo 'articlecomment'; else echo 'articlecomment_ext';?>"/>
+                </form>
+                <!-- Commenting policy -->
+                <?php $theme->render('commentPolicy');?>
+                <!-- End of commenting policy -->
+            </div>
+            <!-- End of comment form -->
+        </div>
+        <!-- End of comments -->
+        <?php $timing->log('end of comments');?>
+
     </div>
+    <?php $timing->log('end of article content');?>
 </div>
-<?php include(THEME_DIRECTORY.'/footer.php'); ?>
+<?php $timing->log('end of article');?>
+<?php $theme->render('footer'); ?>

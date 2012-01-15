@@ -25,7 +25,22 @@ class User extends BaseModel {
         global $db;
         $this->db = $db;
         if($uname !== NULL) {
-            $sql = "SELECT `user`,`name`,`visits`,`ip`,UNIX_TIMESTAMP(`timestamp`) as timestamp,`role`,`description`,`email`,`facebook`,`twitter`,`websitename`,`websiteurl`,`img` FROM `user` WHERE user='".$uname."'";
+            $sql = "SELECT 
+                `user`,
+                `name`,
+                `visits`,
+                `ip`,
+                UNIX_TIMESTAMP(`timestamp`) as timestamp,
+                `role`,
+                `description`,
+                `email`,
+                `facebook`,
+                `twitter`,
+                `websitename`,
+                `websiteurl`,
+                `img` 
+                FROM `user` 
+                WHERE user='".$uname."'";
             parent::__construct($this->db->get_row($sql));
             //$this->db->cache_queries = false;
             return $this;
@@ -36,6 +51,13 @@ class User extends BaseModel {
     protected function setName($name) {
         $this->fields['name'] = $name;
         return $this->fields['name'];
+    }
+
+    /*
+     * Public: Get url for user
+     */
+    public function getURL() {
+        return STANDARD_URL.'user/'.$this->getUser().'/'; 
     }
 
 }

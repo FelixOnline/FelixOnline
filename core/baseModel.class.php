@@ -16,6 +16,8 @@ class BaseModel {
             foreach($dbObject as $key => $value) {
                 $this->fields[$key] = $value;
             }
+        } else {
+            throw new Exception('No model in database');
         }
         return $this->fields;
     }

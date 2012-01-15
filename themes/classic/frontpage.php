@@ -6,7 +6,7 @@ $header = array(
     'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
 );
 
-include($this->directory.'/header.php'); // replace this with function
+$theme->render('header'); // replace this with function
 $timing->log('after header');
 ?>
 
@@ -509,4 +509,4 @@ $timing->log('after header');
     <?php } ?>
 </div>
 <!-- End of featured bar -->
-<?php include($this->directory.'/footer.php'); ?>
+<?php $theme->render('footer'); ?>

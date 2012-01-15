@@ -48,6 +48,7 @@
  */
 class Comment extends BaseModel {
 	private $article; // article class comment is on
+	private $user; // user class
 	private $reply; // comment class of reply
     private $external = false; // if comment is external or not. Default false
     protected $db;
@@ -91,6 +92,16 @@ class Comment extends BaseModel {
     }
 
     /*
+     * Public: Get user class
+     */
+    public function getUser() {
+        if(!$this->user) {
+            $this->user = new User($this->fields['user']);
+        }
+        return $this->user;
+    }
+
+    /*
      * Public: Get comment object of the comment this comment is replying to
      *
      * Returns comment object of reply. Returns false if no reply
@@ -124,10 +135,14 @@ class Comment extends BaseModel {
      * Public: Get commenter's name
      */
     public function getName() {
-        if($this->fields['name']) { // if external commenter has a name
-            return $this->fields['name'];
+        if($this->isExternal()) {
+            if($this->fields['name']) { // if external commenter has a name
+                return $this->fields['name'];
+            } else {
+                return 'Anonymous'; // else return Anonymous
+            }
         } else {
-            return 'Anonymous'; // else return Anonymous
+            return $this->getUser()->getName();
         }
     }
 
@@ -137,10 +152,14 @@ class Comment extends BaseModel {
      * Returns true if is author. False if not.
      */
     public function byAuthor() {
-        if(in_array($this->getUser(), get_article_authors_uname($this->getArticle()->getId())) ) {
-            return true;
-        } else {
+        if($this->isExternal()) {
             return false;
+        } else {
+            if(in_array($this->getUser()->getUser(), $this->getArticle()->getAuthors())) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -179,8 +198,8 @@ class Comment extends BaseModel {
      * Public: Check if comment is rejected
      */
     public function isRejected() {
-        if(!$this->external && !$this->getActive() 
-           || $this->getExternal() && !$this->getActive() && !$this->getPending()) { // if comment that is rejected
+        if(!$this->isExternal() && !$this->getActive() 
+           || $this->isExternal() && !$this->getActive() && !$this->getPending()) { // if comment that is rejected
             return true; 
         } else {
             return false;
@@ -191,7 +210,7 @@ class Comment extends BaseModel {
      * Public: Check if comment is pending approval
      */
     public function isPending() {
-        if($this->getExternal() && $this->getActive() && $this->getPending() && $this->getIP() == $_SERVER['REMOTE_ADDR']) { // if comment is pending for this ip address
+        if($this->isExternal() && $this->getActive() && $this->getPending() && $this->getIP() == $_SERVER['REMOTE_ADDR']) { // if comment is pending for this ip address
             return true;
         } else {
             return false;

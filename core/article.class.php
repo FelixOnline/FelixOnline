@@ -54,7 +54,24 @@ class Article extends BaseModel {
         $this->db = $db;
         //$this->db->cache_queries = true;
         if($id !== NULL) { // if creating an already existing article object
-            $sql = "SELECT `id`,`title`,`short_title`,`teaser`,`author`,`approvedby`,`category`,UNIX_TIMESTAMP(`date`) as date,UNIX_TIMESTAMP(`published`) as published,`hidden`,`text1`,`text2`,`img1`,`img2`,`img2lr`,`hits` FROM `article` WHERE id=".$id;
+            $sql = "SELECT 
+                    `id`,
+                    `title`,
+                    `short_title`,
+                    `teaser`,
+                    `author`,
+                    `approvedby`,
+                    `category`,
+                    UNIX_TIMESTAMP(`date`) as date,
+                    UNIX_TIMESTAMP(`published`) as published,`hidden`,
+                    `text1`,
+                    `text2`,
+                    `img1`,
+                    `img2`,
+                    `img2lr`,
+                    `hits` 
+                FROM `article` 
+                WHERE id=".$id;
             parent::__construct($this->db->get_row($sql));
             //$this->db->cache_queries = false;
             return $this;
@@ -69,15 +86,17 @@ class Article extends BaseModel {
      * Returns array
      */
     public function getAuthors() { 
-        $sql = "SELECT 
-                article_author.author as author 
-                FROM `article_author` 
-                INNER JOIN `article` 
-                ON (article_author.article=article.id) 
-                WHERE article.id=".$this->getId();
-        $authors = $this->db->get_results($sql);
-        foreach($authors as $author) {
-            $this->authors[] = $author->author;
+        if(!$this->authors) {
+            $sql = "SELECT 
+                    article_author.author as author 
+                    FROM `article_author` 
+                    INNER JOIN `article` 
+                    ON (article_author.article=article.id) 
+                    WHERE article.id=".$this->getId();
+            $authors = $this->db->get_results($sql);
+            foreach($authors as $author) {
+                $this->authors[] = new User($author->author);
+            }
         }
         return $this->authors; 
     }
@@ -93,11 +112,11 @@ class Article extends BaseModel {
         if (!$array || !count ($array))
             return '';
         // change array into linked usernames
-        foreach ($array as $key => $value) {
-            $full_array[$key] = '<a href="user/'.$value.'/">'.get_vname_by_uname_db($value).'</a>';
+        foreach ($array as $key => $user) {
+            $full_array[$key] = '<a href="'.$user->getURL().'">'.$user->getName().'</a>';
         }
         // get last element
-        $last = array_pop ($full_array);
+        $last = array_pop($full_array);
         // if it was the only element - return it
         if (!count ($full_array))
             return $last;
@@ -145,12 +164,20 @@ class Article extends BaseModel {
             $sql = "SELECT `content` FROM `text_story` WHERE id = ".$this->getText1();
             $this->content = $this->db->get_var($sql);
         }
-        return $this->content;
+        return $this->cleanText($this->content);
     }
 
     /*
-     * Private: Clean content
+     * Private: Clean text
      */
+    private function cleanText($text) {
+        $result = strip_tags($text, '<p><a><div><b><i><br><blockquote><object><param><embed><li><ul><ol><strong><img><h1><h2><h3><h4><h5><h6><em><iframe><strike>'); // Gets rid of html tags except <p><a><div>
+        $result = preg_replace('#<div[^>]*(?:/>|>(?:\s|&nbsp;)*</div>)#im', '', $result); // Removes empty html div tags
+        $result = preg_replace('#<span*(?:/>|>(?:\s|&nbsp;)[^>]*</span>)#im', '', $result); // Removes empty html div tags
+        $result = preg_replace('#<p[^>]*(?:/>|>(?:\s|&nbsp;)*</p>)#im', '', $result); // Removes empty html p tags
+        //$result = preg_replace("/<(\/)*div[^>]*>/", "<\\1p>", $result); // Changes div tags into <p> tags
+        return $result;
+    }
 
     /*
      * Public: Get article teaser
@@ -204,7 +231,7 @@ class Article extends BaseModel {
      * Returns int
      */
     public function getNumComments() {
-        if(!$this->num_comments) {
+        if(!$this->num_comments && $this->num_comments !== 0) {
             $sql = "SELECT SUM(count) AS count 
                 FROM (
                     SELECT article,COUNT(*) AS count 
@@ -221,18 +248,60 @@ class Article extends BaseModel {
                     GROUP BY article
                 ) AS t GROUP BY article";
             $this->num_comments = $this->db->get_var($sql);
+            if(!$this->num_comments) $this->num_comments = 0;
         }
         return $this->num_comments;
+    }
+
+    /*
+     * Public: Get comments
+     *
+     * Returns db object
+     */
+    public function getComments() {
+        $sql = "SELECT id,timestamp 
+                FROM (
+                    SELECT 
+                        comment.id,
+                        UNIX_TIMESTAMP(comment.timestamp) AS timestamp 
+                    FROM `comment` 
+                    WHERE article=".$this->getId()." 
+                    AND active=1". // select all internal comments 
+                " UNION SELECT 
+                        comment_ext.id,
+                        UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp 
+                    FROM `comment_ext` 
+                    WHERE article=".$this->getId()." 
+                    AND pending=0 AND spam=0". // select external comments that are not spam
+                " UNION SELECT 
+                        comment_ext.id,
+                        UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp 
+                        FROM `comment_ext`
+                    WHERE article=".$this->getId()." 
+                    AND IP = '".$_SERVER['REMOTE_ADDR']."' 
+                    AND active=1 
+                    AND pending=1 
+                    AND spam=0". // select external comments that are pending and are from current ip
+            //" UNION SELECT comment_ext.id,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP != '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=0". // select external comments that have been approved and not from current ip
+            //" UNION SELECT comment_ext.id,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP = '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=0". // select external comments that have been approve and are from current ip
+                ") AS t 
+                ORDER BY timestamp ASC 
+                LIMIT 500";
+        return $this->db->get_results($sql);
     }
 
     /*
      * Public: Get image class
      */
     public function getImage() {
-        if(!$this->image) {
-            $this->image = new Image($this->getImg1());
+        if($this->getImg1()) {
+            if(!$this->image) {
+                $this->image = new Image($this->getImg1());
+            }
+            return $this->image;
+        } else {
+            return false;
         }
-        return $this->image;
     }
 
     /*
