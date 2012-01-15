@@ -74,7 +74,21 @@ class Comment extends BaseModel {
                 return $this;
             } else {
                 $this->external = true; // comment is external
-                $sql = "SELECT id, `article`,`name`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`IP`,`pending`,`reply`,`spam`,`likes`,`dislikes` FROM `comment_ext` WHERE id=$id";
+                $sql = "SELECT 
+                            id, 
+                            `article`,
+                            `name`,
+                            `comment` as content,
+                            UNIX_TIMESTAMP(`timestamp`) as timestamp,
+                            `active`,
+                            `IP` as ip,
+                            `pending`,
+                            `reply`,
+                            `spam`,
+                            `likes`,
+                            `dislikes` 
+                        FROM `comment_ext` 
+                        WHERE id=$id";
                 parent::__construct($this->db->get_row($sql));
                 return $this;
             }
@@ -124,7 +138,7 @@ class Comment extends BaseModel {
         $output = '';
         // Add link to reply comment
         if($this->getReply()) { 
-            $output .= '<a href="'.curPageURLNonSecure().'#comment'.$this->getReply()->getID().'" id="replyLink">';
+            $output .= '<a href="'.Utility::currentPageURL().'#comment'.$this->getReply()->getId().'" id="replyLink">';
             $output .= '@'.$this->getReply()->getName().':</a> '; 
         } 
         $output .= nl2br(trim($this->fields['content'])); 
@@ -210,7 +224,7 @@ class Comment extends BaseModel {
      * Public: Check if comment is pending approval
      */
     public function isPending() {
-        if($this->isExternal() && $this->getActive() && $this->getPending() && $this->getIP() == $_SERVER['REMOTE_ADDR']) { // if comment is pending for this ip address
+        if($this->isExternal() && $this->getActive() && $this->getPending() && $this->getIp() == $_SERVER['REMOTE_ADDR']) { // if comment is pending for this ip address
             return true;
         } else {
             return false;

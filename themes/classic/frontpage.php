@@ -6,7 +6,7 @@ $header = array(
     'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
 );
 
-$theme->render('header'); // replace this with function
+$theme->render('header', $header); 
 $timing->log('after header');
 ?>
 

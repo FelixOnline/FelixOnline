@@ -28,7 +28,7 @@
         <p class="content">
             <?php 
                 if($comment->isRejected()) { // if comment rejected ?>
-                    <span id="error">This comment did not follow our <a href="<?php echo curPageURLNonSecure(); ?>#commentPolicy" rel="facebox">commenting policy</a> and has been rejected</span>
+                    <span id="error">This comment did not follow our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> and has been rejected</span>
             <?php } else { 
                     // Comment content 
                     echo $comment->getContent(); 

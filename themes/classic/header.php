@@ -18,8 +18,8 @@
 
     <!-- Title -->
     <title>
-        <?php if(array_key_exists('title', $header)) {
-            echo $header['title'];
+        <?php if($title) {
+            echo $title;
         } else {
             echo 'Felix Online - The student voice of Imperial College London';
         } ?> 
@@ -29,8 +29,8 @@
     <meta property="og:site_name" content="Felix Online"/>
     <meta property="fb:page_id" content="206951902659704" />
     <?php 
-        if(array_key_exists('meta', $header)) {
-            echo $header['meta'];
+        if($meta) {
+            echo $meta;
         } 
     ?>
 
