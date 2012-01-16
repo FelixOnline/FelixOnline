@@ -24,6 +24,7 @@
  */
 class Category extends BaseModel {
     protected $db;
+    private $editors = array();
 
     function __construct($cat=NULL) {
         global $db;
@@ -61,6 +62,27 @@ class Category extends BaseModel {
      */
     public function getURL() {
         return STANDARD_URL.$this->getCat().'/';
+    }
+
+    /*
+     * Public: Get category editors
+     *
+     * Returns array of user objects
+     */
+    public function getEditors() {
+        if(!$this->editors) {
+            $sql = "SELECT 
+                        user 
+                    FROM `category_author` 
+                    WHERE category='".$this->getId()."' 
+                    AND admin=1
+            ";
+            $editors = $this->db->get_results($sql);
+            foreach($editors as $key => $object) {
+                $this->editors[] = new User($object->user);
+            }
+        }
+        return $this->editors;
     }
 }
 ?>

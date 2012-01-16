@@ -36,7 +36,7 @@ $theme->render('header', $header);
         </div>
         <div class="articleInfo grid_8">
             <p>
-                <?php echo $article->getAuthorsEnglish(); //echo output_in_english_authors(get_article_authors_uname($article)); ?>
+                <?php echo Utility::outputUserList($article->getAuthors()); ?>
             </p>
             <p>
                 <span class="<?php echo $article->getCategoryCat();?>">

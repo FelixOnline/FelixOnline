@@ -87,9 +87,9 @@ class Theme {
 
     /*
      * Translates a string with dashes into camel case (e.g. first-name -> FirstName)
-     * @param    string   $str                     String in dash format
-     * @param    bool     $capitalise_first_char   If true, capitalise the first char in $str
-     * @return   string                              $str translated into camel caps
+     * $str - String in dash format
+     * $ucfirst - If true, capitalise the first char in $str
+     * Returns string - $str translated into camel caps
      */
     private function toCamelCase($str, $ucfirst = true) {
         $parts = explode('-', $str);
