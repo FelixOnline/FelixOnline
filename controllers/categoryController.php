@@ -2,8 +2,12 @@
     
 class CategoryController extends BaseController {
     function GET($matches) {
-        var_dump($matches);
-        echo 'category';
+        $category = new Category($matches['cat']);
+        $this->theme->appendData(array(
+            'category' => $category,
+            'pagenum' => $matches['page']
+        ));
+        $this->theme->render('category');
     }
 }
 

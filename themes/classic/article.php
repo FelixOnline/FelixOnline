@@ -10,7 +10,7 @@ $header = array(
     <meta property="og:description" content="'.$article->getTeaser().'"/>'
 );
 
-$theme->render('header');
+$theme->render('header', $header);
 ?>
 <!-- Article wrapper -->
 <div class="container_12">
