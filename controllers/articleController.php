@@ -1,11 +1,20 @@
 <?php
     
 class ArticleController extends BaseController {
+    private $article;
+
     function GET($matches) {
-        $article = new Article($matches['id']);
-        $this->theme->appendData(array('article' => $article));
+        $this->article = new Article($matches['id']);
+        $this->theme->appendData(array(
+            'article' => $this->article
+        ));
+        $this->theme->setHierarchy(array(
+            'id', /* article-{id}.php */
+            'category-cat' /* article-{cat}.php */
+        ));
         $this->theme->render('article');
     }
+
 }
 
 ?>

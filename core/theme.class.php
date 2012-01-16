@@ -9,6 +9,7 @@ class Theme {
     private $url;
     private $page; // current page
     private $data = array(); // data to be added to rendered page
+    private $hierarchy = array(); // template hierarchy
 
     function __construct($name) {
         global $currentuser, $db, $timing;
@@ -31,6 +32,11 @@ class Theme {
     public function appendData($array) {
         $this->data = array_merge($this->data, $array);
     }
+
+    public function setHierarchy($hierarchy) {
+        return $this->hierarchy = $hierarchy;
+    }
+
     /*
      * Render specific template
      *
@@ -40,24 +46,7 @@ class Theme {
     public function render($page, $data = NULL) {
         if($data) $this->appendData($data);
         $this->page = $page;
-        /*
-         * Check for specific pages in category 
-         * e.g. if gallery page exists then use that etc
-         */
-        switch($page) {
-            case 'frontpage':
-                $this->includePage($page);
-                break;
-            case 'category':
-                $this->includePage($page);
-                break;
-            case 'article':
-                $this->includePage($page);
-                break;
-            default:
-                $this->includePage($page);
-                break;
-        }
+        $this->includePage($this->cascade());
     }
 
     /*
@@ -69,6 +58,44 @@ class Theme {
             extract($data);
             include(THEME_DIRECTORY.'/'.$page.'.php');
         });
+    }
+
+    /*
+     * Private: Cascade through template hierarchy
+     *
+     * Returns matched page
+     */
+    private function cascade() {
+        if($this->hierarchy) { // if there is a hierarchy defined
+            foreach($this->hierarchy as $key => $value) { // loop through each hierarchy
+                $file = $this->page.'-'.$this->data[$this->page]->{'get'.$this->toCamelCase($value)}();
+                if($this->fileExists($file)) { // if that file exists then return it
+                    return $file;
+                }        
+            }
+            $this->hierarchy = array(); // reset hierarchy for further renders TODO
+        }
+        return $this->page; // if no page found then return base page
+    }
+
+    /*
+     * Private: Check whether file exists
+     */
+    private function fileExists($file) {
+        return file_exists(THEME_DIRECTORY.'/'.$file.'.php');
+    }
+
+    /*
+     * Translates a string with dashes into camel case (e.g. first-name -> FirstName)
+     * @param    string   $str                     String in dash format
+     * @param    bool     $capitalise_first_char   If true, capitalise the first char in $str
+     * @return   string                              $str translated into camel caps
+     */
+    private function toCamelCase($str, $ucfirst = true) {
+        $parts = explode('-', $str);
+        $parts = $parts ? array_map('ucfirst', $parts) : array($str);
+        $parts[0] = $ucfirst ? ucfirst($parts[0]) : lcfirst($parts[0]);
+        return implode('', $parts);
     }
 
     /*
