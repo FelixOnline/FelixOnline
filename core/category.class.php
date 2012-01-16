@@ -84,5 +84,24 @@ class Category extends BaseModel {
         }
         return $this->editors;
     }
+
+    /*
+     * Public: Get category articles
+     *
+     * $page - page number to limit article list
+     *
+     * Returns dbobject
+     */
+    public function getArticles($page) {
+        $sql = "SELECT 
+                    id 
+                FROM `article` 
+                WHERE published < NOW() 
+                AND category=".$this->getId()." 
+                ORDER BY published DESC 
+                LIMIT ".(($page-1)*ARTICLES_PER_CAT_PAGE)
+                .",".ARTICLES_PER_CAT_PAGE;
+        return $this->db->get_results($sql);
+    }
 }
 ?>

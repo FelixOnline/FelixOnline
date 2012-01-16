@@ -62,11 +62,14 @@ class Image extends BaseModel {
 
     /*
      * Public: Check if image is tall or not
+     *
+     * $width - width of place image needs to fit to
+     * $limit - pixel limit to check image against
      */
-    public function isTall() {
-        $scale = $this->getWidth()/460;
+    public function isTall($width = 460, $limit = 400) {
+        $scale = $this->getWidth()/$width;
         $check = $this->getHeight()/$scale;
-        if ($check > 400) {
+        if ($check > $limit) {
             return true;
         } else {
             return false;

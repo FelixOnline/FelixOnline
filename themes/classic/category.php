@@ -41,6 +41,136 @@ $theme->render('header', $header);
         ?>
     </div>
     <!-- End of sidebar -->
+
+    <!-- Category articles -->
+    <div class="grid_8 pull_4">
+        <?php
+            /* First page */
+            if(!$pagenum || $pagenum == 1) { 
+                $articles = $category->getArticles(1);
+                foreach($articles as $key => $object) {
+                    $article = new Article($object->id);
+                    if($key == 1) { // top story ?>
+                        <!-- Top story -->
+                        <div class="topstory">
+                            <div class="border clearfix">
+                                <h2>
+                                    <a href="<?php echo $article->getURL();?>">
+                                        <?php echo $article->getTitle();?>
+                                    </a>
+                                </h2>
+                                <div class="subHeader <?php if(!$article->getImage()) echo "wide"; if($article->getImage()->isTall(300, 300)) echo ' tallpic';?>">
+                                    <p>
+                                        <?php 
+                                            if(!$article->getImage()) { 
+                                                echo $article->getPreview(50);
+                                            } else {
+                                                echo $article->getPreview(35);
+                                            }
+                                        ?>
+                                    </p>
+                                    <div id="storyMeta">
+                                        <ul class="metaList">
+                                            <?php if ($category->getCat() == 'comment') { ?>
+                                                <li id="articleAuthor">
+                                                    <a href="<?php echo $article->getUser()->getURL();?>">
+                                                        <?php echo $article->getUser()->getName(); ?>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
+                                            <?php if($article->getNumComments()) { ?>
+                                                <li id="comments">
+                                                    <a href="<?php echo $article->getURL();?>#commentHeader">
+                                                        <?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
+                                            <li>
+                                                <?php echo date("l F j, Y",$article->getDate());?>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <?php if ($image = $article->getImage()) { ?>
+                                    <div id="topStoryPic">
+                                        <a href="<?php echo $article->getURL();?>">
+                                        <?php if($image->isTall(300, 300)) { ?>
+                                            <img id="topStoryPhoto" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(150, 180);?>">
+                                        <?php } else { ?>
+                                            <img id="topStoryPhoto" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(300, 180);?>">
+                                        <?php } ?>
+                                        </a>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <!-- End of top story -->
+            <?php   } else if ($key < 4 && $key > 1) { // middle stories ?>
+                        <div class="featBox">
+                            <div class="border clearfix">
+                                <h3>
+                                    <a href="<?php echo $article->getURL();?>">
+                                        <?php echo $article->getTitle();?>
+                                    </a>
+                                </h3>
+                                <div class="subHeader <?php if(!$article->getImage()) echo "wide"; if($article->getImage()->isTall(220, 220)) echo ' tallpic';?>">
+                                    <p>
+                                        <?php 
+                                            if(!$article->getImage()) { 
+                                                echo $article->getPreview(60);
+                                            } else {
+                                                echo $article->getPreview(35);
+                                            }
+                                        ?>
+                                    </p>
+                                    <div id="storyMeta" class="<?php if(!$article->getNumComments()) echo 'extra';?>">
+                                        <ul class="metaList">
+                                            <?php if ($category->getCat() == 'comment') { ?>
+                                                <li id="articleAuthor">
+                                                    <a href="<?php echo $article->getUser()->getURL();?>">
+                                                        <?php echo $article->getUser()->getName(); ?>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
+                                            <?php if($article->getNumComments()) { ?>
+                                                <li id="comments">
+                                                    <a href="<?php echo $article->getURL();?>#commentHeader">
+                                                        <?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
+                                            <li>
+                                                <?php echo date("l F j, Y",$article->getDate());?>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <?php if ($image = $article->getImage()) { ?>
+                                    <div id="secondStoryPic">
+                                        <a href="<?php echo $article->getURL();?>">
+                                        <?php if($image->isTall(220, 220)) { ?>
+                                            <img id="topStoryPhoto" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(120, 130);?>">
+                                        <?php } else { ?>
+                                            <img id="topStoryPhoto" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(220, 120);?>">
+                                        <?php } ?>
+                                        </a>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+            <?php   } else if ($key > 3) { // end stories ?>
+
+            <?php   }
+                }
+            }
+            /* Not first page */
+            else {
+                $articles = $category->getArticles($pagenum);
+
+            }
+        ?>
+    </div>
+    <!-- End of category articles -->
 </div>
 <?php
 $timing->log('end of category page');

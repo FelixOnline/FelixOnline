@@ -259,7 +259,7 @@
 		</div>
 
 	<?php 		} // End of if
-				} // End of while
+			} // End of while
 
 				} else { // If page is not first
 					$sql = "SELECT a.id FROM `article` AS a INNER JOIN `category` AS c ON (a.category=c.id) WHERE published < NOW() AND c.cat='$category' ORDER BY published DESC LIMIT ".(($p-1)*ARTICLES_PER_SECOND_CAT_PAGE).",".ARTICLES_PER_SECOND_CAT_PAGE;
