@@ -70,6 +70,7 @@ class Theme {
             foreach($this->hierarchy as $key => $value) { // loop through each hierarchy
                 $file = $this->page.'-'.$this->data[$this->page]->{'get'.$this->toCamelCase($value)}();
                 if($this->fileExists($file)) { // if that file exists then return it
+                    $this->hierarchy = array(); // reset hierarchy for further renders TODO
                     return $file;
                 }        
             }

@@ -46,7 +46,7 @@ $theme->render('header', $header);
     <div class="grid_8 pull_4">
         <?php
             /* First page */
-            if($pagenum == 1) { 
+            if(!$pagenum || $pagenum == 1) { 
                 $articles = $category->getArticles(1);
                 foreach($articles as $key => $object) {
                     $article = new Article($object->id);
@@ -71,6 +71,9 @@ $theme->render('header', $header);
                                     </p>
                                     <div id="storyMeta">
                                         <ul class="metaList">
+                                            <li id="articleAuthor">
+                                                <?php echo Utility::outputUserList($article->getAuthors()); ?>
+                                            </li>
                                             <?php if($article->getNumComments()) { ?>
                                                 <li id="comments">
                                                     <a href="<?php echo $article->getURL();?>#commentHeader">
@@ -106,7 +109,7 @@ $theme->render('header', $header);
                                         <?php echo $article->getTitle();?>
                                     </a>
                                 </h3>
-                                <div class="subHeader <?php if(!$article->getImage()) { echo "wide"; } else if($article->getImage()->isTall(160, 160)) { echo ' tallpic'; }?>">
+                                <div class="subHeader <?php if(!$article->getImage()) { echo "wide"; } else if($article->getImage()->isTall(300, 300)) { echo ' tallpic'; }?>">
                                     <p>
                                         <?php 
                                             if(!$article->getImage()) { 
@@ -118,6 +121,9 @@ $theme->render('header', $header);
                                     </p>
                                     <div id="storyMeta" class="<?php if(!$article->getNumComments()) echo 'extra';?>">
                                         <ul class="metaList">
+                                            <li id="articleAuthor">
+                                                <?php echo Utility::outputUserList($article->getAuthors()); ?>
+                                            </li>
                                             <?php if($article->getNumComments()) { ?>
                                                 <li id="comments">
                                                     <a href="<?php echo $article->getURL();?>#commentHeader">
@@ -164,6 +170,9 @@ $theme->render('header', $header);
                                     </p>
                                     <div id="storyMeta">
                                         <ul class="metaList">
+                                            <li id="articleAuthor">
+                                                <?php echo Utility::outputUserList($article->getAuthors()); ?>
+                                            </li>
                                             <?php if($article->getNumComments()) { ?>
                                                 <li id="comments">
                                                     <a href="<?php echo $article->getURL();?>#commentHeader">
@@ -210,6 +219,9 @@ $theme->render('header', $header);
                                 </p>
 								<div id="storyMeta">
 									<ul class="metaList">
+                                            <li id="articleAuthor">
+                                                <?php echo Utility::outputUserList($article->getAuthors()); ?>
+                                            </li>
                                         <?php if($article->getNumComments()) { ?>
                                             <li id="comments">
                                                 <a href="<?php echo $article->getURL();?>#commentHeader">

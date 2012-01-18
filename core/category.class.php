@@ -25,6 +25,7 @@
 class Category extends BaseModel {
     protected $db;
     private $editors = array();
+    private $count; // number of articles in catgeory
 
     function __construct($cat=NULL) {
         global $db;
@@ -60,8 +61,12 @@ class Category extends BaseModel {
     /*
      * Public: Get category url
      */
-    public function getURL() {
-        return STANDARD_URL.$this->getCat().'/';
+    public function getURL($pagenum = NULL) {
+        $output = STANDARD_URL.$this->getCat().'/';
+        if($pagenum != NULL) {
+            $output .= $pagenum.'/';
+        }
+        return $output;
     }
 
     /*
@@ -102,6 +107,24 @@ class Category extends BaseModel {
                 LIMIT ".(($page-1)*ARTICLES_PER_CAT_PAGE)
                 .",".ARTICLES_PER_CAT_PAGE;
         return $this->db->get_results($sql);
+    }
+
+    /*
+     * Public: Get number of pages in a category
+     *
+     * Returns int 
+     */
+    public function getNumPages() {
+        if(!$this->count) {
+            $sql = "SELECT 
+                        COUNT(id) as count 
+                    FROM `article` 
+                    WHERE published < NOW() 
+                    AND category=".$this->getId();
+            $this->count = $this->db->get_var($sql);
+        }
+        $pages = ceil(($this->count - ARTICLES_PER_CAT_PAGE) / (ARTICLES_PER_SECOND_CAT_PAGE)) + 1;
+        return $pages;
     }
 }
 ?>

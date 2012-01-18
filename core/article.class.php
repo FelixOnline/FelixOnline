@@ -294,11 +294,15 @@ class Article extends BaseModel {
      * Public: Get image class
      */
     public function getImage() {
-        if($this->getImg1()) {
-            if(!$this->image) {
-                $this->image = new Image($this->getImg1());
+        if($this->getImg1()) { 
+            if($this->getImg1() == 183 || $this->getImg1() == 742) {
+                return false;
+            } else {
+                if(!$this->image) {
+                    $this->image = new Image($this->getImg1());
+                }
+                return $this->image;
             }
-            return $this->image;
         } else {
             return false;
         }

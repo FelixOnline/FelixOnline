@@ -2580,7 +2580,7 @@ li a.sport:active, .header a.sport:active {
 	position: relative;
 	text-transform: uppercase;
 	float: left;
-	width: 500px;
+	width: 450px;
 	/*font-size-adjust: 0.35;*/
 }
 
@@ -2695,12 +2695,12 @@ li a.sport:active, .header a.sport:active {
 }
 
 #pageList li {
-	display:inline;
+    float: left;
 	margin: 0;
 	padding: 3px 0;
 	border: 1px solid #BEBEBE;
 	background: #DDD;
-	margin-right: 6px;
+	margin-right: 5px;
 }
 
 #pageList li:hover {
