@@ -15,6 +15,7 @@ class CategoryController extends BaseController {
         $this->theme->setHierarchy(array(
             'cat' /* category-{cat}.php */
         ));
+        $this->theme->setParentPage('category');
         $this->theme->render('category');
     }
 }

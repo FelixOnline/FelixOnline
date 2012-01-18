@@ -8,6 +8,7 @@ class Theme {
     private $directory; // theme directory
     private $url;
     private $page; // current page
+    private $parent; // parent page
     private $data = array(); // data to be added to rendered page
     private $hierarchy = array(); // template hierarchy
 
@@ -100,10 +101,18 @@ class Theme {
     }
 
     /*
-     * Check if current view is $query
+     * Public: Set parent page
+     */
+    public function setParentPage($page) {
+        $this->parent = $page;
+        return $this->parent;
+    }
+
+    /*
+     * Public: Check if current view is $query
      */
     public function isPage($query) {
-        if($query == $this->page) return true;
+        if($query == $this->parent) return true;
         else return false; 
     }
 }

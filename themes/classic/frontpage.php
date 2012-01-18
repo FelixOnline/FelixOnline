@@ -123,7 +123,7 @@ $timing->log('after header');
                         </div>
                         <div id="caption2">
                             <a href="<?php echo $article->getURL();?>">
-                                <?php echo $article->getShortDesc(); ?>
+                                <?php echo $article->getTeaser(); ?>
                             </a>
                         </div>
                     </div>

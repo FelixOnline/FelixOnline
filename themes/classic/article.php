@@ -75,7 +75,7 @@ $theme->render('header', $header);
 
                         </li>
                         <li id="googleShare">
-                            <g:plusone size="medium"></g:plusone>
+                            <g:plusone size="medium" annotation="inline" width="140"></g:plusone>
                         </li>
                         <li id="diggShare">
 
@@ -224,5 +224,26 @@ $theme->render('header', $header);
     </div>
     <?php $timing->log('end of article content');?>
 </div>
+
+<!-- Google plus one script -->
+<script type="text/javascript">
+    window.___gcfg = {lang: 'en-GB'};
+    (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+</script>
+<!-- Digg button -->
+<script type="text/javascript">
+    (function() {
+        var s = document.createElement('SCRIPT'), s1 = document.getElementsByTagName('SCRIPT')[0];
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'http://widgets.digg.com/buttons.js';
+        s1.parentNode.insertBefore(s, s1);
+    })();
+</script>
+
 <?php $timing->log('end of article');?>
 <?php $theme->render('footer'); ?>
