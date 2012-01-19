@@ -7,8 +7,8 @@
     $host = "localhost";
     $user = "DB_USER";
     $pass = "DB_PASSWORD";
-    $cid = mysql_connect($host,$user,$pass);
-    $dbok = mysql_select_db($dbname,$cid);
+    //$cid = mysql_connect($host,$user,$pass);
+    //$dbok = mysql_select_db($dbname,$cid);
 
     /* Initialise ezSQL database connection */
     $db = new ezSQL_mysql();
