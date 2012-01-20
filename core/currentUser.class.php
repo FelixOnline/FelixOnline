@@ -63,6 +63,13 @@ class CurrentUser extends User {
         return $this->session;
     }
 
+    public function getUser() {
+        if($this->isLoggedIn()) {
+            return $this->fields['user'];
+        } else {
+            return false;
+        }
+    }
     /*
      * Update user's name from ldap
      */

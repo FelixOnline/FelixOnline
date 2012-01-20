@@ -30,6 +30,7 @@ class Article extends BaseModel {
     private $image; // image class
     private $image_title; // image title
     private $num_comments; // number of comments
+    private $category; // category class
 	private $search = array('@<>@',
         '@<script[^>]*?>.*?</script>@siU',  // javascript
         '@<style[^>]*?>.*?</style>@siU',    // style tags
@@ -124,11 +125,25 @@ class Article extends BaseModel {
     }
 
     /*
+     * Public: Get category class
+     */
+    public function getCategory() {
+        if(!$this->category) {
+            $this->category = new Category($this->getCategoryCat());
+        }
+        return $this->category;
+    }
+
+    /*
      * Public: Get cat of article category
      */
     public function getCategoryCat() {
         if(!$this->category_cat || !$this->category_label) {
-            $sql = "SELECT `cat`,label FROM `category` WHERE id = ".$this->getCategory();
+            $sql = "SELECT 
+                        `cat`,
+                        label 
+                    FROM `category` 
+                    WHERE id = ".$this->fields['category'];
             $cat = $this->db->get_row($sql);
             $this->category_cat = $cat->cat;
             $this->category_label = $cat->label;

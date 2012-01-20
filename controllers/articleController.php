@@ -12,7 +12,6 @@ class ArticleController extends BaseController {
             'id', /* article-{id}.php */
             'category-cat' /* article-{cat}.php */
         ));
-        $this->theme->setParentPage('article');
         $this->theme->render('article');
     }
 }

@@ -46,6 +46,9 @@ class Theme {
      */
     public function render($page, $data = NULL) {
         if($data) $this->appendData($data);
+        if(!$this->parent) {
+            $this->parent = $page;
+        }
         $this->page = $page;
         $this->includePage($this->cascade());
     }
@@ -98,14 +101,6 @@ class Theme {
         $parts = $parts ? array_map('ucfirst', $parts) : array($str);
         $parts[0] = $ucfirst ? ucfirst($parts[0]) : lcfirst($parts[0]);
         return implode('', $parts);
-    }
-
-    /*
-     * Public: Set parent page
-     */
-    public function setParentPage($page) {
-        $this->parent = $page;
-        return $this->parent;
     }
 
     /*
