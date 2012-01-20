@@ -1,13 +1,20 @@
 <?php
 $timing->log('article page');
 
-$header = array(
-    'title' => $article->getTitle().' - '.$article->getCategoryLabel().' - '.'Felix Online',
-    'meta' => '<meta property="og:image" content="'.$article->getImage()->getURL(100).'"/>
+$meta = '
     <meta property="og:title" content="'.$article->getTitle().' - '.$article->getCategoryLabel().' - Felix Online"/>
     <meta property="og:url" content="'.$article->getURL().'"/>
     <meta property="og:type" content="article"/>
-    <meta property="og:description" content="'.$article->getTeaser().'"/>'
+    <meta property="og:description" content="'.$article->getTeaser().'"/>
+';
+
+if($article->getImage()) {
+    $meta .= '<meta property="og:image" content="'.$article->getImage()->getURL(100).'"/>';
+}
+
+$header = array(
+    'title' => $article->getTitle().' - '.$article->getCategoryLabel().' - '.'Felix Online',
+    'meta' => $meta
 );
 
 $theme->render('header', $header);
@@ -220,7 +227,6 @@ $theme->render('header', $header);
         </div>
         <!-- End of comments -->
         <?php $timing->log('end of comments');?>
-
     </div>
     <?php $timing->log('end of article content');?>
 </div>
