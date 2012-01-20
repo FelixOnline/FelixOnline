@@ -111,6 +111,7 @@ $theme->render('header', $header);
                 </div>
             </form>
             <?php //if ($articles) { ?>
+                <!-- Articles -->
                 <div id="articleListCont">
                     <h3 id="userArticleTitle">
                         Articles <span>
@@ -166,17 +167,19 @@ $theme->render('header', $header);
                                                 </ul>
                                             </div>
                                         </div>
-                                        <?php if($article->getCategoryCat() != 'comment' || $article->getImage()) { ?>
-                                            <div id="secondStoryPic">
-                                                <a href="<?php echo $article->getURL();?>">
-                                                    <?php if($article->getImage()->isTall(220, 220)) { ?>
-                                                        <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(120, 155); ?>">
-                                                    <?php } else { ?>
-                                                        <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(220, 150); ?>">
-                                                    <?php } ?>
-                                                </a>
-                                            </div>
-                                        <?php } ?>
+                                        <?php if($article->getCategoryCat() != 'comment') { 
+                                                if($article->getImage()) { ?>
+                                                    <div id="secondStoryPic">
+                                                        <a href="<?php echo $article->getURL();?>">
+                                                            <?php if($article->getImage()->isTall(220, 220)) { ?>
+                                                                <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(120, 155); ?>">
+                                                            <?php } else { ?>
+                                                                <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(220, 150); ?>">
+                                                            <?php } ?>
+                                                        </a>
+                                                    </div>
+                                        <?php   } 
+                                            } ?>
                                     </div>
                                 </div>
                     <?php   } else { ?>
@@ -263,6 +266,7 @@ $theme->render('header', $header);
                     <?php } 
                     } ?>
                 </div>
+                <!-- End of articles -->
                 
                 <!-- Page list -->
                 <div class="grid_8 clearfix">
