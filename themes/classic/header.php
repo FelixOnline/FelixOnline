@@ -79,7 +79,7 @@
 						<script>
 							var user = '<?php echo $currentuser->getUser(); ?>';
 						</script>
-					<? } ?>
+					<?php } ?>
 				</div>
 				<div class="grid_4 last" id="searchBoxCont">
 					<form action="search/" id="cse-search-box">

@@ -127,7 +127,7 @@ $timing->log('after header');
                             </a>
                         </div>
                     </div>
-                <? } ?>
+                <?php } ?>
         </div>
         <!-- End of in this issue -->
 
