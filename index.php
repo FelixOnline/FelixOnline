@@ -2,10 +2,10 @@
     //require_once('mobiledetect.php');
     require_once('inc/timing.inc.php');
     
+    require_once('inc/common.inc.php');
     $timing = new Timing('log-master');
     $timing->log('Start');
 
-    require_once('inc/common.inc.php');
     $timing->log('after common');
     require_once('inc/authentication.php');
     $timing->log('after auth');

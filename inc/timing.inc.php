@@ -44,8 +44,11 @@ class Timing {
         $this->break = $break;
         $this->filename = $name;
         $this->directory = $dir;
-        $this->file = fopen($this->directory.$this->filename, 'a');
-        $this->newRequest();
+        if(TIMING == true) {
+            echo 'hello';
+            $this->file = fopen($this->directory.$this->filename, 'a');
+            $this->newRequest();
+        }
         // Set timezone
         date_default_timezone_set('UTC');
     }
@@ -54,6 +57,7 @@ class Timing {
      * Private: Create new log request with header detailing request
      */
     private function newRequest() {
+            echo 'hello';
         ob_start(); ?>
 
 /*
@@ -80,9 +84,11 @@ Start  Prev
      * Public: New log marker
      */
     public function log($label) {
-        $log = number_format($this->getElapsedTime(),4,'.','').' '.number_format($this->lastLog(),4,'.','').' - '.$label."\n";
-        fwrite($this->file, $log);
-        $this->prev = microtime(true);
+        if(TIMING) {
+            $log = number_format($this->getElapsedTime(),4,'.','').' '.number_format($this->lastLog(),4,'.','').' - '.$label."\n";
+            fwrite($this->file, $log);
+            $this->prev = microtime(true);
+        }
     }
 
     /*
