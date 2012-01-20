@@ -15,6 +15,9 @@ class CurrentUser extends User {
         session_start(); // start session
         $this->session = session_id(); // store session id into $session variable
         $this->ip = $_SERVER['REMOTE_ADDR'];
+        if($this->isLoggedIn()) {
+            $this->setUser($this->isLoggedIn());
+        }
     }
 
     /*
@@ -28,7 +31,7 @@ class CurrentUser extends User {
      */
     public function isLoggedIn() {
         if($_SESSION['felix']['loggedin']){
-            return true;
+            return $_SESSION['felix']['uname'];
         } else {
             return false;
         }
@@ -64,7 +67,7 @@ class CurrentUser extends User {
     }
 
     public function getUser() {
-        if($this->isLoggedIn()) {
+        if($this->fields['user']) {
             return $this->fields['user'];
         } else {
             return false;

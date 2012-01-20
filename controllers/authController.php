@@ -11,8 +11,6 @@ class AuthController extends BaseController {
      */
     function GET($matches) {
         global $currentuser;
-        var_dump($matches);
-        //var_dump($_SERVER);
         if(isset($_GET['session'])) { // catch login
             $this->session = $_GET['session'];
             // check if session is recent and that ip is the same
@@ -20,6 +18,8 @@ class AuthController extends BaseController {
                 $currentuser->setUser($username);
                 $this->login();
                 $this->redirect($_GET['goto']);
+            } else {
+                echo 'Fail';
             }
         }
         echo Utility::currentPageURL();
@@ -30,19 +30,24 @@ class AuthController extends BaseController {
      */
     function POST($matches) {
         global $currentuser;
-        if($this->authenticate($_POST['username'], $_POST['password'])) {
-            $currentuser->setUser($_POST['username']); // not needed
-            $this->logSession();
-            $this->redirect(STANDARD_URL.'login', array(
-                'session' => $currentuser->getSession(),
-                'remember' => $_POST['remember'],
-                'goto' => $_GET['goto']
-            ));
-        } else {
-            // send back to $goto but with fail flag
-            $this->redirect($_GET['goto'], array(
-                'login' => 'fail'
-            ));
+        if(isset($_POST['username']) && isset($_POST['password'])) {
+            if($this->authenticate($_POST['username'], $_POST['password'])) {
+                $currentuser->setUser($_POST['username']); // not needed
+                $this->logSession();
+                $this->redirect(STANDARD_URL.'login', array(
+                    'session' => $currentuser->getSession(),
+                    'remember' => $_POST['remember'],
+                    'goto' => $_GET['goto']
+                ));
+            } else {
+                // send back to $goto but with fail flag
+                $this->redirect($_GET['goto'], array(
+                    'login' => 'fail'
+                ));
+            }
+        } else if(isset($_POST['logout'])) {
+            $this->logout();
+            $this->redirect($_GET['goto']);
         }
     }
 
@@ -68,7 +73,19 @@ class AuthController extends BaseController {
      */
     private function logSession() {
         global $currentuser;
-        $sql = "INSERT INTO `login` (session_id,ip,browser,user) VALUES ('".$currentuser->getSession()."','".$_SERVER['REMOTE_ADDR']."','".$_SERVER['HTTP_USER_AGENT']."','".$currentuser->getUser()."')";
+        $sql = "INSERT INTO `login` 
+                (
+                    session_id,
+                    ip,
+                    browser,
+                    user
+                ) VALUES (
+                    '".$currentuser->getSession()."',
+                    '".$_SERVER['REMOTE_ADDR']."',
+                    '".$_SERVER['HTTP_USER_AGENT']."',
+                    '".$currentuser->getUser()."'
+                )
+        ";
         return $this->db->query($sql);
     }
 
@@ -81,7 +98,18 @@ class AuthController extends BaseController {
      * Returns username of user if successful
      */
     private function checkLogin($session) {
-        $sql = "SELECT user, TIMESTAMPDIFF(SECOND,timestamp,NOW()) AS timediff, ip, browser FROM `login` WHERE session_id='$session' AND valid=1 AND logged_in=0 ORDER BY timediff ASC LIMIT 1";
+        $sql = "SELECT 
+                    user, 
+                    TIMESTAMPDIFF(SECOND,timestamp,NOW()) AS timediff, 
+                    ip, 
+                    browser 
+                FROM `login` 
+                WHERE session_id='$session' 
+                AND valid=1 
+                AND logged_in=0 
+                ORDER BY timediff ASC 
+                LIMIT 1
+        ";
         $login = $this->db->get_row($sql);
         if(
             $login->timediff <= LOGIN_CHECK_LENGTH 
@@ -101,12 +129,35 @@ class AuthController extends BaseController {
     private function login() {
         global $currentuser;
         $_SESSION['felix']['vname'] = $currentuser->getName();
-        $_SESSION['felix']['name'] = $currentuser->getForename();
+        //$_SESSION['felix']['name'] = $currentuser->getForename();
         $_SESSION['felix']['uname'] = $currentuser->getUser();
         $_SESSION['felix']['loggedin'] = true;
         $this->setLoggedIn();
         //destroy_old_sessions($username);
         //update_login_name($username,$_SESSION['felix']['vname']);
+    }
+
+    /*
+     * Private: Logout
+     */
+    private function logout() {
+        $this->destroySessions();
+        $_SESSION['felix']['loggedin'] = false;
+        if(isset($_COOKIE['felixonline']))
+            setcookie("felixonline", "", time(), "/");
+        if(isset($_COOKIE['felixonlinesession']))
+            setcookie("felixonlinesession", "", time(), "/");
+    }
+
+    /*
+     * Private: Destroy sessions
+     */
+    private function destroySessions() {
+        global $currentuser;
+        $sql = "UPDATE login 
+                SET valid=0 
+                WHERE user='".$currentuser->getUser();
+        return $this->db->query($sql);
     }
 
     /*

@@ -30,7 +30,7 @@ $urls = array(
     '/(?P<cat>[a-zA-Z]+)/(?P<page>[0-9]+)' => 'CategoryController',
     '/(?P<cat>[a-zA-Z]+)/(?P<id>[0-9]+)/(?P<title>[a-zA-Z0-9_-]+)/.*' => 'ArticleController',
     '/login/.*' => 'AuthController',
-    '/logout' => 'AuthController',
+    '/logout/.*' => 'AuthController',
 );
 
 /*

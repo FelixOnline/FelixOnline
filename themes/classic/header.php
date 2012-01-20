@@ -68,14 +68,16 @@
 					<?php } else { ?>
 						<div id="loginName">
 						<?php //if (get_user_role($uname)>0)
-							echo '<a href="/engine/" title="Admin Page"><img src="img/wrench.png"/></a>'; ?>
-						<a href="user/<?php echo $uname; ?>/" title="Profile Page"><?php echo $currentuser->getName();?></a>
+							echo '<a href="'.STANDARD_URL.'engine/" title="Admin Page"><img src="img/wrench.png"/></a>'; ?>
+                            <a href="<?php echo $currentuser->getURL(); ?>" title="Profile Page">
+                                <?php echo $currentuser->getName();?>
+                            </a>
 						</div>
-						<form method="post" style="display: inline;">
+                        <form method="post" action="<?php echo STANDARD_URL.'logout/?goto='.Utility::currentPageURL(); ?>" style="display: inline;">
 							<input type="submit" value="Logout" id="logoutbutton" name="logout">
 						</form>
 						<script>
-							var user = '<?php echo $uname; ?>';
+							var user = '<?php echo $currentuser->getUser(); ?>';
 						</script>
 					<? } ?>
 				</div>
