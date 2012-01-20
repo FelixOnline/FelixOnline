@@ -3074,6 +3074,18 @@ blockquote span {
 	margin-bottom: 0;
 }
 
+sub {
+    font-size: 9px;
+    position: relative;
+    bottom: -3px;
+}
+
+sup {
+   font-size: 9px;
+   position: relative;
+   top: -4px;
+}
+
 /* Article picture placeholder */
 /* TO REMOVE */
 
@@ -4764,7 +4776,6 @@ label.success {
 		}
 		/*** End Animation Styles ***/
 
-		
 /* --------------------------------------- */
 /* Media queries for responsive design
  * These follow after primary styles so they will successfully override. */
