@@ -361,7 +361,7 @@ $timing->log('after header');
                 </h4>
             </a>
             <br/>
-            <span><?php echo $article->getShortDesc(175); ?></span>
+            <span><?php echo $article->getPreview(15); ?></span>
             <ul>
                 <li>
                     Other Articles:
