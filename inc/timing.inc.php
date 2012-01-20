@@ -45,7 +45,6 @@ class Timing {
         $this->filename = $name;
         $this->directory = $dir;
         if(TIMING == true) {
-            echo 'hello';
             $this->file = fopen($this->directory.$this->filename, 'a');
             $this->newRequest();
         }
@@ -57,7 +56,6 @@ class Timing {
      * Private: Create new log request with header detailing request
      */
     private function newRequest() {
-            echo 'hello';
         ob_start(); ?>
 
 /*
