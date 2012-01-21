@@ -15,6 +15,22 @@ class AuthController extends BaseController {
             $this->session = $_GET['session'];
             // check if session is recent and that ip is the same
             if($username = $this->checkLogin($this->session)) {
+                // Correct session ID - the one from the auth server is not
+                // the one on this server
+                $sql = "UPDATE login
+                        SET session_id = '".session_id()."'
+                        WHERE session_id='".$this->session."'
+                        AND logged_in=0
+                        AND ip='".$_SERVER['REMOTE_ADDR']."'
+                        AND browser='".$_SERVER['HTTP_USER_AGENT']."'
+                        AND valid=1
+                        AND TIMESTAMPDIFF(SECOND,timestamp,NOW()) <=
+                            ".SESSION_LENGTH."
+                ";
+                
+                $this->session = session_id();
+                $this->db->query($sql);
+
                 $currentuser->setUser($username);
                 $this->login();
                 $this->redirect($_GET['goto']);
@@ -34,8 +50,11 @@ class AuthController extends BaseController {
             if($this->authenticate($_POST['username'], $_POST['password'])) {
                 $currentuser->setUser($_POST['username']); // not needed
                 $this->logSession();
+                $session = $currentuser->getSession();
+                // Close the session here, as we do not want lingering sessions on the auth server
+                session_destroy();
                 $this->redirect(STANDARD_URL.'login', array(
-                    'session' => $currentuser->getSession(),
+                    'session' => $session,
                     'remember' => $_POST['remember'],
                     'goto' => $_GET['goto']
                 ));
@@ -141,8 +160,10 @@ class AuthController extends BaseController {
      * Private: Logout
      */
     private function logout() {
+        global $currentuser;
         $this->destroySessions();
-        $_SESSION['felix']['loggedin'] = false;
+        $currentuser->resetToGuest();
+
         if(isset($_COOKIE['felixonline']))
             setcookie("felixonline", "", time(), "/");
         if(isset($_COOKIE['felixonlinesession']))
