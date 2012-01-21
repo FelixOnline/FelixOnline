@@ -12,9 +12,13 @@ class AuthController extends BaseController {
     function GET($matches) {
         global $currentuser;
         if(isset($_GET['session'])) { // catch login
-            $this->session = $_GET['session'];
+            $this->session = $_GET['session']; // Auth server's session ID
+            
             // check if session is recent and that ip is the same
             if($username = $this->checkLogin($this->session)) {
+                // Regenerate our session ID
+                $currentuser->resetToGuest();
+                
                 // Correct session ID - the one from the auth server is not
                 // the one on this server
                 $sql = "UPDATE login
@@ -28,7 +32,9 @@ class AuthController extends BaseController {
                             ".SESSION_LENGTH."
                 ";
                 
-                $this->session = session_id();
+                $this->session = session_id(); // The session ID auth is using
+                                               // is now the one our session
+                                               // has
                 $this->db->query($sql);
 
                 $currentuser->setUser($username);
@@ -51,8 +57,15 @@ class AuthController extends BaseController {
                 $currentuser->setUser($_POST['username']); // not needed
                 $this->logSession();
                 $session = $currentuser->getSession();
+                
                 // Close the session here, as we do not want lingering sessions on the auth server
-                session_destroy();
+                $params = session_get_cookie_params();
+                setcookie(session_name(), '', time() - 42000,
+                    $params["path"], $params["domain"],
+                    $params["secure"], $params["httponly"]
+                ); // Remove session ID
+                session_destroy(); // Remove all session data
+
                 $this->redirect(STANDARD_URL.'login', array(
                     'session' => $session,
                     'remember' => $_POST['remember'],
