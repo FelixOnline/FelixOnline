@@ -89,7 +89,9 @@ class AuthController extends BaseController {
     private function authenticate($username, $password) {
         global $currentuser;
         if(!LOCAL) { // if executed on union servers
-            /* authenticate user using global function pam_auth - returns true if user is Imperial student, false if not (Union server only) */
+            /* authenticate user using global function pam_auth - returns true
+             * if user is Imperial student, false if not (Union server only)
+             */
             $check = pam_auth(
                 $_POST['username'], 
                 $_POST['password']
@@ -165,8 +167,7 @@ class AuthController extends BaseController {
         $_SESSION['felix']['uname'] = $currentuser->getUser();
         $_SESSION['felix']['loggedin'] = true;
         $this->setLoggedIn();
-        //destroy_old_sessions($username);
-        //update_login_name($username,$_SESSION['felix']['vname']);
+        $this->destroyOldSessions();
     }
 
     /*
@@ -186,12 +187,11 @@ class AuthController extends BaseController {
     /*
      * Private: Destroy a session
      */
-    private function destroySession($sessionid)
-    {
+    private function destroySession() {
         global $currentuser;
         $sql = "DELETE FROM login 
                 WHERE user='".$currentuser->getUser()."'
-                AND session_id='".$sessionid."'
+                AND session_id='".$currentuser->getSession()."'
                 AND ip='".$_SERVER['REMOTE_ADDR']."'
                 AND browser='".$_SERVER['HTTP_USER_AGENT']."'";
         return $this->db->query($sql);
@@ -203,10 +203,25 @@ class AuthController extends BaseController {
     private function destroySessions() {
         global $currentuser;
         $sql = "DELETE FROM login 
-                WHERE user='".$currentuser->getUser();
+                WHERE user='".$currentuser->getUser()."'";
         return $this->db->query($sql);
     }
 
+    /*
+     * Private: Destroy old sessions
+     */
+    private function destroyOldSessions() {
+        global $currentuser;
+        $sql = "DELETE FROM login 
+                WHERE user='".$currentuser->getUser()."'
+				AND valid=0
+				OR logged_in=0
+                OR TIMESTAMPDIFF(SECOND,timestamp,NOW()) >
+                    ".SESSION_LENGTH.";
+        ";
+        return $this->db->query($sql);
+    }
+	
     /*
      * Private: Redirect to location with specific GET params
      *
@@ -247,8 +262,5 @@ class AuthController extends BaseController {
         return $this->db->query($sql);
     }
 
-    /*
-     * Private: Destroy old sessions
-     */
 }
 ?>

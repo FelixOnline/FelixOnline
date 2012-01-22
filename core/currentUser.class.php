@@ -87,7 +87,6 @@ class CurrentUser extends User {
         } else {
             // FIXME: Cookies
             $this->resetToGuest(); // Clear invalid session data
-            // FIXME: clear old sessions from db?
             return false;
         }
     }
