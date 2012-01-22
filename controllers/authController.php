@@ -217,10 +217,13 @@ class AuthController extends BaseController {
      */
     private function destroyOldSessions() {
         global $currentuser;
+        $sql = "DELETE FROM cookies 
+                WHERE UNIXTIME() > UNIXTIME(expires)
+        ";
         $sql = "DELETE FROM login 
                 WHERE user='".$currentuser->getUser()."'
-				AND valid=0
-				OR logged_in=0
+                AND valid=0
+                OR logged_in=0
                 OR TIMESTAMPDIFF(SECOND,timestamp,NOW()) >
                     ".SESSION_LENGTH.";
         ";
