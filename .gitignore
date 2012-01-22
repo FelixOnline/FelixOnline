@@ -13,3 +13,7 @@ archive/
 # Ignore engine folder
 engine/
 
+
+.settings/com.aptana.editor.php.prefs
+
+.project
