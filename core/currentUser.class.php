@@ -99,6 +99,20 @@ class CurrentUser extends User {
         parent::__construct($username);
         /* update user details */
         $this->updateName();
+
+        $sql = "UPDATE login
+                SET timestamp = NOW()
+                WHERE session_id='".$this->session."'
+                AND logged_in=1
+                AND ip='".$_SERVER['REMOTE_ADDR']."'
+                AND browser='".$_SERVER['HTTP_USER_AGENT']."'
+                AND valid=1
+                AND TIMESTAMPDIFF(SECOND,timestamp,NOW()) <=
+                    ".SESSION_LENGTH."
+        ";
+        $this->db->query($sql); // if this fails, it doesn't matter, we will
+                                // just be auto logged out after a while
+		
         $sql = "INSERT INTO `user` 
             (user,name,visits,ip) 
             VALUES (
