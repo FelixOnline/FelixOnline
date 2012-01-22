@@ -45,17 +45,17 @@
 <body>
 	<div id="topBarCont" class="clearfix">
 		<div class="container_16">
-			<div id="topBar" class="grid_16">
+			<div id="topBar" class="grid_16 clearfix">
 				<div class="grid_9 links first">
 					<ul class="clearfix">
                         <li class="first">
-                            <a href="<?php echo STANDARD_URL; ?>" <?php if($theme->isPage('frontpage')) echo 'class="selected"';?>>Felix Online</a>
+                            <a href="<?php echo STANDARD_URL; ?>" <?php if(!$theme->isPage('media') && !$theme->isPage('issuearchive')) echo 'class="selected"';?>>Felix Online</a>
                             </li>
                         <li>
-                            <a href="<?php echo STANDARD_URL; ?>media/" <?php if($theme->isPage('media')) echo 'class="selected"';?>>Media</a>
+                            <a href="<?php echo STANDARD_URL; ?>media/" <?php if(!$theme->isPage('frontpage') && !$theme->isPage('issuearchive')) echo 'class="selected"';?>>Media</a>
                         </li>
                         <li class="last">
-                            <a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if($theme->isPage('issuearchive')) echo 'class="selected"';?>>Issue Archive</a>
+                            <a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if(!$theme->isPage('frontpage') && !$theme->isPage('media')) echo 'class="selected"';?>>Issue Archive</a>
                         </li>
 					</ul>
 				</div>
@@ -93,7 +93,6 @@
 						<input type="submit" name="sa" value="" id="searchButton"/>
 					</form>
 				</div>
-				<div class="clear"></div>
 			</div>
 		</div>
 	</div>
@@ -146,5 +145,5 @@
 	</div>
     
     <!-- Navigation -->
-    <?php include(THEME_DIRECTORY.'/navigation.php'); ?>
+    <?php $theme->render('navigation'); ?>
     <!-- End of navigation -->

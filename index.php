@@ -4,7 +4,7 @@
  */
 
 require_once('inc/timing.inc.php');
-$timing = new Timing('test');
+$timing = new Timing('log-themes');
 
 /* If the url is on the union servers then redirect to custom url */
 if (strstr($_SERVER['HTTP_HOST'],"union.ic.ac.uk") !== false) {
