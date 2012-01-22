@@ -174,7 +174,7 @@ class AuthController extends BaseController {
      */
     private function logout() {
         global $currentuser;
-        $this->destroySessions();
+        $this->destroySession($currentuser->getSession());
         $currentuser->resetToGuest();
 
         if(isset($_COOKIE['felixonline']))
@@ -184,12 +184,25 @@ class AuthController extends BaseController {
     }
 
     /*
+     * Private: Destroy a session
+     */
+    private function destroySession($sessionid)
+    {
+        global $currentuser;
+        $sql = "DELETE FROM login 
+                WHERE user='".$currentuser->getUser()."'
+                AND session_id='".$sessionid."'
+                AND ip='".$_SERVER['REMOTE_ADDR']."'
+                AND browser='".$_SERVER['HTTP_USER_AGENT']."'";
+        return $this->db->query($sql);
+	}
+
+    /*
      * Private: Destroy sessions
      */
     private function destroySessions() {
         global $currentuser;
-        $sql = "UPDATE login 
-                SET valid=0 
+        $sql = "DELETE FROM login 
                 WHERE user='".$currentuser->getUser();
         return $this->db->query($sql);
     }
