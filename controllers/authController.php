@@ -18,7 +18,11 @@ class AuthController extends BaseController {
             if($username = $this->checkLogin($this->session)) {
                 // Regenerate our session ID
                 $currentuser->resetToGuest();
-                
+
+                // Remove any remaining cookies
+                setcookie('felixonline', '', time() - 42000, RELATIVE_PATH,
+                    '.'.STANDARD_SERVER);
+
                 // Correct session ID - the one from the auth server is not
                 // the one on this server
                 $sql = "UPDATE login
@@ -39,6 +43,11 @@ class AuthController extends BaseController {
 
                 $currentuser->setUser($username);
                 $this->login();
+                
+                if(isset($_GET['remember'])) {
+                    $this->setCookie();
+                }
+                
                 $this->redirect($_GET['goto']);
             } else {
                 echo 'Fail';
