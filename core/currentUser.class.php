@@ -47,6 +47,8 @@ class CurrentUser extends User {
             return $_SESSION['felix']['uname'];
         } else {
             // n.b. we don't reset the session here unless we have a bad one
+            
+            // FIXME: cookies
             return false;
         }
     }
@@ -85,7 +87,6 @@ class CurrentUser extends User {
         ) {
             return true;
         } else {
-            // FIXME: Cookies
             $this->resetToGuest(); // Clear invalid session data
             return false;
         }
