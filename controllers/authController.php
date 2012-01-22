@@ -20,8 +20,7 @@ class AuthController extends BaseController {
                 $currentuser->resetToGuest();
 
                 // Remove any remaining cookies
-                setcookie('felixonline', '', time() - 42000, RELATIVE_PATH,
-                    '.'.STANDARD_SERVER);
+                $currentuser->removeCookie();
 
                 // Correct session ID - the one from the auth server is not
                 // the one on this server

@@ -29,13 +29,34 @@ class CurrentUser extends User {
         session_destroy();
         session_start();
         session_regenerate_id(true);
-        
+
+        // Delete permanent cookies
+        $this->removeCookie();
+
         $this->session = session_id();
     }
 
     /*
-     * Private: Check if user has just logged in
+     * Public: Removes the permanent cookie, and removes associated database entries
      */
+    function removeCookie()
+    {
+        global $db;
+        $sql = "DELETE FROM cookies
+                WHERE hash = '".$_COOKIE['felixonline']."'
+        ";
+
+        $db->query($sql);
+
+        // also remove any expired cookies for anyone
+        $sql = "DELETE FROM cookies
+                WHERE expires < NOW();
+        ";
+
+        $db->query($sql);
+
+        setcookie('felixonline', '', time() - 42000, RELATIVE_PATH, '.'.STANDARD_SERVER);
+    }
 
     /*
      * Public: Check if user is currently logged in
@@ -48,8 +69,7 @@ class CurrentUser extends User {
         } else {
             // n.b. we don't reset the session here unless we have a bad one
             
-            // FIXME: cookies
-            return false;
+            return $this->loginFromCookie();
         }
     }
 
