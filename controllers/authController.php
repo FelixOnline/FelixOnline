@@ -186,10 +186,7 @@ class AuthController extends BaseController {
         $this->destroySession($currentuser->getSession());
         $currentuser->resetToGuest();
 
-        if(isset($_COOKIE['felixonline']))
-            setcookie("felixonline", "", time(), "/");
-        if(isset($_COOKIE['felixonlinesession']))
-            setcookie("felixonlinesession", "", time(), "/");
+        $currentuser->removeCookie();
     }
 
     /*
@@ -267,6 +264,30 @@ class AuthController extends BaseController {
     private function setLoggedIn() {
         global $currentuser;
         $sql = "UPDATE login SET logged_in=1 WHERE user='".$currentuser->getUser()."' AND session_id = '".$this->session."'";
+        return $this->db->query($sql);
+    }
+
+    /*
+     * Private: Create cookie
+     */
+    private function setCookie() {        global $currentuser;
+
+        $hash = hash('sha256', mt_rand());
+
+		$expiry_time = time() + COOKIE_LENGTH;
+
+        setcookie('felixonline', $hash, $expiry_time, RELATIVE_PATH, '.'.STANDARD_SERVER);
+        $sql = "INSERT INTO `cookies` 
+                (
+                    hash,
+                    user,
+                    expires
+                ) VALUES (
+                    '".$hash."',
+                    '".$currentuser->getUser()."',
+                    FROM_UNIXTIME(".$expiry_time.")
+                )
+        ";
         return $this->db->query($sql);
     }
 

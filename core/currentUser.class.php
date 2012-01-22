@@ -30,23 +30,22 @@ class CurrentUser extends User {
         session_start();
         session_regenerate_id(true);
 
-        // Delete permanent cookies
-        $this->removeCookie();
-
         $this->session = session_id();
     }
 
     /*
      * Public: Removes the permanent cookie, and removes associated database entries
      */
-    function removeCookie()
-    {
+    function removeCookie() {
         global $db;
-        $sql = "DELETE FROM cookies
-                WHERE hash = '".$_COOKIE['felixonline']."'
-        ";
 
-        $db->query($sql);
+        if (array_key_exists('felixonline', $_COOKIE)) {
+            $sql = "DELETE FROM cookies
+                    WHERE hash = '".$_COOKIE['felixonline']."'
+            ";
+
+            $db->query($sql);
+        }
 
         // also remove any expired cookies for anyone
         $sql = "DELETE FROM cookies
@@ -67,10 +66,73 @@ class CurrentUser extends User {
         if($_SESSION['felix']['loggedin'] && $this->isSessionRecent()){
             return $_SESSION['felix']['uname'];
         } else {
-            // n.b. we don't reset the session here unless we have a bad one
+            // n.b. the session is cleared by isSessionRecent if invalid
             
             return $this->loginFromCookie();
         }
+    }
+
+    /*
+     * Public: Check if there is a valid permanent cookie, if so log in with it
+     *
+     * Returns false if failed, username otherwise
+     */
+    public function loginFromCookie() {
+    	global $db;
+    	
+        // is there a cookie?
+        if (!array_key_exists('felixonline', $_COOKIE)) {
+            return false;
+        }
+
+        $cookiehash = $_COOKIE['felixonline'];
+
+        $sql = "SELECT user
+                FROM `cookies`
+                WHERE hash='".$cookiehash."'
+                AND expires > NOW()
+                ORDER BY expires ASC
+                LIMIT 1
+        ";
+
+        $cookie = $db->get_row($sql);
+        if (!$cookie) {
+        	die('cookie not found - '.$cookiehash);
+            $this->removeCookie();
+            return false;
+        }
+
+        $username = $cookie->user;
+
+        // Reset session ID
+        $this->resetToGuest();
+
+        // Create session
+        $sql = "INSERT INTO `login` 
+                (
+                    session_id,
+                    ip,
+                    browser,
+                    user,
+                    logged_in
+                ) VALUES (
+                    '".$this->getSession()."',
+                    '".$_SERVER['REMOTE_ADDR']."',
+                    '".$_SERVER['HTTP_USER_AGENT']."',
+                    '".$username."',
+                    1
+                )
+        ";
+        $db->query($sql);
+
+        parent::__construct($username);
+
+        $_SESSION['felix']['vname'] = $this->getName();
+        //$_SESSION['felix']['name'] = $this->getForename();
+        $_SESSION['felix']['uname'] = $this->getUser();
+        $_SESSION['felix']['loggedin'] = true;
+
+        return $_SESSION['felix']['uname'];
     }
 
     /*
@@ -108,6 +170,9 @@ class CurrentUser extends User {
             return true;
         } else {
             $this->resetToGuest(); // Clear invalid session data
+            // N.B. Do not delete cookies here!! If the session is invalid
+            // it may have expired, but then we may be able to log in again
+            // from the cookie
             return false;
         }
     }
