@@ -43,7 +43,7 @@ class AuthController extends BaseController {
                 $currentuser->setUser($username);
                 $this->login();
                 
-                if(isset($_GET['remember'])) {
+                if($_GET['remember'] == 'rememberme') {
                     $this->setCookie();
                 }
                 
