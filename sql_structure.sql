@@ -263,14 +263,13 @@ CREATE TABLE IF NOT EXISTS `comment_spam` (
 --
 
 CREATE TABLE IF NOT EXISTS `cookies` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `hash` VARCHAR(64) NULL ,
-  `user` VARCHAR(64) NULL ,
-  `expires` TIMESTAMP NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `hash` VARCHAR(64) NOT NULL,
+  `user` VARCHAR(64) NOT NULL,
+  `expires` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`) ,
-  INDEX `hash` (`hash` ASC) ,
-  INDEX `user` (`user` ASC)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  INDEX `hash` (`hash` ASC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
