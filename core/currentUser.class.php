@@ -71,6 +71,7 @@ class CurrentUser extends User {
                 WHERE session_id='".$this->session."'
                 AND logged_in=1
                 AND valid=1
+                AND user='".$_SESSION['felix']['uname']."'
                 ORDER BY timediff ASC
                 LIMIT 1
         ";
