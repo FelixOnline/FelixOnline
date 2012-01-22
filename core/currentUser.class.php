@@ -160,5 +160,13 @@ class CurrentUser extends User {
                 return false;
         }
     }
+
+    public function getRole() {
+        if($this->fields['role']) {
+            return $this->fields['role'];
+        } else {
+            return 0;
+        }
+    }
 }
 ?>

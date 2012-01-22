@@ -67,7 +67,7 @@
                         <?php include(THEME_DIRECTORY.'/loginBox.php'); ?>
 					<?php } else { ?>
 						<div id="loginName">
-						<?php //if (get_user_role($uname)>0)
+						<?php if ($currentuser->getRole() > 0)
 							echo '<a href="'.STANDARD_URL.'engine/" title="Admin Page"><img src="img/wrench.png"/></a>'; ?>
                             <a href="<?php echo $currentuser->getURL(); ?>" title="Profile Page">
                                 <?php echo $currentuser->getName();?>
