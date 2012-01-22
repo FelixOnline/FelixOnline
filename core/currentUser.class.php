@@ -90,14 +90,13 @@ class CurrentUser extends User {
         $sql = "SELECT user
                 FROM `cookies`
                 WHERE hash='".$cookiehash."'
-                AND expires > NOW()
+                AND UNIX_TIMESTAMP(expires) > UNIX_TIMESTAMP()
                 ORDER BY expires ASC
                 LIMIT 1
         ";
 
         $cookie = $db->get_row($sql);
         if (!$cookie) {
-        	die('cookie not found - '.$cookiehash);
             $this->removeCookie();
             return false;
         }
