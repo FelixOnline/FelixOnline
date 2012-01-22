@@ -17,3 +17,5 @@ engine/
 .settings/com.aptana.editor.php.prefs
 
 .project
+
+.settings/com.aptana.formatter.epl.prefs
