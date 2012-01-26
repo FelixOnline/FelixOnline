@@ -863,6 +863,16 @@ button {  width: auto; overflow: visible; }
 /* Sidebar style */
 /* ---------------------------------------- */
 
+#sexsurvey {
+	border: 1px solid #BEBEBE;
+	margin-bottom: 10px;
+    padding: 10px;
+}
+
+#sexsurvey img {
+    margin-left: 15px;
+}
+
 #fbLikeBox {
 	background: #EEE;
 	border: 1px solid #BEBEBE;

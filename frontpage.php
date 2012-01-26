@@ -5,13 +5,14 @@
 	<div class="container_12">
 
 		<!-- News banner -->
-		<!-- <div class="grid_12 banner">
-		</div> -->
+		<!--<div class="grid_12 banner">
+		</div>-->
 		<!-- End of news banner -->
 
 		<!-- Sidebar -->
 		<div class="sidebar grid_4 push_8">
 			<?php
+                include_once('sidebar/sexsurvey.php');
 				include_once('sidebar/fbLikeBox.php');
 				include_once('sidebar/mediaBox.php');
 				include_once('sidebar/socialLinks.php');
