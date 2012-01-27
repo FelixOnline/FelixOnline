@@ -2,11 +2,19 @@
 $timing->log('article page');
 
 $meta = '
-    <meta property="og:title" content="'.$article->getTitle().' - '.$article->getCategoryLabel().' - Felix Online"/>
+    <meta property="og:title" content="'.$article->getTitle().'"/>
     <meta property="og:url" content="'.$article->getURL().'"/>
     <meta property="og:type" content="article"/>
     <meta property="og:description" content="'.$article->getTeaser().'"/>
+    <meta property="article:section" content="'.$article->getCategoryLabel().'"/>
+    <meta property="article:published_time" content="'.date('c', $article->getDate()).'"/>
 ';
+
+foreach ($article->getAuthors() as $author) {
+	$meta .= '
+	<meta property="article:author" content="'.$author->getName().'"/>
+';
+}
 
 if($article->getImage()) {
     $meta .= '<meta property="og:image" content="'.$article->getImage()->getURL(100).'"/>';
