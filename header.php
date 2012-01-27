@@ -9,12 +9,12 @@
 
 <!DOCTYPE html>
 
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
-<head>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <!--<![endif]-->
+<head prefix"article: http://ogp.me/ns/article#">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -52,23 +52,25 @@
     <meta name="google-site-verification" content="V5LPwqv0BzMHvfMOIZvSjjJ-8tJc4Mi1A-L2AEbby50" />
 
     <meta property="og:site_name" content="Felix Online"/>
-    <meta property="fb:page_id" content="206951902659704" />
+    <meta property="fb:app_id" content="200482590030408" />
     <?php
         if(isset($_GET['article'])) { ?>
             <meta property="og:image" content="http://felixonline.co.uk/inc/timthumb.php?src=/<?php echo get_img_uri(get_img_id($article, 1)); ?>&w=100px&zc=1&a=t"/>
-            <meta property="og:title" content="<?php echo get_article_title($article).' - '.get_article_category($article).' - '.'Felix Online'; ?>"/>
+            <meta property="og:title" content="<?php echo get_article_title($article); ?>"/>
             <meta property="og:url" content="http://felixonline.co.uk/<?php echo article_url($article); ?>"/>
             <meta property="og:type" content="article"/>
             <meta property="og:description" content="<?php echo get_article_teaser($article);?>"/>
+		    <meta property="og:locale" content="en_GB"/>
+		    <meta property="article:section" content="<?php echo get_article_category($article); ?>"/>
     <?php } else if($_GET['media'] == 'video' && isset($_GET['name'])) { ?>
             <meta property="og:description" content="<?php echo get_video_desc($_GET['name']);?>"/>
-            <meta property="og:image" content="http://i.ytimg.com/vi/<?=get_video_id($_GET['name'])?>/0.jpg"/>
+            <meta property="og:image" content="http://i.ytimg.com/vi/<?php echo get_video_id($_GET['name']); ?>/0.jpg"/>
     <?php } else if($_GET['media'] == 'photo' && isset($_GET['name'])) { ?>
             <?php if(get_album_desc($_GET['name'])) { ?>
                 <meta property="og:description" content="<?php echo get_album_desc($_GET['name']);?>"/>
             <?php } ?>
             <meta property="og:title" content="<?php echo get_album_name($_GET['name']).' - Media - Felix Online'; ?>"/>
-            <meta property="og:image" content="http://felixonline.co.uk/inc/timthumb.php?src=/gallery/gallery_images/images/<?=get_album_image($_GET['name'])?>&w=50px&zc=1&a=t"/>
+            <meta property="og:image" content="http://felixonline.co.uk/inc/timthumb.php?src=/gallery/gallery_images/images/<?php echo get_album_image($_GET['name']); ?>&w=50px&zc=1&a=t"/>
     <?php } else { ?>
             <!-- Normal Facebook meta tags -->
             <meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>
@@ -146,7 +148,7 @@
 						<script>
 							var user = '<?php echo $uname; ?>';
 						</script>
-					<? } ?>
+					<?php } ?>
 				</div>
 				<div class="grid_4 last" id="searchBoxCont">
 					<form action="search/" id="cse-search-box">
