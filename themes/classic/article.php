@@ -159,7 +159,6 @@ $theme->render('header', $header);
                 </li>
                 <li>
                     <div id="facebookLike2">
-                        <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
                         <fb:like send="true" width="300" show_faces="false" font="arial"></fb:like>
                     </div>
                 </li>
