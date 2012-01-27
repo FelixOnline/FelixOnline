@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6" prefix="og: http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7" prefix="og: http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8" prefix="og: http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9" prefix="og: http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" prefix="og: http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml"> <!--<![endif]-->
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <!--<![endif]-->
 <head prefix"article: http://ogp.me/ns/article#">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -43,6 +43,15 @@
     <?php } ?>
 </head>
 <body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=200482590030408";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
 	<div id="topBarCont" class="clearfix">
 		<div class="container_16">
 			<div id="topBar" class="grid_16">

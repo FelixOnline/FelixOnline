@@ -79,7 +79,7 @@ $theme->render('header', $header);
                 <ul>
                     <div id="sharebuttons">
                         <li id="facebookLike">
-
+							<fb:like send="false" layout="button_count" width="140" show_faces="false" font="arial"></fb:like>
                         </li>
                         <li id="twitterShare">
 
@@ -160,7 +160,7 @@ $theme->render('header', $header);
                 <li>
                     <div id="facebookLike2">
                         <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-                        <fb:like show_faces="false" width="300" font="arial" send=true></fb:like>
+                        <fb:like send="true" width="300" show_faces="false" font="arial"></fb:like>
                     </div>
                 </li>
             </ul>
