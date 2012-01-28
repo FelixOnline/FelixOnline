@@ -5,7 +5,7 @@
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <!--<![endif]-->
-<head prefix"article: http://ogp.me/ns/article#">
+<head prefix="article: http://ogp.me/ns/article#">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="felix, student news, student newspaper, felix online, imperial college union, imperial college, felixonline"/>
