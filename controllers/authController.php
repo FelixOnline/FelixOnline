@@ -25,14 +25,14 @@ class AuthController extends BaseController {
                 // Correct session ID - the one from the auth server is not
                 // the one on this server
                 $sql = "UPDATE login
-                        SET session_id = '".session_id()."'
-                        WHERE session_id='".$this->session."'
+                        SET session_id = '".$db->escape(session_id())."'
+                        WHERE session_id='".$db->escape($this->session)."'
                         AND logged_in=0
-                        AND ip='".$_SERVER['REMOTE_ADDR']."'
-                        AND browser='".$_SERVER['HTTP_USER_AGENT']."'
+                        AND ip='".$db->escape($_SERVER['REMOTE_ADDR'])."'
+                        AND browser='".$db->escape($_SERVER['HTTP_USER_AGENT'])."'
                         AND valid=1
                         AND TIMESTAMPDIFF(SECOND,timestamp,NOW()) <=
-                            ".SESSION_LENGTH."
+                            ".$db->escape(SESSION_LENGTH)."
                 ";
                 
                 $this->session = session_id(); // The session ID auth is using
@@ -122,10 +122,10 @@ class AuthController extends BaseController {
                     browser,
                     user
                 ) VALUES (
-                    '".$currentuser->getSession()."',
-                    '".$_SERVER['REMOTE_ADDR']."',
-                    '".$_SERVER['HTTP_USER_AGENT']."',
-                    '".$currentuser->getUser()."'
+                    '".$db->escape($currentuser->getSession())."',
+                    '".$db->escape($_SERVER['REMOTE_ADDR'])."',
+                    '".$db->escape($_SERVER['HTTP_USER_AGENT'])."',
+                    '".$db->escape($currentuser->getUser())."'
                 )
         ";
         return $this->db->query($sql);
@@ -146,7 +146,7 @@ class AuthController extends BaseController {
                     ip, 
                     browser 
                 FROM `login` 
-                WHERE session_id='$session' 
+                WHERE session_id='".$db->escape($session)."' 
                 AND valid=1 
                 AND logged_in=0 
                 ORDER BY timediff ASC 
@@ -195,10 +195,10 @@ class AuthController extends BaseController {
     private function destroySession() {
         global $currentuser;
         $sql = "DELETE FROM login 
-                WHERE user='".$currentuser->getUser()."'
-                AND session_id='".$currentuser->getSession()."'
-                AND ip='".$_SERVER['REMOTE_ADDR']."'
-                AND browser='".$_SERVER['HTTP_USER_AGENT']."'";
+                WHERE user='".$db->escape($currentuser->getUser())."'
+                AND session_id='".$db->escape($currentuser->getSession())."'
+                AND ip='".$db->escape($_SERVER['REMOTE_ADDR'])."'
+                AND browser='".$db->escape($_SERVER['HTTP_USER_AGENT'])."'";
         return $this->db->query($sql);
 	}
 
@@ -208,7 +208,7 @@ class AuthController extends BaseController {
     private function destroySessions() {
         global $currentuser;
         $sql = "DELETE FROM login 
-                WHERE user='".$currentuser->getUser()."'";
+                WHERE user='".$db->escape($currentuser->getUser())."'";
         return $this->db->query($sql);
     }
 
@@ -221,7 +221,7 @@ class AuthController extends BaseController {
                 WHERE UNIXTIME() > UNIXTIME(expires)
         ";
         $sql = "DELETE FROM login 
-                WHERE user='".$currentuser->getUser()."'
+                WHERE user='".$db->escape($currentuser->getUser())."'
                 AND valid=0
                 OR logged_in=0
                 OR TIMESTAMPDIFF(SECOND,timestamp,NOW()) >
@@ -257,7 +257,7 @@ class AuthController extends BaseController {
      * Get the user from the session id
      */
     private function getUserFromSession($session) {
-        $sql = "SELECT user FROM login WHERE session_id='".$session."'";
+        $sql = "SELECT user FROM login WHERE session_id='".$db->escape($session)."'";
         return $this->db->get_var($sql);
     }
 
@@ -266,7 +266,7 @@ class AuthController extends BaseController {
      */
     private function setLoggedIn() {
         global $currentuser;
-        $sql = "UPDATE login SET logged_in=1 WHERE user='".$currentuser->getUser()."' AND session_id = '".$this->session."'";
+        $sql = "UPDATE login SET logged_in=1 WHERE user='".$db->escape($currentuser->getUser())."' AND session_id = '".$db->escape($this->session)."'";
         return $this->db->query($sql);
     }
 
@@ -287,9 +287,9 @@ class AuthController extends BaseController {
                     user,
                     expires
                 ) VALUES (
-                    '".$hash."',
-                    '".$currentuser->getUser()."',
-                    FROM_UNIXTIME(".$expiry_time.")
+                    '".$db->escape($hash)."',
+                    '".$db->escape($currentuser->getUser())."',
+                    FROM_UNIXTIME(".$db->escape($expiry_time).")
                 )
         ";
         return $this->db->query($sql);

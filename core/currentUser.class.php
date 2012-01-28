@@ -41,7 +41,7 @@ class CurrentUser extends User {
 
         if (array_key_exists('felixonline', $_COOKIE)) {
             $sql = "DELETE FROM cookies
-                    WHERE hash = '".$_COOKIE['felixonline']."'
+                    WHERE hash = '".$db->escape($_COOKIE['felixonline'])."'
             ";
 
             $db->query($sql);
@@ -89,7 +89,7 @@ class CurrentUser extends User {
 
         $sql = "SELECT user
                 FROM `cookies`
-                WHERE hash='".$cookiehash."'
+                WHERE hash='".$db->escape($cookiehash)."'
                 AND UNIX_TIMESTAMP(expires) > UNIX_TIMESTAMP()
                 ORDER BY expires ASC
                 LIMIT 1
@@ -115,10 +115,10 @@ class CurrentUser extends User {
                     user,
                     logged_in
                 ) VALUES (
-                    '".$this->getSession()."',
-                    '".$_SERVER['REMOTE_ADDR']."',
-                    '".$_SERVER['HTTP_USER_AGENT']."',
-                    '".$username."',
+                    '".$db->escape($this->getSession())."',
+                    '".$db->escape($_SERVER['REMOTE_ADDR'])."',
+                    '".$db->escape($_SERVER['HTTP_USER_AGENT'])."',
+                    '".$db->escape($username)."',
                     1
                 )
         ";
@@ -151,10 +151,10 @@ class CurrentUser extends User {
                     ip,
                     browser
                 FROM `login`
-                WHERE session_id='".$this->session."'
+                WHERE session_id='".$db->escape($this->session)."'
                 AND logged_in=1
                 AND valid=1
-                AND user='".$_SESSION['felix']['uname']."'
+                AND user='".$db->escape($_SESSION['felix']['uname'])."'
                 ORDER BY timediff ASC
                 LIMIT 1
         ";
@@ -187,13 +187,13 @@ class CurrentUser extends User {
 
         $sql = "UPDATE login
                 SET timestamp = NOW()
-                WHERE session_id='".$this->session."'
+                WHERE session_id='".$db->escape($this->session)."'
                 AND logged_in=1
-                AND ip='".$_SERVER['REMOTE_ADDR']."'
-                AND browser='".$_SERVER['HTTP_USER_AGENT']."'
+                AND ip='".$db->escape($_SERVER['REMOTE_ADDR'])."'
+                AND browser='".$db->escape($_SERVER['HTTP_USER_AGENT'])."'
                 AND valid=1
                 AND TIMESTAMPDIFF(SECOND,timestamp,NOW()) <=
-                    ".SESSION_LENGTH."
+                    ".$db->escape(SESSION_LENGTH)."
         ";
         $this->db->query($sql); // if this fails, it doesn't matter, we will
                                 // just be auto logged out after a while
@@ -201,16 +201,16 @@ class CurrentUser extends User {
         $sql = "INSERT INTO `user` 
             (user,name,visits,ip) 
             VALUES (
-                '$username',
-                '".$this->getName()."',
+                '".$db->escape($username)."',
+                '".$db->escape($this->getName())."',
                 1,
                 '".$_SERVER['REMOTE_ADDR']."'
             ) 
             ON DUPLICATE KEY 
             UPDATE 
-                name='".$this->getName()."',
+                name='".$db->escape($this->getName())."',
                 visits=visits+1,
-                ip='".$_SERVER['REMOTE_ADDR']."',
+                ip='".$db->escape($_SERVER['REMOTE_ADDR'])."',
                 timestamp=NOW()";
                 // note that this updated the last access time and the ip
                 // of the last access for this user, this is separate from the
