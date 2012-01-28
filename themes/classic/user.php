@@ -1,9 +1,18 @@
 <?php
 $timing->log('user page');
 
+$meta = '
+    <meta property="og:title" content="'.$user->getName().'"/>
+    <meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>
+    <meta property="og:url" content="'.$user->getURL().'"/>
+    <meta property="og:type" content="profile"/>
+    <meta property="og:locale" content="en_GB"/>
+    <meta property="og:description" content="'.$user->getDescription().'"/>
+';
+
 $header = array(
     'title' => $user->getName().' - '.'Felix Online',
-    'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
+    'meta' => $meta
 );
 
 $theme->render('header', $header);
