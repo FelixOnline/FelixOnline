@@ -11,7 +11,7 @@
                 <td><input type="password" name="password" id="password"/></td>
             </tr>
             <tr>
-                <td><label for="remember">Remember Me: </label></td>
+                <td><label for="rememberButton">Remember Me: </label></td>
                 <td><input type="checkbox" name="remember" id="rememberButton" value="rememberme" checked="checked" /></td>
             </tr>
             <tr>
