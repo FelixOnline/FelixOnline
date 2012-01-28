@@ -189,7 +189,6 @@
 					<ul>
 						<div id="sharebuttons">
 							<li id="facebookLike">
-							<fb:like send="false" layout="button_count" width="140" show_faces="false" font="arial"></fb:like>
 
 							</li>
 							<li id="twitterShare">

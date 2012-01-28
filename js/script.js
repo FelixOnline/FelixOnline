@@ -7,6 +7,14 @@ $(document).ready(function() {
 	// Reload css to fix @font face issue in IE8
 	$('#main_css')[0].href=$('#main_css')[0].href;
 	
+	(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=200482590030408";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+	
 	/* Phoenix box */
 	$('#phoenixcont .acts').hover(function(){
 		if (!$(this).find(".cover").hasClass('animated')) {
@@ -64,9 +72,11 @@ $(document).ready(function() {
 	
     // Load sharing links
     if ($('.sidebar2 #sharebuttons').length) { // If sidebar 2 exists
+    	var facebook = '<fb:like send="false" layout="button_count" width="140" show_faces="false" font="arial"></fb:like>';
 		var twitter = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
 		var digg = '<a class="DiggThisButton DiggCompact"></a>';
 		
+		$('#facebookLike').append(facebook);
 		$('#twitterShare').append(twitter);
 		$('#diggShare').append(digg);
 	};
