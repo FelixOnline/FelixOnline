@@ -273,13 +273,14 @@ class AuthController extends BaseController {
     /*
      * Private: Create cookie
      */
-    private function setCookie() {        global $currentuser;
+    private function setCookie() {
+        global $currentuser;
 
         $hash = hash('sha256', mt_rand());
 
 		$expiry_time = time() + COOKIE_LENGTH;
 
-        setcookie('felixonline', $hash, $expiry_time, RELATIVE_PATH, '.'.STANDARD_SERVER);
+        setcookie('felixonline', $hash, $expiry_time, '/', '.'.STANDARD_SERVER);
         $sql = "INSERT INTO `cookies` 
                 (
                     hash,
