@@ -187,13 +187,13 @@ class CurrentUser extends User {
 
         $sql = "UPDATE login
                 SET timestamp = NOW()
-                WHERE session_id='".$db->escape($this->session)."'
+                WHERE session_id='".$this->db->escape($this->session)."'
                 AND logged_in=1
-                AND ip='".$db->escape($_SERVER['REMOTE_ADDR'])."'
-                AND browser='".$db->escape($_SERVER['HTTP_USER_AGENT'])."'
+                AND ip='".$this->db->escape($_SERVER['REMOTE_ADDR'])."'
+                AND browser='".$this->db->escape($_SERVER['HTTP_USER_AGENT'])."'
                 AND valid=1
                 AND TIMESTAMPDIFF(SECOND,timestamp,NOW()) <=
-                    ".$db->escape(SESSION_LENGTH)."
+                    ".$this->db->escape(SESSION_LENGTH)."
         ";
         $this->db->query($sql); // if this fails, it doesn't matter, we will
                                 // just be auto logged out after a while
@@ -201,16 +201,16 @@ class CurrentUser extends User {
         $sql = "INSERT INTO `user` 
             (user,name,visits,ip) 
             VALUES (
-                '".$db->escape($username)."',
-                '".$db->escape($this->getName())."',
+                '".$this->db->escape($username)."',
+                '".$this->db->escape($this->getName())."',
                 1,
                 '".$_SERVER['REMOTE_ADDR']."'
             ) 
             ON DUPLICATE KEY 
             UPDATE 
-                name='".$db->escape($this->getName())."',
+                name='".$this->db->escape($this->getName())."',
                 visits=visits+1,
-                ip='".$db->escape($_SERVER['REMOTE_ADDR'])."',
+                ip='".$this->db->escape($_SERVER['REMOTE_ADDR'])."',
                 timestamp=NOW()";
                 // note that this updated the last access time and the ip
                 // of the last access for this user, this is separate from the
