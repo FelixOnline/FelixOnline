@@ -11,6 +11,10 @@ $meta = '
     <meta property="article:published_time" content="'.date('c', $article->getDate()).'"/>
 ';
 
+foreach ($article->getAuthors() as $author) {
+	$meta .= '<meta property="article:author" content="'.$author->getURL().'"/>';
+}
+
 if($article->getImage()) {
     $meta .= '<meta property="og:image" content="'.$article->getImage()->getURL(100).'"/>';
 }
