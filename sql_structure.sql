@@ -259,6 +259,21 @@ CREATE TABLE IF NOT EXISTS `comment_spam` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cookies`
+--
+
+CREATE TABLE IF NOT EXISTS `cookies` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `hash` VARCHAR(64) NOT NULL,
+  `user` VARCHAR(64) NOT NULL,
+  `expires` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`) ,
+  INDEX `hash` (`hash` ASC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `engine_page`
 --
 
@@ -807,6 +822,12 @@ ALTER TABLE `comment_ext`
 --
 ALTER TABLE `comment_like`
   ADD CONSTRAINT `comment_like_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`user`);
+
+--
+-- Constraints for table `cookies`
+--
+ALTER TABLE `cookies` 
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `image`

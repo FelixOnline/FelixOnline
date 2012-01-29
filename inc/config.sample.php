@@ -43,6 +43,7 @@
     /*
      * Change these urls to your local versions, e.g http://localhost/felix
      */
+    define('STANDARD_SERVER', 'felixonline.local');
     define('STANDARD_URL','http://felixonline.local/');
     define('BASE_URL','http://localhost/felix/');
     define('ADMIN_URL','http://localhost/felix/engine/');

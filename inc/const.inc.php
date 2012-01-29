@@ -6,6 +6,7 @@
      */
 
 	/* SYSTEM */
+    if(!defined('STANDARD_SERVER'))                 define('STANDARD_SERVER','felixonline.co.uk'); // standard site hostname
     if(!defined('STANDARD_URL'))                    define('STANDARD_URL','http://felixonline.co.uk/'); // standard site url
     if(!defined('BASE_URL'))                        define('BASE_URL','http://felixonline.co.uk/'); // site url [TODO: merge with STANDARD_URL]
     if(!defined('ADMIN_URL'))                       define('ADMIN_URL','http://felixonline.co.uk/engine/'); // url of engine page
