@@ -13,3 +13,5 @@ archive/
 # Ignore engine folder
 engine/
 
+# Ignore sex survey
+sexsurvey/
