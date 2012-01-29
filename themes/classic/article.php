@@ -4,15 +4,15 @@ $timing->log('article page');
 $meta = '
     <meta property="og:title" content="'.$article->getTitle().'"/>
     <meta property="og:url" content="'.$article->getURL().'"/>
-    <meta property="og:type" content="article"/>
+    <meta property="og:type" content="feliximperial:article"/>
     <meta property="og:locale" content="en_GB"/>
     <meta property="og:description" content="'.$article->getTeaser().'"/>
-    <meta property="article:section" content="'.$article->getCategoryLabel().'"/>
-    <meta property="article:published_time" content="'.date('c', $article->getDate()).'"/>
+    <meta property="feliximperial:section" content="'.$article->getCategoryLabel().'"/>
+    <meta property="feliximperial:published_time" content="'.date('c', $article->getDate()).'"/>
 ';
 
 foreach ($article->getAuthors() as $author) {
-	$meta .= '<meta property="article:author" content="'.$author->getURL().'"/>';
+	$meta .= '<meta property="feliximperial:author" content="'.$author->getName().'"/>';
 }
 
 if($article->getImage()) {

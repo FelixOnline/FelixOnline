@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <!--<![endif]-->
-<head prefix="article: http://ogp.me/ns/article#">
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" xmlns:fb="http://ogp.me/ns/fb#"> <!--<![endif]-->
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# feliximperial: http://ogp.me/ns/fb/feliximperial#">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="felix, student news, student newspaper, felix online, imperial college union, imperial college, felixonline"/>
