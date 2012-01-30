@@ -9,12 +9,12 @@
 
 <!DOCTYPE html>
 
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" prefix="og: http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"> <!--<![endif]-->
-<head prefix="article: http://ogp.me/ns/article#">
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" xmlns:fb="http://ogp.me/ns/fb#"> <!--<![endif]-->
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# feliximperial: http://ogp.me/ns/fb/feliximperial#">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -58,10 +58,10 @@
             <meta property="og:image" content="http://felixonline.co.uk/inc/timthumb.php?src=/<?php echo get_img_uri(get_img_id($article, 1)); ?>&w=100px&zc=1&a=t"/>
             <meta property="og:title" content="<?php echo get_article_title($article); ?>"/>
             <meta property="og:url" content="http://felixonline.co.uk/<?php echo article_url($article); ?>"/>
-            <meta property="og:type" content="article"/>
+            <meta property="og:type" content="feliximperial:article"/>
             <meta property="og:description" content="<?php echo get_article_teaser($article);?>"/>
 		    <meta property="og:locale" content="en_GB"/>
-		    <meta property="article:section" content="<?php echo get_article_category($article); ?>"/>
+		    <meta property="feliximperial:section" content="<?php echo get_article_category($article); ?>"/>
     <?php } else if($_GET['media'] == 'video' && isset($_GET['name'])) { ?>
             <meta property="og:description" content="<?php echo get_video_desc($_GET['name']);?>"/>
             <meta property="og:image" content="http://i.ytimg.com/vi/<?php echo get_video_id($_GET['name']); ?>/0.jpg"/>
