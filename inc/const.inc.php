@@ -12,8 +12,8 @@
     if(!defined('PRODUCTION_FLAG'))                 define('PRODUCTION_FLAG', true); // if set to true css and js will be minified etc.. [TODO]
 	if(!defined('SESSION_LENGTH'))                  define('SESSION_LENGTH',7200); // session length
 	if(!defined('COOKIE_LENGTH'))                   define('COOKIE_LENGTH', 2592000); // cookie length (30 days) (60*60*24*30)
-	if(!defined('AUTHENTICATION_SERVER'))           define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk'); // authentication server
-	if(!defined('AUTHENTICATION_PATH'))             define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/'); // authentication path
+	if(!defined('AUTHENTICATION_SERVER'))           define('AUTHENTICATION_SERVER','union.ic.ac.uk'); // authentication server
+	if(!defined('AUTHENTICATION_PATH'))             define('AUTHENTICATION_PATH','https://union.ic.ac.uk/media/felix/'); // authentication path
 	if(!defined('ROOT_USERS'))                      define('ROOT_USERS','felix,cjb07,rsp07,jk708'); // separate with commas, no spaces
 	if(!defined('DEFAULT_IMG_URI'))                 define('DEFAULT_IMG_URI','img/felix_400x400.jpg'); // default image [TODO]
 	if(!defined('DEFAULT_ARTICLE_IMG_ID'))          define('DEFAULT_ARTICLE_IMG_ID',183); // default image id [depreciated]
