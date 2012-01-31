@@ -18,7 +18,6 @@
  *      height
  */
 class Image extends BaseModel {
-
     /*
      * Constructor for Image class
      * If initialised with id then store relevant data in object

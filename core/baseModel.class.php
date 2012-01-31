@@ -49,7 +49,7 @@ class BaseModel {
     }
 
     /*
-     * Save all fields to database TODO
+     * Public: Save all fields to database TODO
      */
     public function save() {
         $arrayLength = count($this->fields);
@@ -93,6 +93,13 @@ class BaseModel {
             $i++;
         }
         return $this->db->query($sql);
+    }
+
+    /*
+     * Public: Get all fields
+     */
+    public function getFields() {
+        return $this->fields;
     }
   
     /* 
