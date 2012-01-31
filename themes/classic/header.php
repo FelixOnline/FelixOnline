@@ -18,8 +18,8 @@
 
     <!-- Title -->
     <title>
-        <?php if(array_key_exists('title', $header)) {
-            echo $header['title'];
+        <?php if($title) {
+            echo $title;
         } else {
             echo 'Felix Online - The student voice of Imperial College London';
         } ?> 
@@ -29,8 +29,8 @@
     <meta property="og:site_name" content="Felix Online"/>
     <meta property="fb:page_id" content="206951902659704" />
     <?php 
-        if(array_key_exists('meta', $header)) {
-            echo $header['meta'];
+        if($meta) {
+            echo $meta;
         } 
     ?>
 
@@ -38,7 +38,7 @@
     <link rel="shortcut icon" href="favicon.ico">
 
     <!-- CSS files -->
-    <?php foreach($this->resources->getCSS() as $key => $value) { ?>
+    <?php foreach($theme->resources->getCSS() as $key => $value) { ?>
             <link id="<?php echo $key;?>" rel="stylesheet" href="<?php echo $value; ?>">
     <?php } ?>
 </head>
@@ -47,15 +47,15 @@
 		<div class="container_16">
 			<div id="topBar" class="grid_16">
 				<div class="grid_9 links first">
-					<ul>
+					<ul class="clearfix">
                         <li class="first">
-                            <a href="<?php echo STANDARD_URL; ?>" <?php if($this->isPage('frontpage')) echo 'class="selected"';?>>Felix Online</a>
+                            <a href="<?php echo STANDARD_URL; ?>" <?php if($theme->isPage('frontpage')) echo 'class="selected"';?>>Felix Online</a>
                             </li>
                         <li>
-                            <a href="<?php echo STANDARD_URL; ?>media/" <?php if($this->isPage('media')) echo 'class="selected"';?>>Media</a>
+                            <a href="<?php echo STANDARD_URL; ?>media/" <?php if($theme->isPage('media')) echo 'class="selected"';?>>Media</a>
                         </li>
                         <li class="last">
-                            <a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if($this->isPage('issuearchive')) echo 'class="selected"';?>>Issue Archive</a>
+                            <a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if($theme->isPage('issuearchive')) echo 'class="selected"';?>>Issue Archive</a>
                         </li>
 					</ul>
 				</div>
@@ -64,20 +64,22 @@
                         <a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox" id="loginButtonA">
                             <div id="loginbutton">Login</div>
                         </a>
-                        <?php include($this->directory.'/loginBox.php'); ?>
+                        <?php include(THEME_DIRECTORY.'/loginBox.php'); ?>
 					<?php } else { ?>
 						<div id="loginName">
-						<?php //if (get_user_role($uname)>0)
-							echo '<a href="/engine/" title="Admin Page"><img src="img/wrench.png"/></a>'; ?>
-						<a href="user/<?php echo $uname; ?>/" title="Profile Page"><?php echo $currentuser->getName();?></a>
+						<?php if ($currentuser->getRole() > 0)
+							echo '<a href="'.STANDARD_URL.'engine/" title="Admin Page"><img src="img/wrench.png"/></a>'; ?>
+                            <a href="<?php echo $currentuser->getURL(); ?>" title="Profile Page">
+                                <?php echo $currentuser->getName();?>
+                            </a>
 						</div>
-						<form method="post" style="display: inline;">
+                        <form method="post" action="<?php echo STANDARD_URL.'logout/?goto='.Utility::currentPageURL(); ?>" style="display: inline;">
 							<input type="submit" value="Logout" id="logoutbutton" name="logout">
 						</form>
 						<script>
-							var user = '<?php echo $uname; ?>';
+							var user = '<?php echo $currentuser->getUser(); ?>';
 						</script>
-					<? } ?>
+					<?php } ?>
 				</div>
 				<div class="grid_4 last" id="searchBoxCont">
 					<form action="search/" id="cse-search-box">
@@ -144,5 +146,5 @@
 	</div>
     
     <!-- Navigation -->
-    <?php include($this->directory.'/navigation.php'); ?>
+    <?php include(THEME_DIRECTORY.'/navigation.php'); ?>
     <!-- End of navigation -->

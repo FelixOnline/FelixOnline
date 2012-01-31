@@ -30,5 +30,62 @@ class Utility {
             return substr($string, 0, $limit).' ... ';
         }
     }
+
+    /*
+     * Public Static: Get list of users in english with links
+     *
+     * $array - array of user objects to output
+     * $bold - if true bold each user
+     *
+     * Returns html string of users
+     */
+    public static function outputUserList($array, $bold = false) {
+        // sanity check
+        if (!$array || !count ($array))
+            return '';
+        // change array into linked usernames
+        foreach ($array as $key => $user) {
+            if(!is_object($user)) {
+                throw new Exception($user.' user is not an object');
+            }
+            $full_array[$key] = '<a href="'.$user->getURL().'">'.$user->getName().'</a>';
+        }
+        // get last element
+        $last = array_pop($full_array);
+        // if it was the only element - return it
+        if (!count ($full_array))
+            return $last;
+        $output = implode (', ', $full_array);
+        if($bold) {
+            $output .= '</b> and <b>';    
+        } else {
+            $output .= ' and ';
+        } 
+        $output .= $last;
+        return $output;
+    }
+
+    /*
+     * Public Static: Hide email behind javascript to prevent robot crawls
+     *
+     * $email - email address to hide
+     * $name - name for email address [optional]
+     *
+     * Returns html code to output
+     */
+    public static function hideEmail($email, $name = NULL) {
+        if(!$name) $name = $email;
+        $character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
+        $key = str_shuffle($character_set); $cipher_text = '';
+        $id = 'e'.rand(1,999999999);
+        for ($i=0;$i<strlen($email);$i+=1)
+            $cipher_text.= $key[strpos($character_set,$email[$i])];
+        $script = 'var a="'.$key.'";var b=a.split("").sort().join("");var c="'.$cipher_text.'";var d="";var n="'.$name.'";';
+        $script.= 'for(var e=0;e<c.length;e++)d+=b.charAt(a.indexOf(c.charAt(e)));';
+        $script.= 'document.getElementById("'.$id.'").innerHTML="<a href=\\"mailto:"+d+"\\">"+n+"</a>"';
+        $script = "eval(\"".str_replace(array("\\",'"'),array("\\\\",'\"'), $script)."\")";
+        $script = '<script type="text/javascript">/*<![CDATA[*/'.$script.'/*]]>*/</script>';
+        return '<span id="'.$id.'">[javascript protected email address]</span>'.$script;
+    }
 }
 ?>

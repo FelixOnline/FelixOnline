@@ -34,7 +34,6 @@
 	<!-- Article wrapper -->
 	<div class="container_12 usercontainer">
 	<?php if(!$error) {?>
-	
 		<!-- Sidebar -->
 		<div class="sidebar grid_4 push_8">
 			<?php if ($articles > 2) { ?>

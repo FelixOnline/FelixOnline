@@ -3,6 +3,9 @@
  * Felix Online
  */
 
+require_once('inc/timing.inc.php');
+$timing = new Timing('test');
+
 /* If the url is on the union servers then redirect to custom url */
 if (strstr($_SERVER['HTTP_HOST'],"union.ic.ac.uk") !== false) {
     header("Location: ".STANDARD_URL.substr($_SERVER['REQUEST_URI'],(1+strrpos($_SERVER['REQUEST_URI'],"/"))));
@@ -27,7 +30,7 @@ $urls = array(
     '/(?P<cat>[a-zA-Z]+)/(?P<page>[0-9]+)' => 'CategoryController',
     '/(?P<cat>[a-zA-Z]+)/(?P<id>[0-9]+)/(?P<title>[a-zA-Z0-9_-]+)/.*' => 'ArticleController',
     '/login/.*' => 'AuthController',
-    '/logout' => 'AuthController',
+    '/logout/.*' => 'AuthController',
 );
 
 /*
@@ -37,6 +40,7 @@ require_once(BASE_DIRECTORY.'/controllers/baseController.php');
 foreach (glob(BASE_DIRECTORY.'/controllers/*.php') as $filename) {
     require_once($filename);
 }
+$timing->log('After setup');
 
 try { // try mapping request to urls
     glue::stick($urls);

@@ -1,8 +1,7 @@
 <!-- Footer -->
     <div class="container_12">
-        <div class="grid_12 footer">
-            <div class="grid_6 alpha">
-                <img src="<?php echo $this->directory; ?>/img/title-small.jpg"/>
+        <div class="grid_12 footer"> <div class="grid_6 alpha">
+                <img src="<?php echo THEME_URL; ?>/img/title-small.jpg"/>
             </div>
             <div class="grid_6 details alpha">
                 <p>Felix, Beit Quad, Prince Consort Road, London SW7 2BB</p>
@@ -16,10 +15,10 @@
 
     <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.5.2.min.js"%3E%3C/script%3E'))</script>
+    <script>!window.jQuery && document.write(unescape('%3Cscript src="<?php echo $theme->getURL();?>/js/libs/jquery-1.5.2.min.js"%3E%3C/script%3E'))</script>
 
     <!-- JS files -->
-    <?php foreach($this->resources->getJS() as $key => $value) { ?>
+    <?php foreach($theme->resources->getJS() as $key => $value) { ?>
         <script src="<?php echo $value; ?>"></script>
     <?php } ?>
 

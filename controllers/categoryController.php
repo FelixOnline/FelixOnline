@@ -2,8 +2,20 @@
     
 class CategoryController extends BaseController {
     function GET($matches) {
-        var_dump($matches);
-        echo 'category';
+        $category = new Category($matches['cat']);
+        if(!$matches['page']) {
+            $pagenum = 1;
+        } else {
+            $pagenum = $matches['page'];
+        }
+        $this->theme->appendData(array(
+            'category' => $category,
+            'pagenum' => $pagenum
+        ));
+        $this->theme->setHierarchy(array(
+            'cat' /* category-{cat}.php */
+        ));
+        $this->theme->render('category');
     }
 }
 

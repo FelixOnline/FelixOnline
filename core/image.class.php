@@ -58,5 +58,21 @@ class Image extends BaseModel {
             return IMAGE_URL.DEFAULT_IMG_URI;
         }
     }
+
+    /*
+     * Public: Check if image is tall or not
+     *
+     * $width - width of place image needs to fit to
+     * $limit - pixel limit to check image against
+     */
+    public function isTall($width = 460, $limit = 400) {
+        $scale = $this->getWidth()/$width;
+        $check = $this->getHeight()/$scale;
+        if ($check > $limit) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 ?>

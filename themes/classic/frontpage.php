@@ -1,10 +1,13 @@
 <?php
+$timing->log('frontpage');
+
 $header = array(
     'title' => 'Felix Online - The student voice of Imperial College London',
     'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
 );
 
-include($this->directory.'/header.php'); // replace this with function
+$theme->render('header', $header); 
+$timing->log('after header');
 ?>
 
 <div class="container_12">
@@ -12,14 +15,22 @@ include($this->directory.'/header.php'); // replace this with function
     <div class="sidebar grid_4 push_8">
         <?php
             include_once(THEME_DIRECTORY.'/sidebar/fbLikeBox.php');
+            $timing->log('after fblikebox');
             //include_once(THEME_DIRECTORY.'/sidebar/mediaBox.php');
+            //$timing->log('after mediabox');
             include_once(THEME_DIRECTORY.'/sidebar/socialLinks.php');
+            $timing->log('after social links');
             include_once(THEME_DIRECTORY.'/sidebar/fbActivity.php');
+            $timing->log('after fbactivity');
             include_once(THEME_DIRECTORY.'/sidebar/mostPopular.php');
-            include_once(THEME_DIRECTORY.'/sidebar/iscience.php');
+            $timing->log('after mostpopular');
+            $theme->render('sidebar/iscience');
+            $timing->log('after iscience');
             include_once(THEME_DIRECTORY.'/sidebar/recentcomments.php');
+            $timing->log('after recent comments');
         ?>
     </div>
+    <?php $timing->log('after sidebar'); ?>
     <!-- End of sidebar -->
     
     <!-- Front page articles -->
@@ -39,11 +50,13 @@ include($this->directory.'/header.php'); // replace this with function
                 WHERE layout='1' 
                 AND section='a'";
             $sectionA = $db->get_row($sql);
+            $timing->log('get frontpage articles');
         ?>
         <!-- Top story -->
         <div class="grid_8 alpha topstory">
             <?php // Initialise top story
                 $article = new Article($sectionA->one);
+                $timing->log('initialise article');
             ?>
             <div class="border clearfix <?php echo $article->getCategoryCat();?>">
                 <h2>
@@ -110,11 +123,11 @@ include($this->directory.'/header.php'); // replace this with function
                         </div>
                         <div id="caption2">
                             <a href="<?php echo $article->getURL();?>">
-                                <?php echo $article->getShortDesc(); ?>
+                                <?php echo $article->getTeaser(); ?>
                             </a>
                         </div>
                     </div>
-                <? } ?>
+                <?php } ?>
         </div>
         <!-- End of in this issue -->
 
@@ -348,7 +361,7 @@ include($this->directory.'/header.php'); // replace this with function
                 </h4>
             </a>
             <br/>
-            <span><?php echo $article->getShortDesc(175); ?></span>
+            <span><?php echo $article->getPreview(15); ?></span>
             <ul>
                 <li>
                     Other Articles:
@@ -368,6 +381,8 @@ include($this->directory.'/header.php'); // replace this with function
             </ul>
         </div>
         <!-- End of featured articles -->
+        
+        <?php $timing->log('end of frontpage articles'); ?>
 
         <!-- Editorial -->
         <div class="grid_4 alpha commentBox">
@@ -394,6 +409,8 @@ include($this->directory.'/header.php'); // replace this with function
         </div>
         <!-- End of editorial -->
 
+        <?php $timing->log('end of editorial'); ?>
+
         <div class="grid_4 omega">
             <div class="twitterbox">
                 <h4>Twitter</h4>
@@ -408,39 +425,43 @@ include($this->directory.'/header.php'); // replace this with function
                 </ul>
             </div>
 
+            <?php $timing->log('end of twitter'); ?>
+
             <div id="weather">
                 <h4>Weather <span>in South Kensington</span></h4>
-            <?php
-                $requestAddress = "http://www.google.com/ig/api?weather=SW72BB&hl=en";
-                // Downloads weather data based on location - I used my zip code.
-                $xml_str = file_get_contents($requestAddress,0);
-                // Parses XML
-                $xml = new SimplexmlElement($xml_str);
-
-                foreach($xml->weather as $item) { ?>
-                    <!-- Current conditions -->
-                    <div id="current">
-                        <img src="http://www.google.com<?php echo $item->current_conditions->icon['data'];?>" title="<?php echo $item->current_conditions->condition['data'];?>"/>
-                        <p><b>Current</b></p>
-                        <p id="temp"><?php echo $item->current_conditions->temp_c['data'];?>&#176;C</p>
-                    </div>
-
                 <?php
-                    foreach($item->forecast_conditions as $new) { ?>
-                        <div class="weatherIcon">
-                            <img src="http://www.google.com<?php echo $new->icon['data']; ?>" title="<?php echo $new->condition['data'];?>"/><br/>
-                            <p><?php echo $new->day_of_week['data'];?></p>
-                        <?php
-                            $low = intval(($new->low['data'] - 32) / 1.8);
-                            $high = intval(($new->high['data'] - 32) / 1.8);
-                        ?>
-                            <p id="temp"><?php echo $high;?>&#176;C | <?php echo $low; ?>&#176;C</p>
+                    $requestAddress = "http://www.google.com/ig/api?weather=SW72BB&hl=en";
+                    // Downloads weather data based on location - I used my zip code.
+                    $xml_str = file_get_contents($requestAddress,0);
+                    // Parses XML
+                    $xml = new SimplexmlElement($xml_str);
+
+                    foreach($xml->weather as $item) { ?>
+                        <!-- Current conditions -->
+                        <div id="current">
+                            <img src="http://www.google.com<?php echo $item->current_conditions->icon['data'];?>" title="<?php echo $item->current_conditions->condition['data'];?>"/>
+                            <p><b>Current</b></p>
+                            <p id="temp"><?php echo $item->current_conditions->temp_c['data'];?>&#176;C</p>
                         </div>
-                <?php }
-                }
-            ?>
+
+                    <?php
+                        foreach($item->forecast_conditions as $new) { ?>
+                            <div class="weatherIcon">
+                                <img src="http://www.google.com<?php echo $new->icon['data']; ?>" title="<?php echo $new->condition['data'];?>"/><br/>
+                                <p><?php echo $new->day_of_week['data'];?></p>
+                            <?php
+                                $low = intval(($new->low['data'] - 32) / 1.8);
+                                $high = intval(($new->high['data'] - 32) / 1.8);
+                            ?>
+                                <p id="temp"><?php echo $high;?>&#176;C | <?php echo $low; ?>&#176;C</p>
+                            </div>
+                    <?php }
+                    }
+                ?>
                 <div class="clear"></div>
             </div>
+
+            <?php $timing->log('end of weather'); ?>
 
             <div id="felixinfo">
                 <h3>About Us</h3>
@@ -450,5 +471,42 @@ include($this->directory.'/header.php'); // replace this with function
         </div>
     </div>
     <!-- End of front page articles -->
+    <?php $timing->log('end of frontpage'); ?>
 </div>
-<?php include($this->directory.'/footer.php'); ?>
+
+<!-- Featured bar -->
+<div class="container_12 clearfix">
+    <?php
+    $sql = "SELECT id,cat,label,top_slider_1 as top FROM `category` 
+            WHERE active=1 
+            AND hidden=0
+            AND id>0 
+            ORDER BY id ASC";
+    $cats = $db->get_results($sql);
+    foreach($cats as $key => $cat) {
+        $article = new Article($cat->top);
+    ?>
+        <div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
+            <div class="border <?php echo $cat->cat;?>">
+                <h3>
+                    <a href="<?php echo STANDARD_URL.$cat->cat;?>/">
+                        <?php echo $cat->label;?>
+                    </a>
+                </h3>
+                <a href="<?php echo $article->getURL();?>">
+                    <img id="featuredBarPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 120);?>" width="220px" height="120px">
+                </a>
+                <h4>
+                    <a href="<?php echo $article->getURL();?>">
+                        <?php echo $article->getTitle();?>
+                    </a>
+                </h4>
+                <p>
+                    <?php echo $article->getPreview(10);?>
+                </p>
+            </div>
+        </div>
+    <?php } ?>
+</div>
+<!-- End of featured bar -->
+<?php $theme->render('footer'); ?>
