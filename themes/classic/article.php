@@ -2,11 +2,18 @@
 $timing->log('article page');
 
 $meta = '
-    <meta property="og:title" content="'.$article->getTitle().' - '.$article->getCategoryLabel().' - Felix Online"/>
+    <meta property="og:title" content="'.$article->getTitle().'"/>
     <meta property="og:url" content="'.$article->getURL().'"/>
-    <meta property="og:type" content="article"/>
+    <meta property="og:type" content="feliximperial:article"/>
+    <meta property="og:locale" content="en_GB"/>
     <meta property="og:description" content="'.$article->getTeaser().'"/>
+    <meta property="feliximperial:section" content="'.$article->getCategoryLabel().'"/>
+    <meta property="feliximperial:published_time" content="'.date('c', $article->getDate()).'"/>
 ';
+
+foreach ($article->getAuthors() as $author) {
+	$meta .= '<meta property="feliximperial:author" content="'.$author->getName().'"/>';
+}
 
 if($article->getImage()) {
     $meta .= '<meta property="og:image" content="'.$article->getImage()->getURL(100).'"/>';
@@ -76,7 +83,7 @@ $theme->render('header', $header);
                 <ul>
                     <div id="sharebuttons">
                         <li id="facebookLike">
-
+							
                         </li>
                         <li id="twitterShare">
 
@@ -156,8 +163,7 @@ $theme->render('header', $header);
                 </li>
                 <li>
                     <div id="facebookLike2">
-                        <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-                        <fb:like show_faces="false" width="300" font="arial" send=true></fb:like>
+                        <fb:like send="true" width="300" show_faces="false" font="arial"></fb:like>
                     </div>
                 </li>
             </ul>
