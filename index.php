@@ -34,6 +34,15 @@ $urls = array(
 );
 
 /*
+ * Add pages to routes
+ */
+$sql = "SELECT * FROM `pages`";
+$pages = $db->get_results($sql);
+foreach($pages as $key => $page) {
+    $urls['/'.$page->slug] = 'pageController'; 
+}
+
+/*
  * Include Controllers
  */
 require_once(BASE_DIRECTORY.'/controllers/baseController.php');
@@ -50,6 +59,7 @@ try { // try mapping request to urls
     } else {
         throw new Exception($e);
     }
+    echo '404';
     //$theme->render('404'); // TODO
 }
 

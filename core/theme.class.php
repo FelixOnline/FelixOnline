@@ -56,11 +56,11 @@ class Theme {
     /*
      * Private: Include page in enclosed function
      */
-    private function includePage($page) {
-        $data = $this->data;
-        call_user_func(function() use($data, $page) {
-            extract($data);
-            include(THEME_DIRECTORY.'/'.$page.'.php');
+    private function includePage($themePage) {
+        $themeData = $this->data;
+        call_user_func(function() use($themeData, $themePage) {
+            extract($themeData);
+            include(THEME_DIRECTORY.'/'.$themePage.'.php');
         });
     }
 
