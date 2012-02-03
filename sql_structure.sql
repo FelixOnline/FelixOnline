@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 19, 2012 at 05:05 PM
+-- Generation Time: Feb 03, 2012 at 04:09 PM
 -- Server version: 5.1.58
 -- PHP Version: 5.3.6-13ubuntu3.3
 
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `api_log` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ip` varchar(40) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   KEY `author` (`author`),
   KEY `approvedby` (`approvedby`),
   KEY `hidden` (`hidden`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1464 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1467 ;
 
 -- --------------------------------------------------------
 
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `article_visit` (
   PRIMARY KEY (`id`),
   KEY `article` (`article`,`timestamp`,`user`),
   KEY `timestamp` (`timestamp`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   PRIMARY KEY (`id`),
   KEY `user` (`user`),
   KEY `article` (`article`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=358 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=324 ;
 
 -- --------------------------------------------------------
 
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `comment_ext` (
   KEY `user` (`name`),
   KEY `article` (`article`),
   KEY `pending` (`pending`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=80008155 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=80008132 ;
 
 -- --------------------------------------------------------
 
@@ -263,13 +263,13 @@ CREATE TABLE IF NOT EXISTS `comment_spam` (
 --
 
 CREATE TABLE IF NOT EXISTS `cookies` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `hash` VARCHAR(64) NOT NULL,
-  `user` VARCHAR(64) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hash` varchar(64) NOT NULL,
+  `user` varchar(64) NOT NULL,
   `expires` TIMESTAMP NOT NULL,
-  PRIMARY KEY (`id`) ,
+  PRIMARY KEY (`id`),
   INDEX `hash` (`hash` ASC)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -347,7 +347,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `logged_in` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user` (`user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -434,6 +434,20 @@ CREATE TABLE IF NOT EXISTS `page` (
   `uri` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pages`
+--
+
+CREATE TABLE IF NOT EXISTS `pages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `slug` varchar(30) DEFAULT NULL,
+  `title` varchar(30) DEFAULT NULL,
+  `content` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -577,7 +591,7 @@ CREATE TABLE IF NOT EXISTS `text_story` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user` (`user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1505 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1508 ;
 
 -- --------------------------------------------------------
 
