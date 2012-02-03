@@ -23,7 +23,10 @@ $theme->render('header', $header);
 
 	<!-- Page container -->
 	<div class="grid_8 pull_4">
-        <?php echo $page->getContent(); ?>
+        <h2><?php echo $page->getTitle(); ?></h2>
+        <div class="content">
+            <?php echo $page->getContent(); ?>
+        </div>
 	</div>
 	<!-- End of contact container -->
 </div>
