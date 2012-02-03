@@ -19,4 +19,13 @@ $this->resources = new ResourceManager(
     array('plugins.js', 'script.js')
 );
 
+/*
+ * Set default sidebar
+ */
+$this->setSidebar(array(   
+    'socialLinks',
+    'mostPopular',
+    'fbActivity'
+));
+
 ?>
