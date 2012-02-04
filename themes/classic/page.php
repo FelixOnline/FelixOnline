@@ -25,7 +25,12 @@ $theme->render('header', $header);
     <div class="grid_8 pull_4 <?php echo $page->getSlug(); ?>">
         <h2><?php echo $page->getTitle(); ?></h2>
         <div class="content">
-            <?php echo $page->getContent(); ?>
+            <?php 
+                /*
+                 * Outputs content and evaluates any php code
+                 */
+                echo $page->getContent(); 
+            ?>
         </div>
 	</div>
 	<!-- End of contact container -->

@@ -28,6 +28,25 @@ class Page extends BaseModel {
             // initialise new page
         }
     }
+
+    /*
+     * Private: Take string and eval any php
+     * Find any instances of php tags in string and replaces it with the evaluated php
+     */
+    private function evalPHP($string) {
+		ob_start();
+		eval("?>$string<?php ");
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;
+    }
+
+    /*
+     * Public: Get page content
+     */
+    public function getContent() {
+        return $this->evalPHP($this->fields['content']);
+    }
 }
 
 ?>
