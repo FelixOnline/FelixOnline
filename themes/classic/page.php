@@ -33,7 +33,7 @@ $theme->render('header', $header);
             ?>
         </div>
 	</div>
-	<!-- End of contact container -->
+	<!-- End of page container -->
 </div>
 <!-- End of page -->
 
