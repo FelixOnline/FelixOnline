@@ -11,6 +11,7 @@ class Theme {
     private $parent; // parent page
     private $data = array(); // data to be added to rendered page
     private $hierarchy = array(); // template hierarchy
+    private $sidebar = array(); // array of sidebar modules
 
     function __construct($name) {
         global $currentuser, $db, $timing;
@@ -56,11 +57,11 @@ class Theme {
     /*
      * Private: Include page in enclosed function
      */
-    private function includePage($page) {
-        $data = $this->data;
-        call_user_func(function() use($data, $page) {
-            extract($data);
-            include(THEME_DIRECTORY.'/'.$page.'.php');
+    private function includePage($themePage) {
+        $themeData = $this->data;
+        call_user_func(function() use($themeData, $themePage) {
+            extract($themeData);
+            include(THEME_DIRECTORY.'/'.$themePage.'.php');
         });
     }
 
@@ -110,5 +111,53 @@ class Theme {
         if($query == $this->parent) return true;
         else return false; 
     }
+
+    /*
+     * Public: Set sidebar modules
+     * Overrides any previous sidebar modules
+     */
+    public function setSidebar($modules) {
+        $this->sidebar = $modules;
+        return $this->sidebar;
+    }
+
+    /*
+     * Public: Render sidebar with set modules
+     */
+    public function renderSidebar() {
+        if(!$this->sidebar || empty($this->sidebar)) {
+            throw new Exception('No sidebar modules set');
+            return false;
+        }
+        foreach($this->sidebar as $key => $module) {
+            $this->render('sidebar/'.$module);
+        }
+    }
+
+    /*
+     * Public: Get sidebar
+     */
+    public function getSidebar() {
+        return $this->sidebar;
+    }
+
+    /*
+     * Public: Add module to end of sidebar
+     * Add a new module to the end of sidebar
+     */
+    public function addSidebarEnd($module) {
+        array_push($this->sidebar, $module);
+        return $this->sidebar;
+    }
+
+    /*
+     * Public: Add module to beginning of sidebar
+     * Add a new module to the beginning of sidebar
+     */
+    public function addSidebarBeginning($module) {
+        array_unshift($this->sidebar, $module);
+        return $this->sidebar;
+    }
+
 }
 ?>
