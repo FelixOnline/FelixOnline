@@ -28,4 +28,10 @@ $this->setSidebar(array(
     'fbActivity'
 ));
 
+global $hooks;
+$hooks->addAction('contact_us', 'contact_us');
+
+function contact_us() {
+    var_dump($_REQUEST);
+}
 ?>

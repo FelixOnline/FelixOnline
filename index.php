@@ -16,6 +16,8 @@ require_once('bootstrap.php');
 
 $currentuser = new CurrentUser();
 
+$hooks = new Hooks();
+
 /*
  * Routes
  */
