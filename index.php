@@ -1,7 +1,14 @@
 <?php
     //require_once('mobiledetect.php');
+    require_once('inc/timing.inc.php');
+    
     require_once('inc/common.inc.php');
+    $timing = new Timing('log-master');
+    $timing->log('Start');
+
+    $timing->log('after common');
     require_once('inc/authentication.php');
+    $timing->log('after auth');
 
     // comment submission
     require_once('inc/comment.php');
@@ -58,4 +65,5 @@
         }
     } // end of media page statement
     include('footer.php'); 
+    $timing->log('end');
 ?>

@@ -863,6 +863,16 @@ button {  width: auto; overflow: visible; }
 /* Sidebar style */
 /* ---------------------------------------- */
 
+#sexsurvey {
+	border: 1px solid #BEBEBE;
+	margin-bottom: 10px;
+    padding: 10px;
+}
+
+#sexsurvey img {
+    margin-left: 15px;
+}
+
 #fbLikeBox {
 	background: #EEE;
 	border: 1px solid #BEBEBE;
@@ -3074,6 +3084,18 @@ blockquote span {
 	margin-bottom: 0;
 }
 
+sub {
+    font-size: 9px;
+    position: relative;
+    bottom: -3px;
+}
+
+sup {
+   font-size: 9px;
+   position: relative;
+   top: -4px;
+}
+
 /* Article picture placeholder */
 /* TO REMOVE */
 
@@ -4764,7 +4786,6 @@ label.success {
 		}
 		/*** End Animation Styles ***/
 
-		
 /* --------------------------------------- */
 /* Media queries for responsive design
  * These follow after primary styles so they will successfully override. */
