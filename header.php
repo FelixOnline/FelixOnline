@@ -58,10 +58,10 @@
             <meta property="og:image" content="http://felixonline.co.uk/inc/timthumb.php?src=/<?php echo get_img_uri(get_img_id($article, 1)); ?>&w=100px&zc=1&a=t"/>
             <meta property="og:title" content="<?php echo get_article_title($article); ?>"/>
             <meta property="og:url" content="http://felixonline.co.uk/<?php echo article_url($article); ?>"/>
-            <meta property="og:type" content="feliximperial:article"/>
+            <meta property="og:type" content="article"/>
             <meta property="og:description" content="<?php echo get_article_teaser($article);?>"/>
 		    <meta property="og:locale" content="en_GB"/>
-		    <meta property="feliximperial:section" content="<?php echo get_article_category($article); ?>"/>
+		    <meta property="article:section" content="<?php echo get_article_category($article); ?>"/>
     <?php } else if($_GET['media'] == 'video' && isset($_GET['name'])) { ?>
             <meta property="og:description" content="<?php echo get_video_desc($_GET['name']);?>"/>
             <meta property="og:image" content="http://i.ytimg.com/vi/<?php echo get_video_id($_GET['name']); ?>/0.jpg"/>
