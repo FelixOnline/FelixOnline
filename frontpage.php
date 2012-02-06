@@ -18,7 +18,7 @@
 				include_once('sidebar/socialLinks.php');
 				include_once('sidebar/fbActivity.php');
 				include_once('sidebar/mostPopular.php');
-				//include_once('sidebar/iscience.php');
+                include_once('sidebar/iscience.php');
 				include_once('sidebar/recentcomments.php');
 			?>
 		</div>
