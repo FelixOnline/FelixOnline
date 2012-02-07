@@ -19,6 +19,8 @@ class Email {
     private $headers; // headers for email
     private $emailFolder; // folder to store emails in
     private $uniqueid; // unique id for email. Used when logging emails to files
+    private $from;
+    private $replyto;
 
     /*
      * Constructor for Email class
@@ -27,9 +29,9 @@ class Email {
         // To send HTML mail, the Content-type header must be set
         $this->headers  = 'MIME-Version: 1.0' . "\r\n";
         $this->headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-        $this->headers .= "From: ".EMAIL_FROM_ADDR."\r\n" .
-        'Reply-To: '.EMAIL_REPLYTO_ADDR."\r\n" .
-        'X-Mailer: PHP/' . phpversion();
+        $this->headers .= 'X-Mailer: PHP/' . phpversion()."\r\n";
+        $this->from = "From: ".EMAIL_FROM_ADDR."\r\n";
+        $this->replyto = 'Reply-To: '.EMAIL_REPLYTO_ADDR."\r\n";
 
         $this->emailFolder = BASE_DIRECTORY.'/emails/';
     }
@@ -105,8 +107,38 @@ class Email {
         $this->headers = $headers;
     }
 
+    /*
+     * Public: Set from address
+     */
+    public function setFrom($email, $name=NULL) {
+        if($name == NULL) {
+            $this->from = 'From: '.$email. "\r\n";
+        } else {
+            $this->from = 'From: '.$name.' <'.$email.'>' . "\r\n";
+        }
+        return $this->from;
+    }
+
+    /*
+     * Public: Set reply to address
+     */
+    public function setReplyTo($email) {
+        $this->replyto = 'Reply-To: '.$email."\r\n";
+        return $this->replyto;
+    }
+
     public function setUniqueID($id) {
         $this->uniqueid = $id;
+    }
+
+    /*
+     * Public: Get email headers
+     */
+    public function getHeaders() {
+        $output = $this->headers;
+        $output .= $this->from;
+        $output .= $this->replyto;
+        return $output;
     }
 
     /*
@@ -117,7 +149,12 @@ class Email {
             if(LOCAL) { // if on local machine
                 $this->logEmail($key, $email);
             } else { 
-                mail($email, $this->subject, $this->content, $this->headers);
+                mail(
+                    $email, 
+                    $this->subject, 
+                    $this->content, 
+                    $this->getHeaders()
+                );
             }
 
             /* if logging emails */
@@ -138,6 +175,7 @@ class Email {
         $fh = fopen($file, 'w');
         $body = 'TO: '.$email."\r\n";
         $body .= 'SUBJECT: '.$this->subject."\r\n";
+        $body .= 'HEADERS: '.$this->getHeaders()."\r\n";
         $body .= "CONTENT: \r\n";
         $body .= $this->content;
         fwrite($fh, $body);
