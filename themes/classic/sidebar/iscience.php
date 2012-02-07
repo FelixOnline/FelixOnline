@@ -1,3 +1,9 @@
+<?php
+// Caching
+$cacheiScience = new Cache('iScience');
+$cacheiScience->setExpiry(6*60*60); // set expiry to 6 hours
+if($cacheiScience->start()) {
+?>
 <div id="iscience">
     <a href="http://dougal.union.ic.ac.uk/media/iscience/"><img src="img/iscience.png"/></a>
 	<?php
@@ -35,3 +41,4 @@
     <?php } ?>
     </ul>
 </div>
+<?php } $cacheiScience->stop(); ?>

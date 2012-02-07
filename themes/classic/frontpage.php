@@ -432,7 +432,12 @@ $timing->log('after header');
             </div>
 
             <?php $timing->log('end of twitter'); ?>
-
+            
+            <?php
+                // Caching
+                $cacheWeather = new Cache('weather');
+                if($cacheWeather->start()) {
+            ?>
             <div id="weather">
                 <h4>Weather <span>in South Kensington</span></h4>
                 <?php
@@ -466,6 +471,7 @@ $timing->log('after header');
                 ?>
                 <div class="clear"></div>
             </div>
+            <?php } $cacheWeather->stop(); ?>
 
             <?php $timing->log('end of weather'); ?>
 
