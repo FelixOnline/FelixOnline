@@ -1,6 +1,11 @@
 <?php
 /*
  * Action hooks
+ *
+ * Usage:
+ *      $hooks->addAction('UNIQUE_IDENTIFIER', 'FUNCTION_NAME');
+ *      $funcname = $hooks->getAction('UNIQUE_IDENTIFIER');
+ *      call_user_func($funcname);
  */
 class Hooks {
     private $actions = array(); // stores actions
