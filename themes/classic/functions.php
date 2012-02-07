@@ -29,6 +29,14 @@ function contact_us() {
     
     // Mail it
     $email->send();
+
+    // Check if it is an ajax request
+    if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        echo 'Success';
+    } else {
+        header("Location: ".$_SERVER["HTTP_REFERER"]);
+    }
+    die();
 }
 
 ?>
