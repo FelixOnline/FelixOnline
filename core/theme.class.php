@@ -126,7 +126,7 @@ class Theme {
      */
     public function renderSidebar() {
         if(!$this->sidebar || empty($this->sidebar)) {
-            throw new Exception('No sidebar modules set');
+            throw new InternalException('No sidebar modules set');
             return false;
         }
         foreach($this->sidebar as $key => $module) {

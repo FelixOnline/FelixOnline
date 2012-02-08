@@ -34,7 +34,7 @@ class ResourceManager {
             }
             return $this->css;
         } else {
-            throw new Exception("Adding css files is not an array");
+            throw new InternalException("CSS files to add is not an array");
         }
     }
 
@@ -52,7 +52,7 @@ class ResourceManager {
             }
             return $this->js;
         } else {
-            throw new Exception("Adding js files is not an array");
+            throw new InternalException("JS files to add is not an array");
         }
     }
 
@@ -64,7 +64,7 @@ class ResourceManager {
             $this->css = $css;
             return $this->css;
         } else {
-            throw new Exception("Adding js files is not an array");
+            throw new InternalException("CSS files to add is not an array");
         }
     }
 
@@ -76,7 +76,7 @@ class ResourceManager {
             $this->js = $js;
             return $this->js;
         } else {
-            throw new Exception("Adding js files is not an array");
+            throw new InternalException("JS files to add is not an array");
         }
     }
 

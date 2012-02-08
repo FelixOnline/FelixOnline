@@ -1,4 +1,19 @@
 <?php
+// Generic
+class InternalException extends Exception {
+	protected $user;
+	
+	public function __construct($message, $code = 100, Exception $previous = null) {
+		global $currentuser;
+		$this->user = $currentuser;
+
+		parent::__construct($message, $code, $previous);
+	}
+	
+	public function getUser() {
+		return $this->user;
+	}
+}
 
 // For if a template does not exist
 class ViewNotFoundException extends Exception {
@@ -23,24 +38,9 @@ class ViewNotFoundException extends Exception {
 }
 
 // For if a model does not exist in the database
-class ModelNotFoundException extends Exception {
-	protected $model;
-	protected $user;
-	
-	public function __construct($message, $model, $code = 102, Exception $previous = null) {
-		global $currentuser;
-		$this->model = $model;
-		$this->user = $currentuser;
-
+class ModelNotFoundException extends InternalException {
+	public function __construct($message, $code = 102, Exception $previous = null) {
 		parent::__construct($message, $code, $previous);
-	}
-	
-	public function getModel() {
-		return $this->model;
-	}
-	
-	public function getUser() {
-		return $this->user;
 	}
 }
 
@@ -95,23 +95,17 @@ class TimthumbImageNotFoundException extends ImageNotFoundException {
 
 // If there is an error in the model (i.e. wrong verb)
 class ModelConfigurationException extends Exception {
-	protected $model;
 	protected $user;
 	protected $verb;
 	protected $property;
 	
-	public function __construct($message, $model, $verb, $propety, $code = 104, Exception $previous = null) {
+	public function __construct($message, $verb, $property, $code = 104, Exception $previous = null) {
 		global $currentuser;
-		$this->model = $model;
 		$this->user = $currentuser;
 		$this->verb = $verb;
 		$this->property = $property;
 
 		parent::__construct($message, $code, $previous);
-	}
-	
-	public function getModel() {
-		return $this->model;
 	}
 	
 	public function getVerb() {
@@ -127,14 +121,14 @@ class ModelConfigurationException extends Exception {
 	}
 }
 
-// URL doesnt match in the glue
+// Base for Glue exceptions
 class GlueException extends Exception {
 	protected $user;
 	protected $url;
 	protected $class;
 	protected $method;
 	
-	public function __construct($message, $url, $class, $method, $code = 105, Exception $previous = null) {
+	public function __construct($message, $url, $class = '', $method = '', $code = 105, Exception $previous = null) {
 		global $currentuser;
 		$this->user = $currentuser;
 		$this->url = $url;
@@ -161,33 +155,24 @@ class GlueException extends Exception {
 	}
 }
 
+// Glue can't match URL
+class GlueURLException extends GlueException {
+	public function __construct($message, $url, $code = 107, Exception $previous = null) {
+		parent::__construct($message, $url, null, null, $code, $previous);
+	}
+}
+
 // The class referenced in the glue doesn't exist
 class GlueClassNotFoundException extends GlueException {
-	public function __construct($message, $url, $class, $method, $code = 106, Exception $previous = null) {
+	public function __construct($message, $url, $class, $method, $code = 108, Exception $previous = null) {
 		parent::__construct($message, $url, $class, $method, $code, $previous);
 	}
 }
 
 // The method called by the glue doesnt exist
 class GlueMethodNotFoundException extends GlueException {
-	public function __construct($message, $url, $class, $method, $code = 107, Exception $previous = null) {
+	public function __construct($message, $url, $class, $method, $code = 109, Exception $previous = null) {
 		parent::__construct($message, $url, $class, $method, $code, $previous);
-	}
-}
-
-// Other stuff
-class InternalException extends Exception {
-	protected $user;
-	
-	public function __construct($message, $code = 108, Exception $previous = null) {
-		global $currentuser;
-		$this->user = $currentuser;
-
-		parent::__construct($message, $code, $previous);
-	}
-	
-	public function getUser() {
-		return $this->user;
 	}
 }
 
