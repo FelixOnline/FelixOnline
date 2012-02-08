@@ -44,8 +44,54 @@ class ModelNotFoundException extends Exception {
 	}
 }
 
-// If the image for timthumb doesnt exist
-class ImageNotFoundException extends Exception {}
+// If the image doesn't exist - don't use this if using timthumb (see below)
+class ImageNotFoundException extends Exception {
+	protected $page;
+	protected $image_url;
+	protected $image_height;
+	protected $image_width;
+	protected $timthumb;
+	protected $user;
+	
+	public function __construct($message, $page, $image_url, $image_height, $image_width, $timthumb = false, $code = 103, Exception $previous = null) {
+		global $currentuser;
+		$this->page = $page;
+		$this->image_url = $image_url;
+		$this->image_height = $image_height;
+		$this->image_width = $image_width;
+		$this->timthumb = $timthumb;
+		$this->user = $currentuser;
+
+		parent::__construct($message, $code, $previous);
+	}
+	
+	public function getPage() {
+		return $this->page;
+	}
+	
+	public function getImageUrl() {
+		return $this->image_url;
+	}
+	
+	public function getImageDimensions() {
+		return array('width' => $this->image_width, 'height' => $this->image_height);
+	}
+	
+	public function isUsingTimthumb() {
+		return $this->timthumb;
+	}
+	
+	public function getUser() {
+		return $this->user;
+	}
+}
+
+// Use this instead for timthumb, mainly in case this stuff changes in the future
+class TimthumbImageNotFoundException extends ImageNotFoundException {
+	public function __construct($message, $page, $image_url, $image_height, $image_width, $timthumb = false, $code = 103, Exception $previous = null) {
+		parent::__construct($message, $page, $image_url, $image_height, $image_width, true, $code, $previous);
+	}
+}
 
 // If there is an error in the model (i.e. wrong verb)
 class ModelConfigurationException extends Exception {
@@ -116,70 +162,16 @@ class GlueException extends Exception {
 }
 
 // The class referenced in the glue doesn't exist
-class GlueClassNotFoundException extends Exception {
-	protected $user;
-	protected $url;
-	protected $class;
-	protected $method;
-	
+class GlueClassNotFoundException extends GlueException {
 	public function __construct($message, $url, $class, $method, $code = 106, Exception $previous = null) {
-		global $currentuser;
-		$this->user = $currentuser;
-		$this->url = $url;
-		$this->class = $class;
-		$this->method = $method;
-
-		parent::__construct($message, $code, $previous);
-	}
-	
-	public function getUser() {
-		return $this->user;
-	}
-	
-	public function getUrl() {
-		return $this->url;
-	}
-	
-	public function getClass() {
-		return $this->class;
-	}
-	
-	public function getMethod() {
-		return $this->method;
+		parent::__construct($message, $url, $class, $method, $code, $previous);
 	}
 }
 
 // The method called by the glue doesnt exist
-class GlueMethodNotFoundException extends Exception {
-	protected $user;
-	protected $url;
-	protected $class;
-	protected $method;
-	
+class GlueMethodNotFoundException extends GlueException {
 	public function __construct($message, $url, $class, $method, $code = 107, Exception $previous = null) {
-		global $currentuser;
-		$this->user = $currentuser;
-		$this->url = $url;
-		$this->class = $class;
-		$this->method = $method;
-
-		parent::__construct($message, $code, $previous);
-	}
-	
-	public function getUser() {
-		return $this->user;
-	}
-	
-	public function getUrl() {
-		return $this->url;
-	}
-	
-	public function getClass() {
-		return $this->class;
-	}
-	
-	public function getMethod() {
-		return $this->method;
+		parent::__construct($message, $url, $class, $method, $code, $previous);
 	}
 }
 
