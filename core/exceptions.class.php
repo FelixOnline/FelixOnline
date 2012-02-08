@@ -176,4 +176,41 @@ class GlueMethodNotFoundException extends GlueException {
 	}
 }
 
+class ErrorHandlerException extends Exception {
+	protected $user;
+	protected $params;
+	
+	public function __construct($message, $params, $code = 110, Exception $previous = null) {
+		global $currentuser;
+		$this->params = $params;
+		$this->user = $currentuser;
+		
+		parent::__construct($message, $code, $previous);
+	}
+	
+	public function getErrno() {
+		return $this->params['errno'];
+	}
+	
+	public function getFile() {
+		return $this->params['file'];
+	}
+	
+	public function getLine() {
+		return $this->params['line'];
+	}
+	
+	public function getContext() {
+		return $this->params['context'];
+	}
+}
+
+function errorhandler($errno, $errstr, $errfile, $errline, $errcontext) {
+	throw new ErrorHandlerException($errstr, array('errno' => $errno, 'file' => $errfile, 'line' => $errline, 'context' => $errcontext));
+	
+	return null;
+}
+
+set_error_handler('errorhandler');
+
 ?>
