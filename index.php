@@ -20,6 +20,7 @@
     }
 
     include('header.php');
+    $timing->log('after header');
 
     if ($_GET['media']) {
         include_once('mediapage.php');

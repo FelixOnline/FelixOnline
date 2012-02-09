@@ -13,19 +13,29 @@
 		<div class="sidebar grid_4 push_8">
 			<?php
                 include_once('sidebar/sexsurvey.php');
+                $timing->log('after sexsurvey');
 				include_once('sidebar/fbLikeBox.php');
+                $timing->log('after fblikebox');
 				include_once('sidebar/mediaBox.php');
+                $timing->log('after mediabox');
 				include_once('sidebar/socialLinks.php');
+                $timing->log('after sociallinks');
 				include_once('sidebar/fbActivity.php');
+                $timing->log('after fbactivity');
 				include_once('sidebar/mostPopular.php');
+                $timing->log('after most popular');
                 include_once('sidebar/iscience.php');
+                $timing->log('after iscience');
 				include_once('sidebar/recentcomments.php');
+                $timing->log('after recentcomments');
 			?>
 		</div>
 		<!-- End of sidebar -->
+        <?php $timing->log('after sidebar'); ?>
 
 		<!--Featured container -->
 			<?php include('frontpage/layout1.php'); ?>
+            <?php $timing->log('after layout'); ?>
 		<!-- End of featuredcontainer -->
 		<div class="clear"></div>
 	</div>

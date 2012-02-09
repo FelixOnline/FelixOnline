@@ -242,6 +242,10 @@
             </ul>
         </div>
 
+        <?php
+            $cacheweather = new Cache('weather');
+            if($cacheweather->start()) {
+        ?>
         <div id="weather">
             <h4>Weather <span>in South Kensington</span></h4>
         <?php
@@ -258,7 +262,6 @@
                     <p><b>Current</b></p>
                     <p id="temp"><?php echo $item->current_conditions->temp_c['data'];?>&#176;C</p>
                 </div>
-
             <?php
                 foreach($item->forecast_conditions as $new) { ?>
                     <div class="weatherIcon">
@@ -275,6 +278,7 @@
         ?>
             <div class="clear"></div>
         </div>
+        <?php } $cacheweather->stop(); ?>
 
         <div id="felixinfo">
             <h3>About Us</h3>

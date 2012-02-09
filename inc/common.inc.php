@@ -11,6 +11,7 @@
 
 // define current working directory
 if(!defined('BASE_DIRECTORY')) define('BASE_DIRECTORY', realpath(dirname(__FILE__).'/../'));
+if(!defined('CACHE_DIRECTORY')) define('CACHE_DIRECTORY', BASE_DIRECTORY.'/cache/');
 
 require_once(dirname(__FILE__).'/config.inc.php');
 //require_once('article.inc.php');
@@ -18,6 +19,7 @@ require_once(dirname(__FILE__).'/const.inc.php');
 require_once(dirname(__FILE__).'/../core/email.inc.php');
 require_once(dirname(__FILE__).'/../core/comment.inc.php');
 require_once(dirname(__FILE__).'/rss.inc.php');
+require_once(dirname(__FILE__).'/../core/cache.class.php');
 
 function global_text($sect,$return) { // 0 stripped value, 1 array
     global $dbok,$cid;
