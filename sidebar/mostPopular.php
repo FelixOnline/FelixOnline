@@ -1,3 +1,7 @@
+<?php
+$cachepop = new Cache('mostPopular');
+if($cachepop->start()) {
+?>
 <div id="mostPopular">
 	<h3>Most Popular</h3>
 	<ul class="popularNav">
@@ -24,3 +28,4 @@
 		</ol>
 	</div>
 </div>
+<?php } $cachepop->stop(); ?>
