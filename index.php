@@ -3,7 +3,7 @@
  * Felix Online
  */
 
-ob_start('ob_gzhandler');
+ob_start();
  
 require_once('inc/timing.inc.php');
 $timing = new Timing('log-themes');
@@ -68,7 +68,7 @@ try {
     	$theme->render('404');
     } catch (Exception $e) {
     	ob_end_clean();
-    	ob_start('ob_gzhandler');
+    	ob_start();
     	echo $prior_exception->getMessage().'<pre>'.$prior_exception->getTraceAsString().'</pre>';
 		ob_end_flush();
 		exit();
@@ -83,7 +83,7 @@ try {
     	$theme->render('500');
     } catch (Exception $e) {
     	ob_end_clean();
-    	ob_start('ob_gzhandler');
+    	ob_start();
     	echo $prior_exception->getMessage().'<pre>'.$prior_exception->getTraceAsString().'</pre>';
 		ob_end_flush();
 		exit();
