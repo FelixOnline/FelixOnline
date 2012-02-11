@@ -19,7 +19,7 @@ class Theme {
         $this->name = $name;
         $this->directory = BASE_DIRECTORY.'/themes/'.$this->name;
         $this->url = STANDARD_URL.'themes/'.$this->name;
-		$this->resources = new ResourceManager(array(), array());
+		//$this->resources = new ResourceManager(array(), array());
 		
         $this->appendData(array(
             'currentuser' => $currentuser, 
