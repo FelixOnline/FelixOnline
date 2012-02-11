@@ -86,7 +86,12 @@ PHP script to perform a database cleanup and export it
     function export() {
         echo "----- Saving Database To media_felix.sql --------\n";
         global $dbname, $host, $user, $pass;
+
+        // data dump
         $exec = 'mysqldump -h '.$host.' -u '.$user.' -p'.$pass.' '.$dbname.' > '.TOOLS_DIRECTORY.'/../media_felix.sql';
+
+        // structure dump
+        $exec = 'mysqldump -d -h '.$host.' -u '.$user.' -p'.$pass.' '.$dbname.' > '.TOOLS_DIRECTORY.'/../media_felix_structure.sql';
         echo shell_exec($exec);
     }
 
