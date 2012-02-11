@@ -61,30 +61,32 @@ try {
 } catch (NotFoundException $e) {
 	$prior_exception = $e;
     try {
-    	if(!isset($theme)) {
-    		trigger_error('The themes class has not been loaded');
-    	}
-    	
-    	$theme->render('404');
+    	ob_end_clean();
+    	ob_start();
+    	$controller = new NotFoundController();
+		$controller->GET(array());
+    	ob_end_flush();
+    	exit();
     } catch (Exception $e) {
     	ob_end_clean();
     	ob_start();
-    	echo $prior_exception->getMessage().'<pre>'.$prior_exception->getTraceAsString().'</pre>';
+    	echo '<h1>Theme missing - Not Found</h1>'.$prior_exception->getMessage().'<pre>'.$prior_exception->getTraceAsString().'</pre>';
 		ob_end_flush();
 		exit();
     }
 } catch (InternalException $e) {
 	$prior_exception = $e;
     try {
-    	if(!isset($theme)) {
-    		trigger_error('The themes class has not been loaded');
-    	}
-    	
-    	$theme->render('500');
+    	ob_end_clean();
+    	ob_start();
+    	$controller = new InternalExceptionController();
+		$controller->GET(array());
+    	ob_end_flush();
+    	exit();
     } catch (Exception $e) {
     	ob_end_clean();
     	ob_start();
-    	echo $prior_exception->getMessage().'<pre>'.$prior_exception->getTraceAsString().'</pre>';
+    	echo '<h1>Theme missing - Internal</h1>'.$prior_exception->getMessage().'<pre>'.$prior_exception->getTraceAsString().'</pre>';
 		ob_end_flush();
 		exit();
     }
