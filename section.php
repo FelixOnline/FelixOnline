@@ -96,7 +96,6 @@
 				</ul>
 			</div>
 			<?php }
-            include_once('sidebar/sexsurvey.php');
 			include_once('sidebar/mediaBox.php');
 			include_once('sidebar/socialLinks.php');
 			include_once('sidebar/fbActivity.php');
