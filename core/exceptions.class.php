@@ -192,11 +192,11 @@ class ErrorHandlerException extends Exception {
 		return $this->params['errno'];
 	}
 	
-	public function getFile() {
+	public function getErrorFile() {
 		return $this->params['file'];
 	}
 	
-	public function getLine() {
+	public function getErrorLine() {
 		return $this->params['line'];
 	}
 	
@@ -211,6 +211,6 @@ function errorhandler($errno, $errstr, $errfile, $errline, $errcontext) {
 	return null;
 }
 
-set_error_handler('errorhandler');
+set_error_handler('errorhandler', E_ALL & ~E_NOTICE);
 
 ?>
