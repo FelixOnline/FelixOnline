@@ -27,7 +27,7 @@ class Theme {
             'timing' => $timing,
             'theme' => $this
         ));
-        require_once($this->directory.'/index.php');
+        require($this->directory.'/index.php');
     }
 
     public function getName() { return $this->name; }
