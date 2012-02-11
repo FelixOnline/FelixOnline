@@ -5,6 +5,7 @@
 
 // define current working directory
 if(!defined('BASE_DIRECTORY')) define('BASE_DIRECTORY', dirname(__FILE__));
+if(!defined('CACHE_DIRECTORY')) define('CACHE_DIRECTORY', BASE_DIRECTORY.'/cache/');
 
 require_once(BASE_DIRECTORY.'/inc/ez_sql_core.php');
 require_once(BASE_DIRECTORY.'/inc/ez_sql_mysql.php');

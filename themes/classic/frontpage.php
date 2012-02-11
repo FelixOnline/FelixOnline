@@ -36,6 +36,11 @@ $timing->log('after header');
     <!-- Front page articles -->
     <div class="grid_8 pull_4 featCont layout1">
         <?php
+            // Start caching
+            $cache = new Cache('frontpage');
+            if($cache->start()) {
+        ?>
+        <?php
             // Section a
             $sql = "SELECT 
                 `1` as one, 
@@ -382,8 +387,9 @@ $timing->log('after header');
         </div>
         <!-- End of featured articles -->
         
-        <?php $timing->log('end of frontpage articles'); ?>
+        <?php } $cache->stop(); ?>
 
+        <?php $timing->log('end of frontpage articles'); ?>
         <!-- Editorial -->
         <div class="grid_4 alpha commentBox">
             <div class="border">
@@ -426,7 +432,12 @@ $timing->log('after header');
             </div>
 
             <?php $timing->log('end of twitter'); ?>
-
+            
+            <?php
+                // Caching
+                $cacheWeather = new Cache('weather');
+                if($cacheWeather->start()) {
+            ?>
             <div id="weather">
                 <h4>Weather <span>in South Kensington</span></h4>
                 <?php
@@ -460,6 +471,7 @@ $timing->log('after header');
                 ?>
                 <div class="clear"></div>
             </div>
+            <?php } $cacheWeather->stop(); ?>
 
             <?php $timing->log('end of weather'); ?>
 

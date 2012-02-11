@@ -1,10 +1,25 @@
 <?php
-	require_once('inc/common.inc.php'); 
-	
-	// PHP file to post to using ajax requests
-	
-	$type= $_POST['type'];
+/*
+ * Handle all ajax requests
+ */
 
+/*
+ * Load Felix Online environment
+ */
+require_once('bootstrap.php');
+
+/*
+ * Set up hooks
+ */
+$hooks = new Hooks();
+$theme = new Theme('classic'); // TODO
+
+$action = $_REQUEST['action'];
+if($action = $hooks->getAction($action)) {
+    call_user_func($action);
+}
+
+    /*
 	switch ($type) {
 		case 'profilechange':
 			change_user();
@@ -78,4 +93,5 @@
 		// Mail it
 		mail($to, $subject, $message, $headers);
 	}
+    */
 ?>

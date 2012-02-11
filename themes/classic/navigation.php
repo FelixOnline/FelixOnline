@@ -1,11 +1,11 @@
 <!-- Navigation -->
 <div class="navigation container_12">
-	<div class="grid_12">
+	<div class="grid_12 clearfix">
 		<ul id="navbar" class="clearfix">
 			<?php 
-			if ($article != '') {
+			if ($theme->isPage('article')) {
                 $check = $article->getCategoryCat();
-			} else if ($category != '') {
+			} else if ($theme->isPage('category')) {
 				$check = $category->getCat();
 			}
 				
@@ -26,6 +26,5 @@
             <?php } ?>	
 		</ul>
 	</div>
-	<div class="clear"></div>
 </div>
 <!-- End of Navigation -->

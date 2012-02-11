@@ -17,6 +17,7 @@ class BaseModel {
                 $this->fields[$key] = $value;
             }
         } else {
+            var_dump($this->db);
             throw new Exception('No model in database');
         }
         return $this->fields;

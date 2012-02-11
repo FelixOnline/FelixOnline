@@ -4,7 +4,7 @@
  */
 
 require_once('inc/timing.inc.php');
-$timing = new Timing('test');
+$timing = new Timing('log-themes');
 
 /* If the url is on the union servers then redirect to custom url */
 if (strstr($_SERVER['HTTP_HOST'],"union.ic.ac.uk") !== false) {
@@ -15,6 +15,8 @@ if (strstr($_SERVER['HTTP_HOST'],"union.ic.ac.uk") !== false) {
 require_once('bootstrap.php');
 
 $currentuser = new CurrentUser();
+
+$hooks = new Hooks();
 
 /*
  * Routes
@@ -34,6 +36,15 @@ $urls = array(
 );
 
 /*
+ * Add pages to routes
+ */
+$sql = "SELECT * FROM `pages`";
+$pages = $db->get_results($sql);
+foreach($pages as $key => $page) {
+    $urls['/'.$page->slug] = 'pageController'; 
+}
+
+/*
  * Include Controllers
  */
 require_once(BASE_DIRECTORY.'/controllers/baseController.php');
@@ -50,6 +61,7 @@ try { // try mapping request to urls
     } else {
         throw new Exception($e);
     }
+    echo '404';
     //$theme->render('404'); // TODO
 }
 

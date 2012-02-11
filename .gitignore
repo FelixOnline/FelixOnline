@@ -13,6 +13,8 @@ archive/
 # Ignore engine folder
 engine/
 
+# Sex survey
+sexsurvey/
 
 .settings/com.aptana.editor.php.prefs
 
