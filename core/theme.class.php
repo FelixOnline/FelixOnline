@@ -12,12 +12,15 @@ class Theme {
     private $data = array(); // data to be added to rendered page
     private $hierarchy = array(); // template hierarchy
     private $sidebar = array(); // array of sidebar modules
+    public $resources;
 
     function __construct($name) {
         global $currentuser, $db, $timing;
         $this->name = $name;
         $this->directory = BASE_DIRECTORY.'/themes/'.$this->name;
         $this->url = STANDARD_URL.'themes/'.$this->name;
+		$this->resources = new ResourceManager(array(), array());
+		
         $this->appendData(array(
             'currentuser' => $currentuser, 
             'db' => $db, 
