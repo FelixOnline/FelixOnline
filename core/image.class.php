@@ -68,6 +68,11 @@ class Image extends BaseModel {
      */
     public function isTall($width = 460, $limit = 400) {
         $scale = $this->getWidth()/$width;
+		
+		if($scale == 0) {
+			return false;
+		}
+		
         $check = $this->getHeight()/$scale;
         if ($check > $limit) {
             return true;
