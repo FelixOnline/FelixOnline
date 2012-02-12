@@ -1,13 +1,11 @@
-		<img class="error_cat" alt="" src="<?php echo STANDARD_URL; ?>errors/cat.jpg" />
 		<div class="error_text">
 			<h1>He's Dead, Jim!</h1>
-			<p>Felix Online is experiencing major technical difficulties at the moment. The cat has already been notified, and things should be back up and running soon.</p>
+			<p>Felix Online is experiencing technical difficulties at the moment. The cat has already been notified, and things should be back up and running soon.</p>
 			<p>In the meantime, please enjoy this video:</p>
 			<iframe width="480" height="360" src="http://www.youtube.com/embed/QgkGogPLacA?rel=0" frameborder="0" allowfullscreen></iframe>
 			<p id="techdetails_show" <?php if(LOCAL): echo 'style="display: none;"'; else: echo 'style="display: block;"'; endif; ?>><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'block'; document.getElementById('techdetails_show').style.display = 'none';">View some technical details</a></p>
 			<div id="techdetails" class="technical_details" <?php if(LOCAL): echo 'style="display: block;"'; else: echo 'style="display: none;"'; endif; ?>>
 				<p id="techdetails_hide"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'none'; document.getElementById('techdetails_show').style.display = 'block';">Hide the technical details</a></p>
-				<p>The first issue shown below is the main problem causing this message. The second is an additional problem which prevented showing the usual error page.</p>
 				<?php
 					$exceptions = array($prior_exception, $e);
 					
@@ -96,9 +94,9 @@
 						}
 					}
 					$to = 'jkimbo@gmail.com, philip.kent@me.com';
-					$subject = 'Felix Online fatal error';
-					$message = "A fatal error has occured on Felix Online\n";
-					$message .= "Details on the error is below. The first exception is the main one, the second is an exception which prevented the usual error page from being shown\n\n";
+					$subject = 'Felix Online error';
+					$message = "An error has occured on Felix Online\n";
+					$message .= "Details on the error is below. If there are multiple errors, the first is the main one, the second prevented the usual error page from being shown\n\n";
 					
 					$exceptions = array($prior_exception, $e);
 					
@@ -181,3 +179,4 @@
 					}
 				}
 				?>
+			</div>

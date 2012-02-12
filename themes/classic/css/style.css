@@ -4406,6 +4406,13 @@ label.success {
 	text-decoration: underline;
 }
 
+.error h1 {
+	font-family: Arial, sans-serif;
+	text-align: center;
+	font-size: 40px;
+	font-weight: bold;
+}
+
 .error h2 {
 	text-transform: uppercase;
 	font-family: Arial, sans-serif;
@@ -4516,6 +4523,10 @@ label.success {
 .facebox_overlayBG {
   background-color: #000;
   z-index: 99;
+}
+
+.error {
+	text-align: center;
 }
 
 /* --------------------------------------- */

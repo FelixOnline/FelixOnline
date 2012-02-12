@@ -36,6 +36,7 @@
 		<img class="felix" alt="FELIX" src="<?php echo STANDARD_URL; ?>errors/felix.jpg" />
 	</div>
 	<div class="box">
+		<img class="error_cat" alt="" src="<?php echo STANDARD_URL; ?>errors/cat.jpg" />
 		<?php require('error.php'); ?>
 		&copy; Felix Imperial
 	</div>
