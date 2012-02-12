@@ -92,7 +92,7 @@ $theme->render('header', $header);
                             <g:plusone size="medium" annotation="inline" width="140"></g:plusone>
                         </li>
                         <li id="redditShare">
-                        	<script type="text/javascript" src="http://www.reddit.com/buttonlite.js?i=1"></script>
+                        	<script type="text/javascript" src="http://www.reddit.com/static/button/button3.js"></script>
                         </li>
                     </div>
                 </ul>
