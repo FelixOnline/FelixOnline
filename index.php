@@ -61,7 +61,6 @@ try {
 } catch (NotFoundException $e) {
 	$prior_exception = $e;
     try {
-    	trigger_error('BOOM');
     	ob_end_clean();
     	ob_start();
     	$controller = new NotFoundController();
@@ -78,6 +77,7 @@ try {
 } catch (InternalException $e) {
 	$prior_exception = $e;
     try {
+    	trigger_error('Dummy error as the below code hasn\'t been written yet');
     	ob_end_clean();
     	ob_start();
     	$controller = new InternalExceptionController();

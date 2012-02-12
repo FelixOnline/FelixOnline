@@ -1,0 +1,31 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #CBCBCB;
+}
+
+.box {
+	width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 3px solid #BEBEBE;
+	background: white;
+	padding: 20px;
+	margin-bottom: 30px;
+}
+
+.header {
+	width: 740px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 40px;
+	text-align: right;
+}
+
+.cat {
+	float: left;
+}
+
+.text {
+	margin-left: 120px;
+	margin-top: -20px;
+}

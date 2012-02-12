@@ -122,13 +122,17 @@ class TimthumbImageNotFoundException extends ImageNotFoundException {
 }
 
 // If there is an error in the model (i.e. wrong verb)
-class ModelConfigurationException extends ModelNotFoundException {
+class ModelConfigurationException extends InternalException {
 	protected $verb;
 	protected $property;
+	protected $class;
+	protected $item;
 	
 	public function __construct($message, $verb, $property, $class, $item, $code = EXCEPTION_MODEL, Exception $previous = null) {
 		$this->verb = $verb;
 		$this->property = $property;
+		$this->class = $class;
+		$this->item = $item;
 
 		parent::__construct($message, $class, $item, $code, $previous);
 	}
@@ -139,6 +143,14 @@ class ModelConfigurationException extends ModelNotFoundException {
 	
 	public function getProperty() {
 		return $this->property;
+	}
+	
+	public function getClass() {
+		return $this->class;
+	}
+	
+	public function getItem() {
+		return $this->item;
 	}
 }
 
