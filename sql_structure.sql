@@ -895,12 +895,6 @@ ALTER TABLE `top_extrapage_cat`
   ADD CONSTRAINT `top_extrapage_cat_ibfk_4` FOREIGN KEY (`cat4`) REFERENCES `category` (`id`),
   ADD CONSTRAINT `top_extrapage_cat_ibfk_5` FOREIGN KEY (`cat5`) REFERENCES `category` (`id`);
 
---
--- Constraints for table `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON UPDATE CASCADE;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

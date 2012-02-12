@@ -34,6 +34,10 @@ class Email {
         $this->replyto = 'Reply-To: '.EMAIL_REPLYTO_ADDR."\r\n";
 
         $this->emailFolder = BASE_DIRECTORY.'/emails/';
+		
+		if(!is_writable($this->emailFolder)) {
+			throw new InternalException('Email storage directory '.$this->emailFolder.' is not writable');
+		}
     }
 
     /*

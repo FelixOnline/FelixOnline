@@ -8,6 +8,7 @@ $header = array(
 
 $theme->render('header', $header); 
 $timing->log('after header');
+
 ?>
 
 <div class="container_12">

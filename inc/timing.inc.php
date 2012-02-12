@@ -44,6 +44,10 @@ class Timing {
         $this->break = $break;
         $this->filename = $name;
         $this->directory = $dir;
+		if(!is_writable($this->directory.$this->filename)) {
+			throw new InternalException('Log file '.$this->directory.$this->filename.' is not writable');
+		}
+		
         $this->file = fopen($this->directory.$this->filename, 'a');
         $this->newRequest();
         // Set timezone

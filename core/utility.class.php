@@ -46,7 +46,7 @@ class Utility {
         // change array into linked usernames
         foreach ($array as $key => $user) {
             if(!is_object($user)) {
-                throw new Exception($user.' user is not an object');
+                throw new InternalException($user.' user is not an object');
             }
             $full_array[$key] = '<a href="'.$user->getURL().'">'.$user->getName().'</a>';
         }
