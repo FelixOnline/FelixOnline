@@ -91,8 +91,8 @@ $theme->render('header', $header);
                         <li id="googleShare">
                             <g:plusone size="medium" annotation="inline" width="140"></g:plusone>
                         </li>
-                        <li id="diggShare">
-
+                        <li id="redditShare">
+                        	<script type="text/javascript" src="http://www.reddit.com/buttonlite.js?i=1"></script>
                         </li>
                     </div>
                 </ul>
@@ -156,8 +156,7 @@ $theme->render('header', $header);
                     </div>
                 </li>
                 <li>
-                    <div id="diggShare2">
-                        <!--<a class="DiggThisButton DiggCompact"></a>-->
+                    <div id="googleShare2">
                         <g:plusone size="medium"></g:plusone>
                     </div>
                 </li>
