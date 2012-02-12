@@ -1,3 +1,4 @@
+<?php try { ?>
 <!DOCTYPE html>
 
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
@@ -44,74 +45,174 @@
 			<p id="techdetails_show" <?php if(LOCAL): echo 'style="display: none;"'; else: echo 'style="display: block;"'; endif; ?>><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'block'; document.getElementById('techdetails_show').style.display = 'none';">View some technical details</a></p>
 			<div id="techdetails" class="technical_details" <?php if(LOCAL): echo 'style="display: block;"'; else: echo 'style="display: none;"'; endif; ?>>
 				<p id="techdetails_hide"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'none'; document.getElementById('techdetails_show').style.display = 'block';">Hide the technical details</a></p>
+				<p>The first issue shown below is the main problem causing this message. The second is an additional problem which prevented showing the usual error page.</p>
 				<?php
-					$data = array();
-					if($prior_exception->getUser()->getUser() instanceof User) {
-						$username = $prior_exception->getUser()->getUser()->getName();
-					} else {
-						$username = '<i>Unauthenticated</i>';
-					}
-					switch ($prior_exception->getCode()) {
-						case EXCEPTION_ERRORHANDLER:
-							$header = 'Internal error';
-							$data['Details'] = $prior_exception->getMessage();
-							$data['File'] = $prior_exception->getErrorFile();
-							$data['Line'] = $prior_exception->getErrorLine();
-							break;
-						case EXCEPTION_GLUE:
-							$header = 'Misconfigured glue';
-							$data['URL'] = $prior_exception->getClass();
-							$data['Class requested'] = $prior_exception->getItem();
-							$data['Method requested'] = $prior_exception->getVerb();
-							break;
-						case EXCEPTION_GLUE_URL:
-							$header = 'URL is not valid';
-							$data['URL'] = $prior_exception->getClass();
-							break;
-						case EXCEPTION_IMAGE_NOTFOUND:
-							$dimensions = $prior_exception->getImageDimensions();
-							$header = 'Image could not be found';
-							$data['Containing page'] = $prior_exception->getPage();
-							$data['Image URL'] = $prior_exception->getImageUrl();
-							$data['Requested dimensions'] = $dimensions['width'].'x'.$dimensions['height'];
-							break;
-						case EXCEPTION_MODEL:
-							$header = 'Misconfigured model';
-							$data['Item type'] = $prior_exception->getClass();
-							$data['Item identifier'] = $prior_exception->getItem();
-							$data['Action'] = $prior_exception->getVerb();
-							$data['Property'] = $prior_exception->getProperty();
-							break;
-						case EXCEPTION_MODEL_NOTFOUND:
-							$header = 'Item is not in database';
-							$data['Item type'] = $prior_exception->getClass();
-							$data['Item identifier'] = $prior_exception->getItem();
-							break;
-						case EXCEPTION_VIEW_NOTFOUND:
-							$header = 'Template does not exist';
-							$data['Template'] = $prior_exception->getView();
-							break;
-						default:
-							$header = 'Internal exception';
-							$data['Details'] = $prior_exception->getMessage();
-							$data['File'] = $prior_exception->getFile();
-							$data['Line'] = $prior_exception->getLine();
-							break;
-					}
-				?>
-				<h2><?php echo $header; ?></h2>
-				<ul>
-					<li><b>Username:</b> <?php echo $username; ?></li>
-					<?php
-						foreach($data as $name => $value) {
-							echo '<li><b>'.$name.':</b> '.$value.'</li>';
+					$exceptions = array($prior_exception, $e);
+					
+					foreach($exceptions as $exception) {
+						$data = array();
+						if($exception->getUser()->getUser() instanceof User) {
+							$username = $exception->getUser()->getUser()->getName();
+						} else {
+							$username = '<i>Unauthenticated</i>';
+						}
+						switch ($exception->getCode()) {
+							case EXCEPTION_ERRORHANDLER:
+								$header = 'Internal error';
+								$data['Details'] = $exception->getMessage();
+								$data['File'] = $exception->getErrorFile();
+								$data['Line'] = $exception->getErrorLine();
+								break;
+							case EXCEPTION_GLUE:
+								$header = 'Misconfigured glue';
+								$data['URL'] = $exception->getClass();
+								$data['Class requested'] = $exception->getItem();
+								$data['Method requested'] = $exception->getVerb();
+								break;
+							case EXCEPTION_GLUE_URL:
+								$header = 'URL is not valid';
+								$data['URL'] = $exception->getClass();
+								break;
+							case EXCEPTION_IMAGE_NOTFOUND:
+								$dimensions = $exception->getImageDimensions();
+								$header = 'Image could not be found';
+								$data['Containing page'] = $exception->getPage();
+								$data['Image URL'] = $exception->getImageUrl();
+								$data['Requested dimensions'] = $dimensions['width'].'x'.$dimensions['height'];
+								break;
+							case EXCEPTION_MODEL:
+								$header = 'Misconfigured model';
+								$data['Item type'] = $exception->getClass();
+								$data['Item identifier'] = $exception->getItem();
+								$data['Action'] = $exception->getVerb();
+								$data['Property'] = $exception->getProperty();
+								break;
+							case EXCEPTION_MODEL_NOTFOUND:
+								$header = 'Item is not in database';
+								$data['Item type'] = $exception->getClass();
+								$data['Item identifier'] = $exception->getItem();
+								break;
+							case EXCEPTION_VIEW_NOTFOUND:
+								$header = 'Template does not exist';
+								$data['Template'] = $exception->getView();
+								break;
+							default:
+								$header = 'Internal exception';
+								$data['Details'] = $exception->getMessage();
+								$data['File'] = $exception->getFile();
+								$data['Line'] = $exception->getLine();
+								break;
 						}
 					?>
-				</ul>
-				<?php
-				if(LOCAL) {
-					echo '<h3>Backtrace <i>(shown in local mode only)</i></h3>';
-					echo '<pre>'.$prior_exception->getTraceAsString().'</pre>';
+					<h2><?php echo $header; ?></h2>
+					<ul>
+						<li><b>Username:</b> <?php echo $username; ?></li>
+						<?php
+							foreach($data as $name => $value) {
+								echo '<li><b>'.$name.':</b> '.$value.'</li>';
+							}
+						?>
+					</ul>
+					<?php
+					if(LOCAL) {
+						echo '<h3>Backtrace <i>(shown in local mode only)</i></h3>';
+						echo '<pre>'.$exception->getTraceAsString().'</pre>';
+					}
+				}
+
+				if(!LOCAL) {
+					$notify = true;
+					if(file_exists(dirname(__FILE__).'/../emails/fatal_next_notify')) {
+						$next_notify = (int) file_get_contents(dirname(__FILE__).'/../emails/fatal_next_notify');
+						if($next_notify > time()) {
+							// We have notified already, don't notify again
+							$notify = false;
+						}
+					}
+					$to = 'jkimbo@gmail.com, philip.kent@me.com';
+					$subject = 'Felix Online fatal error';
+					$message = "A fatal error has occured on Felix Online\n";
+					$message .= "Details on the error is below. The first exception is the main one, the second is an exception which prevented the usual error page from being shown\n\n";
+					
+					$exceptions = array($prior_exception, $e);
+					
+					foreach($exceptions as $exception) {
+						$data = array();
+						$data['Details'] = $exception->getMessage();
+						
+						if($exception->getUser()->getUser() instanceof User) {
+							$username = $exception->getUser()->getUser()->getName();
+						} else {
+							$username = 'Unauthenticated';
+						}
+						switch ($exception->getCode()) {
+							case EXCEPTION_ERRORHANDLER:
+								$header = 'Internal error';
+								$data['File'] = $exception->getErrorFile();
+								$data['Line'] = $exception->getErrorLine();
+								break;
+							case EXCEPTION_GLUE:
+								$header = 'Misconfigured glue';
+								$data['URL'] = $exception->getClass();
+								$data['Class requested'] = $exception->getItem();
+								$data['Method requested'] = $exception->getVerb();
+								break;
+							case EXCEPTION_GLUE_URL:
+								$header = 'URL is not valid';
+								$data['URL'] = $exception->getClass();
+								break;
+							case EXCEPTION_IMAGE_NOTFOUND:
+								$dimensions = $exception->getImageDimensions();
+								$header = 'Image could not be found';
+								$data['Containing page'] = $exception->getPage();
+								$data['Image URL'] = $exception->getImageUrl();
+								$data['Requested dimensions'] = $dimensions['width'].'x'.$dimensions['height'];
+								break;
+							case EXCEPTION_MODEL:
+								$header = 'Misconfigured model';
+								$data['Item type'] = $exception->getClass();
+								$data['Item identifier'] = $exception->getItem();
+								$data['Action'] = $exception->getVerb();
+								$data['Property'] = $exception->getProperty();
+								break;
+							case EXCEPTION_MODEL_NOTFOUND:
+								$header = 'Item is not in database';
+								$data['Item type'] = $exception->getClass();
+								$data['Item identifier'] = $exception->getItem();
+								break;
+							case EXCEPTION_VIEW_NOTFOUND:
+								$header = 'Template does not exist';
+								$data['Template'] = $exception->getView();
+								break;
+							default:
+								$header = 'Internal exception';
+								break;
+						}
+
+						$data['Exception file'] = $exception->getFile();
+						$data['Exception line'] = $exception->getLine();
+
+						$message .= $header."\n";
+						$message .= "Username: ".$username."\n";
+						foreach($data as $name => $value) {
+							$message .= $name.": ".$value."\n";
+						}
+						$message .= "\nBacktrace:\n";
+						$message .= $exception->getTraceAsString();
+						$message .= "\n\n\n";
+					}
+						
+					//$message = wordwrap($message, 70);
+					
+					if($notify) {
+						$status = mail($to, $subject, $message);
+						
+						if(!$status) {
+							echo 'Notification failed';
+						} else {
+							file_put_contents(dirname(__FILE__).'/../emails/fatal_next_notify', time() + 900);
+						}
+					}
 				}
 				?>
 			</div>
@@ -120,3 +221,4 @@
 	</div>
 </body>
 </html>
+<?php } catch (Exception $e) {} ?>
