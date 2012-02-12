@@ -50,8 +50,12 @@
 					$exceptions = array($prior_exception, $e);
 					
 					foreach($exceptions as $exception) {
+						if($exception == null) {
+							continue;
+						}
+						
 						$data = array();
-						if($exception->getUser()->getUser() instanceof User) {
+						if($exception->getUser() instanceof CurrentUser && $exception->getUser()->getUser() instanceof User) {
 							$username = $exception->getUser()->getUser()->getName();
 						} else {
 							$username = '<i>Unauthenticated</i>';
