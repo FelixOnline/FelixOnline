@@ -178,10 +178,12 @@ $theme->render('header', $header);
             <div id="commentCont">
                 <?php
                     $comments = $article->getComments();
-                    foreach($comments as $key => $object) {
-                        $comment = new Comment($object->id); 
-                        $theme->render('comment', array('comment' => $comment));
-                    }
+					if(is_array($comments)) {
+	                    foreach($comments as $key => $object) {
+	                        $comment = new Comment($object->id); 
+	                        $theme->render('comment', array('comment' => $comment));
+	                    }
+					}
                 ?>
             </div>
             <!-- End of comments container -->
