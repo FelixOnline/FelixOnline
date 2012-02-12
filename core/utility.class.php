@@ -87,5 +87,23 @@ class Utility {
         $script = '<script type="text/javascript">/*<![CDATA[*/'.$script.'/*]]>*/</script>';
         return '<span id="'.$id.'">[javascript protected email address]</span>'.$script;
     }
+	
+	/*
+	 * Public Static: Creates CSRF protection token
+	 * 
+	 * $form_name - name of form (token is unique for form)
+	 * $max_length - time for which token is valid (in seconds) [optional, default is 1 hour]
+	 */
+	public static function generateCSRFToken($form_name, $max_length = 3600) {
+		$rand = mt_rand(9, 99999999);
+		$time = time();
+		$hash = $time * $rand;
+		$hash = $hash.$form_name.$max_length;
+		$hash = sha1($hash);
+		
+		setcookie('felixonline_csrf_'.$form_name, $hash, time() + $max_length, '/', '.'.STANDARD_SERVER);
+		
+		return $hash;
+	}
 }
 ?>

@@ -12,6 +12,8 @@ define('EXCEPTION_GLUE_URL', 109);
 define('EXCEPTION_GLUE_CLASS', 110);
 define('EXCEPTION_GLUE_METHOD', 111);
 define('EXCEPTION_ERRORHANDLER', 112);
+define('EXCEPTION_VALIDATOR', 113);
+define('EXCEPTION_LOGIN', 114);
 
 // Base of all exceptions
 class UniversalException extends Exception {
@@ -234,6 +236,30 @@ class ErrorHandlerException extends InternalException {
 	public function getContext() {
 		return $this->params['context'];
 	}
+}
+
+class ValidatorException extends UniversalException {
+	protected $invaliddata;
+	protected $csrf_failed;
+	
+	public function __construct($message, $invaliddata, $csrf_failed = false, $code = EXCEPTION_VALIDATOR, Exception $previous = null) {
+		$this->invaliddata = $invaliddata;
+		$this->csrf_failed = $csrf_failed;
+		
+		parent::__construct($message, $code, $previous);
+	}
+	
+	public function getData() {
+		return $this->invaliddata;
+	}
+	
+	public function hasCsrfFailed() {
+		return $this->csrf_failed;
+	}
+}
+
+class LoginException extends UniversalException {
+	
 }
 
 function errorhandler($errno, $errstr, $errfile, $errline, $errcontext) {
