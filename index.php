@@ -90,7 +90,6 @@ try {
 	$prior_exception = $e;
     try {
     	// First attempt to show nice 500 page. Throw away current theme data
-    	trigger_error('Dummy error as the below code hasn\'t been written yet');
     	ob_end_clean();
     	ob_start();
     	$controller = new InternalExceptionController();

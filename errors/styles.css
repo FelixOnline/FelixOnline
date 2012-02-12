@@ -21,11 +21,11 @@ body {
 	text-align: right;
 }
 
-.cat {
+.error_cat {
 	float: left;
 }
 
-.text {
+.error_text {
 	margin-left: 120px;
 	margin-top: -20px;
 }
