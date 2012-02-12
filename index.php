@@ -72,7 +72,7 @@ try {
     	ob_end_clean();
     	ob_start();
     	$controller = new NotFoundController();
-		$controller->GET(array());
+		$controller->GET(array($prior_exception));
     	ob_end_flush();
     	// End execution
     	exit();
@@ -93,7 +93,7 @@ try {
     	ob_end_clean();
     	ob_start();
     	$controller = new InternalExceptionController();
-		$controller->GET(array());
+		$controller->GET(array($prior_exception));
     	ob_end_flush();
 		// End execution
     	exit();
