@@ -89,10 +89,10 @@ $theme->render('header', $header);
 
                         </li>
                         <li id="googleShare">
-                            <g:plusone size="medium" annotation="inline" width="140"></g:plusone>
+                            
                         </li>
                         <li id="redditShare">
-                        	<script type="text/javascript" src="http://www.reddit.com/static/button/button3.js"></script>
+
                         </li>
                     </div>
                 </ul>
@@ -152,17 +152,17 @@ $theme->render('header', $header);
                 </li>
                 <li>
                     <div id="twitterShare2">
-                        <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
                     </div>
                 </li>
                 <li>
                     <div id="googleShare2">
-                        <g:plusone size="medium"></g:plusone>
+                        
                     </div>
                 </li>
                 <li>
                     <div id="facebookLike2">
-                        <fb:like send="true" width="300" show_faces="false" font="arial"></fb:like>
+                        
                     </div>
                 </li>
             </ul>

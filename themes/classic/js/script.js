@@ -71,14 +71,25 @@ $(document).ready(function() {
     
     // Load sharing links
     if ($('.sidebar2 #sharebuttons').length) { // If sidebar 2 exists
-        //var facebook = '<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffelixonline.co.uk%2F%3Farticle%3D'+article+'&amp;layout=button_count&amp;show_faces=false&amp;width=140&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px; height:21px;" allowTransparency="true"></iframe>';
         var facebook = '<fb:like send="false" layout="button_count" width="140" show_faces="false" font="arial"></fb:like>';
         var twitter = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
-        var digg = '<a class="DiggThisButton DiggCompact"></a>';
+        var google = '<g:plusone size="medium" annotation="inline" width="140"></g:plusone>';
+        var reddit = '<iframe src="http://www.reddit.com/static/button/button3.html?width=69&url='+encodeURIComponent(window.location.href)+'" height="52" width="69" scrolling="no" frameborder="0"></iframe>';
         
         $('#facebookLike').append(facebook);
         $('#twitterShare').append(twitter);
-        $('#diggShare').append(digg);
+        $('#googleShare').append(google);
+        $('#redditShare').append(reddit);
+    };
+    
+    if ($('.articleShare').length) { //If the sharing thing at the bottom exists
+    	var facebook2 = '<fb:like send="true" width="300" show_faces="false" font="arial"></fb:like>';
+    	var twitter2 = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
+    	var google2 = '<g:plusone size="medium"></g:plusone>';
+
+        $('#facebookLike2').append(facebook2);
+        $('#twitterShare2').append(twitter2);
+        $('#googleShare2').append(google2);
     };
    
     // Media box tabs 
