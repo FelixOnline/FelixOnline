@@ -95,8 +95,22 @@ class ViewNotFoundException extends InternalException {
 
 // For if a model does not exist in the database
 class ModelNotFoundException extends NotFoundException {
-	public function __construct($message, $code = EXCEPTION_MODEL_NOTFOUND, Exception $previous = null) {
+	protected $class;
+	protected $item;
+	
+	public function __construct($message, $class, $item = null, $code = EXCEPTION_MODEL_NOTFOUND, Exception $previous = null) {
+		$this->class = $class;
+		$this->item = $item;
+		
 		parent::__construct($message, $code, $previous);
+	}
+	
+	public function getClass() {
+		return $this->class;
+	}
+	
+	public function getItem() {
+		return $this->item;
 	}
 }
 
@@ -108,15 +122,15 @@ class TimthumbImageNotFoundException extends ImageNotFoundException {
 }
 
 // If there is an error in the model (i.e. wrong verb)
-class ModelConfigurationException extends InternalException {
+class ModelConfigurationException extends ModelNotFoundException {
 	protected $verb;
 	protected $property;
 	
-	public function __construct($message, $verb, $property, $code = EXCEPTION_MODEL, Exception $previous = null) {
+	public function __construct($message, $verb, $property, $class, $item, $code = EXCEPTION_MODEL, Exception $previous = null) {
 		$this->verb = $verb;
 		$this->property = $property;
 
-		parent::__construct($message, $code, $previous);
+		parent::__construct($message, $class, $item, $code, $previous);
 	}
 	
 	public function getVerb() {
@@ -158,27 +172,15 @@ class GlueInternalException extends InternalException {
 // Glue can't match URL
 class GlueURLException extends NotFoundException {
 	protected $url;
-	protected $class;
-	protected $method;
 	
-	public function __construct($message, $url, $class = '', $method = '', $code = EXCEPTION_GLUE_URL, Exception $previous = null) {
+	public function __construct($message, $url, $code = EXCEPTION_GLUE_URL, Exception $previous = null) {
 		$this->url = $url;
-		$this->class = $class;
-		$this->method = $method;
 
 		parent::__construct($message, $code, $previous);
 	}
 	
 	public function getUrl() {
 		return $this->url;
-	}
-	
-	public function getClass() {
-		return $this->class;
-	}
-	
-	public function getMethod() {
-		return $this->method;
 	}
 }
 

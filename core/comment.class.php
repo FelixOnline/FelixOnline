@@ -69,7 +69,7 @@ class Comment extends BaseModel {
             if($id < EXTERNAL_COMMENT_ID) { // if comment is internal
                 $this->external = false; // comment is internal
                 $sql = "SELECT id, `article`,`user`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`reply`,`likes`,`dislikes` FROM `comment` WHERE id=$id";
-                parent::__construct($this->db->get_row($sql));
+                parent::__construct($this->db->get_row($sql), 'Comment (Internal)', $id);
                 //$this->name = get_vname_by_uname_db($this->user);
                 return $this;
             } else {
@@ -89,7 +89,7 @@ class Comment extends BaseModel {
                             `dislikes` 
                         FROM `comment_ext` 
                         WHERE id=$id";
-                parent::__construct($this->db->get_row($sql));
+                parent::__construct($this->db->get_row($sql), 'Comment (External)', $id);
                 return $this;
             }
         }

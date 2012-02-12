@@ -61,6 +61,7 @@ try {
 } catch (NotFoundException $e) {
 	$prior_exception = $e;
     try {
+    	trigger_error('BOOM');
     	ob_end_clean();
     	ob_start();
     	$controller = new NotFoundController();
@@ -70,7 +71,7 @@ try {
     } catch (Exception $e) {
     	ob_end_clean();
     	ob_start();
-    	echo '<h1>Theme missing - Not Found</h1>'.$prior_exception->getMessage().'<pre>'.$prior_exception->getTraceAsString().'</pre>';
+    	require('errors/index.php');
 		ob_end_flush();
 		exit();
     }
@@ -86,7 +87,7 @@ try {
     } catch (Exception $e) {
     	ob_end_clean();
     	ob_start();
-    	echo '<h1>Theme missing - Internal</h1>'.$prior_exception->getMessage().'<pre>'.$prior_exception->getTraceAsString().'</pre>';
+    	require('errors/index.php');
 		ob_end_flush();
 		exit();
     }

@@ -34,7 +34,7 @@ class Image extends BaseModel {
         //$this->db->cache_queries = true;
         if($id !== NULL) { // if creating an already existing article object
             $sql = "SELECT `id`,`title`,`uri`,`user`,`description`,UNIX_TIMESTAMP(`timestamp`) as timestamp,`v_offset`,`h_offset`,`caption`,`attribution`,`attr_link`,`width`,`height` FROM `image` WHERE id=".$id;
-            parent::__construct($this->db->get_row($sql));
+            parent::__construct($this->db->get_row($sql), 'Image', $id);
             //$this->db->cache_queries = false;
             return $this;
         } else {
