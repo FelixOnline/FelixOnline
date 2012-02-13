@@ -22,7 +22,7 @@ class Page extends BaseModel {
                         `content`
                     FROM `pages`
                     WHERE slug='".$slug."'";
-            parent::__construct($this->db->get_row($sql));
+            parent::__construct($this->db->get_row($sql), 'Page', $slug);
             return $this;
         } else {
             // initialise new page

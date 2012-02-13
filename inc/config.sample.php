@@ -7,6 +7,21 @@
     $host = "localhost";
     $user = "DB_USER";
     $pass = "DB_PASSWORD";
+
+    /*
+     * Change these urls to your local versions, e.g http://localhost/felix
+     */
+    define('STANDARD_SERVER', 'felixonline.local');
+    define('STANDARD_URL','http://felixonline.local/');
+    define('BASE_URL','http://localhost/felix/');
+    define('ADMIN_URL','http://localhost/felix/engine/');
+    define('AUTHENTICATION_SERVER','localhost'); // authentication server
+    define('AUTHENTICATION_PATH','http://localhost/felix/'); // authentication path
+	define('RELATIVE_PATH','/felix'); // relative path from root
+
+    define('PRODUCTION_FLAG', false); // if set to true css and js will be minified etc..
+    define('LOCAL', true); // if true then site is hosted locally - don't use pam_auth etc.
+    
     //$cid = mysql_connect($host,$user,$pass);
     //$dbok = mysql_select_db($dbname,$cid);
 
@@ -33,24 +48,11 @@
      */
 
     /* Forces charset to be utf8 */
-    mysql_set_charset('utf8',$db->dbh);
-
+    if(is_resource($db->dbh)) {
+    	mysql_set_charset('utf8',$db->dbh);
+    }
     /* turn off error reporting */
     //error_reporting(0);
     /* to turn on error reporting uncomment line: */
     error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
-    /*
-     * Change these urls to your local versions, e.g http://localhost/felix
-     */
-    define('STANDARD_SERVER', 'felixonline.local');
-    define('STANDARD_URL','http://felixonline.local/');
-    define('BASE_URL','http://localhost/felix/');
-    define('ADMIN_URL','http://localhost/felix/engine/');
-    define('AUTHENTICATION_SERVER','localhost'); // authentication server
-    define('AUTHENTICATION_PATH','http://localhost/felix/'); // authentication path
-	define('RELATIVE_PATH','/felix'); // relative path from root
-
-    define('PRODUCTION_FLAG', false); // if set to true css and js will be minified etc..
-    define('LOCAL', true); // if true then site is hosted locally - don't use pam_auth etc. 
 ?>

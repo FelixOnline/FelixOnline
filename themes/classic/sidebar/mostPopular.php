@@ -16,15 +16,17 @@
                     ORDER BY timestamp DESC LIMIT 500
                 ) AS t GROUP BY article ORDER BY c DESC LIMIT 5";
                 $viewed_articles = $db->get_results($sql);
-                foreach($viewed_articles as $object) {
-                    $article = new Article($object->id);
+				if(is_array($viewed_articles)) {
+	                foreach($viewed_articles as $object) {
+	                    $article = new Article($object->id);
                 ?>
                     <li>
                         <a href="<?php echo $article->getURL(); ?>">
                             <?php echo $article->getTitle(); ?>
                         </a>
                     </li>
-                <?php } ?>
+                <?php }
+                } ?>
 		</ol>
 	</div>
 	<div class="mostPopularTab" id="mostPopComment">
@@ -55,15 +57,17 @@
                 GROUP BY article 
                 ORDER BY count DESC, article DESC LIMIT ".POPULAR_ARTICLES; // go for most recent comments instead
                 $popular_articles = $db->get_results($sql);
-                foreach ($popular_articles as $object) {
-                    $article = new Article($object->id);
+  				if(is_array($popular_articles)) {
+	                foreach ($popular_articles as $object) {
+	                    $article = new Article($object->id);
                 ?>
                     <li>
                         <a href="<?php echo $article->getURL(); ?>">
                             <?php echo $article->getTitle(); ?>
                         </a>
                     </li>
-            <?php } ?>
+            <?php }
+            }?>
 		</ol>
 	</div>
 </div>

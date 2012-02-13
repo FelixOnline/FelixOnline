@@ -36,7 +36,6 @@
 
     <!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
     <link rel="shortcut icon" href="favicon.ico">
-
     <!-- CSS files -->
     <?php foreach($theme->resources->getCSS() as $key => $value) { ?>
             <link id="<?php echo $key;?>" rel="stylesheet" href="<?php echo $value; ?>">

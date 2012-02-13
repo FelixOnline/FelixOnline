@@ -43,7 +43,7 @@ class User extends BaseModel {
                 `img` 
                 FROM `user` 
                 WHERE user='".$uname."'";
-            parent::__construct($this->db->get_row($sql));
+            parent::__construct($this->db->get_row($sql), 'User', $uname);
             //$this->db->cache_queries = false;
             return $this;
         } else {

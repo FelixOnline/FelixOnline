@@ -46,7 +46,7 @@ class Utility {
         // change array into linked usernames
         foreach ($array as $key => $user) {
             if(!is_object($user)) {
-                throw new Exception($user.' user is not an object');
+                throw new InternalException($user.' user is not an object');
             }
             $full_array[$key] = '<a href="'.$user->getURL().'">'.$user->getName().'</a>';
         }
@@ -87,5 +87,23 @@ class Utility {
         $script = '<script type="text/javascript">/*<![CDATA[*/'.$script.'/*]]>*/</script>';
         return '<span id="'.$id.'">[javascript protected email address]</span>'.$script;
     }
+	
+	/*
+	 * Public Static: Creates CSRF protection token
+	 * 
+	 * $form_name - name of form (token is unique for form)
+	 * $max_length - time for which token is valid (in seconds) [optional, default is 1 hour]
+	 */
+	public static function generateCSRFToken($form_name, $max_length = 3600) {
+		$rand = mt_rand(9, 99999999);
+		$time = time();
+		$hash = $time * $rand;
+		$hash = $hash.$form_name.$max_length;
+		$hash = sha1($hash);
+		
+		setcookie('felixonline_csrf_'.$form_name, $hash, time() + $max_length, '/', '.'.STANDARD_SERVER);
+		
+		return $hash;
+	}
 }
 ?>

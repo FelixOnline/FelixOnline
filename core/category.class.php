@@ -52,7 +52,7 @@ class Category extends BaseModel {
                     hidden
                 FROM category
                 WHERE cat='".$cat."'";
-            parent::__construct($this->db->get_row($sql));
+            parent::__construct($this->db->get_row($sql), 'Category', $cat);
             return $this;
         } else {
         }

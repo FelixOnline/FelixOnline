@@ -6,19 +6,24 @@
  */
 class BaseModel {
     protected $fields = array(); // array that holds all the database fields
+    protected $class;
+	protected $item;
     protected $db;
 
-    function __construct($dbObject) {
+    function __construct($dbObject, $class, $item=null) {
         /* initialise db connection and store it in object */
         global $db;
         $this->db = $db;
+		
+		$this->class = $class;
+		$this->item = $item;
+		
         if($dbObject) {
             foreach($dbObject as $key => $value) {
                 $this->fields[$key] = $value;
             }
         } else {
-            var_dump($this->db);
-            throw new Exception('No model in database');
+            throw new ModelNotFoundException('No model in database', $class, $item);
         }
         return $this->fields;
     }
@@ -35,7 +40,7 @@ class BaseModel {
                 if(array_key_exists($meth, $this->fields)) {
                     return $this->fields[$meth];
                 } else {
-                    throw new Exception($meth." field doesn't exist");
+                    throw new ModelConfigurationException('The requested field does not exist', $verb, $meth, $class, $item);
                 }
                 break;
             case 'set':
@@ -43,11 +48,11 @@ class BaseModel {
                     $this->fields[$meth] = $arguments[0];
                     return $this->fields[$meth];
                 } else {
-                    throw new Exception($meth." field doesn't exist");
+                    throw new ModelConfigurationException('The requested field does not exist', $verb, $meth, $class, $item);
                 }
                 break;
             default:
-                throw new Exception($verb." is not a recognised verb");
+                throw new ModelConfigurationException('The requested verb is not valid', $verb, $meth, $class, $item);
         }
     }
 

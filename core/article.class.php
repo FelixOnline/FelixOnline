@@ -73,7 +73,7 @@ class Article extends BaseModel {
                     `hits` 
                 FROM `article` 
                 WHERE id=".$id;
-            parent::__construct($this->db->get_row($sql));
+            parent::__construct($this->db->get_row($sql), 'Article', $id);
             //$this->db->cache_queries = false;
             return $this;
         } else {
