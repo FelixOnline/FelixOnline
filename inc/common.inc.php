@@ -744,7 +744,7 @@ function email_article_comment($article,$user,$comment,$commentid,$name=NULL) {
     }
 
     $body .= ' has posted a comment on "<a href="'.BASE_URL.article_url($article).'#'.$commentid.'/">'.get_article_title($article_id).'</a>" <br/><br/>';
-    $body .= '"'.stripslashes(str_replace('\r\n',"\n",str_replace(array('\\\\\\','&lt;','&gt;','\\&quot;','&amp;','Â'),array('','<','>','"','&',''),$comment))).'"'."<br/><br/>";
+    $body .= '"'.stripslashes(str_replace('\r\n',"\n",str_replace(array('\\\\\\','&lt;','&gt;','\\&quot;','&amp;','ï¿½'),array('','<','>','"','&',''),$comment))).'"'."<br/><br/>";
     $body .= "<a href='".BASE_URL.article_url($article).'#'.$commentid."'>View Comment</a><br/><br/>";
     //$body .= "<a href='".BASE_URL."engine/?page=comment&action=trash&c=".$commentid."'>Trash comment</a><br/><br/>";
     $body .= "Lots of love,<br/>";
@@ -797,7 +797,7 @@ function email_comment_reply($article_id,$user,$comment,$commentid,$name=NULL,$r
 
         $body .= ' has replied to your comment on "<a href="'.BASE_URL.article_url($article_id).'#'.$replyComment.'/">'.get_article_title($article_id).'</a>" with:<br/><br/>';
         $body .= '<a href="'.BASE_URL.article_url($article_id).'#'.$commentid.'">@'.get_vname_by_uname_db($orig_user).'</a><br/>';
-        $body .= '"'.stripslashes(str_replace('\r\n',"\n",str_replace(array('\\\\\\','&lt;','&gt;','\\&quot;','&amp;','Â'),array('','<','>','"','&',''),$comment))).'"'."<br/><br/>";
+        $body .= '"'.stripslashes(str_replace('\r\n',"\n",str_replace(array('\\\\\\','&lt;','&gt;','\\&quot;','&amp;','ï¿½'),array('','<','>','"','&',''),$comment))).'"'."<br/><br/>";
         $body .= "<a href='".BASE_URL.article_url($article_id).'#'.$commentid."'>View Comment</a><br/><br/>";
         $body .= "Lots of love,<br/>";
         $body .= "Felix<br/>";
@@ -2355,5 +2355,25 @@ function sbfeedback () {
     } else {
         return false;
     }
+}
+
+function getRelativeTime2($date) {
+    $date = strtotime($date);
+    $diff = time() - $date;
+    if ($diff<60)
+	    return $diff . " second" . plural($diff) . " ago";
+    $diff = round($diff/60);
+	if ($diff<60)
+	    return $diff . " minute" . plural($diff) . " ago";
+    $diff = round($diff/60);
+	if ($diff<24)
+	    return $diff . " hour" . plural($diff) . " ago";
+    $diff = round($diff/24);
+    if ($diff<7)
+	    return $diff . " day" . plural($diff) . " ago";
+	$diff = round($diff/7);
+	if ($diff<4)
+	    return $diff . " week" . plural($diff) . " ago";
+    return "on " . date("F j, Y", strtotime($date));
 }
 ?>
