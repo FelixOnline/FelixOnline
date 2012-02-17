@@ -5,13 +5,8 @@
 	<div class="container_12">
 
 		<!-- News banner -->
-		<div class="grid_12 banner">
-            <p>In last week’s Felix, an article was published in the Hangman section which many readers felt incited sexual violence, trivialised rape and generally contributed to the idea of a rape culture. I would like to assure readers that this was in no way our intention, and we all agree that a piece of content which does this is wholly unacceptable.</p>
-            <p>I would like to take this opportunity to personally apologise for the offence caused by the article in question.</p>
-            <p>This incident has highlighted several major flaws in our quality control process, for which I take full responsibility. I have personally been working with our editors and contributors all weekend to put in place a new system that will ensure more stringent content guidelines are followed and that the consequences of every article we publish are considered fully. I am also ensuring that our writing team is fully educated on and sensitive to such topics.</p>
-            <p>I deeply regret my own personal failure in not having taken action to prevent this happening in the first place, and I would like to reassure readers that after this incident the content that goes into any section will be radically rethought.</p>
-            <p><b>Matt Colvin – Felix Editor</b></p>
-		</div>
+		<!--<div class="grid_12 banner">
+		</div>-->
 		<!-- End of news banner -->
 
 		<!-- Sidebar -->
