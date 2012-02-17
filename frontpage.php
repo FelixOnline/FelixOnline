@@ -5,9 +5,8 @@
 	<div class="container_12">
 
 		<!-- News banner -->
-		<div class="grid_12 banner">
-            <p>In this week’s Felix, an article was published which had been intended to take a satirical look at the dating practices of Imperial students. We recognise that the content of the article was completely inappropriate, and offer an unreserved apology for any offence caused. The article will not appear in the online version. We fully accept that this material has no place within the pages of Felix.</p>
-		</div>
+		<!--<div class="grid_12 banner">
+		</div>-->
 		<!-- End of news banner -->
 
 		<!-- Sidebar -->
