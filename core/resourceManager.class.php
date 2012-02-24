@@ -94,6 +94,9 @@ class ResourceManager {
                 if($this->isLess($value)) {
                     $value = $this->processLess($value); 
                 }
+                if(PRODUCTION_FLAG == true) { // if in production
+                    $value = $this->minify($value, 'css');
+                }
                 $data[$key] = $this->getFilename($value, 'css');
             }
         }
@@ -182,6 +185,40 @@ class ResourceManager {
             file_put_contents($cssfile, $newcache['compiled']);
         } 
         return $filename.'.css';
+    }
+
+    /*
+     * Minify files
+     *
+     * Returns minified file name
+     */
+    private function minify($file, $type) {
+        switch($type) {
+            case 'css':
+                // get filename on its own
+                $filename = strstr($file, '.', true);
+                $minfilename = $filename.'.min.css';
+
+                if(
+                    filemtime($this->getFilename($minfilename, 'css', 'dir'))  
+                    < 
+                    filemtime($this->getFilename($file, 'css', 'dir'))
+                ) {
+                    require_once(BASE_DIRECTORY.'/inc/class.csstidy.php');
+                    $css = new csstidy(); // init new csstidy
+                    $css->set_cfg('preserve_css',true);
+                    $css->load_template('high_compression'); // high compression
+                    $cssfile = $this->getFilename($file, 'css', 'dir'); // get file location
+                    $css->parse(file_get_contents($cssfile)); // parse file
+                    $min = $css->print->plain();
+                    file_put_contents($this->getFilename($minfilename, 'css', 'dir'), $min);
+                }
+                return $minfilename;
+                break;
+            case 'js':
+                return $file; // not supported yet
+                break;
+        }
     }
 }
 ?>
