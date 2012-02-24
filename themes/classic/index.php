@@ -21,7 +21,7 @@ require_once(THEME_DIRECTORY.'/functions.php');
  */
 $this->resources = new ResourceManager(
     /* CSS files */
-    array('style.css'), 
+    array('style.less'), 
     /* JS files */
     array('plugins.js', 'script.js')
 );

@@ -91,6 +91,9 @@ class ResourceManager {
             if($this->isExternal($value)) {
                 $data[$key] = $value;
             } else {
+                if($this->isLess($value)) {
+                    $value = $this->processLess($value); 
+                }
                 $data[$key] = $this->getFilename($value, 'css');
             }
         }
@@ -129,15 +132,56 @@ class ResourceManager {
     /*
      * Get path to file
      */
-    private function getFilename($file, $type) {
+    private function getFilename($file, $type, $version = 'url') {
+        if($version == 'url') { 
+            $root = STANDARD_URL.'themes/'.THEME_NAME.'/';
+        }
+        else if($version == 'dir') {
+            $root = THEME_DIRECTORY.'/';
+        }
         switch($type) {
             case 'css':
-                return STANDARD_URL.'themes/'.THEME_NAME.'/'.$this->cssPath.$file;
+                return $root.$this->cssPath.$file;
                 break;
             case 'js':
-                return STANDARD_URL.'themes/'.THEME_NAME.'/'.$this->jsPath.$file;
+                return $root.$this->jsPath.$file;
                 break;
         }
+    }
+
+    /*
+     * If file is a less file
+     */
+    private function isLess($file) {
+        if(substr(strrchr($file,'.'),1) == 'less') {
+            return true;    
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * Process less file
+     *
+     * Returns compiled css filename
+     */
+    private function processLess($lessfile) {
+        require_once(BASE_DIRECTORY.'/inc/lessc.inc.php');
+        $filename = strstr($lessfile, '.', true);
+        $cssfile = $this->getFilename($filename.'.css', 'css', 'dir');
+        // load the cache
+        $cachefile = $this->getFilename($filename.".cache", 'css', 'dir');
+        if (file_exists($cachefile)) {
+            $cache = unserialize(file_get_contents($cachefile));
+        } else {
+            $cache = $this->getFilename($lessfile, 'css', 'dir');
+        }
+        $newcache = lessc::cexecute($cache);
+        if (!is_array($cache) || $newcache['updated'] > $cache['updated']) {
+            file_put_contents($cachefile, serialize($newcache));
+            file_put_contents($cssfile, $newcache['compiled']);
+        } 
+        return $filename.'.css';
     }
 }
 ?>

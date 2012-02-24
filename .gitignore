@@ -23,3 +23,6 @@ sexsurvey/
 .settings/com.aptana.formatter.epl.prefs
 
 .DS_Store
+
+# cache files
+*.cache
