@@ -80,3 +80,4 @@ RewriteRule ^summerball/$ ?page=summerball [QSA]
 RewriteRule ^([a-zA-Z0-9_-]+)/$ ?cat=$1 [QSA]
 RewriteRule ^([a-zA-Z0-9_-]+)/([0-9]+)/$ ?cat=$1&p=$2 [QSA]
 RewriteRule ^([a-zA-Z0-9_-]+)/([0-9]+)/([a-zA-Z0-9_-]+)/.*$ ?article=$2 [QSA]
+
