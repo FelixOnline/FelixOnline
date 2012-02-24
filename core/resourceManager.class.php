@@ -86,7 +86,9 @@ class ResourceManager {
      * Returns array of css files paths
      */
     public function getCSS() {
+        global $timing;
         $data = array();
+        $min = array();
         foreach($this->css as $key => $value) {
             if($this->isExternal($value)) {
                 $data[$key] = $value;
@@ -94,11 +96,32 @@ class ResourceManager {
                 if($this->isLess($value)) {
                     $value = $this->processLess($value); 
                 }
-                if(PRODUCTION_FLAG == true) { // if in production
-                    $value = $this->minify($value, 'css');
+                if(PRODUCTION_FLAG == true) {
+                    $min[] = $this->minify($value, 'css');
+                } else {
+                    $data[$key] = $this->getFilename($value, 'css');
                 }
-                $data[$key] = $this->getFilename($value, 'css');
             }
+        }
+        $timing->log('before production');
+        if(PRODUCTION_FLAG == true) { // if in production
+            // concatenate minified files
+            $content = '';
+            $name = '';
+            foreach($min as $key => $value) {
+                $filename = strstr($value, '.', true);
+                $content .= file_get_contents($this->getFilename($value, 'css'));
+                $timing->log('after get file contents');
+                if($key == 0) {
+                    $name .= $filename;
+                } else {
+                    $name .= '-'.$filename;
+                }
+            }
+            $timing->log('after min loop');
+            file_put_contents($this->getFilename($name.'.min.css', 'css', 'dir'), $content);
+            $timing->log('after put file');
+            $data['min'] = $this->getFilename($name.'.min.css', 'css');
         }
         return $data;
     }
@@ -200,17 +223,15 @@ class ResourceManager {
                 $minfilename = $filename.'.min.css';
 
                 if(
+                    !file_exists($this->getFilename($minfilename, 'css', 'dir'))
+                    || 
                     filemtime($this->getFilename($minfilename, 'css', 'dir'))  
                     < 
                     filemtime($this->getFilename($file, 'css', 'dir'))
                 ) {
-                    require_once(BASE_DIRECTORY.'/inc/class.csstidy.php');
-                    $css = new csstidy(); // init new csstidy
-                    $css->set_cfg('preserve_css',true);
-                    $css->load_template('high_compression'); // high compression
+                    require_once(BASE_DIRECTORY.'/inc/minify_css.php');
                     $cssfile = $this->getFilename($file, 'css', 'dir'); // get file location
-                    $css->parse(file_get_contents($cssfile)); // parse file
-                    $min = $css->print->plain();
+                    $min = Minify_CSS_Compressor::process(file_get_contents($cssfile));
                     file_put_contents($this->getFilename($minfilename, 'css', 'dir'), $min);
                 }
                 return $minfilename;
