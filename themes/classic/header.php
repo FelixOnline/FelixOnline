@@ -114,14 +114,14 @@
 			<p><?php echo date('d.m.Y');?></p>
 		</div>
 		<div class="grid_8 bigFelix">
-			<?php if ($_GET['media']) {?>
+			<?php if ($theme->isSite('media')) {?>
 			<a href="<?php echo STANDARD_URL; ?>media/">
-			<?php } else if ($_GET['issuearchive']) { ?>
+			<?php } else if ($theme->isSite('archive')) { ?>
 			<a href="<?php echo STANDARD_URL; ?>issuearchive/">
 			<?php } else { ?>
 			<a href="<?php echo STANDARD_URL; ?>">
 			<?php } ?>
-				<h1 <?php if ($_GET['media']) echo 'class="media"'; else if($_GET['issuearchive']) echo 'class="archive"';?>>
+				<h1 <?php if ($theme->isSite('media')) echo 'class="media"'; else if($theme->isSite('archive')) echo 'class="archive"';?>>
 					FELIX
 				</h1>
 			</a>
@@ -145,5 +145,9 @@
 	</div>
     
     <!-- Navigation -->
-    <?php $theme->render('navigation'); ?>
+    <?php 
+        if($theme->isSite('main')) {
+            $theme->render('navigation'); 
+        }
+    ?>
     <!-- End of navigation -->
