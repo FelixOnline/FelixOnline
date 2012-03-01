@@ -12,14 +12,13 @@ class Theme {
     private $data = array(); // data to be added to rendered page
     private $hierarchy = array(); // template hierarchy
     private $sidebar = array(); // array of sidebar modules
-    public $resources;
+    private $site; // current site
 
     function __construct($name) {
         global $currentuser, $db, $timing;
         $this->name = $name;
         $this->directory = BASE_DIRECTORY.'/themes/'.$this->name;
         $this->url = STANDARD_URL.'themes/'.$this->name;
-		//$this->resources = new ResourceManager(array(), array());
 		
         $this->appendData(array(
             'currentuser' => $currentuser, 
@@ -162,5 +161,25 @@ class Theme {
         return $this->sidebar;
     }
 
+    /*
+     * Public: Set site
+     *
+     * Returns site
+     */
+    public function setSite($site) {
+        return $this->site = $site;
+    }
+
+    public function getSite() {
+        return $site;
+    }
+
+    public function isSite($site) {
+        $return = false;
+        if($site == $this->site) {
+            $return = true;    
+        }
+        return $return;
+    }
 }
 ?>
