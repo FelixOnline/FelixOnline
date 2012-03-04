@@ -16,14 +16,14 @@ $theme->render('header', $header);
             </div>
         </h2>
         <?php
-            $photos = $media->getPhotos(NUMBER_OF_ALBUMS_FRONT_PAGE);
-            foreach($photos as $key => $id) {
-                $photo = new MediaPhoto($id); ?>
+            $albums = $media->getAlbums(NUMBER_OF_ALBUMS_FRONT_PAGE);
+            foreach($albums as $key => $id) {
+                $album = new MediaPhotoAlbum($id); ?>
             <div class="grid_3 photocont mosaic-block circle">
-                <a href="<?php echo $photo->getURL(); ?>" class="mosaic-overlay">&nbsp;</a>
+                <a href="<?php echo $album->getURL(); ?>" class="mosaic-overlay">&nbsp;</a>
                 <div class="mosaic-backdrop">
-				    <img src="/gallery/gallery_images/timthumb.php?src=/gallery/gallery_images/images/<?php echo $thumbnail?>&w=220px&h=150px&zc=1">
-					<h5><?php echo $photo->getTitle(); ?></h5>
+				    <img src="<?php echo $album->getThumbnail()->getURL(220, 150); ?>">
+					<h5><?php echo $album->getTitle(); ?></h5>
                 </div>
             </div>
         <?php } ?>

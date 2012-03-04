@@ -1,6 +1,6 @@
 <?php
 /*
- * Media Photo class
+ * Media Photo Album class
  *
  * Fields:
  *      id          - id of photo album 
@@ -15,8 +15,9 @@
  *      hits        -
  *      
  */
-class MediaPhoto extends BaseModel {
+class MediaPhotoAlbum extends BaseModel {
     protected $type;
+    private $thumbnail; // album thumbnail
 
     function __construct($id = NULL) {
         global $db;
@@ -34,7 +35,7 @@ class MediaPhoto extends BaseModel {
                     `visible`,
                     `thumbnail`,
                     `hits`
-                FROM `media_photo` 
+                FROM `media_photo_album` 
                 WHERE id=".$id;
             parent::__construct($this->db->get_row($sql), get_class($this), $id);
             return $this;
@@ -58,6 +59,18 @@ class MediaPhoto extends BaseModel {
             .Utility::urliseText($this->getTitle())
             .'/';
         return $url;
+    }
+
+    /*
+     * Public: Get thumbail
+     *
+     * Returns mediaPhoto object of thumbnail
+     */
+    public function getThumbnail() {
+        if(!$this->thumbnail) {
+            $this->thumbnail = new MediaPhotoImage($this->fields['thumbnail']);
+        }
+        return $this->thumbnail;
     }
 }
 ?>

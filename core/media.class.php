@@ -16,10 +16,10 @@ class Media {
      *
      * Returns array of id's of photo albums
      */
-    public function getPhotos($limit = NULL) {
+    public function getAlbums($limit = NULL) {
         $sql = "SELECT 
                     `id` 
-                FROM `media_photo`
+                FROM `media_photo_album`
                 WHERE visible = 1
                 "; 
         if($limit) {
