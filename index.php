@@ -33,10 +33,7 @@ try {
 	    '/(?P<cat>[a-zA-Z]+)/(?P<page>[0-9]+)' => 'CategoryController',
 	    '/(?P<cat>[a-zA-Z]+)/(?P<id>[0-9]+)/(?P<title>[a-zA-Z0-9_-]+)/.*' => 'ArticleController',
 	    '/login/.*' => 'AuthController',
-	    '/logout/.*' => 'AuthController',
-	    '/media' => 'MediaController',
-	    '/media/(?P<type>[a-zA-Z0-9_-]+)' => 'MediaController',
-	    '/media/(?P<type>[a-zA-Z0-9_-]+)/(?P<id>[0-9]+)/.*' => 'MediaController',
+	    '/logout/.*' => 'AuthController'
 	);
 	
 	/*
@@ -47,6 +44,18 @@ try {
 	foreach($pages as $key => $page) {
 	    $urls['/'.$page->slug] = 'pageController'; 
 	}
+
+    /*
+     * Sites
+     */
+    $media = array(
+	    '/media' => 'MediaController',
+	    '/media/(?P<type>[a-zA-Z0-9_-]+)' => 'MediaController',
+	    '/media/(?P<type>[a-zA-Z0-9_-]+)/(?P<id>[0-9]+)/.*' => 'MediaController'
+    );
+
+    array_push($urls, $media);
+
 } catch (Exception $e) {
 	$prior_exception = null;
 	require('errors/index.php');
