@@ -24,15 +24,15 @@ class MediaController extends BaseController {
      */
     function GET($matches) {
         if(array_key_exists('type', $matches)) {
-            $class = 'media'.ucfirst($matches['type']);
             if(array_key_exists('id', $matches)) {
+                $class = 'media'.ucfirst($matches['type']);
                 $media = new $class($matches['id']);
                 $this->theme->setHierarchy(array(
                     $matches['type'].'-single', /* media-{type}-single.php*/
                     $matches['type'] /* media-{type}.php */
                 ));
             } else {
-                $media = new $class();
+                $media = new Media();
                 $this->theme->setHierarchy(array(
                     $matches['type'] /* media-{type}.php */
                 ));

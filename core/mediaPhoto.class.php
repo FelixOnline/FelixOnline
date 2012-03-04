@@ -121,5 +121,6 @@ class MediaPhoto extends BaseModel {
         } 
         return $this->mostViewed;
     }
+
 }
 ?>
