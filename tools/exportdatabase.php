@@ -72,6 +72,14 @@ PHP script to perform a database cleanup and export it
                 WHERE category_author.user = user.user
             ) = 0';
         $db->query($sql);
+
+        $sql = "UPDATE user
+                SET
+                    visits = 0,
+                    ip = '',
+                    timestamp = NOW()
+                ";
+        $db->query($sql);
         echo "------------- End Clean User Table --------------\n";
     }
 
@@ -93,6 +101,7 @@ PHP script to perform a database cleanup and export it
 
         // data dump
         $exec = 'mysqldump -h '.$host.' -u '.$user.' -p'.$pass.' '.$dbname.' > '.TOOLS_DIRECTORY.'/../media_felix.sql';
+        echo shell_exec($exec);
 
         // structure dump
         $exec = 'mysqldump -d -h '.$host.' -u '.$user.' -p'.$pass.' '.$dbname.' > '.TOOLS_DIRECTORY.'/../media_felix_structure.sql';
