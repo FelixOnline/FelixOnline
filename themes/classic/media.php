@@ -20,9 +20,9 @@ $theme->render('header', $header);
             foreach($photos as $key => $id) {
                 $photo = new MediaPhoto($id); ?>
             <div class="grid_3 photocont mosaic-block circle">
-                <a href="<?php $photo->getURL(); ?>" class="mosaic-overlay">&nbsp;</a>
+                <a href="<?php echo $photo->getURL(); ?>" class="mosaic-overlay">&nbsp;</a>
                 <div class="mosaic-backdrop">
-				    <img src="/gallery/gallery_images/timthumb.php?src=/gallery/gallery_images/images/<?=$thumbnail?>&w=220px&h=150px&zc=1">
+				    <img src="/gallery/gallery_images/timthumb.php?src=/gallery/gallery_images/images/<?php echo $thumbnail?>&w=220px&h=150px&zc=1">
 					<h5><?php echo $photo->getTitle(); ?></h5>
                 </div>
             </div>
