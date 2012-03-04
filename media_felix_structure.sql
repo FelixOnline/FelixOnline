@@ -408,13 +408,13 @@ CREATE TABLE `login` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `media_photo`
+-- Table structure for table `media_photo_album`
 --
 
-DROP TABLE IF EXISTS `media_photo`;
+DROP TABLE IF EXISTS `media_photo_album`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `media_photo` (
+CREATE TABLE `media_photo_album` (
   `id` int(4) NOT NULL DEFAULT '0',
   `folder` text NOT NULL,
   `title` varchar(64) NOT NULL,
@@ -448,6 +448,29 @@ CREATE TABLE `media_photo_albums` (
   `hits` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `media_photo_image`
+--
+
+DROP TABLE IF EXISTS `media_photo_image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `media_photo_image` (
+  `id` int(4) NOT NULL DEFAULT '0',
+  `album_id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `date` datetime NOT NULL,
+  `title` text NOT NULL,
+  `caption` text NOT NULL,
+  `camera` text NOT NULL,
+  `iso` int(6) NOT NULL,
+  `fstop` varchar(5) NOT NULL,
+  `orientation` int(2) NOT NULL,
+  `tags` varchar(100) NOT NULL,
+  `geo_coords` varchar(32) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -962,4 +985,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-03-04 19:42:09
+-- Dump completed on 2012-03-04 23:02:11
