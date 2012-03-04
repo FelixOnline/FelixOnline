@@ -21,6 +21,7 @@ class Media {
                     `id` 
                 FROM `media_photo_album`
                 WHERE visible = 1
+                ORDER BY date DESC
                 "; 
         if($limit) {
             $sql .= "LIMIT 0, ".$limit;
