@@ -13,16 +13,23 @@ class Media {
 
     /*
      * Public: Get photo albums
+     *
+     * Returns array of id's of photo albums
      */
     public function getPhotos($limit = NULL) {
-        $sql = "SELECT `id` 
+        $sql = "SELECT 
+                    `id` 
                 FROM `media_photo`
                 WHERE visible = 1
                 "; 
         if($limit) {
             $sql .= "LIMIT 0, ".$limit;
         }
-        return $this->db->get_results($sql);
+        $albums = $this->db->get_results($sql);
+        foreach($albums as $key => $object) {
+            $output[] = $object->id;
+        }
+        return $output;
     }
 }
 ?>

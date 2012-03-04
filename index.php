@@ -54,7 +54,9 @@ try {
 	    '/media/(?P<type>[a-zA-Z0-9_-]+)/(?P<id>[0-9]+)/.*' => 'MediaController'
     );
 
-    array_push($urls, $media);
+    foreach($media as $route => $controller) {
+	    $urls[$route] = $controller; 
+    }
 
 } catch (Exception $e) {
 	$prior_exception = null;
