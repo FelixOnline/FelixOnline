@@ -105,5 +105,20 @@ class Utility {
 		
 		return $hash;
 	}
+
+    /*
+     * Public Static: Urlise text
+     * Make url friendly text from string
+     *
+     * $string
+     *
+     * Returns string
+     */
+    public static function urliseText($string) {
+        $title = strtolower($string); // Make title lowercase
+        $title= preg_replace('/[^\w\d_ -]/si', '', $title); // Remove special characters
+        $dashed = str_replace( " ", "-", $title); // Replace spaces with hypens
+        return $dashed;
+    }
 }
 ?>

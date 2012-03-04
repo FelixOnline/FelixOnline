@@ -494,7 +494,8 @@ $timing->log('after header');
             WHERE active=1 
             AND hidden=0
             AND id>0 
-            ORDER BY id ASC";
+            AND `order`>0
+            ORDER BY `order` ASC";
     $cats = $db->get_results($sql);
     foreach($cats as $key => $cat) {
         $article = new Article($cat->top);

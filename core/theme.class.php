@@ -12,14 +12,13 @@ class Theme {
     private $data = array(); // data to be added to rendered page
     private $hierarchy = array(); // template hierarchy
     private $sidebar = array(); // array of sidebar modules
-    public $resources;
+    private $site; // current site
 
     function __construct($name) {
         global $currentuser, $db, $timing;
         $this->name = $name;
         $this->directory = BASE_DIRECTORY.'/themes/'.$this->name;
         $this->url = STANDARD_URL.'themes/'.$this->name;
-		//$this->resources = new ResourceManager(array(), array());
 		
         $this->appendData(array(
             'currentuser' => $currentuser, 
@@ -76,7 +75,16 @@ class Theme {
     private function cascade() {
         if($this->hierarchy) { // if there is a hierarchy defined
             foreach($this->hierarchy as $key => $value) { // loop through each hierarchy
-                $file = $this->page.'-'.$this->data[$this->page]->{'get'.$this->toCamelCase($value)}();
+                $parts = explode('-', $value); // split file template into parts
+                $file = $this->page;
+                foreach($parts as $pkeys => $pvalue) { // evaluate each part
+                    $method = 'get'.$this->toCamelCase($pvalue);
+                    if(method_exists($method, ucfirst($this->page))) { // if method exists in class
+                        $file .= '-'.$this->data[$this->page]->{$method}();
+                    } else { // else treat as static variable
+                        $file .= '-'.$pvalue;
+                    }
+                }
                 if($this->fileExists($file)) { // if that file exists then return it
                     $this->hierarchy = array(); // reset hierarchy for further renders TODO
                     return $file;
@@ -162,5 +170,25 @@ class Theme {
         return $this->sidebar;
     }
 
+    /*
+     * Public: Set site
+     *
+     * Returns site
+     */
+    public function setSite($site) {
+        return $this->site = $site;
+    }
+
+    public function getSite() {
+        return $site;
+    }
+
+    public function isSite($site) {
+        $return = false;
+        if($site == $this->site) {
+            $return = true;    
+        }
+        return $return;
+    }
 }
 ?>

@@ -339,9 +339,7 @@ class Article extends BaseModel {
      */
     private function constructURL() {
         $cat = $this->getCategoryCat();
-        $title = strtolower($this->getTitle()); // Make title lowercase
-        $title= preg_replace('/[^\w\d_ -]/si', '', $title); // Remove special characters
-        $dashed = str_replace( " ", "-", $title); // Replace spaces with hypens
+        $dashed = Utility::urliseText($this->getTitle());
         $output = $cat.'/'.$this->getId().'/'.$dashed.'/'; // output: CAT/ID/TITLE/
         return $output;
     }

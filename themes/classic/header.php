@@ -49,13 +49,13 @@
 				<div class="grid_9 links first">
 					<ul class="clearfix">
                         <li class="first">
-                            <a href="<?php echo STANDARD_URL; ?>" <?php if(!$theme->isPage('media') && !$theme->isPage('issuearchive')) echo 'class="selected"';?>>Felix Online</a>
+                            <a href="<?php echo STANDARD_URL; ?>" <?php if($theme->isSite('main')) echo 'class="selected"';?>>Felix Online</a>
                             </li>
                         <li>
-                            <a href="<?php echo STANDARD_URL; ?>media/" <?php if(!$theme->isPage('frontpage') && !$theme->isPage('issuearchive')) echo 'class="selected"';?>>Media</a>
+                            <a href="<?php echo STANDARD_URL; ?>media/" <?php if($theme->isSite('media')) echo 'class="selected"';?>>Media</a>
                         </li>
                         <li class="last">
-                            <a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if(!$theme->isPage('frontpage') && !$theme->isPage('media')) echo 'class="selected"';?>>Issue Archive</a>
+                            <a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if($theme->isSite('archive')) echo 'class="selected"';?>>Issue Archive</a>
                         </li>
 					</ul>
 				</div>
@@ -114,14 +114,14 @@
 			<p><?php echo date('d.m.Y');?></p>
 		</div>
 		<div class="grid_8 bigFelix">
-			<?php if ($_GET['media']) {?>
+			<?php if ($theme->isSite('media')) {?>
 			<a href="<?php echo STANDARD_URL; ?>media/">
-			<?php } else if ($_GET['issuearchive']) { ?>
+			<?php } else if ($theme->isSite('archive')) { ?>
 			<a href="<?php echo STANDARD_URL; ?>issuearchive/">
 			<?php } else { ?>
 			<a href="<?php echo STANDARD_URL; ?>">
 			<?php } ?>
-				<h1 <?php if ($_GET['media']) echo 'class="media"'; else if($_GET['issuearchive']) echo 'class="archive"';?>>
+				<h1 <?php if ($theme->isSite('media')) echo 'class="media"'; else if($theme->isSite('archive')) echo 'class="archive"';?>>
 					FELIX
 				</h1>
 			</a>
@@ -145,5 +145,9 @@
 	</div>
     
     <!-- Navigation -->
-    <?php $theme->render('navigation'); ?>
+    <?php 
+        if($theme->isSite('main')) {
+            $theme->render('navigation'); 
+        }
+    ?>
     <!-- End of navigation -->
