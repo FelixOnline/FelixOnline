@@ -14,7 +14,7 @@ class Media {
     /*
      * Public: Get photo albums
      *
-     * Returns array of id's of photo albums
+     * Returns array of MediaPhoto objects
      */
     public function getAlbums($limit = NULL) {
         $sql = "SELECT 
@@ -27,7 +27,7 @@ class Media {
         }
         $albums = $this->db->get_results($sql);
         foreach($albums as $key => $object) {
-            $output[] = $object->id;
+            $output[] = new MediaPhoto($object->id);
         }
         return $output;
     }

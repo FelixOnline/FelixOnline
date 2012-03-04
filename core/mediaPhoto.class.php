@@ -15,9 +15,11 @@
  *      hits        -
  *      
  */
-class MediaPhotoAlbum extends BaseModel {
+class MediaPhoto extends BaseModel {
     protected $type;
     private $thumbnail; // album thumbnail
+    private $images; // array of images in album
+    private $mostViewed; // array of most viewed albums
 
     function __construct($id = NULL) {
         global $db;
@@ -71,6 +73,53 @@ class MediaPhotoAlbum extends BaseModel {
             $this->thumbnail = new MediaPhotoImage($this->fields['thumbnail']);
         }
         return $this->thumbnail;
+    }
+
+    /*
+     * Public: Get images
+     *
+     * Returns array of mediaPhotoImage objects
+     */
+    public function getImages() {
+        if(!$this->images) {
+            global $db;
+            $sql = "SELECT 
+                        `id`
+                    FROM
+                        `media_photo_image`
+                    WHERE
+                        album_id = ".$this->getId()."
+                    ORDER BY id";
+            $photos = $db->get_results($sql);
+            foreach($photos as $object) {
+                $this->images[] = new MediaPhotoImage($object->id);
+            }
+        }
+        return $this->images;
+    }
+
+    /*
+     * Public: Get most viewed photo albums
+     *
+     * Returns array of mediaPhoto objects
+     */
+    public function getMostViewed() {
+        if(!$this->mostViewed) {
+            global $db;
+            $sql = "SELECT
+                        `id`
+                    FROM
+                        `media_photo_album`
+                    WHERE
+                        visible = '1'
+                    ORDER BY hits DESC
+                    LIMIT 0, 3";
+            $albums = $db->get_results($sql);
+            foreach($albums as $object) {
+                $this->mostViewed[] = new MediaPhoto($object->id);
+            }
+        } 
+        return $this->mostViewed;
     }
 }
 ?>

@@ -17,8 +17,7 @@ $theme->render('header', $header);
         </h2>
         <?php
             $albums = $media->getAlbums(NUMBER_OF_ALBUMS_FRONT_PAGE);
-            foreach($albums as $key => $id) {
-                $album = new MediaPhotoAlbum($id); ?>
+            foreach($albums as $key => $album) { ?>
             <div class="grid_3 photocont mosaic-block circle">
                 <a href="<?php echo $album->getURL(); ?>" class="mosaic-overlay">&nbsp;</a>
                 <div class="mosaic-backdrop">

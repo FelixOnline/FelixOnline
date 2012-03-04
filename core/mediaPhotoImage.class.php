@@ -5,10 +5,10 @@
  * Fields:
  *      id -
  *      album_id -
- *      image_name -
- *      image_date -
- *      image_title -
- *      image_caption -
+ *      name -
+ *      date -
+ *      title -
+ *      caption -
  *      camera -
  *      iso -
  *      fstop -
@@ -27,10 +27,10 @@ class MediaPhotoImage extends BaseModel {
                 SELECT
                     `id`,
                     `album_id`,
-                    `image_name`,
-                    `image_date`,
-                    `image_title`,
-                    `image_caption`,
+                    `name`,
+                    `date`,
+                    `title`,
+                    `caption`,
                     `camera`,
                     `iso`,
                     `fstop`,
@@ -56,11 +56,11 @@ class MediaPhotoImage extends BaseModel {
     public function getURL($width = '', $height = '') {
         $url =  GALLERY_IMAGE_URL;
         if($height) {
-            $url .= $width.'/'.$height.'/'.$this->getImageName();
+            $url .= $width.'/'.$height.'/'.$this->getName();
         } else if($width) {
-            $url .= $width.'/'.$this->getImageName();
+            $url .= $width.'/'.$this->getName();
         } else {
-            $url .= 'gallery_images/images/'.$this->getImageName();
+            $url .= 'gallery_images/images/'.$this->getName();
         }
         return $url;
     }
