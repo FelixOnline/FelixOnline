@@ -46,5 +46,18 @@ class MediaPhoto extends BaseModel {
     public function getType() {
         return $this->type;
     }
+
+    /*
+     * Public: Get photo album url
+     */
+    public function getURL() {
+        $url = STANDARD_URL
+            .'media/photo/'
+            .$this->getId()
+            .'/'
+            .Utility::urliseText($this->getTitle())
+            .'/';
+        return $url;
+    }
 }
 ?>
