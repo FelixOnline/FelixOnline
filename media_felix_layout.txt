@@ -1,0 +1,457 @@
+Media Felix 
+
+Table: api_keys
+Field | Type | Null | Default 
+id int(11) NO  
+api_key varchar(40) YES  
+user varchar(16) YES  
+description mediumtext YES  
+timestamp timestamp NO CURRENT_TIMESTAMP 
+
+Table: api_log
+Field | Type | Null | Default 
+id int(11) NO  
+user_id int(11) YES  
+what longtext NO  
+request longtext YES  
+timestamp timestamp NO CURRENT_TIMESTAMP 
+ip varchar(40) NO  
+
+Table: article
+Field | Type | Null | Default 
+id int(11) NO  
+title varchar(100) NO  
+short_title varchar(20) YES  
+teaser varchar(300) NO  
+author varchar(16) NO  
+category int(11) NO  
+date timestamp NO CURRENT_TIMESTAMP 
+approvedby varchar(16) YES  
+published timestamp YES  
+hidden tinyint(4) NO  
+text1 int(11) NO  
+img1 int(11) YES  
+text2 int(11) YES  
+img2 int(11) YES  
+img2lr tinyint(1) YES  
+hits int(11) NO 0 
+short_desc varchar(100) YES  
+
+Table: article_author
+Field | Type | Null | Default 
+article int(11) YES  
+author varchar(16) YES  
+
+Table: article_topic
+Field | Type | Null | Default 
+article_id int(11) NO  
+topic_id int(11) NO  
+
+Table: article_visit
+Field | Type | Null | Default 
+id int(11) NO  
+article int(11) NO  
+timestamp timestamp NO CURRENT_TIMESTAMP 
+user varchar(16) YES  
+IP varchar(15) YES  
+referrer varchar(255) YES  
+
+Table: category
+Field | Type | Null | Default 
+id int(11) NO  
+label varchar(30) NO  
+cat varchar(16) NO  
+uri varchar(500) NO  
+colourclass varchar(32) NO  
+active tinyint(1) NO 1 
+top_slider_1 int(11) NO  
+top_slider_2 int(11) NO  
+top_slider_3 int(11) NO  
+top_slider_4 int(11) NO  
+top_sidebar_1 int(11) NO  
+top_sidebar_2 int(11) NO  
+top_sidebar_3 int(11) NO  
+top_sidebar_4 int(11) NO  
+top_sidebar_5 int(11) NO  
+email varchar(40) YES  
+twitter varchar(20) YES  
+description text YES  
+hidden tinyint(1) NO  
+order int(11) NO  
+
+Table: category_author
+Field | Type | Null | Default 
+category int(11) NO  
+user varchar(16) NO  
+admin tinyint(1) NO 0 
+
+Table: comment
+Field | Type | Null | Default 
+id int(11) NO  
+article int(11) NO  
+user varchar(16) NO  
+comment varchar(1024) NO  
+timestamp timestamp NO CURRENT_TIMESTAMP 
+active tinyint(1) NO 1 
+reply int(11) YES  
+likes int(11) NO 0 
+dislikes int(11) NO 0 
+
+Table: comment_ext
+Field | Type | Null | Default 
+id int(11) NO  
+article int(11) NO  
+name varchar(32) NO  
+comment varchar(1024) NO  
+timestamp timestamp NO CURRENT_TIMESTAMP 
+active tinyint(1) NO 1 
+IP varchar(15) NO  
+pending tinyint(4) NO 1 
+reply int(11) YES  
+spam tinyint(1) NO  
+likes int(11) NO 0 
+dislikes int(11) NO 0 
+
+Table: comment_like
+Field | Type | Null | Default 
+id int(11) NO  
+user varchar(16) NO  
+comment int(11) NO  
+binlike tinyint(1) NO  
+
+Table: comment_spam
+Field | Type | Null | Default 
+id int(11) NO  
+IP varchar(15) YES  
+date datetime YES  
+
+Table: cookies
+Field | Type | Null | Default 
+id int(11) NO  
+hash varchar(64) NO  
+user varchar(64) NO  
+expires timestamp NO CURRENT_TIMESTAMP 
+
+Table: engine_page
+Field | Type | Null | Default 
+id int(11) NO  
+label varchar(32) NO  
+uri varchar(255) NO  
+inc varchar(255) YES  
+active tinyint(4) NO 1 
+
+Table: frontpage
+Field | Type | Null | Default 
+layout int(11) NO  
+section varchar(20) NO  
+1 int(11) NO  
+2 int(11) NO  
+3 int(11) NO  
+4 int(11) NO  
+5 int(11) NO  
+6 int(11) NO  
+7 int(11) NO  
+8 int(11) YES  
+
+Table: image
+Field | Type | Null | Default 
+id int(11) NO  
+title varchar(100) NO  
+uri varchar(500) NO  
+user varchar(16) NO  
+description varchar(1000) NO  
+timestamp timestamp NO CURRENT_TIMESTAMP 
+v_offset int(11) NO 0 
+h_offset int(11) NO 0 
+caption varchar(100) YES  
+attribution varchar(100) YES  
+attr_link varchar(100) YES  
+width int(11) NO  
+height int(11) NO  
+
+Table: login
+Field | Type | Null | Default 
+id int(11) NO  
+session_id varchar(32) NO  
+ip varchar(15) NO  
+browser text NO  
+user varchar(16) NO  
+timestamp timestamp NO CURRENT_TIMESTAMP 
+valid tinyint(1) NO 1 
+logged_in int(1) NO 0 
+
+Table: media_photo_album
+Field | Type | Null | Default 
+id int(4) NO 0 
+folder text NO  
+title varchar(64) NO  
+author varchar(100) NO  
+date date NO  
+description text NO  
+order int(6) NO  
+visible int(1) NO 1 
+thumbnail int(10) NO  
+hits int(11) NO  
+
+Table: media_photo_albums
+Field | Type | Null | Default 
+id int(4) NO  
+albumFolder text NO  
+albumName varchar(64) NO  
+albumAuthor varchar(100) NO  
+albumDate date NO  
+albumDesc text NO  
+albumOrder int(6) NO  
+visible int(1) NO 1 
+albumThumb int(10) NO  
+hits int(11) NO  
+
+Table: media_photo_image
+Field | Type | Null | Default 
+id int(4) NO 0 
+album_id int(11) NO  
+name text NO  
+date datetime NO  
+title text NO  
+caption text NO  
+camera text NO  
+iso int(6) NO  
+fstop varchar(5) NO  
+orientation int(2) NO  
+tags varchar(100) NO  
+geo_coords varchar(32) NO  
+
+Table: media_photo_images
+Field | Type | Null | Default 
+id int(4) NO  
+albumID int(11) NO  
+imageName text NO  
+imageDate datetime NO  
+imageTitle text NO  
+imageCaption text NO  
+camera text NO  
+iso int(6) NO  
+fstop varchar(5) NO  
+orientation int(2) NO  
+tags varchar(100) NO  
+geoCoords varchar(32) NO  
+
+Table: media_video
+Field | Type | Null | Default 
+id int(11) NO  
+title varchar(100) YES  
+description text YES  
+author varchar(1000) NO  
+video_id varchar(30) YES  
+date date YES  
+visible int(11) YES  
+hits int(11) YES  
+site varchar(30) NO  
+thumbnail varchar(100) NO  
+
+Table: optimise
+Field | Type | Null | Default 
+article int(10) NO  
+optimised int(11) NO  
+
+Table: page
+Field | Type | Null | Default 
+id int(11) unsigned NO  
+label varchar(15) NO  
+uri varchar(500) NO  
+
+Table: pages
+Field | Type | Null | Default 
+id int(11) NO  
+slug varchar(30) YES  
+title varchar(30) YES  
+content text YES  
+
+Table: poll
+Field | Type | Null | Default 
+id int(11) NO  
+title varchar(140) NO  
+article_id int(11) YES  
+author varchar(16) NO  
+description varchar(1000) YES  
+options int(11) NO 1 
+open timestamp YES  
+close timestamp YES  
+created timestamp NO CURRENT_TIMESTAMP 
+limit int(11) YES  
+chart_type_id int(11) NO  
+
+Table: poll_chart_type
+Field | Type | Null | Default 
+id int(11) NO  
+type varchar(32) NO  
+
+Table: poll_option
+Field | Type | Null | Default 
+id int(11) NO  
+poll_id int(11) NO  
+option int(11) NO  
+label varchar(140) NO  
+
+Table: poll_vote
+Field | Type | Null | Default 
+id int(11) NO  
+poll_id int(11) NO  
+user varchar(16) NO  
+answer int(11) NO  
+timestamp timestamp NO CURRENT_TIMESTAMP 
+
+Table: preview_email
+Field | Type | Null | Default 
+id int(11) NO  
+email varchar(50) YES  
+ip varchar(15) YES  
+
+Table: role
+Field | Type | Null | Default 
+id int(11) NO  
+role varchar(255) NO  
+
+Table: sexsurvey_completers
+Field | Type | Null | Default 
+uname varchar(45) NO  
+
+Table: sexsurvey_responses
+Field | Type | Null | Default 
+id int(11) NO  
+data longtext YES  
+deptcheck tinyint(4) YES  
+
+Table: site
+Field | Type | Null | Default 
+id int(11) NO  
+slug varchar(30) YES  
+title varchar(30) YES  
+active int(2) YES 0 
+theme varchar(30) NO  
+
+Table: sport_table
+Field | Type | Null | Default 
+id int(11) NO  
+team varchar(30) YES  
+played int(11) NO  
+won int(11) NO  
+drawn int(11) NO  
+lost int(11) NO  
+f int(11) NO  
+a int(11) NO  
+difference float NO  
+index float NO  
+win_percent int(11) NO  
+
+Table: text_global
+Field | Type | Null | Default 
+id int(11) unsigned NO  
+key varchar(50) NO  
+value varchar(5000) YES  
+style varchar(50) YES  
+
+Table: text_story
+Field | Type | Null | Default 
+id int(11) NO  
+user varchar(16) NO  
+content mediumtext YES  
+timestamp timestamp NO CURRENT_TIMESTAMP 
+
+Table: text_story_bkp
+Field | Type | Null | Default 
+id int(11) NO  
+user varchar(16) NO  
+content mediumtext YES  
+timestamp timestamp NO CURRENT_TIMESTAMP 
+
+Table: thephig_albums
+Field | Type | Null | Default 
+albumID int(4) NO  
+albumFolder text NO  
+albumName varchar(64) NO  
+albumDate text NO  
+albumDesc text NO  
+albumOrder int(6) NO  
+visible int(1) NO 1 
+protected int(1) NO 0 
+gmap int(1) NO 0 
+password text NO  
+
+Table: thephig_images
+Field | Type | Null | Default 
+id int(4) NO  
+albumID int(11) NO  
+imageName text NO  
+thumbnailName text NO  
+imageDate datetime NO  
+imageTitle text NO  
+camera text NO  
+iso int(6) NO  
+fstop varchar(5) NO  
+orientation int(2) NO  
+tags varchar(100) NO  
+geoCoords varchar(32) NO  
+
+Table: thephig_info
+Field | Type | Null | Default 
+galleryTitle varchar(64) NO reedGal 
+galleryPath varchar(32) NO /gallery/ 
+copyrightOwner varchar(24) NO  
+copyrightLink varchar(48) NO  
+jsOverlay varchar(30) NO shutterset 
+imagesPath varchar(32) NO gallery_images 
+albumsPerPage int(3) NO 10 
+imagesPerPage int(3) NO 20 
+maxHeight int(3) NO 150 
+maxWidth int(3) NO 200 
+thumbExtension varchar(6) NO _tn 
+googleAPIkey varchar(90) NO  
+theme text NO  
+
+Table: thephig_users
+Field | Type | Null | Default 
+id tinyint(4) NO  
+username text NO  
+password text NO  
+permissions varchar(20) NO  
+description text NO  
+lastlogin varchar(32) NO  
+
+Table: top_2col
+Field | Type | Null | Default 
+1 int(11) NO  
+2 int(11) NO  
+3 int(11) NO  
+4 int(11) NO  
+
+Table: top_extrapage_cat
+Field | Type | Null | Default 
+cat1 int(11) NO  
+cat2 int(11) NO  
+cat3 int(11) NO  
+cat4 int(11) NO  
+cat5 int(11) NO  
+loc varchar(16) NO  
+
+Table: topic
+Field | Type | Null | Default 
+id int(11) NO  
+name varchar(255) NO  
+
+Table: user
+Field | Type | Null | Default 
+user varchar(16) NO  
+name varchar(80) NO  
+visits int(11) NO 0 
+ip varchar(15) NO 0.0.0.0 
+timestamp timestamp NO CURRENT_TIMESTAMP 
+role int(11) NO 0 
+description longtext YES  
+email varchar(50) YES  
+facebook varchar(50) YES  
+twitter varchar(50) YES  
+websitename varchar(50) YES  
+websiteurl varchar(50) YES  
+img int(11) NO 676 
+

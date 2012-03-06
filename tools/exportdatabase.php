@@ -108,12 +108,38 @@ PHP script to perform a database cleanup and export it
         echo shell_exec($exec);
     }
 
+    /*
+     * Output table layout in human friendly format
+     */
+    function tableLayout() {
+        global $db;
+
+        $file = TOOLS_DIRECTORY.'/../media_felix_layout.txt';
+        $output = "Media Felix \n\n";
+        foreach ( $db->get_col("SHOW TABLES",0) as $table_name ) {
+            $output .= 'Table: '.$table_name."\n";
+            $output .= "Field | Type | Null | Default \n";
+            $tables = $db->get_results("DESC $table_name");
+            foreach($tables as $table) {
+                $row = $table->Field.' ';
+                $row .= $table->Type.' ';
+                $row .= $table->Null.' ';
+                $row .= $table->Default.' ';
+                $row .= "\n";
+                $output .= $row;
+            }
+            $output .= "\n";
+        }
+        file_put_contents($file, $output);
+    }
+
     echo "---------------- Starting Backup ----------------\n";
 
     switch($command) {
         case 'all':
             clean();
             export();
+            tableLayout();
             break;
         case 'clean':
             clean();
