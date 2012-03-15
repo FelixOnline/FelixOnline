@@ -75,7 +75,11 @@ $timing->log('After setup');
 
 try {
 	// try mapping request to urls
-    glue::stick($urls);
+    if(defined('RELATIVE_PATH')) {
+        glue::stick($urls, RELATIVE_PATH);
+    } else {
+        glue::stick($urls);
+    }
 } catch (NotFoundException $e) {
 	// If any exception which amounts to something not being found is raised
 	$prior_exception = $e;
