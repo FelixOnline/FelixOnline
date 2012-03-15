@@ -10,6 +10,7 @@
  */
 class Blog extends BaseModel {
     protected $db;
+    protected $posts;
 
     function __construct($slug=NULL) {
         global $db;
@@ -25,10 +26,37 @@ class Blog extends BaseModel {
             parent::__construct($this->db->get_row($sql), 'Blog', $slug);
             return $this;
         } else {
-            // initialise new page
+            // initialise new blog
         }
     }
 
+    /*
+     * Get posts
+     *
+     * $page - page number to get posts from [optional]
+     *
+     * returns array of BlogPost objects
+     */
+    public function getPosts($limit = NULL) {
+        if(!$this->posts) {
+            $sql = "
+                SELECT
+                    id
+                FROM `blog_post`
+                WHERE blog = ".$this->getId()."
+                ORDER BY timestamp DESC";
+            if($limit) {
+                $sql .= "
+                    LIMIT ".(($page-1)*BLOG_POSTS_PER_PAGE)
+                    .",".BLOG_POSTS_PER_PAGE;
+            }
+            $posts = $this->db->get_results($sql);
+            foreach($posts as $object) {
+                $this->posts[] = new BlogPost($object->id);
+            }
+        }
+        return $this->posts;
+    }
 }
 
 ?>
