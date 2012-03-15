@@ -37,7 +37,7 @@ class Blog extends BaseModel {
      *
      * returns array of BlogPost objects
      */
-    public function getPosts($limit = NULL) {
+    public function getPosts($page = NULL) {
         if(!$this->posts) {
             $sql = "
                 SELECT
@@ -45,7 +45,7 @@ class Blog extends BaseModel {
                 FROM `blog_post`
                 WHERE blog = ".$this->getId()."
                 ORDER BY timestamp DESC";
-            if($limit) {
+            if($page) {
                 $sql .= "
                     LIMIT ".(($page-1)*BLOG_POSTS_PER_PAGE)
                     .",".BLOG_POSTS_PER_PAGE;
