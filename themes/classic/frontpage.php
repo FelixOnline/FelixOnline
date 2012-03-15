@@ -25,8 +25,8 @@ $timing->log('after header');
             $timing->log('after fbactivity');
             include_once(THEME_DIRECTORY.'/sidebar/mostPopular.php');
             $timing->log('after mostpopular');
-            $theme->render('sidebar/iscience');
-            $timing->log('after iscience');
+            //$theme->render('sidebar/iscience');
+            //$timing->log('after iscience');
             include_once(THEME_DIRECTORY.'/sidebar/recentcomments.php');
             $timing->log('after recent comments');
         ?>
