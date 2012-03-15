@@ -21,11 +21,9 @@ class Cache {
         } else {
             $this->directory = CACHE_DIRECTORY;
         }
-		
 		if(!is_writable($this->directory)) {
 			throw new InternalException('Cache directory '.$this->directory.' is not writable');
 		}
-		
         $this->expires = 20 * 60; // default 20mins
     }
 

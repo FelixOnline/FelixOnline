@@ -48,8 +48,10 @@ class Timing {
 			throw new InternalException('Log file '.$this->directory.$this->filename.' is not writable');
 		}
 		
-        $this->file = fopen($this->directory.$this->filename, 'a');
-        $this->newRequest();
+        if(TIMING == true) {
+            $this->file = fopen($this->directory.$this->filename, 'a');
+            $this->newRequest();
+        }
         // Set timezone
         date_default_timezone_set('UTC');
     }
@@ -84,9 +86,11 @@ Start  Prev
      * Public: New log marker
      */
     public function log($label) {
-        $log = number_format($this->getElapsedTime(),4,'.','').' '.number_format($this->lastLog(),4,'.','').' - '.$label."\n";
-        fwrite($this->file, $log);
-        $this->prev = microtime(true);
+        if(TIMING) {
+            $log = number_format($this->getElapsedTime(),4,'.','').' '.number_format($this->lastLog(),4,'.','').' - '.$label."\n";
+            fwrite($this->file, $log);
+            $this->prev = microtime(true);
+        }
     }
 
     /*

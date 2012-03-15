@@ -137,12 +137,12 @@ PHP script to perform a database cleanup and export it
 
     switch($command) {
         case 'all':
-            clean();
+            //clean();
             export();
             tableLayout();
             break;
         case 'clean':
-            clean();
+            //clean();
             break;
         case 'export':
             export();

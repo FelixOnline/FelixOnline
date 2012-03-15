@@ -675,35 +675,6 @@ CREATE TABLE `role` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `sexsurvey_completers`
---
-
-DROP TABLE IF EXISTS `sexsurvey_completers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sexsurvey_completers` (
-  `uname` varchar(45) NOT NULL,
-  UNIQUE KEY `uname_UNIQUE` (`uname`),
-  KEY `uname_key` (`uname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `sexsurvey_responses`
---
-
-DROP TABLE IF EXISTS `sexsurvey_responses`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sexsurvey_responses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `data` longtext,
-  `deptcheck` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `site`
 --
 
