@@ -56,6 +56,23 @@ user varchar(16) YES
 IP varchar(15) YES  
 referrer varchar(255) YES  
 
+Table: blog_post
+Field | Type | Null | Default 
+id int(11) NO  
+blog int(11) YES  
+content text YES  
+timestamp timestamp NO CURRENT_TIMESTAMP 
+author varchar(30) YES  
+type varchar(30) YES  
+meta text YES  
+
+Table: blogs
+Field | Type | Null | Default 
+id int(11) NO  
+name varchar(30) YES  
+slug varchar(30) YES  
+controller varchar(30) YES  
+
 Table: category
 Field | Type | Null | Default 
 id int(11) NO  
