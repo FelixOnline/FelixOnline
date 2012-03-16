@@ -220,6 +220,7 @@ class AuthController extends BaseController {
         $sql = "DELETE FROM cookies 
                 WHERE UNIXTIME() > UNIXTIME(expires)
         ";
+        $this->db->query($sql);
         $sql = "DELETE FROM login 
                 WHERE user='".$this->db->escape($currentuser->getUser())."'
                 AND valid=0
