@@ -56,6 +56,7 @@ RewriteCond %{DOCUMENT_ROOT}/$1 -f [OR]
 RewriteCond %{DOCUMENT_ROOT}/$1 -d [OR]
 RewriteCond %{REQUEST_URI} (.*)/engine/(.*)$ [OR]
 RewriteCond %{REQUEST_URI} (.*)/sexsurvey/(.*)$ [OR]
+RewriteCond %{REQUEST_URI} (.*)/sexism/(.*)$ [OR]
 RewriteCond %{REQUEST_URI} (.*)/api/(.*)$
 RewriteRule (.*) - [S=20]
 #

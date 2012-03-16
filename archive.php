@@ -58,7 +58,7 @@
 		<?php } else {
 		
 			if (!isset($_GET['y']) && !isset($_GET['d']))
-				$year = 2011;
+				$year = 2012;
 			else if (isset($_GET['d'])) 
 				$year = $_GET['d'];
 			else
@@ -220,5 +220,8 @@
 		<?php } ?>
 		
 		<?php } ?>
+        <div id="credits" class="grid_12">
+            <p>The issue archive was made possible through kind donations from <a href="http://www.imperialcollegeunion.org/">Imperial College Union</a> and the IC Trust.</p>
+        </div>
 	</div>
 	<!-- End of archive wrapper -->
