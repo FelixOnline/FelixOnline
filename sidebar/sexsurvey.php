@@ -1,6 +1,6 @@
 <div id="sexsurvey">
-    <a href="http://felixonline.co.uk/sexsurvey/">
-        <img src="<?php echo STANDARD_URL; ?>img/sexsurvey.jpg" width="250px" title="Felix Sex Survey"> 
+    <a href="http://felixonline.co.uk/sexism/">
+        <img src="<?php echo STANDARD_URL; ?>img/sexismsurvey.png" width="250px" title="Felix Sexism Survey"> 
     </a>
-    <p>Want to tell us about your sex life? Fill out the anonymous new <a href="http://felixonline.co.uk/sexsurvey/" title="Go on you know you want to!">Felix Sex Survey</a>.</p>
+    <p>Do you think Imperial is a sexist environment? Share your answers and experiences in the anonymous <a href="http://felixonline.co.uk/sexism/" title="Take the survey now!">Felix Sexism Survey</a>.</p>
 </div>
