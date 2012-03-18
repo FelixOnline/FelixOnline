@@ -56,6 +56,7 @@ RewriteCond %{DOCUMENT_ROOT}/$1 -f [OR]
 RewriteCond %{DOCUMENT_ROOT}/$1 -d [OR]
 RewriteCond %{REQUEST_URI} (.*)/engine/(.*)$ [OR]
 RewriteCond %{REQUEST_URI} (.*)/sexsurvey/(.*)$ [OR]
+RewriteCond %{REQUEST_URI} (.*)/sexism/(.*)$ [OR]
 RewriteCond %{REQUEST_URI} (.*)/api/(.*)$
 RewriteRule (.*) - [S=20]
 #
@@ -80,3 +81,4 @@ RewriteRule ^summerball/$ ?page=summerball [QSA]
 RewriteRule ^([a-zA-Z0-9_-]+)/$ ?cat=$1 [QSA]
 RewriteRule ^([a-zA-Z0-9_-]+)/([0-9]+)/$ ?cat=$1&p=$2 [QSA]
 RewriteRule ^([a-zA-Z0-9_-]+)/([0-9]+)/([a-zA-Z0-9_-]+)/.*$ ?article=$2 [QSA]
+

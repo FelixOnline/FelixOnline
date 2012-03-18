@@ -200,6 +200,7 @@
             <h4><?php echo get_article_title($F1);?></h4>
         </a>
         <br/><span><?php echo get_article_teaser($F1); ?></span>
+        <!--
         <ul>
             <li>
                 Other Articles:
@@ -211,6 +212,7 @@
                 <a href="<?php echo article_url($F3); ?>"><?php echo get_article_title($F3);?></a>
             </li>
         </ul>
+        -->
     </div>
 
     <div class="grid_4 alpha commentBox">

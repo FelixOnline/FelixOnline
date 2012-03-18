@@ -10,7 +10,7 @@
 				$category = $_GET['cat'];
 			}
 				
-			$sql = "SELECT label,cat FROM `category` WHERE hidden=0 AND id>0 ORDER BY id ASC";
+			$sql = "SELECT label,cat FROM `category` WHERE hidden=0 AND id>0 AND `order`>0 ORDER BY `order` ASC";
 			$cats = mysql_query($sql,$cid);
 			while ($cat = mysql_fetch_array($cats)) {
 				$url = $cat['cat'];
@@ -31,7 +31,7 @@
 				$category = $_GET['cat'];
 			}
 				
-			$sql = "SELECT label,cat FROM `category` WHERE hidden=0 AND id>0 ORDER BY id ASC";
+			$sql = "SELECT label,cat FROM `category` WHERE hidden=0 AND id>0 AND `order`>0 ORDER BY `order` ASC";
 			$cats = mysql_query($sql,$cid);
 			while ($cat = mysql_fetch_array($cats)) {
 				$url = $cat['cat'];

@@ -43,7 +43,7 @@
 	<div class="container_12">
 	<?php
 		//$sql = "SELECT * FROM top_extrapage_cat WHERE loc='default' LIMIT 1";
-		$sql = "SELECT id FROM `category` WHERE active=1 AND id>0 ORDER BY id ASC";
+		$sql = "SELECT id FROM `category` WHERE active=1 AND id>0 AND `order`>0 ORDER BY `order` ASC";
 		$rsc = mysql_query($sql,$cid);
 		if (!mysql_num_rows) die;
 		$i = 1;
@@ -52,7 +52,7 @@
 			$i++;
 		}
 		//$categories = mysql_fetch_array($rsc);
-		for ($i=1;$i<EXTRANEWS_COLS;$i++) {
+		for ($i=1;$i<=EXTRANEWS_COLS;$i++) {
 			$category = $categories[$i];
 			$cat = get_category_cat($category);
 			list($a1,$a2,$a3,$a4) = get_category_topstories($category);
