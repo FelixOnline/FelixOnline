@@ -55,9 +55,12 @@ if(isset($_POST['login'])) { // if someone is trying to log in
                 $loc .= '&remember=true'; // append remember flag to location
             }
             if($_POST['comment']) { // if the user was in the process of liking/disliking a comment
-                if ($_POST['commenttype'] == 'like') $type = 1; // if it was a like then $type is 1
-                else $type = 0;
-                like_comment($_POST['comment'],$_POST['username'],$type); // like/dislike the comment 
+                $comment = new Comment(mysql_real_escape_string($_POST['comment']));
+                if ($_POST['commenttype'] == 'like') {
+                    $comment->likeComment(mysql_real_escape_string($_POST['username']));
+                } else { 
+                    $comment->dislikeComment(mysql_real_escape_string($_POST['username']));
+                }
                 $loc .= '#'.$_POST['comment']; // append html anchor of comment to location
             }
             header($loc); // got to $loc (location)
