@@ -31,8 +31,9 @@ class Theme {
     }
 
     public function themeOverride() {
-        if(class_exists('Theme'.ucfirst($this->name))) {
-            $theme = new ThemeClassic($this->name);
+        $name = 'Theme'.ucfirst($this->name);
+        if(class_exists($name)) {
+            $theme = new $name($this->name);
             return $theme;   
         }
         return $this;
