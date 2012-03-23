@@ -16,6 +16,8 @@ global $hooks;
  */
 require_once(THEME_DIRECTORY.'/functions.php');
 
+require_once(THEME_DIRECTORY.'/core/theme-classic.class.php');
+
 /*
  * Set default site wide resources
  */

@@ -14,6 +14,7 @@ class BaseController {
          * Set theme here so that it can be overridden by a controller if necessary
          */
         $this->theme = new Theme('classic');
+        $this->theme = $this->theme->themeOverride();
         $this->theme->setSite('main');
     }
 }

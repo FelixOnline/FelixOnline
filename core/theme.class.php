@@ -4,29 +4,38 @@
  * Handles rendering views etc
  */
 class Theme {
-    private $name; // theme name
-    private $directory; // theme directory
-    private $url;
-    private $page; // current page
-    private $parent; // parent page
-    private $data = array(); // data to be added to rendered page
-    private $hierarchy = array(); // template hierarchy
-    private $sidebar = array(); // array of sidebar modules
-    private $site; // current site
+    protected $name; // theme name
+    protected $directory; // theme directory
+    protected $url;
+    protected $page; // current page
+    protected $parent; // parent page
+    protected $data = array(); // data to be added to rendered page
+    protected $hierarchy = array(); // template hierarchy
+    protected $sidebar = array(); // array of sidebar modules
+    protected $site; // current site
 
     function __construct($name) {
         global $currentuser, $db, $timing;
         $this->name = $name;
         $this->directory = BASE_DIRECTORY.'/themes/'.$this->name;
         $this->url = STANDARD_URL.'themes/'.$this->name;
-		
+
         $this->appendData(array(
             'currentuser' => $currentuser, 
             'db' => $db, 
             'timing' => $timing,
             'theme' => $this
         ));
+
         require($this->directory.'/index.php');
+    }
+
+    public function themeOverride() {
+        if(class_exists('Theme'.ucfirst($this->name))) {
+            $theme = new ThemeClassic($this->name);
+            return $theme;   
+        }
+        return $this;
     }
 
     public function getName() { return $this->name; }
