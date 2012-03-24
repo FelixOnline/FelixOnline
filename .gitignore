@@ -16,6 +16,10 @@ engine/
 # Sex survey
 sexsurvey/
 
+# Live blogs
+tedx/
+varsity/
+
 .settings/com.aptana.editor.php.prefs
 
 .project
