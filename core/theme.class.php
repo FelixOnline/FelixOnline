@@ -21,6 +21,9 @@ class Theme {
         $this->directory = BASE_DIRECTORY.'/themes/'.$this->name;
         $this->url = STANDARD_URL.'themes/'.$this->name;
 
+        /*
+         * Check if there is theme specific theme class and load in if there is
+         */
         $classfile = $this->directory.'/core/theme-'.$this->name.'.class.php';
         $name = 'Theme'.ucfirst($this->name);
         if(file_exists($classfile) && get_class($this) != $name) {
