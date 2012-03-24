@@ -13,6 +13,7 @@ class Theme {
     protected $hierarchy = array(); // template hierarchy
     protected $sidebar = array(); // array of sidebar modules
     protected $site; // current site
+    protected $themeclass; // theme specific class
 
     function __construct($name) {
         global $currentuser, $db, $timing;
@@ -20,25 +21,25 @@ class Theme {
         $this->directory = BASE_DIRECTORY.'/themes/'.$this->name;
         $this->url = STANDARD_URL.'themes/'.$this->name;
 
-        $this->appendData(array(
-            'currentuser' => $currentuser, 
-            'db' => $db, 
-            'timing' => $timing,
-            'theme' => $this
-        ));
-
-        require($this->directory.'/index.php');
-    }
-
-    public function themeOverride() {
+        $classfile = $this->directory.'/core/theme-'.$this->name.'.class.php';
         $name = 'Theme'.ucfirst($this->name);
-        if(class_exists($name)) {
-            $theme = new $name($this->name);
-            return $theme;   
+        if(file_exists($classfile) && get_class($this) != $name) {
+            require_once($classfile);
+            $this->themeclass = new $name($this->name);
+        } else {
+            $this->appendData(array(
+                'currentuser' => $currentuser, 
+                'db' => $db, 
+                'timing' => $timing,
+                'theme' => $this
+            ));
+
+            require($this->directory.'/index.php');
+            $this->themeclass = $this;
         }
-        return $this;
     }
 
+    public function getClass() { return $this->themeclass; }
     public function getName() { return $this->name; }
     public function getDirectory() { return $this->name; }
     public function getURL() { return $this->url; }

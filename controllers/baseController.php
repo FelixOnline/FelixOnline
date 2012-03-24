@@ -13,8 +13,8 @@ class BaseController {
         /*
          * Set theme here so that it can be overridden by a controller if necessary
          */
-        $this->theme = new Theme('classic');
-        $this->theme = $this->theme->themeOverride();
+        $theme = new Theme('classic');
+        $this->theme = $theme->getClass();
         $this->theme->setSite('main');
     }
 }
