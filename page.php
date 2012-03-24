@@ -127,6 +127,7 @@
 				<?php } ?>
 			</div>
 			<?php
+                include_once('sidebar/tedx.php');
 				include_once('sidebar/sexsurvey.php');
 				include_once('sidebar/socialLinks.php');
 				include_once('sidebar/mostPopular.php');
