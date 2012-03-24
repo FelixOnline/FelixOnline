@@ -661,11 +661,19 @@ button {
   float:right;
 }
 #sexsurvey {
-  border:1px solid #bebebe;
-  margin-bottom:10px;
-  padding:10px;
+    border:1px solid #bebebe;
+    margin-bottom:10px;
+    padding:10px;
 }
-#sexsurvey img { margin-left:15px; }
+#sexsurvey img { 
+    margin-left:15px; 
+}
+#tedx {
+    border:1px solid #bebebe;
+    margin-bottom:10px;
+    padding:10px;
+    padding-top: 15px;
+}
 #fbLikeBox {
   background:#eeeeee;
   border:1px solid #bebebe;
