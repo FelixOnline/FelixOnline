@@ -4,31 +4,45 @@
  * Handles rendering views etc
  */
 class Theme {
-    private $name; // theme name
-    private $directory; // theme directory
-    private $url;
-    private $page; // current page
-    private $parent; // parent page
-    private $data = array(); // data to be added to rendered page
-    private $hierarchy = array(); // template hierarchy
-    private $sidebar = array(); // array of sidebar modules
-    private $site; // current site
+    protected $name; // theme name
+    protected $directory; // theme directory
+    protected $url;
+    protected $page; // current page
+    protected $parent; // parent page
+    protected $data = array(); // data to be added to rendered page
+    protected $hierarchy = array(); // template hierarchy
+    protected $sidebar = array(); // array of sidebar modules
+    protected $site; // current site
+    protected $themeclass; // theme specific class
 
     function __construct($name) {
         global $currentuser, $db, $timing;
         $this->name = $name;
         $this->directory = BASE_DIRECTORY.'/themes/'.$this->name;
         $this->url = STANDARD_URL.'themes/'.$this->name;
-		
-        $this->appendData(array(
-            'currentuser' => $currentuser, 
-            'db' => $db, 
-            'timing' => $timing,
-            'theme' => $this
-        ));
-        require($this->directory.'/index.php');
+
+        /*
+         * Check if there is theme specific theme class and load in if there is
+         */
+        $classfile = $this->directory.'/core/theme-'.$this->name.'.class.php';
+        $name = 'Theme'.ucfirst($this->name);
+        if(file_exists($classfile) && get_class($this) != $name) {
+            require_once($classfile);
+            $this->themeclass = new $name($this->name);
+        } else {
+            $this->appendData(array(
+                'currentuser' => $currentuser, 
+                'db' => $db, 
+                'timing' => $timing,
+                'theme' => $this
+            ));
+
+            require($this->directory.'/index.php');
+            $this->themeclass = $this;
+        }
     }
 
+    public function getClass() { return $this->themeclass; }
     public function getName() { return $this->name; }
     public function getDirectory() { return $this->name; }
     public function getURL() { return $this->url; }
