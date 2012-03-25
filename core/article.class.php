@@ -24,6 +24,7 @@
  */
 class Article extends BaseModel {
 	private $authors; // array of authors of article 
+    private $approvedby; // user object of user who approved article
     private $category_cat; // category cat (short version)
     private $category_label; // category label
     private $content; // article content
@@ -100,6 +101,18 @@ class Article extends BaseModel {
             }
         }
         return $this->authors; 
+    }
+
+    /*
+     * Public: Get approved by user
+     *
+     * Returns User object
+     */
+    public function getApprovedBy() {
+        if(!$this->approvedby) {
+            $this->approvedby = new User($this->fields['approvedby']);
+        }
+        return $this->approvedby;
     }
 
     /*

@@ -59,6 +59,7 @@ class Blog extends BaseModel {
         }
         return $this->posts;
     }
+
 }
 
 ?>

@@ -9,6 +9,8 @@ class BaseModel {
     protected $class;
 	protected $item;
     protected $db;
+    private $imported;
+    private $importedFunctions;
 
     function __construct($dbObject, $class, $item=null) {
         /* initialise db connection and store it in object */
@@ -17,6 +19,14 @@ class BaseModel {
 		
 		$this->class = $class;
 		$this->item = $item;
+
+        // import functions
+        $this->imported = array();
+        $this->importedFunctions = array();
+
+        if(class_exists(get_class($this).'Helper')) {
+            $this->import(get_class($this).'Helper');
+        }
 		
         if($dbObject) {
             foreach($dbObject as $key => $value) {
@@ -30,31 +40,55 @@ class BaseModel {
 
     /* 
      * Create dynamic functions 
-     * TODO match set functions
      */
     function __call($method,$arguments) {
-        $meth = $this->from_camel_case(substr($method,3,strlen($method)-3));
-        $verb = substr($method, 0, 3);
-        switch($verb) {
-            case 'get':
-                if(array_key_exists($meth, $this->fields)) {
-                    return $this->fields[$meth];
-                } else {
+        // check if there is an imported function that matches request
+        if(array_key_exists($method, $this->importedFunctions)) {
+            // invoke the function  
+            return call_user_func_array(array($this->importedFunctions[$method], $method), $arguments);
+        } else {
+            $meth = $this->from_camel_case(substr($method,3,strlen($method)-3));
+            $verb = substr($method, 0, 3);
+            switch($verb) {
+                case 'get':
+                    if(array_key_exists($meth, $this->fields)) {
+                        return $this->fields[$meth];
+                    }
                     throw new ModelConfigurationException('The requested field does not exist', $verb, $meth, $class, $item);
-                }
-                break;
-            case 'set':
-                if(array_key_exists($meth, $this->fields)) {
-                    $this->fields[$meth] = $arguments[0];
-                    return $this->fields[$meth];
-                } else {
+                    break;
+                case 'set':
+                    if(array_key_exists($meth, $this->fields)) {
+                        $this->fields[$meth] = $arguments[0];
+                        return $this->fields[$meth];
+                    }
                     throw new ModelConfigurationException('The requested field does not exist', $verb, $meth, $class, $item);
-                }
-                break;
-            default:
-                throw new ModelConfigurationException('The requested verb is not valid', $verb, $meth, $class, $item);
+                    break;
+                default:
+                    throw new ModelConfigurationException('The requested verb is not valid', $verb, $meth, $class, $item);
+                    break; 
+            }
         }
     }
+
+    /*
+     * Import an object and allow its functions to be used in this class
+     */
+    public function import($object) {  
+        // the new object to import
+        $newImport = new $object($this);
+        // the name of the new object (class name)
+        $importName = get_class($newImport);
+        // the new functions to import
+        $importFunctions = get_class_methods($newImport);
+  
+        // add the object to the registry
+        array_push($this->imported, array($import_name, $newImport));  
+  
+        // add the methods to the registry
+        foreach($importFunctions as $key => $functionName) {
+            $this->importedFunctions[$functionName] = &$newImport;
+        }
+    }   
 
     /*
      * Public: Save all fields to database TODO
