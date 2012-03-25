@@ -12,8 +12,6 @@
 		<!-- Sidebar -->
 		<div class="sidebar grid_4 push_8">
 			<?php
-                include_once('sidebar/tedx.php');
-                include_once('sidebar/sexsurvey.php');
 				include_once('sidebar/fbLikeBox.php');
                 $timing->log('after fblikebox');
 				include_once('sidebar/mediaBox.php');
