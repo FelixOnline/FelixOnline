@@ -1,21 +1,13 @@
 <?php
     // Initialise featured articles
-    $sql = "SELECT
-                top_slider_1,
-                top_slider_2,
-                top_slider_3,
-                top_slider_4
-            FROM `category` 
-            WHERE id=".$category->getId();
-    $featured = $db->get_row($sql);
+    $featured = $category->getStories();
 ?>
 <div id="featuredBox">
     <h3>Top Stories</h3>
     <ul class="clearfix">
     <?php
-        foreach($featured as $key => $value) {
-            $article = new Article($value);
-            if($key == 'top_slider_1') {
+        foreach($featured as $key => $article) {
+            if($key == 'top_story_1') {
     ?>
                 <li class="withPic">
                     <a href="<?php echo $article->getURL(); ?>">
