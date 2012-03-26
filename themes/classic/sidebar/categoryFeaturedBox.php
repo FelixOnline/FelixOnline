@@ -1,6 +1,6 @@
 <?php
     // Initialise featured articles
-    $featured = $category->getStories();
+    $featured = $category->getTopStories();
 ?>
 <div id="featuredBox">
     <h3>Top Stories</h3>

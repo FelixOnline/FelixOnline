@@ -128,7 +128,7 @@ class Category extends BaseModel {
         return $pages;
     }
 
-    public function getStories() {
+    public function getTopStories() {
         if(!$this->stories) {
             $this->stories['top_story_1'] = new Article($this->fields['top_slider_1']);
             $this->stories['top_story_2'] = new Article($this->fields['top_slider_2']);
