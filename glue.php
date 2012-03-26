@@ -47,7 +47,7 @@
             $path = $_SERVER['REQUEST_URI'];
 
             if($base != NULL) {
-                $path = substr($path, strpos($path, $base)+strlen($base))."\n";
+                $path = substr($path, strpos($path, $base)+strlen($base));
             }
 
             $found = false;

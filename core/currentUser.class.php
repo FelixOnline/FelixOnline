@@ -23,8 +23,7 @@ class CurrentUser extends User {
     /*
      * Public: Resets the session cookie, regenerating its ID, and ensures old session data is removed
      */
-    function resetToGuest()
-    {
+    public function resetToGuest() {
         // the true parameter clears the current session
         session_destroy();
         session_start();
@@ -139,8 +138,7 @@ class CurrentUser extends User {
      * on every visit, if this is greater than two hours then we need to log in
      * again, unless the cookie is valid
      */
-    public function isSessionRecent()
-    {
+    public function isSessionRecent() {
         if (!$_SESSION['felix']['loggedin']) {
             return false; // If we have no session, this method is meaningless.
         }

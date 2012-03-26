@@ -75,7 +75,15 @@ $timing->log('After setup');
 
 try {
 	// try mapping request to urls
-    if(defined('RELATIVE_PATH')) {
+    if(strstr(Utility::currentPageURL(), AUTHENTICATION_PATH) != false) { // if request is to auth path
+        $relpath = substr(
+            substr(
+                AUTHENTICATION_PATH, 
+                strpos(AUTHENTICATION_PATH, AUTHENTICATION_SERVER) 
+                + strlen(AUTHENTICATION_SERVER)
+            ), 0, -1);
+        glue::stick($urls, $relpath);
+    } else if(defined('RELATIVE_PATH')) { // if a relative path is defined
         glue::stick($urls, RELATIVE_PATH);
     } else {
         glue::stick($urls);

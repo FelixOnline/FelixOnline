@@ -8,7 +8,7 @@
     <?php
         foreach($featured as $key => $article) {
             if($key == 'top_story_1') {
-    ?>
+        ?>
                 <li class="withPic">
                     <a href="<?php echo $article->getURL(); ?>">
                         <h5><?php echo $article->getTitle();?></h5>

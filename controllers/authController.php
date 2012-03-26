@@ -2,6 +2,14 @@
 /*
  * Auth controller
  * Handles authenticating users
+ *
+ * Auth flow
+ * 
+ * User posts to https url
+ * -> authenticates username and password using pam_auth
+ * -> sets session and stores it in database
+ * -> redirects user back to login page with session id and flags for remember and where the user came from (goto)
+ * -> 
  */
 class AuthController extends BaseController {
     private $session; // session id used in login
@@ -49,10 +57,9 @@ class AuthController extends BaseController {
                 
                 $this->redirect($_GET['goto']);
             } else {
-                echo 'Fail';
+                echo 'Fail'; // TODO
             }
         }
-        echo Utility::currentPageURL();
     }
 
     /*
@@ -101,8 +108,8 @@ class AuthController extends BaseController {
              * if user is Imperial student, false if not (Union server only)
              */
             $check = pam_auth(
-                $_POST['username'], 
-                $_POST['password']
+                $username, 
+                $password
             );
         } else {
             $check = true; // override check
@@ -183,18 +190,27 @@ class AuthController extends BaseController {
      */
     private function logout() {
         global $currentuser;
-        $this->destroySession($currentuser->getSession());
+        $this->destroySession();
         $currentuser->resetToGuest();
 
         $currentuser->removeCookie();
     }
 
     /*
-     * Private: Destroy a session
+     * Private: Destroy the current session
      */
     private function destroySession() {
         global $currentuser;
+        /*
         $sql = "DELETE FROM login 
+                WHERE user='".$this->db->escape($currentuser->getUser())."'
+                AND session_id='".$this->db->escape($currentuser->getSession())."'
+                AND ip='".$this->db->escape($_SERVER['REMOTE_ADDR'])."'
+                AND browser='".$this->db->escape($_SERVER['HTTP_USER_AGENT'])."'";
+        */
+        $sql = "UPDATE `login`
+                SET valid = 0,
+                logged_in = 0
                 WHERE user='".$this->db->escape($currentuser->getUser())."'
                 AND session_id='".$this->db->escape($currentuser->getSession())."'
                 AND ip='".$this->db->escape($_SERVER['REMOTE_ADDR'])."'
@@ -203,11 +219,16 @@ class AuthController extends BaseController {
 	}
 
     /*
-     * Private: Destroy sessions
+     * Private: Destroy all user sessions
      */
     private function destroySessions() {
         global $currentuser;
+        /*
         $sql = "DELETE FROM login 
+                WHERE user='".$this->db->escape($currentuser->getUser())."'";
+         */
+        $sql = "UPDATE `login` 
+                SET valid = 0
                 WHERE user='".$this->db->escape($currentuser->getUser())."'";
         return $this->db->query($sql);
     }
@@ -218,13 +239,13 @@ class AuthController extends BaseController {
     private function destroyOldSessions() {
         global $currentuser;
         $sql = "DELETE FROM cookies 
-                WHERE UNIXTIME() > UNIXTIME(expires)
+                WHERE UNIX_TIMESTAMP() > UNIX_TIMESTAMP(expires)
         ";
         $this->db->query($sql);
-        $sql = "DELETE FROM login 
+        $sql = "UPDATE `login` 
+                SET valid = 0
                 WHERE user='".$this->db->escape($currentuser->getUser())."'
-                AND valid=0
-                OR logged_in=0
+                AND logged_in=0
                 OR TIMESTAMPDIFF(SECOND,timestamp,NOW()) >
                     ".SESSION_LENGTH.";
         ";
@@ -267,7 +288,14 @@ class AuthController extends BaseController {
      */
     private function setLoggedIn() {
         global $currentuser;
-        $sql = "UPDATE login SET logged_in=1 WHERE user='".$this->db->escape($currentuser->getUser())."' AND session_id = '".$this->db->escape($this->session)."'";
+        $sql = "UPDATE 
+                    login 
+                SET 
+                    logged_in=1 
+                WHERE 
+                    user='".$this->db->escape($currentuser->getUser())."' 
+                    AND session_id = '".$this->db->escape($this->session)."'
+                ";
         return $this->db->query($sql);
     }
 
