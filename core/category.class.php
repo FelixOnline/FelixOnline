@@ -83,9 +83,13 @@ class Category extends BaseModel {
                     AND admin=1
             ";
             $editors = $this->db->get_results($sql);
-            foreach($editors as $key => $object) {
-                $this->editors[] = new User($object->user);
-            }
+            if (is_null($editors)) {
+            	$this->editors = null;
+            } else {
+	            foreach ($editors as $key => $object) {
+	                $this->editors[] = new User($object->user);
+	            }
+			}
         }
         return $this->editors;
     }
