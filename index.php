@@ -13,9 +13,11 @@ try {
 	$timing = new Timing('log-themes');
 	
 	/* If the url is on the union servers then redirect to custom url */
+    /*
 	if (strstr($_SERVER['HTTP_HOST'],"union.ic.ac.uk") !== false) {
 	    header("Location: ".STANDARD_URL.substr($_SERVER['REQUEST_URI'],(1+strrpos($_SERVER['REQUEST_URI'],"/"))));
 	}
+     */
 	
 	$currentuser = new CurrentUser();
 	
