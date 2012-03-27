@@ -6,3 +6,4 @@
 	</ul>
 	<div class="clear"></div>
 </div>
+<?php $timing->log('after social links'); ?>

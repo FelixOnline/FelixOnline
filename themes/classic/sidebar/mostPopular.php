@@ -77,4 +77,5 @@
 </div>
 <?php
     } $cachemp->stop();
+    $timing->log('after mostpopular');
 ?>

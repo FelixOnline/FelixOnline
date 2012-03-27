@@ -62,3 +62,4 @@
     </ul>
 </div>
 <?php } $cache->stop(); ?>
+<?php $timing->log('after recent comments'); ?>

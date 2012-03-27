@@ -5,11 +5,11 @@ $cacheiScience->setExpiry(6*60*60); // set expiry to 6 hours
 if($cacheiScience->start()) {
 ?>
 <div id="iscience">
-    <a href="http://dougal.union.ic.ac.uk/media/iscience/"><img src="img/iscience.png"/></a>
+    <a href="http://www.isciencemag.co.uk/"><img src="img/iscience.png"/></a>
 	<?php
         // Cache this TODO
         $doc = new DOMDocument();
-        $doc->load('http://dougal.union.ic.ac.uk/media/iscience/feed/');
+        $doc->load('http://isciencemag.co.uk/?feed=rss2');
         $arrFeeds = array();
         foreach ($doc->getElementsByTagName('item') as $node) {
             $itemRSS = array ( 
@@ -42,3 +42,4 @@ if($cacheiScience->start()) {
     </ul>
 </div>
 <?php } $cacheiScience->stop(); ?>
+<?php $timing->log('after iscience'); ?>
