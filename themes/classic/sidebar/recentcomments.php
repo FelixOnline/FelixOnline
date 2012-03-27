@@ -23,34 +23,37 @@
             ) AS t 
             ORDER BY timestamp DESC LIMIT ".RECENT_COMMENTS;
             $recent_comments = $db->get_results($sql);
-            foreach($recent_comments as $key => $object) {
-                $comment = new Comment($object->id);
-        ?>
-            <li <?php if($key+1 == count($recent_comments)) echo 'class="last"';?>>
-                <p id="article">
-                    On <a href="<?php echo $comment->getArticle()->getURL(); ?>"><?php echo $comment->getArticle()->getTitle();?></a>
-                </p>
-                <p id="comment">
-                    <span id="endcomment">
-                        <?php echo Utility::trimText($comment->getContent(), 120);?>
-                    </span>
-                </p>
-                <p id="commentinfo">
-                    <a href="<?php echo $comment->getArticle()->getURL(); ?>#comment<?php echo $comment->getId();?>" title="Go to comment">
-                        <?php echo getRelativeTime($comment->getTimestamp());?>
-                    </a> 
-                    <span id="commenter">
-                        <?php
-                            if($comment->isExternal()) { // external comment
-                                echo $comment->getName();
-                            } else { ?>
-                                <a href="<?php echo $comment->getUser()->getURL();?>/">
-                                    <?php echo $comment->getName(); ?>
-                                </a>
-                        <?php } ?> 
-                    </span>
-                </p>
-            </li>
-        <?php } ?>
+			
+			if(!is_null($recent_comments)) {
+	            foreach($recent_comments as $key => $object) {
+	                $comment = new Comment($object->id);
+	        ?>
+	            <li <?php if($key+1 == count($recent_comments)) echo 'class="last"';?>>
+	                <p id="article">
+	                    On <a href="<?php echo $comment->getArticle()->getURL(); ?>"><?php echo $comment->getArticle()->getTitle();?></a>
+	                </p>
+	                <p id="comment">
+	                    <span id="endcomment">
+	                        <?php echo Utility::trimText($comment->getContent(), 120);?>
+	                    </span>
+	                </p>
+	                <p id="commentinfo">
+	                    <a href="<?php echo $comment->getArticle()->getURL(); ?>#comment<?php echo $comment->getId();?>" title="Go to comment">
+	                        <?php echo getRelativeTime($comment->getTimestamp());?>
+	                    </a> 
+	                    <span id="commenter">
+	                        <?php
+	                            if($comment->isExternal()) { // external comment
+	                                echo $comment->getName();
+	                            } else { ?>
+	                                <a href="<?php echo $comment->getUser()->getURL();?>/">
+	                                    <?php echo $comment->getName(); ?>
+	                                </a>
+	                        <?php } ?> 
+	                    </span>
+	                </p>
+	            </li>
+	        <?php }
+	        } ?>
     </ul>
 </div>
