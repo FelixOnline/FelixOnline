@@ -23,17 +23,11 @@ $timing->log('after header');
             $timing->log('after social links');
             include_once(THEME_DIRECTORY.'/sidebar/fbActivity.php');
             $timing->log('after fbactivity');
-            $cachemp = new Cache('mostPopular');
-            if($cachemp->start()) {
-                include_once(THEME_DIRECTORY.'/sidebar/mostPopular.php');
-            } $cachemp->stop();
+            include_once(THEME_DIRECTORY.'/sidebar/mostPopular.php');
             $timing->log('after mostpopular');
-            //$theme->render('sidebar/iscience');
-            //$timing->log('after iscience');
-            $cache = new Cache('recentComments');
-            if($cache->start()) {
-                include_once(THEME_DIRECTORY.'/sidebar/recentcomments.php');
-            } $cache->stop();
+            $theme->render('sidebar/iscience');
+            $timing->log('after iscience');
+            include_once(THEME_DIRECTORY.'/sidebar/recentcomments.php');
             $timing->log('after recent comments');
         ?>
     </div>

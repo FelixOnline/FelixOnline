@@ -1,3 +1,7 @@
+<?php
+    $cache = new Cache('recentComments');
+    if($cache->start()) {
+?>
 <div class="recentComments">
     <h3>Recent Comments</h3>
     <ul>
@@ -57,3 +61,4 @@
 	        } ?>
     </ul>
 </div>
+<?php } $cache->stop(); ?>
