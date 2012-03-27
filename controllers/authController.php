@@ -61,8 +61,16 @@ class AuthController extends BaseController {
             }
 			// show main exception page if something goes wrong here - do not catch!!!
         } else {
-        	// insert login page here
-        	if ($_GET['failed']) { echo 'login failed'; } else { echo 'no error'; }
+            if($currentuser->isLoggedIn()) {
+                $this->redirect(STANDARD_URL);
+            } else {
+                // insert login page here
+                $failed = 0;
+                if (isset($_GET['failed'])) { 
+                    $failed = 1;
+                } 
+                $this->theme->render('login', array('failed' => $failed));
+            }
         }
     }
 
