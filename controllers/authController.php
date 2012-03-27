@@ -49,7 +49,7 @@ class AuthController extends BaseController {
                 
                 $this->redirect($_GET['goto']);
             } else {
-                echo 'Fail';
+                throw new LoginFailureException("Internal error", $this->session, LOGIN_EXCEPTION_SESSION);
             }
         }
         echo Utility::currentPageURL();
@@ -80,10 +80,8 @@ class AuthController extends BaseController {
                     'goto' => $_GET['goto']
                 ));
             } else {
-                // send back to $goto but with fail flag
-                $this->redirect($_GET['goto'], array(
-                    'login' => 'fail'
-                ));
+                throw new LoginException("Invalid credentials", $_POST['username'], LOGIN_EXCEPTION_CREDENTIALS);
+				// Catch this elsewhere
             }
         } else if(isset($_POST['logout'])) {
             $this->logout();
@@ -105,7 +103,11 @@ class AuthController extends BaseController {
                 $_POST['password']
             );
         } else {
-            $check = true; // override check
+        	if ($username == 'bad' || $password == 'bad') {
+        		$check = false; // manual bad case
+        	} else {
+           		$check = true; // override check
+			}
         }
         return $check;
     }

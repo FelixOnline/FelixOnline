@@ -15,6 +15,10 @@ define('EXCEPTION_ERRORHANDLER', 112);
 define('EXCEPTION_VALIDATOR', 113);
 define('EXCEPTION_LOGIN', 114);
 
+define('LOGIN_EXCEPTION_CREDENTIALS', 50);
+define('LOGIN_EXCEPTION_SESSION', 51);
+define('LOGIN_EXCEPTION_OTHER', 52);
+
 // Base of all exceptions
 class UniversalException extends Exception {
 	protected $user;
@@ -259,7 +263,23 @@ class ValidatorException extends UniversalException {
 }
 
 class LoginException extends UniversalException {
+	protected $username;
+	protected $type;
 	
+	public function __construct($message, $username, $type = LOGIN_EXCEPTION_OTHER, $code = EXCEPTION_VALIDATOR, Exception $previous = null) {
+		$this->username = $username;
+		$this->type = $type;
+		
+		parent::__construct($message, $code, $previous);
+	}
+	
+	public function getUsername() {
+		return $this->username;
+	}
+	
+	public function getType() {
+		return $this->type;
+	}
 }
 
 function errorhandler($errno, $errstr, $errfile, $errline, $errcontext) {
