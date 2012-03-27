@@ -240,7 +240,7 @@ $(document).ready(function() {
 /* ------------------------------------------- */
 /* Edit user profile */
 /* ------------------------------------------- */
-    
+
     $('#editProfile').live('click', function() {
         $('#personalCont').hide();
         $('#personalCont.edit').show();
@@ -248,8 +248,9 @@ $(document).ready(function() {
         $('#editProfileSave').show();
         return false;
     });
-    
+
     // Placeholder support 
+    /*
     $('[placeholder]').focus(function() {
       var input = $(this);
       if (input.val() == input.attr('placeholder')) {
@@ -270,9 +271,10 @@ $(document).ready(function() {
         }
       })
     });
+    */
 
     $("#profileform").validate();
-    
+
     $('#editProfileSave').click( function() {
         $('.user').find('[placeholder]').each(function() {
             var input = $(this);
@@ -280,7 +282,7 @@ $(document).ready(function() {
                 input.val('');
             }
         });
-        
+
         if(($('.facebook input').valid() || $('.facebook input').val() == '' ) && ($('.useremail input').valid() || $('.useremail input').val() == '' ) && ($('.website #url').valid() || $('.website #url').val() == '' )) {
             $('#personalLinksEdit label.error').hide();
             // Get new information and then save through ajax

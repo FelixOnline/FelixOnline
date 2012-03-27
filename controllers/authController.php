@@ -104,7 +104,7 @@ class AuthController extends BaseController {
 					// Catch this elsewhere
 	     	  }
      	    } catch (LoginException $e) {
-         		$this->redirect(STANDARD_URL.'login', array(
+         		$this->redirect(AUTHENTICATION_PATH.'login', array(
 					'failed' => true
 				));
 			}
