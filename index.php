@@ -41,8 +41,10 @@ try {
 	 */
 	$sql = "SELECT * FROM `pages`";
 	$pages = $db->get_results($sql);
-	foreach($pages as $key => $page) {
-	    $urls['/'.$page->slug] = 'pageController'; 
+	if (!is_null($pages)) {
+		foreach($pages as $key => $page) {
+		    $urls['/'.$page->slug] = 'pageController'; 
+		}
 	}
 
     /*

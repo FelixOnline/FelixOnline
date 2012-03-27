@@ -14,7 +14,7 @@ $theme->render('header', $header);
         <h2><?php echo $category->getLabel(); ?></h2>
         <div id="info">
             <ul>
-                <li class="editors">Editors: <b><?php echo Utility::outputUserList($category->getEditors(), true);?></b></li>
+                <?php if(is_array($category->getEditors())): ?><li class="editors">Editors: <b><?php echo Utility::outputUserList($category->getEditors(), true);?></b></li><?php endif; ?>
                 <?php if($category->getEmail()) { ?>
                     <li class="email"><?php echo Utility::hideEmail($category->getEmail());?></li>
                 <?php } ?>
@@ -48,6 +48,10 @@ $theme->render('header', $header);
             /* First page */
             if($pagenum == 1) { 
                 $articles = $category->getArticles(1);
+
+				if (count($articles) < 2) {
+					?>There are no articles in this category<?php
+				}
                 foreach($articles as $key => $object) {
                     $article = new Article($object->id);
                     if($key == 1) { // top story ?>

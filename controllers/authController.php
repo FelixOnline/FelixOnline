@@ -57,8 +57,12 @@ class AuthController extends BaseController {
                 
                 $this->redirect($_GET['goto']);
             } else {
-                echo 'Fail'; // TODO
+                throw new LoginFailureException("Internal error", $this->session, LOGIN_EXCEPTION_SESSION);
             }
+			// show main exception page if something goes wrong here - do not catch!!!
+        } else {
+        	// insert login page here
+        	if ($_GET['failed']) { echo 'login failed'; } else { echo 'no error'; }
         }
     }
 
@@ -68,31 +72,36 @@ class AuthController extends BaseController {
     function POST($matches) {
         global $currentuser;
         if(isset($_POST['username']) && isset($_POST['password'])) {
-            if($this->authenticate($_POST['username'], $_POST['password'])) {
-                $currentuser->setUser($_POST['username']); // not needed
-                $this->logSession();
-                $session = $currentuser->getSession();
-                
-                // Close the session here, as we do not want lingering sessions on the auth server
-                $params = session_get_cookie_params();
-                setcookie(session_name(), '', time() - 42000,
-                    $params["path"], $params["domain"],
-                    $params["secure"], $params["httponly"]
-                ); // Remove session ID
-                session_destroy(); // Remove all session data
-
-                $this->redirect(STANDARD_URL.'login', array(
-                    'session' => $session,
-                    'remember' => $_POST['remember'],
-                    'goto' => $_GET['goto']
-                ));
-            } else {
-                // send back to $goto but with fail flag
-                $this->redirect($_GET['goto'], array(
-                    'login' => 'fail'
-                ));
-            }
-        } else if(isset($_POST['logout'])) {
+        	try {
+  	          if($this->authenticate($_POST['username'], $_POST['password'])) {
+    	            $currentuser->setUser($_POST['username']); // not needed
+	                $this->logSession();
+	                $session = $currentuser->getSession();
+	                
+	                // Close the session here, as we do not want lingering sessions on the auth server
+	                $params = session_get_cookie_params();
+	                setcookie(session_name(), '', time() - 42000,
+	                    $params["path"], $params["domain"],
+	                    $params["secure"], $params["httponly"]
+	                ); // Remove session ID
+	                session_destroy(); // Remove all session data
+	
+	                $this->redirect(STANDARD_URL.'login', array(
+	                    'session' => $session,
+	                    'remember' => $_POST['remember'],
+	                    'goto' => $_GET['goto']
+	                ));
+			  } else {
+	                throw new LoginException("Invalid credentials", $_POST['username'], LOGIN_EXCEPTION_CREDENTIALS);
+					// Catch this elsewhere
+	     	  }
+     	    } catch (LoginException $e) {
+         		$this->redirect(STANDARD_URL.'login', array(
+					'failed' => true
+				));
+			}
+        }
+		if(isset($_POST['logout'])) {
             $this->logout();
             $this->redirect($_GET['goto']);
         }
@@ -112,7 +121,11 @@ class AuthController extends BaseController {
                 $password
             );
         } else {
-            $check = true; // override check
+        	if ($username == 'bad' || $password == 'bad') {
+        		$check = false; // manual bad case
+        	} else {
+           		$check = true; // override check
+			}
         }
         return $check;
     }
