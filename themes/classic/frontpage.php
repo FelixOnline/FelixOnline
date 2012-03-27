@@ -24,14 +24,16 @@ $timing->log('after header');
             include_once(THEME_DIRECTORY.'/sidebar/fbActivity.php');
             $timing->log('after fbactivity');
             $cachemp = new Cache('mostPopular');
-            $cachemp->setExpiry(30*60); // 1 hour
             if($cachemp->start()) {
                 include_once(THEME_DIRECTORY.'/sidebar/mostPopular.php');
             } $cachemp->stop();
             $timing->log('after mostpopular');
             //$theme->render('sidebar/iscience');
             //$timing->log('after iscience');
-            include_once(THEME_DIRECTORY.'/sidebar/recentcomments.php');
+            $cache = new Cache('recentComments');
+            if($cache->start()) {
+                include_once(THEME_DIRECTORY.'/sidebar/recentcomments.php');
+            } $cache->stop();
             $timing->log('after recent comments');
         ?>
     </div>
