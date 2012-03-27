@@ -75,6 +75,7 @@ class CurrentUser extends User {
      * Public: Check if there is a valid permanent cookie, if so log in with it
      *
      * Returns false if failed, username otherwise
+     * TODO make sure there isn't redundant code
      */
     public function loginFromCookie() {
     	global $db;
@@ -123,7 +124,7 @@ class CurrentUser extends User {
         ";
         $db->query($sql);
 
-        parent::__construct($username);
+        parent::__construct($username); // TODO construct doesn't accept a username
 
         $_SESSION['felix']['vname'] = $this->getName();
         //$_SESSION['felix']['name'] = $this->getForename();
