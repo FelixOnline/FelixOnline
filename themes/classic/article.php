@@ -36,6 +36,8 @@ $theme->render('header', $header);
             $theme->render('sidebar/mostPopular');
             $theme->render('sidebar/fbActivity');
             //include_once(THEME_DIRECTORY.'/sidebar/mediaBox.php');
+
+            $timing->log('after sidebar');
         ?>
     </div>
     <!-- End of sidebar -->
@@ -76,6 +78,8 @@ $theme->render('header', $header);
         </div>
         <!-- End of article header -->
 
+        <?php $timing->log('after article header'); ?>
+
         <!-- Sidebar 2 -->
         <div class="sidebar2 grid_2 push_6 entry-unrelated">
             <div id="sharebuttonsCont">
@@ -109,6 +113,7 @@ $theme->render('header', $header);
             </ul>
         </div>
         <!-- End of Sidebar 2 -->
+        <?php $timing->log('after sidebar 2'); ?>
 
         <!-- Content -->
         <div class="content grid_6 pull_2 omega entry-content">
@@ -138,9 +143,11 @@ $theme->render('header', $header);
                     <?php } ?>
                 </div>
             <?php } ?>
+            <?php $timing->log('after image'); ?>
             <?php
                 echo $article->getContent();
             ?>
+            <?php $timing->log('after content'); ?>
         </div>
         <!-- End of content -->
 
