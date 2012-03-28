@@ -62,6 +62,19 @@ try {
 	    $urls[$route] = $controller; 
     }
 
+    /*
+     * Add blogs to routes
+     */
+    $sql = "SELECT * FROM `blogs`";
+    $blogs = $db->get_results($sql);
+    foreach($blogs as $key => $blog) {
+        $controller = 'blogController';
+        if($blog->controller) {
+            $controller = $blog->controller;
+        }
+        $urls['/'.$blog->slug] = $controller;
+    }
+
 } catch (Exception $e) {
 	$prior_exception = null;
 	require('errors/index.php');
