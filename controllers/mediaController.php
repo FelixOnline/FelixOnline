@@ -10,7 +10,8 @@ class MediaController extends BaseController {
         global $db;
         $this->db = $db;
 
-        $this->theme = new Theme('classic');
+        $theme = new Theme('classic');
+        $this->theme = $theme->getClass(); // used so that theme can specify a theme class if necessary
         $this->theme->setSite('media');
     }
 
@@ -23,6 +24,7 @@ class MediaController extends BaseController {
      *      media-{type}-single - media type single page
      */
     function GET($matches) {
+    	global $timing;
         if(array_key_exists('type', $matches)) {
             if(array_key_exists('id', $matches)) {
                 $class = 'media'.ucfirst($matches['type']);

@@ -5,7 +5,7 @@ $header = array(
     'title' => 'Felix Online Media'
 );
 
-$theme->resources->addCSS(array('galleria.classic.css'));
+$theme->resources->addCSS(array('galleria.classic.css', 'felix-galleria.css'));
 $theme->resources->addJS(array('galleria/galleria-1.2.2.js', 'galleria/themes/classic/galleria.classic.js', 'galleria/gallery.js'));
 
 $theme->render('header', $header);
@@ -62,7 +62,7 @@ $theme->render('header', $header);
             <li>
                 <a href="<?php echo $album->getURL(); ?>">
                     <img src="<?php echo $album->getThumbnail()->getURL(210, 120); ?>"/>	
-                    <h5><? echo $album->getTitle(); ?></h5>
+                    <h5><?php echo $album->getTitle(); ?></h5>
                 </a>
             </li>
         <?php } ?>

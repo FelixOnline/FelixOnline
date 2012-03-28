@@ -1,4 +1,6 @@
 <?php
+global $timing;
+
 $timing->log('media page');
 
 $header = array(
