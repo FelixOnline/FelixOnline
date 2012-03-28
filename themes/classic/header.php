@@ -61,10 +61,12 @@
 				</div>
 				<div class="grid_3 login omega">
 					<?php if(!$currentuser->isLoggedIn()) { ?>
-                        <a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox" id="loginButtonA">
+                        <a href="<?php echo Utility::currentPageURL();?>#loginBoxCont" rel="facebox" id="loginButtonA">
                             <div id="loginbutton">Login</div>
                         </a>
-                        <?php include(THEME_DIRECTORY.'/loginBox.php'); ?>
+                        <div id="loginBoxCont">
+                            <?php $theme->render('loginBox'); ?>
+                        </div>
 					<?php } else { ?>
 						<div id="loginName">
 						<?php if ($currentuser->getRole() > 0)

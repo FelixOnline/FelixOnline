@@ -13,9 +13,11 @@ try {
 	$timing = new Timing('log-themes');
 	
 	/* If the url is on the union servers then redirect to custom url */
+    /*
 	if (strstr($_SERVER['HTTP_HOST'],"union.ic.ac.uk") !== false) {
 	    header("Location: ".STANDARD_URL.substr($_SERVER['REQUEST_URI'],(1+strrpos($_SERVER['REQUEST_URI'],"/"))));
 	}
+     */
 	
 	$currentuser = new CurrentUser();
 	
@@ -60,6 +62,19 @@ try {
 	    $urls[$route] = $controller; 
     }
 
+    /*
+     * Add blogs to routes
+     */
+    $sql = "SELECT * FROM `blogs`";
+    $blogs = $db->get_results($sql);
+    foreach($blogs as $key => $blog) {
+        $controller = 'blogController';
+        if($blog->controller) {
+            $controller = $blog->controller;
+        }
+        $urls['/'.$blog->slug] = $controller;
+    }
+
 } catch (Exception $e) {
 	$prior_exception = null;
 	require('errors/index.php');
@@ -77,7 +92,15 @@ $timing->log('After setup');
 
 try {
 	// try mapping request to urls
-    if(defined('RELATIVE_PATH')) {
+    if(strstr(Utility::currentPageURL(), AUTHENTICATION_PATH) != false) { // if request is to auth path
+        $relpath = substr(
+            substr(
+                AUTHENTICATION_PATH, 
+                strpos(AUTHENTICATION_PATH, AUTHENTICATION_SERVER) 
+                + strlen(AUTHENTICATION_SERVER)
+            ), 0, -1);
+        glue::stick($urls, $relpath);
+    } else if(defined('RELATIVE_PATH')) { // if a relative path is defined
         glue::stick($urls, RELATIVE_PATH);
     } else {
         glue::stick($urls);

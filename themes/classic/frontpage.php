@@ -15,20 +15,14 @@ $timing->log('after header');
     <!-- Sidebar -->
     <div class="sidebar grid_4 push_8">
         <?php
-            include_once(THEME_DIRECTORY.'/sidebar/fbLikeBox.php');
-            $timing->log('after fblikebox');
+            $theme->render('sidebar/fbLikeBox');
             //include_once(THEME_DIRECTORY.'/sidebar/mediaBox.php');
             //$timing->log('after mediabox');
-            include_once(THEME_DIRECTORY.'/sidebar/socialLinks.php');
-            $timing->log('after social links');
-            include_once(THEME_DIRECTORY.'/sidebar/fbActivity.php');
-            $timing->log('after fbactivity');
-            include_once(THEME_DIRECTORY.'/sidebar/mostPopular.php');
-            $timing->log('after mostpopular');
-            //$theme->render('sidebar/iscience');
-            //$timing->log('after iscience');
-            include_once(THEME_DIRECTORY.'/sidebar/recentcomments.php');
-            $timing->log('after recent comments');
+            $theme->render('sidebar/socialLinks');
+            $theme->render('sidebar/fbActivity');
+            $theme->render('sidebar/mostPopular');
+            $theme->render('sidebar/iscience');
+            $theme->render('sidebar/recentcomments');
         ?>
     </div>
     <?php $timing->log('after sidebar'); ?>

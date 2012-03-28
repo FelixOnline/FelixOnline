@@ -1,3 +1,7 @@
+<?php
+    $cachemp = new Cache('mostPopular');
+    if($cachemp->start()) {
+?>
 <div id="mostPopular">
 	<h3>Most Popular</h3>
 	<ul class="popularNav">
@@ -75,3 +79,7 @@
         <?php } ?>
 	</div>
 </div>
+<?php
+    } $cachemp->stop();
+    $timing->log('after mostpopular');
+?>

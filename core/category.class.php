@@ -26,6 +26,7 @@ class Category extends BaseModel {
     protected $db;
     private $editors = array();
     private $count; // number of articles in catgeory
+    private $stories; // array of top story objects
 
     function __construct($cat=NULL) {
         global $db;
@@ -129,6 +130,16 @@ class Category extends BaseModel {
         }
         $pages = ceil(($this->count - ARTICLES_PER_CAT_PAGE) / (ARTICLES_PER_SECOND_CAT_PAGE)) + 1;
         return $pages;
+    }
+
+    public function getTopStories() {
+        if(!$this->stories) {
+            $this->stories['top_story_1'] = new Article($this->fields['top_slider_1']);
+            $this->stories['top_story_2'] = new Article($this->fields['top_slider_2']);
+            $this->stories['top_story_3'] = new Article($this->fields['top_slider_3']);
+            $this->stories['top_story_4'] = new Article($this->fields['top_slider_4']);
+        }
+        return $this->stories;
     }
 }
 ?>
