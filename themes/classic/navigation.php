@@ -15,7 +15,7 @@
                     FROM `category` 
                     WHERE hidden=0 
                     AND id>0 
-                    ORDER BY id ASC";
+                    ORDER BY `order` ASC";
             $cats = $db->get_results($sql);
 			
 			if (!is_null($cats)) {
