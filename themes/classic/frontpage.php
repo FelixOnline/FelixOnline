@@ -57,6 +57,7 @@ $timing->log('after header');
                 AND section='a'";
             $sectionA = $db->get_row($sql);
             $timing->log('get frontpage articles');
+			if (!is_null($sectionA)) {
         ?>
         <!-- Top story -->
         <div class="grid_8 alpha topstory">
@@ -99,7 +100,7 @@ $timing->log('after header');
             </div>
         </div>
         <!-- End of top story -->
-
+		<?php } ?>
         <!-- In this issue -->
         <div class="grid_2 push_6 alpha omega thisIssue">
             <h5>In this Issue</h5>
@@ -115,6 +116,8 @@ $timing->log('after header');
                     AND section='b'";
                 //$sectionB = array_unique(mysql_fetch_array(mysql_query($sql,$cid)));
                 $sectionB = $db->get_row($sql);
+				
+				if (!is_null($sectionB)):
                 foreach($sectionB as $key => $value) {
                     $article = new Article($value); ?>
                     <div class="thisIssueCont <?php if($key == 'one') echo 'top';?>">
@@ -133,10 +136,17 @@ $timing->log('after header');
                             </a>
                         </div>
                     </div>
-                <?php } ?>
+                <?php }
+				else :
+                ?>
+                <div class="thisIssueCont top">
+                	No articles have been assigned to this zone
+                </div>
+                <?php endif; ?>
         </div>
         <!-- End of in this issue -->
 
+		<?php if (!is_null($sectionA)) { ?>
         <!-- Second article -->
         <?php $article = new Article($sectionA->two); ?>
         <div class="grid_6 pull_2 omega alpha featBox <?php echo $article->getCategoryCat();?>">
@@ -341,7 +351,10 @@ $timing->log('after header');
             </ul>
         </div>
         <!-- End of news list -->
-
+		<?php } else { ?>
+			<div class="grid_8 alpha">No articles have been set on the frontpage</div>
+		<?php } ?>
+		
         <!-- Featured articles -->        
         <div class="grid_8 alpha omega" id="featuredarticles">
             <h3>Featured Articles</h3>
@@ -357,6 +370,7 @@ $timing->log('after header');
             ?>
 
             <!-- Main featured article -->
+            <?php if (!is_null($featured)) { ?>
             <?php $article = new Article($featured->one); ?>
             <a href="<?php echo $article->getURL(); ?>">
                 <div id="imgcont">
@@ -385,6 +399,9 @@ $timing->log('after header');
                     </a>
                 </li>
             </ul>
+            <?php } else { ?>
+            	<p>No articles have been assigned to this zone</p>
+            <?php } ?>
         </div>
         <!-- End of featured articles -->
         
@@ -403,7 +420,7 @@ $timing->log('after header');
                             ORDER BY date DESC 
                             LIMIT 1";
                         $editorial = new Article($db->get_var($sql));
-                    ?>
+                    if (!is_null($db->get_var($sql))) { ?>
                     <h3>
                         <a href="<?php echo $editorial->getURL(); ?>">
                             <?php echo $editorial->getTitle();?>
@@ -412,6 +429,9 @@ $timing->log('after header');
                     <p>
                         <?php echo $editorial->getPreview(245); ?> ...
                     </p>
+                    <?php } else { ?>
+                    <p>No editorial could be found in the database</p>
+                    <?php } ?>
             </div>
         </div>
         <!-- End of editorial -->
@@ -497,30 +517,32 @@ $timing->log('after header');
             AND `order`>0
             ORDER BY `order` ASC";
     $cats = $db->get_results($sql);
-    foreach($cats as $key => $cat) {
-        $article = new Article($cat->top);
-    ?>
-        <div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
-            <div class="border <?php echo $cat->cat;?>">
-                <h3>
-                    <a href="<?php echo STANDARD_URL.$cat->cat;?>/">
-                        <?php echo $cat->label;?>
-                    </a>
-                </h3>
-                <a href="<?php echo $article->getURL();?>">
-                    <img id="featuredBarPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 120);?>" width="220px" height="120px">
-                </a>
-                <h4>
-                    <a href="<?php echo $article->getURL();?>">
-                        <?php echo $article->getTitle();?>
-                    </a>
-                </h4>
-                <p>
-                    <?php echo $article->getPreview(10);?>
-                </p>
-            </div>
-        </div>
-    <?php } ?>
+	if (!is_null($cats)) {
+	    foreach($cats as $key => $cat) {
+	        $article = new Article($cat->top);
+	    ?>
+	        <div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
+	            <div class="border <?php echo $cat->cat;?>">
+	                <h3>
+	                    <a href="<?php echo STANDARD_URL.$cat->cat;?>/">
+	                        <?php echo $cat->label;?>
+	                    </a>
+	                </h3>
+	                <a href="<?php echo $article->getURL();?>">
+	                    <img id="featuredBarPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 120);?>" width="220px" height="120px">
+	                </a>
+	                <h4>
+	                    <a href="<?php echo $article->getURL();?>">
+	                        <?php echo $article->getTitle();?>
+	                    </a>
+	                </h4>
+	                <p>
+	                    <?php echo $article->getPreview(10);?>
+	                </p>
+	            </div>
+	        </div>
+	    <?php }
+	    } ?>
 </div>
 <!-- End of featured bar -->
 <?php $theme->render('footer'); ?>

@@ -54,6 +54,8 @@
 	                </p>
 	            </li>
 	        <?php }
-	        } ?>
+	        } else { ?>
+	        	Nobody has posted any comments yet!
+	        <?php } ?>
     </ul>
 </div>
