@@ -57,7 +57,7 @@ class AuthController extends BaseController {
                 
                 $this->redirect($_GET['goto']);
             } else {
-                throw new LoginFailureException("Internal error", $this->session, LOGIN_EXCEPTION_SESSION);
+                throw new LoginException("Internal error", $this->session, LOGIN_EXCEPTION_SESSION);
             }
 			// show main exception page if something goes wrong here - do not catch!!!
         } else {
@@ -83,7 +83,7 @@ class AuthController extends BaseController {
         	try {
   	          if($this->authenticate($_POST['username'], $_POST['password'])) {
     	            $currentuser->setUser($_POST['username']); // not needed
-	                $this->logSession();
+	                $this->logSession($_POST['username']);
 	                $session = $currentuser->getSession();
 	                
 	                // Close the session here, as we do not want lingering sessions on the auth server
@@ -141,7 +141,7 @@ class AuthController extends BaseController {
     /*
      * Private: Log session in database
      */
-    private function logSession() {
+    private function logSession($username) {
         global $currentuser;
         $sql = "INSERT INTO `login` 
                 (
@@ -153,7 +153,7 @@ class AuthController extends BaseController {
                     '".$this->db->escape($currentuser->getSession())."',
                     '".$this->db->escape($_SERVER['REMOTE_ADDR'])."',
                     '".$this->db->escape($_SERVER['HTTP_USER_AGENT'])."',
-                    '".$this->db->escape($currentuser->getUser())."'
+                    '".$this->db->escape($username)."'
                 )
         ";
         return $this->db->query($sql);

@@ -180,9 +180,16 @@ class CurrentUser extends User {
      */
     public function setUser($username) {
         $username = strtolower($username);
-        parent::__construct($username);
+        
+        try {
+        	parent::__construct($username);
+        } catch (NotFoundException $e) {
+        	// User does not yet exist in our database...
+        	// It'll be created later so carry on
+        }
+        
         /* update user details */
-        $this->updateName();
+        $name = $this->updateName($username);
 
         $sql = "UPDATE login
                 SET timestamp = NOW()
@@ -201,13 +208,13 @@ class CurrentUser extends User {
             (user,name,visits,ip) 
             VALUES (
                 '".$this->db->escape($username)."',
-                '".$this->db->escape($this->getName())."',
+                '".$this->db->escape($name)."',
                 1,
                 '".$_SERVER['REMOTE_ADDR']."'
             ) 
             ON DUPLICATE KEY 
             UPDATE 
-                name='".$this->db->escape($this->getName())."',
+                name='".$this->db->escape($name)."',
                 visits=visits+1,
                 ip='".$this->db->escape($_SERVER['REMOTE_ADDR'])."',
                 timestamp=NOW()";
@@ -231,17 +238,22 @@ class CurrentUser extends User {
     /*
      * Update user's name from ldap
      */
-    private function updateName() {
+    private function updateName($uname) {
         if(!LOCAL) {
             $ds = ldap_connect("addressbook.ic.ac.uk");
             $r = ldap_bind($ds);
             $justthese = array("gecos");
             $sr = ldap_search($ds, "ou=People, ou=everyone, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
             $info = ldap_get_entries($ds, $sr);
-            if ($info["count"] > 0)
+            if ($info["count"] > 0) {
                 $this->setName($info[0]['gecos'][0]);
-            else
+                return ($info[0]['gecos'][0]);
+			} else {
                 return false;
+			}
+        } else {
+        	$this->setName($uname);
+        	return $uname;
         }
     }
 
