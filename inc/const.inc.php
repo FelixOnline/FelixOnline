@@ -17,7 +17,7 @@
 	if(!defined('AUTHENTICATION_SERVER'))           define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk'); // authentication server
 	if(!defined('AUTHENTICATION_PATH'))             define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/'); // authentication path
 	if(!defined('ROOT_USERS'))                      define('ROOT_USERS','felix,cjb07,rsp07,jk708'); // separate with commas, no spaces
-	if(!defined('DEFAULT_IMG_URI'))                 define('DEFAULT_IMG_URI','img/felix_400x400.jpg'); // default image [TODO]
+	if(!defined('DEFAULT_IMG_URI'))                 define('DEFAULT_IMG_URI','felix-400x400.png'); // default image [TODO]
 	if(!defined('DEFAULT_ARTICLE_IMG_ID'))          define('DEFAULT_ARTICLE_IMG_ID',183); // default image id [depreciated]
 	if(!defined('ARTICLE_URL_ID_PREFIX'))           define('ARTICLE_URL_ID_PREFIX',(STANDARD_URL.'?article=')); // article url prefix [depreciated]
 	if(!defined('TICKER_ARTICLES'))                 define('TICKER_ARTICLES',10); // number of articles in ticker [depreciated]

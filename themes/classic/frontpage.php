@@ -88,7 +88,11 @@ $timing->log('after header');
                 </div>
                 <div id="topStoryPic">
                     <a href="<?php echo $article->getURL();?>">
-                        <img id="topStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(340, 220); ?>" height="220px" width="340px">
+                    	<?php if ($article->getImage()): ?>
+                        	<img id="topStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(340, 220); ?>" height="220px" width="340px">
+ 						<?php else: ?>
+                        	<img id="topStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/340/'.DEFAULT_IMG_URI; ?>" height="220px" width="340px">
+                        <?php endif; ?>
                     </a>
                 </div>
             </div>
@@ -116,7 +120,11 @@ $timing->log('after header');
                     $article = new Article($value); ?>
                     <div class="thisIssueCont <?php if($key == 'one') echo 'top';?>">
                         <a href="<?php echo $article->getURL();?>">
+                        <?php if ($article->getImage()): ?>
                             <img alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(140, 140);?>" width="140px" height="140px" class="captify" rel="caption2"/>
+ 						<?php else: ?>
+                        	<img alt="" src="<?php echo IMAGE_URL.'/140/140/'.DEFAULT_IMG_URI; ?>" width="140px" height="140px" class="captify" rel="caption2"/>
+                        <?php endif; ?>
                             <br class="c"/>
                         </a>
                         <div class="caption1">
@@ -172,7 +180,11 @@ $timing->log('after header');
             </div>
             <div id="secondStoryPic">
                 <a href="<?php echo $article->getURL(); ?>">
-                    <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(220, 160);?>" width="220px" height="160px">
+                	<?php if ($article->getImage()): ?>
+                    	<img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 160); ?>" height="160px" width="220px">
+					<?php else: ?>
+                    	<img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/160/'.DEFAULT_IMG_URI; ?>" height="160px" width="220px">
+                    <?php endif; ?>
                 </a>
             </div>
         </div>
@@ -209,7 +221,11 @@ $timing->log('after header');
             </div>
             <div id="secondStoryPic">
                 <a href="<?php echo $article->getURL();?>">
-                    <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(220, 160);?>" width="220px" height="160px" >
+                	<?php if ($article->getImage()): ?>
+                    	<img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 160); ?>" height="160px" width="220px">
+					<?php else: ?>
+                    	<img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/160/'.DEFAULT_IMG_URI; ?>" height="160px" width="220px">
+                    <?php endif; ?>
                 </a>
             </div>
         </div>
@@ -245,15 +261,25 @@ $timing->log('after header');
             <div class="clear"></div>
 
             <!-- Pictures -->
+
             <div id="thirdStoryPic" class="grid_3 alpha">
                 <a href="<?php echo $articleA->getURL();?>">
-                    <img id="thirdStoryPhoto" alt="<?php echo $articleA->getImage()->getTitle();?>" src="<?php echo $articleA->getImage()->getURL(210, 130);?>" width="210px" height="130px">
+                    <?php if ($articleA->getImage()): ?>
+                    	<img id="thirdStoryPhoto" alt="<?php echo $articleA->getImage()->getTitle();?>" src="<?php echo $articleA->getImage()->getURL(210, 130);?>" width="210px" height="130px">
+					<?php else: ?>
+                    	<img id="thirdStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/210/130/'.DEFAULT_IMG_URI; ?>" height="130px" width="210px">
+                    <?php endif; ?>
                 </a>
             </div>
             <div id="thirdStoryPic" class="grid_3 omega">
                 <a href="<?php echo $articleB->getURL();?>">
-                    <img id="thirdStoryPhoto" alt="<?php echo $articleB->getImage()->getTitle();?>" src="<?php echo $articleB->getImage()->getURL(210, 130);?>" width="210px" height="130px"></a>
-            </div>
+                    <?php if ($articleB->getImage()): ?>
+                    	<img id="thirdStoryPhoto" alt="<?php echo $articleB->getImage()->getTitle();?>" src="<?php echo $articleB->getImage()->getURL(210, 130);?>" width="210px" height="130px">
+					<?php else: ?>
+                    	<img id="thirdStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/210/130/'.DEFAULT_IMG_URI; ?>" height="130px" width="210px">
+                    <?php endif; ?>
+                </a>
+             </div>
             <div class="clear"></div>
 
             <!-- Teaser -->
@@ -368,7 +394,11 @@ $timing->log('after header');
             <?php $article = new Article($featured->one); ?>
             <a href="<?php echo $article->getURL(); ?>">
                 <div id="imgcont">
-                    <img alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(290, 190);?>" width="290px">
+                    <?php if ($articleB->getImage()): ?>
+                    	<img alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(290, 190);?>" width="290px">
+                    <?php else: ?>
+                    	<img alt="" src="<?php echo IMAGE_URL.'/290/190/'.DEFAULT_IMG_URI; ?>" width="290px">
+                    <?php endif; ?>
                 </div>
                 <h4>
                     <?php echo $article->getTitle();?>
@@ -523,7 +553,11 @@ $timing->log('after header');
 	                    </a>
 	                </h3>
 	                <a href="<?php echo $article->getURL();?>">
-	                    <img id="featuredBarPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 120);?>" width="220px" height="120px">
+	                    <?php if ($article->getImage()): ?>
+	                    	<img id="featuredBarPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 120);?>" width="220px" height="120px">
+						<?php else: ?>
+	                    	<img id="featuredBarPhoto" alt="" src="<?php echo IMAGE_URL.'/220/120/'.DEFAULT_IMG_URI; ?>" width="220px" height="120px">
+	                    <?php endif; ?>
 	                </a>
 	                <h4>
 	                    <a href="<?php echo $article->getURL();?>">

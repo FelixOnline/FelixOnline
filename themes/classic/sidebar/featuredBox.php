@@ -23,7 +23,11 @@
                         <h5><?php echo $article->getTitle();?></h5>
                         <div class="featuredPic">
                             <a href="<?php echo $article->getURL(); ?>">
-                                <img id="featuredPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(150, 100); ?>">
+			                    <?php if ($article->getImage()): ?>
+                                	<img id="featuredPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(150, 100); ?>">
+								<?php else: ?>
+			                    	<img id="featuredPhoto" alt="" src="<?php echo IMAGE_URL.'/150/100/'.DEFAULT_IMG_URI; ?>">
+			                    <?php endif; ?>
                             </a>
                         </div>
                     </a>
