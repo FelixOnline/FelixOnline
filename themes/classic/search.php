@@ -1,3 +1,16 @@
+<?php
+$timing->log('frontpage');
+
+$header = array(
+    'title' => 'Felix Online - The student voice of Imperial College London',
+    'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
+);
+
+$theme->render('header', $header); 
+$timing->log('after header');
+
+?>
+
 	<div class="container_12">
 	
 		<?php
@@ -9,10 +22,10 @@
 		<!-- Sidebar -->
 		<div class="sidebar grid_4 push_8">
 			<?php 
-				include_once('sidebar/fbActivity.php');
-				include_once('sidebar/mediaBox.php');
-				include_once('sidebar/mostPopular.php');
-				include_once('sidebar/socialLinks.php');
+	            $theme->render('sidebar/fbActivity');
+	            $theme->render('sidebar/mostPopular');
+	            $theme->render('sidebar/socialLinks');
+
 			?>
 		</div>
 		<!-- End of sidebar -->
@@ -266,3 +279,6 @@
 		<!-- End of search container -->
 		<div class="clear"></div>
 	</div>
+	
+<?php $timing->log('end of search');?>
+<?php $theme->render('footer'); ?>
