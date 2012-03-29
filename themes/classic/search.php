@@ -83,21 +83,28 @@ $timing->log('after header');
 					
 					// title search
 					$sql = "SELECT id FROM article WHERE title LIKE '%$param%' AND hidden = 0 AND published < NOW() ORDER BY date DESC";
-					$rows = mysql_num_rows(mysql_query($sql,$cid));
+					$results = $db->get_results($sql);
 					
-					$query = mysql_query($sql);
-					while (list($article) = mysql_fetch_array($query)) { 
-						array_push($search, $article);
+					if (is_null($results)) {
+						$rows = 0;
+					} else {
+						$rows = count($results);
+
+						foreach ($results as $article) {
+							$article = new Article($article->id);
+							array_push($search, $article);
+						}
 					}
 					
 					// if number of results from title is less than 4 then add content search as well
-					$sql = "SELECT article.id FROM `article` INNER JOIN `text_story` ON (article.text1=text_story.id) WHERE text_story.content LIKE '%$param%' AND article.hidden = 0 AND article.published < NOW() ORDER BY article.date DESC";
-					$query = mysql_query($sql);
+					/*$sql = "SELECT article.id FROM `article` INNER JOIN `text_story` ON (article.text1=text_story.id) WHERE text_story.content LIKE '%$param%' AND article.hidden = 0 AND article.published < NOW() ORDER BY article.date DESC";
+					$results = $db->get_row($sql);
+					
 					while (list($article) = mysql_fetch_array($query)) { 
 						array_push($search, $article);
 					}
 					
-					$rows = count($search);
+					$rows = count($search); */
 				}
 			?>
 			<?php if($toofew) { ?>
@@ -158,24 +165,28 @@ $timing->log('after header');
 				?>
 				<div class="userArticle">
 					<div class="userArticleDate grid_1 alpha">
-						<span><?php echo date('jS',get_article_date($article)); ?></span><br/>
-						<?php echo date('F Y',get_article_date($article)); ?><br/>
+						<span><?php echo date('jS',$article->getDate()); ?></span><br/>
+						<?php echo date('F Y',$article->getDate()); ?><br/>
 					</div>
-					<div class="userArticleInfo grid_7 omega <?php if (get_article_category_cat($article) == 'comment') echo 'second';?>">
-						<h3><a href="<?php echo article_url($article);?>"><?php echo get_article_title($article);?></a></h3>
+					<div class="userArticleInfo grid_7 omega <?php if ($article->getCategory()->getCat() == 'comment') echo 'second';?>">
+						<h3><a href="<?php echo $article->getUrl();?>"><?php echo $article->getTitle();?></a></h3>
 						<div class="subHeader">
-							<p><?php echo get_article_preview_trunc($article, 30); ?></p>
+							<p><?php echo $article->getPreview(30); ?></p>
 							<div id="storyMeta">
 								<ul class="metaList">
-									<li id="category"><a href="<?php echo get_article_category_cat($article);?>" class="<?php echo get_article_category_cat($article);?>"><?php echo get_article_category($article);?></a></li>
-									<li id="comments"><a href="<?php echo article_url($article);?>#commentHeader"><?php $num_comments = get_article_comments($article); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
+									<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
+									<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
 								</ul>
 							</div>
 						</div>
-						<?php if (get_article_category_cat($article) != 'comment') { ?>
+						<?php if ($article->getCategory()->getCat() != 'comment') { ?>
 							<div id="secondStoryPic">
-								<a href="<?php echo article_url($article);?>">
-									<img id="secondStoryPhoto" alt="<?php echo $image_title;?>" src="../inc/timthumb.php?src=../<?php echo get_img_uri(get_img_id($article, 1));?>&h=130px&w=220px&zc=1&a=t">
+								<a href="<?php echo $article->getUrl();?>">
+				                	<?php if ($article->getImage()): ?>
+				                    	<img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 130); ?>" height="130px" width="220px">
+									<?php else: ?>
+				                    	<img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/130/'.DEFAULT_IMG_URI; ?>" height="130px" width="220px">
+				                    <?php endif; ?>
 								</a>
 							</div>
 						<?php } ?>
@@ -186,48 +197,46 @@ $timing->log('after header');
 				<?php } else { ?>
 				<div class="userArticle">
 					<div class="userArticleDate grid_1 alpha">
-						<span><?php echo date('jS',get_article_date($article)); ?></span><br/>
-						<?php echo date('F Y',get_article_date($article)); ?>
-						<div><?php //echo get_article_hits($article); ?> hits</div>
+						<span><?php echo date('jS',$article->getDate()); ?></span><br/>
+						<?php echo date('F Y',$article->getDate()); ?><br/>
 					</div>
 					<div class="userArticleInfo grid_7 omega second">
-						<h3><a href="<?php echo article_url($article);?>"><?php echo get_article_title($article);?></a></h3>
+						<h3><a href="<?php echo $article->getUrl();?>"><?php echo $article->getTitle();?></a></h3>
 						<div class="subHeader">
-							<p><?php echo get_article_preview_trunc($article, 30); ?></p>
+							<p><?php echo $article->getPreview(30); ?></p>
 							<div id="storyMeta">
 								<ul class="metaList">
-									<li id="category"><a href="<?php echo get_article_category_cat($article);?>" class="<?php echo get_article_category_cat($article);?>"><?php echo get_article_category($article);?></a></li>
-									<li id="comments"><a href="<?php echo article_url($article);?>#commentHeader"><?php $num_comments = get_article_comments($article); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
+									<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
+									<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
 								</ul>
 							</div>
 						</div>
 						<div class="clear"></div>
 					</div>
 					<div class="clear"></div>
-				</div>	
-			<?php } 
+				</div>			<?php } 
 				} else { ?>
 				<div class="userArticle">
 					<div class="userArticleDate grid_1 alpha">
-						<span><?php echo date('jS',get_article_date($article)); ?></span><br/>
-						<?php echo date('F Y',get_article_date($article)); ?>
-						<div><?php //echo get_article_hits($article); ?> hits</div>
+						<span><?php echo date('jS',$article->getDate()); ?></span><br/>
+						<?php echo date('F Y',$article->getDate()); ?><br/>
 					</div>
 					<div class="userArticleInfo grid_7 omega second">
-						<h3><a href="<?php echo article_url($article);?>"><?php echo get_article_title($article);?></a></h3>
+						<h3><a href="<?php echo $article->getUrl();?>"><?php echo $article->getTitle();?></a></h3>
 						<div class="subHeader">
-							<p><?php echo get_article_preview_trunc($article, 30); ?></p>
+							<p><?php echo $article->getPreview(30); ?></p>
 							<div id="storyMeta">
 								<ul class="metaList">
-									<li id="category"><a href="<?php echo get_article_category_cat($article);?>" class="<?php echo get_article_category_cat($article);?>"><?php echo get_article_category($article);?></a></li>
-									<li id="comments"><a href="<?php echo article_url($article);?>#commentHeader"><?php $num_comments = get_article_comments($article); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
+									<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
+									<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
 								</ul>
 							</div>
 						</div>
+
 						<div class="clear"></div>
 					</div>
 					<div class="clear"></div>
-				</div>	
+				</div>
 			
 			<?php }
 				}
@@ -235,8 +244,8 @@ $timing->log('after header');
 			</div>
 			
 			<!-- Page list -->
-			<div class="featBox>">
-				<ul id="pageList">
+		    <div class="grid_8 clearfix">
+		        <ul id="pageList" class="clearfix">
 					<li id="desc">Pages:</li>
 					<?php if ($p != 1) // Previous page arrow
 							echo '<li class="arrow"><a href="search/?q='.$_GET["q"].'&p='.($p-1).'">&#171;</a></li>';

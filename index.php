@@ -30,7 +30,7 @@ try {
 	    '/' => 'FrontpageController',
 	    '/user/(?P<user>[a-zA-Z0-9_-]+)' => 'UserController',
 	    '/user/(?P<user>[a-zA-Z0-9_-]+)/(?P<page>[0-9]+)' => 'UserController',
-	    '/search' => 'SearchController',
+	    '/search/(.*)' => 'SearchController',
 	    '/(?P<cat>[a-zA-Z]+)' => 'CategoryController',
 	    '/(?P<cat>[a-zA-Z]+)/(?P<page>[0-9]+)' => 'CategoryController',
 	    '/(?P<cat>[a-zA-Z]+)/(?P<id>[0-9]+)/(?P<title>[a-zA-Z0-9_-]+)/.*' => 'ArticleController',
