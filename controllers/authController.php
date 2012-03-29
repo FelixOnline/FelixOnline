@@ -124,10 +124,14 @@ class AuthController extends BaseController {
             /* authenticate user using global function pam_auth - returns true
              * if user is Imperial student, false if not (Union server only)
              */
+            
+            // disable error handler here temporarily
+            restore_error_handler();
             $check = pam_auth(
                 $username, 
                 $password
             );
+			set_error_handler('errorhandler', E_ALL & ~E_NOTICE);
         } else {
         	if ($username == 'bad' || $password == 'bad') {
         		$check = false; // manual bad case
