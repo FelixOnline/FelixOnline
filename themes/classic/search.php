@@ -66,10 +66,11 @@ $timing->log('after header');
 						
 						if($peopleparam[1]){
 							// second name search
-							$sql = "SELECT user,name FROM user WHERE name LIKE '%".$peopleparam[1]."' ORDER BY name ASC";
+							$sql = "SELECT user,name FROM user WHERE name LIKE '%".$peopleparam[0].' '.$peopleparam[1]."' ORDER BY name ASC";
 							$peoplequery = $db->get_results($sql);
 							
 							if (!is_null($peoplequery)) {
+								$people = array();
 								foreach($peoplequery as $person) {
 									array_push($people, $person->name.'+'.$person->user);
 								}
