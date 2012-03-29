@@ -8,7 +8,7 @@
         <table>
             <tr>
                 <td><label for="user">IC Username: </label></td>
-                <td><input type="text" name="username" id="user" placeholder="jb007"/></td>
+                <td><input type="text" name="username" id="user" placeholder="k.onions"/></td>
             </tr>
             <tr>
                 <td><label for="password">IC Password: </label></td>
