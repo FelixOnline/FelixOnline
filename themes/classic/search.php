@@ -97,14 +97,19 @@ $timing->log('after header');
 					}
 					
 					// if number of results from title is less than 4 then add content search as well
-					/*$sql = "SELECT article.id FROM `article` INNER JOIN `text_story` ON (article.text1=text_story.id) WHERE text_story.content LIKE '%$param%' AND article.hidden = 0 AND article.published < NOW() ORDER BY article.date DESC";
-					$results = $db->get_row($sql);
-					
-					while (list($article) = mysql_fetch_array($query)) { 
-						array_push($search, $article);
+					if ($rows < 4) {
+						$sql = "SELECT article.id FROM `article` INNER JOIN `text_story` ON (article.text1=text_story.id) WHERE text_story.content LIKE '%$param%' AND article.hidden = 0 AND article.published < NOW() ORDER BY article.date DESC";
+						$results = $db->get_results($sql);
+						
+						if (!is_null($results)) {
+							foreach ($results as $article) {
+								$article = new Article($article->id);
+								array_push($search, $article);
+							}
+						}
+						
+						$rows = count($search);
 					}
-					
-					$rows = count($search); */
 				}
 			?>
 			<?php if($toofew) { ?>
