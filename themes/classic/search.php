@@ -56,24 +56,33 @@ $timing->log('after header');
 						$peopleparam = explode(" ", $peopleparam);
 						// firstname search
 						$sql = "SELECT user,name FROM user WHERE name LIKE '".$peopleparam[0]."%' ORDER BY name ASC";
-						$peoplequery = mysql_query($sql);
-						while (list($user, $name) = mysql_fetch_array($peoplequery)) { 
-							array_push($people, $name.'+'.$user);
+						$peoplequery = $db->get_results($sql);
+						
+						if (!is_null($peoplequery)) {
+							foreach($peoplequery as $person) {
+								array_push($people, $person->name.'+'.$person->user);
+							}
 						}
 						
 						if($peopleparam[1]){
 							// second name search
 							$sql = "SELECT user,name FROM user WHERE name LIKE '%".$peopleparam[1]."' ORDER BY name ASC";
-							$peoplequery = mysql_query($sql);
-							while (list($user, $name) = mysql_fetch_array($peoplequery)) { 
-								array_push($people, $name.'+'.$user);
+							$peoplequery = $db->get_results($sql);
+							
+							if (!is_null($peoplequery)) {
+								foreach($peoplequery as $person) {
+									array_push($people, $person->name.'+'.$person->user);
+								}
 							}
 						} else {
 							// second name search
 							$sql = "SELECT user,name FROM user WHERE name LIKE '%".$peopleparam[0]."' ORDER BY name ASC";
-							$peoplequery = mysql_query($sql);
-							while (list($user, $name) = mysql_fetch_array($peoplequery)) { 
-								array_push($people, $name.'+'.$user);
+							$peoplequery = $db->get_results($sql);
+							
+							if (!is_null($peoplequery)) {
+								foreach($peoplequery as $person) {
+									array_push($people, $person->name.'+'.$person->user);
+								}
 							}
 						}
 					}
@@ -115,7 +124,7 @@ $timing->log('after header');
 			<?php if($toofew) { ?>
 				<p>Uh oh! You did not specify enough search terms. Please try again!</p>
 			<?php } else { ?>
-			<h2>Search results for "<?php echo $_GET["q"];?>" -  <?php echo $rows;?> results</h2>
+			<h2>Search results for "<?php echo $_GET["q"];?>" -  <?php echo $rows + $peoplerows;?> results</h2>
 			<?php 
 				if ($rows == 0 && $peoplerows == 0) { ?>
 				
