@@ -146,4 +146,3 @@ class Cache {
         return $this->directory.$this->name;
     }
 }
-?>

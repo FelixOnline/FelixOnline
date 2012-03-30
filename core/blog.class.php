@@ -61,5 +61,3 @@ class Blog extends BaseModel {
     }
 }
 
-?>
-

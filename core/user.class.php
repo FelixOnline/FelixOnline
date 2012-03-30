@@ -111,4 +111,3 @@ class User extends BaseModel {
         return $pages;
     }
 }
-?>
