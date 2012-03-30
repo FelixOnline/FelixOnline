@@ -179,6 +179,10 @@ $theme->render('header', $header);
         <?php $timing->log('beginning of comments');?>
         <!-- Comments -->
         <div class="grid_8 comments" id="commentHeader">
+            <?php 
+                $cache = new Cache('comment-'.$article->getId());
+                if($currentuser->isLoggedIn() || (!$currentuser->isLoggedIn() && $cache->start())) {
+            ?>
             <h3>Comments <span>(<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>)</span></h3>
             <!-- Comments container -->
             <div id="commentCont">
@@ -193,6 +197,10 @@ $theme->render('header', $header);
                 ?>
             </div>
             <!-- End of comments container -->
+            <?php 
+                } 
+                if(!$currentuser->isLoggedIn()) $cache->stop();
+            ?>
             
             <!-- Comment form -->
             <div id="commentForm">
