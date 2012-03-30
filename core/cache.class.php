@@ -87,6 +87,9 @@ class Cache {
         if(!$this->exists()) {
             return false;
         }
+        if($this->expires === 0) {
+            return false; // infinity case
+        }
         $cache = $this->getCache();
         if(time() - $this->expires > $cache['generated']) {
             return true;
