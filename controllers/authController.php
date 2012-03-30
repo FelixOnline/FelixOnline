@@ -350,4 +350,3 @@ class AuthController extends BaseController {
     }
 
 }
-?>

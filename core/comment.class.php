@@ -68,7 +68,18 @@ class Comment extends BaseModel {
         if($id != NULL) {
             if($id < EXTERNAL_COMMENT_ID) { // if comment is internal
                 $this->external = false; // comment is internal
-                $sql = "SELECT id, `article`,`user`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`reply`,`likes`,`dislikes` FROM `comment` WHERE id=$id";
+                $sql = "SELECT 
+                            id, 
+                            `article`,
+                            `user`,
+                            `comment` as content,
+                            UNIX_TIMESTAMP(`timestamp`) as timestamp,
+                            `active`,
+                            `reply`,
+                            `likes`,
+                            `dislikes` 
+                        FROM `comment` 
+                        WHERE id=$id";
                 parent::__construct($this->db->get_row($sql), 'Comment (Internal)', $id);
                 //$this->name = get_vname_by_uname_db($this->user);
                 return $this;
@@ -402,22 +413,31 @@ class Comment extends BaseModel {
      */
     public function likeComment($user) {
         if(!$this->userLikedComment($user)) { // check user hasn't already liked the comment
-            $sql = "INSERT INTO `comment_like` (user,comment,binlike) VALUES ('$user','".$this->id."','1')";
+            $sql = "INSERT INTO `comment_like` 
+                    (
+                        user,
+                        comment,
+                        binlike
+                    ) VALUES (
+                        '".$this->db->escape($user)."',
+                        '".$this->getId()."',
+                        '1'
+                    )";
             $this->db->query($sql);
 
-            $this->likes += 1;
+            $likes = $this->getLikes() + 1;
             if(!$this->external) { // internal comment
                 $sql = "UPDATE `comment` "; 
             } else {
                 $sql = "UPDATE `comment_ext` ";
             }
-            $sql .= "SET likes = ".$this->likes." WHERE id = ".$this->id;
+            $sql .= "SET likes = ".$likes." WHERE id = ".$this->getId();
             $this->db->query($sql);
 
             // clear comment
-            //Cache::clear('comment-'.$this->fields['article']);
+            Cache::clear('comment-'.$this->fields['article']);
 
-            return $this->likes;
+            return $likes;
         } else {
             return false;
         }
@@ -432,22 +452,31 @@ class Comment extends BaseModel {
      */
     public function dislikeComment($user) {
         if(!$this->userLikedComment($user)) { // check user hasn't already liked the comment
-            $sql = "INSERT INTO `comment_like` (user,comment,binlike) VALUES ('$user','".$this->id."','0')";
+            $sql = "INSERT INTO `comment_like` 
+                    (
+                        user,
+                        comment,
+                        binlike
+                    ) VALUES (
+                        '".$this->db->escape($user)."',
+                        '".$this->getId()."',
+                        '0'
+                    )";
             $this->db->query($sql);
 
-            $this->dislikes += 1;
+            $dislikes = $this->getDislikes() + 1;
             if(!$this->external) { // internal comment
                 $sql = "UPDATE `comment` "; 
             } else {
                 $sql = "UPDATE `comment_ext` ";
             }
-            $sql .= "SET dislikes = ".$this->dislikes." WHERE id = ".$this->id;
+            $sql .= "SET dislikes = ".$dislikes." WHERE id = ".$this->getId();
             $this->db->query($sql);
             
             // clear comment
             Cache::clear('comment-'.$this->fields['article']);
 
-            return $this->dislikes;
+            return $dislikes;
         } else {
             return false;
         }
@@ -478,4 +507,3 @@ class Comment extends BaseModel {
     }
 }
 
-?>

@@ -390,4 +390,3 @@ class Article extends BaseModel {
 	}
 }
 
-?>
