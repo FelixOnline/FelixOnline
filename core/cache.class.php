@@ -62,9 +62,18 @@ class Cache {
     /*
      * Public static: Clear cache
      */
-    static public function clear($name = NULL) {
+    static public function clear($name = NULL, $regenerate = true) {
         if($name) { // delete cache file
+            $cache = new Cache($name);
+            if(!$cache->exists()) {
+                return false;
+            }
+            $contents = $cache->getCache();
             unlink(CACHE_DIRECTORY.$name);
+            // regenerate cache
+            if($regenerate) {
+                Utility::getURL($contents['url']);
+            }
         } else { // clear entire cache
             foreach (glob(CACHE_DIRECTORY.'*') as $filename) {
                 unlink($filename);
@@ -101,7 +110,7 @@ class Cache {
     /*
      * Private: Check cache file exists
      */
-    private function exists() {
+    public function exists() {
         return file_exists($this->getName());
     }
 
