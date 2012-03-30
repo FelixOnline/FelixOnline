@@ -414,6 +414,9 @@ class Comment extends BaseModel {
             $sql .= "SET likes = ".$this->likes." WHERE id = ".$this->id;
             $this->db->query($sql);
 
+            // clear comment
+            //Cache::clear('comment-'.$this->fields['article']);
+
             return $this->likes;
         } else {
             return false;
@@ -440,6 +443,9 @@ class Comment extends BaseModel {
             }
             $sql .= "SET dislikes = ".$this->dislikes." WHERE id = ".$this->id;
             $this->db->query($sql);
+            
+            // clear comment
+            Cache::clear('comment-'.$this->fields['article']);
 
             return $this->dislikes;
         } else {
