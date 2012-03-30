@@ -128,5 +128,23 @@ class Utility {
         $dashed = str_replace( " ", "-", $title); // Replace spaces with hypens
         return $dashed;
     }
+
+    /*
+     * Public static: Get URL
+     * Using curl request url but don't get body
+     *
+     * $url - url to ping
+     */
+    public static function getURL($url) {
+        $timeout = 5;
+
+        $ch = curl_init($url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+    }
+
 }
 ?>
