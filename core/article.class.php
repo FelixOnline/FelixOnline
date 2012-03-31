@@ -57,23 +57,23 @@ class Article extends BaseModel {
         //$this->db->cache_queries = true;
         if($id !== NULL) { // if creating an already existing article object
             $sql = "SELECT 
-                    `id`,
-                    `title`,
-                    `short_title`,
-                    `teaser`,
-                    `author`,
-                    `approvedby`,
-                    `category`,
-                    UNIX_TIMESTAMP(`date`) as date,
-                    UNIX_TIMESTAMP(`published`) as published,`hidden`,
-                    `text1`,
-                    `text2`,
-                    `img1`,
-                    `img2`,
-                    `img2lr`,
-                    `hits` 
-                FROM `article` 
-                WHERE id=".$id;
+                        `id`,
+                        `title`,
+                        `short_title`,
+                        `teaser`,
+                        `author`,
+                        `approvedby`,
+                        `category`,
+                        UNIX_TIMESTAMP(`date`) as date,
+                        UNIX_TIMESTAMP(`published`) as published,`hidden`,
+                        `text1`,
+                        `text2`,
+                        `img1`,
+                        `img2`,
+                        `img2lr`,
+                        `hits` 
+                    FROM `article` 
+                    WHERE id=".$id;
             parent::__construct($this->db->get_row($sql), 'Article', $id);
             //$this->db->cache_queries = false;
             return $this;
