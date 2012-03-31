@@ -6,6 +6,7 @@
  */
 class BaseModel {
     protected $fields = array(); // array that holds all the database fields
+    protected $dbtable; // name of database table
     protected $class;
 	protected $item;
     protected $db;
@@ -91,12 +92,35 @@ class BaseModel {
     }   
 
     /*
+     * Public: Set dbtable
+     */
+    public function setDbtable($table) {
+        $this->dbtable = $table;
+        return $this->dbtable;
+    }
+
+    /*
      * Public: Save all fields to database TODO
+     *
+     * Example:
+     *      $obj = new Obj();
+     *      $obj->setTable('comment');
+     *      $obj->setUser('k.onions');
+     *      $obj->setContent('hello');
+     *      $obj->save();
      */
     public function save() {
         $arrayLength = count($this->fields);
+        if(!$arrayLength) {
+            throw new InternalException('No fields in object', $this->class, '');
+        }
         $sql = "INSERT INTO `";
-        $sql .= strtolower(get_class($this));
+
+        if(!$this->dbtable) {
+            throw new InternalException('No table specified', $this->class, '');
+        }
+        $sql .= $this->dbtable;
+
         $sql .= "` (";
         $i = 1; // counter
         foreach($this->fields as $key => $value) {
@@ -114,7 +138,7 @@ class BaseModel {
                 if(is_numeric($value)) {
                     $sql .= $value;
                 } else {
-                    $sql .= "'".$value."'";
+                    $sql .= "'".$this->db->escape($value)."'";
                 }
             } else {
                 $sql .= "''";
@@ -128,7 +152,7 @@ class BaseModel {
         $sql .= "ON DUPLICATE KEY UPDATE ";
         $i = 1;
         foreach($this->fields as $key => $value) {
-            $sql .= $key."='".$value."'";
+            $sql .= $key."='".$this->db->escape($value)."'";
             if($i != $arrayLength) {
                 $sql .= ", ";
             }
