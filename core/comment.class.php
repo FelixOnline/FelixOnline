@@ -41,10 +41,10 @@
  *      // Submit comment
  *      $comment = new Comment();
  *      $comment->setExternal(false); // internal comment
- *      $comment->setArticle(100);
+ *      $comment->setArticle(100); // article id
  *      $comment->setContent('Hello world');
  *      $comment->setUser('felix');
- *      if($comment->insert()) echo 'Success!';
+ *      if($id = $comment->save()) echo 'Success!';
  */
 class Comment extends BaseModel {
 	private $article; // article class comment is on
