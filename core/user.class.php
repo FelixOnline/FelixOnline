@@ -125,4 +125,18 @@ class User extends BaseModel {
         $name = explode(' ', $this->getName());
         return $name[1];
     }
+
+    /*
+     * Public: Get email
+     *
+     * $ldap - [boolean] if true then get email from ldap and not db
+     *
+     * Returns string
+     */
+    public function getEmail($ldap = false) {
+        if($ldap && !LOCAL) {
+            return ldap_get_mail($this->getUser());
+        }
+        return $this->fields['email'];
+    }
 }
