@@ -104,6 +104,11 @@ class Comment extends BaseModel {
                 parent::__construct($this->db->get_row($sql), 'Comment (External)', $id);
                 return $this;
             }
+        } else {
+            $this->setFieldFilters(array(
+                'content' => 'comment',
+                'ip' => 'IP'
+            ));
         }
 	}
 
@@ -243,20 +248,6 @@ class Comment extends BaseModel {
     }
 
     /*
-     * Public: Set user
-     *
-     * $username - username of user commenting
-     *
-     * Returns user
-     */
-    public function setUser($username) {
-        //$user = new User($username);
-        $this->fields['user'] = $username;
-        //$this->fields['name'] = get_vname_by_uname_db($this->user);
-        return $this->user;
-    }
-
-    /*
      * Public: Check if comment already exists
      *
      * Returns the number of rows that the query will return
@@ -282,6 +273,15 @@ class Comment extends BaseModel {
         return $this->db->get_var($sql);
     }
 
+    /*
+     * Public: Set external
+     * Set whether comment is external or not
+     */
+    public function setExternal($external) {
+        $this->external = $external;
+        return $this->external;
+    }
+
     /* 
      * Public: Save new comment into database
      *
@@ -297,12 +297,12 @@ class Comment extends BaseModel {
             require_once('inc/akismet.class.php');
 
             $akismet = new Akismet(STANDARD_URL, AKISMET_API_KEY);
-            $akismet->setCommentAuthor($this->name);
+            $akismet->setCommentAuthor($this->getName());
             //$akismet->setCommentAuthorEmail($email);
-            $akismet->setCommentContent($this->comment);
-            $akismet->setPermalink(full_article_url($this->article));
+            $akismet->setCommentContent($this->getContent());
+            $akismet->setPermalink($this->getArticle()->getURL());
 
-            if($akismet->isCommentSpam()) { // if comment is spam
+            if($spam = $akismet->isCommentSpam()) { // if comment is spam
                 $this->setActive(0);
                 $this->setPending(0);
                 $this->setSpam(1);
@@ -318,23 +318,33 @@ class Comment extends BaseModel {
                         )"; // insert comment ip into comment_spam
                 $this->db->query($sql);
             } else {
-                $this->setActive(0);
-                $this->setPending(0);
+                $this->setActive(1);
+                $this->setPending(1);
                 $this->setSpam(0);
-                $this->emailExternalComment();
             }
         }
 
         parent::save();
-        $this->id = $this->db->insert_id; // get id of inserted comment
+        $this->setId($this->db->insert_id); // get id of inserted comment
         if($this->getReply()) { // if comment is replying to an internal comment 
             $this->emailReply();
+        }
+
+        if(!$spam) {
+            $this->emailExternalComment();
         }
 
         /* email authors of article */
         $this->emailAuthors();
 
-        return $this->id; // return new comment id
+        // clear cache
+        Cache::clear('comment-'.$this->fields['article']);
+        
+        if($this->isExternal() && $this->getSpam() == 1) {
+            return 'spam';
+        } else {
+            return $this->getId(); // return new comment id
+        }
     }
 
     /* 
