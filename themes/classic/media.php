@@ -12,7 +12,7 @@ $theme->render('header', $header);
 <div class="container_12 media">
     <div id="photo">
         <h2 class="grid_12 photosoc clearfix">
-            Photo Gallery 
+            Photo Albums 
             <div id="photosoc">
                 In association with <a href="http://www.union.ic.ac.uk/media/photosoc" target="_BLANK">ICU Photosoc</a>
             </div>
@@ -28,6 +28,9 @@ $theme->render('header', $header);
                 </div>
             </div>
         <?php } ?>
+        <div class="grid_12 clearfix">
+        	<a href="<?php echo STANDARD_URL; ?>media/photo/">View more photo albums</a>
+        </div>
     </div>
 
     <div id="video">
@@ -37,6 +40,9 @@ $theme->render('header', $header);
                 In association with <a href="http://www.union.ic.ac.uk/media/stoic">Stoic TV</a>
             </div>
         </h2>
+        <div class="grid_12 clearfix">
+        	<a href="<?php echo STANDARD_URL; ?>media/video/">View more videos</a>
+        </div>
     </div>
 </div>
 <?php $timing->log('end of media page');?>
