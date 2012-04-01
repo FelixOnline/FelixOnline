@@ -180,8 +180,8 @@ $theme->render('header', $header);
         <!-- Comments -->
         <div class="grid_8 comments" id="commentHeader">
             <?php 
-                $cache = new Cache('comment-'.$article->getId());
-                if($currentuser->isLoggedIn() || $cache->start()) {
+                //$cache = new Cache('comment-'.$article->getId());
+                //if($currentuser->isLoggedIn() || $cache->start()) {
             ?>
             <h3>Comments <span>(<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>)</span></h3>
             <!-- Comments container -->
@@ -198,8 +198,8 @@ $theme->render('header', $header);
             </div>
             <!-- End of comments container -->
             <?php 
-                } 
-                if(!$currentuser->isLoggedIn()) $cache->stop();
+                //} 
+                //if(!$currentuser->isLoggedIn()) $cache->stop();
             ?>
             
             <!-- Comment form -->
