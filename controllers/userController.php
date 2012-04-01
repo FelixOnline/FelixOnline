@@ -8,6 +8,7 @@ class UserController extends BaseController {
         } else {
             $pagenum = $matches['page'];
         }
+
         $this->theme->appendData(array(
             'user' => $user,
             'pagenum' => $pagenum
