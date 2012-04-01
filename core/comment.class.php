@@ -326,16 +326,19 @@ class Comment extends BaseModel {
 
         parent::save();
         $this->setId($this->db->insert_id); // get id of inserted comment
-        if($this->getReply()) { // if comment is replying to an internal comment 
-            $this->emailReply();
-        }
 
-        if(!$spam) {
-            $this->emailExternalComment();
-        }
+        if($this->isExternal()) {
+            if(!$spam) {
+                $this->emailExternalComment();
+            }
+        } else {
+            if($this->getReply()) { // if comment is replying to an internal comment 
+                $this->emailReply();
+            }
 
-        /* email authors of article */
-        $this->emailAuthors();
+            /* email authors of article */
+            $this->emailAuthors();
+        }
 
         // clear cache
         Cache::clear('comment-'.$this->fields['article']);
