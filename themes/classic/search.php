@@ -190,6 +190,11 @@ $timing->log('after header');
 							<div id="storyMeta">
 								<ul class="metaList">
 									<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
+                                	<?php if ($article->getCategory()->getCat() == 'comment') { ?>
+                                    <li id="articleAuthor">
+                                        <?php echo Utility::outputUserList($article->getAuthors()); ?>
+                                    </li>
+                                    <?php } ?>
 									<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
 								</ul>
 							</div>
@@ -222,6 +227,11 @@ $timing->log('after header');
 							<div id="storyMeta">
 								<ul class="metaList">
 									<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
+                                	<?php if ($article->getCategory()->getCat() == 'comment') { ?>
+                                    <li id="articleAuthor">
+                                        <?php echo Utility::outputUserList($article->getAuthors()); ?>
+                                    </li>
+                                    <?php } ?>
 									<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
 								</ul>
 							</div>
@@ -243,6 +253,11 @@ $timing->log('after header');
 							<div id="storyMeta">
 								<ul class="metaList">
 									<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
+                                	<?php if ($article->getCategory()->getCat() == 'comment') { ?>
+                                    <li id="articleAuthor">
+                                        <?php echo Utility::outputUserList($article->getAuthors()); ?>
+                                    </li>
+                                    <?php } ?>
 									<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
 								</ul>
 							</div>

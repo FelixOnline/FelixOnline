@@ -67,7 +67,7 @@ $timing->log('after header');
                 </h2>
                 <div class="subHeader">
                     <p>
-                        <?php echo $article->getPreview(50); ?>
+                        <?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(50); ?>
                     </p>
                     <div id="storyMeta" class="<?php if(!$article->getNumComments()) echo 'extra'; ?>">
                         <ul class="metaList">
@@ -159,7 +159,7 @@ $timing->log('after header');
             </h3>
             <div class="subHeader">
                 <p>
-                    <?php echo $article->getPreview(20); ?>
+                    <?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(20); ?>
                 </p>
                 <div id="storyMeta" class="<?php if(!$article->getNumComments()) echo 'extra'; ?>">
                     <ul class="metaList">
@@ -200,7 +200,7 @@ $timing->log('after header');
             </h3>
             <div class="subHeader">
                 <p>
-                    <?php echo $article->getPreview(20); ?>
+                    <?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(20); ?>
                 </p>
                 <div id="storyMeta" class="<?php if(!$article->getNumComments()) echo 'extra'; ?>">
                     <ul class="metaList">
@@ -284,10 +284,10 @@ $timing->log('after header');
 
             <!-- Teaser -->
             <p class="grid_3 alpha">
-                <?php echo $articleA->getPreview(25); ?>
+                <?php if($articleA->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($articleA->getAuthors()).':</b> '; endif; echo $articleA->getPreview(25); ?>
             </p>
             <p class="grid_3 omega">
-                <?php echo $articleB->getPreview(25); ?>
+                <?php if($articleB->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($articleB->getAuthors()).':</b> '; endif; echo $articleB->getPreview(25); ?>
             </p>
             <div class="clear"></div>
 
@@ -333,7 +333,7 @@ $timing->log('after header');
                         </a>
                     </h4>
                     <p>
-                        <?php echo $article->getPreview(15);?>
+                        <?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?>
                     </p>
                 </li>
 
@@ -349,7 +349,7 @@ $timing->log('after header');
                         </a>
                     </h4>
                     <p>
-                        <?php echo $article->getPreview(15);?>
+                        <?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?>
                     </p>
                 </li>
 
@@ -365,7 +365,7 @@ $timing->log('after header');
                         </a>
                     </h4>
                     <p>
-                        <?php echo $article->getPreview(15);?>
+                        <?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?>
                     </p>
                 </li>
             </ul>
@@ -405,7 +405,7 @@ $timing->log('after header');
                 </h4>
             </a>
             <br/>
-            <span><?php echo $article->getPreview(15); ?></span>
+            <span><?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?></span>
             <ul>
                 <li>
                     Other Articles:
@@ -565,7 +565,7 @@ $timing->log('after header');
 	                    </a>
 	                </h4>
 	                <p>
-	                    <?php echo $article->getPreview(10);?>
+	                    <?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(10); ?>
 	                </p>
 	            </div>
 	        </div>
