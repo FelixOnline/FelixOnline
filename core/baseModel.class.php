@@ -6,11 +6,13 @@
  */
 class BaseModel {
     protected $fields = array(); // array that holds all the database fields
+    protected $dbtable; // name of database table
     protected $class;
 	protected $item;
     protected $db;
-    private $imported;
-    private $importedFunctions;
+    private $imported = array();
+    private $importedFunctions = array();
+    protected $filters = array();
 
     function __construct($dbObject, $class, $item=null) {
         /* initialise db connection and store it in object */
@@ -19,10 +21,6 @@ class BaseModel {
 		
 		$this->class = $class;
 		$this->item = $item;
-
-        // import functions
-        $this->imported = array();
-        $this->importedFunctions = array();
 
         if(class_exists(get_class($this).'Helper')) {
             $this->import(get_class($this).'Helper');
@@ -57,11 +55,8 @@ class BaseModel {
                     throw new ModelConfigurationException('The requested field does not exist', $verb, $meth, $class, $item);
                     break;
                 case 'set':
-                    if(array_key_exists($meth, $this->fields)) {
-                        $this->fields[$meth] = $arguments[0];
-                        return $this->fields[$meth];
-                    }
-                    throw new ModelConfigurationException('The requested field does not exist', $verb, $meth, $class, $item);
+                    $this->fields[$meth] = $arguments[0];
+                    return $this->fields[$meth];
                     break;
                 default:
                     throw new ModelConfigurationException('The requested verb is not valid', $verb, $meth, $class, $item);
@@ -91,15 +86,41 @@ class BaseModel {
     }   
 
     /*
+     * Public: Set dbtable
+     */
+    public function setDbtable($table) {
+        $this->dbtable = $table;
+        return $this->dbtable;
+    }
+
+    /*
      * Public: Save all fields to database TODO
+     *
+     * Example:
+     *      $obj = new Obj();
+     *      $obj->setTable('comment');
+     *      $obj->setUser('k.onions');
+     *      $obj->setContent('hello');
+     *      $obj->save();
      */
     public function save() {
         $arrayLength = count($this->fields);
+        if(!$arrayLength) {
+            throw new InternalException('No fields in object', $this->class, '');
+        }
         $sql = "INSERT INTO `";
-        $sql .= strtolower(get_class($this));
+
+        if(!$this->dbtable) {
+            throw new InternalException('No table specified', $this->class, '');
+        }
+        $sql .= $this->dbtable;
+
         $sql .= "` (";
         $i = 1; // counter
         foreach($this->fields as $key => $value) {
+            if(array_key_exists($key, $this->filters)) {
+                $key = $this->filters[$key];
+            }
             if($i == $arrayLength) {
                 $sql .= $key;
             } else {
@@ -114,7 +135,7 @@ class BaseModel {
                 if(is_numeric($value)) {
                     $sql .= $value;
                 } else {
-                    $sql .= "'".$value."'";
+                    $sql .= "'".$this->db->escape($value)."'";
                 }
             } else {
                 $sql .= "''";
@@ -128,13 +149,28 @@ class BaseModel {
         $sql .= "ON DUPLICATE KEY UPDATE ";
         $i = 1;
         foreach($this->fields as $key => $value) {
-            $sql .= $key."='".$value."'";
+            if(array_key_exists($key, $this->filters)) {
+                $key = $this->filters[$key];
+            }
+            $sql .= $key."='".$this->db->escape($value)."'";
             if($i != $arrayLength) {
                 $sql .= ", ";
             }
             $i++;
         }
         return $this->db->query($sql);
+    }
+
+    /*
+     * Public: Set field filters
+     *
+     * $filters - array
+     *
+     * Returns filters
+     */
+    public function setFieldFilters($filters) {
+        $this->filters = $filters;
+        return $this->filters;
     }
 
     /*
@@ -155,4 +191,3 @@ class BaseModel {
     }
 }
 
-?>

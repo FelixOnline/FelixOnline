@@ -102,4 +102,3 @@ function plural($num) {
     if ($num != 1)
         return "s";
 }
-?>

@@ -28,31 +28,26 @@ class User extends BaseModel {
         $this->db = $db;
         if($uname !== NULL) {
             $sql = "SELECT 
-                `user`,
-                `name`,
-                `visits`,
-                `ip`,
-                UNIX_TIMESTAMP(`timestamp`) as timestamp,
-                `role`,
-                `description`,
-                `email`,
-                `facebook`,
-                `twitter`,
-                `websitename`,
-                `websiteurl`,
-                `img` 
-                FROM `user` 
-                WHERE user='".$uname."'";
+                        `user`,
+                        `name`,
+                        `visits`,
+                        `ip`,
+                        UNIX_TIMESTAMP(`timestamp`) as timestamp,
+                        `role`,
+                        `description`,
+                        `email`,
+                        `facebook`,
+                        `twitter`,
+                        `websitename`,
+                        `websiteurl`,
+                        `img` 
+                    FROM `user` 
+                    WHERE user='".$uname."'";
             parent::__construct($this->db->get_row($sql), 'User', $uname);
             //$this->db->cache_queries = false;
             return $this;
         } else {
         }
-    }
-
-    protected function setName($name) {
-        $this->fields['name'] = $name;
-        return $this->fields['name'];
     }
 
     /*
@@ -112,5 +107,38 @@ class User extends BaseModel {
         return $pages;
         
     }
+
+    /*
+     * Public: Get first name of user
+     *
+     * Returns string
+     */
+    public function getFirstName() {
+        $name = explode(' ', $this->getName());
+        return $name[0];
+    }
+
+    /*
+     * Public: Get last name of user
+     *
+     * Returns string
+     */
+    public function getLastName() {
+        $name = explode(' ', $this->getName());
+        return $name[1];
+    }
+
+    /*
+     * Public: Get email
+     *
+     * $ldap - [boolean] if true then get email from ldap and not db
+     *
+     * Returns string
+     */
+    public function getEmail($ldap = false) {
+        if($ldap && !LOCAL) {
+            return ldap_get_mail($this->getUser());
+        }
+        return $this->fields['email'];
+    }
 }
-?>
