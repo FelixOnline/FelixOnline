@@ -82,7 +82,11 @@ class ArticleController extends BaseController {
         }
         
         $this->theme->appendData(array(
-            'article' => $this->article
+            'article' => $this->article,
+            'errorduplicate' => $errorduplicate,
+            'errorspam' => $errorspam,
+            'errorrecapatcha' => $errorrecapatcha,
+            'errorinsert' => $errorinsert
         ));
         $this->theme->setHierarchy(array(
             'id', /* article-{id}.php */
