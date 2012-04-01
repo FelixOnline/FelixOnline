@@ -107,8 +107,10 @@ class User extends BaseModel {
             ";
             $this->count = $this->db->get_var($sql);
         }
+
         $pages = ceil(($this->count - ARTICLES_PER_USER_PAGE) / (ARTICLES_PER_USER_PAGE)) + 1;
         return $pages;
+        
     }
 }
 ?>
