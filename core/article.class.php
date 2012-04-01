@@ -365,6 +365,8 @@ class Article extends BaseModel {
         if(!$this->recentlyVisited()) {
             $this->logVisitor();
             $this->hitArticle();
+        } else {
+            $this->logVisitor(1);
         }
     }
 
@@ -379,7 +381,7 @@ class Article extends BaseModel {
     /*
      * Private: Add log of visitor into article_vist table
      */
-    private function logVisitor() {
+    private function logVisitor($repeat = 0) {
         global $currentuser;
         $user = NULL;
         if($currentuser->isLoggedIn()) $user = $currentuser->getUser();
@@ -389,12 +391,16 @@ class Article extends BaseModel {
                     article,
                     user,
                     IP,
-                    referrer
+                    browser,
+                    referrer, 
+                    repeat_visit
                 ) VALUES (
                     '".$this->getId()."',
                     '".$user."',
-                    '".$_SERVER['REMOTE_ADDR']."',
-                    '".$_SERVER['HTTP_REFERER']."'
+                    '".$this->db->escape($_SERVER['REMOTE_ADDR'])."',
+                    '".$this->db->escape($_SERVER['HTTP_USER_AGENT'])."',
+                    '".$this->db->escape($_SERVER['HTTP_REFERER'])."',
+                    '".$repeat."'
                 )";
         return $this->db->query($sql);
     }
@@ -416,7 +422,15 @@ class Article extends BaseModel {
                     AND UNIX_TIMESTAMP(timestamp) < now() - interval 4 week";
             return $this->db->get_var($sql);
         } else {
-            return false;
+            $sql = "SELECT
+                        COUNT(id)
+                    FROM
+                        `article_visit`
+                    WHERE IP = '".$_SERVER['REMOTE_ADDR']."'
+                    AND browser = '".$_SERVER['HTTP_USER_AGENT']."'
+                    AND article = '".$this->getId()."'
+                    AND UNIX_TIMESTAMP(timestamp) < now() - interval 4 week";
+            return $this->db->get_var($sql);
         }
     }
 
