@@ -55,14 +55,14 @@ class AuthController extends BaseController {
                     $this->setCookie();
                 }
                 
-                $this->redirect($_GET['goto']);
+                Utility::redirect($_GET['goto']);
             } else {
                 throw new LoginException("Internal error", $this->session, LOGIN_EXCEPTION_SESSION);
             }
 			// show main exception page if something goes wrong here - do not catch!!!
         } else {
             if($currentuser->isLoggedIn()) {
-                $this->redirect(STANDARD_URL);
+                Utility::redirect(STANDARD_URL);
             } else {
                 // insert login page here
                 $failed = 0;
@@ -105,7 +105,7 @@ class AuthController extends BaseController {
 	                ); // Remove session ID
 	                session_destroy(); // Remove all session data
 	
-	                $this->redirect(STANDARD_URL.'login', array(
+                    Utility::redirect(STANDARD_URL.'login', array(
 	                    'session' => $session,
 	                    'remember' => $_POST['remember'],
 	                    'goto' => $_GET['goto']
@@ -115,14 +115,14 @@ class AuthController extends BaseController {
 					// Catch this elsewhere
 	     	  }
      	    } catch (LoginException $e) {
-         		$this->redirect(AUTHENTICATION_PATH.'login', array(
+                Utility::redirect(AUTHENTICATION_PATH.'login', array(
 					'failed' => true
 				));
 			}
         }
 		if(isset($_POST['logout'])) {
             $this->logout();
-            $this->redirect($_GET['goto']);
+            Utility::redirect($_GET['goto']);
         }
     }
 
@@ -288,31 +288,6 @@ class AuthController extends BaseController {
         return $this->db->query($sql);
     }
 	
-    /*
-     * Private: Redirect to location with specific GET params
-     *
-     * $goto - url to redirect to
-     * $params - array of parameters to add to url
-     */
-    private function redirect($goto, $params = NULL, $hash = NULL) {
-        if($params) {
-            $i = 0;
-            if(!$goto) $goto = STANDARD_URL;
-            foreach($params as $key => $value) {
-                if(strpos($goto,'?')) {
-                    $goto .= '&'.$key.'='.$value;
-                } else if ($i == 0) {
-                    $goto .= '?'.$key.'='.$value;
-                }
-                $i++;
-            }
-        }
-        if($hash) {
-            $goto .= '#'.$hash;
-        }
-        header('Location: '.$goto);
-    }
-
     /*
      * Private: Get user from session
      * Get the user from the session id
