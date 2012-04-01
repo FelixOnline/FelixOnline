@@ -146,5 +146,31 @@ class Utility {
         return $result;
     }
 
+    /*
+     * Public static: Redirect users
+     * Redirect a user by sending a new header location
+     *
+     * $goto - url to redirect to
+     * $params - array of parameters to add to url [optional]
+     * $hash - anchor tag to jump to [optional]
+     */
+    public static function redirect($goto, $params = NULL, $hash = NULL) {
+        if($params) {
+            $i = 0;
+            if(!$goto) $goto = STANDARD_URL;
+            foreach($params as $key => $value) {
+                if(strpos($goto,'?')) {
+                    $goto .= '&'.$key.'='.$value;
+                } else if ($i == 0) {
+                    $goto .= '?'.$key.'='.$value;
+                }
+                $i++;
+            }
+        }
+        if($hash) {
+            $goto .= '#'.$hash;
+        }
+        header('Location: '.$goto);
+    }
 }
 ?>
