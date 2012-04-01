@@ -12,6 +12,10 @@ class ArticleController extends BaseController {
             'id', /* article-{id}.php */
             'category-cat' /* article-{cat}.php */
         ));
+
+        // Log article visit
+        $this->article->logVisit();
+
         $this->theme->render('article');
     }
 

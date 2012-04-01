@@ -358,18 +358,21 @@ class Article extends BaseModel {
     }
 
     /*
-     * Public: Log article visit and increment hit count on article
+     * Public: Log visit and increment hit count on article
+     * Check if user has visited page before (based on ip or user for a set length of time)
      */
-    public function logArticleVisit() {
-        $this->hitArticle();
-        $this->logVisitor(); 
+    public function logVisit() {
+        if(!$this->recentlyVisited()) {
+            $this->logVisitor();
+            $this->hitArticle();
+        }
     }
 
     /*
      * Private: Increment hit count on article
      */
     private function hitArticle() {
-        $sql = "UPDATE `article` SET hits=hits+1 WHERE id=".$this->id;
+        $sql = "UPDATE `article` SET hits=hits+1 WHERE id=".$this->getId();
         return $this->db->query($sql);
     }
 
@@ -377,12 +380,44 @@ class Article extends BaseModel {
      * Private: Add log of visitor into article_vist table
      */
     private function logVisitor() {
-        $sql = "INSERT INTO article_visit (article,user,IP,referrer) VALUES ('$this->id',";
-        $sql .= ($u = is_logged_in()) ? "'$u'" : "NULL";
-        $sql .= ",'".$_SERVER['REMOTE_ADDR']."'";
-        $sql .= ",'".$_SERVER['HTTP_REFERER']."'";
-        $sql .= ")";
+        global $currentuser;
+        $user = NULL;
+        if($currentuser->isLoggedIn()) $user = $currentuser->getUser();
+        $sql = "INSERT INTO 
+                    article_visit 
+                (
+                    article,
+                    user,
+                    IP,
+                    referrer
+                ) VALUES (
+                    '".$this->getId()."',
+                    '".$user."',
+                    '".$_SERVER['REMOTE_ADDR']."',
+                    '".$_SERVER['HTTP_REFERER']."'
+                )";
         return $this->db->query($sql);
+    }
+
+    /*
+     * Private: Check if user has recently visited article
+     *
+     * Returns boolean
+     */
+    private function recentlyVisited() {
+        global $currentuser;
+        if($currentuser->isLoggedIn()) {
+            $sql = "SELECT
+                        COUNT(id)
+                    FROM
+                        `article_visit`
+                    WHERE user = '".$currentuser->getUser()."'
+                    AND article = '".$this->getId()."'
+                    AND UNIX_TIMESTAMP(timestamp) < now() - interval 4 week";
+            return $this->db->get_var($sql);
+        } else {
+            return false;
+        }
     }
 
 	public function print_this() {
