@@ -42,6 +42,7 @@
     if(!defined('GALLERY_IMAGE_URL'))               define('GALLERY_IMAGE_URL', 'http://felixonline.co.uk/gallery/'); // image url 
     if(!defined('LOCAL'))                           define('LOCAL', false); // if true then site is hosted locally - don't use pam_auth etc. 
     if(!defined('LOG_EMAILS'))                      define('LOG_EMAILS', false); // Log emails or not 
+    if(!defined('CACHE'))                           define('CACHE', true); // Enable cache 
     if(!defined('BLOG_POSTS_PER_PAGE'))             define('BLOG_POSTS_PER_PAGE', 10); // number of posts to show on blog page
 
 	/* Media Page */
