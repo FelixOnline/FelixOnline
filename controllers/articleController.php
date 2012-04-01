@@ -33,7 +33,9 @@ class ArticleController extends BaseController {
                 $errorduplicate = true;
             } else {
                 if($id = $comment->save()) { 
-                    header('Location: '.Utility::currentPageURL().'#comment'.$id); // redirect user to article page with comment anchor tag
+                    Utility::redirect(Utility::currentPageURL(), 
+                                        '', 
+                                        'comment'.$id);
                     exit;
                 } else {
                     $errorinsert = true;
@@ -69,7 +71,9 @@ class ArticleController extends BaseController {
                         if($id == 'spam') {
                             $errorspam = true;
                         } else {
-                            header('Location: '.Utility::currentPageURL().'#comment'.$id);
+                            Utility::redirect(Utility::currentPageURL(), 
+                                                '', 
+                                                'comment'.$id);
                             exit;
                         }
                     } else {
