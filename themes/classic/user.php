@@ -24,15 +24,15 @@ $theme->render('header', $header);
             <div id="userPopular">
                 <h3>Most Popular Articles</h3>
                 <ol>
-                <?php foreach(get_articles_by_user_popular($user) as $article) { ?>
+                <?php foreach($user->getPopularArticles() as $article) { ?>
                     <li id="userPopList">
                         <div id="popTitle">
-                            <?php if (is_logged_in() == $user) { ?>
+                            <?php if($currentuser->isLoggedIn() == $user->getUser()) { ?>
                             <div id="popHits">
-                                <?php echo get_article_hits($article); ?> hits
+                                <?php echo $article->getHits(); ?> hits
                             </div>
                             <?php } ?>
-                            <a href="<?php echo article_url($article);?>"><?php echo get_article_title($article);?></a>
+                            <a href="<?php echo $article->getURL();?>"><?php echo $article->getTitle();?></a>
                         </div>
                     </li>
                 <?php } ?>

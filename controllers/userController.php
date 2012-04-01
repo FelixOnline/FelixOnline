@@ -8,10 +8,12 @@ class UserController extends BaseController {
         } else {
             $pagenum = $matches['page'];
         }
+        $articles = $user->getArticles($pagenum);
 
         $this->theme->appendData(array(
             'user' => $user,
-            'pagenum' => $pagenum
+            'pagenum' => $pagenum,
+            'articles' => $articles
         ));
         $this->theme->setHierarchy(array(
             'user' /* user-{user}.php */
