@@ -33,7 +33,7 @@ class Cache {
      * Public: Start caching
      */
     public function start() {
-        if($this->exists() && !$this->expired()) { // if cache file exists and hasn't expired
+        if(CACHE && $this->exists() && !$this->expired()) { // if cache file exists and hasn't expired
             $this->valid = true;
             // load cache file
             $cache = $this->getCache();
@@ -118,14 +118,16 @@ class Cache {
      * Private: Create cache
      */
     private function createCache($content) {
-        $fp = fopen($this->getName(), 'w+');
-        $data = json_encode(array(
-            'url' => Utility::currentPageURL(),
-            'generated' => time(),
-            'content' => $content
-        ));
-        fwrite($fp, $data);
-        fclose($fp);
+        if(CACHE) {
+            $fp = fopen($this->getName(), 'w+');
+            $data = json_encode(array(
+                'url' => Utility::currentPageURL(),
+                'generated' => time(),
+                'content' => $content
+            ));
+            fwrite($fp, $data);
+            fclose($fp);
+        } 
     }
 
     /*
@@ -146,4 +148,3 @@ class Cache {
         return $this->directory.$this->name;
     }
 }
-?>

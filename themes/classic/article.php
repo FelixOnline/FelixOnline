@@ -179,6 +179,10 @@ $theme->render('header', $header);
         <?php $timing->log('beginning of comments');?>
         <!-- Comments -->
         <div class="grid_8 comments" id="commentHeader">
+            <?php 
+                //$cache = new Cache('comment-'.$article->getId());
+                //if($currentuser->isLoggedIn() || $cache->start()) {
+            ?>
             <h3>Comments <span>(<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>)</span></h3>
             <!-- Comments container -->
             <div id="commentCont">
@@ -193,6 +197,10 @@ $theme->render('header', $header);
                 ?>
             </div>
             <!-- End of comments container -->
+            <?php 
+                //} 
+                //if(!$currentuser->isLoggedIn()) $cache->stop();
+            ?>
             
             <!-- Comment form -->
             <div id="commentForm">
@@ -209,6 +217,22 @@ $theme->render('header', $header);
                 <?php } else { ?>
                     <h5>Leave a comment as <a href="<?php echo $currentuser->getURL();?>/" title="Profile Page"><?php echo $currentuser->getName();?></a></h5>
                 <?php } ?>
+                <!-- Errors -->
+                <div class="error">
+                        <?php if($errorduplicate) { ?>
+                            <p>Looks like the comment you have just submitted is a duplicate. Please write something original and try again.</p>
+                        <?php } ?>
+                        <?php if($errorspam) { ?>
+                            <p>Our spam filters have flagged your comment as suspicious. If you are not a spammer then please <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
+                        <?php } ?>
+                        <?php if($errorrecapatcha) { ?>
+                            <p>Oops looks like you filled in the ReCaptcha wrong. Please try again to convince us that you are human!</p>
+                        <?php } ?>
+                        <?php if($errorreinsert) { ?>
+                            <p>Uh oh. Looks like an error has occurred. Hopefully it is just a temporary problem so try submitting your comment again. If that still hasn't done the trick then <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
+                        <?php } ?>
+                </div>
+                <!-- End of errors -->
                 <form method="post" action="<?php echo Utility::currentPageURL();?>">
                     <?php if (!$currentuser->isLoggedIn()) { ?>
                         <label for="name">Name: </label>

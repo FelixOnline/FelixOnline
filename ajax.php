@@ -16,7 +16,14 @@ $theme = new Theme('classic'); // TODO
 
 $action = $_REQUEST['action'];
 if($action = $hooks->getAction($action)) {
-    call_user_func($action);
+    $return = call_user_func($action);
+    // Check if it is an ajax request
+    if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        echo $return;
+    } else {
+        header("Location: ".$_SERVER["HTTP_REFERER"]);
+    }
+    die();
 }
 
     /*
@@ -94,4 +101,3 @@ if($action = $hooks->getAction($action)) {
 		mail($to, $subject, $message, $headers);
 	}
     */
-?>

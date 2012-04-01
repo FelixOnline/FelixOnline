@@ -57,23 +57,23 @@ class Article extends BaseModel {
         //$this->db->cache_queries = true;
         if($id !== NULL) { // if creating an already existing article object
             $sql = "SELECT 
-                    `id`,
-                    `title`,
-                    `short_title`,
-                    `teaser`,
-                    `author`,
-                    `approvedby`,
-                    `category`,
-                    UNIX_TIMESTAMP(`date`) as date,
-                    UNIX_TIMESTAMP(`published`) as published,`hidden`,
-                    `text1`,
-                    `text2`,
-                    `img1`,
-                    `img2`,
-                    `img2lr`,
-                    `hits` 
-                FROM `article` 
-                WHERE id=".$id;
+                        `id`,
+                        `title`,
+                        `short_title`,
+                        `teaser`,
+                        `author`,
+                        `approvedby`,
+                        `category`,
+                        UNIX_TIMESTAMP(`date`) as date,
+                        UNIX_TIMESTAMP(`published`) as published,`hidden`,
+                        `text1`,
+                        `text2`,
+                        `img1`,
+                        `img2`,
+                        `img2lr`,
+                        `hits` 
+                    FROM `article` 
+                    WHERE id=".$id;
             parent::__construct($this->db->get_row($sql), 'Article', $id);
             //$this->db->cache_queries = false;
             return $this;
@@ -358,31 +358,80 @@ class Article extends BaseModel {
     }
 
     /*
-     * Public: Log article visit and increment hit count on article
+     * Public: Log visit and increment hit count on article
+     * Check if user has visited page before (based on ip or user for a set length of time)
      */
-    public function logArticleVisit() {
-        $this->hitArticle();
-        $this->logVisitor(); 
+    public function logVisit() {
+        if(!$this->recentlyVisited()) {
+            $this->logVisitor();
+            $this->hitArticle();
+        } else {
+            $this->logVisitor(1);
+        }
     }
 
     /*
      * Private: Increment hit count on article
      */
     private function hitArticle() {
-        $sql = "UPDATE `article` SET hits=hits+1 WHERE id=".$this->id;
+        $sql = "UPDATE `article` SET hits=hits+1 WHERE id=".$this->getId();
         return $this->db->query($sql);
     }
 
     /*
      * Private: Add log of visitor into article_vist table
      */
-    private function logVisitor() {
-        $sql = "INSERT INTO article_visit (article,user,IP,referrer) VALUES ('$this->id',";
-        $sql .= ($u = is_logged_in()) ? "'$u'" : "NULL";
-        $sql .= ",'".$_SERVER['REMOTE_ADDR']."'";
-        $sql .= ",'".$_SERVER['HTTP_REFERER']."'";
-        $sql .= ")";
+    private function logVisitor($repeat = 0) {
+        global $currentuser;
+        $user = NULL;
+        if($currentuser->isLoggedIn()) $user = $currentuser->getUser();
+        $sql = "INSERT INTO 
+                    article_visit 
+                (
+                    article,
+                    user,
+                    IP,
+                    browser,
+                    referrer, 
+                    repeat_visit
+                ) VALUES (
+                    '".$this->getId()."',
+                    '".$user."',
+                    '".$this->db->escape($_SERVER['REMOTE_ADDR'])."',
+                    '".$this->db->escape($_SERVER['HTTP_USER_AGENT'])."',
+                    '".$this->db->escape($_SERVER['HTTP_REFERER'])."',
+                    '".$repeat."'
+                )";
         return $this->db->query($sql);
+    }
+
+    /*
+     * Private: Check if user has recently visited article
+     *
+     * Returns boolean
+     */
+    private function recentlyVisited() {
+        global $currentuser;
+        if($currentuser->isLoggedIn()) {
+            $sql = "SELECT
+                        COUNT(id)
+                    FROM
+                        `article_visit`
+                    WHERE user = '".$currentuser->getUser()."'
+                    AND article = '".$this->getId()."'
+                    AND UNIX_TIMESTAMP(timestamp) < now() - interval 4 week";
+            return $this->db->get_var($sql);
+        } else {
+            $sql = "SELECT
+                        COUNT(id)
+                    FROM
+                        `article_visit`
+                    WHERE IP = '".$_SERVER['REMOTE_ADDR']."'
+                    AND browser = '".$_SERVER['HTTP_USER_AGENT']."'
+                    AND article = '".$this->getId()."'
+                    AND UNIX_TIMESTAMP(timestamp) < now() - interval 4 week";
+            return $this->db->get_var($sql);
+        }
     }
 
 	public function print_this() {
@@ -390,4 +439,3 @@ class Article extends BaseModel {
 	}
 }
 
-?>

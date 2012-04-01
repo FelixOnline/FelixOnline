@@ -55,14 +55,14 @@ class AuthController extends BaseController {
                     $this->setCookie();
                 }
                 
-                $this->redirect($_GET['goto']);
+                Utility::redirect($_GET['goto']);
             } else {
                 throw new LoginException("Internal error", $this->session, LOGIN_EXCEPTION_SESSION);
             }
 			// show main exception page if something goes wrong here - do not catch!!!
         } else {
             if($currentuser->isLoggedIn()) {
-                $this->redirect(STANDARD_URL);
+                Utility::redirect(STANDARD_URL);
             } else {
                 // insert login page here
                 $failed = 0;
@@ -85,6 +85,17 @@ class AuthController extends BaseController {
     	            $currentuser->setUser($_POST['username']); // not needed
 	                $this->logSession($_POST['username']);
 	                $session = $currentuser->getSession();
+
+                    // comment like/dislike
+                    if(isset($_POST['commenttype']) && isset($_POST['comment'])) {
+                        $comment = new Comment($_POST['comment']);
+                        if($_POST['commenttype'] == 'like') {
+                            $comment->likeComment($currentuser->getUser());
+                        } else if($_POST['commenttype'] == 'dislike') {
+                            $comment->dislikeComment($currentuser->getUser());
+                        }
+                        $hash = $comment->getId();
+                    }
 	                
 	                // Close the session here, as we do not want lingering sessions on the auth server
 	                $params = session_get_cookie_params();
@@ -94,24 +105,24 @@ class AuthController extends BaseController {
 	                ); // Remove session ID
 	                session_destroy(); // Remove all session data
 	
-	                $this->redirect(STANDARD_URL.'login', array(
+                    Utility::redirect(STANDARD_URL.'login', array(
 	                    'session' => $session,
 	                    'remember' => $_POST['remember'],
 	                    'goto' => $_GET['goto']
-	                ));
+	                ), $hash);
 			  } else {
 	                throw new LoginException("Invalid credentials", $_POST['username'], LOGIN_EXCEPTION_CREDENTIALS);
 					// Catch this elsewhere
 	     	  }
      	    } catch (LoginException $e) {
-         		$this->redirect(AUTHENTICATION_PATH.'login', array(
+                Utility::redirect(AUTHENTICATION_PATH.'login', array(
 					'failed' => true
 				));
 			}
         }
 		if(isset($_POST['logout'])) {
             $this->logout();
-            $this->redirect($_GET['goto']);
+            Utility::redirect($_GET['goto']);
         }
     }
 
@@ -278,28 +289,6 @@ class AuthController extends BaseController {
     }
 	
     /*
-     * Private: Redirect to location with specific GET params
-     *
-     * $goto - url to redirect to
-     * $params - array of parameters to add to url
-     */
-    private function redirect($goto, $params = NULL) {
-        if($params) {
-            $i = 0;
-            if(!$goto) $goto = STANDARD_URL;
-            foreach($params as $key => $value) {
-                if(strpos($goto,'?')) {
-                    $goto .= '&'.$key.'='.$value;
-                } else if ($i == 0) {
-                    $goto .= '?'.$key.'='.$value;
-                }
-                $i++;
-            }
-        }
-        header('Location: '.$goto);
-    }
-
-    /*
      * Private: Get user from session
      * Get the user from the session id
      */
@@ -350,4 +339,3 @@ class AuthController extends BaseController {
     }
 
 }
-?>

@@ -29,14 +29,25 @@ function contact_us() {
     
     // Mail it
     $email->send();
-
-    // Check if it is an ajax request
-    if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-        echo 'Success';
-    } else {
-        header("Location: ".$_SERVER["HTTP_REFERER"]);
-    }
-    die();
+    
+    return 'Success';
 }
 
+$hooks->addAction('like_comment', 'like_comment');
+function like_comment() {
+    $user = $_REQUEST['user'];
+    $comment = $_REQUEST['comment'];
+    $comment = new Comment($comment);
+    $count = $comment->likeComment($user);
+    return $count;
+}
+
+$hooks->addAction('dislike_comment', 'dislike_comment');
+function dislike_comment() {
+    $user = $_REQUEST['user'];
+    $comment = $_REQUEST['comment'];
+    $comment = new Comment($comment);
+    $count = $comment->dislikeComment($user);
+    return $count;
+}
 ?>

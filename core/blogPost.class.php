@@ -50,4 +50,3 @@ class BlogPost extends BaseModel {
         return $this->author;
     }
 }
-?>

@@ -21,6 +21,8 @@ class User extends BaseModel {
     protected $db;
     private $articles;
     private $count;
+    private $popArticles = array();
+    private $comments = array();
 
     function __construct($uname = NULL) {
         /* initialise db connection and store it in object */
@@ -28,31 +30,26 @@ class User extends BaseModel {
         $this->db = $db;
         if($uname !== NULL) {
             $sql = "SELECT 
-                `user`,
-                `name`,
-                `visits`,
-                `ip`,
-                UNIX_TIMESTAMP(`timestamp`) as timestamp,
-                `role`,
-                `description`,
-                `email`,
-                `facebook`,
-                `twitter`,
-                `websitename`,
-                `websiteurl`,
-                `img` 
-                FROM `user` 
-                WHERE user='".$uname."'";
+                        `user`,
+                        `name`,
+                        `visits`,
+                        `ip`,
+                        UNIX_TIMESTAMP(`timestamp`) as timestamp,
+                        `role`,
+                        `description`,
+                        `email`,
+                        `facebook`,
+                        `twitter`,
+                        `websitename`,
+                        `websiteurl`,
+                        `img` 
+                    FROM `user` 
+                    WHERE user='".$uname."'";
             parent::__construct($this->db->get_row($sql), 'User', $uname);
             //$this->db->cache_queries = false;
             return $this;
         } else {
         }
-    }
-
-    protected function setName($name) {
-        $this->fields['name'] = $name;
-        return $this->fields['name'];
     }
 
     /*
@@ -90,6 +87,48 @@ class User extends BaseModel {
     }
 
     /*
+     * Public: Get popular articles
+     * Get users popular articles
+     */
+    public function getPopularArticles() {
+        if(!$this->popArticles) {
+            $sql = "SELECT 
+                        id 
+                    FROM `article` 
+                    INNER JOIN `article_author` 
+                        ON (article.id=article_author.article) 
+                    WHERE article_author.author='".$this->getUser()."' 
+                    AND published < NOW()
+                    ORDER BY hits DESC LIMIT 0,".NUMBER_OF_POPULAR_ARTICLES_USER;
+            $articles = $this->db->get_results($sql);
+            foreach($articles as $key => $obj) {
+                $this->popArticles[] = new Article($obj->id);
+            }
+        }
+        return $this->popArticles;
+    }
+
+    /*
+     * Public: Get comments
+     * Get all comments from user
+     */
+    public function getPopularComments() {
+        if(!$this->comments) {
+            $sql = "SELECT 
+                        id
+                    FROM `comment` 
+                    WHERE user='".$this->getUser()."' 
+                    ORDER BY timestamp DESC 
+                    LIMIT 0,".NUMBER_OF_POPULAR_COMMENTS_USER;
+            $comments = $this->db->get_results($sql);    
+            foreach($comments as $key => $obj) {
+                $this->comments[] = new Comment($obj->id);
+            } 
+        }
+        return $this->comments;
+    }
+
+    /*
      * Public: Get number of pages in a category
      *
      * Returns int 
@@ -112,5 +151,38 @@ class User extends BaseModel {
         return $pages;
         
     }
+
+    /*
+     * Public: Get first name of user
+     *
+     * Returns string
+     */
+    public function getFirstName() {
+        $name = explode(' ', $this->getName());
+        return $name[0];
+    }
+
+    /*
+     * Public: Get last name of user
+     *
+     * Returns string
+     */
+    public function getLastName() {
+        $name = explode(' ', $this->getName());
+        return $name[1];
+    }
+
+    /*
+     * Public: Get email
+     *
+     * $ldap - [boolean] if true then get email from ldap and not db
+     *
+     * Returns string
+     */
+    public function getEmail($ldap = false) {
+        if($ldap && !LOCAL) {
+            return ldap_get_mail($this->getUser());
+        }
+        return $this->fields['email'];
+    }
 }
-?>

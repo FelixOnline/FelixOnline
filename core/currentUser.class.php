@@ -265,4 +265,3 @@ class CurrentUser extends User {
         }
     }
 }
-?>

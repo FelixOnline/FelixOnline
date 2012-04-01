@@ -40,17 +40,18 @@
  *
  *      // Submit comment
  *      $comment = new Comment();
- *      $comment->setExternal(false);
- *      $comment->setArticle(100);
+ *      $comment->setExternal(false); // internal comment
+ *      $comment->setArticle(100); // article id
  *      $comment->setContent('Hello world');
  *      $comment->setUser('felix');
- *      if($comment->insert()) echo 'Success!';
+ *      if($id = $comment->save()) echo 'Success!';
  */
 class Comment extends BaseModel {
 	private $article; // article class comment is on
 	private $user; // user class
 	private $reply; // comment class of reply
     private $external = false; // if comment is external or not. Default false
+    private $commentsToApprove;
     protected $db;
 	
     /*
@@ -68,7 +69,18 @@ class Comment extends BaseModel {
         if($id != NULL) {
             if($id < EXTERNAL_COMMENT_ID) { // if comment is internal
                 $this->external = false; // comment is internal
-                $sql = "SELECT id, `article`,`user`,`comment` as content,UNIX_TIMESTAMP(`timestamp`) as timestamp,`active`,`reply`,`likes`,`dislikes` FROM `comment` WHERE id=$id";
+                $sql = "SELECT 
+                            id, 
+                            `article`,
+                            `user`,
+                            `comment` as content,
+                            UNIX_TIMESTAMP(`timestamp`) as timestamp,
+                            `active`,
+                            `reply`,
+                            `likes`,
+                            `dislikes` 
+                        FROM `comment` 
+                        WHERE id=$id";
                 parent::__construct($this->db->get_row($sql), 'Comment (Internal)', $id);
                 //$this->name = get_vname_by_uname_db($this->user);
                 return $this;
@@ -92,6 +104,11 @@ class Comment extends BaseModel {
                 parent::__construct($this->db->get_row($sql), 'Comment (External)', $id);
                 return $this;
             }
+        } else {
+            $this->setFieldFilters(array(
+                'content' => 'comment',
+                'ip' => 'IP'
+            ));
         }
 	}
 
@@ -191,24 +208,6 @@ class Comment extends BaseModel {
     }
 	
     /*
-     * Depreciated: Process a database query
-     *
-     * $sql - SQL command as a string
-     *
-     * Returns the result of the mysql query
-     */
-    private function dbquery($sql) {
-		global $cid,$dbok;
-		if (!$cid || !$dbok)
-			die("Database error: ".mysql_error($cid));
-		if ($sql!==NULL && ($c=mysql_num_rows($rsc=mysql_query($sql,$cid)))) {
-            return $rsc;
-        } else {
-            return false;
-        }
-    }
-
-    /*
      * Public: Check if comment is rejected
      */
     public function isRejected() {
@@ -239,22 +238,13 @@ class Comment extends BaseModel {
      * Returns true or false
      */
     public function userLikedComment($user) {
-        $sql = "SELECT COUNT(*) FROM `comment_like` WHERE user='$user' AND comment=".$this->getId();
+        $sql = "SELECT 
+                    COUNT(*) 
+                FROM `comment_like` 
+                WHERE user='$user' 
+                AND comment=".$this->getId();
         $count = $this->db->get_var($sql);
         return $count;
-    }
-
-    /*
-     * Public: Set user
-     *
-     * $username - username of user commenting
-     *
-     * Returns user
-     */
-    public function setUser($username) {
-        $this->user = $username;
-        $this->name = get_vname_by_uname_db($this->user);
-        return $this->user;
     }
 
     /*
@@ -265,61 +255,98 @@ class Comment extends BaseModel {
      */
     public function commentExists() {
         if(!$this->external) {
-            $sql = "SELECT COUNT(*) FROM `comment` WHERE article=".$this->article." AND user='".$this->user."' AND comment='".$this->content."' AND `active`=1";
+            $sql = "SELECT 
+                        COUNT(*) 
+                    FROM `comment` 
+                    WHERE article=".$this->getArticle()->getId()." 
+                    AND user='".$this->getUser()->getUser()."' 
+                    AND comment='".$this->getContent()."' 
+                    AND `active`=1";
         } else {
-            $sql = "SELECT COUNT(*) FROM `comment_ext` WHERE article=".$this->article." AND name='".$this->name."' AND comment='".$this->content."'";
+            $sql = "SELECT 
+                        COUNT(*) 
+                    FROM `comment_ext` 
+                    WHERE article=".$this->getArticle()->getId()." 
+                    AND name='".$this->getName()."' 
+                    AND comment='".$this->getContent()."'";
         }
         return $this->db->get_var($sql);
     }
 
+    /*
+     * Public: Set external
+     * Set whether comment is external or not
+     */
+    public function setExternal($external) {
+        $this->external = $external;
+        return $this->external;
+    }
+
     /* 
-     * Public: Insert new comment into database
+     * Public: Save new comment into database
      *
      * Returns id of new comment
      */
-    public function insert() {
-        $content = $this->db->escape($this->content);
+    public function save() {
         if(!$this->external) { // if internal
-            $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('".$this->article."','".$this->user."','".$content."','".$this->getReplyID()."')"; // insert comment into database
-            $this->db->query($sql); // execute query
-            $this->id = $this->db->insert_id; // get id of inserted comment
+            $this->setDbtable('comment');
+        } else {
+            $this->setDbtable('comment_ext');
+            $this->setIp($_SERVER['REMOTE_ADDR']);
+            // check spam using akismet
+            require_once('inc/akismet.class.php');
 
-            if($this->reply && !$this->reply->isExternal()) { // if comment is replying to a comment 
+            $akismet = new Akismet(STANDARD_URL, AKISMET_API_KEY);
+            $akismet->setCommentAuthor($this->getName());
+            //$akismet->setCommentAuthorEmail($email);
+            $akismet->setCommentContent($this->getContent());
+            $akismet->setPermalink($this->getArticle()->getURL());
+
+            if($spam = $akismet->isCommentSpam()) { // if comment is spam
+                $this->setActive(0);
+                $this->setPending(0);
+                $this->setSpam(1);
+
+                $sql = "INSERT IGNORE INTO 
+                            `comment_spam` 
+                        (
+                            IP, 
+                            date
+                        ) VALUES (
+                            '".$_SERVER['REMOTE_ADDR']."', 
+                            DATE_ADD(NOW(), INTERVAL 2 MONTH)
+                        )"; // insert comment ip into comment_spam
+                $this->db->query($sql);
+            } else {
+                $this->setActive(1);
+                $this->setPending(1);
+                $this->setSpam(0);
+            }
+        }
+
+        parent::save();
+        $this->setId($this->db->insert_id); // get id of inserted comment
+
+        if($this->isExternal()) {
+            if(!$spam) {
+                $this->emailExternalComment();
+            }
+        } else {
+            if($this->getReply()) { // if comment is replying to an internal comment 
                 $this->emailReply();
             }
 
             /* email authors of article */
             $this->emailAuthors();
+        }
 
-            return $this->id; // return new comment id
-        } else { // if external comment
-            $name = $this->db->escape($this->name);
-            // check spam using akismet
-            require_once('inc/akismet.class.php');
-
-            $akismet = new Akismet(STANDARD_URL, AKISMET_API_KEY);
-            $akismet->setCommentAuthor($this->name);
-            //$akismet->setCommentAuthorEmail($email);
-            $akismet->setCommentContent($this->comment);
-            $akismet->setPermalink(full_article_url($this->article));
-
-            if($akismet->isCommentSpam()) { // if comment is spam
-                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$name."','".$content."',0,'".$_SERVER['REMOTE_ADDR']."',0,'".$this->getReplyID()."',1)";
-                $this->db->query($sql);
-                $this->id = $this->db->insert_id; // get id of inserted comment
-
-                $sql = "INSERT IGNORE INTO `comment_spam` (IP, date) VALUES ('".$_SERVER['REMOTE_ADDR']."', DATE_ADD(NOW(), INTERVAL 2 MONTH))"; // insert comment ip into comment_spam
-                $this->db->query($sql);
-
-                return 'spam';
-            } else {
-                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply) VALUES ('".$this->article."','".$name."','".$content."',1,'".$_SERVER['REMOTE_ADDR']."',1,'".$this->getReplyID()."')";
-                $this->db->query($sql);
-                $this->id = $this->db->insert_id; // get id of inserted comment
-
-                $this->emailExternalComment();
-                return $this->id;
-            }
+        // clear cache
+        //Cache::clear('comment-'.$this->fields['article']);
+        
+        if($this->isExternal() && $this->getSpam() == 1) {
+            return 'spam';
+        } else {
+            return $this->getId(); // return new comment id
         }
     }
 
@@ -327,24 +354,22 @@ class Comment extends BaseModel {
      * Public: Email authors of article
      */
     public function emailAuthors() {
-        $authors = get_article_authors_uname($this->article);
-        if(in_array($this->user, $authors)) { // if author of comment is one of the authors
-            $authors = array_diff($authors, array($this->user)); // remove them from the author list
+        $authors = $this->getArticle()->getAuthors();
+        if(in_array($this->getUser(), $authors)) { // if author of comment is one of the authors
+            $authors = array_diff($authors, array($this->getUser())); // remove them from the author list
         }
         foreach($authors as $author) {
-            if(!($emailAddress = get_user_email($author)) && !LOCAL) {
-                $emailAddress = ldap_get_mail($author);
-            }
+            $emailAddress = $author->getEmail();
             $email = new Email();
             $email->setTo($emailAddress);
-            $email->setUniqueID($author);
+            $email->setUniqueID($author->getUser());
 
-            $email->setSubject($this->getName().' has commented on "'.get_article_title($this->article).'"');
+            $email->setSubject($this->getName().' has commented on "'.$this->getArticle()->getTitle().'"');
 
             ob_start();
             $comment = $this;
             $user = $author;
-            include(BASE_DIRECTORY.'/views/emails/comment_notification.php');
+            include(BASE_DIRECTORY.'/templates/emails/comment_notification.php');
             $message = ob_get_contents();
             ob_end_clean();
 
@@ -358,14 +383,17 @@ class Comment extends BaseModel {
      * Private: Email comment author with reply
      */
     private function emailReply() {
+        if($this->getReply()->isExternal()) { // check that comment replied to isn't external
+            return false;
+        }
         $email = new Email();
-        $email->setTo(get_user_email_full($this->reply->getUser()));
-        $email->setSubject($this->getName().' has replied to your comment on "'.get_article_title($this->article).'"');
+        $email->setTo($this->getReply()->getUser()->getEmail());
+        $email->setSubject($this->getName().' has replied to your comment on "'.$this->getArticle()->getTitle().'"');
 
         ob_start();
-        $comment = $this->reply;
+        $comment = $this->getReply();
         $reply = $this;
-        include(BASE_DIRECTORY.'/views/emails/comment_reply_notification.php');
+        include(BASE_DIRECTORY.'/templates/emails/comment_reply_notification.php');
         $message = ob_get_contents();
         ob_end_clean();
 
@@ -381,11 +409,11 @@ class Comment extends BaseModel {
         /* Send email */
         $email = new Email();
         $email->setTo(EMAIL_EXTCOMMENT_NOTIFYADDR);
-        $email->setSubject('New comment to approve on "'.get_article_title($this->article).'"');
+        $email->setSubject('New comment to approve on "'.$this->getArticle()->getTitle().'"');
 
         ob_start();
         $comment = $this;
-        include(BASE_DIRECTORY.'/views/emails/new_external_comment.php');
+        include(BASE_DIRECTORY.'/templates/emails/new_external_comment.php');
         $message = ob_get_contents();
         ob_end_clean();
 
@@ -402,19 +430,31 @@ class Comment extends BaseModel {
      */
     public function likeComment($user) {
         if(!$this->userLikedComment($user)) { // check user hasn't already liked the comment
-            $sql = "INSERT INTO `comment_like` (user,comment,binlike) VALUES ('$user','".$this->id."','1')";
+            $sql = "INSERT INTO `comment_like` 
+                    (
+                        user,
+                        comment,
+                        binlike
+                    ) VALUES (
+                        '".$this->db->escape($user)."',
+                        '".$this->getId()."',
+                        '1'
+                    )";
             $this->db->query($sql);
 
-            $this->likes += 1;
+            $likes = $this->getLikes() + 1;
             if(!$this->external) { // internal comment
                 $sql = "UPDATE `comment` "; 
             } else {
                 $sql = "UPDATE `comment_ext` ";
             }
-            $sql .= "SET likes = ".$this->likes." WHERE id = ".$this->id;
+            $sql .= "SET likes = ".$likes." WHERE id = ".$this->getId();
             $this->db->query($sql);
 
-            return $this->likes;
+            // clear comment
+            //Cache::clear('comment-'.$this->fields['article']);
+
+            return $likes;
         } else {
             return false;
         }
@@ -429,19 +469,31 @@ class Comment extends BaseModel {
      */
     public function dislikeComment($user) {
         if(!$this->userLikedComment($user)) { // check user hasn't already liked the comment
-            $sql = "INSERT INTO `comment_like` (user,comment,binlike) VALUES ('$user','".$this->id."','0')";
+            $sql = "INSERT INTO `comment_like` 
+                    (
+                        user,
+                        comment,
+                        binlike
+                    ) VALUES (
+                        '".$this->db->escape($user)."',
+                        '".$this->getId()."',
+                        '0'
+                    )";
             $this->db->query($sql);
 
-            $this->dislikes += 1;
+            $dislikes = $this->getDislikes() + 1;
             if(!$this->external) { // internal comment
                 $sql = "UPDATE `comment` "; 
             } else {
                 $sql = "UPDATE `comment_ext` ";
             }
-            $sql .= "SET dislikes = ".$this->dislikes." WHERE id = ".$this->id;
+            $sql .= "SET dislikes = ".$dislikes." WHERE id = ".$this->getId();
             $this->db->query($sql);
+            
+            // clear comment
+            //Cache::clear('comment-'.$this->fields['article']);
 
-            return $this->dislikes;
+            return $dislikes;
         } else {
             return false;
         }
@@ -470,6 +522,17 @@ class Comment extends BaseModel {
         fwrite($fh, $body);
         fclose($fh);
     }
+
+    private function getCommentsToApprove() {
+        if(!$this->commentsToApprove) {
+            $sql = "SELECT 
+                        COUNT(id) 
+                    FROM comment_ext 
+                    WHERE ACTIVE=1 
+                    AND pending=1";
+            $this->commentsToApprove = $this->db->get_var($sql);
+        }
+        return $this->commentsToApprove;
+    }
 }
 
-?>

@@ -366,7 +366,12 @@ $(document).ready(function() {
         $.ajax({
             url: "ajax.php",
             type: "POST",
-            data: ({type: 'like', comment:comment, user: user }),
+            data: ({
+                action: 'like_comment',
+                type: 'like',
+                comment: comment,
+                user: user
+            }),
             async:true,
             success: function(msg){
                 //alert(msg);
@@ -382,15 +387,20 @@ $(document).ready(function() {
         });
         return false;
     });
-    
+
     //Dislike comment
     $('.commentAction #dislike').live("click", function() {
-        var likelink = $(this); 
+        var likelink = $(this);
         var comment = $(this).parents('.commentAction').attr('id');
         $.ajax({
             url: "ajax.php",
             type: "POST",
-            data: ({type: 'dislike', comment:comment, user: user }),
+            data: ({
+                action: 'dislike_comment',
+                type: 'dislike',
+                comment: comment,
+                user: user
+            }),
             async:true,
             success: function(msg){
                 //alert(msg);
@@ -406,11 +416,11 @@ $(document).ready(function() {
         });
         return false;
     });
-    
+
     $('.circle').mosaic({
         opacity     :   0.8         //Opacity for overlay (0-1)
     });
-    
+
     $('.play').mosaic({
         opacity     :   0.8         //Opacity for overlay (0-1)
     });
