@@ -341,120 +341,12 @@ class Comment extends BaseModel {
         }
 
         // clear cache
-        Cache::clear('comment-'.$this->fields['article']);
+        //Cache::clear('comment-'.$this->fields['article']);
         
         if($this->isExternal() && $this->getSpam() == 1) {
             return 'spam';
         } else {
             return $this->getId(); // return new comment id
-        }
-    }
-
-    /* 
-     * Public: Insert new comment into database
-     *
-     * Returns id of new comment
-     */
-    public function insert() {
-        if(!$this->external) { // if internal
-            $sql = "INSERT INTO 
-                        `comment` 
-                    (
-                        article,
-                        user,
-                        comment,
-                        reply
-                    ) VALUES (
-                        '".$this->db->escape($this->getArticle())."',
-                        '".$this->db->escape($this->getUser()->getUser())."',
-                        '".$this->db->escape($this->getContent())."',
-                        '".$this->getReply()->getId()."
-                    ')"; // insert comment into database
-            $this->db->query($sql); // execute query
-            $this->id = $this->db->insert_id; // get id of inserted comment
-
-            if($this->getReply() && !$this->getReply()->isExternal()) { // if comment is replying to a comment 
-                $this->emailReply();
-            }
-
-            /* email authors of article */
-            $this->emailAuthors();
-
-            return $this->id; // return new comment id
-        } else { // if external comment
-            $name = $this->db->escape($this->name);
-            // check spam using akismet
-            require_once('inc/akismet.class.php');
-
-            $akismet = new Akismet(STANDARD_URL, AKISMET_API_KEY);
-            $akismet->setCommentAuthor($this->name);
-            //$akismet->setCommentAuthorEmail($email);
-            $akismet->setCommentContent($this->comment);
-            $akismet->setPermalink(full_article_url($this->article));
-
-            if($akismet->isCommentSpam()) { // if comment is spam
-                $sql = "INSERT INTO 
-                            `comment_ext` 
-                        (
-                            article,
-                            name,
-                            comment,
-                            active,
-                            IP,
-                            pending,
-                            reply,
-                            spam
-                        ) VALUES (
-                            '".$this->getArticle()->getId()."',
-                            '".$this->db->escape($this->getName())."',
-                            '".$this->db->escape($this->getContent())."',
-                            0,
-                            '".$_SERVER['REMOTE_ADDR']."',
-                            0,
-                            '".$this->getReplyID()."',
-                            1
-                        )";
-                $this->db->query($sql);
-                $this->id = $this->db->insert_id; // get id of inserted comment
-
-                $sql = "INSERT IGNORE INTO 
-                            `comment_spam` 
-                        (
-                            IP, 
-                            date
-                        ) VALUES (
-                            '".$_SERVER['REMOTE_ADDR']."', 
-                            DATE_ADD(NOW(), INTERVAL 2 MONTH)
-                        )"; // insert comment ip into comment_spam
-                $this->db->query($sql);
-
-                return 'spam';
-            } else {
-                $sql = "INSERT INTO 
-                            `comment_ext` 
-                        (
-                            article,
-                            name,
-                            comment,
-                            active,
-                            IP,
-                            pending,
-                            reply
-                        ) VALUES (
-                            '".$this->article."',
-                            '".$name."',
-                            '".$content."',
-                            1,
-                            '".$_SERVER['REMOTE_ADDR']."',
-                            1,
-                            '".$this->getReplyID()."'
-                        )";
-                $this->db->query($sql);
-                $this->id = $this->db->insert_id; // get id of inserted comment
-
-                $this->emailExternalComment();
-                return $this->id;
-            }
         }
     }
 
@@ -560,7 +452,7 @@ class Comment extends BaseModel {
             $this->db->query($sql);
 
             // clear comment
-            Cache::clear('comment-'.$this->fields['article']);
+            //Cache::clear('comment-'.$this->fields['article']);
 
             return $likes;
         } else {
@@ -599,7 +491,7 @@ class Comment extends BaseModel {
             $this->db->query($sql);
             
             // clear comment
-            Cache::clear('comment-'.$this->fields['article']);
+            //Cache::clear('comment-'.$this->fields['article']);
 
             return $dislikes;
         } else {
