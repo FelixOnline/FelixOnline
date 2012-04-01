@@ -21,6 +21,8 @@ class User extends BaseModel {
     protected $db;
     private $articles;
     private $count;
+    private $popArticles = array();
+    private $comments = array();
 
     function __construct($uname = NULL) {
         /* initialise db connection and store it in object */
@@ -82,6 +84,48 @@ class User extends BaseModel {
         }
         $this->articles = $this->db->get_results($sql);    
         return $this->articles;
+    }
+
+    /*
+     * Public: Get popular articles
+     * Get users popular articles
+     */
+    public function getPopularArticles() {
+        if(!$this->popArticles) {
+            $sql = "SELECT 
+                        id 
+                    FROM `article` 
+                    INNER JOIN `article_author` 
+                        ON (article.id=article_author.article) 
+                    WHERE article_author.author='".$this->getUser()."' 
+                    AND published < NOW()
+                    ORDER BY hits DESC LIMIT 0,".NUMBER_OF_POPULAR_ARTICLES_USER;
+            $articles = $this->db->get_results($sql);
+            foreach($articles as $key => $obj) {
+                $this->popArticles[] = new Article($obj->id);
+            }
+        }
+        return $this->popArticles;
+    }
+
+    /*
+     * Public: Get comments
+     * Get all comments from user
+     */
+    public function getPopularComments() {
+        if(!$this->comments) {
+            $sql = "SELECT 
+                        id
+                    FROM `comment` 
+                    WHERE user='".$this->getUser()."' 
+                    ORDER BY timestamp DESC 
+                    LIMIT 0,".NUMBER_OF_POPULAR_COMMENTS_USER;
+            $comments = $this->db->get_results($sql);    
+            foreach($comments as $key => $obj) {
+                $this->comments[] = new Comment($obj->id);
+            } 
+        }
+        return $this->comments;
     }
 
     /*
