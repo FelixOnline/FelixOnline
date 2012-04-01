@@ -41,13 +41,13 @@ DROP TABLE IF EXISTS `api_log`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `api_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
+  `api_key` varchar(40) DEFAULT NULL,
   `what` longtext NOT NULL,
   `request` longtext,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ip` varchar(40) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=161 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,7 +139,9 @@ CREATE TABLE `article_visit` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user` varchar(16) DEFAULT NULL,
   `IP` varchar(15) DEFAULT NULL,
+  `browser` text NOT NULL,
   `referrer` varchar(255) DEFAULT NULL,
+  `repeat_visit` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `article` (`article`,`timestamp`,`user`),
   KEY `timestamp` (`timestamp`),
@@ -158,12 +160,13 @@ CREATE TABLE `blog_post` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `blog` int(11) DEFAULT NULL,
   `content` text,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `author` varchar(30) DEFAULT NULL,
   `type` varchar(30) DEFAULT NULL,
   `meta` text,
+  `visible` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,8 +181,9 @@ CREATE TABLE `blogs` (
   `name` varchar(30) DEFAULT NULL COMMENT 'Name of blog',
   `slug` varchar(30) DEFAULT NULL COMMENT 'Blog url slug',
   `controller` varchar(30) DEFAULT NULL,
+  `sticky` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,7 +277,7 @@ CREATE TABLE `comment` (
   KEY `article` (`article`),
   CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`article`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`user`) REFERENCES `user` (`user`)
-) ENGINE=InnoDB AUTO_INCREMENT=324 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -301,7 +305,7 @@ CREATE TABLE `comment_ext` (
   KEY `article` (`article`),
   KEY `pending` (`pending`),
   CONSTRAINT `comment_ext_ibfk_1` FOREIGN KEY (`article`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=80008134 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=80008140 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +323,7 @@ CREATE TABLE `comment_like` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `comment_like_check` (`user`,`comment`),
   CONSTRAINT `comment_like_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`user`)
-) ENGINE=InnoDB AUTO_INCREMENT=508 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=529 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -352,7 +356,7 @@ CREATE TABLE `cookies` (
   PRIMARY KEY (`id`),
   KEY `hash` (`hash`),
   KEY `user` (`user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -710,6 +714,35 @@ CREATE TABLE `role` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `sexsurvey_completers`
+--
+
+DROP TABLE IF EXISTS `sexsurvey_completers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sexsurvey_completers` (
+  `uname` varchar(45) NOT NULL,
+  UNIQUE KEY `uname_UNIQUE` (`uname`),
+  KEY `uname_key` (`uname`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sexsurvey_responses`
+--
+
+DROP TABLE IF EXISTS `sexsurvey_responses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sexsurvey_responses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `data` longtext,
+  `deptcheck` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `site`
 --
 
@@ -981,6 +1014,27 @@ CREATE TABLE `user` (
   KEY `timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `varsity`
+--
+
+DROP TABLE IF EXISTS `varsity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `varsity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `team1` varchar(30) DEFAULT NULL,
+  `team2` varchar(30) DEFAULT NULL,
+  `score1` int(11) DEFAULT '0',
+  `score2` int(11) DEFAULT '0',
+  `duration` int(11) DEFAULT NULL,
+  `finished` int(1) NOT NULL DEFAULT '0',
+  `location` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -991,4 +1045,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-03-16 12:36:51
+-- Dump completed on 2012-04-01 22:08:44
