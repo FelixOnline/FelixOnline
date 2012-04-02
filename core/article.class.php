@@ -315,7 +315,11 @@ class Article extends BaseModel {
                 ") AS t 
                 ORDER BY timestamp ASC 
                 LIMIT 500";
-        return $this->db->get_results($sql);
+        $comments = array();
+        foreach($this->db->get_results($sql) as $key => $obj) {
+            $comments[] = new Comment($obj->id);
+        }
+        return $comments;
     }
 
     /*
