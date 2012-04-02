@@ -287,16 +287,6 @@ class CurrentUser extends User {
         return $info;
     }
 
-    /*
-     * Public: Get user info
-     * Decode json array of info
-     *
-     * Returns array
-     */
-    public function getInfo() {
-        return json_decode($this->fields['info']);
-    }
-
     public function getRole() {
         if($this->fields['role']) {
             return $this->fields['role'];

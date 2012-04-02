@@ -233,4 +233,15 @@ class User extends BaseModel {
         }
         return $this->fields['email'];
     }
+
+    /*
+     * Public: Get user info
+     * Decode json array of info
+     *
+     * Returns array
+     */
+    public function getInfo() {
+        return json_decode($this->fields['info']);
+    }
+
 }
