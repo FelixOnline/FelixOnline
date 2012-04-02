@@ -155,7 +155,7 @@ $theme->render('header', $header);
                                                 <?php echo $article->getTitle();?>
                                             </a>
                                         </h3>
-                                        <div class="subHeader <?php if($article->getImage() && $article->getImage()->isTall()) echo 'wide';?>" >
+                                        <div class="subHeader <?php if($article->getImage() && $article->getImage()->isTall(220, 220)) echo 'wide';?>" >
                                             <p>
                                                 <?php echo $article->getPreview(30); ?>
                                             </p>
@@ -181,9 +181,9 @@ $theme->render('header', $header);
                                                     <div id="secondStoryPic">
                                                         <a href="<?php echo $article->getURL();?>">
                                                             <?php if($article->getImage()->isTall(220, 220)) { ?>
-                                                                <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(120, 155); ?>">
+                                                                <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(120); ?>">
                                                             <?php } else { ?>
-                                                                <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(220, 150); ?>">
+                                                                <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(220); ?>">
                                                             <?php } ?>
                                                         </a>
                                                     </div>
