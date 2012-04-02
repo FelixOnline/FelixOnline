@@ -42,22 +42,16 @@ $theme->render('header', $header);
         <?php if ($comments) { ?>
             <div id="recentComments">
                 <h3>Recent Comments</h3>
-                <?php 
-                if ($user_comment_popularity = get_user_comment_popularity($user)) {
-                    list($dislikes,$likes) = $user_comment_popularity;
-                    $ratings = $dislikes + $likes;
-                    $popularity = round(100 * $likes / $ratings);
-                }
-                if ($ratings) { ?>
-                    <span id="popularity">(Popularity: <?php echo $popularity;?>% over <?php echo $ratings;?> ratings)</span>
+                <?php if ($popularity = $user->getCommentPopularity()) { ?>
+                    <span id="popularity">(Popularity: <?php echo $popularity;?>% over <?php echo ($user->getLikes() + $user->getDislikes());?> ratings)</span>
                 <?php } ?>
                 <ul id="commentList">
-                    <?php foreach (get_article_comments_by_user($user) as $comment) {
-                        echo '<li><a href="'.article_url($comment[0]).'">'.get_article_title($comment[0]).'</a> <p>"'.trim_text($comment[2], 130).'"</p></li>';
-                    } ?>
+                    <?php foreach ($comments as $comment) { ?>
+                        <li>
+                            <a href="<?php echo $comment->getURL(); ?>"><?php echo $comment->getArticle()->getTitle(); ?></a> <p><?php echo Utility::trimText($comment->getContent(), 130, false); ?></p>
+                        </li>
+                    <?php } ?>
                 </ul>
-                
-                <?php // if number of comments is greater than NUMBER_OF_POPULAR_COMMENTS_USER then add link to view all comments ?>
             </div>
         <?php } ?>
         <?php 

@@ -30,8 +30,10 @@ class Utility {
      *
      * Returns string
      */
-    public static function trimText($string, $limit) {
-        $string = strip_tags($string); // strip tags
+    public static function trimText($string, $limit, $strip = true) {
+        if($strip) {
+                $string = strip_tags($string); // strip tags
+        }
         if(strlen($string) <= $limit) {
             return $string;
         } else {
