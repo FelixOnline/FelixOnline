@@ -189,7 +189,8 @@ $theme->render('header', $header);
             <div id="commentCont">
                 <?php
                     $cache = new Cache('comment-'.$article->getId());
-                    $comments = $cache->code(array($article, 'getComments'));
+                    //$comments = $cache->code(array($article, 'getComments'));
+                    $comments = $article->getComments();
 					if(is_array($comments)) {
 	                    foreach($comments as $key => $comment) {
 	                        $theme->render('comment', array('comment' => $comment));
