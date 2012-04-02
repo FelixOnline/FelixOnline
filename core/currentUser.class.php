@@ -252,8 +252,10 @@ class CurrentUser extends User {
                 return false;
 			}
         } else {
-        	$this->setName($uname);
-        	return $uname;
+            if(!$this->getName()) {
+                $this->setName($uname);
+            }
+        	return $this->getName();
         }
     }
 
