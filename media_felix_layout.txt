@@ -468,6 +468,7 @@ visits int(11) NO 0
 ip varchar(15) NO 0.0.0.0 
 timestamp timestamp NO CURRENT_TIMESTAMP 
 role int(11) NO 0 
+info text NO  
 description longtext YES  
 email varchar(50) YES  
 facebook varchar(50) YES  
