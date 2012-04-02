@@ -9,11 +9,13 @@ class UserController extends BaseController {
             $pagenum = $matches['page'];
         }
         $articles = $user->getArticles($pagenum);
+        $comments = $user->getComments();
 
         $this->theme->appendData(array(
             'user' => $user,
             'pagenum' => $pagenum,
-            'articles' => $articles
+            'articles' => $articles,
+            'comments' => $comments
         ));
         $this->theme->setHierarchy(array(
             'user' /* user-{user}.php */

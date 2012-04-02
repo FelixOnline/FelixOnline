@@ -112,7 +112,7 @@ class User extends BaseModel {
      * Public: Get comments
      * Get all comments from user
      */
-    public function getPopularComments() {
+    public function getComments() {
         if(!$this->comments) {
             $sql = "SELECT 
                         id
@@ -126,6 +126,54 @@ class User extends BaseModel {
             } 
         }
         return $this->comments;
+    }
+
+    /*
+     * Public: Get user comment popularity
+     *
+     * Returns percentage
+     */
+    public function getCommentPopularity() {
+        $total = $this->getLikes() + $this->getDislikes();
+        if($total) {
+            $popularity = 100 * ($this->getLikes() 
+                            / ($this->getLikes() + $this->getDislikes()));
+            return round($popularity);
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * Public: Get likes
+     * Get number of likes on comments by user
+     */
+    public function getLikes() {
+        if(!$this->likes) {
+            $sql = "SELECT 
+                        SUM(likes) 
+                    FROM `comment` 
+                    WHERE user='".$this->getUser()."' 
+                    AND `active`=1";
+            $this->likes = $this->db->get_var($sql);
+        }
+        return $this->likes;
+    }
+
+    /*
+     * Public: Get dislikes
+     * Get number of dislikes on comments by user
+     */
+    public function getDislikes() {
+        if(!$this->dislikes) {
+            $sql = "SELECT 
+                        SUM(dislikes) 
+                    FROM `comment` 
+                    WHERE user='".$this->getUser()."' 
+                    AND `active`=1";
+            $this->dislikes = $this->db->get_var($sql);
+        }
+        return $this->dislikes;
     }
 
     /*
