@@ -73,6 +73,7 @@ $theme->render('header', $header);
                     </span>
                     <span class="loading">Saving...</span>
                 </h2>
+                <?php var_dump($user->getInfo()); ?>
 				<ul id="userInfo">
 					<li><?php //echo $info[0]; ?></li>
 					<li><?php //echo $info[1]; ?></li>
