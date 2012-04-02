@@ -122,9 +122,11 @@ class User extends BaseModel {
                     ORDER BY timestamp DESC 
                     LIMIT 0,".NUMBER_OF_POPULAR_COMMENTS_USER;
             $comments = $this->db->get_results($sql);    
-            foreach($comments as $key => $obj) {
-                $this->comments[] = new Comment($obj->id);
-            } 
+            if($comments) {
+                foreach($comments as $key => $obj) {
+                    $this->comments[] = new Comment($obj->id);
+                } 
+            }
         }
         return $this->comments;
     }

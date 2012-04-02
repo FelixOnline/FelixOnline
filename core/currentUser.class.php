@@ -263,10 +263,14 @@ class CurrentUser extends User {
                 return false;
 			}
         } else {
-            if(!$this->getName()) {
-                $this->setName($uname);
+            $name = $uname;
+            try {
+                $name = $this->getName();
+            } catch (InternalException $e) {
+                // User does not yet exist in our database...
+                // It'll be created later so carry on
             }
-        	return $this->getName();
+            return $name;
         }
     }
 
