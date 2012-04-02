@@ -146,7 +146,7 @@ CREATE TABLE `article_visit` (
   KEY `article` (`article`,`timestamp`,`user`),
   KEY `timestamp` (`timestamp`),
   CONSTRAINT `article_visit_ibfk_1` FOREIGN KEY (`article`) REFERENCES `article` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -443,7 +443,7 @@ CREATE TABLE `login` (
   `logged_in` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user` (`user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1002,6 +1002,7 @@ CREATE TABLE `user` (
   `ip` varchar(15) NOT NULL DEFAULT '0.0.0.0',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `role` int(11) NOT NULL DEFAULT '0' COMMENT '>0 can log into /engine',
+  `info` text NOT NULL COMMENT 'JSON encoded array of ldap info',
   `description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `facebook` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1045,4 +1046,4 @@ CREATE TABLE `varsity` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-04-01 22:08:44
+-- Dump completed on 2012-04-02 12:18:23
