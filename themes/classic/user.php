@@ -181,9 +181,9 @@ $theme->render('header', $header);
                                                     <div id="secondStoryPic">
                                                         <a href="<?php echo $article->getURL();?>">
                                                             <?php if($article->getImage()->isTall(220, 220)) { ?>
-                                                                <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(120); ?>">
+                                                                <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(120, 155); ?>">
                                                             <?php } else { ?>
-                                                                <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(220); ?>">
+                                                                <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(220, 150); ?>">
                                                             <?php } ?>
                                                         </a>
                                                     </div>
