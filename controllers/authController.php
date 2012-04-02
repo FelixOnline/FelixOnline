@@ -85,6 +85,7 @@ class AuthController extends BaseController {
     	            $currentuser->setUser($_POST['username']); // not needed
 	                $this->logSession($_POST['username']);
 	                $session = $currentuser->getSession();
+                    $currentuser->updateDetails($_POST['username']); // update user details
 
                     // comment like/dislike
                     if(isset($_POST['commenttype']) && isset($_POST['comment'])) {

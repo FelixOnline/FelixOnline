@@ -187,10 +187,6 @@ class CurrentUser extends User {
         	// User does not yet exist in our database...
         	// It'll be created later so carry on
         }
-        
-        /* update user details */
-        $name = $this->updateName($username);
-        $info = $this->updateInfo($username);
 
         $sql = "UPDATE login
                 SET timestamp = NOW()
@@ -205,6 +201,28 @@ class CurrentUser extends User {
         $this->db->query($sql); // if this fails, it doesn't matter, we will
                                 // just be auto logged out after a while
 		
+    }
+
+    public function getSession() {
+        return $this->session;
+    }
+
+    public function getUser() {
+        if($this->fields['user']) {
+            return $this->fields['user'];
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * Public: Update user details
+     */
+    public function updateDetails($username) {
+        /* update user details */
+        $name = $this->updateName($username);
+        $info = $this->updateInfo($username);
+
         $sql = "INSERT INTO `user` 
             (user,name,visits,ip,info) 
             VALUES (
@@ -226,18 +244,6 @@ class CurrentUser extends User {
                 // of the last access for this user, this is separate from the
                 // session
         return $this->db->query($sql);
-    }
-
-    public function getSession() {
-        return $this->session;
-    }
-
-    public function getUser() {
-        if($this->fields['user']) {
-            return $this->fields['user'];
-        } else {
-            return false;
-        }
     }
 
     /*
