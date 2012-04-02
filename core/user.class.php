@@ -273,4 +273,20 @@ class User extends BaseModel {
             return 1262304000; // 1st of January 2010
         }
     }
+
+    /*
+     * Public: Has personal info
+     * Check to see whether user has personal info
+     */
+    public function hasPersonalInfo() {
+        if($this->getDescription()
+            || $this->getFacebook()
+            || $this->getTwitter()
+            || $this->getEmail()
+            || $this->getWebsiteurl()
+        ) {
+            return true;
+        }
+        return false;
+    }
 }
