@@ -86,41 +86,43 @@ $theme->render('header', $header);
                     <p>Last login: <?php echo date('d/m/Y',$user->getLastLogin()); ?></p>
                 <?php } ?>
             </div>
-            <div id="personalCont" class="clearfix">
-                <div id="descCont">
-                    <?php if($description = $user->getDescription()) {
-                        echo $description;
-                    } else if($currentuser->getUser() == $user) {
-                        echo "Add some personal info....";
-                    } ?>
+            <?php if($user->hasPersonalInfo()) { ?>
+                <div id="personalCont" class="clearfix">
+                    <div id="descCont">
+                        <?php if($description = $user->getDescription()) {
+                            echo $description;
+                        } else if($currentuser->getUser() == $user) {
+                            echo "Add some personal info....";
+                        } ?>
+                    </div>
+                    <div id="personalLinks">
+                        <ul>
+                            <?php if($user->getFacebook()) { ?>
+                                <li class="facebook">
+                                    <a href="<?php echo $user->getFacebook(); ?>" target="_blank">Facebook</a>
+                                </li>
+                            <?php } ?>
+                            <?php if($user->getTwitter()) { ?>
+                                <li class="twitter">
+                                    <a href="http://www.twitter.com/<?php echo $user->getTwitter(); ?>" target="_blank">@<?php echo $user->getTwitter(); ?></a>
+                                </li>
+                            <?php } ?>
+                            <?php if($user->getEmail()) { ?>
+                                <li class="useremail">
+                                    <?php echo Utility::hideEmail($user->getEmail()); ?>
+                                </li>
+                            <?php } ?>
+                            <?php if($user->getWebsiteurl()) { ?>
+                                <li class="website">
+                                    <a href="<?php echo $user->getWebsiteurl();?>" target="_blank">
+                                        <?php echo $user->getWebsitename();?>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
                 </div>
-                <div id="personalLinks">
-                    <ul>
-                        <?php if($user->getFacebook()) { ?>
-                            <li class="facebook">
-                                <a href="<?php echo $user->getFacebook(); ?>" target="_blank">Facebook</a>
-                            </li>
-                        <?php } ?>
-                        <?php if($user->getTwitter()) { ?>
-                            <li class="twitter">
-                                <a href="http://www.twitter.com/<?php echo $user->getTwitter(); ?>" target="_blank">@<?php echo $user->getTwitter(); ?></a>
-                            </li>
-                        <?php } ?>
-                        <?php if($user->getEmail()) { ?>
-                            <li class="useremail">
-                                <?php echo Utility::hideEmail($user->getEmail()); ?>
-                            </li>
-                        <?php } ?>
-                        <?php if($user->getWebsiteurl()) { ?>
-                            <li class="website">
-                                <a href="<?php echo $user->getWebsiteurl();?>" target="_blank">
-                                    <?php echo $user->getWebsitename();?>
-                                </a>
-                            </li>
-                        <?php } ?>
-                    </ul>
-                </div>
-            </div>
+            <?php } ?>
         </form>
         <?php if ($articles) { ?>
             <!-- Articles -->
