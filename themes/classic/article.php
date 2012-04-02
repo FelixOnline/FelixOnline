@@ -64,6 +64,7 @@ $theme->render('header', $header);
             <?php
                 if ($currentuser->isLoggedIn()) {
                     /*
+                    TODO
                     $allowed = false;
                     if(check_if_section_editor($uname, $article))  // if user is editor of section article is in
                         $allowed = true;
