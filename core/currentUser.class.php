@@ -190,6 +190,7 @@ class CurrentUser extends User {
         
         /* update user details */
         $name = $this->updateName($username);
+        $info = $this->updateInfo($username);
 
         $sql = "UPDATE login
                 SET timestamp = NOW()
@@ -205,19 +206,22 @@ class CurrentUser extends User {
                                 // just be auto logged out after a while
 		
         $sql = "INSERT INTO `user` 
-            (user,name,visits,ip) 
+            (user,name,visits,ip,info) 
             VALUES (
                 '".$this->db->escape($username)."',
                 '".$this->db->escape($name)."',
                 1,
-                '".$_SERVER['REMOTE_ADDR']."'
+                '".$_SERVER['REMOTE_ADDR']."',
+                '".$this->db->escape($info)."'
             ) 
             ON DUPLICATE KEY 
             UPDATE 
                 name='".$this->db->escape($name)."',
                 visits=visits+1,
                 ip='".$this->db->escape($_SERVER['REMOTE_ADDR'])."',
-                timestamp=NOW()";
+                timestamp=NOW(),
+                info='".$this->db->escape($info)."'
+                ";
                 // note that this updated the last access time and the ip
                 // of the last access for this user, this is separate from the
                 // session
@@ -235,6 +239,7 @@ class CurrentUser extends User {
             return false;
         }
     }
+
     /*
      * Update user's name from ldap
      */
@@ -257,6 +262,39 @@ class CurrentUser extends User {
             }
         	return $this->getName();
         }
+    }
+
+    /*
+     * Update user's info from ldap
+     *
+     * Returns json encoded array
+     */
+    private function updateInfo($uname) {
+        $info = '';
+        if(!LOCAL) { // if on union server
+            $ds=ldap_connect("addressbook.ic.ac.uk");
+            $r=ldap_bind($ds);
+            $justthese = array("o");
+            $sr=ldap_search($ds, "ou=People, ou=shibboleth, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
+            $info = ldap_get_entries($ds, $sr);
+            if ($info["count"] > 0) {
+                $info = json_encode($info[0]['0'][0]);
+                $this->setInfo($info);
+            } else {
+                return false;
+            }
+        }
+        return $info;
+    }
+
+    /*
+     * Public: Get user info
+     * Decode json array of info
+     *
+     * Returns array
+     */
+    public function getInfo() {
+        return json_decode($this->fields['info']);
     }
 
     public function getRole() {

@@ -36,6 +36,7 @@ class User extends BaseModel {
                         `ip`,
                         UNIX_TIMESTAMP(`timestamp`) as timestamp,
                         `role`,
+                        `info`,
                         `description`,
                         `email`,
                         `facebook`,
@@ -197,7 +198,6 @@ class User extends BaseModel {
 
         $pages = ceil(($this->count - ARTICLES_PER_USER_PAGE) / (ARTICLES_PER_USER_PAGE)) + 1;
         return $pages;
-        
     }
 
     /*
