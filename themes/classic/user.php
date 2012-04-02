@@ -124,7 +124,7 @@ $theme->render('header', $header);
                 </div>
             <?php } ?>
         </form>
-        <?php if ($articles) { ?>
+        <?php if (!is_null($articles)) { ?>
             <!-- Articles -->
             <div id="articleListCont">
                 <h3 id="userArticleTitle">
@@ -135,7 +135,6 @@ $theme->render('header', $header);
                 <?php 
                 if ($pagenum == 1) {
                     $articles = $user->getArticles(1);
-                    if(!is_null($articles)) {
                         foreach($articles as $key => $object) {
                             $article = new Article($object->id);
                             if ($key < 4) { ?>
@@ -232,11 +231,9 @@ $theme->render('header', $header);
                                     </div>
                                 </div>	
                     <?php   } 
-                        }
                     } 
                 } else { 
                     $articles = $user->getArticles($pagenum);
-                    if(!is_null($articles)) {
                         foreach($articles as $key => $object) { 
                             $article = new Article($object->id); ?>
                                 <div class="userArticle clearfix">
@@ -277,7 +274,6 @@ $theme->render('header', $header);
                                     </div>
                                 </div>	
                     <?php }
-                    }
                 } ?>
             </div>
             <!-- End of articles -->
