@@ -78,6 +78,13 @@ $theme->render('header', $header);
 					<li><?php echo $info[0]; ?></li>
 					<li><?php echo $info[1]; ?></li>
 				</ul>
+                <?php if ($articles || $comments) { ?>
+                    <p><?php if ($articles){ echo 'Author of '.count($articles); ?> article<?php echo (count($articles) != 1 ? 's' : '');?><?php } ?>
+                    <?php if($comments && $articles){?> and <?php } ?>  
+                    <?php if($comments) { echo count($comments);?> comment<?php echo (count($comments) != 1 ? 's' : ''); }?> 
+                    since <?php echo date('d/m/Y',$user->getFirstLogin());?></p>
+                    <p>Last login: <?php echo date('d/m/Y',$user->getLastLogin()); ?></p>
+                <?php } ?>
             </div>
             <div id="personalCont" class="clearfix">
                 <div id="descCont">

@@ -244,4 +244,33 @@ class User extends BaseModel {
         return json_decode($this->fields['info']);
     }
 
+    public function getFirstLogin() {
+        $sql = "SELECT 
+                    UNIX_TIMESTAMP(timestamp) as timestamp 
+                FROM `login` 
+                WHERE user='".$this->getUser()."' 
+                ORDER BY timestamp ASC 
+                LIMIT 1";
+        $login = $this->db->get_var($sql);
+        if($login) {
+            return $login;
+        } else {
+            return 1262304000; // 1st of January 2010
+        }
+    }
+
+    public function getLastLogin() {
+        $sql = "SELECT 
+                    UNIX_TIMESTAMP(timestamp) as timestamp 
+                FROM `login` 
+                WHERE user='".$this->getUser()."' 
+                ORDER BY timestamp DESC 
+                LIMIT 1";
+        $login = $this->db->get_var($sql);
+        if($login) {
+            return $login;
+        } else {
+            return 1262304000; // 1st of January 2010
+        }
+    }
 }
