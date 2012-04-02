@@ -278,7 +278,7 @@ class CurrentUser extends User {
             $sr=ldap_search($ds, "ou=People, ou=shibboleth, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
             $info = ldap_get_entries($ds, $sr);
             if ($info["count"] > 0) {
-                $info = json_encode($info[0]['o'][0]);
+                $info = json_encode(explode('|', $info[0]['o'][0]));
                 $this->setInfo($info);
             } else {
                 return false;
