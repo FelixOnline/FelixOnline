@@ -99,8 +99,7 @@ class Cache {
         if($this->expires === 0) {
             return false; // infinity case
         }
-        $cache = $this->getCache();
-        if(time() - $this->expires > $cache['generated']) {
+        if(time() - $this->expires > filemtime($this->getName())) {
             return true;
         } else {
             return false;
@@ -117,14 +116,22 @@ class Cache {
     /*
      * Private: Create cache
      */
-    private function createCache($content) {
+    private function createCache($content, $type = 'json') {
         if(CACHE) {
             $fp = fopen($this->getName(), 'w+');
-            $data = json_encode(array(
+            $data = array(
                 'url' => Utility::currentPageURL(),
                 'generated' => time(),
                 'content' => $content
-            ));
+            );
+            switch($type) {
+                case 'serialize':
+                    $data = serialize($data);
+                    break;
+                default:
+                    $data = json_encode($data);
+                    break;
+            }
             fwrite($fp, $data);
             fclose($fp);
         } 
@@ -133,10 +140,17 @@ class Cache {
     /*
      * Private: Get array of contents of cache file
      */
-    private function getCache() {
+    private function getCache($type = 'json') {
         if(!$this->file) {
             $contents = file_get_contents($this->getName());
-            $this->file = json_decode($contents, true);
+            switch($type) {
+                case 'serialize':
+                    $this->file = unserialize($contents);
+                    break;
+                default:
+                    $this->file = json_decode($contents, true);
+                    break;
+            }
         }
         return $this->file;
     }
@@ -146,5 +160,39 @@ class Cache {
      */
     private function getName() {
         return $this->directory.$this->name;
+    }
+
+    /*
+     * Public: code
+     * Cache some code
+     *
+     * $class - object if code is method
+     * $function - name of function to cache [optional]
+     *
+     * n.b. if no function is specified then $class is taken as an anonymous function to cache
+     * 
+     * Examples:
+     *      // function to cache: $foo->bar();
+     *      $output = $cache->code(array($foo, 'bar'));
+     *
+     *      // anonymous function
+     *      $output = $cache->code(function() {
+     *          return 'Hello!';
+     *      });
+     *
+     * Returns result of function
+     */
+    public function code($function) {
+        if(CACHE && $this->exists() && !$this->expired()) { // if cache file exists and hasn't expired
+            $this->valid = true;
+            $cache = $this->getCache('serialize');
+            return $cache['content'];
+        } else {
+            if(is_callable($function)) {
+                $content = call_user_func($function);
+                $this->createCache($content, 'serialize');
+                return $content;
+            }
+        }
     }
 }
