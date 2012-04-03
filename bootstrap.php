@@ -14,6 +14,7 @@ require_once(BASE_DIRECTORY.'/inc/config.inc.php');
 require_once(BASE_DIRECTORY.'/inc/const.inc.php');
 require_once(BASE_DIRECTORY.'/inc/functions.inc.php'); // TODO move to utilities
 require_once(BASE_DIRECTORY.'/inc/validator.inc.php');
+require_once(BASE_DIRECTORY.'/inc/is_email.inc.php');
 
 /*
  * Models
