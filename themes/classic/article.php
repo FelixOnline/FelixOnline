@@ -64,6 +64,7 @@ $theme->render('header', $header);
             <?php
                 if ($currentuser->isLoggedIn()) {
                     /*
+                    TODO
                     $allowed = false;
                     if(check_if_section_editor($uname, $article))  // if user is editor of section article is in
                         $allowed = true;
@@ -187,10 +188,11 @@ $theme->render('header', $header);
             <!-- Comments container -->
             <div id="commentCont">
                 <?php
+                    $cache = new Cache('comment-'.$article->getId());
+                    //$comments = $cache->code(array($article, 'getComments'));
                     $comments = $article->getComments();
 					if(is_array($comments)) {
-	                    foreach($comments as $key => $object) {
-	                        $comment = new Comment($object->id); 
+	                    foreach($comments as $key => $comment) {
 	                        $theme->render('comment', array('comment' => $comment));
 	                    }
 					}

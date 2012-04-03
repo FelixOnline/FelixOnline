@@ -11,7 +11,7 @@ timestamp timestamp NO CURRENT_TIMESTAMP
 Table: api_log
 Field | Type | Null | Default 
 id int(11) NO  
-user_id int(11) YES  
+api_key varchar(40) YES  
 what longtext NO  
 request longtext YES  
 timestamp timestamp NO CURRENT_TIMESTAMP 
@@ -54,7 +54,9 @@ article int(11) NO
 timestamp timestamp NO CURRENT_TIMESTAMP 
 user varchar(16) YES  
 IP varchar(15) YES  
+browser text NO  
 referrer varchar(255) YES  
+repeat_visit tinyint(4) NO 0 
 
 Table: blog_post
 Field | Type | Null | Default 
@@ -65,6 +67,7 @@ timestamp timestamp NO CURRENT_TIMESTAMP
 author varchar(30) YES  
 type varchar(30) YES  
 meta text YES  
+visible int(11) NO 1 
 
 Table: blogs
 Field | Type | Null | Default 
@@ -72,6 +75,7 @@ id int(11) NO
 name varchar(30) YES  
 slug varchar(30) YES  
 controller varchar(30) YES  
+sticky text NO  
 
 Table: category
 Field | Type | Null | Default 
@@ -464,6 +468,7 @@ visits int(11) NO 0
 ip varchar(15) NO 0.0.0.0 
 timestamp timestamp NO CURRENT_TIMESTAMP 
 role int(11) NO 0 
+info text NO  
 description longtext YES  
 email varchar(50) YES  
 facebook varchar(50) YES  

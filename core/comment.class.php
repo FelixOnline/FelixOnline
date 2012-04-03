@@ -178,6 +178,13 @@ class Comment extends BaseModel {
     }
 
     /*
+     * Public: Get url
+     */
+    public function getURL() {
+        return $this->getArticle()->getURL().'#comment'.$this->getId();
+    }
+
+    /*
      * Public: Check if comment is from author of article
      *
      * Returns true if is author. False if not.

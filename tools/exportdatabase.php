@@ -38,6 +38,16 @@ PHP script to perform a database cleanup and export it
      * Functions
      */
     function clean() {
+        $message = "Are you sure you want to clean the database? This cannot be undone. [y/N] ";
+        print $message;
+        flush();
+        ob_flush();
+        $confirmation = trim( fgets( STDIN ) );
+        if ($confirmation !== 'y') {
+            // The user did not say 'y'.
+            echo "Exiting...";
+            exit (0);
+        }
         cleanUsers();
         emptyLogin();
         emptyArticleVists();
@@ -142,7 +152,7 @@ PHP script to perform a database cleanup and export it
             tableLayout();
             break;
         case 'clean':
-            //clean();
+            clean();
             break;
         case 'export':
             export();

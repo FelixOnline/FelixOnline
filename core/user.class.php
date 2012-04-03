@@ -36,6 +36,7 @@ class User extends BaseModel {
                         `ip`,
                         UNIX_TIMESTAMP(`timestamp`) as timestamp,
                         `role`,
+                        `info`,
                         `description`,
                         `email`,
                         `facebook`,
@@ -112,7 +113,7 @@ class User extends BaseModel {
      * Public: Get comments
      * Get all comments from user
      */
-    public function getPopularComments() {
+    public function getComments() {
         if(!$this->comments) {
             $sql = "SELECT 
                         id
@@ -121,11 +122,61 @@ class User extends BaseModel {
                     ORDER BY timestamp DESC 
                     LIMIT 0,".NUMBER_OF_POPULAR_COMMENTS_USER;
             $comments = $this->db->get_results($sql);    
-            foreach($comments as $key => $obj) {
-                $this->comments[] = new Comment($obj->id);
-            } 
+            if($comments) {
+                foreach($comments as $key => $obj) {
+                    $this->comments[] = new Comment($obj->id);
+                } 
+            }
         }
         return $this->comments;
+    }
+
+    /*
+     * Public: Get user comment popularity
+     *
+     * Returns percentage
+     */
+    public function getCommentPopularity() {
+        $total = $this->getLikes() + $this->getDislikes();
+        if($total) {
+            $popularity = 100 * ($this->getLikes() 
+                            / ($this->getLikes() + $this->getDislikes()));
+            return round($popularity);
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * Public: Get likes
+     * Get number of likes on comments by user
+     */
+    public function getLikes() {
+        if(!$this->likes) {
+            $sql = "SELECT 
+                        SUM(likes) 
+                    FROM `comment` 
+                    WHERE user='".$this->getUser()."' 
+                    AND `active`=1";
+            $this->likes = $this->db->get_var($sql);
+        }
+        return $this->likes;
+    }
+
+    /*
+     * Public: Get dislikes
+     * Get number of dislikes on comments by user
+     */
+    public function getDislikes() {
+        if(!$this->dislikes) {
+            $sql = "SELECT 
+                        SUM(dislikes) 
+                    FROM `comment` 
+                    WHERE user='".$this->getUser()."' 
+                    AND `active`=1";
+            $this->dislikes = $this->db->get_var($sql);
+        }
+        return $this->dislikes;
     }
 
     /*
@@ -149,7 +200,6 @@ class User extends BaseModel {
 
         $pages = ceil(($this->count - ARTICLES_PER_USER_PAGE) / (ARTICLES_PER_USER_PAGE)) + 1;
         return $pages;
-        
     }
 
     /*
@@ -184,5 +234,61 @@ class User extends BaseModel {
             return ldap_get_mail($this->getUser());
         }
         return $this->fields['email'];
+    }
+
+    /*
+     * Public: Get user info
+     * Decode json array of info
+     *
+     * Returns array
+     */
+    public function getInfo() {
+        return json_decode($this->fields['info']);
+    }
+
+    public function getFirstLogin() {
+        $sql = "SELECT 
+                    UNIX_TIMESTAMP(timestamp) as timestamp 
+                FROM `login` 
+                WHERE user='".$this->getUser()."' 
+                ORDER BY timestamp ASC 
+                LIMIT 1";
+        $login = $this->db->get_var($sql);
+        if($login) {
+            return $login;
+        } else {
+            return 1262304000; // 1st of January 2010
+        }
+    }
+
+    public function getLastLogin() {
+        $sql = "SELECT 
+                    UNIX_TIMESTAMP(timestamp) as timestamp 
+                FROM `login` 
+                WHERE user='".$this->getUser()."' 
+                ORDER BY timestamp DESC 
+                LIMIT 1";
+        $login = $this->db->get_var($sql);
+        if($login) {
+            return $login;
+        } else {
+            return 1262304000; // 1st of January 2010
+        }
+    }
+
+    /*
+     * Public: Has personal info
+     * Check to see whether user has personal info
+     */
+    public function hasPersonalInfo() {
+        if($this->getDescription()
+            || $this->getFacebook()
+            || $this->getTwitter()
+            || $this->getEmail()
+            || $this->getWebsiteurl()
+        ) {
+            return true;
+        }
+        return false;
     }
 }
