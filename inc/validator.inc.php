@@ -56,14 +56,43 @@ class Validator {
 						break;
 					case self::validator_email:
 						// Check to see if email is an email
+						if(!is_email($value)) {
+							if(!array_key_exists($field, $bad_fields)) {
+								$bad_fields[$field] = array();
+							}
+							
+							$bad_fields[$field][] = $validator;
+						}
 						break;
 					case self::validator_ic_email:
 						// Check to see if an email ends in @imperial.ac.uk or @ic.ac.uk
+						if(!preg_match('/(@ic.ac.uk$|@imperial.ac.uk$)/i', $value)) {
+							if(!array_key_exists($field, $bad_fields)) {
+								$bad_fields[$field] = array();
+							}
+							
+							$bad_fields[$field][] = $validator;
+						}
 						break;
 					case self::validator_ic_username:
 						// Check to see if username is in college directory (if local, assumes success)
 						if(LOCAL) {
 							break; // Do not validate if local
+						} else {
+				            $ds = ldap_connect("addressbook.ic.ac.uk");
+				            $r = ldap_bind($ds);
+				            $justthese = array("gecos");
+				            $sr = ldap_search($ds, "ou=People, ou=everyone, dc=ic, dc=ac, dc=uk", "uid=$value", $justthese);
+				            $info = ldap_get_entries($ds, $sr);
+				            if ($info["count"] > 0) {
+				                break;
+							} else {
+								if(!array_key_exists($field, $bad_fields)) {
+									$bad_fields[$field] = array();
+								}
+								
+								$bad_fields[$field][] = $validator;
+							}
 						}
 						break;
 					case self::validator_maxlength:
@@ -108,7 +137,7 @@ class Validator {
 
 			// Throw an exception if there are invalid fields
 			if(count($bad_fields) > 0) {
-				throw new ValidatorException('A total of '.count($bad_fields).' fields have failed validation', $bad_fields, $csrf_failed);
+				throw new ValidatorException(count($bad_fields), $bad_fields, $csrf_failed);
 			}
 			
 			// Nothing bad happened

@@ -3,7 +3,7 @@ Welcome to the Felix Online source code! This is the code that powers the [Felix
 
 Contributors welcome! Just fork the repository and send us a pull request with your changes. 
 
-Maintained by Jonathan Kim (jk708@imperial.ac.uk) and Chris Birkett
+Maintained by Jonathan Kim (jk708@imperial.ac.uk), Philip Kent (pk1811@imperial.ac.uk), and Chris Birkett
 
 ## Getting started:
 ###Requirements:
@@ -34,7 +34,7 @@ We will then review your changes, making sure it doesn't break anything etc, and
 You can read more about pull requests here: http://help.github.com/send-pull-requests/
 
 ##License
-Copyright (c) 2011 Felix Imperial, Jonathan Kim, Chris Birkett
+Copyright (c) 2011 Felix Imperial, Jonathan Kim, Philip Kent, Chris Birkett
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -42,3 +42,4 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+Includes the is_email() method from http://code.google.com/p/isemail/, licensed under the BSD License
