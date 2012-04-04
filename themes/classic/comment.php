@@ -38,6 +38,7 @@
     </div>
     <?php if(!$comment->isRejected() && !$comment->isPending()) { // if internal comment that is rejected ?>
     <div class="commentAction" id="<?php echo $comment->getId();?>">
+        <input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken($comment->getId().'ratecomment'); ?>"/>
         <ul>
             <li>
             <?php

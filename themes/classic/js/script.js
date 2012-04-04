@@ -334,6 +334,8 @@ $(document).ready(function() {
     $('.commentAction #like').live("click", function() {
         var likelink = $(this);
         var comment = $(this).parents('.commentAction').attr('id');
+        var token = $(this).parents('.commentAction').find('#token').val();
+        var check = comment+'ratecomment';
         $.ajax({
             url: "ajax.php",
             type: "POST",
@@ -341,7 +343,8 @@ $(document).ready(function() {
                 action: 'like_comment',
                 type: 'like',
                 comment: comment,
-                user: user
+                token: token,
+                check: check
             }),
             async:true,
             success: function(msg){
@@ -363,6 +366,8 @@ $(document).ready(function() {
     $('.commentAction #dislike').live("click", function() {
         var likelink = $(this);
         var comment = $(this).parents('.commentAction').attr('id');
+        var token = $(this).parents('.commentAction').find('#token').val();
+        var check = comment+'ratecomment';
         $.ajax({
             url: "ajax.php",
             type: "POST",
@@ -370,7 +375,8 @@ $(document).ready(function() {
                 action: 'dislike_comment',
                 type: 'dislike',
                 comment: comment,
-                user: user
+                token: token,
+                check: check
             }),
             async:true,
             success: function(msg){
