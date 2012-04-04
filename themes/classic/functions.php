@@ -34,20 +34,30 @@ function contact_us() {
 
 $hooks->addAction('like_comment', 'like_comment');
 function like_comment() {
-    $user = $_REQUEST['user'];
-    $comment = $_REQUEST['comment'];
-    $comment = new Comment($comment);
-    $count = $comment->likeComment($user);
-    return $count;
+    global $currentuser;
+    if($currentuser->isLoggedIn()) {
+        $user = $currentuser->getUser();
+        $comment = $_REQUEST['comment'];
+        $comment = new Comment($comment);
+        $count = $comment->likeComment($user);
+        return $count;
+    } else {
+        return json_encode(array(error => true, details => 'Not logged in'));
+    }
 }
 
 $hooks->addAction('dislike_comment', 'dislike_comment');
 function dislike_comment() {
-    $user = $_REQUEST['user'];
-    $comment = $_REQUEST['comment'];
-    $comment = new Comment($comment);
-    $count = $comment->dislikeComment($user);
-    return $count;
+    global $currentuser;
+    if($currentuser->isLoggedIn()) {
+        $user = $currentuser->getUser();
+        $comment = $_REQUEST['comment'];
+        $comment = new Comment($comment);
+        $count = $comment->dislikeComment($user);
+        return $count;
+    } else {
+        return json_encode(array(error => true, details => 'Not logged in'));
+    }
 }
 
 $hooks->addAction('profile_change', 'profile_change');
