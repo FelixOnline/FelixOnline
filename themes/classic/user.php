@@ -120,7 +120,7 @@ $theme->render('header', $header);
                 </div>
             </div>
 			<?php if($currentuser->isLoggedIn() == $user->getUser()) { ?>
-                <?php Utility::generateCSRFToken($currentuser->isLoggedIn().'userprofile'); ?>
+                <input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken('userprofile'); ?>"/>
                 <div id="personalCont" class="edit clearfix" style="display: none;">
                     <div id="descCont">
                         <textarea placeholder="Add some personal info..."><?php echo $user->getDescription(); ?></textarea>

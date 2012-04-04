@@ -7,6 +7,7 @@
  * Load Felix Online environment
  */
 require_once('bootstrap.php');
+require_once('inc/exceptions.inc.php');
 
 $currentuser = new CurrentUser();
 
@@ -18,7 +19,22 @@ $theme = new Theme('classic'); // TODO
 
 $action = $_REQUEST['action'];
 if($action = $hooks->getAction($action)) {
-    $return = call_user_func($action);
+    // check csrf
+    $check = $_REQUEST['check'];
+    $token = $_REQUEST['token'];
+    try {
+        Validator::Check(
+            array('csrf' => $token), 
+            array('csrf' => 
+                array(
+                    'val_1007' => $check
+                )
+            )
+        ); 
+        $return = call_user_func($action);
+    } catch (ValidatorException $e) {
+        $return = json_encode(array(error => true, details => $e->getMessage().' '.json_encode($e->getData())));
+    }
     // Check if it is an ajax request
     if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
         echo $return;
@@ -27,79 +43,3 @@ if($action = $hooks->getAction($action)) {
     }
     die();
 }
-
-    /*
-	switch ($type) {
-		case 'profilechange':
-			change_user();
-			break;
-		case 'like':
-			like_comment_ajax($_POST['user'], $_POST['comment']);
-			break;
-		case 'dislike':
-			dislike_comment_ajax($_POST['user'], $_POST['comment']);
-			break;
-		case 'sendmessage':
-			send_message();
-			break;
-		case 'other':
-			break;
-	}
-
-	
-	function change_user() {
-		$desc = mysql_real_escape_string($_POST['desc']);
-		$facebook = mysql_real_escape_string($_POST['facebook']);
-		$twitter = mysql_real_escape_string($_POST['twitter']);
-		$email = mysql_real_escape_string($_POST['email']);
-		$show_email = $_POST['show_email'];
-		$webname = mysql_real_escape_string($_POST['webname']);
-		if($_POST['weburl'])
-			$weburl = addhttp(mysql_real_escape_string($_POST['weburl']));
-		$user = mysql_real_escape_string($_POST['user']);
-		
-		//echo $facebook;
-		
-		$sql = "UPDATE `user` SET description = '$desc', email = '$email', facebook = '$facebook', twitter = '$twitter', websitename = '$webname', websiteurl = '$weburl' WHERE user='$user'";
-		$result = mysql_query($sql) 
-			or die(mysql_error()); 
-		echo 'Updated!';
-	}
-	
-	function like_comment_ajax($user, $comment) {
-        $comment = new Comment($comment);
-        $count = $comment->likeComment($user);
-		echo $count;
-	}
-	
-	function dislike_comment_ajax($user, $comment) {
-        $comment = new Comment($comment);
-        $count = $comment->dislikeComment($user);
-		echo $count;
-	}
-	
-	function send_message() {
-		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$message = $_POST['message'];
-	
-		//echo $name.' '.$message;
-		
-		// multiple recipients
-		$to  = 'felix@imperial.ac.uk';
-
-		// subject
-		if($name)
-			$subject = $name.' sent a message';
-		else
-			$subject = 'Anonymous message';
-		
-		$message = wordwrap($message, 70);
-		
-		if ($email) 
-			$headers = 'From: '.$name.' <'.$email.'>' . "\r\n";
-		
-		// Mail it
-		mail($to, $subject, $message, $headers);
-	}
-    */

@@ -74,7 +74,6 @@ try {
         }
         $urls['/'.$blog->slug] = $controller;
     }
-
 } catch (Exception $e) {
 	$prior_exception = null;
 	require('errors/index.php');
