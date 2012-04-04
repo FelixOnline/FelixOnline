@@ -289,10 +289,7 @@ $(document).ready(function() {
             data.email = $('.useremail input').val();
             data.webname = $('.website #name').val();
             data.weburl = $('.website #url').val();
-
-            console.log(data);
             data.action = 'profile_change';
-            //log(desc+' '+facebook+' '+twitter+' '+email+' '+webname+' '+weburl);
 
             $.ajax({
                 url: "ajax.php",
@@ -312,31 +309,28 @@ $(document).ready(function() {
                         return false;
                     }
 
-                    console.log(message);
-                    //alert(msg);
                     // Change profile info
-                    /*
-                    if(desc) {
-                        $('#descCont').text(desc);
+                    if(data.desc) {
+                        $('#descCont').text(data.desc);
                     } else $('#descCont').text('Add some personal info....');
-                    if(facebook) {
-                        $('#personalLinks .facebook a').attr('href', facebook);
+                    if(data.facebook) {
+                        $('#personalLinks .facebook a').attr('href', data.facebook);
                         $('#personalLinks .facebook').show();
                     } else $('#personalLinks .facebook').hide();
-                    if(twitter) {
-                        $('#personalLinks .twitter a').attr('href', 'http://www.twitter.com/'+twitter).text('@'+twitter);
+                    if(data.twitter) {
+                        $('#personalLinks .twitter a').attr('href', 'http://www.twitter.com/'+data.twitter).text('@'+data.twitter);
                         $('#personalLinks .twitter').show();
                     } else $('#personalLinks .twitter').hide();
-                    if(email) {
-                        $('#personalLinks .useremail a').attr('href', 'mailto:'+email).text(email);
+                    if(data.email) {
+                        $('#personalLinks .useremail a').attr('href', 'mailto:'+data.email).text(data.email);
                         $('#personalLinks .useremail').show();
                     } else $('#personalLinks .useremail').hide();
-                    if(weburl) {
-                        $('#personalLinks .website a').attr('href', weburl);
-                        if(webname)
-                            $('#personalLinks .website a').text(webname);
+                    if(data.weburl) {
+                        $('#personalLinks .website a').attr('href', data.weburl);
+                        if(data.webname)
+                            $('#personalLinks .website a').text(data.webname);
                         else
-                            $('#personalLinks .website a').text(weburl);
+                            $('#personalLinks .website a').text(data.weburl);
                         $('#personalLinks .website').show();
                     } else $('#personalLinks .website').hide();
                     $('#personalCont').show();
@@ -346,7 +340,6 @@ $(document).ready(function() {
                             $('#editProfile').fadeIn(500);
                         });
                     }, 500);
-                    */
                 },
                 error: function(msg){
                     alert(msg);
