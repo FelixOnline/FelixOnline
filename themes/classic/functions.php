@@ -54,26 +54,6 @@ $hooks->addAction('profile_change', 'profile_change');
 function profile_change() {
     global $currentuser;
     if($currentuser->isLoggedIn()) {
-        /*
-		$desc = mysql_real_escape_string($_POST['desc']);
-		$facebook = mysql_real_escape_string($_POST['facebook']);
-		$twitter = mysql_real_escape_string($_POST['twitter']);
-		$email = mysql_real_escape_string($_POST['email']);
-		$show_email = $_POST['show_email'];
-		$webname = mysql_real_escape_string($_POST['webname']);
-		if($_POST['weburl'])
-			$weburl = Utility::addhttp(mysql_real_escape_string($_POST['weburl']));
-		$user = mysql_real_escape_string($_POST['user']);
-		
-        $sql = "UPDATE 
-                    `user` 
-                SET 
-                    description = '$desc', email = '$email', facebook = '$facebook', twitter = '$twitter', websitename = '$webname', websiteurl = '$weburl' WHERE user='$user'";
-		$result = mysql_query($sql) 
-			or die(mysql_error()); 
-		//echo $facebook;
-         */
-		
         $user = new User();
         $user->setUser($currentuser->getUser());
         $user->setDescription($_POST['desc']);
@@ -87,7 +67,5 @@ function profile_change() {
     } else {
         return json_encode(array(error => true, details => 'Not logged in'));
     }
-    // check csrf
-	//return $_COOKIE['felixonline_csrf_jk708userprofile'];
 }
 ?>
