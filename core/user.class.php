@@ -28,6 +28,7 @@ class User extends BaseModel {
         /* initialise db connection and store it in object */
         global $db;
         $this->db = $db;
+        $this->dbtable = 'user';
         if($uname !== NULL) {
             $sql = "SELECT 
                         `user`,

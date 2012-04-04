@@ -174,5 +174,21 @@ class Utility {
         }
         header('Location: '.$goto);
     }
+
+    /*
+     * Public: Add http
+     * Adds http to url if doesn't exist
+     */
+    public static function addhttp($url) {
+        $url = trim($url);
+        if($url != '' && $url != 'http://') {
+            if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+                $url = "http://" . $url;
+            }
+        } else {
+            $url = '';
+        }
+        return $url;
+    }
 }
 ?>

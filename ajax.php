@@ -8,6 +8,8 @@
  */
 require_once('bootstrap.php');
 
+$currentuser = new CurrentUser();
+
 /*
  * Set up hooks
  */
