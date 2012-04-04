@@ -249,30 +249,6 @@ $(document).ready(function() {
         return false;
     });
 
-    // Placeholder support
-    /*
-    $('[placeholder]').focus(function() {
-      var input = $(this);
-      if (input.val() == input.attr('placeholder')) {
-        input.val('');
-        input.removeClass('placeholder');
-      }
-    }).blur(function() {
-      var input = $(this);
-      if (input.val() == '' || input.val() == input.attr('placeholder')) {
-        input.addClass('placeholder');
-        input.val(input.attr('placeholder'));
-      }
-    }).blur().parents('form').submit(function() {
-      $(this).find('[placeholder]').each(function() {
-        var input = $(this);
-        if (input.val() == input.attr('placeholder')) {
-          input.val('');
-        }
-      })
-    });
-    */
-
     $("#profileform").validate();
 
     $('#editProfileSave').click( function() {
@@ -290,6 +266,8 @@ $(document).ready(function() {
             data.webname = $('.website #name').val();
             data.weburl = $('.website #url').val();
             data.action = 'profile_change';
+            data.token = $('#token').val();
+            data.check = 'userprofile';
 
             $.ajax({
                 url: "ajax.php",
@@ -354,7 +332,7 @@ $(document).ready(function() {
     //Like comment
     // TODO: add ajax loader when "liking"
     $('.commentAction #like').live("click", function() {
-        var likelink = $(this); 
+        var likelink = $(this);
         var comment = $(this).parents('.commentAction').attr('id');
         $.ajax({
             url: "ajax.php",

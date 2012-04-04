@@ -20,6 +20,19 @@
  *  - csrf - Set the token in the form first using the method in the utilities bit. Parameter should be form name
  * 
  * If a parameter is not needed (i.e. in more or less every case), a dummy value should be provided
+ *
+ * CSRF example:
+ *      $param = 'formname';
+ *      $token = Utility::generateCSRFToken($param);
+ *      // send these two values along with date in ajax request
+ *      Validator::Check( // this will throw an exception if not valid
+ *          array('csrf' => $token),
+ *          array('csrf' =>
+ *              array(
+ *                  'val_1007' => $param
+ *              )
+ *          ) 
+ *      );
  */
 
 class Validator {
@@ -117,7 +130,7 @@ class Validator {
 						break;
 					case self::validator_csrf:
 						// Check to see if the CSRF token matches that of the one in the session
-						if(array_key_exists('felixonline_csrf_'.$parameter, $_COOKIE) && $field !== $_COOKIE['felixonline_csrf_'.$parameter]) {
+						if(array_key_exists('felixonline_csrf_'.$parameter, $_COOKIE) && $value !== $_COOKIE['felixonline_csrf_'.$parameter]) {
 							if(!array_key_exists($field, $bad_fields)) {
 								$bad_fields[$field] = array();
 							}
