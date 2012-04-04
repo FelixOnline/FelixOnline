@@ -249,7 +249,7 @@ $(document).ready(function() {
         return false;
     });
 
-    // Placeholder support 
+    // Placeholder support
     /*
     $('[placeholder]').focus(function() {
       var input = $(this);
@@ -276,46 +276,46 @@ $(document).ready(function() {
     $("#profileform").validate();
 
     $('#editProfileSave').click( function() {
-        $('.user').find('[placeholder]').each(function() {
-            var input = $(this);
-            if (input.val() == input.attr('placeholder')) {
-                input.val('');
-            }
-        });
-
         if(($('.facebook input').valid() || $('.facebook input').val() == '' ) && ($('.useremail input').valid() || $('.useremail input').val() == '' ) && ($('.website #url').valid() || $('.website #url').val() == '' )) {
             $('#personalLinksEdit label.error').hide();
             // Get new information and then save through ajax
             $('#userInfoCont .loading').show();
             var link = $(this).hide();
-            
-            var desc = $('#descCont textarea').val();
-            var facebook = $('.facebook input').val();
-            var twitter = $('.twitter input').val();
-            var email = $('.useremail input').val();
-            var webname = $('.website #name').val();
-            var weburl = $('.website #url').val();
-            
+
+            var data = {};
+            data.desc = $('#descCont textarea').val();
+            data.facebook = $('.facebook input').val();
+            data.twitter = $('.twitter input').val();
+            data.email = $('.useremail input').val();
+            data.webname = $('.website #name').val();
+            data.weburl = $('.website #url').val();
+
+            console.log(data);
+            data.action = 'profile_change';
             //log(desc+' '+facebook+' '+twitter+' '+email+' '+webname+' '+weburl);
-            
+
             $.ajax({
                 url: "ajax.php",
                 type: "POST",
-                data: ({
-                    type: 'profilechange', 
-                    desc: desc, 
-                    facebook: facebook, 
-                    twitter: twitter, 
-                    email: email, 
-                    webname: webname, 
-                    weburl: weburl, 
-                    user: user 
-                }),
+                data: data,
                 async:true,
                 success: function(msg){
+                    try {
+                        var message = JSON.parse(msg);
+                    } catch(err) {
+                        alert(err);
+                    }
+                    if(message.error) {
+                        alert(message.details);
+                        $('#userInfoCont .loading').hide();
+                        link.show();
+                        return false;
+                    }
+
+                    console.log(message);
                     //alert(msg);
-                    
                     // Change profile info
+                    /*
                     if(desc) {
                         $('#descCont').text(desc);
                     } else $('#descCont').text('Add some personal info....');
@@ -333,20 +333,20 @@ $(document).ready(function() {
                     } else $('#personalLinks .useremail').hide();
                     if(weburl) {
                         $('#personalLinks .website a').attr('href', weburl);
-                        if(webname) 
+                        if(webname)
                             $('#personalLinks .website a').text(webname);
-                        else 
+                        else
                             $('#personalLinks .website a').text(weburl);
                         $('#personalLinks .website').show();
                     } else $('#personalLinks .website').hide();
-                    
                     $('#personalCont').show();
                     $('#personalCont.edit').hide();
-                    setTimeout(function(){ 
+                    setTimeout(function(){
                         $('#userInfoCont .loading').fadeOut(500, function() {
                             $('#editProfile').fadeIn(500);
-                        }); 
+                        });
                     }, 500);
+                    */
                 },
                 error: function(msg){
                     alert(msg);
@@ -357,7 +357,7 @@ $(document).ready(function() {
     });
 
 /* END */
-    
+
     //Like comment
     // TODO: add ajax loader when "liking"
     $('.commentAction #like').live("click", function() {
