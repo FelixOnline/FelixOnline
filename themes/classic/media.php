@@ -40,6 +40,17 @@ $theme->render('header', $header);
                 In association with <a href="http://www.union.ic.ac.uk/media/stoic">Stoic TV</a>
             </div>
         </h2>
+        <?php
+            $videos = $media->getVideos(NUMBER_OF_ALBUMS_FRONT_PAGE);
+            foreach($videos as $key => $video) { ?>
+            <div class="grid_3 videocont video-block play">
+                <a href="<?php echo $video->getURL(); ?>" class="mosaic-overlay">&nbsp;</a>
+                <div class="mosaic-backdrop">
+				    <img src="<?php echo $video->getThumbnail(); ?>" width="210">
+					<h5><?php echo $video->getTitle(); ?></h5>
+                </div>
+            </div>
+        <?php } ?>
         <div class="grid_12 clearfix">
         	<a href="<?php echo STANDARD_URL; ?>media/video/">View more videos</a>
         </div>
