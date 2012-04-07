@@ -40,6 +40,8 @@
     <?php foreach($theme->resources->getCSS() as $key => $value) { ?>
             <link id="<?php echo $key;?>" rel="stylesheet" href="<?php echo $value; ?>">
     <?php } ?>
+
+    <script src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>js/libs/modernizr-2.5.3.min.js"></script>
 </head>
 <body>
 	<div id="fb-root"></div>
