@@ -46,7 +46,7 @@ class Image extends BaseModel {
      */
     public function getURL($width = '', $height = '') {
         if($this->getUri()) {
-            $uri = str_replace('img/upload/', '', $this->getUri());
+            $uri = $this->getName();
             if($height) {
                 return IMAGE_URL.$width.'/'.$height.'/'.$uri;
             } else if($width) {
@@ -78,6 +78,14 @@ class Image extends BaseModel {
         } else {
             return false;
         }
+    }
+
+    /*
+     * Public: Get image name
+     * Get image filename
+     */
+    public function getName() {
+        return str_replace('img/upload/', '', $this->getUri());
     }
 }
 ?>
