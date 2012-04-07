@@ -54,5 +54,27 @@ class Media {
         }
         return $output;
     }
+
+    /*
+     * Public: Get radio shows
+     * Get IC Radio shows
+     *
+     * Returns array of radio shows
+     */
+    public function getRadioShows() {
+        $doc = new DOMDocument();
+        $doc->load('https://icradio-firestar.media.su.ic.ac.uk/external/felix.php');
+        $arrFeeds = array();
+        foreach ($doc->getElementsByTagName('show') as $node) {
+            $itemRSS = array ( 
+                'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+                'dj' => $node->getElementsByTagName('dj')->item(0)->nodeValue,
+                'genre' => $node->getElementsByTagName('genre')->item(0)->nodeValue,
+                'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
+            );
+            array_push($arrFeeds, $itemRSS);
+        }
+        return $arrFeeds;
+    }
 }
 ?>

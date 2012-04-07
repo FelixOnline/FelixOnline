@@ -7,7 +7,6 @@ if($cacheiScience->start()) {
 <div id="iscience">
     <a href="http://www.isciencemag.co.uk/"><img src="img/iscience.png"/></a>
 	<?php
-        // Cache this TODO
         $doc = new DOMDocument();
         $doc->load('http://isciencemag.co.uk/?feed=rss2');
         $arrFeeds = array();
