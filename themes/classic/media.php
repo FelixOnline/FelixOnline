@@ -55,6 +55,34 @@ $theme->render('header', $header);
         	<a href="<?php echo STANDARD_URL; ?>media/video/">View more videos</a>
         </div>
     </div>
+    
+    <div id="radio">
+        <h2 class="grid_12 radio clearfix">
+            Radio
+            <div id="radio">
+                In association with <a href="http://www.icradio.com/" target="_BLANK">IC Radio</a>
+            </div>
+        </h2>
+        <?php 
+            // cache
+            $cache = new Cache('icradio');
+            $cache->setExpiry(6*60*60); // set expiry to 6 hours
+            if($cache->start()) {
+                $shows = $media->getRadioShows();
+                foreach($shows as $show) { ?>
+                    <div class="grid_3 radiocont">
+                        <a href="<?php echo $show['link']; ?>">
+                            <h5><?php echo $show['title']; ?></h5>
+                        </a>
+                        <p class="dj"><?php echo $show['dj']; ?></p>
+                        <?php if($show['genre']) { ?>
+                        <p class="genre"><?php echo $show['genre']; ?></p>
+                        <?php } ?>
+                    </div>
+            <?php
+                } 
+            } $cache->stop(); ?>
+    </div>
 </div>
 <?php $timing->log('end of media page');?>
 <?php $theme->render('footer'); ?>

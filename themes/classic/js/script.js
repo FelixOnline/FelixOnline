@@ -91,7 +91,7 @@ $(document).ready(function() {
         $('#twitterShare2').append(twitter2);
         $('#googleShare2').append(google2);
     };
-   
+
     // Media box tabs 
     var mediaTabContainers = $('div#mediaBox > div');
     $('div#mediaBox ul.mediaBoxNav a').click(function () {
@@ -401,7 +401,6 @@ $(document).ready(function() {
     $('.play').mosaic({
         opacity     :   0.8         //Opacity for overlay (0-1)
     });
-
 
     //Contact form validation
     $("#contactform").submit(function() {
