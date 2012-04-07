@@ -122,5 +122,15 @@ class MediaPhoto extends BaseModel {
         return $this->mostViewed;
     }
 
+    /*
+     * Public: Hit photo album
+     */
+    public function hit() {
+        $sql = "UPDATE 
+                    `media_photo_album` 
+                SET hits=hits+1 
+                WHERE id=".$this->getId();
+        return $this->db->query($sql);
+    }
 }
 ?>
