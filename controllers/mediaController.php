@@ -33,6 +33,7 @@ class MediaController extends BaseController {
                     $matches['type'].'-single', /* media-{type}-single.php*/
                     $matches['type'] /* media-{type}.php */
                 ));
+                $media->hit();
             } else {
                 $media = new Media();
                 $this->theme->setHierarchy(array(

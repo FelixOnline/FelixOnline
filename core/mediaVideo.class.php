@@ -117,5 +117,16 @@ class MediaVideo extends BaseModel {
         }
     }
 
+    /*
+     * Public: Hit video
+     */
+    public function hit() {
+        $sql = "UPDATE 
+                    `media_video` 
+                SET hits=hits+1 
+                WHERE id=".$this->getId();
+        return $this->db->query($sql);
+    }
+
 }
 ?>
