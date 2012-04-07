@@ -32,5 +32,27 @@ class Media {
         }
         return $output;
     }
+
+    /*
+     * Public: Get videos
+     *
+     * Returns array of MediaVideo objects
+     */
+    public function getVideos($limit = NULL) {
+        $sql = "SELECT 
+                    `id` 
+                FROM `media_video`
+                WHERE visible = 1
+                ORDER BY date DESC
+                "; 
+        if($limit) {
+            $sql .= "LIMIT 0, ".$limit;
+        }
+        $albums = $this->db->get_results($sql);
+        foreach($albums as $key => $object) {
+            $output[] = new MediaVideo($object->id);
+        }
+        return $output;
+    }
 }
 ?>
