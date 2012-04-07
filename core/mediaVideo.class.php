@@ -99,5 +99,23 @@ class MediaVideo extends BaseModel {
         return $this->mostViewed;
     }
 
+    /*
+     * Public: Get embed code
+     *
+     * $width - optional
+     * $height - optional
+     *
+     * Returns html embed code
+     */
+    public function getEmbed($width = NULL, $height = NULL) {
+        if(!$width) $width = 620;
+        if(!$height) $height = 378;
+        if($this->getSite() == 'youtube') {
+            return '<iframe width="'.$width.'" height="'.$height.'" src="http://www.youtube.com/embed/'.$this->getVideoId().'?rel=0" frameborder="0" allowfullscreen></iframe>';
+        } else if($this->getSite() == 'vimeo') {
+            return '<iframe src="http://player.vimeo.com/video/'.$this->getVideoId().'" width="'.$width.'" height="'.$height.'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+        }
+    }
+
 }
 ?>
