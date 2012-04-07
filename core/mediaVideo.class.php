@@ -9,7 +9,7 @@
  *      author      - author of video [string]
  *      video_id    - id of video
  *      date        - date of video
- *      visible     -
+ *      hidden      -
  *      hits        -
  *      site        - name of site video is on
  *      thumbnail   - url of thumbnail
@@ -32,7 +32,7 @@ class MediaVideo extends BaseModel {
                     `author`,
                     `video_id`,
                     UNIX_TIMESTAMP(`date`) as date,
-                    `visible`,
+                    `hidden`,
                     `thumbnail`,
                     `hits`,
                     `site`
@@ -88,7 +88,7 @@ class MediaVideo extends BaseModel {
                     FROM
                         `media_video`
                     WHERE
-                        visible = '1'
+                        hidden = '0'
                     ORDER BY hits DESC
                     LIMIT 0, 3";
             $albums = $db->get_results($sql);
