@@ -40,9 +40,56 @@ $theme->render('header', $header);
                 In association with <a href="http://www.union.ic.ac.uk/media/stoic">Stoic TV</a>
             </div>
         </h2>
+        <?php
+            $videos = $media->getVideos(NUMBER_OF_ALBUMS_FRONT_PAGE);
+            foreach($videos as $key => $video) { ?>
+            <div class="grid_3 videocont video-block play">
+                <a href="<?php echo $video->getURL(); ?>" class="mosaic-overlay">&nbsp;</a>
+                <div class="mosaic-backdrop">
+				    <img src="<?php echo $video->getThumbnail(); ?>" width="210">
+					<h5><?php echo $video->getTitle(); ?></h5>
+                </div>
+            </div>
+        <?php } ?>
         <div class="grid_12 clearfix">
         	<a href="<?php echo STANDARD_URL; ?>media/video/">View more videos</a>
         </div>
+    </div>
+    
+    <div id="radio">
+        <h2 class="grid_12 radio clearfix">
+            Radio
+            <div id="radio">
+                In association with <a href="http://www.icradio.com/" target="_BLANK">IC Radio</a>
+            </div>
+            <div id="listenlive">
+                <div id="instructions">Listen Live:</div>
+                <audio id="listenlive" controls preload="auto" autobuffer>
+                    <source src="http://icecast.icradio.com:8000/vorbis-extra-high" />
+                    <source src="http://icecast.icradio.com:8000/mp3-high" />
+                    <p>Your browser does not support the audio element.</p>  
+                </audio>
+            </div>
+        </h2>
+        <?php 
+            // cache
+            $cache = new Cache('icradio');
+            $cache->setExpiry(6*60*60); // set expiry to 6 hours
+            if($cache->start()) {
+                $shows = $media->getRadioShows();
+                foreach($shows as $show) { ?>
+                    <div class="grid_3 radiocont">
+                        <a href="<?php echo $show['link']; ?>">
+                            <h5><?php echo $show['title']; ?></h5>
+                        </a>
+                        <p class="dj"><?php echo $show['dj']; ?></p>
+                        <?php if($show['genre']) { ?>
+                        <p class="genre"><?php echo $show['genre']; ?></p>
+                        <?php } ?>
+                    </div>
+            <?php
+                } 
+            } $cache->stop(); ?>
     </div>
 </div>
 <?php $timing->log('end of media page');?>
