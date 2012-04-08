@@ -67,7 +67,7 @@ $theme->render('header', $header);
                 <audio id="listenlive" controls preload="auto" autobuffer>
                     <source src="http://icecast.icradio.com:8000/vorbis-extra-high" />
                     <source src="http://icecast.icradio.com:8000/mp3-high" />
-                    <p>Your browser does not support the audio element.</p>  
+                    <p><a href="http://www.icradio.com/live">here</a></p>  
                 </audio>
             </div>
         </h2>
