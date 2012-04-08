@@ -62,6 +62,14 @@ $theme->render('header', $header);
             <div id="radio">
                 In association with <a href="http://www.icradio.com/" target="_BLANK">IC Radio</a>
             </div>
+            <div id="listenlive">
+                <div id="instructions">Listen Live:</div>
+                <audio id="listenlive" controls preload="auto" autobuffer>
+                    <source src="http://icecast.icradio.com:8000/vorbis-extra-high" />
+                    <source src="http://icecast.icradio.com:8000/mp3-high" />
+                    <p>Your browser does not support the audio element.</p>  
+                </audio>
+            </div>
         </h2>
         <?php 
             // cache
