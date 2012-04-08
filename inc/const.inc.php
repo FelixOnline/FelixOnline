@@ -43,6 +43,7 @@
     if(!defined('LOCAL'))                           define('LOCAL', false); // if true then site is hosted locally - don't use pam_auth etc. 
     if(!defined('LOG_EMAILS'))                      define('LOG_EMAILS', false); // Log emails or not 
     if(!defined('CACHE'))                           define('CACHE', true); // Enable cache 
+    if(!defined('CACHE_LENGTH'))                    define('CACHE_LENGTH', 1800); // Default cache length (20 mins)
     if(!defined('BLOG_POSTS_PER_PAGE'))             define('BLOG_POSTS_PER_PAGE', 10); // number of posts to show on blog page
 
 	/* Media Page */
