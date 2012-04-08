@@ -63,7 +63,7 @@ class Media {
      */
     public function getRadioShows() {
         $doc = new DOMDocument();
-        $doc->load('https://icradio-firestar.media.su.ic.ac.uk/external/felix.php');
+        $doc->load('http://icradio-firestar.media.su.ic.ac.uk/external/felix.php');
         $arrFeeds = array();
         foreach ($doc->getElementsByTagName('show') as $node) {
             $itemRSS = array ( 
