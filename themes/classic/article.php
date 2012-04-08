@@ -35,7 +35,7 @@ $theme->render('header', $header);
             $theme->render('sidebar/socialLinks');
             $theme->render('sidebar/mostPopular');
             $theme->render('sidebar/fbActivity');
-            //include_once(THEME_DIRECTORY.'/sidebar/mediaBox.php');
+            $theme->render('sidebar/mediaBox');
 
             $timing->log('after sidebar');
         ?>

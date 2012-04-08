@@ -1,3 +1,4 @@
+<?php $media = new Media(); ?>
 <div id="mediaBox">
 	<h3>Media Box</h3>
 	<ul class="mediaBoxNav">
@@ -7,36 +8,49 @@
 	</ul>
 	<div class="mediaBoxTab" id="mediaPhoto">
 		<?php 
-			// Get most recent album from phig 
-			$sql = "SELECT * FROM `media_photo_albums` WHERE visible = 1 ORDER BY id DESC";
-			$result = mysql_query($sql);
-			$row = mysql_fetch_array( $result );
-			
-			$imgsql = "SELECT * FROM `media_photo_images` WHERE id=".$row['albumThumb'];
-			$imgrow = mysql_fetch_array(mysql_query($imgsql));
+            $albums = $media->getAlbums(1);
+            foreach($albums as $album) {
 		?>
-		<a href="media/photo/<?=$row['id']?>/<?=urlise_text($row['albumName'])?>/">
-			<img src="/gallery/gallery_images/timthumb.php?src=/gallery/gallery_images/images/<?php echo $imgrow['imageName'];?>&w=258px&h=160&zc=1"/>
-			<p><?php echo $row['albumName'];?></p>
+		<a href="<?php echo $album->getURL(); ?>">
+			<img src="<?php echo $album->getThumbnail()->getURL(258, 160);?>"/>
+			<p><?php echo $album->getTitle();?></p>
 		</a>
+        <?php } ?>
 	</div>
 	<div class="mediaBoxTab" id="mediaVideo">
 		<?php 
-			// Get most recent album from phig 
-			$sql = "SELECT * FROM `media_video` WHERE hidden = 0 ORDER BY id DESC";
-			$result = mysql_query($sql);
-			$row = mysql_fetch_array( $result );
+            $videos = $media->getVideos(1);
+            foreach($videos as $video) {
 		?>
-		<a href="media/video/<?=$row['id']?>/<?=urlise_text($row['title'])?>/">
-            <?php if($row['site'] == 'youtube') { ?>
-                <img src="http://i.ytimg.com/vi/<?=$row['video_id']?>/0.jpg" width="258px"/>
-            <?php } else {?>
-                <img src="<?php echo $row['thumbnail'];?>" width="258px" />     
-            <?php } ?>
-			<p><?php echo $row['title'];?></p>
+		<a href="<?php echo $video->getURL(); ?>">
+            <img src="<?php echo $video->getThumbnail(); ?>" width="258px"/>
+			<p><?php echo $video->getTitle();?></p>
 		</a>
+        <?php } ?>
 	</div>
 	<div class="mediaBoxTab" id="mediaRadio">
-		<p>Coming soon...</p>
+        <p>Listen Live:</p>
+        <audio id="listenlive" controls preload="auto" autobuffer>
+            <source src="http://icecast.icradio.com:8000/vorbis-extra-high" />
+            <source src="http://icecast.icradio.com:8000/mp3-high" />
+            <p><a href="http://www.icradio.com/live">on the ICRadio website</a></p>  
+        </audio>
+        <ul id="radiolist">
+        <?php
+            // cache
+            $cache = new Cache('sidebar-icradio');
+            $cache->setExpiry(6*60*60); // set expiry to 6 hours
+            if($cache->start()) {
+                $shows = $media->getRadioShows();
+                foreach($shows as $show) { ?>
+                <li>
+                    <a href="<?php echo $show['link']; ?>"> 
+                        <?php echo $show['title']; ?>
+                    </a>
+                </li>
+            <?php } 
+            } $cache->stop(); ?>
+        </ul>
 	</div>
 </div>
+<?php $timing->log('after mediabox'); ?>

@@ -57,7 +57,7 @@ $theme->render('header', $header);
         <?php 
             $theme->render('sidebar/fbActivity');
             $theme->render('sidebar/mostPopular');
-            //$theme->render('sidebar/mediaBox');
+            $theme->render('sidebar/mediaBox');
         ?>
     </div>
     <!-- End of sidebar -->
