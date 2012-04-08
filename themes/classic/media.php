@@ -10,7 +10,7 @@ $header = array(
 $theme->render('header', $header);
 ?>
 <div class="container_12 media">
-    <div id="photo">
+    <div id="photo" class="clearfix">
         <h2 class="grid_12 photosoc clearfix">
             Photo Albums 
             <div id="photosoc">
@@ -33,7 +33,7 @@ $theme->render('header', $header);
         </div>
     </div>
 
-    <div id="video">
+    <div id="video" class="clearfix">
         <h2 class="grid_12 stoictv clearfix">
             Videos
             <div id="stoic">
@@ -56,7 +56,7 @@ $theme->render('header', $header);
         </div>
     </div>
     
-    <div id="radio">
+    <div id="radio" class="clearfix">
         <h2 class="grid_12 radio clearfix">
             Radio
             <div id="radio">
