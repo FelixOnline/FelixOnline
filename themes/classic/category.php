@@ -34,7 +34,7 @@ $theme->render('header', $header);
                 $theme->render('sidebar/categoryTwitter');
             }
             $theme->render('sidebar/categoryFeaturedBox');
-            //include_once('sidebar/mediaBox.php');
+            $theme->render('sidebar/mediaBox');
             $theme->render('sidebar/socialLinks');
             $theme->render('sidebar/fbActivity');
             $theme->render('sidebar/mostPopular');

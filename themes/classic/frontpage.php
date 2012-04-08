@@ -16,8 +16,7 @@ $timing->log('after header');
     <div class="sidebar grid_4 push_8">
         <?php
             $theme->render('sidebar/fbLikeBox');
-            //include_once(THEME_DIRECTORY.'/sidebar/mediaBox.php');
-            //$timing->log('after mediabox');
+            $theme->render('sidebar/mediaBox');
             $theme->render('sidebar/socialLinks');
             $theme->render('sidebar/fbActivity');
             $theme->render('sidebar/mostPopular');
