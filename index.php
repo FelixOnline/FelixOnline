@@ -27,6 +27,7 @@ try {
 	 * Routes
 	 */
 	$urls = array(
+<<<<<<< HEAD
 		'/' => 'FrontpageController',
 		'/user/(?P<user>[a-zA-Z0-9_-]+)' => 'UserController',
 		'/user/(?P<user>[a-zA-Z0-9_-]+)/(?P<page>[0-9]+)' => 'UserController',
@@ -38,7 +39,8 @@ try {
 		'/logout/.*' => 'AuthController',
 		'/issuearchive' => 'ArchiveController',
 		'/issuearchive/decade/(?P<decade>[0-9]+)' => 'ArchiveController',
-		'/issuearchive/year/(?P<year>[0-9]+)' => 'ArchiveController'
+		'/issuearchive/year/(?P<year>[0-9]+)' => 'ArchiveController',
+		'/issuearchive/issue/(?P<id>[0-9]+)' => 'ArchiveController'
 	);
 
 	/*
