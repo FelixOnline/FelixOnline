@@ -3,6 +3,9 @@
  * Archive controller
  */
 class ArchiveController extends BaseController {
+    private $currentyear;
+    private $year;
+
     function __construct() {
         parent::__construct();
         //global $dbaname;
@@ -26,17 +29,14 @@ class ArchiveController extends BaseController {
     }
 
     function GET($matches) {
-        $currentyear = date('Y');
+        $this->currentyear = date('Y');
         if(array_key_exists('decade', $matches)) {
-            $year = $matches['decade'];
+            $this->year = $matches['decade'];
         } else if(array_key_exists('year', $matches)) {
-            $year = $matches['year'];
+            $this->year = $matches['year'];
         } else {
-            $year = $currentyear;
+            $this->year = $this->currentyear;
         }
-
-        // generate list of decades
-        $start = 1949; // TODO: move into config
 
         // get latest issue year TODO: cache
         $sql = "SELECT 
@@ -45,14 +45,38 @@ class ArchiveController extends BaseController {
         $end = $this->dba->get_var($sql);
 
         $start = 1950;
-        $decades[0]['final'] = '1949';
         $currentdecade = array();
+        $decades = $this->getDecades($start, $end, $currentdecade);
+
+        // 91949 edge case
+        array_unshift($decades, array('final' => '1949'));
+        if($this->year == '1949') { // if selected year
+            $decades[0]['selected'] = true;
+            $currentdecade = $decades[0];
+        }
+        
+        $this->theme->appendData(array(
+            'decades' => $decades,
+            'currentdecade' => $currentdecade,
+            'year' => $this->year
+        ));
+
+        $this->theme->render('archive');
+    }
+    
+    /*
+     * Return list of decades from a start and end year
+     *
+     * Returns array
+     */
+    private function getDecades($start, $end, &$currentdecade) {
+        $decades = array();
         for($i = $start; $i <= $end; $i = $i+10) {
             $final = $i + 9;
-            if($final > $currentyear) {
-                $final = $currentyear;
+            if($final > $this->currentyear) {
+                $final = $this->currentyear;
             }
-            if($year >= $i && $year <= $final) {
+            if($this->year >= $i && $this->year <= $final) {
                 $selected = true;
             } else {
                 $selected = false;
@@ -66,17 +90,7 @@ class ArchiveController extends BaseController {
 
             if($selected) $currentdecade = $info;
         }
-        if($year == '1949') {
-            $decades[0]['selected'] = true;
-            $currentdecade = $decades[0];
-        }
-        
-        $this->theme->appendData(array(
-            'decades' => $decades,
-            'currentdecade' => $currentdecade,
-            'year' => $year
-        ));
-
-        $this->theme->render('archive');
+        return $decades;
     }
+
 }
