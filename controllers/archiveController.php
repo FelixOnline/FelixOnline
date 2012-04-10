@@ -115,8 +115,7 @@ class ArchiveController extends BaseController {
 
         // Make sure the files exists, otherwise we are wasting our time
         if (!file_exists($file)) {
-            header("HTTP/1.1 404 Not Found");
-            exit;
+            throw new NotFoundException("Issue doesn't exists on server");
         }
 
         // Get the 'Range' header if one was sent
