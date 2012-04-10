@@ -36,13 +36,9 @@ $theme->render('header', $header);
         <?php foreach($decades as $key => $decade) { ?>  
             <li <?php if($decade['selected']) echo 'class="current"'; ?> >
                 <?php if($decade['begin']) { ?>
-                    <a href="<?php echo STANDARD_URL; ?>decade/<?php echo $decade['begin']; ?>">
-                        <?php echo $decade['begin']; ?>-<?php echo $decade['final']; ?>
-                    </a>
+                    <a href="<?php echo STANDARD_URL; ?>issuearchive/decade/<?php echo $decade['begin']; ?>"><?php echo $decade['begin']; ?>-<?php echo $decade['final']; ?></a>
                 <?php } else { ?>
-                    <a href="<?php echo STANDARD_URL; ?>year/<?php echo $decade['final']; ?>">
-                        <?php echo $decade['final']; ?>
-                    </a>
+                    <a href="<?php echo STANDARD_URL; ?>issuearchive/year/<?php echo $decade['final']; ?>"><?php echo $decade['final']; ?></a>
                 <?php } ?>
             </li>
         <?php } ?>
@@ -50,11 +46,13 @@ $theme->render('header', $header);
     
     <h3 class="grid_12">Years</h3>
     <ul class="tabsyear">
-        <?php for($i = $currentdecade['begin']; $i <= $currentdecade['final']; $i++) { ?>
+        <?php 
+            if(!$currentdecade['begin']) {
+                $currentdecade['begin'] = $currentdecade['final']; 
+            }
+            for($i = $currentdecade['begin']; $i <= $currentdecade['final']; $i++) { ?>
             <li <?php if($i == $year) echo 'class="current"'; ?>>
-                <a href="<?php STANDARD_URL; ?>year/<?php echo $i; ?>">
-                    <?php echo $i; ?>
-                </a>
+                <a href="<?php STANDARD_URL; ?>issuearchive/year/<?php echo $i; ?>"><?php echo $i; ?></a>
             </li>
         <?php } ?>
     </ul>

@@ -66,6 +66,10 @@ class ArchiveController extends BaseController {
 
             if($selected) $currentdecade = $info;
         }
+        if($year == '1949') {
+            $decades[0]['selected'] = true;
+            $currentdecade = $decades[0];
+        }
         
         $this->theme->appendData(array(
             'decades' => $decades,
