@@ -30,11 +30,13 @@ class ArchiveController extends BaseController {
 
     function GET($matches) {
         global $timing;
-        if(array_key_exists('id', $matches)) { // viewing a specific issue
+        if(array_key_exists('id', $matches) && array_key_exists('download', $matches)) { // viewing a specific issue
             //$file = 'http://felixonline.co.uk/archive/IC_1963/1963_0184_A.pdf';
             $file = BASE_DIRECTORY.'/archive/1963_0184_A.pdf';
             $filename = '1963_184.pdf'; /* Note: Always use .pdf at the end. */
             $this->serveFileResumable($file, $filename, 'application/pdf');
+        } else if(array_key_exists('id', $matches)) {
+            echo 'Issue page';     
         } else {
             $this->currentyear = date('Y');
             if(array_key_exists('decade', $matches)) {
@@ -181,5 +183,4 @@ class ArchiveController extends BaseController {
         // Exit here to avoid accidentally sending extra content on the end of the file
         exit;
     }
-
 }
