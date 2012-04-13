@@ -225,14 +225,17 @@ class User extends BaseModel {
 
     /*
      * Public: Get email
-     *
-     * $ldap - [boolean] if true then get email from ldap and not db
+     * If user has defined an email the use that. Else use ldap email
+     * $force - [boolean] if true then always return an email address (if not defined in database then from ldap)
      *
      * Returns string
      */
-    public function getEmail($ldap = false) {
-        if($ldap && !LOCAL) {
-            return ldap_get_mail($this->getUser());
+    public function getEmail($force = false) {
+        if($force == true) { // if forcing email
+            if(!$this->fields['email']) {
+                return ldap_get_mail($this->getUser());
+            }
+            return $this->fields['email'];
         }
         return $this->fields['email'];
     }

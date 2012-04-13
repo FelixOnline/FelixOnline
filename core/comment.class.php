@@ -366,7 +366,7 @@ class Comment extends BaseModel {
             $authors = array_diff($authors, array($this->getUser())); // remove them from the author list
         }
         foreach($authors as $author) {
-            $emailAddress = $author->getEmail();
+            $emailAddress = $author->getEmail(true); // get email address of user
             $email = new Email();
             $email->setTo($emailAddress);
             $email->setUniqueID($author->getUser());
@@ -394,7 +394,7 @@ class Comment extends BaseModel {
             return false;
         }
         $email = new Email();
-        $email->setTo($this->getReply()->getUser()->getEmail());
+        $email->setTo($this->getReply()->getUser()->getEmail(true));
         $email->setSubject($this->getName().' has replied to your comment on "'.$this->getArticle()->getTitle().'"');
 
         ob_start();
