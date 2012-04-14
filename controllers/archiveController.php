@@ -63,17 +63,21 @@ class ArchiveController extends BaseController {
             $currentdecade = array();
             $decades = $this->getDecades($start, $end, $currentdecade);
 
-            // 91949 edge case
+            // 1949 edge case
             array_unshift($decades, array('final' => '1949'));
-            if($this->year == '1949') { // if selected year
+            if($this->year == '1949') { // if selected year is 1949
                 $decades[0]['selected'] = true;
                 $currentdecade = $decades[0];
             }
             
+            // get issues 
+            $issues = $this->getIssues($this->year);
+
             $this->theme->appendData(array(
                 'decades' => $decades,
                 'currentdecade' => $currentdecade,
-                'year' => $this->year
+                'year' => $this->year,
+                'issues' => $issues
             ));
 
             $this->theme->render('archive');
@@ -130,5 +134,33 @@ class ArchiveController extends BaseController {
 
         // Exit here to avoid accidentally sending extra content on the end of the file
         exit;
+    }
+
+    /*
+     * Public static: Get issues
+     *
+     * $year    - year to get publications from 
+     * $pub     - id of publication type [default = 1 (Felix)]
+     *
+     * Return array of issue objects
+     */
+    public function getIssues($year, $pub = 1) {
+        $sql = "SELECT
+                    i.id,
+                    f.FileName
+                FROM Issues as i
+                INNER JOIN Files as f
+                ON(i.IssueNo = f.IssueNo AND i.PubNo = f.PubNo)
+                WHERE YEAR(PubDate) = '".$year."'
+                AND i.PubNo = ".$pub."
+                ORDER BY id ASC";
+        $result = $this->dba->get_results($sql);
+        $issues = array();
+        foreach($result as $obj) {
+            $issue = new Issue($obj->id);
+            $issue->setFileName($obj->FileName);
+            $issues[] = $issue;
+        }
+        return $issues;
     }
 }

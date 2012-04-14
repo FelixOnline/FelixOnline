@@ -153,7 +153,16 @@
     <div class="issuecont">
     
     <?php
-    $sql = "SELECT PubDate,i.IssueNo,FileName FROM Issues AS i INNER JOIN Files AS f ON (i.IssueNo=f.IssueNo AND i.PubNo=f.PubNo) WHERE YEAR(PubDate)='$year' AND i.PubNo = 1 ORDER BY PubDate ASC";
+        $sql = "SELECT 
+                    PubDate,
+                    i.IssueNo,
+                    FileName 
+                FROM Issues AS i 
+                INNER JOIN Files AS f 
+                ON (i.IssueNo=f.IssueNo AND i.PubNo=f.PubNo) 
+                WHERE YEAR(PubDate)='$year' 
+                AND i.PubNo = 1 
+                ORDER BY PubDate ASC";
     $rsc = mysql_query($sql,$cid_archive);
     if (mysql_num_rows($rsc)) {
         $i = 1;
