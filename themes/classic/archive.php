@@ -12,7 +12,7 @@ $theme->render('header', $header);
 <!-- Archive wrapper -->
 <div class="container_12 archive">
     <!-- Search -->
-    <div id="archivesearchbar" class="grid_6">
+    <div id="archivesearchbar" class="grid_12">
         <h3>Search the Felix archive</h3>
         <form method="get" action="">
             <input type="text" name="aq" size="40" placeholder="Search the archive.." value="<?=stripslashes($_GET['aq'])?>" id="searchinput" />
