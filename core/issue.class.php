@@ -76,7 +76,8 @@ class Issue extends BaseModel {
      * Returns string
      */
     public function getThumbnailURL() {
-        $url = STANDARD_URL.'archive/thumbs/'.$this->getThumbnail();
+        //$url = STANDARD_URL.'archive/thumbs/'.$this->getThumbnail();
+        $url = 'http://felixonline.co.uk/archive/thumbs/'.$this->getThumbnail();
         return $url;
     }
 }
