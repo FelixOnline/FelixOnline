@@ -679,23 +679,12 @@ button {
     border:1px solid #bebebe;
     margin-bottom:10px;
     padding:10px;
-    padding-top: 10px;
+    padding-top: 15px;
     padding-bottom: 5px;
 }
 
-.sidebar #skeleton #logo {
-    float: left;
-    width: 120px;
-}
-
-.sidebar #skeleton #info {
-    float: right;
-    width: 130px;
-}
-
-.sidebar #skeleton #info p {
-    text-align: right;
-    font-weight: bold;
+.sidebar #skeleton #logo img {
+    margin-left: 25px;
 }
 
 .sidebar #skeleton #desc {

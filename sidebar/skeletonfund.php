@@ -1,14 +1,6 @@
 <div id="skeleton" class="clearfix">
-    <div class="clearfix">
-        <div id="logo">
-            <img src="<?php echo STANDARD_URL; ?>img/skeletonfund-220.jpg" width="120"/>
-        </div>
-        <div id="info">
-            <p>Follow his journey on </p>
-            <p>Facebook,</p> 
-            <p>Twitter,</p> 
-            <p>or his Blog</p>
-        </div>
+    <div id="logo">
+        <a href="http://www.skeletonfund.com/" alt="The Skeleton Fund" title="Click to find out more!"><img src="<?php echo STANDARD_URL; ?>img/skeletonfund-220.jpg" width="220" height="220"/></a>
     </div>
     <div id="desc">
         <p>Kadhim Shubber is cycling 1000 miles on a tandem, with a skeleton on the back, to raise £10,000 for the Rector's Scholarships.</p>
