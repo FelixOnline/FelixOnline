@@ -40,7 +40,6 @@
 	</div>
 
 	<!-- Featured bar -->
-        <img src="<?php echo STANDARD_URL; ?>img/skeletonfund-220.jpg"/>
 	<div class="container_12">
 	<?php
 		//$sql = "SELECT * FROM top_extrapage_cat WHERE loc='default' LIMIT 1";
