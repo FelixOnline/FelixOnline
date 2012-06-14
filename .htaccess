@@ -54,6 +54,7 @@ RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
 # If requested resource exists as a file or directory, skip next 17 rules
 RewriteCond %{DOCUMENT_ROOT}/$1 -f [OR]
 RewriteCond %{DOCUMENT_ROOT}/$1 -d [OR]
+RewriteCond %{REQUEST_URI} (.*)/preview/(.*)$ [OR]
 RewriteCond %{REQUEST_URI} (.*)/engine/(.*)$ [OR]
 RewriteCond %{REQUEST_URI} (.*)/sexsurvey/(.*)$ [OR]
 RewriteCond %{REQUEST_URI} (.*)/sexism/(.*)$ [OR]

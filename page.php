@@ -96,12 +96,10 @@
 			?>
 			<div id="featuredBox" <?php if($category == 'phoenix') echo 'class="featboxphoenix"';?>>
 				<?php if($category == 'phoenix') { ?>
-					<h3><?php echo $category_display;?></h3>
-					<ul>
-						<li><a href="phoenix/act1/">Act I</a></li>
-						<li><a href="phoenix/act2/">Act II</a></li>
-						<li><a href="phoenix/act3/">Act III</a></li>
-					</ul>
+				<h3>Phoenix 2012</h3>
+				<ul>
+                  <li><a href="http://felixonline.co.uk/phoenix">Contents</a></li>
+				</ul>
 				<?php } else { ?>
 				<h3>Featured <span class="<?php echo $category;?>"><?php echo $category_display;?></span> Stories</h3>
 				<ul>

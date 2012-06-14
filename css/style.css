@@ -655,10 +655,34 @@ button {
 #phoenixinfo #editorial p {
   margin-bottom:10px;
   font-style:italic;
+  font-size: 14px;
 }
-#phoenixinfo #coverpage {
+#phoenixinfo #sidebar {
   width:270px;
   float:right;
+}
+#phoenixinfo #coverpage {
+  margin-top: 15px;
+}
+#phoenixinfo #contents {
+  margin-top: 15px;    
+}
+#phoenixinfo #contents ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+#phoenixinfo #contents li {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+#phoenixinfo #contents a {
+  text-decoration: none;
+  color: #444;
+}
+#phoenixinfo #contents a:hover {
+  text-decoration: underline;
 }
 #sexsurvey {
     border:1px solid #bebebe;
