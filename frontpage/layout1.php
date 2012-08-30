@@ -244,44 +244,6 @@
             </ul>
         </div>
 
-        <?php
-            $cacheweather = new Cache('weather');
-            if($cacheweather->start()) {
-        ?>
-        <div id="weather">
-            <h4>Weather <span>in South Kensington</span></h4>
-        <?php
-            $requestAddress = "http://www.google.com/ig/api?weather=SW72BB&hl=en";
-            // Downloads weather data based on location - I used my zip code.
-            $xml_str = file_get_contents($requestAddress,0);
-            // Parses XML
-            $xml = new SimplexmlElement($xml_str);
-
-            foreach($xml->weather as $item) { ?>
-                <!-- Current conditions -->
-                <div id="current">
-                    <img src="http://www.google.com<?php echo $item->current_conditions->icon['data'];?>" title="<?php echo $item->current_conditions->condition['data'];?>"/>
-                    <p><b>Current</b></p>
-                    <p id="temp"><?php echo $item->current_conditions->temp_c['data'];?>&#176;C</p>
-                </div>
-            <?php
-                foreach($item->forecast_conditions as $new) { ?>
-                    <div class="weatherIcon">
-                        <img src="http://www.google.com<?php echo $new->icon['data']; ?>" title="<?php echo $new->condition['data'];?>"/><br/>
-                        <p><?php echo $new->day_of_week['data'];?></p>
-                    <?php
-                        $low = intval(($new->low['data'] - 32) / 1.8);
-                        $high = intval(($new->high['data'] - 32) / 1.8);
-                    ?>
-                        <p id="temp"><?php echo $high;?>&#176;C | <?php echo $low; ?>&#176;C</p>
-                    </div>
-            <?php }
-            }
-        ?>
-            <div class="clear"></div>
-        </div>
-        <?php } $cacheweather->stop(); ?>
-
         <div id="felixinfo">
             <h3>About Us</h3>
             <p>Felix is the award winning student newspaper of Imperial College London since 1949. Bringing you the best of news and commentary every week.</p>
