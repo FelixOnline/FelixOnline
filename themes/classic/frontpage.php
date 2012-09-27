@@ -10,23 +10,21 @@ $theme->render('header', $header);
 $timing->log('after header');
 
 ?>
-
 <div class="container_12">
     <!-- Sidebar -->
-    <div class="sidebar grid_4 push_8">
-        <?php
-            $theme->render('sidebar/fbLikeBox');
-            $theme->render('sidebar/mediaBox');
-            $theme->render('sidebar/socialLinks');
-            $theme->render('sidebar/fbActivity');
-            $theme->render('sidebar/mostPopular');
-            $theme->render('sidebar/iscience');
-            $theme->render('sidebar/recentcomments');
-        ?>
-    </div>
-    <?php $timing->log('after sidebar'); ?>
-    <!-- End of sidebar -->
-    
+	<div class="sidebar grid_4 push_8">
+	    <?php
+	        $theme->render('sidebar/fbLikeBox');
+	        $theme->render('sidebar/mediaBox');
+	        $theme->render('sidebar/socialLinks');
+	        $theme->render('sidebar/fbActivity');
+	        $theme->render('sidebar/mostPopular');
+	        $theme->render('sidebar/iscience');
+	        $theme->render('sidebar/recentcomments');
+	    ?>
+	</div>
+	<?php $timing->log('after sidebar'); ?>
+	<!-- End of sidebar -->
     <!-- Front page articles -->
     <div class="grid_8 pull_4 featCont layout1">
         <?php
@@ -50,7 +48,7 @@ $timing->log('after header');
                 AND section='a'";
             $sectionA = $db->get_row($sql);
             $timing->log('get frontpage articles');
-			if (!is_null($sectionA)) {
+            if (!is_null($sectionA)) {
         ?>
         <!-- Top story -->
         <div class="grid_8 alpha topstory">
@@ -87,17 +85,17 @@ $timing->log('after header');
                 </div>
                 <div id="topStoryPic">
                     <a href="<?php echo $article->getURL();?>">
-                    	<?php if ($article->getImage()): ?>
-                        	<img id="topStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(340, 220); ?>" height="220px" width="340px">
- 						<?php else: ?>
-                        	<img id="topStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/340/'.DEFAULT_IMG_URI; ?>" height="220px" width="340px">
+                        <?php if ($article->getImage()): ?>
+                            <img id="topStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(340, 220); ?>" height="220px" width="340px">
+                         <?php else: ?>
+                            <img id="topStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/340/'.DEFAULT_IMG_URI; ?>" height="220px" width="340px">
                         <?php endif; ?>
                     </a>
                 </div>
             </div>
         </div>
         <!-- End of top story -->
-		<?php } ?>
+        <?php } ?>
         <!-- In this issue -->
         <div class="grid_2 push_6 alpha omega thisIssue">
             <h5>In this Issue</h5>
@@ -113,16 +111,16 @@ $timing->log('after header');
                     AND section='b'";
                 //$sectionB = array_unique(mysql_fetch_array(mysql_query($sql,$cid)));
                 $sectionB = $db->get_row($sql);
-				
-				if (!is_null($sectionB)):
+
+                if (!is_null($sectionB)):
                 foreach($sectionB as $key => $value) {
                     $article = new Article($value); ?>
                     <div class="thisIssueCont <?php if($key == 'one') echo 'top';?>">
                         <a href="<?php echo $article->getURL();?>">
                         <?php if ($article->getImage()): ?>
                             <img alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(140, 140);?>" width="140px" height="140px" class="captify" rel="caption2"/>
- 						<?php else: ?>
-                        	<img alt="" src="<?php echo IMAGE_URL.'/140/140/'.DEFAULT_IMG_URI; ?>" width="140px" height="140px" class="captify" rel="caption2"/>
+                         <?php else: ?>
+                            <img alt="" src="<?php echo IMAGE_URL.'/140/140/'.DEFAULT_IMG_URI; ?>" width="140px" height="140px" class="captify" rel="caption2"/>
                         <?php endif; ?>
                             <br class="c"/>
                         </a>
@@ -138,16 +136,16 @@ $timing->log('after header');
                         </div>
                     </div>
                 <?php }
-				else :
+                else :
                 ?>
                 <div class="thisIssueCont top">
-                	No articles have been assigned to this zone
+                    No articles have been assigned to this zone
                 </div>
                 <?php endif; ?>
         </div>
         <!-- End of in this issue -->
 
-		<?php if (!is_null($sectionA)) { ?>
+        <?php if (!is_null($sectionA)) { ?>
         <!-- Second article -->
         <?php $article = new Article($sectionA->two); ?>
         <div class="grid_6 pull_2 omega alpha featBox <?php echo $article->getCategoryCat();?>">
@@ -179,10 +177,10 @@ $timing->log('after header');
             </div>
             <div id="secondStoryPic">
                 <a href="<?php echo $article->getURL(); ?>">
-                	<?php if ($article->getImage()): ?>
-                    	<img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 160); ?>" height="160px" width="220px">
-					<?php else: ?>
-                    	<img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/160/'.DEFAULT_IMG_URI; ?>" height="160px" width="220px">
+                    <?php if ($article->getImage()): ?>
+                        <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 160); ?>" height="160px" width="220px">
+                    <?php else: ?>
+                        <img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/160/'.DEFAULT_IMG_URI; ?>" height="160px" width="220px">
                     <?php endif; ?>
                 </a>
             </div>
@@ -220,10 +218,10 @@ $timing->log('after header');
             </div>
             <div id="secondStoryPic">
                 <a href="<?php echo $article->getURL();?>">
-                	<?php if ($article->getImage()): ?>
-                    	<img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 160); ?>" height="160px" width="220px">
-					<?php else: ?>
-                    	<img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/160/'.DEFAULT_IMG_URI; ?>" height="160px" width="220px">
+                    <?php if ($article->getImage()): ?>
+                        <img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 160); ?>" height="160px" width="220px">
+                    <?php else: ?>
+                        <img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/160/'.DEFAULT_IMG_URI; ?>" height="160px" width="220px">
                     <?php endif; ?>
                 </a>
             </div>
@@ -264,18 +262,18 @@ $timing->log('after header');
             <div id="thirdStoryPic" class="grid_3 alpha">
                 <a href="<?php echo $articleA->getURL();?>">
                     <?php if ($articleA->getImage()): ?>
-                    	<img id="thirdStoryPhoto" alt="<?php echo $articleA->getImage()->getTitle();?>" src="<?php echo $articleA->getImage()->getURL(210, 130);?>" width="210px" height="130px">
-					<?php else: ?>
-                    	<img id="thirdStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/210/130/'.DEFAULT_IMG_URI; ?>" height="130px" width="210px">
+                        <img id="thirdStoryPhoto" alt="<?php echo $articleA->getImage()->getTitle();?>" src="<?php echo $articleA->getImage()->getURL(210, 130);?>" width="210px" height="130px">
+                    <?php else: ?>
+                        <img id="thirdStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/210/130/'.DEFAULT_IMG_URI; ?>" height="130px" width="210px">
                     <?php endif; ?>
                 </a>
             </div>
             <div id="thirdStoryPic" class="grid_3 omega">
                 <a href="<?php echo $articleB->getURL();?>">
                     <?php if ($articleB->getImage()): ?>
-                    	<img id="thirdStoryPhoto" alt="<?php echo $articleB->getImage()->getTitle();?>" src="<?php echo $articleB->getImage()->getURL(210, 130);?>" width="210px" height="130px">
-					<?php else: ?>
-                    	<img id="thirdStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/210/130/'.DEFAULT_IMG_URI; ?>" height="130px" width="210px">
+                        <img id="thirdStoryPhoto" alt="<?php echo $articleB->getImage()->getTitle();?>" src="<?php echo $articleB->getImage()->getURL(210, 130);?>" width="210px" height="130px">
+                    <?php else: ?>
+                        <img id="thirdStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/210/130/'.DEFAULT_IMG_URI; ?>" height="130px" width="210px">
                     <?php endif; ?>
                 </a>
              </div>
@@ -370,10 +368,10 @@ $timing->log('after header');
             </ul>
         </div>
         <!-- End of news list -->
-		<?php } else { ?>
-			<div class="grid_8 alpha">No articles have been set on the frontpage</div>
-		<?php } ?>
-		
+        <?php } else { ?>
+            <div class="grid_8 alpha">No articles have been set on the frontpage</div>
+        <?php } ?>
+
         <!-- Featured articles -->        
         <div class="grid_8 alpha omega" id="featuredarticles">
             <h3>Featured Articles</h3>
@@ -394,9 +392,9 @@ $timing->log('after header');
             <a href="<?php echo $article->getURL(); ?>">
                 <div id="imgcont">
                     <?php if ($articleB->getImage()): ?>
-                    	<img alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(290, 190);?>" width="290px">
+                        <img alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(290, 190);?>" width="290px">
                     <?php else: ?>
-                    	<img alt="" src="<?php echo IMAGE_URL.'/290/190/'.DEFAULT_IMG_URI; ?>" width="290px">
+                        <img alt="" src="<?php echo IMAGE_URL.'/290/190/'.DEFAULT_IMG_URI; ?>" width="290px">
                     <?php endif; ?>
                 </div>
                 <h4>
@@ -423,11 +421,11 @@ $timing->log('after header');
                 </li>
             </ul>
             <?php } else { ?>
-            	<p>No articles have been assigned to this zone</p>
+                <p>No articles have been assigned to this zone</p>
             <?php } ?>
         </div>
         <!-- End of featured articles -->
-        
+
         <?php } $cache->stop(); ?>
 
         <?php $timing->log('end of frontpage articles'); ?>
@@ -476,15 +474,17 @@ $timing->log('after header');
             </div>
 
             <?php $timing->log('end of twitter'); ?>
-            
+
             <?php
                 // Caching
-                $cacheWeather = new Cache('weather');
-                if($cacheWeather->start()) {
+               // disabled due to google breaking
+                //$cacheWeather = new Cache('weather');
+                //if($cacheWeather->start()) {
             ?>
             <div id="weather">
                 <h4>Weather <span>in South Kensington</span></h4>
                 <?php
+                    /*
                     $requestAddress = "http://www.google.com/ig/api?weather=SW72BB&hl=en";
                     // Downloads weather data based on location - I used my zip code.
                     $xml_str = file_get_contents($requestAddress,0);
@@ -512,10 +512,11 @@ $timing->log('after header');
                             </div>
                     <?php }
                     }
+                    */
                 ?>
                 <div class="clear"></div>
             </div>
-            <?php } $cacheWeather->stop(); ?>
+            <?php /* } $cacheWeather->stop(); */ ?>
 
             <?php $timing->log('end of weather'); ?>
 
@@ -540,36 +541,37 @@ $timing->log('after header');
             AND `order`>0
             ORDER BY `order` ASC";
     $cats = $db->get_results($sql);
-	if (!is_null($cats)) {
-	    foreach($cats as $key => $cat) {
-	        $article = new Article($cat->top);
-	    ?>
-	        <div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
-	            <div class="border <?php echo $cat->cat;?>">
-	                <h3>
-	                    <a href="<?php echo STANDARD_URL.$cat->cat;?>/">
-	                        <?php echo $cat->label;?>
-	                    </a>
-	                </h3>
-	                <a href="<?php echo $article->getURL();?>">
-	                    <?php if ($article->getImage()): ?>
-	                    	<img id="featuredBarPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 120);?>" width="220px" height="120px">
-						<?php else: ?>
-	                    	<img id="featuredBarPhoto" alt="" src="<?php echo IMAGE_URL.'/220/120/'.DEFAULT_IMG_URI; ?>" width="220px" height="120px">
-	                    <?php endif; ?>
-	                </a>
-	                <h4>
-	                    <a href="<?php echo $article->getURL();?>">
-	                        <?php echo $article->getTitle();?>
-	                    </a>
-	                </h4>
-	                <p>
-	                    <?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(10); ?>
-	                </p>
-	            </div>
-	        </div>
-	    <?php }
-	    } ?>
+    if (!is_null($cats)) {
+        foreach($cats as $key => $cat) {
+            $article = new Article($cat->top);
+        ?>
+            <div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
+                <div class="border <?php echo $cat->cat;?>">
+                    <h3>
+                        <a href="<?php echo STANDARD_URL.$cat->cat;?>/">
+                            <?php echo $cat->label;?>
+                        </a>
+                    </h3>
+                    <a href="<?php echo $article->getURL();?>">
+                        <?php if ($article->getImage()): ?>
+                            <img id="featuredBarPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 120);?>" width="220px" height="120px">
+                        <?php else: ?>
+                            <img id="featuredBarPhoto" alt="" src="<?php echo IMAGE_URL.'/220/120/'.DEFAULT_IMG_URI; ?>" width="220px" height="120px">
+                        <?php endif; ?>
+                    </a>
+                    <h4>
+                        <a href="<?php echo $article->getURL();?>">
+                            <?php echo $article->getTitle();?>
+                        </a>
+                    </h4>
+                    <p>
+                        <?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(10); ?>
+                    </p>
+                </div>
+            </div>
+        <?php }
+        } ?>
 </div>
+
 <!-- End of featured bar -->
 <?php $theme->render('footer'); ?>
