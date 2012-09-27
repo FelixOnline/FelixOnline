@@ -13,6 +13,8 @@
     <meta name="author" content="Jonathan Kim">
     <meta name="google-site-verification" content="V5LPwqv0BzMHvfMOIZvSjjJ-8tJc4Mi1A-L2AEbby50" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href='http://fonts.googleapis.com/css?family=Kreon:400,700|Bevan|Pontano+Sans' rel='stylesheet' type='text/css'>
 
     <base href="<?php echo STANDARD_URL; ?>">
 
@@ -103,21 +105,7 @@
 
 	<div class="header container_12">
 		<!-- Begin header 1 -->
-		<div class="grid_5 line">
-		</div>
-		<div class="grid_2 header1">
-			<p>"Keep the Cat Free"</p>
-		</div>
-		<div class="grid_5 line">
-		</div>
-		<div class="clear"></div>
-		<!-- End header 1 -->
-
-		<!-- Begin header main -->
-		<div class="grid_2 date">
-			<p><?php echo date('d.m.Y');?></p>
-		</div>
-		<div class="grid_8 bigFelix">
+		<div class="grid_12 bigFelix">
 			<?php if ($theme->isSite('media')) {?>
 			<a href="<?php echo STANDARD_URL; ?>media/">
 			<?php } else if ($theme->isSite('archive')) { ?>
@@ -129,23 +117,14 @@
 					FELIX
 				</h1>
 			</a>
+			<div class="catPic"><img src="img/felix_cat-small.jpg" alt="" /></div>
+			<div class="headerText">
+				"Keep the Cat Free"
+				<div class="date">
+					<?php echo date('d/m/y', time()); ?>
+				</div>
+			</div>
 		</div>
-		<div class="grid_2 catPic">
-			<img src="img/felix_cat-small.jpg" width="100px" height="110px"/>
-		</div>
-		<div class="clear"></div>
-		<!-- End header main -->
-
-		<!-- Begin header 2 -->
-		<div class="grid_3 line">
-		</div>
-		<div class="grid_6 header2">
-			<p>The student voice of Imperial College London since 1949</p>
-		</div>
-		<div class="grid_3 line">
-		</div>
-		<div class="clear"></div>
-		<!-- End header 2 -->
 	</div>
     
     <!-- Navigation -->
