@@ -140,7 +140,11 @@ class Comment extends BaseModel {
     public function getReply() {
         if($this->fields['reply']) {
             if(!$this->reply) {
-                $this->reply = new Comment($this->fields['reply']); // initialise new comment as reply
+                try {
+                    $this->reply = new Comment($this->fields['reply']); // initialise new comment as reply
+                } catch (Exception $e) {
+                    return false;
+                }
             }
             return $this->reply;
         } else {
