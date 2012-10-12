@@ -117,6 +117,13 @@
 					FELIX
 				</h1>
 			</a>
+			<div class="catPic"><img src="img/felix_cat-small.jpg" alt="" /></div>
+			<div class="headerText">
+				"Keep the Cat Free"
+				<div class="date">
+					<?php echo date('d/m/y', time()); ?>
+				</div>
+			</div>
 		</div>
 	</div>
     

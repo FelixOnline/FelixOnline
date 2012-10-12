@@ -175,11 +175,10 @@ button {  width: auto; overflow: visible; }
 /* Top bar */
 
 #topBarCont {
-	margin-bottom: 10px;
 }
 
 #topBar {
-	background: #CBCBCB;
+	background: #cbcbcb;
 	color: #ffffff;
 	height: 25px;
 	padding-bottom: 0px;
@@ -212,33 +211,33 @@ button {  width: auto; overflow: visible; }
 }
 #topBar .links li a:hover {
   text-decoration:underline;
-  color:#333333;
+  color: #000;
 }
 #topBar .links li a.selected {
-  color:#333333;
   text-decoration:underline;
+  color: #000;
 }
 #topBar .links li.last { border-right:0px; }
 #topBar .login { position:relative; }
 #topBar .login a {
-  color:#ffffff;
+  color:#fff;
   text-decoration:none;
 }
 #topBar .login a:hover { text-decoration:underline; }
-#topBar .login div#loginbutton {
+#topBar .login div#loginbutton, #topBar .login #logoutbutton {
   float:right;
   padding:4px 10px 5px 10px;
-  background:#555555;
+  background:black;
   position:absolute;
   right:-30px;
   top:0px;
 }
-#topBar .login div#loginbutton:hover, #topBar .login #logoutbutton:hover { background:#111111; }
+#topBar .login div#loginbutton:hover, #topBar .login #logoutbutton:hover { text-decoration: underline; }
 #topBar .login #logoutbutton {
   float:right;
   padding:3px 5px 4px 5px;
   border:none;
-  background:#555555;
+  background: black;
   position:absolute;
   right:-30px;
   top:0px;
@@ -305,7 +304,7 @@ button {  width: auto; overflow: visible; }
 }
 #searchBoxCont #searchBox {
   width:180px;
-  border:1px solid #7e9db9;
+  border:1px solid black;
   padding:2px;
 }
 .faded { color:#999999; }
@@ -338,23 +337,26 @@ button {  width: auto; overflow: visible; }
   width:620px;
   height:110px;
   background:transparent url("../img/title.jpg") no-repeat scroll;
+  float: left;
 }
 .bigFelix h1.media { background:transparent url("../img/mediatitle.jpg") no-repeat scroll; }
 .bigFelix h1.archive { background:transparent url("../img/archivetitle.jpg") no-repeat scroll; }
 .bigFelix span { font-size:130px; }
-.catPic img { float:right; }
+.catPic { float:right; }
 .header2 {
   text-align:center;
   font-size:1.3em;
 }
-.header .line {
-	border-top: 1px solid #444;
-	margin-top: 10px;
+.bigFelix {
+  border-top: 1px solid black;
+  padding-top: 10px;
+  border-bottom: 3px solid black;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
-.header .grid_3.line {
-	margin-top: 12px;
-}
+.bigFelix .headerText { float: right; width: 75px; font-weight: bold; text-align: right; margin-right: 20px; }
+.bigFelix .headerText .date { margin-top: 60px; font-weight: normal; font-size: 18px; }
 
 /* ----------------------------------------- */
 /* Navigation */
@@ -373,18 +375,17 @@ button {  width: auto; overflow: visible; }
 	margin: 0;
 	padding: 0;
     float: left;
-	border-right: 1px solid #BEBEBE;
-	padding: 12px 5px 5px 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .navigation li a {
 	font-family: 'Kreon', 'Pontano Sans', sans-serif;
-	font-size: 25px;
-	padding: 5px 4px 5px 4px;
-	width: 100%;
+	font-size: 16px;
 	text-decoration: none;
 	text-transform: uppercase;
-	line-height: 0.5em;
+	padding-right: 5px;
+	padding-left: 4.5px;
 }
 
 .navigation li:hover a {
@@ -903,21 +904,25 @@ button {  width: auto; overflow: visible; }
     padding:5px;
 }
 #userPopular li {
-    margin-left:25px;
-    padding-bottom:10px;
-    color:#999999;
-    font-weight:bold;
+  margin-left:25px;
+  padding-bottom:5px;
+  color:#999999;
+  font-weight:bold;
+  font-family: Kreon, sans-serif;
 }
 #userPopular li:hover { color:#333333; }
 #userPopular li a {
-    font:normal 13px;
-    text-decoration:none;
+  font-weight:normal;
+  font-size: 15px;
+  text-decoration:none;
+  font-family: 'Warnock Pro', sans-serif;
 }
 #userPopular li a:hover { text-decoration:underline; }
 #userPopular li a:active {
-    color:#ffffff;
-    background:#1f4f82;
+  color:#ffffff;
+  background:#1f4f82;
 }
+
 #userPopList span { font-size:13px; }
 #userPopList span:hover { color:#999999; }
 #userPopList #popTitle a { width:200px; }
@@ -973,7 +978,7 @@ button {  width: auto; overflow: visible; }
   display:block;
   width:100%;
   padding-top:2px;
-  font-size:25px;
+  font-size:20px;
   padding-left:5px;
   border-bottom:1px solid #bebebe;
   margin-bottom:5px;
@@ -1153,7 +1158,7 @@ ul.metaList li {
 .metaList li#category {
   text-transform:uppercase;
   font-family:'Kreon', sans-serif;
-  font-size:25px;
+  font-size:20px;
   line-height:80%;
 }
 .metaList a, #storyMeta a { text-decoration:none; }
@@ -1274,7 +1279,7 @@ li a.books:active, .header a.books:active {
 }
 .newsList #category {
   font-family:'Kreon', sans-serif;
-  font-size:25px;
+  font-size:20px;
   float:right;
   text-transform:uppercase;
   font-weight:normal;
@@ -1289,14 +1294,14 @@ li a.books:active, .header a.books:active {
 }
 #featuredarticles h3 {
   font-family:'Kreon', sans-serif;
-  font-size:30px;
+  font-size:20px;
   font-weight:normal;
   text-transform:uppercase;
   float:right;
   line-height:90%;
 }
 #featuredarticles h4 {
-  font-size:29px;
+  font-size:25px;
   display:inline;
   color:#222222;
   position:relative;
@@ -1385,7 +1390,7 @@ li a.books:active, .header a.books:active {
     padding-bottom:20px;
 }
 .commentBox h4 {
-    font-size:30px;
+    font-size:20px;
     font-family:'Kreon', sans-serif;
     line-height:95%;
     color:#ff6633;
@@ -1414,7 +1419,7 @@ li a.books:active, .header a.books:active {
 }
 .twitterbox { border-top:2px solid #32ccfe; }
 .twitterbox h4 {
-    font-size:30px;
+    font-size:20px;
     font-family:'Kreon', sans-serif;
     line-height:95%;
     color:#32ccfe;
@@ -1463,7 +1468,7 @@ li a.books:active, .header a.books:active {
 }
 #weather h4 {
   font-family:'Kreon', sans-serif;
-  font-size:28px;
+  font-size:25px;
   font-weight:normal;
   line-height:95%;
   padding-left:5px;
@@ -1487,7 +1492,7 @@ li a.books:active, .header a.books:active {
 }
 #felixinfo h3 {
   font-family:'Kreon', sans-serif;
-  font-size:28px;
+  font-size:25px;
   font-weight:normal;
   line-height:95%;
   padding-left:5px;
@@ -1520,35 +1525,35 @@ li a.books:active, .header a.books:active {
 }
 .featuredBar h3 {
   font-family:'Kreon', sans-serif;
-  font-size:30px;
+  font-size:20px;
   font-weight:normal;
   line-height:70%;
   margin-bottom:10px;
   text-transform:uppercase;
 }
 .featuredBar h4 {
-  height:44px;
+  height:25px;
   margin-top:5px;
   margin-bottom:5px;
   overflow:hidden;
 }
 .featuredBar h4 a { color:#222222; }
-.featuredBar .news { border-top:5px solid #318ba1; }
-.featuredBar .comment { border-top:5px solid #ff6633; }
-.featuredBar .science { border-top:5px solid #40ac48; }
-.featuredBar .politics { border-top:5px solid #f2c5c1; }
-.featuredBar .biz { border-top:5px solid #00bff2; }
-.featuredBar .arts { border-top:5px solid #bd926c; }
-.featuredBar .music { border-top:5px solid #d0b341; }
-.featuredBar .film { border-top:5px solid #f48465; }
-.featuredBar .fashion { border-top:5px solid #cb77a1; }
-.featuredBar .games { border-top:5px solid #cca9be; }
-.featuredBar .tech { border-top:5px solid #2a7bbe; }
-.featuredBar .travel { border-top:5px solid #00adb8; }
-.featuredBar .food { border-top:5px solid #f2c5c1; }
-.featuredBar .tv { border-top:5px solid #cca9be; }
-.featuredBar .sport { border-top:5px solid #009019; }
-.featuredBar .books { border-top:5px solid #c06782; }
+.featuredBar .news { border-top:3px solid #318ba1; }
+.featuredBar .comment { border-top:3px solid #ff6633; }
+.featuredBar .science { border-top:3px solid #40ac48; }
+.featuredBar .politics { border-top:3px solid #f2c5c1; }
+.featuredBar .biz { border-top:3px solid #00bff2; }
+.featuredBar .arts { border-top:3px solid #bd926c; }
+.featuredBar .music { border-top:3px solid #d0b341; }
+.featuredBar .film { border-top:3px solid #f48465; }
+.featuredBar .fashion { border-top:3px solid #cb77a1; }
+.featuredBar .games { border-top:3px solid #cca9be; }
+.featuredBar .tech { border-top:3px solid #2a7bbe; }
+.featuredBar .travel { border-top:3px solid #00adb8; }
+.featuredBar .food { border-top:3px solid #f2c5c1; }
+.featuredBar .tv { border-top:3px solid #cca9be; }
+.featuredBar .sport { border-top:3px solid #009019; }
+.featuredBar .books { border-top:3px solid #c06782; }
 .featuredBar a { text-decoration:none; }
 .featuredBar a:hover { text-decoration:underline; }
 .featuredBar h4 a:active {
