@@ -4,7 +4,7 @@
             <h1><a href="/phoenix/">Phoenix</a></h1>
             <div id="paperinfo">
                 <p>The annual arts publication of Imperial College London</p>
-                <p><a href="/archive/IC_2011/2011_Phoenix.pdf">Click here for PDF version</a></p>
+                <p><a href="/archive/IC_2012/2012_Phoenix.pdf">Click here for PDF version</a></p>
             </div>
         </div>
         
@@ -19,7 +19,7 @@
             
             <div id="sidebar">
                 <div id="coverpage">
-                    <a href="/archive/IC_2011/2011_Phoenix.pdf" title="Phoenix Issue">
+                    <a href="/archive/IC_2012/2012_Phoenix.pdf" title="Phoenix Issue">
                         <img src="http://img.felixonline.co.uk/270/201206142102-pk1811-cover.png"/>
                     </a>
                 </div>
