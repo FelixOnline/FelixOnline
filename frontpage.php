@@ -3,7 +3,10 @@
 	<!-- End of Phoenix -->
 
 	<div class="container_12">
-
+<div class="grid_12 banner">
+    <p>Due to software upgrades, Felix Online may not be available between 1 and 2 PM on Sunday 18th. We apologise for any inconvenience.</p>
+    </div>
+    
 		<!-- News banner -->
 		<!--<div class="grid_12 banner">
 		</div>-->

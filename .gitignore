@@ -15,3 +15,21 @@ engine/
 
 # Ignore sex survey
 sexsurvey/
+
+# Ignore FFS
+ffs/
+
+# Ignore old sex survey
+oldsexsurvey/
+
+# Ignore sexism survey
+sexism/
+
+# Ignore varsity liveblog
+varsity/
+
+# Ignore TEDx liveblog
+tedx/
+
+# Ignore google analytics
+google*.html
