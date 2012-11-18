@@ -27,7 +27,7 @@
 			$header .= get_category_label_by_cat($_GET['cat']).' - ';
 		} else if(isset($_GET['id']) && check_user($_GET['id'])) {
 			$header .= get_vname_by_uname_db($_GET['id']).' - ';
-		} else if(isset($_GET['issue archive'])) {
+		} else if(isset($_GET['issuearchive'])) {
 			$header .= 'Issue Archive - ';
 		} else if(isset($_GET['media'])) {
 			if($_GET['media']=='photo' && isset($_GET['name']))
@@ -97,9 +97,9 @@
 			<div id="topBar" class="grid_16 clearfix">
 				<div class="grid_9 links first">
 					<ul>
-						<li class="first"><a href="<?php echo STANDARD_URL; ?>" <?php if(!(isset($_GET['media']) || isset($_GET['issue archive']))) echo 'class="selected"';?>>Felix Online</a></li>
+						<li class="first"><a href="<?php echo STANDARD_URL; ?>" <?php if(!(isset($_GET['media']) || isset($_GET['issuearchive']))) echo 'class="selected"';?>>Felix Online</a></li>
 						<li><a href="<?php echo STANDARD_URL; ?>media/" <?php if(isset($_GET['media'])) echo 'class="selected"';?>>Media</a></li>
-						<li class="last"><a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if(isset($_GET['issue archive'])) echo 'class="selected"';?>>Issue Archive</a></li>
+						<li class="last"><a href="<?php echo STANDARD_URL; ?>issuearchive/" <?php if(isset($_GET['issuearchive'])) echo 'class="selected"';?>>Issue Archive</a></li>
 						<!--<li><a href="publications/">Other Publications</a></li>
 						<li class="last"><a href="http://m.felixonline.co.uk">Mobile</a></li>-->
 					</ul>
@@ -172,7 +172,7 @@
 			<?php } else { ?>
 			<a href="<?php echo STANDARD_URL; ?>">
 			<?php } ?>
-				<h1 <?php if ($_GET['media']) echo 'class="media"'; else if($_GET['issue archive']) echo 'class="archive"';?>>
+				<h1 <?php if ($_GET['media']) echo 'class="media"'; else if($_GET['issuearchive']) echo 'class="archive"';?>>
 					FELIX
 				</h1>
 			</a>
