@@ -15,7 +15,6 @@
 		<!-- Sidebar -->
 		<div class="sidebar grid_4 push_8">
 			<?php
-				include_once('sidebar/skeletonfund.php');
 				include_once('sidebar/fbLikeBox.php');
                 $timing->log('after fblikebox');
 				include_once('sidebar/mediaBox.php');
