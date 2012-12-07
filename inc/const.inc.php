@@ -102,7 +102,7 @@
 	define('EMAIL_COMMENT_SUBJECT_PREFIX','New comment: ');
 	define('EMAIL_COMMENT_AUTHOR',true);
 	define('EMAIL_COMMENT_COMMENTERS',true);
-	define('EMAIL_EXTCOMMENT_NOTIFYADDR','jk708@ic.ac.uk, felix@imperial.ac.uk'); // comma-separated list of addresses to notify when a new external comment needs approval
+	define('EMAIL_EXTCOMMENT_NOTIFYADDR','felix@imperial.ac.uk'); // comma-separated list of addresses to notify when a new external comment needs approval
 
 	/* SITE CONSTANTS */
 	$icip = array('155.198','129.31.','146.169'); # 7 characters
