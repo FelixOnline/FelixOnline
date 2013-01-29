@@ -6,7 +6,7 @@ if($cache->start()) {
 <div id="iscience">
     <a href="http://dougal.union.ic.ac.uk/media/iscience/"><img src="img/iscience.png"/></a>
 	<?php
-        $articlelimit = 3;
+        $articlelimit = 2;
         $doc = new DOMDocument();
         $doc->load('http://isciencemag.co.uk/?feed=rss2');
         $arrFeeds = array();
