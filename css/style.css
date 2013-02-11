@@ -3005,12 +3005,10 @@ label.success {
 .thumbLink { text-decoration:none; }
 .thumb {
   margin-bottom:10px;
-  border:2px dashed #bebebe;
-  margin-left:8px;
-  margin-right:8px;
+  margin-left:10px;
+  margin-right:10px;
   padding-bottom:10px;
 }
-.thumb:hover { border:2px solid #bebebe; }
 .thumb .issue {
   text-align:center;
   color:#666666;

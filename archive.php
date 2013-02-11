@@ -26,6 +26,7 @@
 		<?php 
 			require_once('inc/config_archive.inc.php'); 
 			
+        // Search results
 		if($_GET['aq']) {
 			echo '<div class="issuecont">';
 			$q = mysql_escape_string($_GET['aq']);
@@ -58,7 +59,7 @@
 		<?php } else {
 		
 			if (!isset($_GET['y']) && !isset($_GET['d']))
-				$year = 2012;
+				$year = 2013;
 			else if (isset($_GET['d'])) 
 				$year = $_GET['d'];
 			else
@@ -77,14 +78,16 @@
 			list($end) = mysql_fetch_array(mysql_query($sql,$cid_archive));
 			$p = 0;
 			
+            // Loop through years
 			for($i = $start; $i <= $end; $i++) {
-				$years[$p] = $i;
-				if($i%10 != 0)
+				//$years[$p] = $i;
+                // If not the beginning of a decade 
+				if($i%10 != 0) {
 					$decade[$p] = $i;
-				else {
+                } else {
 					$decade[$p] = $i;
-					if($i+9 < $end)
-						$i = $i+9;
+					if($i+9 < $end) // as long as 9 years in the future isn't greater than the last year
+						$i = $i+9; // skip forward 9 years
 				}
 				$p++;
 			}
