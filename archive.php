@@ -80,14 +80,16 @@
 			
             // Loop through years
 			for($i = $start; $i <= $end; $i++) {
-				//$years[$p] = $i;
                 // If not the beginning of a decade 
 				if($i%10 != 0) {
 					$decade[$p] = $i;
                 } else {
-					$decade[$p] = $i;
-					if($i+9 < $end) // as long as 9 years in the future isn't greater than the last year
-						$i = $i+9; // skip forward 9 years
+                    $decade[$p] = $i;
+                    if($i+9 < $end) { // as long as 9 years in the future isn't greater than the last year
+                        $i = $i+9; // skip forward 9 years
+                    } else { // otherwise go the penultimate year
+                        $i = $end - 1;
+                    }
 				}
 				$p++;
 			}
@@ -97,17 +99,17 @@
 				if($_GET['y'])
 					$url_e = explode('year',curPageUrl());
 				else if($_GET['aq'])
-						$url_e = explode('?aq',curPageUrl());
+                    $url_e = explode('?aq',curPageUrl());
 				else 
 					$url_e = explode('decade',curPageUrl());
 				$url = $url_e[0];
-				if($decade[$key]%10 == 0 && $decade[($key+1)]%10 !=0) {
-					echo '<li'.((abs($year-$decade[$key]) < 10)?' class="current"':'').'><a href="'.$url.'decade/'.$decade[$key].'/">'.$decade[$key].'-'.($decade[$last]).'</a></li>';
-				} else if($decade[$key]%10 != 0 && $decade[$key] != $decade[$last]) {
-					echo '<li'.((abs($year-$decade[$key]) < 10)?' class="current"':'').'><a href="'.$url.'decade/'.$decade[$key].'/">'.$decade[$key].'</a></li>';
-				} else if($decade[$key] != $decade[$last]){
-					echo '<li'.((abs($year-$decade[$key]) < 10)?' class="current"':'').'><a href="'.$url.'decade/'.$decade[$key].'/">'.$decade[$key].'-'.($decade[$key]+9).'</a></li>';
-				}
+                if($decade[$key]%10 == 0 && $decade[($key+1)]%10 !=0) {
+                    echo '<li'.((abs($year-$value) < 10 && $year > $value)?' class="current"':'').'><a href="'.$url.'decade/'.$value.'/">'.$value.'-'.($decade[$last]).'</a></li>'.PHP_EOL;
+                } else if($decade[$key]%10 != 0 && $decade[$key] != $decade[$last]) {
+                    echo '<li'.((abs($year-$decade[$key]) < 10 && $year > $value)?' class="current"':'').'><a href="'.$url.'decade/'.$decade[$key].'/">'.$decade[$key].'</a></li>'.PHP_EOL;
+                } else if($value != $decade[$last]){
+                    echo '<li'.((abs($year-$value) < 10 && $year > $value)?' class="current"':'').'><a href="'.$url.'decade/'.$value.'/">'.$value.'-'.($decade[$key]+9).'</a></li>'.PHP_EOL;
+                }
 			}
 			?>
 		</ul>
