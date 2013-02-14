@@ -2,7 +2,7 @@
 	<h3>Recent Comments</h3>
 		<ul>
 		<?php 
-			$commentlimit = 3;
+			$commentlimit = 5;
 			
 			$sql = "SELECT * FROM (".
 				" SELECT comment.article, comment.id,comment.user,name,comment,UNIX_TIMESTAMP(comment.timestamp) AS timestamp FROM `comment` LEFT JOIN `user` ON (comment.user=user.user) WHERE active=1".
