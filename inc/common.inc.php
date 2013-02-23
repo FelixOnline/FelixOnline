@@ -1779,7 +1779,7 @@ function log_page_visit($article) {
 
 function get_mostviewed_articles() {
     global $cid;
-    $sql = "SELECT DISTINCT article,COUNT(article) AS c FROM (SELECT article FROM article_visit AS av INNER JOIN article AS a ON (av.article=a.id) WHERE a.published IS NOT NULL ORDER BY timestamp DESC LIMIT 500) AS t GROUP BY article ORDER BY c DESC LIMIT 5";
+    $sql = "SELECT DISTINCT article,COUNT(article) AS c FROM (SELECT article FROM article_visit AS av INNER JOIN article AS a ON (av.article=a.id) WHERE a.published IS NOT NULL AND av.timestamp > (UNIX_TIMESTAMP() - 97286400) ORDER BY timestamp DESC LIMIT 500) AS t GROUP BY article ORDER BY c DESC LIMIT 5";
     $rsc = mysql_query($sql,$cid);
     while ($row = mysql_fetch_array($rsc))
         $viewed_articles[] = $row[0];
