@@ -219,7 +219,7 @@ body {
   color:#444444;
   font-size:11px;
   padding:0;
-  font: 13px 'Pontano Sans', sans-serif;
+  font: 13px 'Arial', sans-serif;
   *font-size:small;
   text-rendering:optimizeLegibility;
 }
@@ -279,6 +279,7 @@ button {
   height:25px;
   padding-bottom:0px;
   padding-left:0px;
+  font-family: 'Pontano Sans', sans-serif;
 }
 #topBar .first { margin-left:7px; }
 #topBar .links ul {
@@ -725,6 +726,7 @@ button {
   padding:0;
   padding:3px 9px 4px 9px;
   font-size:1.4em;
+  font-family: 'Pontano Sans', sans-serif;
 }
 #mediaBox li a {
   text-decoration:none;
@@ -840,6 +842,7 @@ button {
   padding:0;
   margin-top:8px;
   padding-bottom:3px;
+  font-family: 'Pontano Sans', sans-serif;
 }
 #mostPopular  ul.popularNav  li {
   display:inline;
@@ -894,6 +897,7 @@ button {
   background:#eeeeee;
   margin-bottom:10px;
   padding-bottom:5px;
+  font-family: "Pontano Sans", sans-serif;
 }
 #featuredBox  h3 {
   font-family:'Kreon', sans-serif;
@@ -1139,6 +1143,7 @@ button {
   background:#dddddd;
   padding-left:5px;
   padding-top:3px;
+  font-family: 'Pontano Sans', sans-serif;
 }
 .caption1 a {
   color:#222222;
@@ -1455,10 +1460,12 @@ li a.books:active, .header a.books:active {
 .recentComments li #article {
   font-size:12px;
   padding-bottom:5px;
+  font-family: 'Pontano Sans', sans-serif;
 }
 .recentComments li #commenter {
   font-size:14px;
   float:right;
+  font-family: 'Pontano Sans', sans-serif;
 }
 .recentComments #comment {
   font-style:italic;
