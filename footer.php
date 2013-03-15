@@ -31,12 +31,16 @@
 			});
 		</script>
 	<?php } ?>
-	
+
   <!-- scripts concatenated and minified via ant build script-->
   <script src="js/plugins.js"></script>
   <script src="js/script.js"></script>
   <!-- end concatenated and minified scripts-->
-  
+  <script src="js/jquery.livetwitter.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+$('#tweets').liveTwitter('#voteicu', {limit: 4, rate: 5000});
+</script>
 	<?php if ($_GET['article']) { ?>
 	<!-- Digg button -->
 	<script type="text/javascript">
