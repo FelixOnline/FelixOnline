@@ -16,7 +16,7 @@
 
 <script type='text/javascript'>
   jwplayer('mediaspace').setup({
-    'flashplayer': 'js/jwplayer.flash.swf',
+    'flashplayer': 'js/player.swf',
     'file': 'livestream',
     'streamer': 'rtmp://stoic-streamer.huntershome.org/flvplayback',
     'controlbar': 'bottom',
