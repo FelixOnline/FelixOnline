@@ -47,24 +47,6 @@
 		<!-- Sidebar -->
 		<div class="sidebar grid_4 push_8">
 			<?php
-				if($sectwitter = get_section_twitter($category)) {
-			?>
-			<div class="twitterbox" id="<?php echo $sectwitter;?>">
-				<h4>Twitter</h4>
-				<div class="clear"></div>
-				<div id="twitheader">
-					<a href="http://twitter.com/" title="" id="twitpiclink"><img src="" width="50px" id="felixTwitterlogo"/></a>
-					<h5></h5>
-					<p><a href="http://twitter.com/" target="_blank" title=""></a> - <span></span></p>
-					<div class="clear"></div>
-				</div>
-				<ul id="felixtwitterlist">
-					<li>Loading....</li>
-				</ul>
-			</div>
-			<?php } ?>
-
-			<?php
 			if (mysql_num_rows($rsc)) {
 				// Initialise featured articles
 				$pg = $category;
