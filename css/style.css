@@ -1545,20 +1545,6 @@ li a.books:active, .header a.books:active {
 .twitterbox p a:hover { text-decoration:underline; }
 .twitterbox #felixtwitterlist {
   list-style-type:none;
-  padding-top:10px;
-}
-#felixtwitterlist .twitter-item {
-  margin-bottom:5px;
-  padding:5px 0;
-  border-top:1px dotted #bebebe;
-  background-image:url(../img/twitter_newbird_blue.png);
-  background-position:top left;
-  background-repeat:no-repeat;
-  text-indent:25px;
-}
-#felixtwitterlist .tweet {
-  display:block;
-  text-indent:0px;
 }
 #weather {
   border-top:2px solid #bebebe;
