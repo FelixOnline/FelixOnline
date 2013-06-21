@@ -15,6 +15,7 @@ Have a look a our [installation guide](wiki/Installation) if you are unsure how 
 * Clone the repo into the folder your local web server hosts from
 * Import media\_felix.sql into your MySql database
 * Make your own config.inc.php to connect to your local database and change default links. There is a config.sample.php in the inc/ folder so use that as a base.
+* Grant write access to log, cache, and the generated folder inside the CSS (and JS if applicable) for your theme
 * Go to local site (e.g. http://localhost/felix/)
 
 ##Contributing:
