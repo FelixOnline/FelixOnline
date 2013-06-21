@@ -27,8 +27,12 @@ class Media {
             $sql .= "LIMIT 0, ".$limit;
         }
         $albums = $this->db->get_results($sql);
-        foreach($albums as $key => $object) {
-            $output[] = new MediaPhoto($object->id);
+        if(is_array($albums)) {
+            foreach($albums as $key => $object) {
+                $output[] = new MediaPhoto($object->id);
+            }
+        } else {
+            $output = array();
         }
         return $output;
     }
@@ -42,15 +46,20 @@ class Media {
         $sql = "SELECT 
                     `id` 
                 FROM `media_video`
-                WHERE hidden = 0
+                WHERE visible = 1
                 ORDER BY date DESC
                 "; 
         if($limit) {
             $sql .= "LIMIT 0, ".$limit;
         }
         $albums = $this->db->get_results($sql);
-        foreach($albums as $key => $object) {
-            $output[] = new MediaVideo($object->id);
+
+        if(is_array($albums)) { 
+            foreach($albums as $key => $object) {
+                $output[] = new MediaVideo($object->id);
+            }
+        } else {
+            $output = array();
         }
         return $output;
     }
@@ -62,17 +71,21 @@ class Media {
      * Returns array of radio shows
      */
     public function getRadioShows() {
-        $doc = new DOMDocument();
-        $doc->load('http://icradio-firestar.media.su.ic.ac.uk/external/felix.php');
-        $arrFeeds = array();
-        foreach ($doc->getElementsByTagName('show') as $node) {
-            $itemRSS = array ( 
-                'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
-                'dj' => $node->getElementsByTagName('dj')->item(0)->nodeValue,
-                'genre' => $node->getElementsByTagName('genre')->item(0)->nodeValue,
-                'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
-            );
-            array_push($arrFeeds, $itemRSS);
+        try {
+            $doc = new DOMDocument();
+            $doc->load('http://icradio-firestar.media.su.ic.ac.uk/external/felix.php');
+            $arrFeeds = array();
+            foreach ($doc->getElementsByTagName('show') as $node) {
+                $itemRSS = array ( 
+                    'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+                    'dj' => $node->getElementsByTagName('dj')->item(0)->nodeValue,
+                    'genre' => $node->getElementsByTagName('genre')->item(0)->nodeValue,
+                    'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
+                );
+                array_push($arrFeeds, $itemRSS);
+            }
+        } catch(Exception $e) {
+            $arrFeeds = array();
         }
         return $arrFeeds;
     }
