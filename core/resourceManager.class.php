@@ -193,7 +193,7 @@ class ResourceManager {
      */
     private function processLess($lessfile) {
         require_once(BASE_DIRECTORY.'/inc/lessc.inc.php');
-        $filename = strstr($lessfile, '.', true);
+        $filename = strstr('generated/'.$lessfile, '.', true);
         $cssfile = $this->getFilename($filename.'.css', 'css', 'dir');
         // load the cache
         $cachefile = $this->getFilename($filename.".cache", 'css', 'dir');
