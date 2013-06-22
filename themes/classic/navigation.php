@@ -1,33 +1,27 @@
 <!-- Navigation -->
 <div class="navigation container_12">
-	<div class="grid_12 clearfix">
-		<ul id="navbar" class="clearfix">
-			<?php 
-			if ($theme->isPage('article')) {
+    <div class="grid_12 clearfix">
+        <ul id="navbar" class="clearfix">
+            <?php
+            // If article page
+            if ($theme->isPage('article')) {
                 $check = $article->getCategoryCat();
-			} else if ($theme->isPage('category')) {
-				$check = $category->getCat();
-			}
-				
-            $sql = "SELECT 
-                        label,
-                        cat 
-                    FROM `category` 
-                    WHERE hidden=0 
-                    AND id>0 
-                    ORDER BY `order` ASC";
-            $cats = $db->get_results($sql);
-			
-			if (!is_null($cats)) {
-            	foreach($cats as $key => $cat) { ?>
-               		<li class="<?php echo $cat->cat; ?> <?php if($check==$cat->cat) echo 'selected'; ?> <?php if($cat->cat == 'news') echo 'first'; ?> <?php if($cat->cat == 'sport') echo 'last'; ?>">
-                    	<a href="<?php echo STANDARD_URL.$cat->cat; ?>/">
-                        	<?php echo $cat->label; ?>
-                    	</a>
-               		</li>
-            <?php } 
-			} ?>	
-		</ul>
-	</div>
+            } else if ($theme->isPage('category')) { // if category page
+                $check = $category->getCat();
+            }
+
+            $cats = Category::getCategories();
+
+            if (!is_null($cats)) {
+                foreach($cats as $key => $cat) { ?>
+                    <li class="<?php echo $cat->cat; ?> <?php if($check==$cat->cat) echo 'selected'; ?> <?php if($cat->cat == 'news') echo 'first'; ?> <?php if($cat->cat == 'sport') echo 'last'; ?>">
+                        <a href="<?php echo STANDARD_URL.$cat->cat; ?>/">
+                            <?php echo $cat->label; ?>
+                        </a>
+                    </li>
+            <?php }
+            } ?>
+        </ul>
+    </div>
 </div>
 <!-- End of Navigation -->
