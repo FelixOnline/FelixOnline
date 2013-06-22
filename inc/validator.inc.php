@@ -137,6 +137,9 @@ class Validator {
 							
 							$bad_fields[$field][] = $validator;
 							$csrf_failed = true;
+						} elseif(!array_key_exists('felixonline_csrf_'.$parameter, $_COOKIE)) {
+							$bad_fields[$field][] = $validator;
+							$csrf_failed = true;
 						}
 						
 						// Reset CSRF token
