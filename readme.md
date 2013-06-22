@@ -3,7 +3,7 @@ Welcome to the Felix Online source code! This is the code that powers the [Felix
 
 Contributors welcome! Just fork the repository and send us a pull request with your changes. 
 
-Maintained by Jonathan Kim (jk708@imperial.ac.uk), Philip Kent (pk1811@imperial.ac.uk), and Chris Birkett
+Maintained by Philip Kent (pk1811@imperial.ac.uk) and Jonathan Kim (hello@jkimbo.com)
 
 ## Getting started:
 ###Requirements:
