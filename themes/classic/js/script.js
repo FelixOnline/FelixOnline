@@ -278,14 +278,24 @@ $(document).ready(function() {
                     try {
                         var message = JSON.parse(msg);
                     } catch(err) {
-                        alert(err);
-                    }
-                    if(message.error) {
-                        alert(message.details);
+                        alert(msg);
                         $('#userInfoCont .loading').hide();
                         link.show();
                         return false;
                     }
+                    if(message.error) {
+                        alert(message.details);
+
+    	                if(message.reload) {
+	                    	location.reload();
+	                    }
+                        $('#userInfoCont .loading').hide();
+                        link.show();
+                        return false;
+                    }
+                    
+					// Set new token
+					$('#token').val(message.newtoken);
 
                     // Change profile info
                     if(data.desc) {

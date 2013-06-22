@@ -42,7 +42,7 @@ function like_comment() {
         $count = $comment->likeComment($user);
         return $count;
     } else {
-        return json_encode(array(error => true, details => 'Not logged in'));
+        return (array(error => true, details => 'Not logged in'));
     }
 }
 
@@ -56,7 +56,7 @@ function dislike_comment() {
         $count = $comment->dislikeComment($user);
         return $count;
     } else {
-        return json_encode(array(error => true, details => 'Not logged in'));
+        return (array(error => true, details => 'Not logged in'));
     }
 }
 
@@ -65,6 +65,7 @@ function profile_change() {
     global $currentuser;
     if($currentuser->isLoggedIn()) {
         $user = new User();
+		// Validate input here
         $user->setUser($currentuser->getUser());
         $user->setDescription($_POST['desc']);
         $user->setEmail($_POST['email']);
@@ -73,9 +74,9 @@ function profile_change() {
         $user->setWebsitename($_POST['webname']);
         $user->setWebsiteurl(Utility::addhttp($_POST['weburl']));
         $user->save();
-		return json_encode(array(error => false));
+		return (array(error => false));
     } else {
-        return json_encode(array(error => true, details => 'Not logged in'));
+        return (array(error => true, details => 'Not logged in'));
     }
 }
 ?>
