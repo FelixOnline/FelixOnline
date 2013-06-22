@@ -22,7 +22,7 @@ require_once(BASE_DIRECTORY.'/inc/is_email.inc.php');
 require_once(BASE_DIRECTORY.'/core/baseModel.class.php');
 require_once(BASE_DIRECTORY.'/core/user.class.php');
 foreach (glob(BASE_DIRECTORY.'/core/*.php') as $filename) {
-    require_once($filename);
+	require_once($filename);
 }
 
 //require_once(BASE_DIRECTORY.'/inc/authentication.php');

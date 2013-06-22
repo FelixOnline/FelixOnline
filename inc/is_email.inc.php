@@ -9,14 +9,14 @@
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  * 
- *     - Redistributions of source code must retain the above copyright notice,
- *       this list of conditions and the following disclaimer.
- *     - Redistributions in binary form must reproduce the above copyright notice,
- *       this list of conditions and the following disclaimer in the documentation
- *       and/or other materials provided with the distribution.
- *     - Neither the name of Dominic Sayers nor the names of its contributors may be
- *       used to endorse or promote products derived from this software without
- *       specific prior written permission.
+ *	 - Redistributions of source code must retain the above copyright notice,
+ *	   this list of conditions and the following disclaimer.
+ *	 - Redistributions in binary form must reproduce the above copyright notice,
+ *	   this list of conditions and the following disclaimer in the documentation
+ *	   and/or other materials provided with the distribution.
+ *	 - Neither the name of Dominic Sayers nor the names of its contributors may be
+ *	   used to endorse or promote products derived from this software without
+ *	   specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -216,12 +216,12 @@ if (!defined('ISEMAIL_VALID')) {
 	$parsedata	= array(
 				ISEMAIL_COMPONENT_LOCALPART	=> '',
 				ISEMAIL_COMPONENT_DOMAIN	=> ''
-			       );			// For the components of the address
+				   );			// For the components of the address
 
 	$atomlist	= array(
 				ISEMAIL_COMPONENT_LOCALPART	=> array(''),
 				ISEMAIL_COMPONENT_DOMAIN	=> array('')
-			       );			// For the dot-atom elements of the address
+				   );			// For the dot-atom elements of the address
 	$element_count	= 0;
 	$element_len	= 0;
 	$hyphen_flag	= false;			// Hyphen cannot occur at the end of a subdomain
@@ -238,21 +238,21 @@ if (!defined('ISEMAIL_VALID')) {
 		//-------------------------------------------------------------
 		case ISEMAIL_COMPONENT_LOCALPART:
 			// http://tools.ietf.org/html/rfc5322#section-3.4.1
-			//   local-part      =   dot-atom / quoted-string / obs-local-part
+			//   local-part	  =   dot-atom / quoted-string / obs-local-part
 			//
-			//   dot-atom        =   [CFWS] dot-atom-text [CFWS]
+			//   dot-atom		=   [CFWS] dot-atom-text [CFWS]
 			//
 			//   dot-atom-text   =   1*atext *("." 1*atext)
 			//
 			//   quoted-string   =   [CFWS]
-			//                       DQUOTE *([FWS] qcontent) [FWS] DQUOTE
-			//                       [CFWS]
+			//					   DQUOTE *([FWS] qcontent) [FWS] DQUOTE
+			//					   [CFWS]
 			//
 			//   obs-local-part  =   word *("." word)
 			//
-			//   word            =   atom / quoted-string
+			//   word			=   atom / quoted-string
 			//
-			//   atom            =   [CFWS] 1*atext [CFWS]
+			//   atom			=   [CFWS] 1*atext [CFWS]
 			switch ($token) {
 			// Comment
 			case ISEMAIL_STRING_OPENPARENTHESIS:
@@ -337,10 +337,10 @@ if (!defined('ISEMAIL_VALID')) {
 				//
 				// http://tools.ietf.org/html/rfc2119
 				// 4. SHOULD NOT   This phrase, or the phrase "NOT RECOMMENDED" mean that
-				//    there may exist valid reasons in particular circumstances when the
-				//    particular behavior is acceptable or even useful, but the full
-				//    implications should be understood and the case carefully weighed
-				//    before implementing any behavior described with this label.
+				//	there may exist valid reasons in particular circumstances when the
+				//	particular behavior is acceptable or even useful, but the full
+				//	implications should be understood and the case carefully weighed
+				//	before implementing any behavior described with this label.
 				elseif	(($context_prior === ISEMAIL_CONTEXT_COMMENT) || ($context_prior === ISEMAIL_CONTEXT_FWS))
 								$return_status[]	= ISEMAIL_DEPREC_CFWS_NEAR_AT;
 
@@ -355,17 +355,17 @@ if (!defined('ISEMAIL_VALID')) {
 			// atext
 			default:
 				// http://tools.ietf.org/html/rfc5322#section-3.2.3
-				//    atext           =   ALPHA / DIGIT /    ; Printable US-ASCII
-				//                        "!" / "#" /        ;  characters not including
-				//                        "$" / "%" /        ;  specials.  Used for atoms.
-				//                        "&" / "'" /
-				//                        "*" / "+" /
-				//                        "-" / "/" /
-				//                        "=" / "?" /
-				//                        "^" / "_" /
-				//                        "`" / "{" /
-				//                        "|" / "}" /
-				//                        "~"
+				//	atext		   =   ALPHA / DIGIT /	; Printable US-ASCII
+				//						"!" / "#" /		;  characters not including
+				//						"$" / "%" /		;  specials.  Used for atoms.
+				//						"&" / "'" /
+				//						"*" / "+" /
+				//						"-" / "/" /
+				//						"=" / "?" /
+				//						"^" / "_" /
+				//						"`" / "{" /
+				//						"|" / "}" /
+				//						"~"
 				if ($end_or_die) {
 					// We have encountered atext where it is no longer valid
 					switch ($context_prior) {
@@ -398,40 +398,40 @@ if (!defined('ISEMAIL_VALID')) {
 		//-------------------------------------------------------------
 		case ISEMAIL_COMPONENT_DOMAIN:
 			// http://tools.ietf.org/html/rfc5322#section-3.4.1
-			//   domain          =   dot-atom / domain-literal / obs-domain
+			//   domain		  =   dot-atom / domain-literal / obs-domain
 			//
-			//   dot-atom        =   [CFWS] dot-atom-text [CFWS]
+			//   dot-atom		=   [CFWS] dot-atom-text [CFWS]
 			//
 			//   dot-atom-text   =   1*atext *("." 1*atext)
 			//
 			//   domain-literal  =   [CFWS] "[" *([FWS] dtext) [FWS] "]" [CFWS]
 			//
-			//   dtext           =   %d33-90 /          ; Printable US-ASCII
-			//                       %d94-126 /         ;  characters not including
-			//                       obs-dtext          ;  "[", "]", or "\"
+			//   dtext		   =   %d33-90 /		  ; Printable US-ASCII
+			//					   %d94-126 /		 ;  characters not including
+			//					   obs-dtext		  ;  "[", "]", or "\"
 			//
-			//   obs-domain      =   atom *("." atom)
+			//   obs-domain	  =   atom *("." atom)
 			//
-			//   atom            =   [CFWS] 1*atext [CFWS]
+			//   atom			=   [CFWS] 1*atext [CFWS]
 
 
 			// http://tools.ietf.org/html/rfc5321#section-4.1.2
-			//   Mailbox        = Local-part "@" ( Domain / address-literal )
+			//   Mailbox		= Local-part "@" ( Domain / address-literal )
 			//
-			//   Domain         = sub-domain *("." sub-domain)
+			//   Domain		 = sub-domain *("." sub-domain)
 			//
 			//   address-literal  = "[" ( IPv4-address-literal /
-			//                    IPv6-address-literal /
-			//                    General-address-literal ) "]"
-			//                    ; See Section 4.1.3
+			//					IPv6-address-literal /
+			//					General-address-literal ) "]"
+			//					; See Section 4.1.3
 
 			// http://tools.ietf.org/html/rfc5322#section-3.4.1
-			//      Note: A liberal syntax for the domain portion of addr-spec is
-			//      given here.  However, the domain portion contains addressing
-			//      information specified by and used in other protocols (e.g.,
-			//      [RFC1034], [RFC1035], [RFC1123], [RFC5321]).  It is therefore
-			//      incumbent upon implementations to conform to the syntax of
-			//      addresses for the context in which they are used.
+			//	  Note: A liberal syntax for the domain portion of addr-spec is
+			//	  given here.  However, the domain portion contains addressing
+			//	  information specified by and used in other protocols (e.g.,
+			//	  [RFC1034], [RFC1035], [RFC1123], [RFC5321]).  It is therefore
+			//	  incumbent upon implementations to conform to the syntax of
+			//	  addresses for the context in which they are used.
 			// is_email() author's note: it's not clear how to interpret this in
 			// the context of a general email address validator. The conclusion I
 			// have reached is this: "addressing information" must comply with
@@ -473,7 +473,7 @@ if (!defined('ISEMAIL_VALID')) {
 					// also applies to RFC 5321 domains.
 					//
 					// http://tools.ietf.org/html/rfc1035#section-2.3.4
-					// labels          63 octets or less
+					// labels		  63 octets or less
 					if ($element_len > 63) $return_status[]	= ISEMAIL_RFC5322_LABEL_TOOLONG;
 
 					$end_or_die		= false;	// CFWS is OK again now we're at the beginning of an element (although it may be obsolete CFWS)
@@ -519,25 +519,25 @@ if (!defined('ISEMAIL_VALID')) {
 			default:
 				// RFC 5322 allows any atext...
 				// http://tools.ietf.org/html/rfc5322#section-3.2.3
-				//    atext           =   ALPHA / DIGIT /    ; Printable US-ASCII
-				//                        "!" / "#" /        ;  characters not including
-				//                        "$" / "%" /        ;  specials.  Used for atoms.
-				//                        "&" / "'" /
-				//                        "*" / "+" /
-				//                        "-" / "/" /
-				//                        "=" / "?" /
-				//                        "^" / "_" /
-				//                        "`" / "{" /
-				//                        "|" / "}" /
-				//                        "~"
+				//	atext		   =   ALPHA / DIGIT /	; Printable US-ASCII
+				//						"!" / "#" /		;  characters not including
+				//						"$" / "%" /		;  specials.  Used for atoms.
+				//						"&" / "'" /
+				//						"*" / "+" /
+				//						"-" / "/" /
+				//						"=" / "?" /
+				//						"^" / "_" /
+				//						"`" / "{" /
+				//						"|" / "}" /
+				//						"~"
 
 				// But RFC 5321 only allows letter-digit-hyphen to comply with DNS rules (RFCs 1034 & 1123)
 				// http://tools.ietf.org/html/rfc5321#section-4.1.2
-				//   sub-domain     = Let-dig [Ldh-str]
+				//   sub-domain	 = Let-dig [Ldh-str]
 				//
-				//   Let-dig        = ALPHA / DIGIT
+				//   Let-dig		= ALPHA / DIGIT
 				//
-				//   Ldh-str        = *( ALPHA / DIGIT / "-" ) Let-dig
+				//   Ldh-str		= *( ALPHA / DIGIT / "-" ) Let-dig
 				//
 				if ($end_or_die) {
 					// We have encountered atext where it is no longer valid
@@ -584,11 +584,11 @@ if (!defined('ISEMAIL_VALID')) {
 			// http://tools.ietf.org/html/rfc5322#section-3.4.1
 			//   domain-literal  =   [CFWS] "[" *([FWS] dtext) [FWS] "]" [CFWS]
 			//
-			//   dtext           =   %d33-90 /          ; Printable US-ASCII
-			//                       %d94-126 /         ;  characters not including
-			//                       obs-dtext          ;  "[", "]", or "\"
+			//   dtext		   =   %d33-90 /		  ; Printable US-ASCII
+			//					   %d94-126 /		 ;  characters not including
+			//					   obs-dtext		  ;  "[", "]", or "\"
 			//
-			//   obs-dtext       =   obs-NO-WS-CTL / quoted-pair
+			//   obs-dtext	   =   obs-NO-WS-CTL / quoted-pair
 			switch ($token) {
 			// End of domain literal
 			case ISEMAIL_STRING_CLOSESQBRACKET:
@@ -597,9 +597,9 @@ if (!defined('ISEMAIL_VALID')) {
 
 					// http://tools.ietf.org/html/rfc5321#section-4.1.2
 					//   address-literal  = "[" ( IPv4-address-literal /
-					//                    IPv6-address-literal /
-					//                    General-address-literal ) "]"
-					//                    ; See Section 4.1.3
+					//					IPv6-address-literal /
+					//					General-address-literal ) "]"
+					//					; See Section 4.1.3
 					//
 					// http://tools.ietf.org/html/rfc5321#section-4.1.3
 					//   IPv4-address-literal  = Snum 3("."  Snum)
@@ -609,36 +609,36 @@ if (!defined('ISEMAIL_VALID')) {
 					//   General-address-literal  = Standardized-tag ":" 1*dcontent
 					//
 					//   Standardized-tag  = Ldh-str
-					//                     ; Standardized-tag MUST be specified in a
-					//                     ; Standards-Track RFC and registered with IANA
+					//					 ; Standardized-tag MUST be specified in a
+					//					 ; Standards-Track RFC and registered with IANA
 					//
-					//   dcontent       = %d33-90 / ; Printable US-ASCII
-					//                  %d94-126 ; excl. "[", "\", "]"
+					//   dcontent	   = %d33-90 / ; Printable US-ASCII
+					//				  %d94-126 ; excl. "[", "\", "]"
 					//
-					//   Snum           = 1*3DIGIT
-					//                  ; representing a decimal integer
-					//                  ; value in the range 0 through 255
+					//   Snum		   = 1*3DIGIT
+					//				  ; representing a decimal integer
+					//				  ; value in the range 0 through 255
 					//
-					//   IPv6-addr      = IPv6-full / IPv6-comp / IPv6v4-full / IPv6v4-comp
+					//   IPv6-addr	  = IPv6-full / IPv6-comp / IPv6v4-full / IPv6v4-comp
 					//
-					//   IPv6-hex       = 1*4HEXDIG
+					//   IPv6-hex	   = 1*4HEXDIG
 					//
-					//   IPv6-full      = IPv6-hex 7(":" IPv6-hex)
+					//   IPv6-full	  = IPv6-hex 7(":" IPv6-hex)
 					//
-					//   IPv6-comp      = [IPv6-hex *5(":" IPv6-hex)] "::"
-					//                  [IPv6-hex *5(":" IPv6-hex)]
-					//                  ; The "::" represents at least 2 16-bit groups of
-					//                  ; zeros.  No more than 6 groups in addition to the
-					//                  ; "::" may be present.
+					//   IPv6-comp	  = [IPv6-hex *5(":" IPv6-hex)] "::"
+					//				  [IPv6-hex *5(":" IPv6-hex)]
+					//				  ; The "::" represents at least 2 16-bit groups of
+					//				  ; zeros.  No more than 6 groups in addition to the
+					//				  ; "::" may be present.
 					//
-					//   IPv6v4-full    = IPv6-hex 5(":" IPv6-hex) ":" IPv4-address-literal
+					//   IPv6v4-full	= IPv6-hex 5(":" IPv6-hex) ":" IPv4-address-literal
 					//
-					//   IPv6v4-comp    = [IPv6-hex *3(":" IPv6-hex)] "::"
-					//                  [IPv6-hex *3(":" IPv6-hex) ":"]
-					//                  IPv4-address-literal
-					//                  ; The "::" represents at least 2 16-bit groups of
-					//                  ; zeros.  No more than 4 groups in addition to the
-					//                  ; "::" and IPv4-address-literal may be present.
+					//   IPv6v4-comp	= [IPv6-hex *3(":" IPv6-hex)] "::"
+					//				  [IPv6-hex *3(":" IPv6-hex) ":"]
+					//				  IPv4-address-literal
+					//				  ; The "::" represents at least 2 16-bit groups of
+					//				  ; zeros.  No more than 4 groups in addition to the
+					//				  ; "::" and IPv4-address-literal may be present.
 					//
 					// is_email() author's note: We can't use ip2long() to validate
 					// IPv4 addresses because it accepts abbreviated addresses
@@ -724,17 +724,17 @@ if (!defined('ISEMAIL_VALID')) {
 			// dtext
 			default:
 				// http://tools.ietf.org/html/rfc5322#section-3.4.1
-				//   dtext           =   %d33-90 /          ; Printable US-ASCII
-				//                       %d94-126 /         ;  characters not including
-				//                       obs-dtext          ;  "[", "]", or "\"
+				//   dtext		   =   %d33-90 /		  ; Printable US-ASCII
+				//					   %d94-126 /		 ;  characters not including
+				//					   obs-dtext		  ;  "[", "]", or "\"
 				//
-				//   obs-dtext       =   obs-NO-WS-CTL / quoted-pair
+				//   obs-dtext	   =   obs-NO-WS-CTL / quoted-pair
 				//
-				//   obs-NO-WS-CTL   =   %d1-8 /            ; US-ASCII control
-				//                       %d11 /             ;  characters that do not
-				//                       %d12 /             ;  include the carriage
-				//                       %d14-31 /          ;  return, line feed, and
-				//                       %d127              ;  white space characters
+				//   obs-NO-WS-CTL   =   %d1-8 /			; US-ASCII control
+				//					   %d11 /			 ;  characters that do not
+				//					   %d12 /			 ;  include the carriage
+				//					   %d14-31 /		  ;  return, line feed, and
+				//					   %d127			  ;  white space characters
 				$ord = ord($token);
 
 				// CR, LF, SP & HTAB have already been parsed above
@@ -758,10 +758,10 @@ if (!defined('ISEMAIL_VALID')) {
 		case ISEMAIL_CONTEXT_QUOTEDSTRING:
 			// http://tools.ietf.org/html/rfc5322#section-3.2.4
 			//   quoted-string   =   [CFWS]
-			//                       DQUOTE *([FWS] qcontent) [FWS] DQUOTE
-			//                       [CFWS]
+			//					   DQUOTE *([FWS] qcontent) [FWS] DQUOTE
+			//					   [CFWS]
 			//
-			//   qcontent        =   qtext / quoted-pair
+			//   qcontent		=   qtext / quoted-pair
 			switch ($token) {
 			// Quoted pair
 			case ISEMAIL_STRING_BACKSLASH:
@@ -803,18 +803,18 @@ if (!defined('ISEMAIL_VALID')) {
 			// qtext
 			default:
 				// http://tools.ietf.org/html/rfc5322#section-3.2.4
-				//   qtext           =   %d33 /             ; Printable US-ASCII
-				//                       %d35-91 /          ;  characters not including
-				//                       %d93-126 /         ;  "\" or the quote character
-				//                       obs-qtext
+				//   qtext		   =   %d33 /			 ; Printable US-ASCII
+				//					   %d35-91 /		  ;  characters not including
+				//					   %d93-126 /		 ;  "\" or the quote character
+				//					   obs-qtext
 				//
-				//   obs-qtext       =   obs-NO-WS-CTL
+				//   obs-qtext	   =   obs-NO-WS-CTL
 				//
-				//   obs-NO-WS-CTL   =   %d1-8 /            ; US-ASCII control
-				//                       %d11 /             ;  characters that do not
-				//                       %d12 /             ;  include the carriage
-				//                       %d14-31 /          ;  return, line feed, and
-				//                       %d127              ;  white space characters
+				//   obs-NO-WS-CTL   =   %d1-8 /			; US-ASCII control
+				//					   %d11 /			 ;  characters that do not
+				//					   %d12 /			 ;  include the carriage
+				//					   %d14-31 /		  ;  return, line feed, and
+				//					   %d127			  ;  white space characters
 				$ord = ord($token);
 
 				if (($ord > 127) || ($ord === 0) || ($ord === 10)) {
@@ -840,20 +840,20 @@ if (!defined('ISEMAIL_VALID')) {
 		//-------------------------------------------------------------
 		case ISEMAIL_CONTEXT_QUOTEDPAIR:
 			// http://tools.ietf.org/html/rfc5322#section-3.2.1
-			//   quoted-pair     =   ("\" (VCHAR / WSP)) / obs-qp
+			//   quoted-pair	 =   ("\" (VCHAR / WSP)) / obs-qp
 			//
-			//   VCHAR           =  %d33-126            ; visible (printing) characters
-			//   WSP             =  SP / HTAB           ; white space
+			//   VCHAR		   =  %d33-126			; visible (printing) characters
+			//   WSP			 =  SP / HTAB		   ; white space
 			//
-			//   obs-qp          =   "\" (%d0 / obs-NO-WS-CTL / LF / CR)
+			//   obs-qp		  =   "\" (%d0 / obs-NO-WS-CTL / LF / CR)
 			//
-			//   obs-NO-WS-CTL   =   %d1-8 /            ; US-ASCII control
-			//                       %d11 /             ;  characters that do not
-			//                       %d12 /             ;  include the carriage
-			//                       %d14-31 /          ;  return, line feed, and
-			//                       %d127              ;  white space characters
+			//   obs-NO-WS-CTL   =   %d1-8 /			; US-ASCII control
+			//					   %d11 /			 ;  characters that do not
+			//					   %d12 /			 ;  include the carriage
+			//					   %d14-31 /		  ;  return, line feed, and
+			//					   %d127			  ;  white space characters
 			//
-			// i.e. obs-qp       =  "\" (%d0-8, %d10-31 / %d127)
+			// i.e. obs-qp	   =  "\" (%d0-8, %d10-31 / %d127)
 			$ord = ord($token);
 
 			if	($ord > 127)
@@ -895,9 +895,9 @@ if (!defined('ISEMAIL_VALID')) {
 		//-------------------------------------------------------------
 		case ISEMAIL_CONTEXT_COMMENT:
 			// http://tools.ietf.org/html/rfc5322#section-3.2.2
-			//   comment         =   "(" *([FWS] ccontent) [FWS] ")"
+			//   comment		 =   "(" *([FWS] ccontent) [FWS] ")"
 			//
-			//   ccontent        =   ctext / quoted-pair / comment
+			//   ccontent		=   ctext / quoted-pair / comment
 			switch ($token) {
 			// Nested comment
 			case ISEMAIL_STRING_OPENPARENTHESIS:
@@ -946,18 +946,18 @@ if (!defined('ISEMAIL_VALID')) {
 			// ctext
 			default:
 				// http://tools.ietf.org/html/rfc5322#section-3.2.3
-				//   ctext           =   %d33-39 /          ; Printable US-ASCII
-				//                       %d42-91 /          ;  characters not including
-				//                       %d93-126 /         ;  "(", ")", or "\"
-				//                       obs-ctext
+				//   ctext		   =   %d33-39 /		  ; Printable US-ASCII
+				//					   %d42-91 /		  ;  characters not including
+				//					   %d93-126 /		 ;  "(", ")", or "\"
+				//					   obs-ctext
 				//
-				//   obs-ctext       =   obs-NO-WS-CTL
+				//   obs-ctext	   =   obs-NO-WS-CTL
 				//
-				//   obs-NO-WS-CTL   =   %d1-8 /            ; US-ASCII control
-				//                       %d11 /             ;  characters that do not
-				//                       %d12 /             ;  include the carriage
-				//                       %d14-31 /          ;  return, line feed, and
-				//                       %d127              ;  white space characters
+				//   obs-NO-WS-CTL   =   %d1-8 /			; US-ASCII control
+				//					   %d11 /			 ;  characters that do not
+				//					   %d12 /			 ;  include the carriage
+				//					   %d14-31 /		  ;  return, line feed, and
+				//					   %d127			  ;  white space characters
 				$ord = ord($token);
 
 				if (($ord > 127) || ($ord === 0) || ($ord === 10)) {
@@ -974,8 +974,8 @@ if (!defined('ISEMAIL_VALID')) {
 		//-------------------------------------------------------------
 		case ISEMAIL_CONTEXT_FWS:
 			// http://tools.ietf.org/html/rfc5322#section-3.2.2
-			//   FWS             =   ([*WSP CRLF] 1*WSP) /  obs-FWS
-			//                                          ; Folding white space
+			//   FWS			 =   ([*WSP CRLF] 1*WSP) /  obs-FWS
+			//										  ; Folding white space
 
 			// But note the erratum:
 			// http://www.rfc-editor.org/errata_search.php?rfc=5322&eid=1908:
@@ -985,7 +985,7 @@ if (!defined('ISEMAIL_VALID')) {
 			//   therefore the possibility that a line which makes up a folded header
 			//   field could be composed entirely of white space.
 			//
-			//   obs-FWS         =   1*([CRLF] WSP)
+			//   obs-FWS		 =   1*([CRLF] WSP)
 			if ($token_prior === ISEMAIL_STRING_CR) {
 				if ($token === ISEMAIL_STRING_CR) {
 					$return_status[]	= ISEMAIL_ERR_FWS_CRLF_X2;	// Fatal error
@@ -1066,7 +1066,7 @@ if (!defined('ISEMAIL_VALID')) {
 		// http://tools.ietf.org/html/rfc5321#section-4.1.2
 		//   Forward-path   = Path
 		//
-		//   Path           = "<" [ A-d-l ":" ] Mailbox ">"
+		//   Path		   = "<" [ A-d-l ":" ] Mailbox ">"
 		//
 		// http://tools.ietf.org/html/rfc5321#section-4.5.3.1.3
 		//   The maximum total length of a reverse-path or forward-path is 256
@@ -1084,7 +1084,7 @@ if (!defined('ISEMAIL_VALID')) {
 		elseif	(strlen($parsedata[ISEMAIL_COMPONENT_LOCALPART] . ISEMAIL_STRING_AT . $parsedata[ISEMAIL_COMPONENT_DOMAIN]) > 254)
 										$return_status[]	= ISEMAIL_RFC5322_TOOLONG;
 		// http://tools.ietf.org/html/rfc1035#section-2.3.4
-		// labels          63 octets or less
+		// labels		  63 octets or less
 		elseif ($element_len > 63)					$return_status[]	= ISEMAIL_RFC5322_LABEL_TOOLONG;
 	}
 
