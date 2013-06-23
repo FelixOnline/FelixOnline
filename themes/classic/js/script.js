@@ -194,6 +194,119 @@ $(document).ready(function() {
     });
     
 /* ------------------------------------------- */
+/* AJAX Helper */
+/* ------------------------------------------- */
+
+	function ajaxHelper(method, data, spinner, hideme, showme, successbox, failbox, callback) {
+		method = method || 'POST';
+		data = data || {};
+		spinner = spinner || null;
+		hideme = hideme || {};
+		showme = showme || {};
+		successbox = successbox || null;
+		failbox = failbox || null;
+		callback = callback || null;
+		
+		// hidemes are hidden during the AJAX call and are shown again at the end
+		// showme are shown at the beginning of the call and are hidden at the end
+		// Ignore spinners here
+		function hideStart(hideme, showme, spinner) {
+			jQuery.each(hideme, function(index, obj) {
+				$(obj).hide();
+			});
+			
+			jQuery.each(showme, function(index, obj) {
+				$(obj).show();
+			});
+			
+			if(spinner != null) {
+				$(spinner).show();
+			}
+		}
+	
+		function hideEnd(hideme, showme, spinner) {
+			jQuery.each(hideme, function(index, obj) {
+				$(obj).show();
+			});
+			
+			jQuery.each(showme, function(index, obj) {
+				$(obj).hide();
+			});
+			
+			if(spinner != null) {
+				$(spinner).hide();
+			}
+		}
+		
+		function error(error, failbox) {
+			if(failbox != null) {
+				$(failbox).text(error);
+				toggleBox(failbox);
+			} else {
+				alert(error);
+			}
+		}
+		
+		hideStart(hideme, showme, spinner);
+		
+        $.ajax({
+            url: "ajax.php",
+            type: method,
+            data: data,
+            async:true,
+            success: function(msg){
+                try {
+                    var message = JSON.parse(msg);
+                } catch(err) {
+                    var message = {};
+                    message.error = err;
+                    message.reload = false;
+                }
+                if(message.error) {
+                    error(message.details, failbox);
+
+	                if(message.reload) {
+                    	location.reload();
+                    }
+                    hideEnd(hideme, showme, spinner);
+                    return false;
+                }
+                
+				// Set new token
+				$('#token').val(message.newtoken);
+
+				hideEnd(hideme, showme, spinner);
+				
+				// Run callback if one exists
+				if(callback) {
+					callback(data, message);
+				}
+
+				if(successbox != null) {
+					if(data.success) {
+						$(successbox).text(data.success);
+					} else {
+						$(successbox).text('Success');
+					}
+					
+					toggleBox(successbox);
+				}
+								
+				return true;
+            },
+            error: function(msg){
+                error(msg, failbox);
+                
+                if(message.reload) {
+                	location.reload();
+                }
+                hideEnd(hideme, showme, spinner);
+                return false;
+            }
+        });
+    }
+
+/* ------------------------------------------- */
 /* Edit user profile */
 /* ------------------------------------------- */
 
@@ -208,88 +321,52 @@ $(document).ready(function() {
     $("#profileform").validate();
 
     $('#editProfileSave').click( function() {
-        if(($('.facebook input').valid() || $('.facebook input').val() == '' ) && ($('.useremail input').valid() || $('.useremail input').val() == '' ) && ($('.website #url').valid() || $('.website #url').val() == '' )) {
-            $('#personalLinksEdit label.error').hide();
-            // Get new information and then save through ajax
-            $('#userInfoCont .loading').show();
-            var link = $(this).hide();
+        $('#personalLinksEdit label.error').hide();
 
-            var data = {};
-            data.desc = $('#descCont textarea').val();
-            data.facebook = $('.facebook input').val();
-            data.twitter = $('.twitter input').val();
-            data.email = $('.useremail input').val();
-            data.webname = $('.website #name').val();
-            data.weburl = $('.website #url').val();
-            data.action = 'profile_change';
-            data.token = $('#token').val();
-            data.check = 'userprofile';
+        var data = {};
+        data.desc = $('#descCont textarea').val();
+        data.facebook = $('.facebook input').val();
+        data.twitter = $('.twitter input').val();
+        data.email = $('.useremail input').val();
+        data.webname = $('.website #name').val();
+        data.weburl = $('.website #url').val();
+        data.action = 'profile_change';
+        data.token = $('#token').val();
+        data.check = 'userprofile';
 
-            $.ajax({
-                url: "ajax.php",
-                type: "POST",
-                data: data,
-                async:true,
-                success: function(msg){
-                    try {
-                        var message = JSON.parse(msg);
-                    } catch(err) {
-                        alert(msg);
-                        $('#userInfoCont .loading').hide();
-                        link.show();
-                        return false;
-                    }
-                    if(message.error) {
-                        alert(message.details);
+		ajaxHelper('POST', data, '#userInfoCont .loading', ['#editProfileSave'], null, null, null, ajaxCallback);
 
-    	                if(message.reload) {
-	                    	location.reload();
-	                    }
-                        $('#userInfoCont .loading').hide();
-                        link.show();
-                        return false;
-                    }
-                    
-					// Set new token
-					$('#token').val(message.newtoken);
-
-                    // Change profile info
-                    if(data.desc) {
-                        $('#descCont').text(data.desc);
-                    } else $('#descCont').text('Add some personal info....');
-                    if(data.facebook) {
-                        $('#personalLinks .facebook a').attr('href', data.facebook);
-                        $('#personalLinks .facebook').show();
-                    } else $('#personalLinks .facebook').hide();
-                    if(data.twitter) {
-                        $('#personalLinks .twitter a').attr('href', 'http://www.twitter.com/'+data.twitter).text('@'+data.twitter);
-                        $('#personalLinks .twitter').show();
-                    } else $('#personalLinks .twitter').hide();
-                    if(data.email) {
-                        $('#personalLinks .useremail a').attr('href', 'mailto:'+data.email).text(data.email);
-                        $('#personalLinks .useremail').show();
-                    } else $('#personalLinks .useremail').hide();
-                    if(data.weburl) {
-                        $('#personalLinks .website a').attr('href', data.weburl);
-                        if(data.webname)
-                            $('#personalLinks .website a').text(data.webname);
-                        else
-                            $('#personalLinks .website a').text(data.weburl);
-                        $('#personalLinks .website').show();
-                    } else $('#personalLinks .website').hide();
-                    $('#personalCont').show();
-                    $('#personalCont.edit').hide();
-                    setTimeout(function(){
-                        $('#userInfoCont .loading').fadeOut(500, function() {
-                            $('#editProfile').fadeIn(500);
-                        });
-                    }, 500);
-                },
-                error: function(msg){
-                    alert(msg);
-                }
-            });
+		function ajaxCallback(data, message) {
+            // Change profile info
+            if(data.desc) {
+                $('#descCont').text(data.desc);
+            } else $('#descCont').text('Add some personal info....');
+            if(data.facebook) {
+                $('#personalLinks .facebook a').attr('href', data.facebook);
+                $('#personalLinks .facebook').show();
+            } else $('#personalLinks .facebook').hide();
+            if(data.twitter) {
+                $('#personalLinks .twitter a').attr('href', 'http://www.twitter.com/'+data.twitter).text('@'+data.twitter);
+                $('#personalLinks .twitter').show();
+            } else $('#personalLinks .twitter').hide();
+            if(data.email) {
+                $('#personalLinks .useremail a').attr('href', 'mailto:'+data.email).text(data.email);
+                $('#personalLinks .useremail').show();
+            } else $('#personalLinks .useremail').hide();
+            if(data.weburl) {
+                $('#personalLinks .website a').attr('href', data.weburl);
+                if(data.webname)
+                    $('#personalLinks .website a').text(data.webname);
+                else
+                    $('#personalLinks .website a').text(data.weburl);
+                $('#personalLinks .website').show();
+            } else $('#personalLinks .website').hide();
+            $('#personalCont').show();
+            $('#personalCont.edit').hide();
+            $('#editProfileSave').hide();
+            $('#editProfile').show();
         }
+        
         return false;
     });
 
@@ -412,18 +489,11 @@ $(document).ready(function() {
         return false;
     }
 
-    // Summer ball feedback validation
-    $("#sbform").validate();
-
-    $('#sbform #didyou input').click(function() {
-        var val = $(this).val();
-        if(val == 'Yes'){
-            $('#sbform #commentlabel').html('What did you think of it? <span>(required)</span>');
-        } else {
-            $('#sbform #commentlabel').html('Why not? <span>(required)</span>');
-        }
-    });
-
+	function toggleBox(box) {
+		$(box).show();
+		$(box).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300);
+		$(box).delay(300).hide();
+	}
 });
 
 
