@@ -18,4 +18,3 @@ class BaseController {
 		$this->theme->setSite('main');
 	}
 }
-?>

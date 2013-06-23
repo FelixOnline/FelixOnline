@@ -46,7 +46,7 @@ class Media {
 		$sql = "SELECT 
 					`id` 
 				FROM `media_video`
-				WHERE visible = 1
+                WHERE hidden = 0
 				ORDER BY date DESC
 				"; 
 		if($limit) {
