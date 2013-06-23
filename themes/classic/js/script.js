@@ -91,8 +91,6 @@ $(document).ready(function() {
 	});
 
 	$('.likeComment').bind('click', function() {
-		//$('#facebox #loginForm').prepend('Test');
-		//console.log("test");
 		if ($('#loginForm #commenttype').length){
 			$('#loginForm #commenttype').remove();
 			$('#loginForm #comment').remove();
@@ -102,8 +100,6 @@ $(document).ready(function() {
 	});
 	
 	$('.dislikeComment').bind('click', function() {
-		//$('#facebox #loginForm').prepend('Test');
-		//console.log("test");
 		if ($('#loginForm #commenttype').length){
 			$('#loginForm #commenttype').remove();
 			$('#loginForm #comment').remove();
@@ -385,69 +381,52 @@ $(document).ready(function() {
 /* END */
 
 	//Like comment
-	// TODO: add ajax loader when "liking"
 	$('.commentAction #like').live("click", function() {
-		var likelink = $(this);
-		var comment = $(this).parents('.commentAction').attr('id');
-		var token = $(this).parents('.commentAction').find('#token').val();
+		rateComment(this, 'like');
+		return false;
+	});
+	
+	//Dislike comment
+	$('.commentAction #dislike').live("click", function() {
+		rateComment(this, 'dislike');
+		return false;
+	});
+	
+	function rateComment(cobj, action) {
+		var comment = $(cobj).parents('.commentAction').attr('id');
+		var token = $(cobj).parents('.commentAction').find('#token').val();
 		var check = comment+'ratecomment';
-		$.ajax({
-			url: "ajax.php",
-			type: "POST",
-			data: ({
-				action: 'like_comment',
-				type: 'like',
-				comment: comment,
-				token: token,
-				check: check
-			}),
-			async:true,
-			success: function(msg){
-				//alert(msg);
+		
+		data = {};
+		data.action = action+'_comment';
+		data.type = action;
+		data.comment = comment;
+		data.token = token;
+		data.check = check;
+		
+		ajaxHelper(null, 'POST', data, '#likespinner-'+comment, ['#comment-'+comment+'-like', '#comment-'+comment+'-unlike'], null, null, null, ajaxCallback);
+
+		if(action == like) {
+			function ajaxCallback() {
+				var likelink = $('.commentAction #like');
 				likelink.next('#likecounter').text('('+msg+')');
 				likelink.parent().prepend('Liked');
 				likelink.parent().next().prepend('Disliked');
 				likelink.parent().next().children('a').remove();
 				likelink.remove();
-			},
-			error: function(msg){
-				alert(msg);
 			}
-		});
-		return false;
-	});
-
-	//Dislike comment
-	$('.commentAction #dislike').live("click", function() {
-		var likelink = $(this);
-		var comment = $(this).parents('.commentAction').attr('id');
-		var token = $(this).parents('.commentAction').find('#token').val();
-		var check = comment+'ratecomment';
-		$.ajax({
-			url: "ajax.php",
-			type: "POST",
-			data: ({
-				action: 'dislike_comment',
-				type: 'dislike',
-				comment: comment,
-				token: token,
-				check: check
-			}),
-			async:true,
-			success: function(msg){
-				//alert(msg);
+		} else {
+			function ajaxCallback() {
+				var likelink = $('.commentAction #dislike');
 				likelink.next('#dislikecounter').text('('+msg+')');
-				likelink.parent().prepend('Disliked');
-				likelink.parent().prev().prepend('Liked');
-				likelink.parent().prev().children('a').remove();
+				likelink.parent().prepend('Liked');
+				likelink.parent().next().prepend('Disliked');
+				likelink.parent().next().children('a').remove();
 				likelink.remove();
-			},
-			error: function(msg){
-				alert(msg);
 			}
-		});
+		}
 		return false;
-	});
+	}
 
 	$('.circle').mosaic({
 		opacity	 :   0.8		 //Opacity for overlay (0-1)
