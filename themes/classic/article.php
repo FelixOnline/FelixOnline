@@ -280,16 +280,6 @@ $theme->render('header', $header);
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 	})();
 </script>
-<!-- Digg button -->
-<script type="text/javascript">
-	(function() {
-		var s = document.createElement('SCRIPT'), s1 = document.getElementsByTagName('SCRIPT')[0];
-		s.type = 'text/javascript';
-		s.async = true;
-		s.src = 'http://widgets.digg.com/buttons.js';
-		s1.parentNode.insertBefore(s, s1);
-	})();
-</script>
 
 <?php $timing->log('end of article');?>
 <?php $theme->render('footer'); ?>
