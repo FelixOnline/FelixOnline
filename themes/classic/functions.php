@@ -65,11 +65,47 @@ function profile_change() {
 	global $currentuser;
 	if($currentuser->isLoggedIn()) {
 		$user = new User();
-		// Validate input here
+		
+		try {
+			Validator::Check(array(
+				'email' => $_POST['email'],
+				'weburl' => $_POST['weburl'],
+				'facebook' => $_POST['facebook'],
+				'webname' => $_POST['webname'],
+				'twitter' => $_POST['twitter']
+			), array (
+				'email' => array(
+					Validator::validator_email => null,
+					Validator::validator_maxlength => 50
+				),
+				'weburl' => array(
+					Validator::validator_maxlength => 50,
+					Validator::validator_url => null
+				),
+				'facebook' => array(
+					Validator::validator_maxlength => 50,
+					Validator::validator_url => null
+				),
+				'webname' => array(
+					Validator::validator_maxlength => 50,
+				),
+				'twitter' => array(
+					Validator::validator_maxlength => 50
+				)
+			));
+		} catch (ValidatorException $e) {
+			$failed_fields = array();
+			foreach($e->getData() as $failedField => $data) {
+				$failed_fields[] = $failedField;
+			}
+			
+			return array(error => true, details => 'There has been an issue with some of your data, please check the highlighted fields and try again', validator => true, validator_data => $failed_fields);
+		}
+		
 		$user->setUser($currentuser->getUser());
 		$user->setDescription($_POST['desc']);
 		$user->setEmail($_POST['email']);
-		$user->setFacebook($_POST['facebook']);
+		$user->setFacebook(Utility::addhttp($_POST['facebook']));
 		$user->setTwitter($_POST['twitter']);
 		$user->setWebsitename($_POST['webname']);
 		$user->setWebsiteurl(Utility::addhttp($_POST['weburl']));
