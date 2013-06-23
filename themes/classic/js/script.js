@@ -25,50 +25,6 @@ $(document).ready(function() {
         });
     });
     
-    // Felix twitter
-    if ($('#felixtwitterlist').length && !$('.sidebar .twitterbox').length) {
-        $.getJSON('http://api.twitter.com/1/statuses/user_timeline.json?screen_name=feliximperial&count=5&include_rts=true&callback=?', function(twitters) {
-            var statusHTML = [];
-            for (var i=0; i<twitters.length; i++){
-                var username = twitters[i].user.screen_name;
-                var status = twitters[i].text.replace(/((https?|s?ftp|ssh)\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!])/g, function(url) {
-                    return '<a href="'+url+'">'+url+'</a>';
-                }).replace(/\B@([_a-z0-9]+)/ig, function(reply) {
-                    return  reply.charAt(0)+'<a href="http://twitter.com/'+reply.substring(1)+'">'+reply.substring(1)+'</a>';
-                });
-                statusHTML.push('<li class="twitter-item"><span>'+status+'</span> <a style="font-size:85%" href="http://twitter.com/'+username+'/statuses/'+twitters[i].id+'" class="tweet">'+relative_time(twitters[i].created_at)+'</a></li>');
-            }
-            document.getElementById('felixtwitterlist').innerHTML = statusHTML.join('');
-        });
-    }
-    
-    // Category twitter
-    if($('.sidebar .twitterbox').length) {
-        var id = $('.sidebar .twitterbox').attr('id');
-        $.getJSON('http://api.twitter.com/1/statuses/user_timeline.json?screen_name='+id+'&count=4&include_rts=true&callback=?', function(twitters) {
-            var statusHTML = [];
-            for (var i=0; i<twitters.length; i++){
-                var username = twitters[i].user.screen_name;
-                var userimage = twitters[i].user.profile_image_url;
-                var location = twitters[i].user.location;
-                var name = twitters[i].user.name;
-                var status = twitters[i].text.replace(/((https?|s?ftp|ssh)\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!])/g, function(url) {
-                    return '<a href="'+url+'">'+url+'</a>';
-                }).replace(/\B@([_a-z0-9]+)/ig, function(reply) {
-                    return  reply.charAt(0)+'<a href="http://twitter.com/'+reply.substring(1)+'">'+reply.substring(1)+'</a>';
-                });
-                statusHTML.push('<li class="twitter-item"><span>'+status+'</span> <a style="font-size:85%" href="http://twitter.com/'+username+'/statuses/'+twitters[i].id+'" class="tweet">'+relative_time(twitters[i].created_at)+'</a></li>');
-            }
-            $('.sidebar #twitheader #twitpiclink').attr('href', 'http://twitter.com/'+username);
-            $('.sidebar #twitheader img').attr('src', userimage);
-            $('.sidebar #twitheader h5').text(name);
-            $('.sidebar #twitheader p a').attr('href', 'http://twitter.com/'+username).text('@'+username);
-            $('.sidebar #twitheader p span').text(location);
-            
-            document.getElementById('felixtwitterlist').innerHTML = statusHTML.join('');
-        });
-    }
-    
     // Load sharing links
     if ($('.sidebar2 #sharebuttons').length) { // If sidebar 2 exists
         var facebook = '<fb:like send="false" layout="button_count" width="140" show_faces="false" font="arial"></fb:like>';
