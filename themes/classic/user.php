@@ -127,10 +127,10 @@ $theme->render('header', $header);
 					</div>
 					<div id="personalLinksEdit">
 						<ul>
-							<li class="facebook"><input type="text" class="url" value="<?php echo $user->getFacebook(); ?>" placeholder="http://www.facebook.com/joe.bloggs"/></li>
-							<li class="twitter">@<input type="text" value="<?php echo $user->getTwitter(); ?>" placeholder="twitter"/></li>
-							<li class="useremail"><input type="text" class="required email" value="<?php echo ($user->getEmail() ? $user->getEmail() : '')?>" placeholder="name@domain.com"/></li>
-							<li class="website"><input type="text" id="name" value="<?php echo $user->getWebsitename(); ?>" placeholder="Name"/><input type="text" id="url" class="url" value="<?php echo $user->getWebsiteurl(); ?>" placeholder="Url"/></li>
+							<li class="facebook"><input name="facebook" type="text" class="url" value="<?php echo $user->getFacebook(); ?>" placeholder="http://www.facebook.com/joe.bloggs"/></li>
+							<li class="twitter">@<input name="twitter" type="text" value="<?php echo $user->getTwitter(); ?>" placeholder="twitter"/></li>
+							<li class="useremail"><input name="email" type="text" class="required email" value="<?php echo ($user->getEmail() ? $user->getEmail() : '')?>" placeholder="name@domain.com"/></li>
+							<li class="website"><input name="webname" type="text" id="name" value="<?php echo $user->getWebsitename(); ?>" placeholder="Name"/><input type="text" name="weburl" id="url" class="url" value="<?php echo $user->getWebsiteurl(); ?>" placeholder="Url"/></li>
 						</ul>
 					</div>
 				</div>

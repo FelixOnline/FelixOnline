@@ -43,6 +43,7 @@ class Validator {
 	const validator_maxlength = 'val_1005';
 	const validator_minlength = 'val_1006';
 	const validator_csrf = 'val_1007';
+	const validator_url = 'val_1008';
 	
 	public static function Check($source_data, $validators) {
 		$bad_fields = array();
@@ -68,6 +69,9 @@ class Validator {
 						}
 						break;
 					case self::validator_email:
+						if($value == '') {
+							break; // Use null filter to trap this case if it can't b enull
+						}
 						// Check to see if email is an email
 						if(!is_email($value)) {
 							if(!array_key_exists($field, $bad_fields)) {
@@ -78,6 +82,9 @@ class Validator {
 						}
 						break;
 					case self::validator_ic_email:
+						if($value == '') {
+							break; // Use null filter to trap this case if it can't b enull
+						}
 						// Check to see if an email ends in @imperial.ac.uk or @ic.ac.uk
 						if(!preg_match('/(@ic.ac.uk$|@imperial.ac.uk$)/i', $value)) {
 							if(!array_key_exists($field, $bad_fields)) {
@@ -88,6 +95,9 @@ class Validator {
 						}
 						break;
 					case self::validator_ic_username:
+						if($value == '') {
+							break; // Use null filter to trap this case if it can't b enull
+						}
 						// Check to see if username is in college directory (if local, assumes success)
 						if(LOCAL) {
 							break; // Do not validate if local
@@ -146,18 +156,31 @@ class Validator {
 						setcookie('felixonline_csrf_'.$parameter, '', time()-360000, '/', '.'.STANDARD_SERVER);
 						
 						break;
+					case self::validator_url:
+						if($value == '') {
+							break; // Use null filter to trap this case if it can't b enull
+						}
+						if(filter_var($value, FILTER_VALIDATE_URL) === false) {
+							if(!array_key_exists($field, $bad_fields)) {
+								$bad_fields[$field] = array();
+							}
+							
+							$bad_fields[$field][] = $validator;
+
+						}
 					default:
 						break;
 				}
 			}
 
-			// Throw an exception if there are invalid fields
-			if(count($bad_fields) > 0) {
-				throw new ValidatorException(count($bad_fields), $bad_fields, $csrf_failed);
-			}
-			
-			// Nothing bad happened
-			return true;
 		}
+
+		// Throw an exception if there are invalid fields
+		if(count($bad_fields) > 0) {
+			throw new ValidatorException(count($bad_fields), $bad_fields, $csrf_failed);
+		}
+		
+		// Nothing bad happened
+		return true;
 	}
 }
