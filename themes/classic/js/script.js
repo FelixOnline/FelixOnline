@@ -197,7 +197,7 @@ $(document).ready(function() {
 /* AJAX Helper */
 /* ------------------------------------------- */
 
-	function ajaxHelper(method, data, spinner, hideme, showme, successbox, failbox, callback) {
+	function ajaxHelper(form, method, data, spinner, hideme, showme, successbox, failbox, callback) {
 		method = method || 'POST';
 		data = data || {};
 		spinner = spinner || null;
@@ -247,6 +247,12 @@ $(document).ready(function() {
 			}
 		}
 		
+		function handleValidation(fields, form) {
+			jQuery.each(fields, function(index, obj) {
+				$("#"+form+" input[name="+obj+"]").addClass('invalidField');
+			});
+		}
+				
 		hideStart(hideme, showme, spinner);
 		
         $.ajax({
@@ -263,12 +269,17 @@ $(document).ready(function() {
                     message.reload = false;
                 }
                 if(message.error) {
+                	if(message.validator) {
+                		handleValidation(message.validator_data, form);
+                	}
+                	
                     error(message.details, failbox);
 
 	                if(message.reload) {
                     	location.reload();
                     }
                     hideEnd(hideme, showme, spinner);
+					$('#token').val(message.newtoken);
                     return false;
                 }
                 
@@ -300,6 +311,7 @@ $(document).ready(function() {
                 if(message.reload) {
                 	location.reload();
                 }
+				$('#token').val(message.newtoken);
                 hideEnd(hideme, showme, spinner);
                 return false;
             }
@@ -334,7 +346,7 @@ $(document).ready(function() {
         data.token = $('#token').val();
         data.check = 'userprofile';
 
-		ajaxHelper('POST', data, '#userInfoCont .loading', ['#editProfileSave'], null, null, null, ajaxCallback);
+		ajaxHelper('profileform', 'POST', data, '#userInfoCont .loading', ['#editProfileSave'], null, null, null, ajaxCallback);
 
 		function ajaxCallback(data, message) {
             // Change profile info
@@ -494,6 +506,10 @@ $(document).ready(function() {
 		$(box).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300);
 		$(box).delay(300).hide();
 	}
+	
+	$('input').change(function() {
+		$(this).removeClass('invalidField');
+	});
 });
 
 
