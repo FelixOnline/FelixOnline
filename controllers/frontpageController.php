@@ -5,9 +5,9 @@ class FrontpageController extends BaseController {
 		global $timing;
 		$timing->log('Frontpage controller');
 
-        $frontpage = new Frontpage();
-        $this->theme->render('frontpage', array(
-            'frontpage' => $frontpage
-        ));
-    }
+		$frontpage = new Frontpage();
+		$this->theme->render('frontpage', array(
+			'frontpage' => $frontpage
+		));
+	}
 }

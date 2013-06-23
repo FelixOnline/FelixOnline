@@ -141,22 +141,22 @@ class Category extends BaseModel
 			$this->stories['top_story_4'] = new Article($this->fields['top_slider_4']);
 		}
 		return $this->stories;
-    }
+	}
 
-    /**
-     * Static: Get all categories
-     */
-    public static function getCategories()
-    {
-        global $db;
-        $sql = "SELECT
-                    label,
-                    cat
-                FROM `category`
-                WHERE hidden = 0
-                AND id > 0
-                ORDER BY `order` ASC";
-        $cats = $db->get_results($sql);
-        return $cats;
+	/**
+	 * Static: Get all categories
+	 */
+	public static function getCategories()
+	{
+		global $db;
+		$sql = "SELECT
+					label,
+					cat
+				FROM `category`
+				WHERE hidden = 0
+				AND id > 0
+				ORDER BY `order` ASC";
+		$cats = $db->get_results($sql);
+		return $cats;
 	}
 }

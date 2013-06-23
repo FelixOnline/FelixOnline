@@ -134,7 +134,7 @@ class Theme {
 	 */
 	public function isPage($query) {
 		if($query == $this->parent) return true;
-        else return false;
+		else return false;
 	}
 
 	/*

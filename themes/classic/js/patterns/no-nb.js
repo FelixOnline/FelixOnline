@@ -21,18 +21,18 @@
 // % - Karl Berry, who gave us free hands and all resources
 // % - Taco Hoekwater, with useful macros
 // % - Hans Hagen, who did the unicodifisation of patterns already long before
-// %               and helped with testing, suggestions and bug reports
+// %			   and helped with testing, suggestions and bug reports
 // % - Norbert Preining, who tested & integrated patterns into TeX Live
 // %
 // % However, the "copyright/copyleft" owner of patterns remains the original author.
 // %
 // % The copyright statement of this file is thus:
 // %
-// %    Do with this file whatever needs to be done in future for the sake of
-// %    "a better world" as long as you respect the copyright of original file.
-// %    If you're the original author of patterns or taking over a new revolution,
-// %    plese remove all of the TUG comments & credits that we added here -
-// %    you are the Queen / the King, we are only the servants.
+// %	Do with this file whatever needs to be done in future for the sake of
+// %	"a better world" as long as you respect the copyright of original file.
+// %	If you're the original author of patterns or taking over a new revolution,
+// %	plese remove all of the TUG comments & credits that we added here -
+// %	you are the Queen / the King, we are only the servants.
 // %
 // % If you want to change this file, rather than uploading directly to CTAN,
 // % we would be grateful if you could send it to us (http://tug.org/tex-hyphen)
@@ -58,7 +58,7 @@
 // %
 // % For more unformation see
 // %
-// %    http://tug.org/tex-hyphen
+// %	http://tug.org/tex-hyphen
 // %
 // %------------------------------------------------------------------------------
 // %
@@ -94,7 +94,7 @@
 // %   trie_size = 33385 
 // %   trie_op_size = 815
 // % (The corresponding values for nohyphb.tex are
-// %   trie_size = 31900    trie_op_size = 636)
+// %   trie_size = 31900	trie_op_size = 636)
 // % If you want to load more than one set of hyphenation 
 // % patterns the parameters have to be set to a value 
 // % larger than or equal to the sum of all required values
