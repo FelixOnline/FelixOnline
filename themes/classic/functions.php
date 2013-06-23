@@ -40,7 +40,7 @@ function like_comment() {
 		$comment = $_REQUEST['comment'];
 		$comment = new Comment($comment);
 		$count = $comment->likeComment($user);
-		return $count;
+		return array(count => $count);
 	} else {
 		return (array(error => true, details => 'Not logged in'));
 	}
@@ -54,7 +54,7 @@ function dislike_comment() {
 		$comment = $_REQUEST['comment'];
 		$comment = new Comment($comment);
 		$count = $comment->dislikeComment($user);
-		return $count;
+		return array(count => $count);
 	} else {
 		return (array(error => true, details => 'Not logged in'));
 	}

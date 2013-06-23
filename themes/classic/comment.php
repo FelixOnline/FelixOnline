@@ -40,7 +40,7 @@
 	<div class="commentAction" id="<?php echo $comment->getId();?>">
 		<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken($comment->getId().'ratecomment'); ?>"/>
 		<ul>
-			<li>
+			<li id="comment-<?php echo $comment->getId(); ?>-like">
 			<?php
 				if (!$currentuser->isLoggedIn()) {?>
 					<a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox" class="likeComment">Like</a>
@@ -51,7 +51,7 @@
 				<?php } } ?>
 					<span id="likecounter">(<?php echo $comment->getLikes(); ?>)</span>
 			</li>
-			<li><?php if (!$currentuser->isLoggedIn()) { ?>
+			<li id="comment-<?php echo $comment->getId(); ?>-dislike"><?php if (!$currentuser->isLoggedIn()) { ?>
 				<a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox" class="dislikeComment">Dislike</a>
 				<?php } else {
 					if ($liked) echo 'Disliked';
@@ -59,6 +59,9 @@
 					<a href="<?php echo Utility::currentPageURL();?>#" id="dislike">Dislike</a>
 				<?php } }?>
 					<span id="dislikecounter">(<?php echo $comment->getDislikes(); ?>)</span>
+			</li>
+			<li id="likespinner_<?php echo $comment->getId(); ?>" style="display: none;">
+				<span class="loading">Please wait...</span>
 			</li>
 			<li>
 				<a href="<?php echo Utility::currentPageURL().'#comment'.$comment->getId();?>" id="commentLink">Link</a>
