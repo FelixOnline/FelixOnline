@@ -60,7 +60,7 @@
 				<?php } }?>
 					<span id="dislikecounter">(<?php echo $comment->getDislikes(); ?>)</span>
 			</li>
-			<li id="likespinner_<?php echo $comment->getId(); ?>">
+			<li id="likespinner_<?php echo $comment->getId(); ?>" style="display: none;">
 				<span class="loading">Please wait...</span>
 			</li>
 			<li>

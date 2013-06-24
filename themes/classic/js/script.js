@@ -404,27 +404,34 @@ $(document).ready(function() {
 		data.token = token;
 		data.check = check;
 		
-		ajaxHelper(null, 'POST', data, '#likespinner-'+comment, ['#comment-'+comment+'-like', '#comment-'+comment+'-unlike'], null, null, null, ajaxCallback);
-
-		if(action == like) {
-			function ajaxCallback() {
-				var likelink = $('.commentAction #like');
-				likelink.next('#likecounter').text('('+msg+')');
-				likelink.parent().prepend('Liked');
-				likelink.parent().next().prepend('Disliked');
-				likelink.parent().next().children('a').remove();
-				likelink.remove();
-			}
+		window.com = comment;
+		
+		if(action == 'like') {
+			call = likeAjaxCallback;
 		} else {
-			function ajaxCallback() {
-				var likelink = $('.commentAction #dislike');
-				likelink.next('#dislikecounter').text('('+msg+')');
-				likelink.parent().prepend('Liked');
-				likelink.parent().next().prepend('Disliked');
-				likelink.parent().next().children('a').remove();
-				likelink.remove();
-			}
+			call = dislikeAjaxCallback;
 		}
+		
+		ajaxHelper(null, 'POST', data, '#likespinner_'+comment+' .loading', ['#comment-'+comment+'-like', '#comment-'+comment+'-dislike'], ['#likespinner_'+comment], null, null, call);
+
+		function likeAjaxCallback(data, msg) {
+			var likelink = $('#comment-'+window.com+'-like a');
+			likelink.next('#likecounter').text('('+msg.count+')');
+			likelink.parent().prepend('Liked');
+			likelink.parent().next().prepend('Disliked');
+			likelink.parent().next().children('a').remove();
+			likelink.remove();
+		}
+			
+		function dislikeAjaxCallback(data, msg) {
+			var likelink = $('#comment-'+window.com+'-dislike a');
+			likelink.next('#dislikecounter').text('('+msg.count+')');
+			likelink.parent().prepend('Disliked');
+			likelink.parent().prev().prepend('Liked');
+			likelink.parent().prev().children('a').remove();
+			likelink.remove();
+		}
+
 		return false;
 	}
 
