@@ -8,14 +8,13 @@ function contact_us() {
 	
 	try {
 		Validator::Check(array(
-			'name' => $_POST['name'],
-			'email' => $_POST['email'],
-			'message' => $_POST['message']
+			'email' => $emailaddress,
+			'message' => $message
 		), array (
 			'email' => array(
 				Validator::validator_email => null
 			),
-			'messsage' => array(
+			'message' => array(
 				Validator::validator_notnull => null
 			)
 		));
@@ -49,7 +48,7 @@ function contact_us() {
 	}
 	
 	// Mail it
-	//$email->send();
+	$email->send();
 	
 	return array(error => false, success => 'Your message has been sent, thank you!');
 }

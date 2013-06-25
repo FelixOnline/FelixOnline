@@ -50,17 +50,15 @@ class Validator {
 		$csrf_failed = false;
 		foreach ($source_data as $field => $value) {
 			// Check to see if any validators are defined for this field
-			
 			if(!array_key_exists($field, $validators)) {
 				continue; // no validators
 			}
-			
 			// There are validators, run each
 			foreach ($validators[$field] as $validator => $parameter) {
 				switch ($validator) {
 					case self::validator_notnull:
 						// Checks to see if a field has a value
-						if(empty($value)) {
+						if($value == '') {
 							if(!array_key_exists($field, $bad_fields)) {
 								$bad_fields[$field] = array();
 							}

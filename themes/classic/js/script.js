@@ -290,8 +290,8 @@ $(document).ready(function() {
 				}
 
 				if(successbox != null) {
-					if(data.success) {
-						$(successbox).text(data.success);
+					if(data.success != '') {
+						$(successbox).text(message.success);
 					} else {
 						$(successbox).text('Success');
 					}
@@ -449,14 +449,18 @@ $(document).ready(function() {
 		var name = $('#contactform #name').val();
 		var email = $('#contactform #email').val();
 		var message = $('#contactform #message').val();
+		var token = $('#contactform').find('#token').val();
+		var check = 'contact_us';
 
 		data = {};
 		data.action = 'contact_us';
 		data.name = name;
 		data.email = email;
 		data.message = message;
+		data.token = token;
+		data.check = check;
 		
-		ajaxHelper('#contactform', 'POST', data, '#contactform #sending', ['#contactform #submit'], null, '#contactform #sent', null, ajaxCallback);
+		ajaxHelper('#contactform', 'POST', data, '#contactform #sending', ['#contactform #submit'], null, '#sent', null, ajaxCallback);
 	
 		function ajaxCallback(data, message) {
 			$('#contactform').hide();
