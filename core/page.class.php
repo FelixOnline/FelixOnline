@@ -47,6 +47,13 @@ class Page extends BaseModel {
 	public function getContent() {
 		return $this->evalPHP($this->fields['content']);
 	}
-}
 
-?>
+	/**
+	 * Public: Get page slug
+	 *
+	 * @return string page slug
+	 */
+	public function getSlug() {
+		return $this->fields['slug'];				
+	}
+}
