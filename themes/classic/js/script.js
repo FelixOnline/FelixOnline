@@ -3,15 +3,12 @@
  */
 
 $(document).ready(function() {
-	
-	// Reload css to fix @font face issue in IE8
-	//$('#main_css')[0].href=$('#main_css')[0].href;
 	(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=200482590030408";
-	  fjs.parentNode.insertBefore(js, fjs);
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=200482590030408";
+		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 	
 	/* Phoenix box */
@@ -36,7 +33,7 @@ $(document).ready(function() {
 		$('#twitterShare').append(twitter);
 		$('#googleShare').append(google);
 		$('#redditShare').append(reddit);
-	};
+	}
 	
 	if ($('.articleShare').length) { //If the sharing thing at the bottom exists
 		var facebook2 = '<fb:like send="true" width="300" show_faces="false" font="arial"></fb:like>';
@@ -46,7 +43,7 @@ $(document).ready(function() {
 		$('#facebookLike2').append(facebook2);
 		$('#twitterShare2').append(twitter2);
 		$('#googleShare2').append(google2);
-	};
+	}
 
 	// Media box tabs 
 	var mediaTabContainers = $('div#mediaBox > div');
@@ -112,7 +109,7 @@ $(document).ready(function() {
 	
 	$(document).bind('reveal.facebox', function() { 
 		$('#loginForm #user').focus();
-	})
+	});
 	
 	//Twitter style countdown on comment form
 	$("#commentForm #comment").charCount();
@@ -215,8 +212,8 @@ $(document).ready(function() {
 				$(obj).show();
 			});
 			
-			if(spinner != null) {
-				$(spinner).show();
+			if(spinner !== null) {
+                $(spinner).show();
 			}
 		}
 	
@@ -229,17 +226,17 @@ $(document).ready(function() {
 				$(obj).hide();
 			});
 			
-			if(spinner != null) {
+			if(spinner !== null) {
 				$(spinner).hide();
 			}
 		}
 		
-		function error(error, failbox) {
-			if(failbox != null) {
-				$(failbox).text(error);
+		function error(err, failbox) {
+			if(failbox !== null) {
+				$(failbox).text(err);
 				toggleBox(failbox);
 			} else {
-				alert(error);
+				alert(err);
 			}
 		}
 		
@@ -257,8 +254,9 @@ $(document).ready(function() {
 			data: data,
 			async:true,
 			success: function(msg){
+                var message = null;
 				try {
-					var message = JSON.parse(msg);
+					message = JSON.parse(msg);
 				} catch(err) {
 					var message = {};
 					message.error = err;
@@ -289,8 +287,8 @@ $(document).ready(function() {
 					callback(data, message);
 				}
 
-				if(successbox != null) {
-					if(data.success != '') {
+				if(successbox !== null) {
+					if(data.success !== '') {
 						$(successbox).text(message.success);
 					} else {
 						$(successbox).text('Success');
@@ -436,11 +434,11 @@ $(document).ready(function() {
 	}
 
 	$('.circle').mosaic({
-		opacity	 :   0.8		 //Opacity for overlay (0-1)
+		opacity:0.8		//Opacity for overlay (0-1)
 	});
 
 	$('.play').mosaic({
-		opacity	 :   0.8		 //Opacity for overlay (0-1)
+		opacity:0.8		//Opacity for overlay (0-1)
 	});
 
 	//Contact form validation
