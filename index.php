@@ -7,22 +7,22 @@ ob_start();
 
 try {
 	require_once('bootstrap.php');
-	
+
 	require_once('inc/exceptions.inc.php');
 	require_once('inc/timing.inc.php');
 	$timing = new Timing('log-themes');
-	
+
 	/* If the url is on the union servers then redirect to custom url */
 	/*
 	if (strstr($_SERVER['HTTP_HOST'],"union.ic.ac.uk") !== false) {
 		header("Location: ".STANDARD_URL.substr($_SERVER['REQUEST_URI'],(1+strrpos($_SERVER['REQUEST_URI'],"/"))));
 	}
 	 */
-	
+
 	$currentuser = new CurrentUser();
-	
+
 	$hooks = new Hooks();
-	
+
 	/*
 	 * Routes
 	 */
@@ -37,7 +37,7 @@ try {
 		'/login/.*' => 'AuthController',
 		'/logout/.*' => 'AuthController'
 	);
-	
+
 	/*
 	 * Add pages to routes
 	 */
@@ -45,7 +45,7 @@ try {
 	$pages = $db->get_results($sql);
 	if (!is_null($pages)) {
 		foreach($pages as $key => $page) {
-			$urls['/'.$page->slug] = 'pageController'; 
+			$urls['/'.$page->slug] = 'pageController';
 		}
 	}
 
@@ -59,7 +59,7 @@ try {
 	);
 
 	foreach($media as $route => $controller) {
-		$urls[$route] = $controller; 
+		$urls[$route] = $controller;
 	}
 
 	/*
@@ -94,8 +94,8 @@ try {
 	if(strstr(Utility::currentPageURL(), AUTHENTICATION_PATH) != false) { // if request is to auth path
 		$relpath = substr(
 			substr(
-				AUTHENTICATION_PATH, 
-				strpos(AUTHENTICATION_PATH, AUTHENTICATION_SERVER) 
+				AUTHENTICATION_PATH,
+				strpos(AUTHENTICATION_PATH, AUTHENTICATION_SERVER)
 				+ strlen(AUTHENTICATION_SERVER)
 			), 0, -1);
 		glue::stick($urls, $relpath);
@@ -127,14 +127,13 @@ try {
 	}
 } catch (InternalException $e) {
 	// If something bad happened
-  	// time to bail out and display the emergency error page
-   	ob_end_clean();
-   	ob_start();
-   	require('errors/index.php');
+	// time to bail out and display the emergency error page
+	ob_end_clean();
+	ob_start();
+	require('errors/index.php');
 	ob_end_flush();
 	// End execution
 	exit();
 }
 
 ob_end_flush();
-?>

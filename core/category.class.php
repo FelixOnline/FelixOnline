@@ -22,7 +22,8 @@
  *	  description	 -
  *	  hidden		  -
  */
-class Category extends BaseModel {
+class Category extends BaseModel
+{
 	protected $db;
 	private $editors = array();
 	private $count; // number of articles in catgeory
@@ -140,5 +141,22 @@ class Category extends BaseModel {
 			$this->stories['top_story_4'] = new Article($this->fields['top_slider_4']);
 		}
 		return $this->stories;
+	}
+
+	/**
+	 * Static: Get all categories
+	 */
+	public static function getCategories()
+	{
+		global $db;
+		$sql = "SELECT
+					label,
+					cat
+				FROM `category`
+				WHERE hidden = 0
+				AND id > 0
+				ORDER BY `order` ASC";
+		$cats = $db->get_results($sql);
+		return $cats;
 	}
 }

@@ -6,7 +6,7 @@ $header = array(
 	'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
 );
 
-$theme->render('header', $header); 
+$theme->render('header', $header);
 $timing->log('after header');
 
 ?>
@@ -34,26 +34,14 @@ $timing->log('after header');
 		?>
 		<?php
 			// Section a
-			$sql = "SELECT 
-				`1` as one, 
-				`2` as two, 
-				`3` as three, 
-				`4` as four,
-				`5` as five,
-				`6` as six,
-				`7` as seven,
-				`8` as eight 
-				FROM `frontpage` 
-				WHERE layout='1' 
-				AND section='a'";
-			$sectionA = $db->get_row($sql);
+			$sectionA = $frontpage->getSection('a');
 			$timing->log('get frontpage articles');
 			if (!is_null($sectionA)) {
 		?>
 		<!-- Top story -->
 		<div class="grid_8 alpha topstory">
 			<?php // Initialise top story
-				$article = new Article($sectionA->one);
+				$article = $sectionA['one'];
 				$timing->log('initialise article');
 			?>
 			<div class="border clearfix <?php echo $article->getCategoryCat();?>">
@@ -99,22 +87,12 @@ $timing->log('after header');
 		<!-- In this issue -->
 		<div class="grid_2 push_6 alpha omega thisIssue">
 			<h5>In this Issue</h5>
-			<?php 
+			<?php
 				// Section b
-				$sql = "SELECT `1` as one ,
-					`2` as two,
-					`3` three,
-					`4` four,
-					`5` five 
-					FROM `frontpage` 
-					WHERE layout='1' 
-					AND section='b'";
-				//$sectionB = array_unique(mysql_fetch_array(mysql_query($sql,$cid)));
-				$sectionB = $db->get_row($sql);
+				$sectionB = $frontpage->getSection('b');
 
 				if (!is_null($sectionB)):
-				foreach($sectionB as $key => $value) {
-					$article = new Article($value); ?>
+				foreach($sectionB as $key => $article) { ?>
 					<div class="thisIssueCont <?php if($key == 'one') echo 'top';?>">
 						<a href="<?php echo $article->getURL();?>">
 						<?php if ($article->getImage()): ?>
@@ -147,7 +125,7 @@ $timing->log('after header');
 
 		<?php if (!is_null($sectionA)) { ?>
 		<!-- Second article -->
-		<?php $article = new Article($sectionA->two); ?>
+		<?php $article = $sectionA['two']; ?>
 		<div class="grid_6 pull_2 omega alpha featBox <?php echo $article->getCategoryCat();?>">
 			<h3>
 				<a href="<?php echo $article->getURL();?>">
@@ -188,7 +166,7 @@ $timing->log('after header');
 		<!-- End of second article -->
 
 		<!-- Third article -->
-		<?php $article = new Article($sectionA->three); ?>
+		<?php $article = $sectionA['three']; ?>
 		<div class="grid_6 pull_2 omega alpha featBox <?php echo $article->getCategoryCat();?>" id="last">
 			<h3>
 				<a href="<?php echo $article->getURL();?>">
@@ -229,9 +207,9 @@ $timing->log('after header');
 		<!-- End of third article -->
 
 		<!-- Article four and five -->
-		<?php 
-			$articleA = new Article($sectionA->four);
-			$articleB = new Article($sectionA->five);
+		<?php
+			$articleA = $sectionA['four'];
+			$articleB = $sectionA['five'];
 		?>
 		<div class="grid_6 pull_2 alpha omega featBox bottom">
 			<!-- Header -->
@@ -318,7 +296,7 @@ $timing->log('after header');
 		<!-- News list -->
 		<div class="grid_6 pull_2 alpha omega newsList">
 			<ul>
-				<?php $article = new Article($sectionA->six); ?>
+				<?php $article = $sectionA['six']; ?>
 				<li class="<?php echo $article->getCategoryCat();?>">
 					<h4>
 						<a href="<?php echo $article->getURL();?>" id="title">
@@ -334,7 +312,7 @@ $timing->log('after header');
 					</p>
 				</li>
 
-				<?php $article = new Article($sectionA->seven); ?>
+				<?php $article = $sectionA['seven']; ?>
 				<li class="<?php echo $article->getCategoryCat();?>">
 					<h4>
 						<a href="<?php echo $article->getURL();?>" id="title">
@@ -350,7 +328,7 @@ $timing->log('after header');
 					</p>
 				</li>
 
-				<?php $article = new Article($sectionA->eight); ?>
+				<?php $article = $sectionA['eight']; ?>
 				<li class="<?php echo $article->getCategoryCat();?>">
 					<h4>
 						<a href="<?php echo $article->getURL();?>" id="title">
@@ -372,23 +350,17 @@ $timing->log('after header');
 			<div class="grid_8 alpha">No articles have been set on the frontpage</div>
 		<?php } ?>
 
-		<!-- Featured articles -->		
+		<!-- Featured articles -->
 		<div class="grid_8 alpha omega" id="featuredarticles">
 			<h3>Featured Articles</h3>
-			<?php 
+			<?php
 				// Featured articles
-				$sql = "SELECT `1` as one,
-					`2` as two,
-					`3` as three 
-					FROM `frontpage` 
-					WHERE layout='1' 
-					AND section='featured'";
-				$featured = $db->get_row($sql);
+				$featured = $frontpage->getSection('featured');
 			?>
 
 			<!-- Main featured article -->
 			<?php if (!is_null($featured)) { ?>
-			<?php $article = new Article($featured->one); ?>
+			<?php $article = $featured['one']; ?>
 			<a href="<?php echo $article->getURL(); ?>">
 				<div id="imgcont">
 					<?php if ($articleB->getImage()): ?>
@@ -408,13 +380,13 @@ $timing->log('after header');
 					Other Articles:
 				</li>
 				<li>
-					<?php $article = new Article($featured->two); ?>
+					<?php $article = $featured['two']; ?>
 					<a href="<?php echo $article->getURL(); ?>">
 						<?php echo $article->getTitle();?>
 					</a>
 				</li>
 				<li>
-					<?php $article = new Article($featured->three); ?>
+					<?php $article = $featured['three']; ?>
 					<a href="<?php echo $article->getURL(); ?>">
 						<?php echo $article->getTitle();?>
 					</a>
@@ -434,14 +406,8 @@ $timing->log('after header');
 			<div class="border">
 				<h4>Editorial</h4>
 					<?php
-						$sql = "SELECT id FROM `article` 
-							WHERE author='felix' 
-							AND category='2' 
-							AND text1 IS NOT NULL 
-							ORDER BY date DESC 
-							LIMIT 1";
-						$editorial = new Article($db->get_var($sql));
-					if (!is_null($db->get_var($sql))) { ?>
+						$editorial = $frontpage->getEditorial();
+					if (!is_null($editorial)) { ?>
 					<h3>
 						<a href="<?php echo $editorial->getURL(); ?>">
 							<?php echo $editorial->getTitle();?>
@@ -534,13 +500,7 @@ $timing->log('after header');
 <!-- Featured bar -->
 <div class="container_12 clearfix">
 	<?php
-	$sql = "SELECT id,cat,label,top_slider_1 as top FROM `category` 
-			WHERE active=1 
-			AND hidden=0
-			AND id>0 
-			AND `order`>0
-			ORDER BY `order` ASC";
-	$cats = $db->get_results($sql);
+	$cats = $frontpage->getFeaturedCategories();
 	if (!is_null($cats)) {
 		foreach($cats as $key => $cat) {
 			$article = new Article($cat->top);
