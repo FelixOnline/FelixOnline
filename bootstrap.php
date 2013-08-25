@@ -11,6 +11,7 @@ if(!defined('CACHE_DIRECTORY')) define('CACHE_DIRECTORY', BASE_DIRECTORY.'/cache
 
 require_once(BASE_DIRECTORY.'/inc/ez_sql_core.php');
 require_once(BASE_DIRECTORY.'/inc/ez_sql_mysqli.php');
+require_once(BASE_DIRECTORY.'/inc/SafeSQL.class.php');
 require_once(BASE_DIRECTORY.'/glue.php');
 require_once(BASE_DIRECTORY.'/inc/config.inc.php');
 require_once(BASE_DIRECTORY.'/inc/const.inc.php');

@@ -22,12 +22,10 @@
 	define('PRODUCTION_FLAG', false); // if set to true css and js will be minified etc..
 	define('LOCAL', true); // if true then site is hosted locally - don't use pam_auth etc.
 	
-	//$cid = mysql_connect($host,$user,$pass);
-	//$dbok = mysql_select_db($dbname,$cid);
-
 	/* Initialise ezSQL database connection */
 	$db = new ezSQL_mysqli();
 	$db->quick_connect($user,$pass,$dbname,$host,'utf8');
+	$safesql = new SafeSQL_MySQLi($db->dbh);
 
 	/* Set settings for caching (turned off by defualt) */
 	// Cache expiry
