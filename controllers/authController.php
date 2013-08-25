@@ -32,17 +32,20 @@ class AuthController extends BaseController {
 
 				// Correct session ID - the one from the auth server is not
 				// the one on this server
-				$sql = "UPDATE login
-						SET session_id = '".$this->db->escape(session_id())."'
-						WHERE session_id='".$this->db->escape($this->session)."'
+				$sql = $this->safesql->query("UPDATE login
+						SET session_id = '%s'
+						WHERE session_id='%s'
 						AND logged_in=0
-						AND ip='".$this->db->escape($_SERVER['REMOTE_ADDR'])."'
-						AND browser='".$this->db->escape($_SERVER['HTTP_USER_AGENT'])."'
+						AND ip='%s'
+						AND browser='%s'
 						AND valid=1
-						AND TIMESTAMPDIFF(SECOND,timestamp,NOW()) <=
-							".$this->db->escape(SESSION_LENGTH)."
-				";
-				
+						AND TIMESTAMPDIFF(SECOND,timestamp,NOW()) <= %i",
+						array(session_id(),
+							$this->session,
+							$_SERVER['REMOTE_ADDR'],
+							$_SERVER['HTTP_USER_AGENT'],
+							SESSION_LENGTH));
+
 				$this->session = session_id(); // The session ID auth is using
 											   // is now the one our session
 											   // has
@@ -159,19 +162,19 @@ class AuthController extends BaseController {
 	 */
 	private function logSession($username) {
 		global $currentuser;
-		$sql = "INSERT INTO `login` 
-				(
-					session_id,
-					ip,
-					browser,
-					user
-				) VALUES (
-					'".$this->db->escape($currentuser->getSession())."',
-					'".$this->db->escape($_SERVER['REMOTE_ADDR'])."',
-					'".$this->db->escape($_SERVER['HTTP_USER_AGENT'])."',
-					'".$this->db->escape($username)."'
-				)
-		";
+		$sql = $this->safesql->query("INSERT INTO `login` 
+									(
+										session_id,
+										ip,
+										browser,
+										user
+									) VALUES (%q)",
+									array(
+										array($currentuser->getSession(),
+												$_SERVER['REMOTE_ADDR'],
+												$_SERVER['HTTP_USER_AGENT'],
+												$username)));
+
 		return $this->db->query($sql);
 	}
 
@@ -184,18 +187,18 @@ class AuthController extends BaseController {
 	 * Returns username of user if successful
 	 */
 	private function checkLogin($session) {
-		$sql = "SELECT 
-					user, 
-					TIMESTAMPDIFF(SECOND,timestamp,NOW()) AS timediff, 
-					ip, 
-					browser 
-				FROM `login` 
-				WHERE session_id='".$this->db->escape($session)."' 
-				AND valid=1 
-				AND logged_in=0 
-				ORDER BY timediff ASC 
-				LIMIT 1
-		";
+		$sql = $this->safesql->query("SELECT 
+										user, 
+										TIMESTAMPDIFF(SECOND,timestamp,NOW()) AS timediff, 
+										ip, 
+										browser 
+									FROM `login` 
+									WHERE session_id='%s' 
+									AND valid=1 
+									AND logged_in=0 
+									ORDER BY timediff ASC 
+									LIMIT 1",
+									array($session));
 		$login = $this->db->get_row($sql);
 		if(
 			$login->timediff <= LOGIN_CHECK_LENGTH 
@@ -238,20 +241,18 @@ class AuthController extends BaseController {
 	 */
 	private function destroySession() {
 		global $currentuser;
-		/*
-		$sql = "DELETE FROM login 
-				WHERE user='".$this->db->escape($currentuser->getUser())."'
-				AND session_id='".$this->db->escape($currentuser->getSession())."'
-				AND ip='".$this->db->escape($_SERVER['REMOTE_ADDR'])."'
-				AND browser='".$this->db->escape($_SERVER['HTTP_USER_AGENT'])."'";
-		*/
-		$sql = "UPDATE `login`
-				SET valid = 0,
-				logged_in = 0
-				WHERE user='".$this->db->escape($currentuser->getUser())."'
-				AND session_id='".$this->db->escape($currentuser->getSession())."'
-				AND ip='".$this->db->escape($_SERVER['REMOTE_ADDR'])."'
-				AND browser='".$this->db->escape($_SERVER['HTTP_USER_AGENT'])."'";
+				
+		$sql = $this->safesql->query("UPDATE login
+				SET valid = 0
+				WHERE session_id='%s'
+				AND ip='%s'
+				AND browser='%s'
+				AND user='%s'",
+				array($currentuser->getSession(),
+					$_SERVER['REMOTE_ADDR'],
+					$_SERVER['HTTP_USER_AGENT'],
+					$currentuser->getUser()));
+
 		return $this->db->query($sql);
 	}
 
@@ -260,13 +261,12 @@ class AuthController extends BaseController {
 	 */
 	private function destroySessions() {
 		global $currentuser;
-		/*
-		$sql = "DELETE FROM login 
-				WHERE user='".$this->db->escape($currentuser->getUser())."'";
-		 */
-		$sql = "UPDATE `login` 
+
+		$sql = $this->safesql->query("UPDATE `login` 
 				SET valid = 0
-				WHERE user='".$this->db->escape($currentuser->getUser())."'";
+				WHERE user='%s'",
+				array($currentuser->getUser()));
+				
 		return $this->db->query($sql);
 	}
 
@@ -279,13 +279,14 @@ class AuthController extends BaseController {
 				WHERE UNIX_TIMESTAMP() > UNIX_TIMESTAMP(expires)
 		";
 		$this->db->query($sql);
-		$sql = "UPDATE `login` 
+		$sql = $this->safesql->query("UPDATE `login` 
 				SET valid = 0
-				WHERE user='".$this->db->escape($currentuser->getUser())."'
+				WHERE user='%s'
 				AND logged_in=0
-				OR TIMESTAMPDIFF(SECOND,timestamp,NOW()) >
-					".SESSION_LENGTH.";
-		";
+				OR TIMESTAMPDIFF(SECOND,timestamp,NOW()) > %i",
+				array($currentuser->getUser(),
+						SESSION_LENGTH));
+
 		return $this->db->query($sql);
 	}
 	
@@ -294,7 +295,7 @@ class AuthController extends BaseController {
 	 * Get the user from the session id
 	 */
 	private function getUserFromSession($session) {
-		$sql = "SELECT user FROM login WHERE session_id='".$this->db->escape($session)."'";
+		$sql = $this->safesql->query("SELECT user FROM login WHERE session_id='%s'", array($session));
 		return $this->db->get_var($sql);
 	}
 
@@ -303,14 +304,15 @@ class AuthController extends BaseController {
 	 */
 	private function setLoggedIn() {
 		global $currentuser;
-		$sql = "UPDATE 
-					login 
-				SET 
-					logged_in=1 
-				WHERE 
-					user='".$this->db->escape($currentuser->getUser())."' 
-					AND session_id = '".$this->db->escape($this->session)."'
-				";
+		$sql = $this->safesql->query("UPDATE 
+										login 
+									SET 
+										logged_in=1 
+									WHERE 
+										user='%s' 
+										AND session_id = '%s'",
+									array($currentuser->getUser(), $this->session));
+
 		return $this->db->query($sql);
 	}
 
@@ -325,17 +327,18 @@ class AuthController extends BaseController {
 		$expiry_time = time() + COOKIE_LENGTH;
 
 		setcookie('felixonline', $hash, $expiry_time, '/', '.'.STANDARD_SERVER);
-		$sql = "INSERT INTO `cookies` 
-				(
-					hash,
-					user,
-					expires
-				) VALUES (
-					'".$this->db->escape($hash)."',
-					'".$this->db->escape($currentuser->getUser())."',
-					FROM_UNIXTIME(".$this->db->escape($expiry_time).")
-				)
-		";
+		$sql = $this->safesql->query("INSERT INTO `cookies` 
+									(
+										hash,
+										user,
+										expires
+									) VALUES (
+										'%s',
+										'%s',
+										FROM_UNIXTIME(%i)
+									)",
+									array($hash, $currentuser->getUser(), $expiry_time));
+
 		return $this->db->query($sql);
 	}
 

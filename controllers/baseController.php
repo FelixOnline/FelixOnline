@@ -8,7 +8,9 @@ class BaseController {
 
 	function __construct() {
 		global $db;
+		global $safesql;
 		$this->db = $db;
+		$this->safesql = $safesql;
 
 		/*
 		 * Set theme here so that it can be overridden by a controller if necessary
