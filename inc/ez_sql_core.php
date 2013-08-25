@@ -5,8 +5,8 @@
 	*  Web...: http://justinvincent.com
 	*  Name..: ezSQL
 	*  Desc..: ezSQL Core module - database abstraction library to make
-	*		  it very easy to deal with databases. ezSQLcore can not be used by 
-	*		  itself (it is designed for use by database specific modules).
+	*          it very easy to deal with databases. ezSQLcore can not be used by
+	*          itself (it is designed for use by database specific modules).
 	*
 	*/
 
@@ -14,7 +14,7 @@
 	*  ezSQL Constants
 	*/
 
-	define('EZSQL_VERSION','2.08');
+	define('EZSQL_VERSION','2.17');
 	define('OBJECT','OBJECT',true);
 	define('ARRAY_A','ARRAY_A',true);
 	define('ARRAY_N','ARRAY_N',true);
@@ -27,29 +27,29 @@
 	class ezSQLcore
 	{
 
-		var $trace			= false;  // same as $debug_all
-		var $debug_all		= false;  // same as $trace
-		var $debug_called	 = false;
+		var $trace            = false;  // same as $debug_all
+		var $debug_all        = false;  // same as $trace
+		var $debug_called     = false;
 		var $vardump_called   = false;
-		var $show_errors	  = true;
-		var $num_queries	  = 0;
-		var $last_query	   = null;
-		var $last_error	   = null;
-		var $col_info		 = null;
+		var $show_errors      = true;
+		var $num_queries      = 0;
+		var $last_query       = null;
+		var $last_error       = null;
+		var $col_info         = null;
 		var $captured_errors  = array();
-		var $cache_dir		= false;
-		var $cache_queries	= false;
-		var $cache_inserts	= false;
+		var $cache_dir        = false;
+		var $cache_queries    = false;
+		var $cache_inserts    = false;
 		var $use_disk_cache   = false;
-		var $cache_timeout	= 24; // hours
-		var $timers		   = array();
+		var $cache_timeout    = 24; // hours
+		var $timers           = array();
 		var $total_query_time = 0;
 		var $db_connect_time  = 0;
-		var $trace_log		= array();
-		var $use_trace_log	= false;
-		var $sql_log_file	 = false;
-		var $do_profile	   = false;
-		var $profile_times	= array();
+		var $trace_log        = array();
+		var $use_trace_log    = false;
+		var $sql_log_file     = false;
+		var $do_profile       = false;
+		var $profile_times    = array();
 
 		// == TJH == default now needed for echo of debug function
 		var $debug_echo_is_on = true;
@@ -75,7 +75,7 @@
 			$this->captured_errors[] = array
 			(
 				'error_str' => $err_str,
-				'query'	 => $this->last_query
+				'query'     => $this->last_query
 			);
 		}
 
@@ -166,7 +166,7 @@
 			// If invalid output type was specified..
 			else
 			{
-				$this->print_error(" \$db->get_row(string query, output type, int offset) -- Output type must be one of: OBJECT, ARRAY_A, ARRAY_N");
+				$this->show_errors ? trigger_error(" \$db->get_row(string query, output type, int offset) -- Output type must be one of: OBJECT, ARRAY_A, ARRAY_N",E_USER_WARNING) : null;
 			}
 
 		}
@@ -240,7 +240,7 @@
 				}
 				else
 				{
-					return null;
+					return array();
 				}
 			}
 		}
@@ -303,7 +303,9 @@
 						'num_rows' => $this->num_rows,
 						'return_value' => $this->num_rows,
 					);
-					error_log ( serialize($result_cache), 3, $cache_file);
+					file_put_contents($cache_file, serialize($result_cache));
+					if( file_exists($cache_file . ".updating") )
+						unlink($cache_file . ".updating");
 				}
 			}
 
@@ -323,9 +325,10 @@
 			if ( $this->use_disk_cache && file_exists($cache_file) )
 			{
 				// Only use this cache file if less than 'cache_timeout' (hours)
-				if ( (time() - filemtime($cache_file)) > ($this->cache_timeout*3600) )
+				if ( (time() - filemtime($cache_file)) > ($this->cache_timeout*3600) &&
+					!(file_exists($cache_file . ".updating") && (time() - filemtime($cache_file . ".updating") < 60)) )
 				{
-					unlink($cache_file);
+					touch($cache_file . ".updating"); // Show that we in the process of updating the cache
 				}
 				else
 				{
@@ -543,9 +546,54 @@
 					'time' => $this->timer_elapsed($timer_name)
 				);
 			}
-			
+
 			$this->total_query_time += $this->timer_elapsed($timer_name);
 		}
 
-	}
+		/**********************************************************************
+		* Creates a SET nvp sql string from an associative array (and escapes all values)
+		*
+		*  Usage:
+		*
+		*     $db_data = array('login'=>'jv','email'=>'jv@vip.ie', 'user_id' => 1, 'created' => 'NOW()');
+		*
+		*     $db->query("INSERT INTO users SET ".$db->get_set($db_data));
+		*
+		*     ...OR...
+		*
+		*     $db->query("UPDATE users SET ".$db->get_set($db_data)." WHERE user_id = 1");
+		*
+		* Output:
+		*
+		*     login = 'jv', email = 'jv@vip.ie', user_id = 1, created = NOW()
+		*/
 
+		function get_set($params)
+		{
+			if( !is_array( $params ) )
+			{
+				$this->register_error( 'get_set() parameter invalid. Expected array in '.__FILE__.' on line '.__LINE__);
+				return;
+			}
+			$sql = array();
+			foreach ( $params as $field => $val )
+			{
+				if ( $val === 'true' || $val === true )
+					$val = 1;
+				if ( $val === 'false' || $val === false )
+					$val = 0;
+
+				switch( $val ){
+					case 'NOW()' :
+					case 'NULL' :
+					  $sql[] = "$field = $val";
+						break;
+					default :
+						$sql[] = "$field = '".$this->escape( $val )."'";
+				}
+			}
+
+			return implode( ', ' , $sql );
+		}
+
+	}

@@ -26,8 +26,8 @@
 	//$dbok = mysql_select_db($dbname,$cid);
 
 	/* Initialise ezSQL database connection */
-	$db = new ezSQL_mysql();
-	$db->quick_connect($user,$pass,$dbname,$host);
+	$db = new ezSQL_mysqli();
+	$db->quick_connect($user,$pass,$dbname,$host,'utf8');
 
 	/* Set settings for caching (turned off by defualt) */
 	// Cache expiry
@@ -47,10 +47,6 @@
 	 * ***Only cache queries if they are unlikely to change within the cache timeout***
 	 */
 
-	/* Forces charset to be utf8 */
-	if(is_resource($db->dbh)) {
-		mysql_set_charset('utf8',$db->dbh);
-	}
 	/* turn off error reporting */
 	//error_reporting(0);
 	/* to turn on error reporting uncomment line: */
