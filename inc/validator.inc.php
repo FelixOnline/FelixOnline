@@ -22,17 +22,17 @@
  * If a parameter is not needed (i.e. in more or less every case), a dummy value should be provided
  *
  * CSRF example:
- *      $param = 'formname';
- *      $token = Utility::generateCSRFToken($param);
- *      // send these two values along with date in ajax request
- *      Validator::Check( // this will throw an exception if not valid
- *          array('csrf' => $token),
- *          array('csrf' =>
- *              array(
- *                  'val_1007' => $param
- *              )
- *          ) 
- *      );
+ *	  $param = 'formname';
+ *	  $token = Utility::generateCSRFToken($param);
+ *	  // send these two values along with date in ajax request
+ *	  Validator::Check( // this will throw an exception if not valid
+ *		  array('csrf' => $token),
+ *		  array('csrf' =>
+ *			  array(
+ *				  'val_1007' => $param
+ *			  )
+ *		  ) 
+ *	  );
  */
 
 class Validator {
@@ -92,13 +92,13 @@ class Validator {
 						if(LOCAL) {
 							break; // Do not validate if local
 						} else {
-				            $ds = ldap_connect("addressbook.ic.ac.uk");
-				            $r = ldap_bind($ds);
-				            $justthese = array("gecos");
-				            $sr = ldap_search($ds, "ou=People, ou=everyone, dc=ic, dc=ac, dc=uk", "uid=$value", $justthese);
-				            $info = ldap_get_entries($ds, $sr);
-				            if ($info["count"] > 0) {
-				                break;
+							$ds = ldap_connect("addressbook.ic.ac.uk");
+							$r = ldap_bind($ds);
+							$justthese = array("gecos");
+							$sr = ldap_search($ds, "ou=People, ou=everyone, dc=ic, dc=ac, dc=uk", "uid=$value", $justthese);
+							$info = ldap_get_entries($ds, $sr);
+							if ($info["count"] > 0) {
+								break;
 							} else {
 								if(!array_key_exists($field, $bad_fields)) {
 									$bad_fields[$field] = array();

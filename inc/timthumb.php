@@ -480,7 +480,7 @@ class timthumb {
 		}
 
 		if (!function_exists ('imagecreatetruecolor')) {
-		    return $this->error('GD Library Error: imagecreatetruecolor does not exist - please contact your webhost and ask them to install the GD library');
+			return $this->error('GD Library Error: imagecreatetruecolor does not exist - please contact your webhost and ask them to install the GD library');
 		}
 
 		if (function_exists ('imagefilter') && defined ('IMG_FILTER_NEGATE')) {
@@ -511,8 +511,8 @@ class timthumb {
 
 		// set default width and height if neither are set already
 		if ($new_width == 0 && $new_height == 0) {
-		    $new_width = 100;
-		    $new_height = 100;
+			$new_width = 100;
+			$new_height = 100;
 		}
 
 		// ensure size limits can not be abused

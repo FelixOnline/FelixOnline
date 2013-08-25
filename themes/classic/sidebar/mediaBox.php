@@ -8,49 +8,49 @@
 	</ul>
 	<div class="mediaBoxTab" id="mediaPhoto">
 		<?php 
-            $albums = $media->getAlbums(1);
-            foreach($albums as $album) {
+			$albums = $media->getAlbums(1);
+			foreach($albums as $album) {
 		?>
 		<a href="<?php echo $album->getURL(); ?>">
 			<img src="<?php echo $album->getThumbnail()->getURL(258, 160);?>"/>
 			<p><?php echo $album->getTitle();?></p>
 		</a>
-        <?php } ?>
+		<?php } ?>
 	</div>
 	<div class="mediaBoxTab" id="mediaVideo">
 		<?php 
-            $videos = $media->getVideos(1);
-            foreach($videos as $video) {
+			$videos = $media->getVideos(1);
+			foreach($videos as $video) {
 		?>
 		<a href="<?php echo $video->getURL(); ?>">
-            <img src="<?php echo $video->getThumbnail(); ?>" width="258px"/>
+			<img src="<?php echo $video->getThumbnail(); ?>" width="258px"/>
 			<p><?php echo $video->getTitle();?></p>
 		</a>
-        <?php } ?>
+		<?php } ?>
 	</div>
 	<div class="mediaBoxTab" id="mediaRadio">
-        <p>Listen Live:</p>
-        <audio id="listenlive" controls preload="auto" autobuffer>
-            <source src="http://icecast.icradio.com:8000/vorbis-extra-high" />
-            <source src="http://icecast.icradio.com:8000/mp3-high" />
-            <p><a href="http://www.icradio.com/live">on the ICRadio website</a></p>  
-        </audio>
-        <ul id="radiolist">
-        <?php
-            // cache
-            $cache = new Cache('sidebar-icradio');
-            $cache->setExpiry(6*60*60); // set expiry to 6 hours
-            if($cache->start()) {
-                $shows = $media->getRadioShows();
-                foreach($shows as $show) { ?>
-                <li>
-                    <a href="<?php echo $show['link']; ?>"> 
-                        <?php echo $show['title']; ?>
-                    </a>
-                </li>
-            <?php } 
-            } $cache->stop(); ?>
-        </ul>
+		<p>Listen Live:</p>
+		<audio id="listenlive" controls preload="auto" autobuffer>
+			<source src="http://icecast.icradio.com:8000/vorbis-extra-high" />
+			<source src="http://icecast.icradio.com:8000/mp3-high" />
+			<p><a href="http://www.icradio.com/live">on the ICRadio website</a></p>  
+		</audio>
+		<ul id="radiolist">
+		<?php
+			// cache
+			$cache = new Cache('sidebar-icradio');
+			$cache->setExpiry(6*60*60); // set expiry to 6 hours
+			if($cache->start()) {
+				$shows = $media->getRadioShows();
+				foreach($shows as $show) { ?>
+				<li>
+					<a href="<?php echo $show['link']; ?>"> 
+						<?php echo $show['title']; ?>
+					</a>
+				</li>
+			<?php } 
+			} $cache->stop(); ?>
+		</ul>
 	</div>
 </div>
 <?php $timing->log('after mediabox'); ?>

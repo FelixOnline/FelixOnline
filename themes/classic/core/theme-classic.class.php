@@ -2,8 +2,8 @@
 
 class ThemeClassic extends Theme {
 
-    public function foobar() {
-        return 'Foo Bar';
-    }
+	public function foobar() {
+		return 'Foo Bar';
+	}
 }
 ?>

@@ -2,8 +2,8 @@
 $timing->log('505 error');
 
 $header = array(
-    'title' => 'Felix Online - The student voice of Imperial College London',
-    'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
+	'title' => 'Felix Online - The student voice of Imperial College London',
+	'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
 );
 
 $theme->render('header', $header); 

@@ -70,7 +70,7 @@ class RSSFeed {
 		$output .= '<rdf:Seq>';
 		for($k=0; $k<$this->nritems; $k++) {
 			$output .= '<rdf:li rdf:resource="'.$this->items[$k]['url'].'"/>'."\n"; 
-		};      
+		};	  
 		$output .= '</rdf:Seq>'."\n";
 		$output .= '</items>'."\n";
 		$output .= '<image rdf:resource="'.$this->image_url.'"/>'."\n";

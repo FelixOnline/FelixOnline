@@ -20,19 +20,19 @@ require_once(THEME_DIRECTORY.'/functions.php');
  * Set default site wide resources
  */
 $this->resources = new ResourceManager(
-    /* CSS files */
-    array('960.css', 'style.less'), 
-    /* JS files */
-    array('plugins.js', 'script.js')
+	/* CSS files */
+	array('960.css', 'style.less'), 
+	/* JS files */
+	array('plugins.js', 'script.js')
 );
 
 /*
  * Set default sidebar
  */
 $this->setSidebar(array(   
-    'socialLinks',
-    'mostPopular',
-    'fbActivity'
+	'socialLinks',
+	'mostPopular',
+	'fbActivity'
 ));
 
 ?>

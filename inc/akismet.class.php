@@ -31,16 +31,16 @@
  *
  *  <b>Usage:</b>
  *  <code>
- *    $akismet = new Akismet('http://www.example.com/blog/', 'aoeu1aoue');
- *    $akismet->setCommentAuthor($name);
- *    $akismet->setCommentAuthorEmail($email);
- *    $akismet->setCommentAuthorURL($url);
- *    $akismet->setCommentContent($comment);
- *    $akismet->setPermalink('http://www.example.com/blog/alex/someurl/');
- *    if($akismet->isCommentSpam())
- *      // store the comment but mark it as spam (in case of a mis-diagnosis)
- *    else
- *      // store the comment normally
+ *	$akismet = new Akismet('http://www.example.com/blog/', 'aoeu1aoue');
+ *	$akismet->setCommentAuthor($name);
+ *	$akismet->setCommentAuthorEmail($email);
+ *	$akismet->setCommentAuthorURL($url);
+ *	$akismet->setCommentContent($comment);
+ *	$akismet->setPermalink('http://www.example.com/blog/alex/someurl/');
+ *	if($akismet->isCommentSpam())
+ *	  // store the comment but mark it as spam (in case of a mis-diagnosis)
+ *	else
+ *	  // store the comment normally
  *  </code>
  *
  *  Optionally you may wish to check if your WordPress API key is valid as in the example below.
@@ -49,9 +49,9 @@
  *   $akismet = new Akismet('http://www.example.com/blog/', 'aoeu1aoue');
  *   
  *   if($akismet->isKeyValid()) {
- *     // api key is okay
+ *	 // api key is okay
  *   } else {
- *     // api key is invalid
+ *	 // api key is invalid
  *   }
  * </code>
  *

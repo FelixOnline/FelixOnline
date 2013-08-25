@@ -2,8 +2,8 @@
 $timing->log('frontpage');
 
 $header = array(
-    'title' => 'Felix Online - The student voice of Imperial College London',
-    'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
+	'title' => 'Felix Online - The student voice of Imperial College London',
+	'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
 );
 
 $theme->render('header', $header); 
@@ -22,9 +22,9 @@ $timing->log('after header');
 		<!-- Sidebar -->
 		<div class="sidebar grid_4 push_8">
 			<?php 
-	            $theme->render('sidebar/fbActivity');
-	            $theme->render('sidebar/mostPopular');
-	            $theme->render('sidebar/socialLinks');
+				$theme->render('sidebar/fbActivity');
+				$theme->render('sidebar/mostPopular');
+				$theme->render('sidebar/socialLinks');
 
 			?>
 		</div>
@@ -190,11 +190,11 @@ $timing->log('after header');
 							<div id="storyMeta">
 								<ul class="metaList">
 									<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
-                                	<?php if ($article->getCategory()->getCat() == 'comment') { ?>
-                                    <li id="articleAuthor">
-                                        <?php echo Utility::outputUserList($article->getAuthors()); ?>
-                                    </li>
-                                    <?php } ?>
+									<?php if ($article->getCategory()->getCat() == 'comment') { ?>
+									<li id="articleAuthor">
+										<?php echo Utility::outputUserList($article->getAuthors()); ?>
+									</li>
+									<?php } ?>
 									<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
 								</ul>
 							</div>
@@ -202,11 +202,11 @@ $timing->log('after header');
 						<?php if ($article->getCategory()->getCat() != 'comment') { ?>
 							<div id="secondStoryPic">
 								<a href="<?php echo $article->getUrl();?>">
-				                	<?php if ($article->getImage()): ?>
-				                    	<img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 130); ?>" height="130px" width="220px">
+									<?php if ($article->getImage()): ?>
+										<img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 130); ?>" height="130px" width="220px">
 									<?php else: ?>
-				                    	<img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/130/'.DEFAULT_IMG_URI; ?>" height="130px" width="220px">
-				                    <?php endif; ?>
+										<img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/130/'.DEFAULT_IMG_URI; ?>" height="130px" width="220px">
+									<?php endif; ?>
 								</a>
 							</div>
 						<?php } ?>
@@ -227,11 +227,11 @@ $timing->log('after header');
 							<div id="storyMeta">
 								<ul class="metaList">
 									<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
-                                	<?php if ($article->getCategory()->getCat() == 'comment') { ?>
-                                    <li id="articleAuthor">
-                                        <?php echo Utility::outputUserList($article->getAuthors()); ?>
-                                    </li>
-                                    <?php } ?>
+									<?php if ($article->getCategory()->getCat() == 'comment') { ?>
+									<li id="articleAuthor">
+										<?php echo Utility::outputUserList($article->getAuthors()); ?>
+									</li>
+									<?php } ?>
 									<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
 								</ul>
 							</div>
@@ -253,11 +253,11 @@ $timing->log('after header');
 							<div id="storyMeta">
 								<ul class="metaList">
 									<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
-                                	<?php if ($article->getCategory()->getCat() == 'comment') { ?>
-                                    <li id="articleAuthor">
-                                        <?php echo Utility::outputUserList($article->getAuthors()); ?>
-                                    </li>
-                                    <?php } ?>
+									<?php if ($article->getCategory()->getCat() == 'comment') { ?>
+									<li id="articleAuthor">
+										<?php echo Utility::outputUserList($article->getAuthors()); ?>
+									</li>
+									<?php } ?>
 									<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
 								</ul>
 							</div>
@@ -274,8 +274,8 @@ $timing->log('after header');
 			</div>
 			
 			<!-- Page list -->
-		    <div class="grid_8 clearfix">
-		        <ul id="pageList" class="clearfix">
+			<div class="grid_8 clearfix">
+				<ul id="pageList" class="clearfix">
 					<li id="desc">Pages:</li>
 					<?php if ($p != 1) // Previous page arrow
 							echo '<li class="arrow"><a href="search/?q='.$_GET["q"].'&p='.($p-1).'">&#171;</a></li>';

@@ -5,8 +5,8 @@
 	*  Web...: http://justinvincent.com
 	*  Name..: ezSQL
 	*  Desc..: ezSQL Core module - database abstraction library to make
-	*          it very easy to deal with databases. ezSQLcore can not be used by 
-	*          itself (it is designed for use by database specific modules).
+	*		  it very easy to deal with databases. ezSQLcore can not be used by 
+	*		  itself (it is designed for use by database specific modules).
 	*
 	*/
 
@@ -27,29 +27,29 @@
 	class ezSQLcore
 	{
 
-		var $trace            = false;  // same as $debug_all
-		var $debug_all        = false;  // same as $trace
-		var $debug_called     = false;
+		var $trace			= false;  // same as $debug_all
+		var $debug_all		= false;  // same as $trace
+		var $debug_called	 = false;
 		var $vardump_called   = false;
-		var $show_errors      = true;
-		var $num_queries      = 0;
-		var $last_query       = null;
-		var $last_error       = null;
-		var $col_info         = null;
+		var $show_errors	  = true;
+		var $num_queries	  = 0;
+		var $last_query	   = null;
+		var $last_error	   = null;
+		var $col_info		 = null;
 		var $captured_errors  = array();
-		var $cache_dir        = false;
-		var $cache_queries    = false;
-		var $cache_inserts    = false;
+		var $cache_dir		= false;
+		var $cache_queries	= false;
+		var $cache_inserts	= false;
 		var $use_disk_cache   = false;
-		var $cache_timeout    = 24; // hours
-		var $timers           = array();
+		var $cache_timeout	= 24; // hours
+		var $timers		   = array();
 		var $total_query_time = 0;
 		var $db_connect_time  = 0;
-		var $trace_log        = array();
-		var $use_trace_log    = false;
-		var $sql_log_file     = false;
-		var $do_profile       = false;
-		var $profile_times    = array();
+		var $trace_log		= array();
+		var $use_trace_log	= false;
+		var $sql_log_file	 = false;
+		var $do_profile	   = false;
+		var $profile_times	= array();
 
 		// == TJH == default now needed for echo of debug function
 		var $debug_echo_is_on = true;
@@ -75,7 +75,7 @@
 			$this->captured_errors[] = array
 			(
 				'error_str' => $err_str,
-				'query'     => $this->last_query
+				'query'	 => $this->last_query
 			);
 		}
 
