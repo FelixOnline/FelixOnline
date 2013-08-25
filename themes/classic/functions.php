@@ -5,6 +5,27 @@ function contact_us() {
 	$name = $_REQUEST['name'];
 	$emailaddress = $_REQUEST['email'];
 	$message = $_REQUEST['message'];
+	
+	try {
+		Validator::Check(array(
+			'email' => $emailaddress,
+			'message' => $message
+		), array (
+			'email' => array(
+				Validator::validator_email => null
+			),
+			'message' => array(
+				Validator::validator_notnull => null
+			)
+		));
+	} catch (ValidatorException $e) {
+		$failed_fields = array();
+		foreach($e->getData() as $failedField => $data) {
+			$failed_fields[] = $failedField;
+		}
+		
+		return array(error => true, details => 'There has been an issue with some of your data, please check the highlighted fields and try again', validator => true, validator_data => $failed_fields);
+	}
 
 	$email = new Email(); 
 
@@ -29,7 +50,7 @@ function contact_us() {
 	// Mail it
 	$email->send();
 	
-	return 'Success';
+	return array(error => false, success => 'Your message has been sent, thank you!');
 }
 
 $hooks->addAction('like_comment', 'like_comment');

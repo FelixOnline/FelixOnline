@@ -245,7 +245,11 @@ $(document).ready(function() {
 		
 		function handleValidation(fields, form) {
 			jQuery.each(fields, function(index, obj) {
-				$("#"+form+" input[name="+obj+"]").addClass('invalidField');
+				if($("#"+form+" input[name="+obj+"]").length != 0) {
+					$("#"+form+" input[name="+obj+"]").addClass('invalidField');
+				} else {
+					$("#"+form+" #"+obj).addClass('invalidField');
+				}
 			});
 		}
 				
@@ -290,8 +294,8 @@ $(document).ready(function() {
 				}
 
 				if(successbox != null) {
-					if(data.success) {
-						$(successbox).text(data.success);
+					if(data.success != '') {
+						$(successbox).text(message.success);
 					} else {
 						$(successbox).text('Success');
 					}
@@ -445,47 +449,29 @@ $(document).ready(function() {
 
 	//Contact form validation
 	$("#contactform").submit(function() {
-		var messageText = $("#contactform #message").val();
-		if(!messageText) {
-			$("#contactform label.error").show();
-			return false;
-		} else {
-			$("#contactform label.error").hide();
-			var name = $('#contactform #name').val();
-			var email = $('#contactform #email').val();
-			$('#contactform #submit').hide();
-			$('#contactform #sending').show();
-			submit_message(name, email, messageText);
-			return false;
-		}
-	});
+		$("#contactform label.error").hide();
+		var name = $('#contactform #name').val();
+		var email = $('#contactform #email').val();
+		var message = $('#contactform #message').val();
+		var token = $('#contactform #token').val();
+		var check = 'contact_us';
 
-	function submit_message(name, email, message) {
-		$.ajax({
-			url: "ajax.php",
-			type: "POST",
-			data: ({
-					action: 'contact_us', 
-					name:name, 
-					email: email, 
-					message:message 
-			}),
-			async:true,
-			success: function(msg){
-				//alert(msg);
-				console.log(msg);
-				setTimeout(function(){ 
-					$('#contactform').fadeOut(500, function() {
-						$('#sent').fadeIn(500);
-					}); 
-				}, 500);
-			},
-			error: function(msg){
-				alert(msg);
-			}
-		});
+		data = {};
+		data.action = 'contact_us';
+		data.name = name;
+		data.email = email;
+		data.message = message;
+		data.token = token;
+		data.check = check;
+
+		ajaxHelper('contactform', 'POST', data, '#contactform #sending', ['#contactform #submit'], null, '#sent', null, ajaxCallback);
+	
+		function ajaxCallback(data, message) {
+			$('#contactform').hide();
+		}
+
 		return false;
-	}
+	});
 
 	function toggleBox(box) {
 		$(box).show();
@@ -494,6 +480,9 @@ $(document).ready(function() {
 	}
 	
 	$('input').change(function() {
+		$(this).removeClass('invalidField');
+	});
+	$('textarea').change(function() {
 		$(this).removeClass('invalidField');
 	});
 });
