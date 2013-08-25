@@ -3,6 +3,8 @@
  * Sets up the Felix Online environment 
  */
 
+date_default_timezone_set('Europe/London');
+
 // define current working directory
 if(!defined('BASE_DIRECTORY')) define('BASE_DIRECTORY', dirname(__FILE__));
 if(!defined('CACHE_DIRECTORY')) define('CACHE_DIRECTORY', BASE_DIRECTORY.'/cache/');
