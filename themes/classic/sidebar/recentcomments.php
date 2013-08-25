@@ -6,27 +6,7 @@
 	<h3>Recent Comments</h3>
 	<ul>
 		<?php 
-			$sql = "SELECT * FROM (
-				SELECT comment.article,
-					comment.id,
-					comment.user,
-					user.name,
-					comment.comment,
-					UNIX_TIMESTAMP(comment.timestamp) AS timestamp 
-				FROM `comment` LEFT JOIN `user` ON (comment.user=user.user) 
-				WHERE active=1 
-				UNION SELECT comment_ext.article,
-					comment_ext.id,
-					comment_ext.name,
-					comment_ext.comment,
-					'ext',
-					UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp 
-				FROM `comment_ext` 
-				WHERE active=1 
-				AND pending=0
-			) AS t 
-			ORDER BY timestamp DESC LIMIT ".RECENT_COMMENTS;
-			$recent_comments = $db->get_results($sql);
+			$recent_comments = Comment::getRecentComments(RECENT_COMMENTS);
 			
 			if(!is_null($recent_comments)) {
 				foreach($recent_comments as $key => $object) {
