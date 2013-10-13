@@ -4,11 +4,11 @@
  * Deals with both article retrieval and article submission
  *
  * Fields:
- *	  id			  - id of article 
- *	  title		   - title of article 
+ *	  id			  - id of article
+ *	  title		   - title of article
  *	  short_title	 - short title of article for boxes on front page [optional]
- *	  teaser		  - article teaser 
- *	  author		  - first author of article, superseded by article_author table [depreciated] 
+ *	  teaser		  - article teaser
+ *	  author		  - first author of article, superseded by article_author table [depreciated]
  *	  category		- id of category article is in
  *	  date			- timestamp when article was added to site
  *	  approvedby	  - user who approved the article to be published
@@ -23,7 +23,7 @@
  *	  short_desc	  - short description of article for boxes on front page [optional]
  */
 class Article extends BaseModel {
-	private $authors; // array of authors of article 
+	private $authors; // array of authors of article
 	private $approvedby; // user object of user who approved article
 	private $category_cat; // category cat (short version)
 	private $category_label; // category label
@@ -37,12 +37,13 @@ class Article extends BaseModel {
 		'@<style[^>]*?>.*?</style>@siU',	// style tags
 		'@<embed[^>]*?>.*?</embed>@siU',	// embed
 		'@<object[^>]*?>.*?</object>@siU',	// object
-		'@<iframe[^>]*?>.*?</iframe>@siU',	// iframe	  
+		'@<iframe[^>]*?>.*?</iframe>@siU',	// iframe
 		'@<![\s\S]*?--[ \t\n\r]*>@',		// multi-line comments including CDATA
 		'@</?[^>]*>*@' 		  // html tags
 	);
 	protected $db;
-	
+	protected $safesql;
+
 	/*
 	 * Constructor for Article class
 	 * If initialised with id then store relevant data in object
@@ -53,27 +54,30 @@ class Article extends BaseModel {
 	 */
 	function __construct($id=NULL) {
 		global $db;
+		global $safesql;
 		$this->db = $db;
+		$this->safesql = $safesql;
+
 		//$this->db->cache_queries = true;
 		if($id !== NULL) { // if creating an already existing article object
-			$sql = "SELECT 
-						`id`,
-						`title`,
-						`short_title`,
-						`teaser`,
-						`author`,
-						`approvedby`,
-						`category`,
-						UNIX_TIMESTAMP(`date`) as date,
-						UNIX_TIMESTAMP(`published`) as published,`hidden`,
-						`text1`,
-						`text2`,
-						`img1`,
-						`img2`,
-						`img2lr`,
-						`hits` 
-					FROM `article` 
-					WHERE id=".$id;
+			$sql = $this->safesql->query("SELECT
+										`id`,
+										`title`,
+										`short_title`,
+										`teaser`,
+										`author`,
+										`approvedby`,
+										`category`,
+										UNIX_TIMESTAMP(`date`) as date,
+										UNIX_TIMESTAMP(`published`) as published,`hidden`,
+										`text1`,
+										`text2`,
+										`img1`,
+										`img2`,
+										`img2lr`,
+										`hits`
+									FROM `article`
+									WHERE id=%i", array($id));
 			parent::__construct($this->db->get_row($sql), 'Article', $id);
 			//$this->db->cache_queries = false;
 			return $this;
@@ -81,26 +85,26 @@ class Article extends BaseModel {
 			// initialise new article
 		}
 	}
-	
+
 	/*
 	 * Public: Get array of authors of article
 	 *
 	 * Returns array
 	 */
-	public function getAuthors() { 
+	public function getAuthors() {
 		if(!$this->authors) {
-			$sql = "SELECT 
-					article_author.author as author 
-					FROM `article_author` 
-					INNER JOIN `article` 
-					ON (article_author.article=article.id) 
-					WHERE article.id=".$this->getId();
+			$sql = $this->safesql->query("SELECT
+											article_author.author as author
+											FROM `article_author`
+											INNER JOIN `article`
+											ON (article_author.article=article.id)
+											WHERE article.id=%i", array($this->getId()));
 			$authors = $this->db->get_results($sql);
 			foreach($authors as $author) {
 				$this->authors[] = new User($author->author);
 			}
 		}
-		return $this->authors; 
+		return $this->authors;
 	}
 
 	/*
@@ -152,11 +156,11 @@ class Article extends BaseModel {
 	 */
 	public function getCategoryCat() {
 		if(!$this->category_cat || !$this->category_label) {
-			$sql = "SELECT 
-						`cat`,
-						label 
-					FROM `category` 
-					WHERE id = ".$this->fields['category'];
+			$sql = $this->safesql->query("SELECT
+											`cat`,
+											label
+										FROM `category`
+										WHERE id = %i", array($this->fields['category']));
 			$cat = $this->db->get_row($sql);
 			$this->category_cat = $cat->cat;
 			$this->category_label = $cat->label;
@@ -169,7 +173,7 @@ class Article extends BaseModel {
 	 */
 	public function getCategoryLabel() {
 		if(!$this->category_label || !$this->category_cat) {
-			$sql = "SELECT cat,`label` FROM `category` WHERE id = ".$this->getCategory();
+			$sql = $this->safesql->query("SELECT cat,`label` FROM `category` WHERE id = %i", array($this->getCategory()));
 			$cat = $this->db->get_row($sql);
 			$this->category_label = $cat->label;
 			$this->category_cat = $cat->cat;
@@ -189,7 +193,7 @@ class Article extends BaseModel {
 	 */
 	public function getContent() {
 		if(!$this->content) {
-			$sql = "SELECT `content` FROM `text_story` WHERE id = ".$this->getText1();
+			$sql = $this->safesql->query("SELECT `content` FROM `text_story` WHERE id = %i", array($this->getText1()));
 			$this->content = $this->db->get_var($sql);
 		}
 		return $this->cleanText($this->content);
@@ -240,7 +244,7 @@ class Article extends BaseModel {
 
 	/*
 	 * Public: Get short description
-	 * If a short description is specified in the database then use that. 
+	 * If a short description is specified in the database then use that.
 	 * Otherwise limit article content to a certain character length
 	 *
 	 * $limit - character limit for description [defaults to 80]
@@ -260,21 +264,21 @@ class Article extends BaseModel {
 	 */
 	public function getNumComments() {
 		if(!$this->num_comments && $this->num_comments !== 0) {
-			$sql = "SELECT SUM(count) AS count 
-				FROM (
-					SELECT article,COUNT(*) AS count 
-					FROM `comment` 
-					WHERE article=".$this->getId()." 
-					AND `active`=1 
-					GROUP BY article 
-					UNION ALL 
-					SELECT article,COUNT(*) AS count 
-					FROM `comment_ext` 
-					WHERE article=".$this->getId()." 
-					AND `active`=1 
-					AND `pending`=0 
-					GROUP BY article
-				) AS t GROUP BY article";
+			$sql = $this->safesql->query("SELECT SUM(count) AS count
+										FROM (
+											SELECT article,COUNT(*) AS count
+											FROM `comment`
+											WHERE article=%i
+											AND `active`=1
+											GROUP BY article
+											UNION ALL
+											SELECT article,COUNT(*) AS count
+											FROM `comment_ext`
+											WHERE article=%i
+											AND `active`=1
+											AND `pending`=0
+											GROUP BY article
+										) AS t GROUP BY article", array($this->getId(), $this->getId()));
 			$this->num_comments = $this->db->get_var($sql);
 			if(!$this->num_comments) $this->num_comments = 0;
 		}
@@ -287,34 +291,32 @@ class Article extends BaseModel {
 	 * Returns db object
 	 */
 	public function getComments() {
-		$sql = "SELECT id,timestamp 
-				FROM (
-					SELECT 
-						comment.id,
-						UNIX_TIMESTAMP(comment.timestamp) AS timestamp 
-					FROM `comment` 
-					WHERE article=".$this->getId()." 
-					AND active=1". // select all internal comments 
-				" UNION SELECT 
-						comment_ext.id,
-						UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp 
-					FROM `comment_ext` 
-					WHERE article=".$this->getId()." 
-					AND pending=0 AND spam=0". // select external comments that are not spam
-				" UNION SELECT 
-						comment_ext.id,
-						UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp 
-						FROM `comment_ext`
-					WHERE article=".$this->getId()." 
-					AND IP = '".$_SERVER['REMOTE_ADDR']."' 
-					AND active=1 
-					AND pending=1 
-					AND spam=0". // select external comments that are pending and are from current ip
-			//" UNION SELECT comment_ext.id,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP != '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=0". // select external comments that have been approved and not from current ip
-			//" UNION SELECT comment_ext.id,UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp FROM `comment_ext` WHERE article=$article AND IP = '".$_SERVER['REMOTE_ADDR']."' AND active=1 AND pending=0". // select external comments that have been approve and are from current ip
-				") AS t 
-				ORDER BY timestamp ASC 
-				LIMIT 500";
+		$sql = $this->safesql->query("SELECT id,timestamp
+									FROM (
+										SELECT
+											comment.id,
+											UNIX_TIMESTAMP(comment.timestamp) AS timestamp
+										FROM `comment`
+										WHERE article=%i
+										AND active=1". // select all internal comments
+									" UNION SELECT
+											comment_ext.id,
+											UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp
+										FROM `comment_ext`
+										WHERE article=%i
+										AND pending=0 AND spam=0". // select external comments that are not spam
+									" UNION SELECT
+											comment_ext.id,
+											UNIX_TIMESTAMP(comment_ext.timestamp) AS timestamp
+											FROM `comment_ext`
+										WHERE article=%i
+										AND IP = '%s'
+										AND active=1
+										AND pending=1
+										AND spam=0". // select external comments that are pending and are from current ip
+									") AS t
+									ORDER BY timestamp ASC
+									LIMIT 500", array($this->getId(), $this->getId(), $this->getId(), $_SERVER['REMOTE_ADDR']));
 		$comments = array();
 		$rsc = $this->db->get_results($sql);
 		if($rsc) {
@@ -329,7 +331,7 @@ class Article extends BaseModel {
 	 * Public: Get image class
 	 */
 	public function getImage() {
-		if($this->getImg1()) { 
+		if($this->getImg1()) {
 			if($this->getImg1() == 183 || $this->getImg1() == 742) {
 				return false;
 			} else {
@@ -381,7 +383,7 @@ class Article extends BaseModel {
 	 * Private: Increment hit count on article
 	 */
 	private function hitArticle() {
-		$sql = "UPDATE `article` SET hits=hits+1 WHERE id=".$this->getId();
+		$sql = $this->safesql->query("UPDATE `article` SET hits=hits+1 WHERE id=%i", array($this->getId()));
 		return $this->db->query($sql);
 	}
 
@@ -392,23 +394,16 @@ class Article extends BaseModel {
 		global $currentuser;
 		$user = NULL;
 		if($currentuser->isLoggedIn()) $user = $currentuser->getUser();
-		$sql = "INSERT INTO 
-					article_visit 
-				(
-					article,
-					user,
-					IP,
-					browser,
-					referrer, 
-					repeat_visit
-				) VALUES (
-					'".$this->getId()."',
-					'".$user."',
-					'".$this->db->escape($_SERVER['REMOTE_ADDR'])."',
-					'".$this->db->escape($_SERVER['HTTP_USER_AGENT'])."',
-					'".$this->db->escape($_SERVER['HTTP_REFERER'])."',
-					'".$repeat."'
-				)";
+		$sql = $this->safesql->query("INSERT INTO
+										article_visit
+									(
+										article,
+										user,
+										IP,
+										browser,
+										referrer,
+										repeat_visit
+									) VALUES (%q)", array(array($this->getId(), $user, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $_SERVER['HTTP_REFERER'], $repeat)));
 		return $this->db->query($sql);
 	}
 
@@ -420,23 +415,23 @@ class Article extends BaseModel {
 	private function recentlyVisited() {
 		global $currentuser;
 		if($currentuser->isLoggedIn()) {
-			$sql = "SELECT
-						COUNT(id)
-					FROM
-						`article_visit`
-					WHERE user = '".$currentuser->getUser()."'
-					AND article = '".$this->getId()."'
-					AND UNIX_TIMESTAMP(timestamp) < now() - interval 4 week";
+			$sql = $this->safesql->query("SELECT
+											COUNT(id)
+										FROM
+											`article_visit`
+										WHERE user = '%s'
+										AND article = '%s'
+										AND UNIX_TIMESTAMP(timestamp) < now() - interval 4 week", array($currentuser->getUser(), $this->getId()));
 			return $this->db->get_var($sql);
 		} else {
-			$sql = "SELECT
-						COUNT(id)
-					FROM
-						`article_visit`
-					WHERE IP = '".$_SERVER['REMOTE_ADDR']."'
-					AND browser = '".$_SERVER['HTTP_USER_AGENT']."'
-					AND article = '".$this->getId()."'
-					AND UNIX_TIMESTAMP(timestamp) < now() - interval 4 week";
+			$sql = $this->safesql->query("SELECT
+											COUNT(id)
+										FROM
+											`article_visit`
+										WHERE IP = '%s'
+										AND browser = '%s'
+										AND article = %i
+										AND UNIX_TIMESTAMP(timestamp) < now() - interval 4 week", array($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $this->getId()));
 			return $this->db->get_var($sql);
 		}
 	}
@@ -447,46 +442,48 @@ class Article extends BaseModel {
 
 	public static function getMostPopular($number_to_get) {
 		global $db;
-		
-		$sql = "SELECT DISTINCT article AS id,COUNT(article) AS c 
-			FROM (
-				SELECT article FROM article_visit AS av 
-				INNER JOIN article AS a 
-				ON (av.article=a.id) 
-				WHERE a.published IS NOT NULL 
-				ORDER BY timestamp DESC LIMIT 500
-			) AS t GROUP BY article ORDER BY c DESC LIMIT ".$number_to_get;
-		
-		return $db->get_results($sql);	
+		global $safesql;
+
+		$sql = $safesql->query("SELECT DISTINCT article AS id,COUNT(article) AS c
+									FROM (
+										SELECT article FROM article_visit AS av
+										INNER JOIN article AS a
+										ON (av.article=a.id)
+										WHERE a.published IS NOT NULL
+										ORDER BY timestamp DESC LIMIT 500
+									) AS t GROUP BY article ORDER BY c DESC LIMIT %i", array($number_to_get));
+
+		return $db->get_results($sql);
 	}
-	
+
 	public static function getMostCommented($threshold, $number_to_get) {
 		global $db;
-		
-		$sql = "SELECT article AS id,SUM(count) AS count 
-		FROM (
-				(SELECT c.article,COUNT(*) AS count 
-				FROM `comment` AS c 
-				INNER JOIN `article` AS a ON (c.article=a.id) 
-				WHERE c.`active`=1 
-				AND timestamp>(DATE_SUB(NOW(),INTERVAL ".$threshold." day)) 
-				AND a.published<NOW() 
-				GROUP BY article 
-				ORDER BY timestamp DESC 
-				LIMIT 20) 
-			UNION ALL 
-				(SELECT ce.article,COUNT(*) AS count 
-				FROM `comment_ext` AS ce 
-				INNER JOIN `article` AS a ON (ce.article=a.id) 
-				WHERE ce.`active`=1 
-				AND pending=0 
-				AND timestamp>(DATE_SUB(NOW(),INTERVAL ".$threshold." day)) 
-				AND a.published<NOW() 
-				GROUP BY article 
-				ORDER BY timestamp DESC)
-		) AS t 
-		GROUP BY article 
-		ORDER BY count DESC, article DESC LIMIT ".$number_to_get; // go for most recent comments instead
+		global $safesql;
+
+		$sql = $safesql->query("SELECT article AS id,SUM(count) AS count
+									FROM (
+											(SELECT c.article,COUNT(*) AS count
+											FROM `comment` AS c
+											INNER JOIN `article` AS a ON (c.article=a.id)
+											WHERE c.`active`=1
+											AND timestamp>(DATE_SUB(NOW(),INTERVAL %i day))
+											AND a.published<NOW()
+											GROUP BY article
+											ORDER BY timestamp DESC
+											LIMIT 20)
+										UNION ALL
+											(SELECT ce.article,COUNT(*) AS count
+											FROM `comment_ext` AS ce
+											INNER JOIN `article` AS a ON (ce.article=a.id)
+											WHERE ce.`active`=1
+											AND pending=0
+											AND timestamp>(DATE_SUB(NOW(),INTERVAL %i day))
+											AND a.published<NOW()
+											GROUP BY article
+											ORDER BY timestamp DESC)
+									) AS t
+									GROUP BY article
+									ORDER BY count DESC, article DESC LIMIT %i", array($threshold, $threshold, $number_to_get)); // go for most recent comments instead
 		return $db->get_results($sql);
 	}
 }

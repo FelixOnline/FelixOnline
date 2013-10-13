@@ -12,19 +12,23 @@
 class Blog extends BaseModel {
 	protected $db;
 	protected $posts;
+	protected $safesql;
 
 	function __construct($slug=NULL) {
 		global $db;
+		global $safesql;
 		$this->db = $db;
+		$this->safesql = $safesql;
+
 		if($slug !== NULL) {
-			$sql = "SELECT
-						`id`,
-						`name`,
-						`slug`,
-						`controller`,
-						`sticky`
-					FROM `blogs`
-					WHERE slug='".$slug."'";
+			$sql = $this->safesql->query("SELECT
+											`id`,
+											`name`,
+											`slug`,
+											`controller`,
+											`sticky`
+										FROM `blogs`
+										WHERE slug='%s'", array($slug));
 			parent::__construct($this->db->get_row($sql), 'Blog', $slug);
 			return $this;
 		} else {
@@ -45,13 +49,15 @@ class Blog extends BaseModel {
 				SELECT
 					id
 				FROM `blog_post`
-				WHERE blog = ".$this->getId()."
+				WHERE blog = %i
 				ORDER BY timestamp DESC";
 			if($page) {
-				$sql .= "
-					LIMIT ".(($page-1)*BLOG_POSTS_PER_PAGE)
-					.",".BLOG_POSTS_PER_PAGE;
+				$sql .= "LIMIT %i,%i;";
+				$sql = $this->safesql->query($sql, array($this->getId(), (($page-1)*BLOG_POSTS_PER_PAGE), BLOG_POSTS_PER_PAGE));
+			} else {
+				$sql = $this->safesql->query($sql, array($this->getId()));
 			}
+
 			$posts = $this->db->get_results($sql);
 			foreach($posts as $object) {
 				$this->posts[] = new BlogPost($object->id);

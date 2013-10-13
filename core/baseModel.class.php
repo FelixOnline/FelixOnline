@@ -10,6 +10,7 @@ class BaseModel {
 	protected $class;
 	protected $item;
 	protected $db;
+	protected $safesql;
 	private $imported = array();
 	private $importedFunctions = array();
 	protected $filters = array();
@@ -17,15 +18,17 @@ class BaseModel {
 	function __construct($dbObject, $class, $item=null) {
 		/* initialise db connection and store it in object */
 		global $db;
+		global $safesql;
 		$this->db = $db;
-		
+		$this->safesql = $safesql;
+
 		$this->class = $class;
 		$this->item = $item;
 
 		if(class_exists(get_class($this).'Helper')) {
 			$this->import(get_class($this).'Helper');
 		}
-		
+
 		if($dbObject) {
 			foreach($dbObject as $key => $value) {
 				$this->fields[$key] = $value;
@@ -36,13 +39,13 @@ class BaseModel {
 		return $this->fields;
 	}
 
-	/* 
-	 * Create dynamic functions 
+	/*
+	 * Create dynamic functions
 	 */
 	function __call($method,$arguments) {
 		// check if there is an imported function that matches request
 		if(array_key_exists($method, $this->importedFunctions)) {
-			// invoke the function  
+			// invoke the function
 			return call_user_func_array(array($this->importedFunctions[$method], $method), $arguments);
 		} else {
 			$meth = $this->from_camel_case(substr($method,3,strlen($method)-3));
@@ -60,7 +63,7 @@ class BaseModel {
 					break;
 				default:
 					throw new ModelConfigurationException('The requested verb is not valid', $verb, $meth, $class, $item);
-					break; 
+					break;
 			}
 		}
 	}
@@ -68,22 +71,22 @@ class BaseModel {
 	/*
 	 * Import an object and allow its functions to be used in this class
 	 */
-	public function import($object) {  
+	public function import($object) {
 		// the new object to import
 		$newImport = new $object($this);
 		// the name of the new object (class name)
 		$importName = get_class($newImport);
 		// the new functions to import
 		$importFunctions = get_class_methods($newImport);
-  
+
 		// add the object to the registry
-		array_push($this->imported, array($import_name, $newImport));  
-  
+		array_push($this->imported, array($import_name, $newImport));
+
 		// add the methods to the registry
 		foreach($importFunctions as $key => $functionName) {
 			$this->importedFunctions[$functionName] = &$newImport;
 		}
-	}   
+	}
 
 	/*
 	 * Public: Set dbtable
@@ -127,7 +130,7 @@ class BaseModel {
 				$sql .= $key.', ';
 			}
 			$i++;
-		} 
+		}
 		$sql .= ") VALUES (";
 		$i = 1;
 		foreach($this->fields as $key => $value) {
@@ -144,7 +147,7 @@ class BaseModel {
 				$sql .= ", ";
 			}
 			$i++;
-		} 
+		}
 		$sql .= ") ";
 		$sql .= "ON DUPLICATE KEY UPDATE ";
 		$i = 1;
@@ -179,10 +182,10 @@ class BaseModel {
 	public function getFields() {
 		return $this->fields;
 	}
-  
-	/* 
+
+	/*
 	 * Convert camel case to underscore
-	 * http://www.paulferrett.com/2009/php-camel-case-functions/ 
+	 * http://www.paulferrett.com/2009/php-camel-case-functions/
 	 */
 	function from_camel_case($str) {
 		$str[0] = strtolower($str[0]);
