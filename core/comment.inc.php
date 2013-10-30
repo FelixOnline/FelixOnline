@@ -118,6 +118,7 @@ class Comment {
     public function getTimestamp()  { return $this->timestamp; }
     public function getLikes()      { return $this->likes; }
     public function getDislikes()   { return $this->dislikes; }
+    public function getIP()         { return $this->IP; }
 
     /*
      * Public: Get comment content with reply link
@@ -360,7 +361,7 @@ class Comment {
      *
      * Returns id of new comment
      */
-    public function insert() {
+    public function insert($spam = 0) {
         $content = mysql_real_escape_string(get_correct_utf8_mysql_string($this->content));
         if(!$this->external) { // if internal
             $sql = "INSERT INTO `comment` (article,user,comment,reply) VALUES ('".$this->article."','".$this->user."','".$content."','".$this->getReplyID()."')"; // insert comment into database
@@ -376,33 +377,11 @@ class Comment {
 
             return $this->id; // return new comment id
         } else { // if external comment
-            // check spam using akismet
-            require_once('inc/akismet.class.php');
-
-            $akismet = new Akismet(STANDARD_URL, AKISMET_API_KEY);
-            $akismet->setCommentAuthor($this->name);
-            //$akismet->setCommentAuthorEmail($email);
-            $akismet->setCommentContent($this->comment);
-            $akismet->setPermalink(full_article_url($this->article));
-
-            if($akismet->isCommentSpam()) { // if comment is spam
-                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$this->name."','".$content."',0,'".$_SERVER['REMOTE_ADDR']."',0,'".$this->getReplyID()."',1)";
+                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$this->name."','".$content."',1,'".$_SERVER['REMOTE_ADDR']."',1,'".$this->getReplyID()."',".$spam.")";
                 $rsc = $this->dbquery($sql);
                 $this->id = mysql_insert_id(); // get id of inserted comment
 
-                // insert comment ip into comment_spam
-                $sql = "INSERT IGNORE INTO `comment_spam` (IP, date) VALUES ('".$_SERVER['REMOTE_ADDR']."', DATE_ADD(NOW(), INTERVAL 2 MONTH))";
-                $rsc = $this->dbquery($sql);
-
-                return 'spam';
-            } else {
-                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply) VALUES ('".$this->article."','".$this->name."','".$content."',1,'".$_SERVER['REMOTE_ADDR']."',1,'".$this->getReplyID()."')";
-                $rsc = $this->dbquery($sql);
-                $this->id = mysql_insert_id(); // get id of inserted comment
-
-                $this->emailExternalComment();
                 return $this->id;
-            }
         }
     }
 

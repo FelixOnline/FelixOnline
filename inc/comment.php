@@ -8,7 +8,7 @@
 
     $errorinsert = false; // error on insert flag
     $errorduplicate = false; // error on duplicate flag
-    $errorrecapatcha = false; // error on recapatcha fail
+    $errorakismet = false; // error on recapatcha fail
     $errorspam = false; // error on spam catch
 
     $newComment = new Comment();
@@ -42,33 +42,56 @@
             $newComment->setReply($_POST['replyComment']);
         }
 
-        // ReCapatcha
-        //A. Load the Recaptcha Libary
-        require_once('recaptchalib.php');
-         
-        //B. Recaptcha Looks for the POST to confirm 
-        $resp = recaptcha_check_answer(RECAPTCHA_PRIVATE_KEY,
-                                        $_SERVER["REMOTE_ADDR"],
-                                        $_POST["recaptcha_challenge_field"],
-                                        $_POST["recaptcha_response_field"]);
-         
-        //C. If if the User's authentication is valid, echo "success" to the Ajax
-        if ($resp->is_valid) {
-            if ($newComment->commentExists()) { // if comment already exists
-                $errorduplicate = true;
-            } else {
-                if($id = $newComment->insert()) {
-                    if($id == 'spam') {
-                        $errorspam = true;
-                    } else {
-                        header('Location: '.full_article_url($article).'#comment'.$id);
-                    }
-                } else {
-                    $errorinsert = true;
-                }
-            }
-        } else {
-            $errorrecapatcha = true; 
+        // Akismet
+        //A. Load the Akismet Libary
+
+        require_once('Akismet/Akismet.php');
+        require_once('Akismet/Connector/ConnectorInterface.php');
+        require_once('Akismet/Connector/Curl.php');
+        require_once('Akismet/Connector/PHP.php');
+
+        try {
+        	$ak = new RzekaE\Akismet\Akismet(AKISMET_API_KEY, BASE_URL);
+        } catch(Exception $e) {
+        	$errorakismet = true;
+        }
+
+        if(!$errorakismet) {
+		//B. Build comment array for akismet
+		$comment = array(
+			'user_ip' => $_SERVER['REMOTE_ADDR'],
+			'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+			'referrer' => $_SERVER['HTTP_REFERER'],
+			'comment_type' => 'comment',
+			'comment_author' => $_POST['name'],
+			'comment_content' => $_POST['comment'],
+			'permalink' => full_article_url($article));
+
+		//C. Call Akismet
+		try {
+			$status = $ak->check($comment);
+		} catch(Exception $e) {
+			$errorakismet = true;
+         	}
+
+	}
+
+	if(!$errorakismet) {
+        	//D. Parse response
+        	    if ($newComment->commentExists()) { // if comment already exists
+        	        $errorduplicate = true;
+        	    } else {
+        	    if($status) { $status = 1; } else { $status = 0; }
+        	        if($id = $newComment->insert($status)) {
+        	            if($status == 1) {
+        	                $errorspam = true;
+        	            } else {
+        	                header('Location: '.full_article_url($article).'#comment'.$id);
+        	            }
+        	        } else {
+        	            $errorinsert = true;
+        	        }
+        	    }
         }
     }
 ?>

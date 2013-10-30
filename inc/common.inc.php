@@ -893,31 +893,34 @@ function insert_comment_external($article,$name,$comment,$replyName,$replyCommen
 function mark_spam($id) {
     global $cid;
 
-    // get ip from comment id
-    $sql = "SELECT IP FROM `comment_ext` WHERE id='$id'";
-    $result = mysql_query($sql,$cid);
-
-    if(mysql_num_rows($result)) {
-        $ip = mysql_result($result, 0);
-
-        // insert comment ip into comment_spam
-        $sql = "INSERT IGNORE INTO `comment_spam` (IP, date) VALUES ('$ip', DATE_ADD(NOW(), INTERVAL 2 MONTH))";
-        mysql_query($sql,$cid) or die(mysql_error());
-
-        // mark all comments with that ip as not pending
-        $sql = "UPDATE `comment_ext` SET active=0, pending=0, spam=1 WHERE IP='$ip'";
+    if(true) {
+        $com = new Comment($id);
+        $sql = "UPDATE `comment_ext` SET active=0, pending=0, spam=1 WHERE id='$id'";
         $result = mysql_query($sql)
             or die(mysql_error());
 
         // check aksimet spam
-        require_once('akismet.class.php');
+        require_once('Akismet/Akismet.php');
+        require_once('Akismet/Connector/ConnectorInterface.php');
+        require_once('Akismet/Connector/Curl.php');
+        require_once('Akismet/Connector/PHP.php');
 
-        $WordPressAPIKey = '4c2ddc0022f0';
-        $MyBlogURL = 'http://felixonline.co.uk';
+        try {
+          	$ak = new RzekaE\Akismet\Akismet(AKISMET_API_KEY, BASE_URL);
+        } catch(Exception $e) {
+           	return false;
+        }
 
-        $akismet = new Akismet($MyBlogURL ,$WordPressAPIKey);
+        $comment = array(
+        'user_ip' => $com->getIP(),
+        'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+        'referrer' => $_SERVER['HTTP_REFERER'],
+        'comment_type' => 'comment',
+        'comment_author' => get_vname_by_uname_db($com->getUser()),
+        'comment_content' => $com->getContent(),
+        'permalink' => full_article_url($com->getArticle()));
 
-        $akismet->submitSpam();
+	$ak->sendSpam($comment);
 
         return true;
     } else {
@@ -927,31 +930,35 @@ function mark_spam($id) {
 
 function not_spam($id) {
     global $cid;
-    // get ip from comment id
-    $sql = "SELECT IP FROM `comment_ext` WHERE id='$id'";
-    $result = mysql_query($sql,$cid);
 
-    if(mysql_num_rows($result)) {
-        $ip = mysql_result($result, 0);
-
-        // delete ip from table
-        $sql = "DELETE FROM `comment_spam` WHERE IP='$ip' LIMIT 1";
-        mysql_query($sql,$cid) or die(mysql_error());
-
-        // mark all comments with that ip as pending
-        $sql = "UPDATE `comment_ext` SET active=1,pending=1 WHERE IP='$ip'";
+    if(true) {
+	$com = new Comment($id);
+        $sql = "UPDATE `comment_ext` SET active=1,pending=1 WHERE id='$id'";
         $result = mysql_query($sql)
             or die(mysql_error());
 
         // check aksimet spam
-        require_once('akismet.class.php');
+        require_once('Akismet/Akismet.php');
+        require_once('Akismet/Connector/ConnectorInterface.php');
+        require_once('Akismet/Connector/Curl.php');
+        require_once('Akismet/Connector/PHP.php');
 
-        $WordPressAPIKey = '4c2ddc0022f0';
-        $MyBlogURL = 'http://felixonline.co.uk';
+        try {
+                $ak = new RzekaE\Akismet\Akismet(AKISMET_API_KEY, BASE_URL);
+        } catch(Exception $e) {
+                return false;
+        }
 
-        $akismet = new Akismet($MyBlogURL ,$WordPressAPIKey);
+        $comment = array(
+        'user_ip' => $com->getIP(),
+        'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+        'referrer' => $_SERVER['HTTP_REFERER'],
+        'comment_type' => 'comment',
+        'comment_author' => get_vname_by_uname_db($com->getUser()),
+        'comment_content' => $com->getContent(),
+        'permalink' => full_article_url($com->getArticle()));
 
-        $akismet->submitHam();
+	$ak->sendHam($comment);
 
         return true;
     } else {

@@ -26,6 +26,7 @@
     define('ADMIN_URL','http://localhost/felix/engine/');
     define('AUTHENTICATION_SERVER','localhost'); // authentication server
     define('AUTHENTICATION_PATH','http://localhost/felix/'); // authentication path
+    define('AKISMET_API_KEY', 'abcd');
 
     define('PRODUCTION_FLAG', true); // if set to true css and js will be minified etc..
     define('LOCAL', false); // if true then site is hosted locally - don't use pam_auth etc. 
