@@ -377,7 +377,7 @@ class Comment {
 
             return $this->id; // return new comment id
         } else { // if external comment
-                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$this->name."','".$content."',1,'".$_SERVER['REMOTE_ADDR']."',1,'".$this->getReplyID()."',".$spam.")";
+                $sql = "INSERT INTO `comment_ext` (article,name,comment,active,IP,pending,reply,spam) VALUES ('".$this->article."','".$this->name."','".$content."',".(int) !$spam.",'".$_SERVER['REMOTE_ADDR']."',".(int) !$spam.",'".$this->getReplyID()."',".$spam.")";
                 $rsc = $this->dbquery($sql);
                 $this->id = mysql_insert_id(); // get id of inserted comment
 
