@@ -486,5 +486,3 @@ $(document).ready(function() {
 		$(this).removeClass('invalidField');
 	});
 });
-
-

@@ -4,6 +4,8 @@ $header = array(
 	'title' => $page->getTitle().' - Felix Online'
 ); 
 
+$theme->resources->addJS(array('contact.js'));
+
 $theme->render('header', $header);
 ?>
 <!-- Page wrapper -->
