@@ -7,11 +7,11 @@ $(document).ready(function() {
 	// Reload css to fix @font face issue in IE8
 	//$('#main_css')[0].href=$('#main_css')[0].href;
 	(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=200482590030408";
-	  fjs.parentNode.insertBefore(js, fjs);
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=200482590030408";
+		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 	
 	/* Phoenix box */
@@ -112,7 +112,7 @@ $(document).ready(function() {
 	
 	$(document).bind('reveal.facebox', function() { 
 		$('#loginForm #user').focus();
-	})
+	});
 	
 	//Twitter style countdown on comment form
 	$("#commentForm #comment").charCount();
@@ -440,37 +440,11 @@ $(document).ready(function() {
 	}
 
 	$('.circle').mosaic({
-		opacity	 :   0.8		 //Opacity for overlay (0-1)
+		opacity: 0.8		//Opacity for overlay (0-1)
 	});
 
 	$('.play').mosaic({
-		opacity	 :   0.8		 //Opacity for overlay (0-1)
-	});
-
-	//Contact form validation
-	$("#contactform").submit(function() {
-		$("#contactform label.error").hide();
-		var name = $('#contactform #name').val();
-		var email = $('#contactform #email').val();
-		var message = $('#contactform #message').val();
-		var token = $('#contactform #token').val();
-		var check = 'contact_us';
-
-		data = {};
-		data.action = 'contact_us';
-		data.name = name;
-		data.email = email;
-		data.message = message;
-		data.token = token;
-		data.check = check;
-
-		ajaxHelper('contactform', 'POST', data, '#contactform #sending', ['#contactform #submit'], null, '#sent', null, ajaxCallback);
-	
-		function ajaxCallback(data, message) {
-			$('#contactform').hide();
-		}
-
-		return false;
+		opacity: 0.8		//Opacity for overlay (0-1)
 	});
 
 	function toggleBox(box) {
@@ -486,5 +460,4 @@ $(document).ready(function() {
 		$(this).removeClass('invalidField');
 	});
 });
-
 
