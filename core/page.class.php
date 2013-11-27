@@ -49,4 +49,12 @@ class Page extends BaseModel {
 	}
 }
 
-?>
+	/**
+	 * Public: Get page slug
+	 *
+	 * @return string page slug
+	 */
+	public function getSlug() {
+		return $this->fields['slug'];				
+	}
+}

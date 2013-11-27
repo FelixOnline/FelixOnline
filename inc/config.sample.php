@@ -49,4 +49,3 @@
 	//error_reporting(0);
 	/* to turn on error reporting uncomment line: */
 	error_reporting(E_ERROR | E_WARNING | E_PARSE);
-?>

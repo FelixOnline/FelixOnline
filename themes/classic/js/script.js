@@ -488,3 +488,128 @@ $(document).ready(function() {
 });
 
 
+/* ------------------------------------------- */
+/* AJAX Helper */
+/* ------------------------------------------- */
+
+function ajaxHelper(form, method, data, spinner, hideme, showme, successbox, failbox, callback) {
+	method = method || 'POST';
+	data = data || {};
+	spinner = spinner || null;
+	hideme = hideme || {};
+	showme = showme || {};
+	successbox = successbox || null;
+	failbox = failbox || null;
+	callback = callback || null;
+	
+	// hidemes are hidden during the AJAX call and are shown again at the end
+	// showme are shown at the beginning of the call and are hidden at the end
+	// Ignore spinners here
+	function hideStart(hideme, showme, spinner) {
+		jQuery.each(hideme, function(index, obj) {
+			$(obj).hide();
+		});
+		
+		jQuery.each(showme, function(index, obj) {
+			$(obj).show();
+		});
+		
+		if(spinner !== null) {
+			$(spinner).show();
+		}
+	}
+
+	function hideEnd(hideme, showme, spinner) {
+		jQuery.each(hideme, function(index, obj) {
+			$(obj).show();
+		});
+		
+		jQuery.each(showme, function(index, obj) {
+			$(obj).hide();
+		});
+		
+		if(spinner !== null) {
+			$(spinner).hide();
+		}
+	}
+	
+	function error(err, failbox) {
+		if(failbox !== null) {
+			$(failbox).text(err);
+			toggleBox(failbox);
+		} else {
+			alert(err);
+		}
+	}
+	
+	function handleValidation(fields, form) {
+		jQuery.each(fields, function(index, obj) {
+			$("#"+form+" input[name="+obj+"]").addClass('invalidField');
+		});
+	}
+			
+	hideStart(hideme, showme, spinner);
+	
+	$.ajax({
+		url: "ajax.php",
+		type: method,
+		data: data,
+		async: true,
+		success: function(msg){
+			var message = null;
+			try {
+				message = JSON.parse(msg);
+			} catch(err) {
+				var message = {};
+				message.error = err;
+				message.reload = false;
+			}
+			if(message.error) {
+				if(message.validator) {
+					handleValidation(message.validator_data, form);
+				}
+				
+				error(message.details, failbox);
+
+				if(message.reload) {
+					location.reload();
+				}
+				hideEnd(hideme, showme, spinner);
+				$('#token').val(message.newtoken);
+				return false;
+			}
+			
+			// Set new token
+			$('#token').val(message.newtoken);
+
+			hideEnd(hideme, showme, spinner);
+			
+			// Run callback if one exists
+			if(callback) {
+				callback(data, message);
+			}
+
+			if(successbox !== null) {
+				if(data.success !== '') {
+					$(successbox).text(message.success);
+				} else {
+					$(successbox).text('Success');
+				}
+				
+				toggleBox(successbox);
+			}
+							
+			return true;
+		},
+		error: function(msg){
+			error(msg, failbox);
+			
+			if(message.reload) {
+				location.reload();
+			}
+			$('#token').val(message.newtoken);
+			hideEnd(hideme, showme, spinner);
+			return false;
+		}
+	});
+}

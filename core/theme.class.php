@@ -93,7 +93,7 @@ class Theme {
 				$file = $this->page;
 				foreach($parts as $pkeys => $pvalue) { // evaluate each part
 					$method = 'get'.$this->toCamelCase($pvalue);
-					if(method_exists($method, ucfirst($this->page))) { // if method exists in class
+					if(method_exists(ucfirst($this->page), $method)) { // if method exists in class
 						$file .= '-'.$this->data[$this->page]->{$method}();
 					} else { // else treat as static variable
 						$file .= '-'.$pvalue;
@@ -205,4 +205,3 @@ class Theme {
 		return $return;
 	}
 }
-?>
