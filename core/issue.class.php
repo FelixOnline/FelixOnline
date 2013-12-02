@@ -11,74 +11,74 @@
  *      Year        - Temporary
  */
 class Issue extends BaseModel {
-    protected $filters = array();
+	protected $filters = array();
 
-    function __construct($id = NULL) {
-        global $dba;
-        $this->dba = $dba;
-        if($id !== NULL) {
-            $sql = "SELECT
+	function __construct($id = NULL) {
+		global $dba;
+		$this->dba = $dba;
+		if($id !== NULL) {
+			$sql = "SELECT
 						`id`,
-                        UNIX_TIMESTAMP(`PubDate`) as pub_date,
-                        `IssueNo`,
-                        `PubNo`,
-                        `Description`,
-                        `Year`
-                    FROM `Issues`
+						UNIX_TIMESTAMP(`PubDate`) as pub_date,
+						`IssueNo`,
+						`PubNo`,
+						`Description`,
+						`Year`
+					FROM `Issues`
 					WHERE id=".$id;
-            $this->filters = array(
-                'IssueNo' => 'issue_no',
-                'PubNo' => 'pub_no'
-            );
-            parent::__construct($this->dba->get_row($sql), 'Issue', $id);
-            return $this;
-        } else {
-            // initialise new issue
-        }
-    }
+			$this->filters = array(
+				'IssueNo' => 'issue_no',
+				'PubNo' => 'pub_no'
+			);
+			parent::__construct($this->dba->get_row($sql), 'Issue', $id);
+			return $this;
+		} else {
+			// initialise new issue
+		}
+	}
 
-    /*
-     * Public: Get URL
-     *
-     * Returns string
-     */
-    public function getURL() {
-        $url = STANDARD_URL.'issuearchive/issue/'.$this->getId();    
-        return $url;
-    }
+	/*
+	 * Public: Get URL
+	 *
+	 * Returns string
+	 */
+	public function getURL() {
+		$url = STANDARD_URL.'issuearchive/issue/'.$this->getId();
+		return $url;
+	}
 
-    /*
-     * Public: Get download URL
-     *
-     * Returns string
-     */
-    public function getDownloadURL() {
-        $url = $this->getURL().'/download';
-        return $url;
-    }
+	/*
+	 * Public: Get download URL
+	 *
+	 * Returns string
+	 */
+	public function getDownloadURL() {
+		$url = $this->getURL().'/download';
+		return $url;
+	}
 
-    /*
-     * Public: Get thumbnail
-     * Gets thumbnail filename
-     *
-     * TODO: clean up
-     *
-     * Returns string
-     */
-    public function getThumbnail() {
-        $thumb = substr($this->getFile(),8,(strlen($this->getFile())-11)).'png';
-        return $thumb;
-    }
+	/*
+	 * Public: Get thumbnail
+	 * Gets thumbnail filename
+	 *
+	 * TODO: clean up
+	 *
+	 * Returns string
+	 */
+	public function getThumbnail() {
+		$thumb = substr($this->getFile(),8,(strlen($this->getFile())-11)).'png';
+		return $thumb;
+	}
 
-    /*
-     * Public: Get thumbnail url
-     *
-     * Returns string
-     */
-    public function getThumbnailURL() {
-        $url = 'http://felixonline.co.uk/archive/thumbs/'.$this->getThumbnail();
-        return $url;
-    }
+	/*
+	 * Public: Get thumbnail url
+	 *
+	 * Returns string
+	 */
+	public function getThumbnailURL() {
+		$url = 'http://felixonline.co.uk/archive/thumbs/'.$this->getThumbnail();
+		return $url;
+	}
 
 	/**
 	 * Public: Get file
