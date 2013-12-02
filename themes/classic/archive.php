@@ -41,7 +41,7 @@ $theme->render('header', $header);
                 $currentdecade['begin'] = $currentdecade['final']; 
             }
             for($i = $currentdecade['begin']; $i <= $currentdecade['final']; $i++) { ?>
-            <li <?php if($i == $year) echo 'class="current"'; ?>>
+			<li class="<?php if($i == $year) { ?>current<?php } ?>">
                 <a href="<?php STANDARD_URL; ?>issuearchive/year/<?php echo $i; ?>"><?php echo $i; ?></a>
             </li>
         <?php } ?>
