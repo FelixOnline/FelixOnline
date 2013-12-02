@@ -31,9 +31,9 @@ class BaseModel {
 
 		if($dbObject) {
 			foreach($dbObject as $key => $value) {
-                if(!empty($this->filters) && array_key_exists($key, $this->filters)) {
-                    $key = $this->filters[$key];
-                }
+				if(!empty($this->filters) && array_key_exists($key, $this->filters)) {
+					$key = $this->filters[$key];
+				}
 				$this->fields[$key] = $value;
 			}
 		} else {
