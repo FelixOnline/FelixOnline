@@ -73,11 +73,19 @@ class ArchiveController extends BaseController {
             // get issues 
             $issues = $this->getIssues($this->year);
 
+			// 2011 Felix Daily
+			// TODO: make this nicer
+			$daily = array();
+			if ($this->year == '2011') {
+				$daily = $this->getIssues($this->year, 3);
+			}
+
             $this->theme->appendData(array(
                 'decades' => $decades,
                 'currentdecade' => $currentdecade,
                 'year' => $this->year,
-                'issues' => $issues
+				'issues' => $issues,
+				'daily' => $daily
             ));
 
             $this->theme->render('archive');
