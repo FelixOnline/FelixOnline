@@ -9,7 +9,6 @@
 		*/
 ?>
 
-
 <!-- Archive wrapper -->
 <div class="container_12 archive">
     <!-- Search -->

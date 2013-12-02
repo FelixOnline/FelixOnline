@@ -5,15 +5,24 @@
 class ArchiveController extends BaseController {
     function __construct() {
         parent::__construct();
-        global $dbaname;
-        $this->dba = new ezSQL_mysql();
-        $this->dba->quick_connect(
+        //global $dbaname;
+		$dbaname = 'media_felix_archive';
+
+		$dba = new ezSQL_mysqli();
+        $dba->quick_connect(
             $this->db->dbuser,
             $this->db->dbpassword,
             $dbaname,
-            $this->db->dbhost
+			$this->db->dbhost,
+			'utf8'
         );
-        mysql_set_charset('utf8',$this->dba->dbh);
+		$safesql = new SafeSQL_MySQLi($dba->dbh);
+		$dba->cache_timeout = 24; // Note: this is hours
+		$dba->use_disk_cache = true;
+		$dba->cache_dir = 'inc/ezsql_cache'; // Specify a cache dir. Path is taken from calling script
+		$dba->show_errors();
+
+		$this->dba = $dba;
     }
 
     function GET($matches) {
