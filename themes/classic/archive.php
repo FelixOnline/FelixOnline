@@ -57,7 +57,7 @@ $theme->render('header', $header);
                             <div class="issue">
                                 <?php echo $issue->getIssueNo(); ?>
                             </div>
-                            <img src="<?php echo $issue->getThumbnailURL();?>" alt="<?php echo $issue->getId();?>"/>
+                            <img src="<?php echo $issue->getThumbnailURL();?>" alt="<?php echo $issue->getIssueNo();?>"/>
                             <div class="date">
                                 <?php echo date("l jS F",$issue->getPubDate()); ?>
                             </div>

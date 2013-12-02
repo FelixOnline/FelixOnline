@@ -58,7 +58,7 @@ class BaseModel {
 					if(array_key_exists($meth, $this->fields)) {
 						return $this->fields[$meth];
 					}
-					throw new ModelConfigurationException('The requested field does not exist', $verb, $meth, $class, $item);
+					throw new ModelConfigurationException('The requested field "'.$meth.'" does not exist', $verb, $meth, $class, $item);
 					break;
 				case 'set':
 					$this->fields[$meth] = $arguments[0];

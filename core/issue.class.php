@@ -13,19 +13,19 @@
 class Issue extends BaseModel {
     protected $filters = array();
 
-    function __construct($id = NULL) {
+    function __construct($id = NULL, $pub = 1) {
         global $dba;
         $this->dba = $dba;
         if($id !== NULL) {
             $sql = "SELECT
-                        `id`,
                         UNIX_TIMESTAMP(`PubDate`) as pub_date,
                         `IssueNo`,
                         `PubNo`,
                         `Description`,
                         `Year`
                     FROM `Issues`
-                    WHERE id=".$id;
+					WHERE IssueNo=".$id."
+					AND PubNo=".$pub;
             $this->filters = array(
                 'IssueNo' => 'issue_no',
                 'PubNo' => 'pub_no'
@@ -43,7 +43,7 @@ class Issue extends BaseModel {
      * Returns string
      */
     public function getURL() {
-        $url = STANDARD_URL.'issuearchive/issue/'.$this->getId();    
+        $url = STANDARD_URL.'issuearchive/issue/'.$this->getIssueNo();    
         return $url;
     }
 

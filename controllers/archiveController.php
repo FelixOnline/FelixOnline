@@ -8,7 +8,7 @@ class ArchiveController extends BaseController {
 
     function __construct() {
         parent::__construct();
-        //global $dbaname;
+        global $dba;
 		$dbaname = 'media_felix_archive';
 
 		$dba = new ezSQL_mysqli();
@@ -146,18 +146,19 @@ class ArchiveController extends BaseController {
      */
     public function getIssues($year, $pub = 1) {
         $sql = "SELECT
-                    i.id,
+					i.IssueNo AS id,
                     f.FileName
                 FROM Issues as i
                 INNER JOIN Files as f
                 ON(i.IssueNo = f.IssueNo AND i.PubNo = f.PubNo)
                 WHERE YEAR(PubDate) = '".$year."'
                 AND i.PubNo = ".$pub."
-                ORDER BY id ASC";
+                ORDER BY i.IssueNo ASC";
         $result = $this->dba->get_results($sql);
+
         $issues = array();
         foreach($result as $obj) {
-            $issue = new Issue($obj->id);
+            $issue = new Issue($obj->id, $pub);
             $issue->setFileName($obj->FileName);
             $issues[] = $issue;
         }
