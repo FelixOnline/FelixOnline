@@ -13,19 +13,19 @@
 class Issue extends BaseModel {
     protected $filters = array();
 
-    function __construct($id = NULL, $pub = 1) {
+    function __construct($id = NULL) {
         global $dba;
         $this->dba = $dba;
         if($id !== NULL) {
             $sql = "SELECT
+						`id`,
                         UNIX_TIMESTAMP(`PubDate`) as pub_date,
                         `IssueNo`,
                         `PubNo`,
                         `Description`,
                         `Year`
                     FROM `Issues`
-					WHERE IssueNo=".$id."
-					AND PubNo=".$pub;
+					WHERE id=".$id;
             $this->filters = array(
                 'IssueNo' => 'issue_no',
                 'PubNo' => 'pub_no'
@@ -43,7 +43,7 @@ class Issue extends BaseModel {
      * Returns string
      */
     public function getURL() {
-        $url = STANDARD_URL.'issuearchive/issue/'.$this->getIssueNo();    
+        $url = STANDARD_URL.'issuearchive/issue/'.$this->getId();    
         return $url;
     }
 
@@ -66,7 +66,7 @@ class Issue extends BaseModel {
      * Returns string
      */
     public function getThumbnail() {
-        $thumb = substr($this->getFileName(),8,(strlen($this->getFileName())-11)).'png';
+        $thumb = substr($this->getFile(),8,(strlen($this->getFile())-11)).'png';
         return $thumb;
     }
 
@@ -76,9 +76,41 @@ class Issue extends BaseModel {
      * Returns string
      */
     public function getThumbnailURL() {
-        //$url = STANDARD_URL.'archive/thumbs/'.$this->getThumbnail();
         $url = 'http://felixonline.co.uk/archive/thumbs/'.$this->getThumbnail();
         return $url;
     }
+
+	/**
+	 * Public: Get file
+	 *
+	 * Returns string
+	 */
+	public function getFile() {
+		if (!array_key_exists('file', $this->fields)) {
+			$sql = "SELECT
+						FileName
+					FROM Files
+					WHERE PubNo = ".$this->getPubNo()."
+					AND IssueNo = ".$this->getIssueNo();
+			$result = $this->dba->get_row($sql);
+			$this->fields['file'] = $result->FileName;
+		}
+		return $this->fields['file'];
+	}
+
+	/**
+	 * Public: Get file name
+	 *
+	 * Returns string
+	 */
+	public function getFileName() {
+		if (!array_key_exists('file_name', $this->fields)) {
+			$file = $this->getFile();
+			preg_match('/\/(\w+)_[A-Z]/', $file, $matches);
+			$filename = $matches[1] . '.pdf';
+			$this->fields['file_name'] = $file_name;
+		}
+		return $this->fields['file_name'];
+	}
 }
 

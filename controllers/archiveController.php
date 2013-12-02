@@ -31,9 +31,9 @@ class ArchiveController extends BaseController {
     function GET($matches) {
         global $timing;
         if(array_key_exists('id', $matches) && array_key_exists('download', $matches)) { // viewing a specific issue
-            //$file = 'http://felixonline.co.uk/archive/IC_1963/1963_0184_A.pdf';
-            $file = BASE_DIRECTORY.'/archive/1963_0184_A.pdf';
-            $filename = '1963_184.pdf'; /* Note: Always use .pdf at the end. */
+			$issue = new Issue($matches['id']);
+			$file = BASE_DIRECTORY.'/archive/'.$issue->getFile();
+			$filename = $issue->getFileName();
 
 			// Make sure the files exists, otherwise we are wasting our time
 			if (!file_exists($file)) {
@@ -146,20 +146,16 @@ class ArchiveController extends BaseController {
      */
     public function getIssues($year, $pub = 1) {
         $sql = "SELECT
-					i.IssueNo AS id,
-                    f.FileName
+					i.id AS id
                 FROM Issues as i
-                INNER JOIN Files as f
-                ON(i.IssueNo = f.IssueNo AND i.PubNo = f.PubNo)
                 WHERE YEAR(PubDate) = '".$year."'
                 AND i.PubNo = ".$pub."
-                ORDER BY i.IssueNo ASC";
+                ORDER BY i.id ASC";
         $result = $this->dba->get_results($sql);
 
         $issues = array();
         foreach($result as $obj) {
-            $issue = new Issue($obj->id, $pub);
-            $issue->setFileName($obj->FileName);
+            $issue = new Issue($obj->id);
             $issues[] = $issue;
         }
         return $issues;
