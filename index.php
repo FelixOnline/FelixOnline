@@ -27,7 +27,6 @@ try {
 	 * Routes
 	 */
 	$urls = array(
-<<<<<<< HEAD
 		'/' => 'FrontpageController',
 		'/user/(?P<user>[a-zA-Z0-9_-]+)' => 'UserController',
 		'/user/(?P<user>[a-zA-Z0-9_-]+)/(?P<page>[0-9]+)' => 'UserController',
