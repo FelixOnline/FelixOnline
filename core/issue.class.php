@@ -16,8 +16,9 @@ class Issue extends BaseModel {
 	function __construct($id = NULL) {
 		global $dba;
 		$this->dba = $dba;
+		$this->safesql = new SafeSQL_MySQLi($dba->dbh);
 		if($id !== NULL) {
-			$sql = "SELECT
+			$sql = $this->safesql->query("SELECT
 						`id`,
 						UNIX_TIMESTAMP(`PubDate`) as pub_date,
 						`IssueNo`,
@@ -25,7 +26,7 @@ class Issue extends BaseModel {
 						`Description`,
 						`Year`
 					FROM `Issues`
-					WHERE id=".$id;
+					WHERE id=%i", array($id));
 			$this->filters = array(
 				'IssueNo' => 'issue_no',
 				'PubNo' => 'pub_no'
@@ -87,11 +88,16 @@ class Issue extends BaseModel {
 	 */
 	public function getFile() {
 		if (!array_key_exists('file', $this->fields)) {
-			$sql = "SELECT
+			$sql = $this->safesql->query(
+					"SELECT
 						FileName
 					FROM Files
-					WHERE PubNo = ".$this->getPubNo()."
-					AND IssueNo = ".$this->getIssueNo();
+					WHERE PubNo = %i
+					AND IssueNo = %i",
+					array(
+						$this->getPubNo(),
+						$this->getIssueNo()
+					));
 			$result = $this->dba->get_row($sql);
 			$this->fields['file'] = $result->FileName;
 		}

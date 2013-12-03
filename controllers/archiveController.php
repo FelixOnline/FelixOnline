@@ -19,7 +19,7 @@ class ArchiveController extends BaseController {
 			$this->db->dbhost,
 			'utf8'
 		);
-		$safesql = new SafeSQL_MySQLi($dba->dbh);
+		$this->safesql = new SafeSQL_MySQLi($dba->dbh);
 		$dba->cache_timeout = 24; // Note: this is hours
 		$dba->use_disk_cache = true;
 		$dba->cache_dir = 'inc/ezsql_cache'; // Specify a cache dir. Path is taken from calling script
@@ -54,9 +54,9 @@ class ArchiveController extends BaseController {
 			}
 
 			// get latest issue year TODO: cache
-			$sql = "SELECT 
+			$sql = $this->safesql->query("SELECT 
 						MAX(YEAR(PubDate)) 
-					FROM Issues";
+					FROM Issues", array());
 			$end = $this->dba->get_var($sql);
 
 			$start = 1950;
@@ -153,12 +153,12 @@ class ArchiveController extends BaseController {
 	 * Return array of issue objects
 	 */
 	public function getIssues($year, $pub = 1) {
-		$sql = "SELECT
+		$sql = $this->safesql->query("SELECT
 					i.id AS id
 				FROM Issues as i
-				WHERE YEAR(PubDate) = '".$year."'
-				AND i.PubNo = ".$pub."
-				ORDER BY i.id ASC";
+				WHERE YEAR(PubDate) = %i
+				AND i.PubNo = %i
+				ORDER BY i.id ASC", array($year, $pub));
 		$result = $this->dba->get_results($sql);
 
 		$issues = array();
