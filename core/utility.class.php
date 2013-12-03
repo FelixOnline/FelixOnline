@@ -190,5 +190,75 @@ class Utility {
 		}
 		return $url;
 	}
+
+	/**
+     * Decode JSON string and throw error if fails
+     *
+     * @param string $string - JSON string to decode
+     *
+     * @static
+     *
+     * @return mixed - associative array
+     * @throws \Exception if json decode fails with message about why
+     */
+    public static function jsonDecode($string)
+    {
+        $json = json_decode($string, true);
+
+        // if json_decode failed
+        if ($json === null) {
+			self::jsonLastError();
+        }
+
+        return $json;
+    }
+
+	/**
+     * Encode as JSON and throw error if fails
+     *
+     * @param mixed $data - data to encode
+     *
+     * @static
+     *
+     * @return string - json string
+     * @throws \Exception if json decode fails with message about why
+     */
+    public static function jsonEncode($data)
+    {
+        $json = json_encode($data);
+
+        // if json_encode failed
+        if ($json === false) {
+			self::jsonLastError();
+        }
+
+        return $json;
+    }
+
+	/**
+	 * Throw json last error
+	 */
+	public static function jsonLastError()
+	{
+		switch (json_last_error()) {
+		case JSON_ERROR_DEPTH:
+			throw new InternalException('Maximum stack depth exceeded');
+			break;
+		case JSON_ERROR_STATE_MISMATCH:
+			throw new InternalException('Underflow or the modes mismatch');
+			break;
+		case JSON_ERROR_CTRL_CHAR:
+			throw new InternalException('Unexpected control character found');
+			break;
+		case JSON_ERROR_SYNTAX:
+			throw new InternalException('Syntax error, malformed JSON');
+			break;
+		case JSON_ERROR_UTF8:
+			throw new InternalException('Malformed UTF-8 characters, possibly incorrectly encoded');
+			break;
+		default:
+			throw new InternalException('Unknown error');
+			break;
+		}
+	}
 }
-?>
