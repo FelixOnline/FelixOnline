@@ -192,48 +192,48 @@ class Utility {
 	}
 
 	/**
-     * Decode JSON string and throw error if fails
-     *
-     * @param string $string - JSON string to decode
-     *
-     * @static
-     *
-     * @return mixed - associative array
-     * @throws \Exception if json decode fails with message about why
-     */
-    public static function jsonDecode($string)
-    {
-        $json = json_decode($string, true);
+	 * Decode JSON string and throw error if fails
+	 *
+	 * @param string $string - JSON string to decode
+	 *
+	 * @static
+	 *
+	 * @return mixed - associative array
+	 * @throws \Exception if json decode fails with message about why
+	 */
+	public static function jsonDecode($string)
+	{
+		$json = json_decode($string, true);
 
-        // if json_decode failed
-        if ($json === null) {
+		// if json_decode failed
+		if ($json === null) {
 			self::jsonLastError();
-        }
+		}
 
-        return $json;
-    }
+		return $json;
+	}
 
 	/**
-     * Encode as JSON and throw error if fails
-     *
-     * @param mixed $data - data to encode
-     *
-     * @static
-     *
-     * @return string - json string
-     * @throws \Exception if json decode fails with message about why
-     */
-    public static function jsonEncode($data)
-    {
-        $json = json_encode($data);
+	 * Encode as JSON and throw error if fails
+	 *
+	 * @param mixed $data - data to encode
+	 *
+	 * @static
+	 *
+	 * @return string - json string
+	 * @throws \Exception if json decode fails with message about why
+	 */
+	public static function jsonEncode($data)
+	{
+		$json = json_encode($data);
 
-        // if json_encode failed
-        if ($json === false) {
+		// if json_encode failed
+		if ($json === false) {
 			self::jsonLastError();
-        }
+		}
 
-        return $json;
-    }
+		return $json;
+	}
 
 	/**
 	 * Throw json last error
