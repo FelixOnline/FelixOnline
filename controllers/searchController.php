@@ -15,15 +15,18 @@ class SearchController extends BaseController {
 		}
 
 		$search = new Search($query);
-		$articles = $search->articleTitles();
+		$articles = $search->articleTitles($page);
+
 		$people = $search->people();
 
 		// get articles
 		$this->theme->render(
 			'search',
 			array(
-				'articles' => $articles,
-				'people' => $people,
+				'articles' => $articles['articles'],
+				'article_count' => $articles['count'],
+				'people' => $people['people'],
+				'people_count' => $people['count'],
 				'query' => $query,
 				'page' => $page
 			)

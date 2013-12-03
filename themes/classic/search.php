@@ -99,20 +99,6 @@ $timing->log('after header');
 						}
 					}
 					
-					// if number of results from title is less than 4 then add content search as well
-					if ($rows < 4) {
-						$sql = "SELECT article.id FROM `article` INNER JOIN `text_story` ON (article.text1=text_story.id) WHERE text_story.content LIKE '%$param%' AND article.hidden = 0 AND article.published < NOW() ORDER BY article.date DESC";
-						$results = $db->get_results($sql);
-						
-						if (!is_null($results)) {
-							foreach ($results as $article) {
-								$article = new Article($article->id);
-								array_push($search, $article);
-							}
-						}
-						
-						$rows = count($search);
-					}
 				}
 			 */
 			?>
@@ -120,8 +106,8 @@ $timing->log('after header');
 			<?php if ($toofew) { ?>
 				<p>Uh oh! You did not specify enough search terms. Please try again!</p>
 			<?php } else { ?>
-				<h2>Search results for "<?php echo $query; ?>" -  <?php echo count($articles); ?> results</h2>
-				<?php if (empty($articles) && empty($people)) { ?>
+				<h2>Search results for "<?php echo $query; ?>" -  <?php echo $article_count; ?> results</h2>
+				<?php if ($article_count == 0 && $people_count == 0) { ?>
 					<p>Uh oh! We couldn't find what you were looking for. Please try again!</p>
 				<?php } else { ?>
 					<?php if (!empty($people)) { ?>
@@ -136,48 +122,75 @@ $timing->log('after header');
 						</div>
 					<?php } ?>
 				
-					<?php if (!empty($articles)) { ?>
+					<?php if ($article_count !== 0) { ?>
 						<div id="articleListCont">
 							<h3>Articles</h3>
 							<?php foreach ($articles as $key => $article) { ?>
-							<?php if ($page == 1) {
-								if ($key < 4) { ?>
-									<div class="userArticle">
-										<div class="userArticleDate grid_1 alpha">
-											<span><?php echo date('jS',$article->getDate()); ?></span><br/>
-											<?php echo date('F Y',$article->getDate()); ?><br/>
-										</div>
-										<div class="userArticleInfo grid_7 omega <?php if ($article->getCategory()->getCat() == 'comment') echo 'second';?>">
-											<h3><a href="<?php echo $article->getUrl();?>"><?php echo $article->getTitle();?></a></h3>
-											<div class="subHeader">
-												<p><?php echo $article->getPreview(30); ?></p>
-												<div id="storyMeta">
-													<ul class="metaList">
-														<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
-														<?php if ($article->getCategory()->getCat() == 'comment') { ?>
-														<li id="articleAuthor">
-															<?php echo Utility::outputUserList($article->getAuthors()); ?>
-														</li>
-														<?php } ?>
-														<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
-													</ul>
-												</div>
+								<?php if ($page == 1) {
+									if ($key < 4) { ?>
+										<div class="userArticle">
+											<div class="userArticleDate grid_1 alpha">
+												<span><?php echo date('jS',$article->getDate()); ?></span><br/>
+												<?php echo date('F Y',$article->getDate()); ?><br/>
 											</div>
-											<?php if ($article->getCategory()->getCat() != 'comment') { ?>
-												<div id="secondStoryPic">
-													<a href="<?php echo $article->getUrl();?>">
-														<?php if ($article->getImage()): ?>
-															<img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 130); ?>" height="130px" width="220px">
-														<?php else: ?>
-															<img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/130/'.DEFAULT_IMG_URI; ?>" height="130px" width="220px">
-														<?php endif; ?>
-													</a>
+											<div class="userArticleInfo grid_7 omega <?php if ($article->getCategory()->getCat() == 'comment') echo 'second';?>">
+												<h3><a href="<?php echo $article->getUrl();?>"><?php echo $article->getTitle();?></a></h3>
+												<div class="subHeader">
+													<p><?php echo $article->getPreview(30); ?></p>
+													<div id="storyMeta">
+														<ul class="metaList">
+															<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
+															<?php if ($article->getCategory()->getCat() == 'comment') { ?>
+															<li id="articleAuthor">
+																<?php echo Utility::outputUserList($article->getAuthors()); ?>
+															</li>
+															<?php } ?>
+															<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
+														</ul>
+													</div>
 												</div>
-											<?php } ?>
+												<?php if ($article->getCategory()->getCat() != 'comment') { ?>
+													<div id="secondStoryPic">
+														<a href="<?php echo $article->getUrl();?>">
+															<?php if ($article->getImage()): ?>
+																<img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 130); ?>" height="130px" width="220px">
+															<?php else: ?>
+																<img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/130/'.DEFAULT_IMG_URI; ?>" height="130px" width="220px">
+															<?php endif; ?>
+														</a>
+													</div>
+												<?php } ?>
+												<div class="clear"></div>
+											</div>
 											<div class="clear"></div>
 										</div>
-										<div class="clear"></div>
-									</div>
+									<?php } else { ?>
+										<div class="userArticle">
+											<div class="userArticleDate grid_1 alpha">
+												<span><?php echo date('jS',$article->getDate()); ?></span><br/>
+												<?php echo date('F Y',$article->getDate()); ?><br/>
+											</div>
+											<div class="userArticleInfo grid_7 omega second">
+												<h3><a href="<?php echo $article->getUrl();?>"><?php echo $article->getTitle();?></a></h3>
+												<div class="subHeader">
+													<p><?php echo $article->getPreview(30); ?></p>
+													<div id="storyMeta">
+														<ul class="metaList">
+															<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
+															<?php if ($article->getCategory()->getCat() == 'comment') { ?>
+															<li id="articleAuthor">
+																<?php echo Utility::outputUserList($article->getAuthors()); ?>
+															</li>
+															<?php } ?>
+															<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
+														</ul>
+													</div>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="clear"></div>
+										</div>
+									<?php } ?>
 								<?php } else { ?>
 									<div class="userArticle">
 										<div class="userArticleDate grid_1 alpha">
@@ -200,39 +213,12 @@ $timing->log('after header');
 													</ul>
 												</div>
 											</div>
+
 											<div class="clear"></div>
 										</div>
 										<div class="clear"></div>
 									</div>
 								<?php } ?>
-							<?php } else { ?>
-								<div class="userArticle">
-									<div class="userArticleDate grid_1 alpha">
-										<span><?php echo date('jS',$article->getDate()); ?></span><br/>
-										<?php echo date('F Y',$article->getDate()); ?><br/>
-									</div>
-									<div class="userArticleInfo grid_7 omega second">
-										<h3><a href="<?php echo $article->getUrl();?>"><?php echo $article->getTitle();?></a></h3>
-										<div class="subHeader">
-											<p><?php echo $article->getPreview(30); ?></p>
-											<div id="storyMeta">
-												<ul class="metaList">
-													<li id="category"><a href="<?php echo $article->getCategory()->getLabel();?>" class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></a></li>
-													<?php if ($article->getCategory()->getCat() == 'comment') { ?>
-													<li id="articleAuthor">
-														<?php echo Utility::outputUserList($article->getAuthors()); ?>
-													</li>
-													<?php } ?>
-													<li id="comments"><a href="<?php echo $article->getUrl();?>#commentHeader"><?php $num_comments = $article->getNumComments(); echo $num_comments.' comment'.($num_comments != 1 ? 's' : '');?></a></li>
-												</ul>
-											</div>
-										</div>
-
-										<div class="clear"></div>
-									</div>
-									<div class="clear"></div>
-								</div>
-							<?php } ?>
 							<?php } ?>
 						</div>
 
@@ -243,7 +229,7 @@ $timing->log('after header');
 								<?php if ($page != 1) // Previous page arrow
 										echo '<li class="arrow"><a href="search/?q='.$query.'&p='.($page-1).'">&#171;</a></li>';
 												
-									$pages = ceil((count($articles)-ARTICLES_PER_USER_PAGE)/ARTICLES_PER_USER_PAGE)+1;
+									$pages = ceil(($article_count - ARTICLES_PER_USER_PAGE)/ARTICLES_PER_USER_PAGE) + 1;
 									if ($pages>1) {
 										$span = NUMBER_OF_PAGES_IN_PAGE_LIST;
 										if ($pages > $span) {
