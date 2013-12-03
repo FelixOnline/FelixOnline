@@ -5,8 +5,6 @@
 class Search
 {
 	protected $query;
-	protected $articles = array();
-	protected $people = array();
 
 	function __construct($query) {
 		global $db;
@@ -79,8 +77,8 @@ class Search
 			LIMIT %i, %i",
 			array(
 				'%'.$this->query.'%',
-				($page - 1) * ARTICLES_PER_CAT_PAGE,
-				ARTICLES_PER_CAT_PAGE
+				($page - 1) * $this->pageSize,
+				$this->pageSize
 			)
 		);
 		$results = $this->db->get_results($sql);
@@ -135,8 +133,8 @@ class Search
 			LIMIT %i, %i",
 			array(
 				'%'.$this->query.'%',
-				($page - 1) * ARTICLES_PER_CAT_PAGE,
-				ARTICLES_PER_CAT_PAGE
+				($page - 1) * $this->pageSize,
+				$this->pageSize
 			)
 		);
 		$results = $this->db->get_results($sql);
