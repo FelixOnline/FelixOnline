@@ -15,8 +15,8 @@ $timing->log('after header');
 		<!-- Sidebar -->
 		<div class="sidebar grid_4 push_8">
 			<?php 
-				//$theme->render('sidebar/fbActivity');
-				//$theme->render('sidebar/mostPopular');
+				$theme->render('sidebar/fbActivity');
+				$theme->render('sidebar/mostPopular');
 				$theme->render('sidebar/socialLinks');
 			?>
 		</div>
@@ -24,85 +24,6 @@ $timing->log('after header');
 		
 		<!--Search container -->
 		<div class="grid_8 pull_4">
-			<?php 
-				/*
-				global $cid;
-				$search = array(); // array to contain search results
-				$people = array(); // array to contain people results
-				
-				if (!isset($_GET['p'])){ 
-					$p=1;
-				} else {
-					$p = $_GET['p'];
-				}
-	
-				$param = trim($_GET["q"]);
-				$param = str_replace(" ", "%", $param);
-				
-				if(strlen($param) < 2 || $param == 'Search Felix Online...') { 
-					$toofew = true;
-				} else {
-					// people seach
-					$peopleparam = trim($_GET['q']);
-					
-					if(strlen($peopleparam) > 2) {
-						$peopleparam = explode(" ", $peopleparam);
-						// firstname search
-						$sql = "SELECT user,name FROM user WHERE name LIKE '".$peopleparam[0]."%' ORDER BY name ASC";
-						$peoplequery = $db->get_results($sql);
-						
-						if (!is_null($peoplequery)) {
-							foreach($peoplequery as $person) {
-								array_push($people, $person->name.'+'.$person->user);
-							}
-						}
-						
-						if($peopleparam[1]){
-							// second name search
-							$sql = "SELECT user,name FROM user WHERE name LIKE '%".$peopleparam[0].' '.$peopleparam[1]."' ORDER BY name ASC";
-							$peoplequery = $db->get_results($sql);
-							
-							if (!is_null($peoplequery)) {
-								$people = array();
-								foreach($peoplequery as $person) {
-									array_push($people, $person->name.'+'.$person->user);
-								}
-							}
-						} else {
-							// second name search
-							$sql = "SELECT user,name FROM user WHERE name LIKE '%".$peopleparam[0]."' ORDER BY name ASC";
-							$peoplequery = $db->get_results($sql);
-							
-							if (!is_null($peoplequery)) {
-								foreach($peoplequery as $person) {
-									array_push($people, $person->name.'+'.$person->user);
-								}
-							}
-						}
-					}
-					
-					$people = array_unique($people);
-					$peoplerows = count($people);
-					
-					// title search
-					$sql = "SELECT id FROM article WHERE title LIKE '%$param%' AND hidden = 0 AND published < NOW() ORDER BY date DESC";
-					$results = $db->get_results($sql);
-					
-					if (is_null($results)) {
-						$rows = 0;
-					} else {
-						$rows = count($results);
-
-						foreach ($results as $article) {
-							$article = new Article($article->id);
-							array_push($search, $article);
-						}
-					}
-					
-				}
-			 */
-			?>
-
 			<?php if ($toofew) { ?>
 				<p>Uh oh! You did not specify enough search terms. Please try again!</p>
 			<?php } else { ?>
@@ -110,13 +31,12 @@ $timing->log('after header');
 				<?php if ($article_count == 0 && $people_count == 0) { ?>
 					<p>Uh oh! We couldn't find what you were looking for. Please try again!</p>
 				<?php } else { ?>
-					<?php if (!empty($people)) { ?>
+					<?php if ($people_count !== 0) { ?>
 						<div id="peopleresult">
 							<h3>People</h3>
 							<ul>
-								<?php foreach ($people as $person) { 
-									$details = explode('+', $person); ?>
-								<li><a href="user/<?php echo $details[1];?>/"><?php echo $details[0];?></a></li>
+								<?php foreach ($people as $person) { ?>
+									<li><a href="user/<?php echo $person['user'];?>/"><?php echo $person['name'];?></a></li>
 								<?php } ?>
 							</ul>
 						</div>

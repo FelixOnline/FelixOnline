@@ -19,9 +19,31 @@ class Search
 	}
 
 	public function people() {
+		$people = array();
+
+		$sql = $this->safesql->query("SELECT
+			user, name
+			FROM user
+			WHERE name LIKE '%s'
+			ORDER BY name ASC",
+			array(
+				"%" . $this->query. "%"
+			)
+		);
+		$results = $this->db->get_results($sql);
+		
+		if (!is_null($results)) {
+			foreach($results as $person) {
+				array_push($people, array(
+					'name' => $person->name,
+					'user' => $person->user
+				));
+			}
+		}
+		
 		return array(
-			'count' => 0,
-			'people' => array()
+			'count' => count($people),
+			'people' => $people
 		);
 	}
 
