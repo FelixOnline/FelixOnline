@@ -18,7 +18,7 @@ class UserController extends BaseController {
 			'comments' => $comments
 		));
 		$this->theme->setHierarchy(array(
-			'user' /* user-{user}.php */
+			$user->getUser() // user-{user}.php
 		));
 		$this->theme->render('user');
 	}

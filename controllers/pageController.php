@@ -12,7 +12,7 @@ class PageController extends BaseController {
 			'page' => $this->page
 		));
 		$this->theme->setHierarchy(array(
-			'slug' /* page-{slug}.php */
+			$this->page->getSlug() // page-{slug}.php
 		));
 		$this->theme->render('page');
 	}

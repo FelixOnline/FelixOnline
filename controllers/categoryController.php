@@ -13,7 +13,7 @@ class CategoryController extends BaseController {
 			'pagenum' => $pagenum
 		));
 		$this->theme->setHierarchy(array(
-			'cat' /* category-{cat}.php */
+			$category->getCat() // category-{cat}.php
 		));
 		$this->theme->render('category');
 	}
