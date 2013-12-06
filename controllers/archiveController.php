@@ -44,11 +44,12 @@ class ArchiveController extends BaseController {
 		} else if(array_key_exists('id', $matches)) {
 			echo 'Issue page';
 		} else {
+			$issue_manager = new IssueManager();
+
 			// If a search
 			if (array_key_exists('q', $_GET)) {
 				$query = trim($_GET['q']);
 
-				$issue_manager = new IssueManager();
 				$issues = $issue_manager->searchContent($query);
 
 				$this->theme->render('archive-search', array(
@@ -85,13 +86,13 @@ class ArchiveController extends BaseController {
 			}
 			
 			// get issues 
-			$issues = $this->getIssues($this->year);
+			$issues = $issue_manager->getIssues($this->year);
 
 			// 2011 Felix Daily
 			// TODO: make this nicer
 			$daily = array();
 			if ($this->year == '2011') {
-				$daily = $this->getIssues($this->year, 3);
+				$daily = $issue_manager->getIssues($this->year, 3);
 			}
 
 			$this->theme->appendData(array(
@@ -156,30 +157,5 @@ class ArchiveController extends BaseController {
 
 		// Exit here to avoid accidentally sending extra content on the end of the file
 		exit;
-	}
-
-	/*
-	 * Public static: Get issues
-	 *
-	 * $year    - year to get publications from 
-	 * $pub     - id of publication type [default = 1 (Felix)]
-	 *
-	 * Return array of issue objects
-	 */
-	public function getIssues($year, $pub = 1) {
-		$sql = $this->safesql->query("SELECT
-					i.id AS id
-				FROM Issues as i
-				WHERE YEAR(PubDate) = %i
-				AND i.PubNo = %i
-				ORDER BY i.id ASC", array($year, $pub));
-		$result = $this->dba->get_results($sql);
-
-		$issues = array();
-		foreach($result as $obj) {
-			$issue = new Issue($obj->id);
-			$issues[] = $issue;
-		}
-		return $issues;
 	}
 }
