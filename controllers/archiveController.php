@@ -44,6 +44,20 @@ class ArchiveController extends BaseController {
 		} else if(array_key_exists('id', $matches)) {
 			echo 'Issue page';
 		} else {
+			// If a search
+			if (array_key_exists('q', $_GET)) {
+				$query = trim($_GET['q']);
+
+				$issue_manager = new IssueManager();
+				$issues = $issue_manager->searchContent($query);
+
+				$this->theme->render('archive-search', array(
+					'search_results' => $issues,
+					'query' => $query,
+				));
+				return false;
+			}
+
 			$this->currentyear = date('Y');
 			if(array_key_exists('decade', $matches)) {
 				$this->year = $matches['decade'];

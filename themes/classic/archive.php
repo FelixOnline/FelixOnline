@@ -15,7 +15,7 @@ $theme->render('header', $header);
     <div id="archivesearchbar" class="grid_12">
         <h3>Search the Felix archive</h3>
         <form method="get" action="">
-            <input type="text" name="aq" size="40" placeholder="Search the archive.." value="<?=stripslashes($_GET['aq'])?>" id="searchinput" />
+            <input type="text" name="q" size="40" placeholder="Search the archive.." id="searchinput" />
             <input type="submit" value="Search" id="searchbuttonfwd" />
         </form>
     </div>
@@ -48,26 +48,18 @@ $theme->render('header', $header);
     </ul>
     
     <div class="issuecont clearfix">
-        <?php 
-            if(!empty($issues)) {
-                $i = 1;
-                foreach($issues as $issue) { ?>
-                    <a href="<?php echo $issue->getDownloadURL(); ?>" class="thumbLink">
-                        <div class="thumb grid_2">
-                            <div class="issue">
-                                <?php echo $issue->getIssueNo(); ?>
-                            </div>
-                            <img src="<?php echo $issue->getThumbnailURL();?>" alt="<?php echo $issue->getId();?>"/>
-                            <div class="date">
-                                <?php echo date("l jS F",$issue->getPubDate()); ?>
-                            </div>
-                        </div>
-                        </a>
-					<?php if($i%6 == 0) { ?><div class="clear"></div><?php } $i++; ?>
+        <?php if(!empty($issues)) {
+			foreach($issues as $key => $issue) {
+				$theme->render('snippets/issue', array(
+					'issue' => $issue
+				));
+				if(($key + 1) % 6 == 0) { ?>
+					<div class="clear"></div>
 				<?php } ?>
-			<?php } else { ?> 
-				<p class="grid_12">No issues this year.</p>
 			<?php } ?>
+		<?php } else { ?> 
+			<p class="grid_12">No issues this year.</p>
+		<?php } ?>
     </div>
     
     <?php if (!empty($daily)) { ?>
@@ -76,22 +68,14 @@ $theme->render('header', $header);
 		</div>
 
 		<div class="issuecont clearfix">
-			<?php 
-				$i = 1;
-				foreach($daily as $issue) { ?>
-					<a href="<?php echo $issue->getDownloadURL(); ?>" class="thumbLink">
-						<div class="thumb grid_2">
-							<div class="issue">
-								<?php echo $issue->getIssueNo(); ?>
-							</div>
-							<img src="<?php echo $issue->getThumbnailURL();?>" alt="<?php echo $issue->getId();?>"/>
-							<div class="date">
-								<?php echo date("l jS F",$issue->getPubDate()); ?>
-							</div>
-						</div>
-						</a>
-					<?php if($i%6 == 0) { ?><div class="clear"></div><?php } $i++; ?>
+			<?php foreach($daily as $key => $issue) {
+				$theme->render('snippets/issue', array(
+					'issue' => $issue
+				));
+				if(($key + 1) % 6 == 0) {?>
+					<div class="clear"></div>
 				<?php } ?>
+			<?php } ?>
 		</div>
     <?php } ?>
 

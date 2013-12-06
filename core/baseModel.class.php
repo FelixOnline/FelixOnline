@@ -64,6 +64,12 @@ class BaseModel {
 					$this->fields[$meth] = $arguments[0];
 					return $this->fields[$meth];
 					break;
+				case 'has':
+					if (array_key_exists($meth, $this->fields)) {
+						return true;
+					}
+					return false;
+					break;
 				default:
 					throw new ModelConfigurationException('The requested verb is not valid', $verb, $meth, $class, $item);
 					break;

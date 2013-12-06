@@ -36,11 +36,11 @@ try {
 		'/(?P<cat>[a-zA-Z]+)/(?P<id>[0-9]+)/(?P<title>[a-zA-Z0-9_-]+)/.*' => 'ArticleController',
 		'/login/.*' => 'AuthController',
 		'/logout/.*' => 'AuthController',
-		'/issuearchive' => 'ArchiveController',
 		'/issuearchive/decade/(?P<decade>[0-9]+)' => 'ArchiveController',
 		'/issuearchive/year/(?P<year>[0-9]+)' => 'ArchiveController',
 		'/issuearchive/issue/(?P<id>[0-9]+)' => 'ArchiveController',
-		'/issuearchive/issue/(?P<id>[0-9]+)/(?P<download>download)' => 'ArchiveController'
+		'/issuearchive/issue/(?P<id>[0-9]+)/(?P<download>download)' => 'ArchiveController',
+		'/issuearchive/.*' => 'ArchiveController',
 	);
 
 	/*
