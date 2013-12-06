@@ -44,12 +44,27 @@ $theme->render('header', $header);
 
 	<div class="article grid_8 pull_4 alpha <?php echo $article->getCategoryCat();?> instapaper_body hentry">
 		<!-- Article header -->
-		<h2 class="grid_8 instapaper_title entry-title">
-			<?php echo $article->getTitle(); ?>
-		</h2>
-		<div class="subHeader grid_8">
-			<?php echo $article->getTeaser(); ?>
-		</div>
+		<?php if ($article->getCategoryCat() == 'comment') { ?>
+			<div class="grid_5">
+				<h2 class="instapaper_title entry-title"><?php echo $article->getTitle(); ?></h2>
+				<div class="subHeader"><?php echo $article->getTeaser(); ?></div>
+			</div>
+			<div class="grid_3 alpha omega" id="commentArticlePic">
+				<?php
+					$author = $article->getAuthors()[0];
+					$image = $author->getImage();
+				?>
+				<a href="user/<?php echo $author->getUser(); ?>/" title="<?php echo $author->getName(); ?>">
+					<img id="articlePic" alt="<?php echo $author->getName(); ?>" src="<?php echo $image->getURL(220, 160); ?>"></a>
+			</div>
+        <?php } else { ?>
+			<h2 class="grid_8 instapaper_title entry-title">
+				<?php echo $article->getTitle(); ?>
+			</h2>
+			<div class="subHeader grid_8">
+				<?php echo $article->getTeaser(); ?>
+			</div>
+		<?php } ?>
 		<div class="articleInfo grid_8">
 			<p>
 				<?php echo Utility::outputUserList($article->getAuthors()); ?>
@@ -61,21 +76,6 @@ $theme->render('header', $header);
 					</a>
 				</span> - <?php echo date("l F j, Y", $article->getDate());?>
 			</p>
-			<?php
-				if ($currentuser->isLoggedIn()) {
-					/*
-					TODO
-					$allowed = false;
-					if(check_if_section_editor($uname, $article))  // if user is editor of section article is in
-						$allowed = true;
-					else if (get_user_role($uname)==100) // if super user
-						$allowed = true;
-
-					if ($allowed) { ?>
-				<span id="editpage"><a href="/engine/?page=addarticle&article=<?php echo $article;?>">Edit Page</a></span>
-			<?php	} */
-				}
-			?>
 		</div>
 		<!-- End of article header -->
 
@@ -180,16 +180,10 @@ $theme->render('header', $header);
 		<?php $timing->log('beginning of comments');?>
 		<!-- Comments -->
 		<div class="grid_8 comments" id="commentHeader">
-			<?php 
-				//$cache = new Cache('comment-'.$article->getId());
-				//if($currentuser->isLoggedIn() || $cache->start()) {
-			?>
 			<h3>Comments <span>(<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>)</span></h3>
 			<!-- Comments container -->
 			<div id="commentCont">
 				<?php
-					$cache = new Cache('comment-'.$article->getId());
-					//$comments = $cache->code(array($article, 'getComments'));
 					$comments = $article->getComments();
 					if(is_array($comments)) {
 						foreach($comments as $key => $comment) {
@@ -199,10 +193,6 @@ $theme->render('header', $header);
 				?>
 			</div>
 			<!-- End of comments container -->
-			<?php 
-				//} 
-				//if(!$currentuser->isLoggedIn()) $cache->stop();
-			?>
 			
 			<!-- Comment form -->
 			<div id="commentForm">

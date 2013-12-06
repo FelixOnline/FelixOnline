@@ -88,4 +88,3 @@ class Image extends BaseModel {
 		return str_replace('img/upload/', '', $this->getUri());
 	}
 }
-?>

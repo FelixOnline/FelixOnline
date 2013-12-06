@@ -295,4 +295,16 @@ class User extends BaseModel {
 		}
 		return false;
 	}
+
+	/**
+	 * Public: Get image
+	 */
+	public function getImage() {
+		if (!$this->image) {
+			if ($this->getImg()) {
+				$this->image = new Image($this->getImg());
+			}
+		}
+		return $this->image;
+	}
 }
