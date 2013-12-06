@@ -55,7 +55,7 @@ class Cache {
 			$this->createCache($content);
 			ob_end_flush();
 		} else {
-			echo "<!-- Cached ".date('jS F Y H:i', filemtime($this->getName()))."-->";
+			echo "<!-- Cached ".date('jS F Y H:i', filemtime($this->getName()))." -->";
 		}
 	}
 
@@ -122,14 +122,14 @@ class Cache {
 			$data = array(
 				'url' => Utility::currentPageURL(),
 				'generated' => time(),
-				'content' => $content
+				'content' => utf8_encode($content)
 			);
 			switch($type) {
 				case 'serialize':
 					$data = serialize($data);
 					break;
 				default:
-					$data = json_encode($data);
+					$data = Utility::jsonEncode($data);
 					break;
 			}
 			fwrite($fp, $data);
@@ -148,7 +148,7 @@ class Cache {
 					$this->file = unserialize($contents);
 					break;
 				default:
-					$this->file = json_decode($contents, true);
+					$this->file = Utility::jsonDecode($contents);
 					break;
 			}
 		}
