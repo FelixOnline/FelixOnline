@@ -57,7 +57,7 @@ $theme->render('header', $header);
 				<a href="user/<?php echo $author->getUser(); ?>/" title="<?php echo $author->getName(); ?>">
 					<img id="articlePic" alt="<?php echo $author->getName(); ?>" src="<?php echo $image->getURL(220, 160); ?>"></a>
 			</div>
-        <?php } else { ?>
+		<?php } else { ?>
 			<h2 class="grid_8 instapaper_title entry-title">
 				<?php echo $article->getTitle(); ?>
 			</h2>
