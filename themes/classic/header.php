@@ -90,13 +90,13 @@
 				<div class="grid_4 last" id="searchBoxCont">
 					<form action="search/" id="cse-search-box">
 						<?php
-							if($_GET["q"] && $_GET["q"] != 'Search Felix Online...') { ?>
+							if($_GET["q"]) { ?>
 								<input type="text" name="q" size="31" id="searchBox" autocomplete="off" value="<?php echo $_GET['q'];?>"/>
 						<?php } else { ?>
-								<input type="text" name="q" size="31" id="searchBox" class="faded" autocomplete="off" onclick="if(this.value == 'Search Felix Online...') {this.value=''; this.style.color='#222';}" onblur="if(this.value.length == 0){ this.value='Search Felix Online...'; this.style.color='#999';};" value="Search Felix Online..."/>
+								<input type="text" name="q" size="31" id="searchBox" autocomplete="off" placeholder="Search Felix Online..."/>
 						<?php } ?>
 						<div class="clear"></div>
-						<input type="submit" name="sa" value="" id="searchButton"/>
+						<input type="submit" value="" id="searchButton"/>
 					</form>
 				</div>
 			</div>

@@ -52,7 +52,7 @@ class Article extends BaseModel {
 	 *
 	 * Returns article object
 	 */
-	function __construct($id=NULL) {
+	function __construct($id = NULL) {
 		global $db;
 		global $safesql;
 		$this->db = $db;
