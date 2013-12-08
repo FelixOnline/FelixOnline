@@ -12,7 +12,7 @@ class BlogController extends BaseController {
 			'blog' => $this->blog
 		));
 		$this->theme->setHierarchy(array(
-			'slug' /* page-{slug}.php */
+			$this->blog->getSlug() // page-{slug}.php
 		));
 		$this->theme->render('blog');
 	}

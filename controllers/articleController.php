@@ -9,8 +9,8 @@ class ArticleController extends BaseController {
 			'article' => $this->article
 		));
 		$this->theme->setHierarchy(array(
-			'id', /* article-{id}.php */
-			'category-cat' /* article-{cat}.php */
+			$this->article->getId(), // article-{id}.php
+			$this->article->getCategoryCat(), // article-{cat}.php
 		));
 
 		// Log article visit
@@ -97,8 +97,8 @@ class ArticleController extends BaseController {
 			'errorinsert' => $errorinsert
 		));
 		$this->theme->setHierarchy(array(
-			'id', /* article-{id}.php */
-			'category-cat' /* article-{cat}.php */
+			$this->article->getId(),
+			$this->article->getCategoryCat(),
 		));
 		$this->theme->render('article');
 	}

@@ -89,16 +89,7 @@ class Theme {
 	private function cascade() {
 		if($this->hierarchy) { // if there is a hierarchy defined
 			foreach($this->hierarchy as $key => $value) { // loop through each hierarchy
-				$parts = explode('-', $value); // split file template into parts
-				$file = $this->page;
-				foreach($parts as $pkeys => $pvalue) { // evaluate each part
-					$method = 'get'.$this->toCamelCase($pvalue);
-					if(method_exists(ucfirst($this->page), $method)) { // if method exists in class
-						$file .= '-'.$this->data[$this->page]->{$method}();
-					} else { // else treat as static variable
-						$file .= '-'.$pvalue;
-					}
-				}
+				$file = $this->page . '-' . $value;
 				if($this->fileExists($file)) { // if that file exists then return it
 					$this->hierarchy = array(); // reset hierarchy for further renders TODO
 					return $file;
