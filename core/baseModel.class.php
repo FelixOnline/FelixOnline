@@ -31,6 +31,9 @@ class BaseModel {
 
 		if($dbObject) {
 			foreach($dbObject as $key => $value) {
+				if(!empty($this->filters) && array_key_exists($key, $this->filters)) {
+					$key = $this->filters[$key];
+				}
 				$this->fields[$key] = $value;
 			}
 		} else {
@@ -55,11 +58,17 @@ class BaseModel {
 					if(array_key_exists($meth, $this->fields)) {
 						return $this->fields[$meth];
 					}
-					throw new ModelConfigurationException('The requested field does not exist', $verb, $meth, $class, $item);
+					throw new ModelConfigurationException('The requested field "'.$meth.'" does not exist', $verb, $meth, $class, $item);
 					break;
 				case 'set':
 					$this->fields[$meth] = $arguments[0];
 					return $this->fields[$meth];
+					break;
+				case 'has':
+					if (array_key_exists($meth, $this->fields)) {
+						return true;
+					}
+					return false;
 					break;
 				default:
 					throw new ModelConfigurationException('The requested verb is not valid', $verb, $meth, $class, $item);

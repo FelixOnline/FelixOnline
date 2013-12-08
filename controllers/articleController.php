@@ -103,5 +103,3 @@ class ArticleController extends BaseController {
 		$this->theme->render('article');
 	}
 }
-
-?>
