@@ -27,28 +27,33 @@ class User extends BaseModel {
 	function __construct($uname = NULL) {
 		/* initialise db connection and store it in object */
 		global $db;
+		global $safesql;
 		$this->db = $db;
-		$this->dbtable = 'user';
+		$this->safesql = $safesql;
+
 		if($uname !== NULL) {
-			$sql = "SELECT 
-						`user`,
-						`name`,
-						`visits`,
-						`ip`,
-						UNIX_TIMESTAMP(`timestamp`) as timestamp,
-						`role`,
-						`info`,
-						`description`,
-						`email`,
-						`facebook`,
-						`twitter`,
-						`websitename`,
-						`websiteurl`,
-						`img` 
-					FROM `user` 
-					WHERE user='".$uname."'";
+			$sql = $this->safesql->query(
+				"SELECT 
+					`user`,
+					`name`,
+					`visits`,
+					`ip`,
+					UNIX_TIMESTAMP(`timestamp`) as timestamp,
+					`role`,
+					`info`,
+					`description`,
+					`email`,
+					`facebook`,
+					`twitter`,
+					`websitename`,
+					`websiteurl`,
+					`img` 
+				FROM `user` 
+				WHERE user='%s'",
+				array(
+					$uname
+				));
 			parent::__construct($this->db->get_row($sql), 'User', $uname);
-			//$this->db->cache_queries = false;
 			return $this;
 		} else {
 		}
@@ -73,17 +78,22 @@ class User extends BaseModel {
 	 */
 	public function getArticles($page = NULL) {
 		$sql = "SELECT 
-					id 
-				FROM `article` 
-				INNER JOIN `article_author` 
-					ON (article.id=article_author.article) 
-				WHERE article_author.author='".$this->getUser()."' 
-				AND published < NOW()
-				ORDER BY article.date DESC
-		";
+				id 
+			FROM `article` 
+			INNER JOIN `article_author` 
+				ON (article.id=article_author.article) 
+			WHERE article_author.author='%s'
+			AND published < NOW()
+			ORDER BY article.date DESC";
 		if($page) {
-			$sql .= " LIMIT ".($page-1)*ARTICLES_PER_USER_PAGE.",".ARTICLES_PER_USER_PAGE;
+			$sql .= " LIMIT %i, %i";
 		}
+
+		$sql = $this->safesql->query($sql, array(
+			$this->getUser(),
+			($page-1) * ARTICLES_PER_USER_PAGE,
+			ARTICLES_PER_USER_PAGE,
+		));
 		$this->articles = $this->db->get_results($sql);	
 		return $this->articles;
 	}
@@ -94,14 +104,19 @@ class User extends BaseModel {
 	 */
 	public function getPopularArticles() {
 		if(!$this->popArticles) {
-			$sql = "SELECT 
-						id 
-					FROM `article` 
-					INNER JOIN `article_author` 
-						ON (article.id=article_author.article) 
-					WHERE article_author.author='".$this->getUser()."' 
-					AND published < NOW()
-					ORDER BY hits DESC LIMIT 0,".NUMBER_OF_POPULAR_ARTICLES_USER;
+			$sql = $this->safesql->query(
+				"SELECT 
+					id 
+				FROM `article` 
+				INNER JOIN `article_author` 
+					ON (article.id=article_author.article) 
+				WHERE article_author.author='%s' 
+				AND published < NOW()
+				ORDER BY hits DESC LIMIT 0, %i",
+				array(
+					$this->getUser(),
+					NUMBER_OF_POPULAR_ARTICLES_USER,
+				));
 			$articles = $this->db->get_results($sql);
 			foreach($articles as $key => $obj) {
 				$this->popArticles[] = new Article($obj->id);
@@ -116,12 +131,17 @@ class User extends BaseModel {
 	 */
 	public function getComments() {
 		if(!$this->comments) {
-			$sql = "SELECT 
-						id
-					FROM `comment` 
-					WHERE user='".$this->getUser()."' 
-					ORDER BY timestamp DESC 
-					LIMIT 0,".NUMBER_OF_POPULAR_COMMENTS_USER;
+			$sql = $this->safesql->query(
+				"SELECT 
+					id
+				FROM `comment` 
+				WHERE user='%s' 
+				ORDER BY timestamp DESC 
+				LIMIT 0, %i",
+				array(
+					$this->getUser(),
+					NUMBER_OF_POPULAR_COMMENTS_USER,
+				));
 			$comments = $this->db->get_results($sql);	
 			if($comments) {
 				foreach($comments as $key => $obj) {
@@ -154,11 +174,15 @@ class User extends BaseModel {
 	 */
 	public function getLikes() {
 		if(!$this->likes) {
-			$sql = "SELECT 
-						SUM(likes) 
-					FROM `comment` 
-					WHERE user='".$this->getUser()."' 
-					AND `active`=1";
+			$sql = $this->safesql->query(
+				"SELECT 
+					SUM(likes) 
+				FROM `comment` 
+				WHERE user='%s'
+				AND `active`=1",
+				array(
+					$this->getUser(),
+				));
 			$this->likes = $this->db->get_var($sql);
 		}
 		return $this->likes;
@@ -170,11 +194,15 @@ class User extends BaseModel {
 	 */
 	public function getDislikes() {
 		if(!$this->dislikes) {
-			$sql = "SELECT 
-						SUM(dislikes) 
-					FROM `comment` 
-					WHERE user='".$this->getUser()."' 
-					AND `active`=1";
+			$sql = $this->safesql->query(
+				"SELECT 
+					SUM(dislikes) 
+				FROM `comment` 
+				WHERE user='%s'
+				AND `active`=1",
+				array(
+					$this->getUser(),
+				));
 			$this->dislikes = $this->db->get_var($sql);
 		}
 		return $this->dislikes;
@@ -187,15 +215,18 @@ class User extends BaseModel {
 	 */
 	public function getNumPages() {
 		if(!$this->count) {
-			$sql = "SELECT 
-						COUNT(id) as count 
-					FROM `article` 
-					INNER JOIN `article_author` 
-						ON (article.id=article_author.article) 
-					WHERE article_author.author='".$this->getUser()."' 
-					AND published < NOW()
-					ORDER BY article.date DESC
-			";
+			$sql = $this->safesql->query(
+				"SELECT 
+					COUNT(id) as count 
+				FROM `article` 
+				INNER JOIN `article_author` 
+					ON (article.id=article_author.article) 
+				WHERE article_author.author='%s'
+				AND published < NOW()
+				ORDER BY article.date DESC",
+				array(
+					$this->getUser()
+				));
 			$this->count = $this->db->get_var($sql);
 		}
 
@@ -251,12 +282,16 @@ class User extends BaseModel {
 	}
 
 	public function getFirstLogin() {
-		$sql = "SELECT 
-					UNIX_TIMESTAMP(timestamp) as timestamp 
-				FROM `login` 
-				WHERE user='".$this->getUser()."' 
-				ORDER BY timestamp ASC 
-				LIMIT 1";
+		$sql = $this->safesql->query(
+			"SELECT 
+				UNIX_TIMESTAMP(timestamp) as timestamp 
+			FROM `login` 
+			WHERE user='%s' 
+			ORDER BY timestamp ASC 
+			LIMIT 1",
+			array(
+				$this->getUser()
+			));
 		$login = $this->db->get_var($sql);
 		if($login) {
 			return $login;
@@ -266,13 +301,17 @@ class User extends BaseModel {
 	}
 
 	public function getLastLogin() {
-		$sql = "SELECT 
-					UNIX_TIMESTAMP(timestamp) as timestamp 
-				FROM `login` 
-				WHERE user='".$this->getUser()."' 
-				ORDER BY timestamp DESC 
-				LIMIT 1";
-		$login = $this->db->get_var($sql);
+		$sql = $this->safesql->query(
+			"SELECT 
+				UNIX_TIMESTAMP(timestamp) as timestamp 
+			FROM `login` 
+			WHERE user='%s' 
+			ORDER BY timestamp DESC 
+			LIMIT 1",
+			array(
+				$this->getUser()
+			));
+	$login = $this->db->get_var($sql);
 		if($login) {
 			return $login;
 		} else {
