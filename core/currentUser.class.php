@@ -11,6 +11,11 @@ class CurrentUser extends User {
 	 * Store session id and ip address into object
 	 */
 	function __construct() {
+		global $db;
+		global $safesql;
+		$this->db = $db;
+		$this->safesql = $safesql;
+
 		session_name("felix"); // set session name
 		session_start(); // start session
 		$this->session = session_id(); // store session id into $session variable
@@ -35,23 +40,25 @@ class CurrentUser extends User {
 	/*
 	 * Public: Removes the permanent cookie, and removes associated database entries
 	 */
-	function removeCookie() {
-		global $db;
-
+	public function removeCookie() {
 		if (array_key_exists('felixonline', $_COOKIE)) {
-			$sql = "DELETE FROM cookies
-					WHERE hash = '".$db->escape($_COOKIE['felixonline'])."'
-			";
+			$sql = $this->safesql->query(
+				"DELETE FROM cookies
+				WHERE hash = '%s'",
+				array(
+					$_COOKIE['felixonline']
+				));
 
-			$db->query($sql);
+			$this->db->query($sql);
 		}
 
 		// also remove any expired cookies for anyone
-		$sql = "DELETE FROM cookies
-				WHERE expires < NOW();
-		";
+		// TODO move to cron
+		$sql = $this->safesql->query(
+			"DELETE FROM cookies
+			WHERE expires < NOW()", array());
 
-		$db->query($sql);
+		$this->db->query($sql);
 
 		setcookie('felixonline', '', time() - 42000, '/', '.'.STANDARD_SERVER);
 	}
@@ -78,8 +85,6 @@ class CurrentUser extends User {
 	 * TODO make sure there isn't redundant code
 	 */
 	public function loginFromCookie() {
-		global $db;
-		
 		// is there a cookie?
 		if (!array_key_exists('felixonline', $_COOKIE)) {
 			return false;
@@ -87,15 +92,18 @@ class CurrentUser extends User {
 
 		$cookiehash = $_COOKIE['felixonline'];
 
-		$sql = "SELECT user
-				FROM `cookies`
-				WHERE hash='".$db->escape($cookiehash)."'
-				AND UNIX_TIMESTAMP(expires) > UNIX_TIMESTAMP()
-				ORDER BY expires ASC
-				LIMIT 1
-		";
+		$sql = $this->safesql->query(
+			"SELECT user
+			FROM `cookies`
+			WHERE hash='%s'
+			AND UNIX_TIMESTAMP(expires) > UNIX_TIMESTAMP()
+			ORDER BY expires ASC
+			LIMIT 1",
+			array(
+				$cookiehash
+			));
 
-		$cookie = $db->get_row($sql);
+		$cookie = $this->db->get_row($sql);
 		if (!$cookie) {
 			$this->removeCookie();
 			return false;
@@ -107,24 +115,30 @@ class CurrentUser extends User {
 		$this->resetToGuest();
 
 		// Create session
-		$sql = "INSERT INTO `login` 
-				(
-					session_id,
-					ip,
-					browser,
-					user,
-					logged_in
-				) VALUES (
-					'".$db->escape($this->getSession())."',
-					'".$db->escape($_SERVER['REMOTE_ADDR'])."',
-					'".$db->escape($_SERVER['HTTP_USER_AGENT'])."',
-					'".$db->escape($username)."',
-					1
-				)
-		";
-		$db->query($sql);
+		$sql = $this->safesql->query(
+			"INSERT INTO `login` 
+			(
+				session_id,
+				ip,
+				browser,
+				user,
+				logged_in
+			) VALUES (
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				1
+			)",
+			array(
+				$this->getSession(),
+				$_SERVER['REMOTE_ADDR'],
+				$_SERVER['HTTP_USER_AGENT'],
+				$username,
+			));
+		$this->db->query($sql);
 
-		parent::__construct($username); // TODO construct doesn't accept a username
+		parent::__construct($username);
 
 		$_SESSION['felix']['vname'] = $this->getName();
 		//$_SESSION['felix']['name'] = $this->getForename();
@@ -144,21 +158,24 @@ class CurrentUser extends User {
 			return false; // If we have no session, this method is meaningless.
 		}
 
-		global $db;
-		$sql = "SELECT
-					TIMESTAMPDIFF(SECOND,timestamp,NOW()) AS timediff,
-					ip,
-					browser
-				FROM `login`
-				WHERE session_id='".$db->escape($this->session)."'
-				AND logged_in=1
-				AND valid=1
-				AND user='".$db->escape($_SESSION['felix']['uname'])."'
-				ORDER BY timediff ASC
-				LIMIT 1
-		";
+		$sql = $this->safesql->query(
+			"SELECT
+				TIMESTAMPDIFF(SECOND,timestamp,NOW()) AS timediff,
+				ip,
+				browser
+			FROM `login`
+			WHERE session_id='%s'
+			AND logged_in=1
+			AND valid=1
+			AND user='%s'
+			ORDER BY timediff ASC
+			LIMIT 1",
+			array(
+				$this->session,
+				$_SESSION['felix']['uname'],
+			));
 
-		$user = $db->get_row($sql);
+		$user = $this->db->get_row($sql);
 
 		if (
 			$user->timediff <= SESSION_LENGTH 
@@ -188,16 +205,21 @@ class CurrentUser extends User {
 			// It'll be created later so carry on
 		}
 
-		$sql = "UPDATE login
-				SET timestamp = NOW()
-				WHERE session_id='".$this->db->escape($this->session)."'
-				AND logged_in=1
-				AND ip='".$this->db->escape($_SERVER['REMOTE_ADDR'])."'
-				AND browser='".$this->db->escape($_SERVER['HTTP_USER_AGENT'])."'
-				AND valid=1
-				AND TIMESTAMPDIFF(SECOND,timestamp,NOW()) <=
-					".$this->db->escape(SESSION_LENGTH)."
-		";
+		$sql = $this->safesql->query(
+			"UPDATE login
+			SET timestamp = NOW()
+			WHERE session_id='%s'
+			AND logged_in=1
+			AND ip='%s'
+			AND browser='%s'
+			AND valid=1
+			AND TIMESTAMPDIFF(SECOND,timestamp,NOW()) <= %i",
+			array(
+				$this->session,
+				$_SERVER['REMOTE_ADDR'],
+				$_SERVER['HTTP_USER_AGENT'],
+				SESSION_LENGTH,
+			));
 		$this->db->query($sql); // if this fails, it doesn't matter, we will
 								// just be auto logged out after a while
 		
@@ -223,26 +245,35 @@ class CurrentUser extends User {
 		$name = $this->updateName($username);
 		$info = $this->updateInfo($username);
 
-		$sql = "INSERT INTO `user` 
-			(user,name,visits,ip,info) 
+		$sql = $this->safesql->query(
+			"INSERT INTO `user` 
+				(user,name,visits,ip,info) 
 			VALUES (
-				'".$this->db->escape($username)."',
-				'".$this->db->escape($name)."',
+				'%s',
+				'%s',
 				1,
-				'".$_SERVER['REMOTE_ADDR']."',
-				'".$this->db->escape($info)."'
+				'%s',
+				'%s'
 			) 
 			ON DUPLICATE KEY 
 			UPDATE 
-				name='".$this->db->escape($name)."',
+				name='%s',
 				visits=visits+1,
-				ip='".$this->db->escape($_SERVER['REMOTE_ADDR'])."',
+				ip='%s',
 				timestamp=NOW(),
-				info='".$this->db->escape($info)."'
-				";
-				// note that this updated the last access time and the ip
-				// of the last access for this user, this is separate from the
-				// session
+				info='%s'",
+			array(
+				$username,
+				$name,
+				$_SERVER['REMOTE_ADDR'],
+				$info,
+				$name,
+				$_SERVER['REMOTE_ADDR'],
+				$info,
+			));
+			// note that this updated the last access time and the ip
+			// of the last access for this user, this is separate from the
+			// session
 		return $this->db->query($sql);
 	}
 
@@ -254,7 +285,12 @@ class CurrentUser extends User {
 			$ds = ldap_connect("addressbook.ic.ac.uk");
 			$r = ldap_bind($ds);
 			$justthese = array("gecos");
-			$sr = ldap_search($ds, "ou=People, ou=everyone, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
+			$sr = ldap_search(
+				$ds,
+				"ou=People, ou=everyone, dc=ic, dc=ac, dc=uk",
+				"uid=$uname",
+				$justthese
+			);
 			$info = ldap_get_entries($ds, $sr);
 			if ($info["count"] > 0) {
 				$this->setName($info[0]['gecos'][0]);
@@ -282,10 +318,15 @@ class CurrentUser extends User {
 	private function updateInfo($uname) {
 		$info = '';
 		if(!LOCAL) { // if on union server
-			$ds=ldap_connect("addressbook.ic.ac.uk");
-			$r=ldap_bind($ds);
+			$ds = ldap_connect("addressbook.ic.ac.uk");
+			$r = ldap_bind($ds);
 			$justthese = array("o");
-			$sr=ldap_search($ds, "ou=People, ou=shibboleth, dc=ic, dc=ac, dc=uk", "uid=$uname", $justthese);
+			$sr = ldap_search(
+				$ds,
+				"ou=People, ou=shibboleth, dc=ic, dc=ac, dc=uk",
+				"uid=$uname",
+				$justthese
+			);
 			$info = ldap_get_entries($ds, $sr);
 			if ($info["count"] > 0) {
 				$info = json_encode(explode('|', $info[0]['o'][0]));
