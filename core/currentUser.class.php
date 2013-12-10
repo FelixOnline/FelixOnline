@@ -53,7 +53,7 @@ class CurrentUser extends User {
 
 		$db->query($sql);
 
-		setcookie('felixonline', '', time() - 42000, '/', '.'.STANDARD_SERVER);
+		setcookie('felixonline', '', time() - 42000, '/');
 	}
 
 	/*
