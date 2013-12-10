@@ -35,22 +35,24 @@
 			<source src="http://icecast.icradio.com:8000/mp3-high" />
 			<p><a href="http://www.icradio.com/live">on the ICRadio website</a></p>  
 		</audio>
-		<ul id="radiolist">
-		<?php
-			// cache
-			$cache = new Cache('sidebar-icradio');
-			$cache->setExpiry(6*60*60); // set expiry to 6 hours
-			if($cache->start()) {
-				$shows = $media->getRadioShows();
-				foreach($shows as $show) { ?>
-				<li>
-					<a href="<?php echo $show['link']; ?>"> 
-						<?php echo $show['title']; ?>
-					</a>
-				</li>
-			<?php } 
-			} $cache->stop(); ?>
-		</ul>
+		<?php if (ICRADIO) { ?>
+			<ul id="radiolist">
+			<?php
+				// cache
+				$cache = new Cache('sidebar-icradio');
+				$cache->setExpiry(6*60*60); // set expiry to 6 hours
+				if($cache->start()) {
+					$shows = $media->getRadioShows();
+					foreach($shows as $show) { ?>
+					<li>
+						<a href="<?php echo $show['link']; ?>"> 
+							<?php echo $show['title']; ?>
+						</a>
+					</li>
+				<?php } 
+				} $cache->stop(); ?>
+			</ul>
+		<?php } ?>
 	</div>
 </div>
 <?php $timing->log('after mediabox'); ?>
