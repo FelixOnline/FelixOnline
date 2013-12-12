@@ -21,11 +21,13 @@ class MediaVideo extends BaseModel {
 	private $mostViewed; // array of most viewed videos
 
 	function __construct($id = NULL) {
-		global $db;
+		global $db, $safesql;
 		$this->db = $db;
+		$this->safesql = $safesql;
 		$this->type = 'video';
 		if($id !== NULL) {
-			$sql = "SELECT 
+			$sql = $this->safesql->query(
+				"SELECT 
 					`id`,
 					`title`,
 					`description`,
@@ -37,7 +39,10 @@ class MediaVideo extends BaseModel {
 					`hits`,
 					`site`
 				FROM `media_video` 
-				WHERE id=".$id;
+				WHERE id= %i",
+				array(
+					$id,
+				));
 			parent::__construct($this->db->get_row($sql), get_class($this), $id);
 			return $this;
 		} else {
@@ -82,16 +87,16 @@ class MediaVideo extends BaseModel {
 	 */
 	public function getMostViewed() {
 		if(!$this->mostViewed) {
-			global $db;
-			$sql = "SELECT
-						`id`
-					FROM
-						`media_video`
-					WHERE
-						hidden = '0'
-					ORDER BY hits DESC
-					LIMIT 0, 3";
-			$albums = $db->get_results($sql);
+			$sql = $this->safesql->query(
+				"SELECT
+					`id`
+				FROM
+					`media_video`
+				WHERE
+					hidden = '0'
+				ORDER BY hits DESC
+				LIMIT 0, 3", array());
+			$albums = $this->db->get_results($sql);
 			foreach($albums as $object) {
 				$this->mostViewed[] = new MediaVideo($object->id);
 			}
@@ -121,12 +126,15 @@ class MediaVideo extends BaseModel {
 	 * Public: Hit video
 	 */
 	public function hit() {
-		$sql = "UPDATE 
-					`media_video` 
-				SET hits=hits+1 
-				WHERE id=".$this->getId();
+		$sql = $this->safesql->query(
+			"UPDATE 
+				`media_video` 
+			SET hits=hits+1 
+			WHERE id=%i",
+			array(
+				$this->getId(),
+			));
 		return $this->db->query($sql);
 	}
 
 }
-?>

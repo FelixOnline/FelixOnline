@@ -27,7 +27,7 @@ class Media {
 			$sql .= " LIMIT 0, %i";
 			$sql = $this->safesql->query($sql, array($limit));
 		} else {
-			$sql = $this->safesql->query($sql);
+			$sql = $this->safesql->query($sql, array());
 		}
 		$albums = $this->db->get_results($sql);
 		if(is_array($albums)) {
@@ -55,7 +55,7 @@ class Media {
 			$sql .= " LIMIT 0, %i";
 			$sql = $this->safesql->query($sql, array($limit));
 		} else {
-			$sql = $this->safesql->query($sql);
+			$sql = $this->safesql->query($sql, array());
 		}
 		$albums = $this->db->get_results($sql);
 

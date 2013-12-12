@@ -20,11 +20,12 @@
 class MediaPhotoImage extends BaseModel {
 
 	function __construct($id = NULL) {
-		global $db;
+		global $db, $safesql;
 		$this->db = $db;
+		$this->safesql = $safesql;
 		if($id !== NULL) {
-			$sql = "
-				SELECT
+			$sql = $this->safesql->query(
+				"SELECT
 					`id`,
 					`album_id`,
 					`name`,
@@ -40,7 +41,10 @@ class MediaPhotoImage extends BaseModel {
 				FROM  
 					`media_photo_image`
 				WHERE
-					id = ".$id;
+					id = %i",
+				array(
+					$id,
+				));
 			parent::__construct($this->db->get_row($sql), get_class($this), $id);
 			return $this;
 		} else {
@@ -65,4 +69,3 @@ class MediaPhotoImage extends BaseModel {
 		return $url;
 	}
 }
-?>
