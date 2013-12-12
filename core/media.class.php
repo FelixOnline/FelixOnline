@@ -24,7 +24,7 @@ class Media {
 				WHERE visible = 1
 				ORDER BY date DESC"; 
 		if($limit) {
-			$sql .= "LIMIT 0, %i";
+			$sql .= " LIMIT 0, %i";
 			$sql = $this->safesql->query($sql, array($limit));
 		} else {
 			$sql = $this->safesql->query($sql);
@@ -52,7 +52,7 @@ class Media {
 				WHERE hidden = 0
 				ORDER BY date DESC"; 
 		if($limit) {
-			$sql .= "LIMIT 0, %i";
+			$sql .= " LIMIT 0, %i";
 			$sql = $this->safesql->query($sql, array($limit));
 		} else {
 			$sql = $this->safesql->query($sql);
