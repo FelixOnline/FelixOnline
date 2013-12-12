@@ -8,6 +8,7 @@
 class Frontpage extends BaseModel
 {
 	protected $db;
+	protected $safesql;
 	protected $layout;
 	protected $sections = array();
 
@@ -18,8 +19,9 @@ class Frontpage extends BaseModel
 	 */
 	function __construct($layout = 1)
 	{
-		global $db;
+		global $db, $safesql;
 		$this->db = $db;
+		$this->safesql = $safesql;
 		$this->layout = $layout;
 	}
 
@@ -33,7 +35,8 @@ class Frontpage extends BaseModel
 	public function getSection($section)
 	{
 		if (!array_key_exists($section, $this->sections)) {
-			$sql = "SELECT
+			$sql = $this->safesql->query(
+				"SELECT
 					`1` AS one,
 					`2` AS two,
 					`3` AS three,
@@ -43,8 +46,12 @@ class Frontpage extends BaseModel
 					`7` AS seven,
 					`8` AS eight
 				FROM `frontpage`
-				WHERE layout=".$this->layout."
-				AND section='".$section."'";
+				WHERE layout=%i
+				AND section='%s'",
+				array(
+					$this->layout,
+					$section,
+				));
 
 			$list = $this->db->get_row($sql);
 
@@ -67,12 +74,13 @@ class Frontpage extends BaseModel
 	 */
 	public function getEditorial()
 	{
-		$sql = "SELECT id FROM `article`
+		$sql = $this->safesql->query(
+			"SELECT id FROM `article`
 			WHERE author='felix'
 			AND category='2'
 			AND text1 IS NOT NULL
 			ORDER BY date DESC
-			LIMIT 1";
+			LIMIT 1", array());
 		$id = $this->db->get_var($sql);
 		return new Article($id);
 	}
@@ -84,8 +92,8 @@ class Frontpage extends BaseModel
 	 */
 	public function getFeaturedCategories()
 	{
-		$sql = "
-			SELECT
+		$sql = $this->safesql->query(
+			"SELECT
 				id,
 				cat,
 				label,
@@ -95,7 +103,7 @@ class Frontpage extends BaseModel
 			AND hidden = 0
 			AND id > 0
 			AND `order` > 0
-			ORDER BY `order` ASC";
+			ORDER BY `order` ASC", array());
 		$cats = $this->db->get_results($sql);
 		return $cats;
 	}
