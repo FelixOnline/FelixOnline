@@ -7,8 +7,9 @@
 class Media {
 	protected $db;
 	function __construct() {
-		global $db;
+		global $db, $safesql;
 		$this->db = $db; 
+		$this->safesql = $safesql; 
 	}
 
 	/*
@@ -21,10 +22,12 @@ class Media {
 					`id` 
 				FROM `media_photo_album`
 				WHERE visible = 1
-				ORDER BY date DESC
-				"; 
+				ORDER BY date DESC"; 
 		if($limit) {
-			$sql .= "LIMIT 0, ".$limit;
+			$sql .= "LIMIT 0, %i";
+			$sql = $this->safesql->query($sql, array($limit));
+		} else {
+			$sql = $this->safesql->query($sql);
 		}
 		$albums = $this->db->get_results($sql);
 		if(is_array($albums)) {
@@ -47,10 +50,12 @@ class Media {
 					`id` 
 				FROM `media_video`
 				WHERE hidden = 0
-				ORDER BY date DESC
-				"; 
+				ORDER BY date DESC"; 
 		if($limit) {
-			$sql .= "LIMIT 0, ".$limit;
+			$sql .= "LIMIT 0, %i";
+			$sql = $this->safesql->query($sql, array($limit));
+		} else {
+			$sql = $this->safesql->query($sql);
 		}
 		$albums = $this->db->get_results($sql);
 
@@ -90,4 +95,3 @@ class Media {
 		return $arrFeeds;
 	}
 }
-?>
