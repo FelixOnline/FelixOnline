@@ -31,9 +31,12 @@ class Category extends BaseModel
 
 	function __construct($cat=NULL) {
 		global $db;
+		global $safesql;
 		$this->db = $db;
+		$this->safesql = $safesql;
 		if($cat !== NULL) {
-			$sql = "SELECT
+			$sql = $this->safesql->query(
+				"SELECT
 					id,
 					label,
 					cat,
@@ -53,7 +56,7 @@ class Category extends BaseModel
 					description,
 					hidden
 				FROM category
-				WHERE cat='".$cat."'";
+				WHERE cat='%s'", array($cat));
 			parent::__construct($this->db->get_row($sql), 'Category', $cat);
 			return $this;
 		} else {
@@ -78,12 +81,12 @@ class Category extends BaseModel
 	 */
 	public function getEditors() {
 		if(!$this->editors) {
-			$sql = "SELECT 
-						user 
-					FROM `category_author` 
-					WHERE category='".$this->getId()."' 
-					AND admin=1
-			";
+			$sql = $this->safesql->query(
+				"SELECT 
+					user 
+				FROM `category_author` 
+				WHERE category=%i 
+				AND admin=1", array($id));
 			$editors = $this->db->get_results($sql);
 			if (is_null($editors)) {
 				$this->editors = null;
@@ -104,14 +107,19 @@ class Category extends BaseModel
 	 * Returns dbobject
 	 */
 	public function getArticles($page) {
-		$sql = "SELECT 
-					id 
-				FROM `article` 
-				WHERE published < NOW() 
-				AND category=".$this->getId()." 
-				ORDER BY published DESC 
-				LIMIT ".(($page-1)*ARTICLES_PER_CAT_PAGE)
-				.",".ARTICLES_PER_CAT_PAGE;
+		$sql = $this->safesql->query(
+			"SELECT 
+				id 
+			FROM `article` 
+			WHERE published < NOW() 
+			AND category=%i
+			ORDER BY published DESC 
+			LIMIT %i, %i",
+			array(
+				$this->getId(),
+				($page-1) * ARTICLES_PER_CAT_PAGE,
+				ARTICLES_PER_CAT_PAGE
+			));
 		return $this->db->get_results($sql);
 	}
 
@@ -122,11 +130,15 @@ class Category extends BaseModel
 	 */
 	public function getNumPages() {
 		if(!$this->count) {
-			$sql = "SELECT 
-						COUNT(id) as count 
-					FROM `article` 
-					WHERE published < NOW() 
-					AND category=".$this->getId();
+			$sql = $this->safesql->query(
+				"SELECT 
+					COUNT(id) as count 
+				FROM `article` 
+				WHERE published < NOW() 
+				AND category=%i",
+				array(
+					$this->getId()
+				));
 			$this->count = $this->db->get_var($sql);
 		}
 		$pages = ceil(($this->count - ARTICLES_PER_CAT_PAGE) / (ARTICLES_PER_SECOND_CAT_PAGE)) + 1;
@@ -149,13 +161,16 @@ class Category extends BaseModel
 	public static function getCategories()
 	{
 		global $db;
-		$sql = "SELECT
-					label,
-					cat
-				FROM `category`
-				WHERE hidden = 0
-				AND id > 0
-				ORDER BY `order` ASC";
+		global $safesql;
+		$sql = $safesql->query(
+			"SELECT
+				label,
+				cat
+			FROM `category`
+			WHERE hidden = 0
+			AND id > 0
+			ORDER BY `order` ASC",
+			array());
 		$cats = $db->get_results($sql);
 		return $cats;
 	}

@@ -10,18 +10,24 @@
  */
 class Page extends BaseModel {
 	protected $db;
+	protected $safesql;
 
 	function __construct($slug=NULL) {
-		global $db;
+		global $db, $safesql;
 		$this->db = $db;
+		$this->safesql = $safesql;
 		if($slug !== NULL) {
-			$sql = "SELECT
-						`id`,
-						`slug`,
-						`title`,
-						`content`
-					FROM `pages`
-					WHERE slug='".$slug."'";
+			$sql = $this->safesql->query(
+				"SELECT
+					`id`,
+					`slug`,
+					`title`,
+					`content`
+				FROM `pages`
+				WHERE slug='%s'",
+				array(
+					$slug,	
+				));
 			parent::__construct($this->db->get_row($sql), 'Page', $slug);
 			return $this;
 		} else {

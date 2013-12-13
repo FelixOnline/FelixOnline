@@ -65,42 +65,52 @@ class Comment extends BaseModel {
 	 */
 	public function __construct($id=NULL) {
 		global $db;
+		global $safesql;
 		$this->db = $db;
+		$this->safesql = $safesql;
 		if($id != NULL) {
 			if($id < EXTERNAL_COMMENT_ID) { // if comment is internal
 				$this->external = false; // comment is internal
-				$sql = "SELECT 
-							id, 
-							`article`,
-							`user`,
-							`comment` as content,
-							UNIX_TIMESTAMP(`timestamp`) as timestamp,
-							`active`,
-							`reply`,
-							`likes`,
-							`dislikes` 
-						FROM `comment` 
-						WHERE id=$id";
+				$sql = $this->safesql->query(
+					"SELECT 
+						id, 
+						`article`,
+						`user`,
+						`comment` as content,
+						UNIX_TIMESTAMP(`timestamp`) as timestamp,
+						`active`,
+						`reply`,
+						`likes`,
+						`dislikes` 
+					FROM `comment` 
+					WHERE id=%i",
+					array(
+						$id
+					));
 				parent::__construct($this->db->get_row($sql), 'Comment (Internal)', $id);
 				//$this->name = get_vname_by_uname_db($this->user);
 				return $this;
 			} else {
 				$this->external = true; // comment is external
-				$sql = "SELECT 
-							id, 
-							`article`,
-							`name`,
-							`comment` as content,
-							UNIX_TIMESTAMP(`timestamp`) as timestamp,
-							`active`,
-							`IP` as ip,
-							`pending`,
-							`reply`,
-							`spam`,
-							`likes`,
-							`dislikes` 
-						FROM `comment_ext` 
-						WHERE id=$id";
+				$sql = $this->safesql->query(
+					"SELECT 
+						id, 
+						`article`,
+						`name`,
+						`comment` as content,
+						UNIX_TIMESTAMP(`timestamp`) as timestamp,
+						`active`,
+						`IP` as ip,
+						`pending`,
+						`reply`,
+						`spam`,
+						`likes`,
+						`dislikes` 
+					FROM `comment_ext` 
+					WHERE id=%i",
+					array(
+						$id
+					));
 				parent::__construct($this->db->get_row($sql), 'Comment (External)', $id);
 				return $this;
 			}
@@ -249,11 +259,16 @@ class Comment extends BaseModel {
 	 * Returns true or false
 	 */
 	public function userLikedComment($user) {
-		$sql = "SELECT 
-					COUNT(*) 
-				FROM `comment_like` 
-				WHERE user='$user' 
-				AND comment=".$this->getId();
+		$sql = $this->safesql->query(
+			"SELECT 
+				COUNT(*) 
+			FROM `comment_like` 
+			WHERE user='%s' 
+			AND comment=%i",
+			array(
+				$user,
+				$this->getId()
+			));
 		$count = $this->db->get_var($sql);
 		return $count;
 	}
@@ -266,21 +281,33 @@ class Comment extends BaseModel {
 	 */
 	public function commentExists() {
 		if(!$this->external) {
-			$sql = "SELECT 
-						COUNT(*) 
-					FROM `comment` 
-					WHERE article=".$this->getArticle()->getId()." 
-					AND user='".$this->getUser()->getUser()."' 
-					AND comment='".$this->getContent()."' 
-					AND `active`=1";
+			$sql = $this->safesql->query(
+				"SELECT 
+					COUNT(*) 
+				FROM `comment` 
+				WHERE article=%i 
+				AND user='%s' 
+				AND comment='%s' 
+				AND `active`=1",
+				array(
+					$this->getArticle()->getId(),
+					$this->getUser()->getUser(),
+					$this->getContent(),
+				));
 		} else {
-			$sql = "SELECT 
-						COUNT(*) 
-					FROM `comment_ext` 
-					WHERE article=".$this->getArticle()->getId()." 
-					AND name='".$this->getName()."' 
-					AND comment='".$this->getContent()."'";
-		}
+			$sql = $this->safesql->query(
+				"SELECT 
+					COUNT(*) 
+				FROM `comment_ext` 
+				WHERE article=%i 
+				AND name='%s' 
+				AND comment='%s'",
+				array(
+					$this->getArticle()->getId(),
+					$this->getName(),
+					$this->getContent(),
+				));
+	}
 		return $this->db->get_var($sql);
 	}
 
@@ -318,15 +345,18 @@ class Comment extends BaseModel {
 				$this->setPending(0);
 				$this->setSpam(1);
 
-				$sql = "INSERT IGNORE INTO 
-							`comment_spam` 
-						(
-							IP, 
-							date
-						) VALUES (
-							'".$_SERVER['REMOTE_ADDR']."', 
-							DATE_ADD(NOW(), INTERVAL 2 MONTH)
-						)"; // insert comment ip into comment_spam
+				$sql = $this->safesql->query(
+					"INSERT IGNORE INTO `comment_spam` 
+					(
+						IP, 
+						date
+					) VALUES (
+						'%s', 
+						DATE_ADD(NOW(), INTERVAL 2 MONTH)
+					)",
+					array(
+						$_SERVER['REMOTE_ADDR'],
+					)); // insert comment ip into comment_spam
 				$this->db->query($sql);
 			} else {
 				$this->setActive(1);
@@ -441,16 +471,21 @@ class Comment extends BaseModel {
 	 */
 	public function likeComment($user) {
 		if(!$this->userLikedComment($user)) { // check user hasn't already liked the comment
-			$sql = "INSERT INTO `comment_like` 
-					(
-						user,
-						comment,
-						binlike
-					) VALUES (
-						'".$this->db->escape($user)."',
-						'".$this->getId()."',
-						'1'
-					)";
+			$sql = $this->safesql->query(
+				"INSERT INTO `comment_like` 
+				(
+					user,
+					comment,
+					binlike
+				) VALUES (
+					'%s',
+					%i,
+					'1'
+				)",
+				array(
+					$user,
+					$this->getId(),
+				));
 			$this->db->query($sql);
 
 			$likes = $this->getLikes() + 1;
@@ -459,7 +494,11 @@ class Comment extends BaseModel {
 			} else {
 				$sql = "UPDATE `comment_ext` ";
 			}
-			$sql .= "SET likes = ".$likes." WHERE id = ".$this->getId();
+			$sql .= "SET likes = %i WHERE id = %i";
+			$sql = $this->safesql->query($sql, array(
+				$likes,
+				$this->getId(),
+			));
 			$this->db->query($sql);
 
 			// clear comment
@@ -480,16 +519,21 @@ class Comment extends BaseModel {
 	 */
 	public function dislikeComment($user) {
 		if(!$this->userLikedComment($user)) { // check user hasn't already liked the comment
-			$sql = "INSERT INTO `comment_like` 
-					(
-						user,
-						comment,
-						binlike
-					) VALUES (
-						'".$this->db->escape($user)."',
-						'".$this->getId()."',
-						'0'
-					)";
+			$sql = $this->safesql->query(
+				"INSERT INTO `comment_like` 
+				(
+					user,
+					comment,
+					binlike
+				) VALUES (
+					'%s',
+					%i,
+					'0'
+				)",
+				array(
+					$user,
+					$this->getId(),
+				));
 			$this->db->query($sql);
 
 			$dislikes = $this->getDislikes() + 1;
@@ -498,7 +542,11 @@ class Comment extends BaseModel {
 			} else {
 				$sql = "UPDATE `comment_ext` ";
 			}
-			$sql .= "SET dislikes = ".$dislikes." WHERE id = ".$this->getId();
+			$sql .= "SET dislikes = %i WHERE id = %i";
+			$sql = $this->safesql->query($sql, array(
+				$dislikes,
+				$this->getId(),
+			));
 			$this->db->query($sql);
 			
 			// clear comment
@@ -536,11 +584,12 @@ class Comment extends BaseModel {
 
 	private function getCommentsToApprove() {
 		if(!$this->commentsToApprove) {
-			$sql = "SELECT 
-						COUNT(id) 
-					FROM comment_ext 
-					WHERE ACTIVE=1 
-					AND pending=1";
+			$sql = $this->safesql->query(
+				"SELECT 
+					COUNT(id) 
+				FROM comment_ext 
+				WHERE ACTIVE=1 
+				AND pending=1", array());
 			$this->commentsToApprove = $this->db->get_var($sql);
 		}
 		return $this->commentsToApprove;
@@ -551,8 +600,10 @@ class Comment extends BaseModel {
 	 */
 	public static function getRecentComments($num_to_get) {
 		global $db;
+		global $safesql;
 		
-		$sql = "SELECT * FROM (
+		$sql = $safesql->query(
+			"SELECT * FROM (
 				SELECT comment.article,
 					comment.id,
 					comment.user,
@@ -571,7 +622,10 @@ class Comment extends BaseModel {
 				WHERE active=1 
 				AND pending=0
 			) AS t 
-			ORDER BY timestamp DESC LIMIT ".$num_to_get;
+			ORDER BY timestamp DESC LIMIT %i",
+			array(
+				$num_to_get,
+			));
 
 		$recent_comments = $db->get_results($sql);
 		return $recent_comments;
