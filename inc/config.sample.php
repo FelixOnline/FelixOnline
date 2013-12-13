@@ -21,6 +21,10 @@
 
 	define('PRODUCTION_FLAG', false); // if set to true css and js will be minified etc..
 	define('LOCAL', true); // if true then site is hosted locally - don't use pam_auth etc.
+
+	/* Third party */
+	define('ISCIENCE', false);
+	define('ICRADIO', false);
 	
 	/* Initialise ezSQL database connection */
 	$db = new ezSQL_mysqli();
