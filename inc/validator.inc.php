@@ -151,7 +151,7 @@ class Validator {
 						}
 						
 						// Reset CSRF token
-						setcookie('felixonline_csrf_'.$parameter, '', time()-360000, '/', '.'.STANDARD_SERVER);
+						setcookie('felixonline_csrf_'.$parameter, '', time()-360000, '/');
 						
 						break;
 					case self::validator_url:

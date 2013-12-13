@@ -109,7 +109,7 @@ class AuthController extends BaseController {
 					); // Remove session ID
 					session_destroy(); // Remove all session data
 	
-					Utility::redirect(STANDARD_URL.'login', array(
+					Utility::redirect(STANDARD_URL.'login/', array(
 						'session' => $session,
 						'remember' => $_POST['remember'],
 						'goto' => $_GET['goto']
@@ -326,7 +326,7 @@ class AuthController extends BaseController {
 
 		$expiry_time = time() + COOKIE_LENGTH;
 
-		setcookie('felixonline', $hash, $expiry_time, '/', '.'.STANDARD_SERVER);
+		setcookie('felixonline', $hash, $expiry_time, '/');
 		$sql = $this->safesql->query("INSERT INTO `cookies` 
 									(
 										hash,

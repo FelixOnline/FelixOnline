@@ -11,15 +11,7 @@ class Utility {
 	 * Returns string
 	 */
 	public static function currentPageURL() {
-		$pageURL = 'http';
-		if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
-			$pageURL .= "://";
-		if ($_SERVER["SERVER_PORT"] != "80") {
-			$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-		} else {
-			$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-		}
-		return $pageURL;
+		return STANDARD_URL . substr($_SERVER["REQUEST_URI"], 1);
 	}
 
 	/*
@@ -111,7 +103,7 @@ class Utility {
 		$hash = $hash.$form_name.$max_length;
 		$hash = sha1($hash);
 		
-		setcookie('felixonline_csrf_'.$form_name, $hash, time() + $max_length, '/', '.'.STANDARD_SERVER);
+		setcookie('felixonline_csrf_'.$form_name, $hash, time() + $max_length, '/');
 		
 		return $hash;
 	}
