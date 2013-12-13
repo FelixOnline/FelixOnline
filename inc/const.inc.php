@@ -148,6 +148,10 @@
 		"wlan.ic.ac.uk" => "College Wireless"
 	);
 
+	/* THIRD PARTY */
+	if(!defined('ISCIENCE')) define('ISCIENCE', true); // enable iscience feed
+	if(!defined('ICRADIO')) define('ICRADIO', true); // enable icradio feed
+
 	/* ENGINE CONSTANTS */
 	define('NUMBER_OF_ARTICLES_PER_PAGE',10);
 

@@ -37,7 +37,7 @@ class Cache {
 			$this->valid = true;
 			// load cache file
 			$cache = $this->getCache();
-			echo $cache['content'];
+			echo utf8_decode($cache['content']);
 			return false;
 		} else {
 			ob_start();
