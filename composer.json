@@ -6,7 +6,11 @@
         {
             "name": "Jonathan Kim",
             "email": "jkimbo@gmail.com"
-        }
+        },
+		{
+			"name": "Philip Kent",
+			"email": "kentphilip@gmail.com"
+		}
     ],
     "require": {
 		"felixonline/exporter": "0.1.*"
