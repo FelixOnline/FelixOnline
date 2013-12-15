@@ -1,0 +1,14 @@
+{
+    "name": "felixonline/online",
+    "description": "Felix Online",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonathan Kim",
+            "email": "jkimbo@gmail.com"
+        }
+    ],
+    "require": {
+		"felixonline/exporter": "0.1.*"
+    }
+}
