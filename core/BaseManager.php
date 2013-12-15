@@ -36,32 +36,7 @@ class BaseManager
 	 * Get all objects
 	 */
 	public function all($limit = NULL, $order = array("id", "ASC")) {
-		$params = array(
-			$this->table,
-			$order[0],
-			$order[1],
-		);
-
-		$sql = "SELECT
-					`id`
-				FROM %s
-				ORDER BY %s %s";
-
-		if (!is_null($limit)) {
-			$sql .= " LIMIT 0, %i";
-			$params[] = $limit;
-		}
-
-		$sql = $this->safesql->query($sql, $params);
-
-		$results = $this->db->get_results($sql);
-		$objects = [];
-
-		foreach($results as $result) {
-			$objects[] = new $this->class($result->id);
-		}
-
-		return $objects;
+		return $this->filter(NULL, $limit, $order);
 	}
 
 	/**
@@ -74,20 +49,25 @@ class BaseManager
 	 *		'published < NOW()'
 	 *	), 20, array('published', 'ASC'));
 	 */
-	public function filter($filters, $limit = NULL, $order = array("id", "ASC")) {
-		$filter = implode(" AND ", $filters);
-		$params = array(
-			$this->table,
-			$filter,
-			$order[0],
-			$order[1],
-		);
-
+	public function filter($filters = NULL, $limit = NULL, $order = array("id", "ASC")) {
 		$sql = "SELECT
 					`id`
-				FROM %s
-				WHERE %s
-				ORDER BY %s %s";
+				FROM %s";
+
+		$params = array(
+			$this->table
+		);
+
+		if (!is_null($filters)) {
+			$filter = implode(" AND ", $filters);
+
+			$sql .= " WHERE %s";
+			$params[] = $filter;
+		}
+
+		$sql .= " ORDER BY %s %s";
+		$params[] = $order[0];
+		$params[] = $order[1];
 
 		if (!is_null($limit)) {
 			$sql .= " LIMIT 0, %i";
