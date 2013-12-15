@@ -113,7 +113,7 @@ $exporter = new FelixExporter(array(
     'db_name' => $config['db_name'],
     'db_user' => $config['db_user'],
     'db_pass' => $config['db_pass'],
-    'file' => dirname(__FILE__) . '/' . $config['db_name'] . '-' . time() . '.sql',
+    'file' => dirname(__FILE__) . '/../backups/' . $config['db_name'] . '-' . date("Y-m-d") . '.sql',
 ));
 
 $exporter->run();
