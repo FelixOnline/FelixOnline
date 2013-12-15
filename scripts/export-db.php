@@ -7,6 +7,7 @@ require dirname(__FILE__) . '/../vendor/autoload.php';
 require dirname(__FILE__) . '/../inc/ez_sql_core.php'; // TODO REMOVE
 require dirname(__FILE__) . '/../inc/ez_sql_mysqli.php'; // TODO REMOVE
 require dirname(__FILE__) . '/../inc/SafeSQL.class.php'; // TODO REMOVE
+
 $config = require dirname(__FILE__) . '/../inc/config.inc.php';
 
 class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
@@ -76,16 +77,32 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
         }
 
         if ($table == 'user') {
-            $row['ip'] = '0.0.0.0';
-            $row['facebook'] = NULL;
-            $row['twitter'] = NULL;
-            $row['websitename'] = NULL;
-            $row['websiteurl'] = NULL;
+			// Check if user has any articles
+			$res = $this->db->query(
+				"SELECT 
+					COUNT(id) 
+				FROM `article` 
+				INNER JOIN `article_author` 
+					ON (article.id=article_author.article) 
+				WHERE article_author.author='".$row['user']."'
+				AND published < NOW()");
+			$count = $res->fetch_row()[0];
 
-            if ($row['email'] ) {
-                $row['email'] = "test-".$this->count."@example.com";
-                $this->count++;
-            }
+			if ($count > 0) {
+				$row['ip'] = '0.0.0.0';
+				$row['facebook'] = NULL;
+				$row['twitter'] = NULL;
+				$row['websitename'] = NULL;
+				$row['websiteurl'] = NULL;
+				$row['visits'] = 0;
+
+				if ($row['email'] ) {
+					$row['email'] = "test-".$this->count."@example.com";
+					$this->count++;
+				}
+			} else {
+				return false;
+			}
         }
 
         return $row;
