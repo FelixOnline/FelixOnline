@@ -3,11 +3,6 @@
 	 * Create a config.inc.php with the information below to run on a local dev machine
 	 */
 
-	$dbname = "DB_TABLE";
-	$host = "localhost";
-	$user = "DB_USER";
-	$pass = "DB_PASSWORD";
-
 	/*
 	 * Change these urls to your local versions, e.g http://localhost/felix
 	 */
@@ -26,9 +21,22 @@
 	define('ISCIENCE', false);
 	define('ICRADIO', false);
 	
+	$config = array(
+		'db_name' => "DB_TABLE",
+		'db_host' => "localhost",
+		'db_user' => "DB_USER",
+		'db_pass' => "DB_PASSWORD",
+	);
+
 	/* Initialise ezSQL database connection */
 	$db = new ezSQL_mysqli();
-	$db->quick_connect($user,$pass,$dbname,$host,'utf8');
+	$db->quick_connect(
+		$config['db_user'],
+		$config['db_pass'],
+		$config['db_name'],
+		'localhost',
+		'utf8'
+	);
 	$safesql = new SafeSQL_MySQLi($db->dbh);
 
 	/* Set settings for caching (turned off by defualt) */
@@ -53,4 +61,5 @@
 	//error_reporting(0);
 	/* to turn on error reporting uncomment line: */
 	error_reporting(E_ERROR | E_WARNING | E_PARSE);
-?>
+
+	return $config;
