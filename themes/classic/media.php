@@ -64,10 +64,10 @@ $theme->render('header', $header);
 			</div>
 			<div id="listenlive">
 				<div id="instructions">Listen Live:</div>
-				<audio id="listenlive" controls preload="auto" autobuffer>
-					<source src="http://icecast.icradio.com:8000/vorbis-extra-high" />
-					<source src="http://icecast.icradio.com:8000/mp3-high" />
-					<p><a href="http://www.icradio.com/live">on the ICRadio website</a></p>  
+					<audio id="listenlive" controls preload="none">
+                        		<source src="http://icecast.icradio.com:8000/mp3-high" type="audio/mpeg" />
+                        		<source src="http://icecast.icradio.com:8000/vorbis-low" type="audio/ogg; codecs=vorbis" />
+                        		<p><a href="http://www.icradio.com/live">on the ICRadio website</a></p>
 				</audio>
 			</div>
 		</h2>
