@@ -29,13 +29,13 @@
 								break;
 							case EXCEPTION_GLUE:
 								$header = 'Misconfigured glue';
-								$data['URL'] = $exception->getClass();
+								$data['URL'] = $exception->getUrl();
 								$data['Class requested'] = $exception->getItem();
 								$data['Method requested'] = $exception->getVerb();
 								break;
 							case EXCEPTION_GLUE_URL:
 								$header = 'URL is not valid';
-								$data['URL'] = $exception->getClass();
+								$data['URL'] = $exception->getUrl();
 								break;
 							case EXCEPTION_IMAGE_NOTFOUND:
 								$dimensions = $exception->getImageDimensions();
