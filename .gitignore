@@ -33,3 +33,5 @@ varsity/
 
 /vendor/
 *.sql
+
+themes/classic/css/generated/
