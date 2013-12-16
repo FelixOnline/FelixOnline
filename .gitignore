@@ -30,3 +30,6 @@ varsity/
 
 # cache files
 *.cache
+
+/vendor/
+*.sql
