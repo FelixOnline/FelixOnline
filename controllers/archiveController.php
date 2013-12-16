@@ -9,7 +9,7 @@ class ArchiveController extends BaseController {
 	function __construct() {
 		parent::__construct();
 		global $dba;
-		$dbaname = 'media_felix_archive';
+		$dbaname = ARCHIVE_DATABASE;
 
 		$dba = new ezSQL_mysqli();
 		$dba->quick_connect(

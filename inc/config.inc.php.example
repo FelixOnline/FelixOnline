@@ -21,6 +21,9 @@
 	define('ISCIENCE', false);
 	define('ICRADIO', false);
 	
+	/* Archive */
+	define('ARCHIVE_DATABASE', 'media_felix_archive');
+
 	$config = array(
 		'db_name' => "DB_TABLE",
 		'db_host' => "localhost",
