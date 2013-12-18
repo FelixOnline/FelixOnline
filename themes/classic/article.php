@@ -24,6 +24,8 @@ $header = array(
 	'meta' => $meta
 );
 
+$theme->resources->addCSS(array('print.less'));
+
 $theme->render('header', $header);
 ?>
 <!-- Article wrapper -->
