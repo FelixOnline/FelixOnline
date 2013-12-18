@@ -5,6 +5,8 @@ Contributors welcome! Just fork the repository and send us a pull request with y
 
 Maintained by Philip Kent (pk1811@imperial.ac.uk) and Jonathan Kim (hello@jkimbo.com)
 
+[![Stories in Ready](https://badge.waffle.io/felixonline/felixonline.png?label=ready)](http://waffle.io/felixonline/felixonline)
+
 ## Getting started:
 ###Requirements:
 * Local LAMP stack (Apache, PHP and MySQL)
