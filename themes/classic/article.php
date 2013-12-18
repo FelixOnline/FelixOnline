@@ -111,8 +111,8 @@ $theme->render('header', $header);
 					</a>
 				</li>
 				<li>
-					<a href="<?php echo STANDARD_URL; ?>print.php?article=<?php echo $article->getId();?>" target="_blank">Print Article</a>
-				</li> <!-- TODO -->
+					<a href="#" id="print-article">Print Article</a>
+				</li>
 			</ul>
 		</div>
 		<!-- End of Sidebar 2 -->
