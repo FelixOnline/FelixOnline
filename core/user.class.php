@@ -346,4 +346,18 @@ class User extends BaseModel {
 		}
 		return $this->image;
 	}
+
+	/*
+	 * Public: has Articles Hidden from Robots
+	 */
+	public function hasArticlesHiddenFromRobots() {
+		$sql=$this->safesql->query(
+			"SELECT COUNT(*) 
+			FROM `article_author` INNER JOIN `article` 
+			ON article_author.article=article.id 
+			WHERE article_author.`author`='%s' and searchable=0",
+			array( $this->getUser()) );
+		$result=$this->db->get_var($sql);
+		return ($result>0 ? true: false);
+	}
 }
