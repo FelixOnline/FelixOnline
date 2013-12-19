@@ -1,3 +1,8 @@
+		<?php
+			restore_error_handler();
+			restore_exception_handler();
+		?>
+		
 		<div class="error_text">
 			<h1>He's Dead, Jim!</h1>
 			<p>Felix Online is experiencing technical difficulties at the moment. The cat has already been notified, and things should be back up and running soon.</p>
