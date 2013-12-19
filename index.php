@@ -48,7 +48,7 @@ try {
 	/*
 	 * Add pages to routes
 	 */
-	$sql = "SELECT * FROM `pages`";
+	$sql = "SELECT `id`, `slug` FROM `pages`";
 	$pages = $db->get_results($sql);
 	if (!is_null($pages)) {
 		foreach($pages as $key => $page) {
@@ -72,7 +72,7 @@ try {
 	/*
 	 * Add blogs to routes
 	 */
-	$sql = "SELECT * FROM `blogs`";
+	$sql = "SELECT `id`, `name`, `slug`, `controller` FROM `blogs`";
 	$blogs = $db->get_results($sql);
 	foreach($blogs as $key => $blog) {
 		$controller = 'blogController';
