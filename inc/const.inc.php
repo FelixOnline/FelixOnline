@@ -110,6 +110,7 @@
 	define('EMAIL_COMMENT_AUTHOR',true);
 	define('EMAIL_COMMENT_COMMENTERS',true);
 	define('EMAIL_EXTCOMMENT_NOTIFYADDR','jk708@ic.ac.uk, felix@imperial.ac.uk'); // comma-separated list of addresses to notify when a new external comment needs approval
+	if(!defined('EMAIL_ERRORS'))		define('EMAIL_ERRORS', 'jkimbo@gmail.com, philip.kent@me.com'); // people to email on errors
 
 	/* SITE CONSTANTS */
 	$icip = array('155.198','129.31.','146.169'); # 7 characters
