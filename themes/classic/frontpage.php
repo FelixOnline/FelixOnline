@@ -76,7 +76,7 @@ $timing->log('after header');
 						<?php if ($article->getImage()): ?>
 							<img id="topStoryPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(340, 220); ?>" height="220px" width="340px">
 						 <?php else: ?>
-							<img id="topStoryPhoto" alt="" src="<?php echo IMAGE_URL.'/220/340/'.DEFAULT_IMG_URI; ?>" height="220px" width="340px">
+							<img id="topStoryPhoto" alt="" src="<?php echo IMAGE_URL.'340/220/'.DEFAULT_IMG_URI; ?>" height="220px" width="340px">
 						<?php endif; ?>
 					</a>
 				</div>

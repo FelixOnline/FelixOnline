@@ -98,7 +98,9 @@ $timing->log('After setup');
 
 try {
 	// try mapping request to urls
-	if(strstr(Utility::currentPageURL(), AUTHENTICATION_PATH) != false) { // if request is to auth path
+	if((isset($_POST['username']) && isset($_POST['password'])) &&
+		strstr(Utility::currentPageURL(), AUTHENTICATION_PATH) != false
+	) { // if request is to auth path
 		$relpath = substr(
 			substr(
 				AUTHENTICATION_PATH,
