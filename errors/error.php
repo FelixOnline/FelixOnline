@@ -1,3 +1,8 @@
+		<?php
+			restore_error_handler();
+			restore_exception_handler();
+		?>
+		
 		<div class="error_text">
 			<h1>He's Dead, Jim!</h1>
 			<p>Felix Online is experiencing technical difficulties at the moment. The cat has already been notified, and things should be back up and running soon.</p>
@@ -29,13 +34,13 @@
 								break;
 							case EXCEPTION_GLUE:
 								$header = 'Misconfigured glue';
-								$data['URL'] = $exception->getClass();
+								$data['URL'] = $exception->getUrl();
 								$data['Class requested'] = $exception->getItem();
 								$data['Method requested'] = $exception->getVerb();
 								break;
 							case EXCEPTION_GLUE_URL:
 								$header = 'URL is not valid';
-								$data['URL'] = $exception->getClass();
+								$data['URL'] = $exception->getUrl();
 								break;
 							case EXCEPTION_IMAGE_NOTFOUND:
 								$dimensions = $exception->getImageDimensions();
