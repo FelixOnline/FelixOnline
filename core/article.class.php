@@ -71,7 +71,7 @@ class Article extends BaseModel {
 										`category`,
 										UNIX_TIMESTAMP(`date`) as date,
 										UNIX_TIMESTAMP(`published`) as published,`hidden`,
-									       	`searchable`
+										`searchable`,
 										`text1`,
 										`text2`,
 										`img1`,
@@ -489,14 +489,5 @@ class Article extends BaseModel {
 		return $db->get_results($sql);
 	}
 	
-	public function getIsHiddenFromRobots() {
-		//Does the article appear to webcrawlers?
-		$sql = $this->safesql->query( "SELECT `searchable` 
-			FROM `article` 
-			WHERE `id`=%i
-			",array( $this->getId() ));
-		$result = $this->db->get_var($sql);
-		return ($result=="0" ? true : false); //returns true if 0 (i.e. the article is not searchable)
-	}
 }
 

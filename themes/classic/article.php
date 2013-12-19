@@ -18,7 +18,7 @@ foreach ($article->getAuthors() as $author) {
 if($article->getImage()) {
 	$meta .= '<meta property="og:image" content="'.$article->getImage()->getURL(100).'"/>';
 }
-if($article->getIsHiddenFromRobots()) {
+if(!$article->getSearchable()) {
 	$meta .= '<meta name="robots" content="noindex">';
 }
 $header = array(
