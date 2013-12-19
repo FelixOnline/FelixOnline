@@ -36,7 +36,7 @@ $(document).ready(function() {
 		$('#twitterShare').append(twitter);
 		$('#googleShare').append(google);
 		$('#redditShare').append(reddit);
-	};
+	}
 	
 	if ($('.articleShare').length) { //If the sharing thing at the bottom exists
 		var facebook2 = '<fb:like send="true" width="300" show_faces="false" font="arial"></fb:like>';
@@ -46,7 +46,7 @@ $(document).ready(function() {
 		$('#facebookLike2').append(facebook2);
 		$('#twitterShare2').append(twitter2);
 		$('#googleShare2').append(google2);
-	};
+	}
 
 	// Media box tabs 
 	var mediaTabContainers = $('div#mediaBox > div');
@@ -458,6 +458,12 @@ $(document).ready(function() {
 	});
 	$('textarea').change(function() {
 		$(this).removeClass('invalidField');
+	});
+
+	// Print link
+	$('#print-article').click(function(event) {
+		window.print();
+		return false;
 	});
 });
 
