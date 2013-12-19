@@ -14,6 +14,7 @@
  *	  approvedby	  - user who approved the article to be published
  *	  published	   - timestamp when article was published
  *	  hidden		  - if article is hidden from engine
+ *        searchable       - can article be seen by search engines?
  *	  text1		   - id of main article text
  *	  img1			- id of main article image
  *	  text2		   - id of second article text [depreciated]
@@ -70,6 +71,7 @@ class Article extends BaseModel {
 										`category`,
 										UNIX_TIMESTAMP(`date`) as date,
 										UNIX_TIMESTAMP(`published`) as published,`hidden`,
+										`searchable`,
 										`text1`,
 										`text2`,
 										`img1`,
@@ -486,5 +488,6 @@ class Article extends BaseModel {
 									ORDER BY count DESC, article DESC LIMIT %i", array($threshold, $threshold, $number_to_get)); // go for most recent comments instead
 		return $db->get_results($sql);
 	}
+	
 }
 

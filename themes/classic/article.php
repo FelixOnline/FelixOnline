@@ -18,7 +18,9 @@ foreach ($article->getAuthors() as $author) {
 if($article->getImage()) {
 	$meta .= '<meta property="og:image" content="'.$article->getImage()->getURL(100).'"/>';
 }
-
+if(!$article->getSearchable()) {
+	$meta .= '<meta name="robots" content="noindex">';
+}
 $header = array(
 	'title' => $article->getTitle().' - '.$article->getCategoryLabel().' - '.'Felix Online',
 	'meta' => $meta
