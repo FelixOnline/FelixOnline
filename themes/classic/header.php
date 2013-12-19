@@ -14,7 +14,7 @@
 	<meta name="google-site-verification" content="V5LPwqv0BzMHvfMOIZvSjjJ-8tJc4Mi1A-L2AEbby50" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-	<link href='http://fonts.googleapis.com/css?family=Kreon:400,700|Bevan|Pontano+Sans' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Kreon:400,700|Bevan|Pontano+Sans' rel='stylesheet' type='text/css'>
 
 	<base href="<?php echo STANDARD_URL; ?>">
 

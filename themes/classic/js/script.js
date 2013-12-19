@@ -30,7 +30,7 @@ $(document).ready(function() {
 		var facebook = '<fb:like send="false" layout="button_count" width="140" show_faces="false" font="arial"></fb:like>';
 		var twitter = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
 		var google = '<g:plusone size="medium" annotation="inline" width="140"></g:plusone>';
-		var reddit = '<iframe src="http://www.reddit.com/static/button/button3.html?width=69&url='+encodeURIComponent(window.location.href)+'" height="52" width="69" scrolling="no" frameborder="0"></iframe>';
+		var reddit = '<iframe src="//www.reddit.com/static/button/button3.html?width=69&url='+encodeURIComponent(window.location.href)+'" height="52" width="69" scrolling="no" frameborder="0"></iframe>';
 		
 		$('#facebookLike').append(facebook);
 		$('#twitterShare').append(twitter);
