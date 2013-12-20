@@ -17,11 +17,17 @@ $currentuser = new CurrentUser();
 $hooks = new Hooks();
 $theme = new Theme('classic'); // TODO
 
-$action = $_REQUEST['action'];
+$clean_request = array();
+foreach($_POST as $key => $val) {
+	$clean_request[$key] = htmlspecialchars_decode($val);
+}
+
+$action = $clean_request['action'];
+
 if($action = $hooks->getAction($action)) {
 	// check csrf
-	$check = $_REQUEST['check'];
-	$token = $_REQUEST['token'];
+	$check = $clean_request['check'];
+	$token = $clean_request['token'];
 	try {
 		Validator::Check(
 			array('csrf' => $token), 
@@ -31,7 +37,7 @@ if($action = $hooks->getAction($action)) {
 				)
 			)
 		); 
-		$return = call_user_func($action);
+		$return = call_user_func($action, $clean_request);
 	} catch (ValidatorException $e) {
 		if($e->getMessage() == 1 && key($e->getData()) == 'csrf') {
 			$return = array(error => true, details => 'A security error has occured, this page will now be reloaded', reload => true);

@@ -351,24 +351,24 @@ $(document).ready(function() {
 		function ajaxCallback(data, message) {
 			// Change profile info
 			if(data.desc) {
-				$('#descCont').text(data.desc);
+				$('#descCont').text($("<div/>").html(data.desc).text());
 			} else $('#descCont').text('Add some personal info....');
 			if(data.facebook) {
 				$('#personalLinks .facebook a').attr('href', data.facebook);
 				$('#personalLinks .facebook').show();
 			} else $('#personalLinks .facebook').hide();
 			if(data.twitter) {
-				$('#personalLinks .twitter a').attr('href', 'http://www.twitter.com/'+data.twitter).text('@'+data.twitter);
+				$('#personalLinks .twitter a').attr('href', 'http://www.twitter.com/'+data.twitter).text($("<div/>").html('@'+data.twitter).text());
 				$('#personalLinks .twitter').show();
 			} else $('#personalLinks .twitter').hide();
 			if(data.email) {
-				$('#personalLinks .useremail a').attr('href', 'mailto:'+data.email).text(data.email);
+				$('#personalLinks .useremail a').attr('href', 'mailto:'+data.email+$("<div/>").html(data.email).text());
 				$('#personalLinks .useremail').show();
 			} else $('#personalLinks .useremail').hide();
 			if(data.weburl) {
 				$('#personalLinks .website a').attr('href', data.weburl);
 				if(data.webname)
-					$('#personalLinks .website a').text(data.webname);
+					$('#personalLinks .website a').text($("<div />").html(data.webname).text());
 				else
 					$('#personalLinks .website a').text(data.weburl);
 				$('#personalLinks .website').show();

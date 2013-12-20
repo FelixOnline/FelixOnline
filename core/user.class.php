@@ -23,6 +23,7 @@ class User extends BaseModel {
 	private $count;
 	private $popArticles = array();
 	private $comments = array();
+	protected $dbtable = 'user';
 
 	function __construct($uname = NULL) {
 		/* initialise db connection and store it in object */
