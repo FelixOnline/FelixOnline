@@ -133,8 +133,16 @@ if ($return !== 0) {
 	throw new Exception(implode("\n", $output));
 }
 
+// Remove original sql file
+unlink($db_file);
+
 // create symlink
-symlink($db_file . '.zip', 'latest.sql.zip');
+$symlink = 'latest.sql.zip';
+if (file_exists($symlink)) {
+	unlink($symlink);
+}
+
+symlink($db_file . '.zip', $symlink);
 
 // Move back to original directory
 chdir($orig_directory);
