@@ -12,71 +12,71 @@ $config = require dirname(__FILE__) . '/../inc/config.inc.php';
 
 class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 {
-    protected $count = 1;
-    function processTable($table)
-    {
-        if ($table == 'article_visit') {
-            return false;
-        }
+	protected $count = 1;
+	function processTable($table)
+	{
+		if ($table == 'article_visit') {
+			return false;
+		}
 
-        if ($table == 'api_keys') {
-            return false;
-        }
+		if ($table == 'api_keys') {
+			return false;
+		}
 
-        if ($table == 'api_log') {
-            return false;
-        }
+		if ($table == 'api_log') {
+			return false;
+		}
 
-        if ($table == 'comment_spam') {
-            return false;
-        }
+		if ($table == 'comment_spam') {
+			return false;
+		}
 
-        if ($table == 'cookies') {
-            return false;
-        }
+		if ($table == 'cookies') {
+			return false;
+		}
 
-        if ($table == 'ffs_completers') {
-            return false;
-        }
+		if ($table == 'ffs_completers') {
+			return false;
+		}
 
-        if ($table == 'ffs_responses') {
-            return false;
-        }
+		if ($table == 'ffs_responses') {
+			return false;
+		}
 
-        if ($table == 'login') {
-            return false;
-        }
+		if ($table == 'login') {
+			return false;
+		}
 
-        if ($table == 'optimise') {
-            return false;
-        }
+		if ($table == 'optimise') {
+			return false;
+		}
 
-        if ($table == 'preview_email') {
-            return false;
-        }
+		if ($table == 'preview_email') {
+			return false;
+		}
 
-        if ($table == 'text_story_bkp') {
-            return false;
-        }
+		if ($table == 'text_story_bkp') {
+			return false;
+		}
 
-        if ($table == 'thephig_users') {
-            return false;
-        }
+		if ($table == 'thephig_users') {
+			return false;
+		}
 
-        return $table;
-    }
+		return $table;
+	}
 
-    function processRow($row, $table)
-    {
-        if ($table == 'comment_ext') {
-            if ($row['spam'] == 1) {
-                return false;
-            }
+	function processRow($row, $table)
+	{
+		if ($table == 'comment_ext') {
+			if ($row['spam'] == 1) {
+				return false;
+			}
 
-            $row['IP'] = NULL;
-        }
+			$row['IP'] = NULL;
+		}
 
-        if ($table == 'user') {
+		if ($table == 'user') {
 			// Check if user has any articles
 			$res = $this->db->query(
 				"SELECT 
@@ -103,17 +103,46 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 			} else {
 				return false;
 			}
-        }
+		}
 
-        return $row;
-    }
+		return $row;
+	}
 }
 
+$orig_directory = getcwd();
+
+// change to backup directory
+$backup_directory = realpath(dirname(__FILE__) . '/../backups');
+chdir($backup_directory);
+
+$db_file = $config['db_name'] . '-' . date("Y-m-d") . '.sql';
+
 $exporter = new FelixExporter(array(
-    'db_name' => $config['db_name'],
-    'db_user' => $config['db_user'],
-    'db_pass' => $config['db_pass'],
-    'file' => dirname(__FILE__) . '/../backups/' . $config['db_name'] . '-' . date("Y-m-d") . '.sql',
+	'db_name' => $config['db_name'],
+	'db_user' => $config['db_user'],
+	'db_pass' => $config['db_pass'],
+	'file' => $db_file,
 ));
 
 $exporter->run();
+
+// Zip file
+exec(sprintf("zip %s %s", $db_file . '.zip', $db_file), $output, $return);
+
+if ($return !== 0) {
+	throw new Exception(implode("\n", $output));
+}
+
+// Remove original sql file
+unlink($db_file);
+
+// create symlink
+$symlink = 'latest.sql.zip';
+if (file_exists($symlink)) {
+	unlink($symlink);
+}
+
+symlink($db_file . '.zip', $symlink);
+
+// Move back to original directory
+chdir($orig_directory);
