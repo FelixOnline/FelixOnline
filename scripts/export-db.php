@@ -109,11 +109,32 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
     }
 }
 
+$orig_directory = getcwd();
+
+// change to backup directory
+$backup_directory = realpath(dirname(__FILE__) . '/../backups');
+chdir($backup_directory);
+
+$db_file = $config['db_name'] . '-' . date("Y-m-d") . '.sql';
+
 $exporter = new FelixExporter(array(
     'db_name' => $config['db_name'],
     'db_user' => $config['db_user'],
     'db_pass' => $config['db_pass'],
-    'file' => dirname(__FILE__) . '/../backups/' . $config['db_name'] . '-' . date("Y-m-d") . '.sql',
+    'file' => $db_file,
 ));
 
 $exporter->run();
+
+// Zip file
+exec(sprintf("zip %s %s", $db_file . '.zip', $db_file), $output, $return);
+
+if ($return !== 0) {
+	throw new Exception(implode("\n", $output));
+}
+
+// create symlink
+symlink($db_file . '.zip', 'latest.sql.zip');
+
+// Move back to original directory
+chdir($orig_directory);
