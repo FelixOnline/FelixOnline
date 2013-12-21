@@ -80,6 +80,19 @@ $theme->render('header', $header);
 					</a>
 				</span> - <?php echo date("l F j, Y", $article->getDate());?>
 			</p>
+			<?php
+				$isSectionEditor = false;
+				if($article->getCategory()->getEditors != null) {
+					foreach($article->getCategory()->getEditors() as $user) {
+						if($currentuser->getUser() == $user->getUser()) {
+							$isSectionEditor = true;
+						}
+					}
+				}
+			?>
+			<?php if($currentuser->getRole() >= 25 || $isSectionEditor): ?>
+				<span id="editpage"><a href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Page</a></span>
+			<?php endif; ?>
 		</div>
 		<!-- End of article header -->
 
