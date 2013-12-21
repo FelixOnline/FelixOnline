@@ -53,6 +53,8 @@ class Comment extends BaseModel {
 	private $external = false; // if comment is external or not. Default false
 	private $commentsToApprove;
 	protected $db;
+	protected $transformers = array(
+		'content' => parent::TRANSFORMER_NO_HTML);
 	
 	/*
 	 * Constructor for Comment class
@@ -68,6 +70,7 @@ class Comment extends BaseModel {
 		global $safesql;
 		$this->db = $db;
 		$this->safesql = $safesql;
+
 		if($id != NULL) {
 			if($id < EXTERNAL_COMMENT_ID) { // if comment is internal
 				$this->external = false; // comment is internal
@@ -87,7 +90,9 @@ class Comment extends BaseModel {
 					array(
 						$id
 					));
+
 				parent::__construct($this->db->get_row($sql), 'Comment (Internal)', $id);
+
 				return $this;
 			} else {
 				$this->external = true; // comment is external
@@ -110,6 +115,9 @@ class Comment extends BaseModel {
 					array(
 						$id
 					));
+
+				$this->transfomers['name'] = parent::TRANSFORMER_NO_HTML;
+
 				parent::__construct($this->db->get_row($sql), 'Comment (External)', $id);
 				return $this;
 			}
