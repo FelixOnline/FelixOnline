@@ -86,7 +86,7 @@ class Category extends BaseModel
 					user 
 				FROM `category_author` 
 				WHERE category=%i 
-				AND admin=1", array($id));
+				AND admin=1", array($this->getId()));
 			$editors = $this->db->get_results($sql);
 			if (is_null($editors)) {
 				$this->editors = null;
