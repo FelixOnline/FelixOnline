@@ -88,7 +88,6 @@ class Comment extends BaseModel {
 						$id
 					));
 				parent::__construct($this->db->get_row($sql), 'Comment (Internal)', $id);
-				//$this->name = get_vname_by_uname_db($this->user);
 				return $this;
 			} else {
 				$this->external = true; // comment is external
@@ -244,7 +243,11 @@ class Comment extends BaseModel {
 	 * Public: Check if comment is pending approval
 	 */
 	public function isPending() {
-		if($this->isExternal() && $this->getActive() && $this->getPending() && $this->getIp() == $_SERVER['REMOTE_ADDR']) { // if comment is pending for this ip address
+		if($this->isExternal()
+			&& $this->getActive()
+			&& $this->getPending()
+			&& $this->getIp() == $_SERVER['REMOTE_ADDR']
+		) { // if comment is pending for this ip address
 			return true;
 		} else {
 			return false;
@@ -307,7 +310,7 @@ class Comment extends BaseModel {
 					$this->getName(),
 					$this->getContent(),
 				));
-	}
+		}
 		return $this->db->get_var($sql);
 	}
 
@@ -326,21 +329,26 @@ class Comment extends BaseModel {
 	 * Returns id of new comment
 	 */
 	public function save() {
+		global $akismet;
 		if(!$this->external) { // if internal
 			$this->setDbtable('comment');
 		} else {
 			$this->setDbtable('comment_ext');
 			$this->setIp($_SERVER['REMOTE_ADDR']);
+
 			// check spam using akismet
-			require_once('inc/akismet.class.php');
 
-			$akismet = new Akismet(STANDARD_URL, AKISMET_API_KEY);
-			$akismet->setCommentAuthor($this->getName());
-			//$akismet->setCommentAuthorEmail($email);
-			$akismet->setCommentContent($this->getContent());
-			$akismet->setPermalink($this->getArticle()->getURL());
+			$check = $akismet->check(array(
+				'permalink' => $this->getArticle()->getURL(),
+				'comment_type' => 'comment',
+				'comment_author' => $this->getName(),
+				'comment_content' => $this->getContent(),
+				'user_ip' => $this->getIp(),
+				'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+				'referrer' => $_SERVER['HTTP_REFERER'],
+			));
 
-			if($spam = $akismet->isCommentSpam()) { // if comment is spam
+			if($check == true) { // if comment is spam
 				$this->setActive(0);
 				$this->setPending(0);
 				$this->setSpam(1);
@@ -358,20 +366,23 @@ class Comment extends BaseModel {
 						$_SERVER['REMOTE_ADDR'],
 					)); // insert comment ip into comment_spam
 				$this->db->query($sql);
-			} else {
+			} else { // Not spam
 				$this->setActive(1);
 				$this->setPending(1);
 				$this->setSpam(0);
 			}
 		}
 
+		// check for akismet errors
+		if (!is_null($akismet->getError())) {
+			throw new ExternalException($akismet->getError());
+		}
+
 		parent::save();
 		$this->setId($this->db->insert_id); // get id of inserted comment
 
-		if($this->isExternal()) {
-			if(!$spam) {
-				$this->emailExternalComment();
-			}
+		if($this->isExternal() && !$spam) {
+			$this->emailExternalComment();
 		} else {
 			if($this->getReply()) { // if comment is replying to an internal comment 
 				$this->emailReply();
@@ -380,15 +391,8 @@ class Comment extends BaseModel {
 			/* email authors of article */
 			$this->emailAuthors();
 		}
-
-		// clear cache
-		//Cache::clear('comment-'.$this->fields['article']);
 		
-		if($this->isExternal() && $this->getSpam() == 1) {
-			return 'spam';
-		} else {
-			return $this->getId(); // return new comment id
-		}
+		return $this->getId(); // return new comment id
 	}
 
 	/*
@@ -631,4 +635,3 @@ class Comment extends BaseModel {
 		return $recent_comments;
 	}
 }
-
