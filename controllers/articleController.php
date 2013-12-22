@@ -49,30 +49,34 @@ class ArticleController extends BaseController {
 
 		/* External comment */
 		else if ($_POST['articlecomment_ext']) {
-			$comment->setExternal(true);
-			$comment->setContent($_POST['comment']);
-			$comment->setName($_POST['name']);
-			if(isset($_POST['replyComment'])) {
-				$comment->setReply($_POST['replyComment']);
-			}
-
-			if ($comment->commentExists()) { // if comment already exists
-				$errorduplicate = true;
-			} else {
-				if($id = $comment->save()) {
-					if($comment->isExternal() && $comment->getSpam() == 1) {
-						$errorspam = true;
-					} else {
-						Utility::redirect(
-							Utility::currentPageURL(), 
-							'', 
-							'comment'.$id
-						);
-						exit;
-					}
-				} else {
-					$errorinsert = true;
+			try {
+				$comment->setExternal(true);
+				$comment->setContent($_POST['comment']);
+				$comment->setName($_POST['name']);
+				if(isset($_POST['replyComment'])) {
+					$comment->setReply($_POST['replyComment']);
 				}
+
+				if ($comment->commentExists()) { // if comment already exists
+					$errorduplicate = true;
+				} else {
+					if($id = $comment->save()) {
+						if($comment->isExternal() && $comment->getSpam() == 1) {
+							$errorspam = true;
+						} else {
+							Utility::redirect(
+								Utility::currentPageURL(), 
+								'', 
+								'comment'.$id
+							);
+							exit;
+						}
+					} else {
+						$errorinsert = true;
+					}
+				}
+			} catch (ExternalException $e) {
+				$errorconnection = true;
 			}
 		}
 		
@@ -80,7 +84,8 @@ class ArticleController extends BaseController {
 			'article' => $this->article,
 			'errorduplicate' => $errorduplicate,
 			'errorspam' => $errorspam,
-			'errorinsert' => $errorinsert
+			'errorinsert' => $errorinsert,
+			'errorconnection' => $errorconnection,
 		));
 		$this->theme->setHierarchy(array(
 			$this->article->getId(),

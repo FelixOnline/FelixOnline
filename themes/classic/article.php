@@ -232,6 +232,9 @@ $theme->render('header', $header);
 					<?php if($errorinsert) { ?>
 						<p>Uh oh. Looks like an error has occurred. Hopefully it is just a temporary problem so try submitting your comment again. If that still hasn't done the trick then <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
 					<?php } ?>
+					<?php if ($errorconnection) { ?>
+						<p>Sorry it looks like we are having trouble with our anti spam service. Please try again later.</p>
+					<?php } ?>
 				</div>
 				<!-- End of errors -->
 				<form method="post" action="<?php echo Utility::currentPageURL();?>">

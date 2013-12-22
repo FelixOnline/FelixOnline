@@ -373,6 +373,11 @@ class Comment extends BaseModel {
 			}
 		}
 
+		// check for akismet errors
+		if (!is_null($akismet->getError())) {
+			throw new ExternalException($akismet->getError());
+		}
+
 		parent::save();
 		$this->setId($this->db->insert_id); // get id of inserted comment
 

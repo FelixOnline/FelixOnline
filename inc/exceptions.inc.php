@@ -14,6 +14,7 @@ define('EXCEPTION_GLUE_METHOD', 111);
 define('EXCEPTION_ERRORHANDLER', 112);
 define('EXCEPTION_VALIDATOR', 113);
 define('EXCEPTION_LOGIN', 114);
+define('EXCEPTION_EXTERNAL', 115);
 
 define('LOGIN_EXCEPTION_CREDENTIALS', 50);
 define('LOGIN_EXCEPTION_SESSION', 51);
@@ -38,6 +39,13 @@ class UniversalException extends Exception {
 // Generic - our fault
 class InternalException extends UniversalException {
 	public function __construct($message, $code = EXCEPTION_INTERNAL, Exception $previous = null) {
+		parent::__construct($message, $code, $previous);
+	}
+}
+
+// Generic - not our fault
+class ExternalException extends UniversalException {
+	public function __construct($message, $code = EXCEPTION_EXTERNAL, Exception $previous = null) {
 		parent::__construct($message, $code, $previous);
 	}
 }
