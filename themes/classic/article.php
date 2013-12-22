@@ -216,7 +216,8 @@ $theme->render('header', $header);
 				<?php if (!$currentuser->isLoggedIn()) { ?>
 					<h5>Comment anonymously or <a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox">log in</a></h5>
 					<div id="info">
-						<p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and are moderated later. Read our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
+						<p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and are moderated later. Your IP address will also be submitted to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
+						<p>Read our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
 					</div>
 				<?php } else { ?>
 					<h5>Leave a comment as <a href="<?php echo $currentuser->getURL();?>/" title="Profile Page"><?php echo $currentuser->getName();?></a></h5>
