@@ -24,7 +24,7 @@
 			<?php }
 			echo '</ol>';
 			} else { ?>
-				It doesn't look like any articles exist yet...
+				It doesn't look like any articles have been read recently...
 			<?php } ?>
 	</div>
 	<div class="mostPopularTab" id="mostPopComment">
@@ -43,7 +43,7 @@
 		<?php }
 		echo '</ol>';
 		} else { ?>
-			Nobody has posted any comments yet!
+			Nobody has posted any comments recently.
 		<?php } ?>
 	</div>
 </div>
