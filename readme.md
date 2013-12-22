@@ -16,9 +16,14 @@ Have a look a our [installation guide](wiki/Installation) if you are unsure how 
 ###Setup:
 * Clone the repo into the folder your local web server hosts from
 * Import media\_felix.sql into your MySql database
+* Install [composer](http://getcomposer.org/download/) if you haven't already got it and run `composer install`
 * Make your own config.inc.php to connect to your local database and change default links. There is a config.sample.php in the inc/ folder so use that as a base.
 * Grant write access to log, cache, and the generated folder inside the CSS (and JS if applicable) for your theme
 * Go to local site (e.g. http://localhost/felix/)
+
+### Database Migrations
+* Run `./vendor/bin/phinx init` to create a `phinx.yml` file in the root directory and fill it in with your database credentials
+* Run `./vendor/bin/phinx migrate` to run all migrations
 
 ##Contributing:
 We are always looking for help from people so please free to contribute to the site if you find a bug or have thought up a new feature. Here is a step by step way of doing it:
