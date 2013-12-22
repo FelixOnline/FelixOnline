@@ -36,3 +36,5 @@ varsity/
 
 themes/classic/css/generated/
 phinx.yml
+composer.phar
+composer.lock
