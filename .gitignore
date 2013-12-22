@@ -35,3 +35,4 @@ varsity/
 *.sql
 
 themes/classic/css/generated/
+phinx.yml
