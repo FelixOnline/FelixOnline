@@ -1,4 +1,5 @@
 		<?php
+			require_once('inc/exceptions.inc.php');
 			restore_error_handler();
 			restore_exception_handler();
 		?>
@@ -20,11 +21,13 @@
 						}
 						
 						$data = array();
-						if($exception->getUser() instanceof CurrentUser && $exception->getUser()->getUser() instanceof User) {
+
+						if(!($exception instanceof Exception) && $exception->getUser() instanceof CurrentUser && $exception->getUser()->getUser() instanceof User) {
 							$username = $exception->getUser()->getUser()->getName();
 						} else {
 							$username = '<i>Unauthenticated</i>';
 						}
+
 						switch ($exception->getCode()) {
 							case EXCEPTION_ERRORHANDLER:
 								$header = 'Internal error';
@@ -110,7 +113,7 @@
 							$data = array();
 							$data['Details'] = $exception->getMessage();
 							
-							if($exception->getUser()->getUser() instanceof User) {
+							if(!($exception instanceof Exception) && $exception->getUser()->getUser() instanceof User) {
 								$username = $exception->getUser()->getUser()->getName();
 							} else {
 								$username = 'Unauthenticated';
@@ -172,9 +175,8 @@
 							$message .= "\n\n\n";
 						}
 					}
-						
+
 					//$message = wordwrap($message, 70);
-					
 					if($notify) {
 						$status = mail($to, $subject, $message);
 						
