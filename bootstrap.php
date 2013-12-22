@@ -9,6 +9,9 @@ date_default_timezone_set('Europe/London');
 if(!defined('BASE_DIRECTORY')) define('BASE_DIRECTORY', dirname(__FILE__));
 if(!defined('CACHE_DIRECTORY')) define('CACHE_DIRECTORY', BASE_DIRECTORY.'/cache/');
 
+// Composer
+require BASE_DIRECTORY.'/vendor/autoload.php';
+
 require_once(BASE_DIRECTORY.'/inc/ez_sql_core.php');
 require_once(BASE_DIRECTORY.'/inc/ez_sql_mysqli.php');
 require_once(BASE_DIRECTORY.'/inc/SafeSQL.class.php');
@@ -33,3 +36,10 @@ foreach (glob(BASE_DIRECTORY.'/core/*.php') as $filename) {
 //require_once(BASE_DIRECTORY.'/inc/authentication.php');
 require_once(BASE_DIRECTORY.'/inc/rss.inc.php');
 
+// Initialize Akismet
+if (LOCAL) { // development connector
+	$connector = new \RzekaE\Akismet\Connector\Test();
+} else {
+	$connector = new \RzekaE\Akismet\Connector\Curl();
+}
+$akismet = new \RzekaE\Akismet\Akismet(AKISMET_API_KEY, STANDARD_URL, $connector);

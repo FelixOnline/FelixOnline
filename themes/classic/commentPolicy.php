@@ -10,5 +10,6 @@
 			<li>use excessively foul language</li>
 			<li>are obviously spam</li>
 		</ul>
+		<p>If you submit your comment anonymously then your IP address will be submitted to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
 	</div>
 </div>

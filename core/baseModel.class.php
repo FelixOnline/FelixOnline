@@ -143,7 +143,7 @@ class BaseModel {
 		$sql .= ") VALUES (";
 		$i = 1;
 		foreach($this->fields as $key => $value) {
-			if($value) {
+			if(isset($value)) {
 				if(is_numeric($value)) {
 					$sql .= $value;
 				} else {

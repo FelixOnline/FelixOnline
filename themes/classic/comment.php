@@ -73,10 +73,9 @@
 	</div>
 	<?php } ?>
 	<div class="clear"></div>
-	<?php 
-		if($comment->isPending()) { ?>
-			<div id="commentPending">
-				This comment is awaiting approval and will appear shortly if it follows our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a>. If you have an Imperial ID, you can avoid this delay by <a href="<?php echo Utility::currentPageURL(); ?>#loginBox" rel="facebox">logging in</a> before commenting.
-			</div>
+	<?php if($comment->isPending()) { ?>
+		<div id="commentPending">
+			This comment is awaiting approval and will appear shortly if it follows our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a>. If you have an Imperial ID, you can avoid this delay by <a href="<?php echo Utility::currentPageURL(); ?>#loginBox" rel="facebox">logging in</a> before commenting.
+		</div>
 	<?php } ?>
 </div>
