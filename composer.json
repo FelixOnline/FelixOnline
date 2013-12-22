@@ -13,6 +13,7 @@
 		}
     ],
     "require": {
-		"felixonline/exporter": "0.1.*"
+		"felixonline/exporter": "0.1.*",
+		"rzeka/akismet-api": "dev-master"
     }
 }

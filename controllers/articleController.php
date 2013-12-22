@@ -56,36 +56,23 @@ class ArticleController extends BaseController {
 				$comment->setReply($_POST['replyComment']);
 			}
 
-			// ReCapatcha
-			//A. Load the Recaptcha Libary
-			require_once('inc/recaptchalib.php');
-			 
-			//B. Recaptcha Looks for the POST to confirm 
-			$resp = recaptcha_check_answer(RECAPTCHA_PRIVATE_KEY,
-											$_SERVER["REMOTE_ADDR"],
-											$_POST["recaptcha_challenge_field"],
-											$_POST["recaptcha_response_field"]);
-			 
-			//C. If if the User's authentication is valid, echo "success" to the Ajax
-			if ($resp->is_valid) {
-				if ($comment->commentExists()) { // if comment already exists
-					$errorduplicate = true;
-				} else {
-					if($id = $comment->save()) {
-						if($id == 'spam') {
-							$errorspam = true;
-						} else {
-							Utility::redirect(Utility::currentPageURL(), 
-												'', 
-												'comment'.$id);
-							exit;
-						}
-					} else {
-						$errorinsert = true;
-					}
-				}
+			if ($comment->commentExists()) { // if comment already exists
+				$errorduplicate = true;
 			} else {
-				$errorrecapatcha = true; 
+				if($id = $comment->save()) {
+					if($id == 'spam') {
+						$errorspam = true;
+					} else {
+						Utility::redirect(
+							Utility::currentPageURL(), 
+							'', 
+							'comment'.$id
+						);
+						exit;
+					}
+				} else {
+					$errorinsert = true;
+				}
 			}
 		}
 		
@@ -93,7 +80,6 @@ class ArticleController extends BaseController {
 			'article' => $this->article,
 			'errorduplicate' => $errorduplicate,
 			'errorspam' => $errorspam,
-			'errorrecapatcha' => $errorrecapatcha,
 			'errorinsert' => $errorinsert
 		));
 		$this->theme->setHierarchy(array(

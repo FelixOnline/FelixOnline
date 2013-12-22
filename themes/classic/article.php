@@ -213,11 +213,6 @@ $theme->render('header', $header);
 			
 			<!-- Comment form -->
 			<div id="commentForm">
-				<script type="text/javascript">
-					var RecaptchaOptions = {
-						theme : 'clean'
-					};
-				</script>
 				<?php if (!$currentuser->isLoggedIn()) { ?>
 					<h5>Comment anonymously or <a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox">log in</a></h5>
 					<div id="info">
@@ -228,18 +223,15 @@ $theme->render('header', $header);
 				<?php } ?>
 				<!-- Errors -->
 				<div class="error">
-						<?php if($errorduplicate) { ?>
-							<p>Looks like the comment you have just submitted is a duplicate. Please write something original and try again.</p>
-						<?php } ?>
-						<?php if($errorspam) { ?>
-							<p>Our spam filters have flagged your comment as suspicious. If you are not a spammer then please <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
-						<?php } ?>
-						<?php if($errorrecapatcha) { ?>
-							<p>Oops looks like you filled in the ReCaptcha wrong. Please try again to convince us that you are human!</p>
-						<?php } ?>
-						<?php if($errorreinsert) { ?>
-							<p>Uh oh. Looks like an error has occurred. Hopefully it is just a temporary problem so try submitting your comment again. If that still hasn't done the trick then <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
-						<?php } ?>
+					<?php if($errorduplicate) { ?>
+						<p>Looks like the comment you have just submitted is a duplicate. Please write something original and try again.</p>
+					<?php } ?>
+					<?php if($errorspam) { ?>
+						<p>Our spam filters have flagged your comment as suspicious. If you are not a spammer then please <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
+					<?php } ?>
+					<?php if($errorinsert) { ?>
+						<p>Uh oh. Looks like an error has occurred. Hopefully it is just a temporary problem so try submitting your comment again. If that still hasn't done the trick then <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
+					<?php } ?>
 				</div>
 				<!-- End of errors -->
 				<form method="post" action="<?php echo Utility::currentPageURL();?>">
@@ -256,14 +248,6 @@ $theme->render('header', $header);
 						<textarea name="comment" id="comment" rows="4" class="required"><?php if(isset($_POST['comment'])) echo $_POST['comment']; ?></textarea>
 						<label for="comment" class="error">Please write a comment</label>
 					</div>
-					<?php if (!$currentuser->isLoggedIn()) { ?>
-						<label for="capatca">To prove you are human: </label>
-						<div class="clear"></div>
-						<?php
-							require_once(BASE_DIRECTORY.'/inc/recaptchalib.php');
-							echo recaptcha_get_html(RECAPTCHA_PUBLIC_KEY);
-						?>
-					<?php } ?>
 					<input type="submit" value="Post your comment" id="submit" name="<?php if($currentuser->isLoggedIn()) echo 'articlecomment'; else echo 'articlecomment_ext';?>"/>
 				</form>
 				<!-- Commenting policy -->
