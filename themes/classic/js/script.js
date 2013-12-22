@@ -28,7 +28,7 @@ $(document).ready(function() {
 	// Load sharing links
 	if ($('.sidebar2 #sharebuttons').length) { // If sidebar 2 exists
 		var facebook = '<fb:like send="false" layout="button_count" width="140" show_faces="false" font="arial"></fb:like>';
-		var twitter = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
+		var twitter = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="://platform.twitter.com/widgets.js"></script>';
 		var google = '<g:plusone size="medium" annotation="inline" width="140"></g:plusone>';
 		var reddit = '<iframe src="//www.reddit.com/static/button/button3.html?width=69&url='+encodeURIComponent(window.location.href)+'" height="52" width="69" scrolling="no" frameborder="0"></iframe>';
 		
@@ -40,7 +40,7 @@ $(document).ready(function() {
 	
 	if ($('.articleShare').length) { //If the sharing thing at the bottom exists
 		var facebook2 = '<fb:like send="true" width="300" show_faces="false" font="arial"></fb:like>';
-		var twitter2 = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
+		var twitter2 = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="://platform.twitter.com/widgets.js"></script>';
 		var google2 = '<g:plusone size="medium"></g:plusone>';
 
 		$('#facebookLike2').append(facebook2);

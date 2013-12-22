@@ -30,9 +30,6 @@ $theme->render('header', $header);
 	<!-- Sidebar -->
 	<div class="sidebar grid_4 push_8">
 		<?php 
-			if($category->getTwitter()) { 
-				$theme->render('sidebar/categoryTwitter');
-			}
 			$theme->render('sidebar/categoryFeaturedBox');
 			$theme->render('sidebar/mediaBox');
 			$theme->render('sidebar/socialLinks');

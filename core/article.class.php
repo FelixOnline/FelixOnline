@@ -446,14 +446,20 @@ class Article extends BaseModel {
 		global $db;
 		global $safesql;
 
-		$sql = $safesql->query("SELECT DISTINCT article AS id,COUNT(article) AS c
-									FROM (
-										SELECT article FROM article_visit AS av
-										INNER JOIN article AS a
-										ON (av.article=a.id)
-										WHERE a.published IS NOT NULL
-										ORDER BY timestamp DESC LIMIT 500
-									) AS t GROUP BY article ORDER BY c DESC LIMIT %i", array($number_to_get));
+		$sql = $safesql->query("
+			SELECT
+				DISTINCT article AS id,
+				COUNT(article) AS c
+			FROM (
+				SELECT article FROM article_visit AS av
+				INNER JOIN article AS a
+				ON (av.article=a.id)
+				WHERE a.published IS NOT NULL
+				AND a.published > FROM_UNIXTIME(UNIX_TIMESTAMP() - 1814400)
+				ORDER BY timestamp DESC LIMIT 500
+			) AS t GROUP BY article ORDER BY c DESC LIMIT %i",
+			array($number_to_get)
+		);
 
 		return $db->get_results($sql);
 	}

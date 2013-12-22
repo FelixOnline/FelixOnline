@@ -432,59 +432,12 @@ $timing->log('after header');
 					<a href="http://twitter.com/feliximperial" title="Felix Imperial"><img src="img/felixtwitter.jpg" width="50px" id="felixTwitterlogo"/></a>
 					<h5>Felix Imperial</h5>
 					<p><a href="http://twitter.com/feliximperial" target="_blank" title="Felix Twitter account">@feliximperial</a> - South Kensington</p>
-					<div class="clear"></div>
 				</div>
-				<ul id="felixtwitterlist">
-					<li>Loading....</li>
-				</ul>
+				<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/feliximperial"  data-widget-id="346347929105219584" data-chrome="noheader nofooter noborders noscrollbar transparent" data-tweet-limit="4">Tweets by @feliximperial</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</div>
 
 			<?php $timing->log('end of twitter'); ?>
-
-			<?php
-				// Caching
-			   // disabled due to google breaking
-				//$cacheWeather = new Cache('weather');
-				//if($cacheWeather->start()) {
-			?>
-			<div id="weather">
-				<h4>Weather <span>in South Kensington</span></h4>
-				<?php
-					/*
-					$requestAddress = "http://www.google.com/ig/api?weather=SW72BB&hl=en";
-					// Downloads weather data based on location - I used my zip code.
-					$xml_str = file_get_contents($requestAddress,0);
-					// Parses XML
-					$xml = new SimplexmlElement($xml_str);
-
-					foreach($xml->weather as $item) { ?>
-						<!-- Current conditions -->
-						<div id="current">
-							<img src="http://www.google.com<?php echo $item->current_conditions->icon['data'];?>" title="<?php echo $item->current_conditions->condition['data'];?>"/>
-							<p><b>Current</b></p>
-							<p id="temp"><?php echo $item->current_conditions->temp_c['data'];?>&#176;C</p>
-						</div>
-
-					<?php
-						foreach($item->forecast_conditions as $new) { ?>
-							<div class="weatherIcon">
-								<img src="http://www.google.com<?php echo $new->icon['data']; ?>" title="<?php echo $new->condition['data'];?>"/><br/>
-								<p><?php echo $new->day_of_week['data'];?></p>
-							<?php
-								$low = intval(($new->low['data'] - 32) / 1.8);
-								$high = intval(($new->high['data'] - 32) / 1.8);
-							?>
-								<p id="temp"><?php echo $high;?>&#176;C | <?php echo $low; ?>&#176;C</p>
-							</div>
-					<?php }
-					}
-					*/
-				?>
-				<div class="clear"></div>
-			</div>
-			<?php /* } $cacheWeather->stop(); */ ?>
-
-			<?php $timing->log('end of weather'); ?>
 
 			<div id="felixinfo">
 				<h3>About Us</h3>
