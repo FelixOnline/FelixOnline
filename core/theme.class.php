@@ -189,11 +189,6 @@ class Theme {
 	}
 
 	public function isSite($site) {
-		$return = false;
-		if($site == $this->site) {
-			$return = true;	
-		}
-		return $return;
+		return $site == $this->site;
 	}
 }
-?>

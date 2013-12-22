@@ -26,6 +26,8 @@ class ArchiveController extends BaseController {
 		$dba->show_errors();
 
 		$this->dba = $dba;
+
+		$this->theme->setSite('archive');
 	}
 
 	function GET($matches) {
