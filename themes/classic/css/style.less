@@ -415,6 +415,7 @@ button {  width: auto; overflow: visible; }
 .navigation .tv a { color:rgb(0,0,214); }
 .navigation .sport a { color:rgb(45,79,42); }
 .navigation .books a { color:rgb(230,54,59); }
+.navigation .features a { color: #9d0055; }
 
 .navigation .selected a { color:#ffffff; }
 
@@ -435,6 +436,10 @@ button {  width: auto; overflow: visible; }
 .navigation .selected.tv, .navigation li:hover.tv { background:rgb(0,0,214); }
 .navigation .selected.sport, .navigation li:hover.sport { background:rgb(45,79,42); }
 .navigation .selected.books, .navigation li:hover.books { background:rgb(230,54,59); }
+.navigation .selected.features,
+.navigation li:hover.features {
+  background: #9d0055;
+}
 
 #phoenixcont {
   margin-top:10px;
@@ -1129,6 +1134,13 @@ br.c { clear:both; }
 .featBox .header.tv, .newsList li.tv, .article.tv .comments { border-top:2px solid rgb(0,0,214); }
 .featBox .header.sport, .newsList li.sport, .article.sport .comments { border-top:2px solid rgb(45,79,42); }
 .featBox .header.books, .newsList li.books, .article.books .comments { border-top:2px solid rgb(230,54,59); }
+
+.featBox .header.features,
+.newsList li.features,
+.article.features .comments {
+  border-top: 2px solid #9d0055;
+}
+
 .featBox .header h4 { padding-top:3px; }
 .featBox .header a.cat {
   font-family:'Kreon', sans-serif;
@@ -1548,6 +1560,9 @@ li a.books:active, .header a.books:active {
 .featuredBar .tv { border-top: 3px solid rgb(0,0,214); }
 .featuredBar .sport { border-top: 3px solid rgb(45,79,42); }
 .featuredBar .books { border-top: 3px solid rgb(230,54,59); }
+.featuredBar .features {
+  border-top: 3px solid #9d0055;
+}
 
 .featuredBar h3 {
   font-family:'Kreon', sans-serif;
@@ -1651,6 +1666,12 @@ li a.books:active, .header a.books:active {
   color:#ffffff;
   background:rgb(230,54,59); 
 }
+.featuredBar .features  h3 a { color: #9d0055;  }
+.featuredBar .features h3 a:active {
+  color: #ffffff;
+  background: #9d0055;
+}
+
 .section_header {
   margin-bottom:10px;
   margin-left:10px;
@@ -1725,6 +1746,11 @@ li a.books:active, .header a.books:active {
   border-bottom:1px solid rgb(230,54,59); 
   color:rgb(230,54,59); 
 }
+.features.section_header {
+  border-bottom: 1px solid #9d0055;
+  color: #9d0055;
+}
+
 .section_header h2 {
 	font-family: 'Kreon', sans-serif;
 	font-weight: bold;
@@ -1967,6 +1993,11 @@ li a.books:active, .header a.books:active {
   border-top:1px solid rgb(230,54,59); 
   border-bottom:2px solid rgb(230,54,59); 
 }
+.article.features .articleInfo {
+  border-top: 1px solid #9d0055;
+  border-bottom: 2px solid #9d0055;
+}
+
 .article .articleInfo #editpage a {
   font-weight:normal;
   font-size:12px;
