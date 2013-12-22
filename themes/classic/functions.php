@@ -1,10 +1,10 @@
 <?php
 
 $hooks->addAction('contact_us', 'contact_us');
-function contact_us() {
-	$name = $_REQUEST['name'];
-	$emailaddress = $_REQUEST['email'];
-	$message = $_REQUEST['message'];
+function contact_us($data) {
+	$name = $data['name'];
+	$emailaddress = $data['email'];
+	$message = $data['message'];
 	
 	try {
 		Validator::Check(array(
@@ -54,11 +54,11 @@ function contact_us() {
 }
 
 $hooks->addAction('like_comment', 'like_comment');
-function like_comment() {
+function like_comment($data) {
 	global $currentuser;
 	if($currentuser->isLoggedIn()) {
 		$user = $currentuser->getUser();
-		$comment = $_REQUEST['comment'];
+		$comment = $data['comment'];
 		$comment = new Comment($comment);
 		$count = $comment->likeComment($user);
 		return array(count => $count);
@@ -68,11 +68,11 @@ function like_comment() {
 }
 
 $hooks->addAction('dislike_comment', 'dislike_comment');
-function dislike_comment() {
+function dislike_comment($data) {
 	global $currentuser;
 	if($currentuser->isLoggedIn()) {
 		$user = $currentuser->getUser();
-		$comment = $_REQUEST['comment'];
+		$comment = $data['comment'];
 		$comment = new Comment($comment);
 		$count = $comment->dislikeComment($user);
 		return array(count => $count);
@@ -82,18 +82,17 @@ function dislike_comment() {
 }
 
 $hooks->addAction('profile_change', 'profile_change');
-function profile_change() {
+function profile_change($data) {
 	global $currentuser;
 	if($currentuser->isLoggedIn()) {
 		$user = new User();
-		
 		try {
 			Validator::Check(array(
-				'email' => $_POST['email'],
-				'weburl' => $_POST['weburl'],
-				'facebook' => $_POST['facebook'],
-				'webname' => $_POST['webname'],
-				'twitter' => $_POST['twitter']
+				'email' => $data['email'],
+				'weburl' => $data['weburl'],
+				'facebook' => $data['facebook'],
+				'webname' => $data['webname'],
+				'twitter' => $data['twitter']
 			), array (
 				'email' => array(
 					Validator::validator_email => null,
@@ -124,12 +123,12 @@ function profile_change() {
 		}
 		
 		$user->setUser($currentuser->getUser());
-		$user->setDescription($_POST['desc']);
-		$user->setEmail($_POST['email']);
-		$user->setFacebook(Utility::addhttp($_POST['facebook']));
-		$user->setTwitter($_POST['twitter']);
-		$user->setWebsitename($_POST['webname']);
-		$user->setWebsiteurl(Utility::addhttp($_POST['weburl']));
+		$user->setDescription($data['desc']);
+		$user->setEmail($data['email']);
+		$user->setFacebook(Utility::addhttp($data['facebook']));
+		$user->setTwitter($data['twitter']);
+		$user->setWebsitename($data['webname']);
+		$user->setWebsiteurl(Utility::addhttp($data['weburl']));
 		$user->save();
 		return (array(error => false));
 	} else {

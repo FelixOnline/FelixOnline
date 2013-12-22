@@ -14,6 +14,10 @@ class BaseModel {
 	private $imported = array();
 	private $importedFunctions = array();
 	protected $filters = array();
+	protected $transformers = array();
+
+	const TRANSFORMER_NONE = 1;
+	const TRANSFORMER_NO_HTML = 2;
 
 	function __construct($dbObject, $class, $item=null) {
 		/* initialise db connection and store it in object */
@@ -61,7 +65,20 @@ class BaseModel {
 					throw new ModelConfigurationException('The requested field "'.$meth.'" does not exist', $verb, $meth, $class, $item);
 					break;
 				case 'set':
-					$this->fields[$meth] = $arguments[0];
+					if(array_key_exists($meth, $this->transformers)) {
+						switch($this->transformers[$meth]) {
+							case self::TRANSFORMER_NO_HTML:
+								$this->fields[$meth] = strip_tags($arguments[0]);
+								break;
+							case self::TRANSFORMER_NONE:
+							default:
+								$this->fields[$meth] = $arguments[0];
+								break;
+						}
+					} else {
+						$this->fields[$meth] = $arguments[0];
+					}
+
 					return $this->fields[$meth];
 					break;
 				case 'has':
@@ -118,12 +135,12 @@ class BaseModel {
 	public function save() {
 		$arrayLength = count($this->fields);
 		if(!$arrayLength) {
-			throw new InternalException('No fields in object', $this->class, '');
+			throw new InternalException('No fields in object', $this->class);
 		}
 		$sql = "INSERT INTO `";
 
 		if(!$this->dbtable) {
-			throw new InternalException('No table specified', $this->class, '');
+			throw new InternalException('No table specified', $this->class);
 		}
 		$sql .= $this->dbtable;
 
@@ -183,6 +200,18 @@ class BaseModel {
 	public function setFieldFilters($filters) {
 		$this->filters = $filters;
 		return $this->filters;
+	}
+
+	/*
+	 * Public: Set field transformers
+	 *
+	 $ $transformers - array
+	 *
+	 * Returns transformers
+	 */
+	public function setTransformers($transformers) {
+		$this->transformers = $transformers;
+		return $this->transformers;
 	}
 
 	/*

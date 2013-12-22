@@ -23,6 +23,14 @@ class User extends BaseModel {
 	private $count;
 	private $popArticles = array();
 	private $comments = array();
+	protected $dbtable = 'user';
+	protected $transformers = array(
+		'description' => parent::TRANSFORMER_NO_HTML,
+		'email' => parent::TRANSFORMER_NO_HTML,
+		'facebook' =>parent::TRANSFORMER_NO_HTML,
+		'twitter' => parent::TRANSFORMER_NO_HTML,
+		'websitename' => parent::TRANSFORMER_NO_HTML,
+		'websiteurl' => parent::TRANSFORMER_NO_HTML);
 
 	function __construct($uname = NULL) {
 		/* initialise db connection and store it in object */
@@ -53,6 +61,7 @@ class User extends BaseModel {
 				array(
 					$uname
 				));
+
 			parent::__construct($this->db->get_row($sql), 'User', $uname);
 			return $this;
 		} else {
