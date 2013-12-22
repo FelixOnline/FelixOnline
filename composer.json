@@ -13,6 +13,7 @@
 		}
     ],
     "require": {
-		"felixonline/exporter": "0.1.*"
+		"felixonline/exporter": "0.1.*",
+		"robmorgan/phinx": "0.2.*"
     }
 }
