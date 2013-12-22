@@ -387,11 +387,7 @@ class Comment extends BaseModel {
 			$this->emailAuthors();
 		}
 		
-		if($this->isExternal() && $this->getSpam() == 1) {
-			return 'spam';
-		} else {
-			return $this->getId(); // return new comment id
-		}
+		return $this->getId(); // return new comment id
 	}
 
 	/*

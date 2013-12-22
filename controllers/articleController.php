@@ -60,7 +60,7 @@ class ArticleController extends BaseController {
 				$errorduplicate = true;
 			} else {
 				if($id = $comment->save()) {
-					if($id == 'spam') {
+					if($comment->isExternal() && $comment->getSpam() == 1) {
 						$errorspam = true;
 					} else {
 						Utility::redirect(
