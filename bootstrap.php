@@ -42,4 +42,5 @@ if (LOCAL) { // development connector
 } else {
 	$connector = new \RzekaE\Akismet\Connector\Curl();
 }
-$akismet = new \RzekaE\Akismet\Akismet(AKISMET_API_KEY, STANDARD_URL, $connector);
+$akismet = new \RzekaE\Akismet\Akismet($connector);
+$akismet->keyCheck(AKISMET_API_KEY, STANDARD_URL);
