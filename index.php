@@ -6,9 +6,9 @@
 ob_start();
 
 try {
+	require_once('inc/exceptions.inc.php');
 	require_once('bootstrap.php');
 
-	require_once('inc/exceptions.inc.php');
 	require_once('inc/timing.inc.php');
 	$timing = new Timing('log-themes');
 
