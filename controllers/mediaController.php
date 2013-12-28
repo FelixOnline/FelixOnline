@@ -50,4 +50,3 @@ class MediaController extends BaseController {
 		$this->theme->render('media');
 	}
 }
-?>

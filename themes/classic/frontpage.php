@@ -146,7 +146,7 @@ $timing->log('after header');
 							</li>
 						<?php } ?>
 						<li id="category">
-							<a href="<?php echo $article->getCategoryURL();?>/" class="<?php echo $article->getCategoryCat();?>">
+							<a href="<?php echo $article->getCategoryURL();?>" class="<?php echo $article->getCategoryCat();?>">
 								<?php echo $article->getCategoryLabel();?>
 							</a>
 						</li>
@@ -187,7 +187,7 @@ $timing->log('after header');
 							</li>
 						<?php } ?>
 						<li id="category">
-							<a href="<?php echo $article->getCategoryURL();?>/" class="<?php echo $article->getCategoryCat();?>">
+							<a href="<?php echo $article->getCategoryURL();?>" class="<?php echo $article->getCategoryCat();?>">
 								<?php echo $article->getCategoryLabel();?>
 							</a>
 						</li>
@@ -214,7 +214,7 @@ $timing->log('after header');
 		<div class="grid_6 pull_2 alpha omega featBox bottom">
 			<!-- Header -->
 			<div class="grid_3 alpha header <?php echo $articleA->getCategoryCat();?>">
-				<a href="<?php echo $articleA->getCategoryURL();?>/" class="cat <?php echo $articleA->getCategoryCat();?>">
+				<a href="<?php echo $articleA->getCategoryURL();?>" class="cat <?php echo $articleA->getCategoryCat();?>">
 					<?php echo $articleA->getCategoryLabel();?>
 				</a>
 				<h4>
@@ -224,7 +224,7 @@ $timing->log('after header');
 				</h4>
 			</div>
 			<div class="grid_3 omega header <?php echo $articleB->getCategoryCat();?>">
-				<a href="<?php echo $articleB->getCategoryURL();?>/" class="cat <?php echo $articleB->getCategoryCat();?>">
+				<a href="<?php echo $articleB->getCategoryURL();?>" class="cat <?php echo $articleB->getCategoryCat();?>">
 					<?php echo $articleB->getCategoryLabel();?>
 				</a>
 				<h4>
@@ -301,7 +301,7 @@ $timing->log('after header');
 					<h4>
 						<a href="<?php echo $article->getURL();?>" id="title">
 							<?php echo $article->getTitle();?>
-						</a> <a href="<?php echo $article->getCategoryURL();?>/" class="<?php echo $article->getCategoryCat();?>">
+						</a> <a href="<?php echo $article->getCategoryURL();?>" class="<?php echo $article->getCategoryCat();?>">
 							<span id="category">
 								<?php echo $article->getCategoryLabel();?>
 							</span>
@@ -317,7 +317,7 @@ $timing->log('after header');
 					<h4>
 						<a href="<?php echo $article->getURL();?>" id="title">
 							<?php echo $article->getTitle();?>
-						</a> <a href="<?php echo $article->getCategoryURL();?>/" class="<?php echo $article->getCategoryCat();?>">
+						</a> <a href="<?php echo $article->getCategoryURL();?>" class="<?php echo $article->getCategoryCat();?>">
 							<span id="category">
 								<?php echo $article->getCategoryLabel();?>
 							</span>
@@ -333,7 +333,7 @@ $timing->log('after header');
 					<h4>
 						<a href="<?php echo $article->getURL();?>" id="title">
 							<?php echo $article->getTitle();?>
-						</a> <a href="<?php echo $article->getCategoryURL();?>/" class="<?php echo $article->getCategoryCat();?>">
+						</a> <a href="<?php echo $article->getCategoryURL();?>" class="<?php echo $article->getCategoryCat();?>">
 							<span id="category">
 								<?php echo $article->getCategoryLabel();?>
 							</span>
