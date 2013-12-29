@@ -409,7 +409,8 @@ class Comment extends BaseModel {
 	public function emailAuthors() {
 		$authors = $this->getArticle()->getAuthors();
 		if(in_array($this->getUser(), $authors)) { // if author of comment is one of the authors
-			$authors = array_diff($authors, array($this->getUser())); // remove them from the author list
+			$key = array_search($this->getUser(), $authors);
+			unset($authors[$key]); // remove them from the author list
 		}
 		foreach($authors as $author) {
 			$emailAddress = $author->getEmail(true); // get email address of user
