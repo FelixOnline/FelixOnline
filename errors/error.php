@@ -101,7 +101,7 @@
 							$notify = false;
 						}
 					}
-					$to = EMAIL_ERRORS;
+					$to = explode(',', EMAIL_ERRORS);
 					$subject = 'Felix Online error';
 					$message = "An error has occured on Felix Online\n";
 					$message .= "Details on the error is below. If there are multiple errors, the first is the main one, the second prevented the usual error page from being shown\n\n";
@@ -178,7 +178,15 @@
 
 					//$message = wordwrap($message, 70);
 					if($notify) {
-						$status = mail($to, $subject, $message);
+						$status = false;
+
+						foreach($to as $addressee) {
+							$successful = mail($to, $subject, $message);
+
+							if($successful) {
+								$status = true;
+							}
+						}
 						
 						if(!$status) {
 							echo 'Notification failed';
