@@ -18,6 +18,8 @@ class ArticleSearchable extends AbstractMigration
 		))
 		->addIndex(array('searchable'))
 		->save();
+
+		$this->execute('UPDATE `article` SET searchable = 0 WHERE `id` IN (1378, 1450)');
     }
 
     /**
