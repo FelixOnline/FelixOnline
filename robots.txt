@@ -2,7 +2,3 @@ User-agent: *
 Allow: /
 Disallow: /preview/
 Disallow: /print.php*$
-Disallow: /news/1378*$
-Disallow: /?article=1378
-Disallow: /news/1450*$
-Disallow: /?article=1450
