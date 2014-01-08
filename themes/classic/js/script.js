@@ -29,7 +29,7 @@ $(document).ready(function() {
 	if ($('.sidebar2 #sharebuttons').length) { // If sidebar 2 exists
 		var facebook = '<div class="fb-like" data-width="140px" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>';
 		var twitter = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>';
-		var google = '<g:plusone size="medium" annotation="inline" width="140"></g:plusone>';
+		var google = '<div class="g-plusone" data=size="medium" data-annotation="inline" data-width="140"></div>';
 		
 		$('#facebookLike').append(facebook);
 		$('#twitterShare').append(twitter);
@@ -39,7 +39,7 @@ $(document).ready(function() {
 	if ($('.articleShare').length) { //If the sharing thing at the bottom exists
 		var facebook2 = '<div class="fb-like" data-width="300px" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>';
 		var twitter2 = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>';
-		var google2 = '<g:plusone size="medium"></g:plusone>';
+		var google2 = '<div class="g-plusone" data-size="medium"></div>';
 
 		$('#facebookLike2').append(facebook2);
 		$('#twitterShare2').append(twitter2);
