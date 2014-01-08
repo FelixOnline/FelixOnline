@@ -114,7 +114,7 @@ $theme->render('header', $header);
 							
 						</li>
 						<li id="redditShare">
-
+							<script type="text/javascript" src="http://www.reddit.com/static/button/button3.js"></script>
 						</li>
 					</div>
 				</ul>

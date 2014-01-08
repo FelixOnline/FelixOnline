@@ -30,12 +30,10 @@ $(document).ready(function() {
 		var facebook = '<div class="fb-like" data-width="140px" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>';
 		var twitter = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>';
 		var google = '<g:plusone size="medium" annotation="inline" width="140"></g:plusone>';
-		var reddit = '<iframe src="//www.reddit.com/static/button/button3.html?width=69&url='+encodeURIComponent(window.location.href)+'" height="52" width="69" scrolling="no" frameborder="0"></iframe>';
 		
 		$('#facebookLike').append(facebook);
 		$('#twitterShare').append(twitter);
 		$('#googleShare').append(google);
-		$('#redditShare').append(reddit);
 	}
 	
 	if ($('.articleShare').length) { //If the sharing thing at the bottom exists
