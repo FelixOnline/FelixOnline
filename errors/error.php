@@ -181,7 +181,7 @@
 						$status = false;
 
 						foreach($to as $addressee) {
-							$successful = mail($to, $subject, $message);
+							$successful = mail($addressee, $subject, $message);
 
 							if($successful) {
 								$status = true;
