@@ -4,8 +4,9 @@
 
 	<div class="container_12">
 		<!-- News banner -->
-		<!--<div class="grid_12 banner">
-		</div>-->
+		<div class="grid_12 banner">
+			<p>Due to major software upgrades, Felix Online will be unavailable between 12:00 and 13:00 on Friday 10th January. We apologise for any inconvenience this may cause.</p>
+		</div>
 		<!-- End of news banner -->
 
 		<!-- Sidebar -->
