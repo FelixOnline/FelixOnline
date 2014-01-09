@@ -74,9 +74,12 @@ class IssueManager extends BaseManager
 		$result = $this->dba->get_results($sql);
 
 		$issues = array();
-		foreach($result as $obj) {
-			$issue = new Issue($obj->id);
-			$issues[] = $issue;
+
+		if ($result) {
+			foreach($result as $obj) {
+				$issue = new Issue($obj->id);
+				$issues[] = $issue;
+			}
 		}
 		return $issues;
 	}
