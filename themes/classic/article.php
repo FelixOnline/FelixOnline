@@ -2,6 +2,8 @@
 $timing->log('article page');
 
 $meta = '
+	<meta name="twitter:card" content="summary"/>
+	<meta name="twitter:site" content="@feliximperial"/>
 	<meta property="og:title" content="'.$article->getTitle().'"/>
 	<meta property="og:url" content="'.$article->getURL().'"/>
 	<meta property="og:type" content="article"/>
