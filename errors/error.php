@@ -166,6 +166,7 @@
 							$data['Exception line'] = $exception->getLine();
 
 							$message .= $header."\n";
+							$message .= "URL accessed: http://".STANDARD_SERVER."/".$_SERVER["REQUEST_URI"]."\n";
 							$message .= "Username: ".$username."\n";
 							foreach($data as $name => $value) {
 								$message .= $name.": ".$value."\n";
