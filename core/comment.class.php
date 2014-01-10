@@ -389,7 +389,7 @@ class Comment extends BaseModel {
 		parent::save();
 		$this->setId($this->db->insert_id); // get id of inserted comment
 
-		if($this->isExternal() && !$spam) {
+		if($this->isExternal() && !$this->getSpam()) {
 			$this->emailExternalComment();
 		} else {
 			if($this->getReply()) { // if comment is replying to an internal comment 
