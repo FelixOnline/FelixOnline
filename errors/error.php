@@ -92,7 +92,7 @@
 					}
 				}
 
-				if(!LOCAL) {
+				if(!LOCAL && $notify) {
 					$notify = true;
 					if(file_exists(dirname(__FILE__).'/../emails/fatal_next_notify')) {
 						$next_notify = (int) file_get_contents(dirname(__FILE__).'/../emails/fatal_next_notify');

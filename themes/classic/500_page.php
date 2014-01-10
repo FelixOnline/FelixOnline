@@ -13,7 +13,10 @@ $timing->log('after header');
 	<!-- Article wrapper -->
 	<div class="container_12">
 		<div class="grid_12 error">
-			<?php require(BASE_DIRECTORY.'/errors/error.php'); ?>
+			<?php
+				$notify = false;
+				require(BASE_DIRECTORY.'/errors/error.php');
+			?>
 		</div>
 		<div class="clear"></div>
 	</div>
