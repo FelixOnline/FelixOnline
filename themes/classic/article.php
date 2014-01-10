@@ -2,7 +2,7 @@
 $timing->log('article page');
 
 $meta = '
-	<meta name="twitter:card" content="summary"/>
+	<meta name="twitter:card" content="summary_large_image"/>
 	<meta name="twitter:site" content="@feliximperial"/>
 	<meta property="og:title" content="'.$article->getTitle().'"/>
 	<meta property="og:url" content="'.$article->getURL().'"/>
@@ -18,7 +18,7 @@ foreach ($article->getAuthors() as $author) {
 }
 
 if($article->getImage()) {
-	$meta .= '<meta property="og:image" content="'.$article->getImage()->getURL(100).'"/>';
+	$meta .= '<meta property="og:image" content="'.$article->getImage()->getURL(600).'"/>';
 }
 if(!$article->getSearchable()) {
 	$meta .= '<meta name="robots" content="noindex">';
