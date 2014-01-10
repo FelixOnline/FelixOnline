@@ -338,7 +338,7 @@ class Comment extends BaseModel {
 	 */
 	public function save() {
 		global $akismet;
-		if(!$this->external) { // if internal
+		if(!$this->isExternal()) { // if internal
 			$this->setDbtable('comment');
 		} else {
 			$this->setDbtable('comment_ext');
@@ -389,10 +389,15 @@ class Comment extends BaseModel {
 		parent::save();
 		$this->setId($this->db->insert_id); // get id of inserted comment
 
-		if($this->isExternal() && !$this->getSpam()) {
-			$this->emailExternalComment();
-		} else {
-			if($this->getReply()) { // if comment is replying to an internal comment 
+		// Send emails
+
+		if ($this->isExternal()) {
+			// If pending comment
+			if (!$this->getSpam() && $this->getPending() && $this->getActive()) {
+				$this->emailExternalComment();
+			}
+		} else { // internal emails
+			if ($this->getReply()) { // if comment is replying to an internal comment 
 				$this->emailReply();
 			}
 
