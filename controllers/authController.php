@@ -119,7 +119,7 @@ class AuthController extends BaseController {
 					// Catch this elsewhere
 		 	  }
 	 		} catch (LoginException $e) {
-				Utility::redirect(AUTHENTICATION_PATH.'login', array(
+				Utility::redirect(STANDARD_URL.'login', array(
 					'failed' => true
 				));
 			}
