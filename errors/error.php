@@ -9,8 +9,9 @@
 			<p>Felix Online is experiencing technical difficulties at the moment. The cat has already been notified, and things should be back up and running soon.</p>
 			<p>In the meantime, please enjoy this video:</p>
 			<iframe width="480" height="360" src="http://www.youtube.com/embed/QgkGogPLacA?rel=0" frameborder="0" allowfullscreen></iframe>
-			<p id="techdetails_show" <?php if(LOCAL): echo 'style="display: none;"'; else: echo 'style="display: block;"'; endif; ?>><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'block'; document.getElementById('techdetails_show').style.display = 'none';">View some technical details</a></p>
-			<div id="techdetails" class="technical_details" <?php if(LOCAL): echo 'style="display: block;"'; else: echo 'style="display: none;"'; endif; ?>>
+			<?php if(LOCAL || ($exception->getUser() instanceof CurrentUser && $exception->getUser()->getRole() == 100)) { ?>
+			<p id="techdetails_show" style="display: none;"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'block'; document.getElementById('techdetails_show').style.display = 'none';">View some technical details</a></p>
+			<div id="techdetails" class="technical_details" style="display: block;">
 				<p id="techdetails_hide"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'none'; document.getElementById('techdetails_show').style.display = 'block';">Hide the technical details</a></p>
 				<?php
 					$exceptions = array($prior_exception, $e);
@@ -86,11 +87,10 @@
 						?>
 					</ul>
 					<?php
-					if(LOCAL) {
-						echo '<h3>Backtrace <i>(shown in local mode only)</i></h3>';
-						echo '<pre>'.$exception->getTraceAsString().'</pre>';
-					}
+					echo '<h3>Backtrace</h3>';
+					echo '<pre>'.$exception->getTraceAsString().'</pre>';
 				}
+			}
 
 				if(!LOCAL && $notify) {
 					$notify = true;
