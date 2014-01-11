@@ -84,7 +84,7 @@ $theme->render('header', $header);
 			</p>
 			<?php
 				$isSectionEditor = false;
-				if($article->getCategory()->getEditors != null) {
+				if($article->getCategory()->getEditors() != null) {
 					foreach($article->getCategory()->getEditors() as $user) {
 						if($currentuser->getUser() == $user->getUser()) {
 							$isSectionEditor = true;
@@ -226,16 +226,16 @@ $theme->render('header', $header);
 				<?php } ?>
 				<!-- Errors -->
 				<div class="error">
-					<?php if($errorduplicate) { ?>
+					<?php if(isset($errorduplicate) && $errorduplicate) { ?>
 						<p>Looks like the comment you have just submitted is a duplicate. Please write something original and try again.</p>
 					<?php } ?>
-					<?php if($errorspam) { ?>
+					<?php if(isset($errorspam) && $errorspam) { ?>
 						<p>Our spam filters have flagged your comment as suspicious. If you are not a spammer then please <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
 					<?php } ?>
-					<?php if($errorinsert) { ?>
+					<?php if(isset($errorinsert) && $errorinsert) { ?>
 						<p>Uh oh. Looks like an error has occurred. Hopefully it is just a temporary problem so try submitting your comment again. If that still hasn't done the trick then <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
 					<?php } ?>
-					<?php if ($errorconnection) { ?>
+					<?php if (isset($errorconnection) && $errorconnection) { ?>
 						<p>Sorry it looks like we are having trouble with our anti spam service. Please try again later.</p>
 					<?php } ?>
 				</div>

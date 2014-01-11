@@ -48,7 +48,7 @@ class Timing {
 			throw new InternalException('Log file '.$this->directory.$this->filename.' is not writable');
 		}
 		
-		if(TIMING == true) {
+		if(defined('TIMING') && TIMING == true) {
 			$this->file = fopen($this->directory.$this->filename, 'a');
 			$this->newRequest();
 		}
@@ -86,7 +86,7 @@ Start  Prev
 	 * Public: New log marker
 	 */
 	public function log($label) {
-		if(TIMING) {
+		if(defined('TIMING') && TIMING) {
 			$log = number_format($this->getElapsedTime(),4,'.','').' '.number_format($this->lastLog(),4,'.','').' - '.$label."\n";
 			fwrite($this->file, $log);
 			$this->prev = microtime(true);

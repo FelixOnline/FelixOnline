@@ -14,7 +14,7 @@
 
 			if (!is_null($cats)) {
 				foreach($cats as $key => $cat) { ?>
-					<li class="<?php echo $cat->cat; ?> <?php if($check==$cat->cat) echo 'selected'; ?> <?php if($cat->cat == 'news') echo 'first'; ?> <?php if($cat->cat == 'sport') echo 'last'; ?>">
+					<li class="<?php echo $cat->cat; ?> <?php if(isset($check) && $check == $cat->cat) echo 'selected'; ?> <?php if($cat->cat == 'news') echo 'first'; ?> <?php if($cat->cat == 'sport') echo 'last'; ?>">
 						<a href="<?php echo STANDARD_URL.$cat->cat; ?>/">
 							<?php echo $cat->label; ?>
 						</a>

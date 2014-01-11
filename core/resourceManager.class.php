@@ -104,7 +104,7 @@ class ResourceManager {
 			}
 		}
 		$timing->log('before production');
-		if(PRODUCTION_FLAG == true) { // if in production
+		if (PRODUCTION_FLAG == true) { // if in production
 			// concatenate minified files
 			$content = '';
 			$name = '';
