@@ -109,8 +109,8 @@ class ResourceManager {
 			$content = '';
 			$name = '';
 			foreach($min as $key => $value) {
-				$filename = strstr($value, '.', true);
-				$content .= file_get_contents($this->getFilename($value, 'css'));
+				$filename = basename($value, '.min.css');
+				$content .= file_get_contents($this->getFilename($value, 'css', 'dir'));
 				$timing->log('after get file contents');
 				if($key == 0) {
 					$name .= $filename;
@@ -193,7 +193,7 @@ class ResourceManager {
 	 */
 	private function processLess($lessfile) {
 		require_once(BASE_DIRECTORY.'/inc/lessc.inc.php');
-		$filename = strstr('generated/'.$lessfile, '.', true);
+		$filename = strstr($lessfile, '.', true);
 		$cssfile = $this->getFilename($filename.'.css', 'css', 'dir');
 		// load the cache
 		$cachefile = $this->getFilename($filename.".cache", 'css', 'dir');
@@ -242,4 +242,3 @@ class ResourceManager {
 		}
 	}
 }
-?>
