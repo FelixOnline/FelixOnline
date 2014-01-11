@@ -90,7 +90,7 @@
 				<div class="grid_4 last" id="searchBoxCont">
 					<form action="search/" id="cse-search-box">
 						<?php
-							if($_GET["q"]) { ?>
+							if(isset($_GET["q"]) && $_GET["q"]) { ?>
 								<input type="text" name="q" size="31" id="searchBox" autocomplete="off" value="<?php echo $_GET['q'];?>"/>
 						<?php } else { ?>
 								<input type="text" name="q" size="31" id="searchBox" autocomplete="off" placeholder="Search Felix Online..."/>
