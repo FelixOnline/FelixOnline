@@ -36,7 +36,7 @@ $timing->log('after header');
 		</div>
 		<div class="clear"></div>
 		<div class="grid_12 error">
-			<?php if(LOCAL || ($exception->getUser() instanceof CurrentUser && $exception->getUser()->getRole() == 100)) { ?>
+			<?php if(LOCAL || ($e->getUser() instanceof CurrentUser && $e->getUser()->getRole() == 100)) { ?>
 			<p id="techdetails_show" style="display: none;"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'block'; document.getElementById('techdetails_show').style.display = 'none';">View some technical details</a></p>
 			<div id="techdetails" class="technical_details" style="display: block;">
 				<p id="techdetails_hide"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'none'; document.getElementById('techdetails_show').style.display = 'block';">Hide the technical details</a></p>
