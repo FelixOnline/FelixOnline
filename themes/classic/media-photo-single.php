@@ -2,10 +2,11 @@
 $timing->log('photo single page');
 
 $header = array(
-	'title' => 'Felix Online Media'
+	'title' => 'Felix Online Media',
+	'meta' => '<link rel="stylesheet" href="'.STANDARD_URL.'themes/'.THEME_NAME.'/css/galleria.classic.css">',
 );
 
-$theme->resources->addCSS(array('galleria.classic.css', 'felix-galleria.css'));
+$theme->resources->addCSS(array('felix-galleria.css'));
 $theme->resources->addJS(array('galleria/galleria-1.2.2.js', 'galleria/themes/classic/galleria.classic.js', 'galleria/gallery.js'));
 
 $theme->render('header', $header);
