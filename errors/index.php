@@ -37,7 +37,10 @@
 	</div>
 	<div class="box">
 		<img class="error_cat" alt="" src="<?php echo STANDARD_URL; ?>errors/cat.jpg" />
-		<?php require('error.php'); ?>
+		<?php
+			$notify = true;
+			require('error.php');
+		?>
 		&copy; Felix Imperial
 	</div>
 </body>

@@ -36,8 +36,9 @@ $timing->log('after header');
 		</div>
 		<div class="clear"></div>
 		<div class="grid_12 error">
-			<p id="techdetails_show" <?php if(LOCAL): echo 'style="display: none;"'; else: echo 'style="display: block;"'; endif; ?>><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'block'; document.getElementById('techdetails_show').style.display = 'none';">View some technical details</a></p>
-			<div id="techdetails" class="technical_details" <?php if(LOCAL): echo 'style="display: block;"'; else: echo 'style="display: none;"'; endif; ?>>
+			<?php if(LOCAL || ($exception->getUser() instanceof CurrentUser && $exception->getUser()->getRole() == 100)) { ?>
+			<p id="techdetails_show" style="display: none;"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'block'; document.getElementById('techdetails_show').style.display = 'none';">View some technical details</a></p>
+			<div id="techdetails" class="technical_details" style="display: block;">
 				<p id="techdetails_hide"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'none'; document.getElementById('techdetails_show').style.display = 'block';">Hide the technical details</a></p>
 				<?php
 					$exceptions = array($prior_exception, $e);
@@ -62,13 +63,13 @@ $timing->log('after header');
 								break;
 							case EXCEPTION_GLUE:
 								$header = 'Misconfigured glue';
-								$data['URL'] = $exception->getURL();
+								$data['URL'] = $exception->getUrl();
 								$data['Class requested'] = $exception->getClass();
 								$data['Method requested'] = $exception->getMethod();
 								break;
 							case EXCEPTION_GLUE_URL:
 								$header = 'URL is not valid';
-								$data['URL'] = $exception->getURL();
+								$data['URL'] = $exception->getUrl();
 								break;
 							case EXCEPTION_IMAGE_NOTFOUND:
 								$dimensions = $exception->getImageDimensions();
@@ -111,11 +112,10 @@ $timing->log('after header');
 						?>
 					</ul>
 					<?php
-					if(LOCAL) {
-						echo '<h3>Backtrace <i>(shown in local mode only)</i></h3>';
-						echo '<pre>'.$exception->getTraceAsString().'</pre>';
-					}
+					echo '<h3>Backtrace</h3>';
+					echo '<pre>'.$exception->getTraceAsString().'</pre>';
 				}
+			}
 			?>
 		</div>
 	</div>
