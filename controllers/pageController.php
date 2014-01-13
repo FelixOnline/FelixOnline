@@ -6,10 +6,11 @@
 class PageController extends BaseController {
 	private $page;
 	function GET($matches) {
+		$page = substr($matches[0], 1);
+
+		// Remove trailing slash
 		if (substr($matches[0], -1) == '/') {
-			$page = substr($matches[0], 1, -1);
-		} else {
-			$page = substr($matches[0], 1);
+			$page = substr($page, 0, -1);
 		}
 
 		$this->page = new Page($page);
