@@ -24,15 +24,6 @@ $timing->log('after header');
 				</form>
 				<p>Or just return to the <a href="/">homepage</a> to begin again.</p>
 			</div>
-			
-			<!--<p>Seems you have stumbled on a page that isn't here! Before you ponder about the philosophical implications of that sentence why not go back the safety of the <a href="/">homepage</a> or search for what you were looking for using this lovely search box: </p>-->
-			<!-- Google search -->
-			<!--<form action="/search/" id="cse-search-box">
-				<input type="text" name="q" size="31" id="searchbox"/>
-				<input type="submit" name="sa" value="Search" id="searchbut" />
-			</form>
-			<p>Alternatively just enjoy the following video: </p>
-			<iframe title="YouTube video player" class="youtube-player" type="text/html" width="620" height="495" src="http://www.youtube.com/embed/QgkGogPLacA" frameborder="0"></iframe>-->
 		</div>
 		<div class="clear"></div>
 		<div class="grid_12 error">

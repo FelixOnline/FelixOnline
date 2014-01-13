@@ -6,7 +6,13 @@
 class PageController extends BaseController {
 	private $page;
 	function GET($matches) {
-		$page = substr($matches[0], 1, -1);
+		$page = substr($matches[0], 1);
+
+		// Remove trailing slash
+		if (substr($matches[0], -1) == '/') {
+			$page = substr($page, 0, -1);
+		}
+
 		$this->page = new Page($page);
 		$this->theme->appendData(array(
 			'page' => $this->page
@@ -17,5 +23,3 @@ class PageController extends BaseController {
 		$this->theme->render('page');
 	}
 }
-
-?>

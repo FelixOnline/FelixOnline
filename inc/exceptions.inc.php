@@ -218,9 +218,22 @@ class GlueClassNotFoundException extends GlueInternalException {
 }
 
 // The method called by the glue doesnt exist
-class GlueMethodNotFoundException extends GlueInternalException {
+class GlueMethodNotFoundException extends GlueURLException {
+	protected $method;
+	protected $class;
+
 	public function __construct($message, $url, $class, $method, $code = EXCEPTION_GLUE_METHOD, Exception $previous = null) {
-		parent::__construct($message, $url, $class, $method, $code, $previous);
+		$this->method = $method;
+		$this->class = $class;
+		parent::__construct($message, $url, $code, $previous);
+	}
+
+	public function getMethod() {
+		return $this->method;
+	}
+
+	public function getClass() {
+		return $this->class;
 	}
 }
 
