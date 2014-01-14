@@ -44,7 +44,8 @@
 	if(!defined('LOG_EMAILS'))					  define('LOG_EMAILS', false); // Log emails or not 
 	if(!defined('CACHE'))						   define('CACHE', true); // Enable cache 
 	if(!defined('CACHE_LENGTH'))					define('CACHE_LENGTH', 1800); // Default cache length (20 mins)
-	if(!defined('BLOG_POSTS_PER_PAGE'))			 define('BLOG_POSTS_PER_PAGE', 10); // number of posts to show on blog page
+	if(!defined('BLOG_POSTS_PER_PAGE'))				define('BLOG_POSTS_PER_PAGE', 10); // number of posts to show on blog page
+	if(!defined('SERVER_ENV'))						define('SERVER_ENV', 'production'); // server environment
 
 	/* Media Page */
 	if(!defined('NUMBER_OF_ALBUMS_FRONT_PAGE'))	 	define('NUMBER_OF_ALBUMS_FRONT_PAGE',4); // number of media items on front page
