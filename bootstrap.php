@@ -40,7 +40,7 @@ require_once(BASE_DIRECTORY.'/inc/rss.inc.php');
 if (LOCAL) { // development connector
 	$connector = new \RzekaE\Akismet\Connector\Test();
 } else {
-	$connector = new \RzekaE\Akismet\Connector\Curl();
+	$connector = new \RzekaE\Akismet\Connector\PHP();
 }
 $akismet = new \RzekaE\Akismet\Akismet($connector);
 $akismet->keyCheck(AKISMET_API_KEY, STANDARD_URL);
