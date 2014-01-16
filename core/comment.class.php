@@ -345,6 +345,11 @@ class Comment extends BaseModel {
 			$this->setIp($_SERVER['REMOTE_ADDR']);
 
 			// check spam using akismet
+			$key_check = $akismet->keyCheck(AKISMET_API_KEY, STANDARD_URL);
+
+			if ($key_check == false) {
+				throw new ExternalException('Akismet key is invalid');
+			}
 
 			$check = $akismet->check(array(
 				'permalink' => $this->getArticle()->getURL(),
@@ -356,7 +361,7 @@ class Comment extends BaseModel {
 				'referrer' => $_SERVER['HTTP_REFERER'],
 			));
 
-			if($check == true) { // if comment is spam
+			if ($check == true) { // if comment is spam
 				$this->setActive(0);
 				$this->setPending(0);
 				$this->setSpam(1);
