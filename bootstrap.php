@@ -43,4 +43,3 @@ if (LOCAL) { // development connector
 	$connector = new \RzekaE\Akismet\Connector\PHP();
 }
 $akismet = new \RzekaE\Akismet\Akismet($connector);
-$akismet->keyCheck(AKISMET_API_KEY, STANDARD_URL);
