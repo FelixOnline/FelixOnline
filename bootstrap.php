@@ -40,6 +40,6 @@ require_once(BASE_DIRECTORY.'/inc/rss.inc.php');
 if (LOCAL) { // development connector
 	$connector = new \RzekaE\Akismet\Connector\Test();
 } else {
-	$connector = new \RzekaE\Akismet\Connector\PHP();
+	$connector = new \RzekaE\Akismet\Connector\Curl();
 }
 $akismet = new \RzekaE\Akismet\Akismet($connector);

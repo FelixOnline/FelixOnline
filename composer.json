@@ -21,6 +21,6 @@
     "require": {
 		"felixonline/exporter": "0.1.*",
 		"robmorgan/phinx": "0.2.*",
-		"rzeka/akismet-api": "dev-php_connector_fix"
+		"rzeka/akismet-api": "dev-curl_connection_error"
     }
 }
