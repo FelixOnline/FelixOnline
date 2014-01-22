@@ -5,7 +5,8 @@ class SearchController extends BaseController {
 		global $timing;
 		$timing->log('Search controller');
 
-		$query = str_replace(" ", "%", trim($_GET['q']));
+		$_query = trim(strip_tags($_GET['q']));
+		$query = str_replace(" ", "%", trim($_query));
 
 		$page = isset($_GET['p']) ? $_GET['p'] : 1;
 
@@ -15,7 +16,14 @@ class SearchController extends BaseController {
 		}
 
 		$search = new Search($query);
-		$articles = $search->articleTitles($page);
+		try  {
+			$articles = $search->articleTitles($page);
+		} catch (InternalException $e) {
+			$articles = array(
+				'count' => 0,
+				'articles' => [],
+			);
+		}
 
 		$people = $search->people();
 
@@ -27,7 +35,7 @@ class SearchController extends BaseController {
 				'article_count' => $articles['count'],
 				'people' => $people['people'],
 				'people_count' => $people['count'],
-				'query' => $query,
+				'query' => $_query,
 				'page' => $page
 			)
 		);
