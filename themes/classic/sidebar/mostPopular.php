@@ -29,10 +29,10 @@
 	</div>
 	<div class="mostPopularTab" id="mostPopComment">
 		<?php
-			$popular_Article = Article::getMostCommented(MOST_POPULAR_INTERVAL, POPULAR_ARTICLES);
-			if(!is_null($popular_articles)) {
+			$commented_articles = Article::getMostCommented(MOST_POPULAR_INTERVAL, POPULAR_ARTICLES);
+			if(!is_null($commented_articles)) {
 				echo '<ol>';
-				foreach ($popular_articles as $object) {
+				foreach ($commented_articles as $object) {
 					$article = new Article($object->id);
 			?>
 				<li>
