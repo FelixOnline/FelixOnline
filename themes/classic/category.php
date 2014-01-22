@@ -51,15 +51,15 @@ $theme->render('header', $header);
 				}
 				foreach($articles as $key => $object) {
 					$article = new Article($object->id);
-					if($key == 1) { // top story 
+					if($key == 0) { // top story 
 						$theme->render('snippets/articlelist/article_large', array(
 							'article' => $article
 						));
-					} else if ($key < 4 && $key > 1) { // middle stories 
+					} else if ($key <= 2 && $key > 0) { // middle stories 
 						$theme->render('snippets/articlelist/article_medium', array(
 							'article' => $article
 						));
-					} else if ($key > 3) { // end stories
+					} else if ($key >= 3) { // end stories
 						$theme->render('snippets/articlelist/article_small', array(
 							'article' => $article
 						));
