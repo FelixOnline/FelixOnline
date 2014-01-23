@@ -47,8 +47,7 @@ $theme->render('header', $header);
 				if (count($articles) < 2) {
 					?>There are no articles in this category<?php
 				}
-				foreach($articles as $key => $object) {
-					$article = new Article($object->id);
+				foreach($articles as $article) {
 					if($key == 0) { // top story 
 						$theme->render('snippets/articlelist/article_large', array(
 							'article' => $article
@@ -69,8 +68,7 @@ $theme->render('header', $header);
 				if (count($articles) == 0) { ?>
 					Could not find any articles
 			<?php }
-				foreach($articles as $key => $object) {
-					$article = new Article($object->id); ?>
+				foreach($articles as $article) { ?>
 						<div class="featBox">
 							<div class="border clearfix">
 								<h3>
