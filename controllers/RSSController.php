@@ -2,32 +2,28 @@
 	
 class RSSController extends BaseController {
 	function GET($matches) {
-		$articleManager = new ArticleManager();
+		$articleManager = new \FelixOnline\Core\ArticleManager();
 
 		// RSS feed for category
 		if (array_key_exists('cat', $matches)) {
-			$category = new Category($matches['cat']);
+			$category = (new \FelixOnline\Core\CategoryManager())
+				->filter('cat = "%s"', array($matches['cat']))
+				->one();
 
-			$articles = $articleManager->filter(
-				array(
-					'published IS NOT NULL',
-					'published < NOW()',
-					'category = ' . $category->getId(),
-				),
-				RSS_ARTICLES,
-				array('published', 'DESC')
-			);
+			$articleManager->filter('published IS NOT NULL')
+				->filter('published < NOW()')
+				->filter('category = %i', array($category->getId()))
+				->limit(0, RSS_ARTICLES)
+				->order('published', 'DESC');
 
 		} else {
-			$articles = $articleManager->filter(
-				array(
-					'published IS NOT NULL',
-					'published < NOW()',
-				),
-				RSS_ARTICLES,
-				array('published', 'DESC')
-			);
+			$articleManager->filter('published IS NOT NULL')
+				->filter('published < NOW()')
+				->limit(0, RSS_ARTICLES)
+				->order('published', 'DESC');
 		}
+
+		$articles = $articleManager->values();
 
 		$newsfeed = new RSSFeed();
 		$newsfeed->SetChannel(
