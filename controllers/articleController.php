@@ -1,29 +1,33 @@
 <?php
 	
-class ArticleController extends BaseController {
+class ArticleController extends BaseController
+{
 	private $article;
 
-	function GET($matches) {
-		$this->article = new Article($matches['id']);
+	function GET($matches)
+	{
+		$article = new \FelixOnline\Core\Article($matches['id']);
 		$this->theme->appendData(array(
-			'article' => $this->article
+			'article' => $article
 		));
+
 		$this->theme->setHierarchy(array(
-			$this->article->getId(), // article-{id}.php
-			$this->article->getCategoryCat(), // article-{cat}.php
+			$article->getId(), // article-{id}.php
+			$article->getCategory()->getCat(), // article-{cat}.php
 		));
 
 		// Log article visit
-		$this->article->logVisit();
+		$article->logVisit();
 
 		$this->theme->render('article');
 	}
 
-	function POST($matches) {
+	function POST($matches)
+	{
 		global $currentuser;
-		$this->article = new Article($matches['id']);
+		$article = new \FelixOnline\Core\Article($matches['id']);
 		$comment = new Comment();
-		$comment->setArticle($matches['id']);
+		$comment->setArticle($article->getId());
 
 		/* User comment */
 		if ($_POST['articlecomment']) {
@@ -81,15 +85,15 @@ class ArticleController extends BaseController {
 		}
 		
 		$this->theme->appendData(array(
-			'article' => $this->article,
+			'article' => $article,
 			'errorduplicate' => $errorduplicate,
 			'errorspam' => $errorspam,
 			'errorinsert' => $errorinsert,
 			'errorconnection' => $errorconnection,
 		));
 		$this->theme->setHierarchy(array(
-			$this->article->getId(),
-			$this->article->getCategoryCat(),
+			$article->getId(),
+			$article->getCategoryCat(),
 		));
 		$this->theme->render('article');
 	}

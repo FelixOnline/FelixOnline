@@ -7,11 +7,11 @@
 			top_sidebar_4,
 			top_sidebar_5 
 			FROM `category` 
-			WHERE cat='".$article->getCategoryCat()."'";
+			WHERE cat='".$article->getCategory()->getCat()."'";
 	$featured = $db->get_row($sql);
 ?>
 <div id="featuredBox">
-	<h3>Top <span class="<?php echo $article->getCategoryCat();?>"><?php echo $article->getCategoryLabel();?></span> Stories</h3>
+	<h3>Top <span class="<?php echo $article->getCategory()->getCat();?>"><?php echo $article->getCategory()->getLabel();?></span> Stories</h3>
 	<ul class="clearfix">
 	<?php 
 		foreach($featured as $key => $value) { 

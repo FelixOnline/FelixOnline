@@ -5,7 +5,7 @@
 			<?php
 			// If article page
 			if ($theme->isPage('article')) {
-				$check = $article->getCategoryCat();
+				$check = $article->getCategory()->getCat();
 			} else if ($theme->isPage('category')) { // if category page
 				$check = $category->getCat();
 			}
