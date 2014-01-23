@@ -47,18 +47,9 @@ $akismet = new \RzekaE\Akismet\Akismet($connector);
 // Initialize App
 $app = new \FelixOnline\Core\App($config);
 
-$db = new \ezSQL_mysqli();
-$db->quick_connect(
-	$config['db_user'],
-	$config['db_pass'],
-	$config['db_name'],
-	'localhost',
-	3306,
-	'utf8'
-);
 $app['db'] = $db;
 
-$app['safesql'] = new \SafeSQL_MySQLi($db->dbh);
+$app['safesql'] = $safesql;
 
 $app['env'] = \FelixOnline\Core\Environment::getInstance();
 $app['currentuser'] = new \FelixOnline\Core\CurrentUser();

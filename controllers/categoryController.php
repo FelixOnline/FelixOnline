@@ -4,9 +4,7 @@ class CategoryController extends BaseController
 {
 	function GET($matches)
 	{
-		$catManager = new \FelixOnline\Core\CategoryManager();
-
-		$category = $catManager
+		$category = (new \FelixOnline\Core\CategoryManager())
 			->filter('cat = "%s"', array($matches['cat']))
 			->one();
 

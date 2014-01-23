@@ -34,7 +34,7 @@
 	);
 
 	/* Initialise ezSQL database connection */
-	$db = new ezSQL_mysqli();
+	$db = new \ezSQL_mysqli();
 	$db->quick_connect(
 		$config['db_user'],
 		$config['db_pass'],
@@ -42,7 +42,7 @@
 		'localhost',
 		'utf8'
 	);
-	$safesql = new SafeSQL_MySQLi($db->dbh);
+	$safesql = new \SafeSQL_MySQLi($db->dbh);
 
 	/* Set settings for caching (turned off by defualt) */
 	// Cache expiry
