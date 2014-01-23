@@ -58,7 +58,7 @@ class Frontpage extends BaseModel
 			$articles = array();
 			foreach ($list as $key => $a) {
 				if ($a != 0 && !is_null($a)) {
-					$articles[$key] = new Article($a);
+					$articles[$key] = new \FelixOnline\Core\Article($a);
 				}
 			}
 
@@ -74,15 +74,19 @@ class Frontpage extends BaseModel
 	 */
 	public function getEditorial()
 	{
-		$sql = $this->safesql->query(
-			"SELECT id FROM `article`
-			WHERE author='felix'
-			AND category='2'
-			AND text1 IS NOT NULL
-			ORDER BY date DESC
-			LIMIT 1", array());
-		$id = $this->db->get_var($sql);
-		return new Article($id);
+		$articles = (new \FelixOnline\Core\ArticleManager())
+			->filter("author = 'felix'") // TODO need to use article_author coloumn
+			->filter('category = 2')
+			->filter('text1 IS NOT NULL')
+			->order('date', 'DESC')
+			->limit(0, 1)
+			->values();
+
+		if (is_null($articles)) {
+			throw new InternalException('Cannot find editorial');
+		}
+
+		return $articles[0];
 	}
 
 	/**

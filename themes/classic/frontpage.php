@@ -44,7 +44,7 @@ $timing->log('after header');
 				$article = $sectionA['one'];
 				$timing->log('initialise article');
 			?>
-			<div class="border clearfix <?php echo $article->getCategoryCat();?>">
+			<div class="border clearfix <?php echo $article->getCategory()->getCat();?>">
 				<h2>
 					<a href="<?php echo $article->getURL(); ?>">
 						<?php echo $article->getTitle(); ?>
@@ -52,7 +52,7 @@ $timing->log('after header');
 				</h2>
 				<div class="subHeader">
 					<p>
-						<?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(50); ?>
+						<?php if($article->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(50); ?>
 					</p>
 					<div id="storyMeta" class="<?php if(!$article->getNumComments()) echo 'extra'; ?>">
 						<ul class="metaList">
@@ -64,8 +64,8 @@ $timing->log('after header');
 								</li>
 							<?php } ?>
 							<li id="category">
-								<a href="<?php echo $article->getCategoryURL();?>" class="<?php echo $article->getCategoryCat();?>">
-									<?php echo $article->getCategoryLabel();?>
+								<a href="<?php echo $article->getCategory()->getURL();?>" class="<?php echo $article->getCategory()->getCat();?>">
+									<?php echo $article->getCategory()->getLabel();?>
 								</a>
 							</li>
 						</ul>
@@ -126,7 +126,7 @@ $timing->log('after header');
 		<?php if (!is_null($sectionA)) { ?>
 		<!-- Second article -->
 		<?php $article = $sectionA['two']; ?>
-		<div class="grid_6 pull_2 omega alpha featBox <?php echo $article->getCategoryCat();?>">
+		<div class="grid_6 pull_2 omega alpha featBox <?php echo $article->getCategory()->getCat();?>">
 			<h3>
 				<a href="<?php echo $article->getURL();?>">
 					<?php echo $article->getTitle();?>
@@ -134,7 +134,7 @@ $timing->log('after header');
 			</h3>
 			<div class="subHeader">
 				<p>
-					<?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(20); ?>
+					<?php if($article->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(20); ?>
 				</p>
 				<div id="storyMeta" class="<?php if(!$article->getNumComments()) echo 'extra'; ?>">
 					<ul class="metaList">
@@ -146,8 +146,8 @@ $timing->log('after header');
 							</li>
 						<?php } ?>
 						<li id="category">
-							<a href="<?php echo $article->getCategoryURL();?>" class="<?php echo $article->getCategoryCat();?>">
-								<?php echo $article->getCategoryLabel();?>
+							<a href="<?php echo $article->getCategory()->getURL();?>" class="<?php echo $article->getCategory()->getCat();?>">
+								<?php echo $article->getCategory()->getLabel();?>
 							</a>
 						</li>
 					</ul>
@@ -167,7 +167,7 @@ $timing->log('after header');
 
 		<!-- Third article -->
 		<?php $article = $sectionA['three']; ?>
-		<div class="grid_6 pull_2 omega alpha featBox <?php echo $article->getCategoryCat();?>" id="last">
+		<div class="grid_6 pull_2 omega alpha featBox <?php echo $article->getCategory()->getCat();?>" id="last">
 			<h3>
 				<a href="<?php echo $article->getURL();?>">
 					<?php echo $article->getTitle();?>
@@ -175,7 +175,7 @@ $timing->log('after header');
 			</h3>
 			<div class="subHeader">
 				<p>
-					<?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(20); ?>
+					<?php if($article->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(20); ?>
 				</p>
 				<div id="storyMeta" class="<?php if(!$article->getNumComments()) echo 'extra'; ?>">
 					<ul class="metaList">
@@ -187,8 +187,8 @@ $timing->log('after header');
 							</li>
 						<?php } ?>
 						<li id="category">
-							<a href="<?php echo $article->getCategoryURL();?>" class="<?php echo $article->getCategoryCat();?>">
-								<?php echo $article->getCategoryLabel();?>
+							<a href="<?php echo $article->getCategory()->getURL();?>" class="<?php echo $article->getCategory()->getCat();?>">
+								<?php echo $article->getCategory()->getLabel();?>
 							</a>
 						</li>
 					</ul>
@@ -213,9 +213,9 @@ $timing->log('after header');
 		?>
 		<div class="grid_6 pull_2 alpha omega featBox bottom">
 			<!-- Header -->
-			<div class="grid_3 alpha header <?php echo $articleA->getCategoryCat();?>">
-				<a href="<?php echo $articleA->getCategoryURL();?>" class="cat <?php echo $articleA->getCategoryCat();?>">
-					<?php echo $articleA->getCategoryLabel();?>
+			<div class="grid_3 alpha header <?php echo $articleA->getCategory()->getCat();?>">
+				<a href="<?php echo $articleA->getCategory()->getURL();?>" class="cat <?php echo $articleA->getCategory()->getCat();?>">
+					<?php echo $articleA->getCategory()->getLabel();?>
 				</a>
 				<h4>
 					<a href="<?php echo $articleA->getURL();?>">
@@ -223,9 +223,9 @@ $timing->log('after header');
 					</a>
 				</h4>
 			</div>
-			<div class="grid_3 omega header <?php echo $articleB->getCategoryCat();?>">
-				<a href="<?php echo $articleB->getCategoryURL();?>" class="cat <?php echo $articleB->getCategoryCat();?>">
-					<?php echo $articleB->getCategoryLabel();?>
+			<div class="grid_3 omega header <?php echo $articleB->getCategory()->getCat();?>">
+				<a href="<?php echo $articleB->getCategory()->getURL();?>" class="cat <?php echo $articleB->getCategory()->getCat();?>">
+					<?php echo $articleB->getCategory()->getLabel();?>
 				</a>
 				<h4>
 					<a href="<?php echo $articleB->getURL();?>">
@@ -259,10 +259,10 @@ $timing->log('after header');
 
 			<!-- Teaser -->
 			<p class="grid_3 alpha">
-				<?php if($articleA->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($articleA->getAuthors()).':</b> '; endif; echo $articleA->getPreview(25); ?>
+				<?php if($articleA->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($articleA->getAuthors()).':</b> '; endif; echo $articleA->getPreview(25); ?>
 			</p>
 			<p class="grid_3 omega">
-				<?php if($articleB->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($articleB->getAuthors()).':</b> '; endif; echo $articleB->getPreview(25); ?>
+				<?php if($articleB->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($articleB->getAuthors()).':</b> '; endif; echo $articleB->getPreview(25); ?>
 			</p>
 			<div class="clear"></div>
 
@@ -297,50 +297,50 @@ $timing->log('after header');
 		<div class="grid_6 pull_2 alpha omega newsList">
 			<ul>
 				<?php $article = $sectionA['six']; ?>
-				<li class="<?php echo $article->getCategoryCat();?>">
+				<li class="<?php echo $article->getCategory()->getCat();?>">
 					<h4>
 						<a href="<?php echo $article->getURL();?>" id="title">
 							<?php echo $article->getTitle();?>
-						</a> <a href="<?php echo $article->getCategoryURL();?>" class="<?php echo $article->getCategoryCat();?>">
+						</a> <a href="<?php echo $article->getCategory()->getURL();?>" class="<?php echo $article->getCategory()->getCat();?>">
 							<span id="category">
-								<?php echo $article->getCategoryLabel();?>
+								<?php echo $article->getCategory()->getLabel();?>
 							</span>
 						</a>
 					</h4>
 					<p>
-						<?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?>
+						<?php if($article->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?>
 					</p>
 				</li>
 
 				<?php $article = $sectionA['seven']; ?>
-				<li class="<?php echo $article->getCategoryCat();?>">
+				<li class="<?php echo $article->getCategory()->getCat();?>">
 					<h4>
 						<a href="<?php echo $article->getURL();?>" id="title">
 							<?php echo $article->getTitle();?>
-						</a> <a href="<?php echo $article->getCategoryURL();?>" class="<?php echo $article->getCategoryCat();?>">
+						</a> <a href="<?php echo $article->getCategory()->getURL();?>" class="<?php echo $article->getCategory()->getCat();?>">
 							<span id="category">
-								<?php echo $article->getCategoryLabel();?>
+								<?php echo $article->getCategory()->getLabel();?>
 							</span>
 						</a>
 					</h4>
 					<p>
-						<?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?>
+						<?php if($article->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?>
 					</p>
 				</li>
 
 				<?php $article = $sectionA['eight']; ?>
-				<li class="<?php echo $article->getCategoryCat();?>">
+				<li class="<?php echo $article->getCategory()->getCat();?>">
 					<h4>
 						<a href="<?php echo $article->getURL();?>" id="title">
 							<?php echo $article->getTitle();?>
-						</a> <a href="<?php echo $article->getCategoryURL();?>" class="<?php echo $article->getCategoryCat();?>">
+						</a> <a href="<?php echo $article->getCategory()->getURL();?>" class="<?php echo $article->getCategory()->getCat();?>">
 							<span id="category">
-								<?php echo $article->getCategoryLabel();?>
+								<?php echo $article->getCategory()->getLabel();?>
 							</span>
 						</a>
 					</h4>
 					<p>
-						<?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?>
+						<?php if($article->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?>
 					</p>
 				</li>
 			</ul>
@@ -374,7 +374,7 @@ $timing->log('after header');
 				</h4>
 			</a>
 			<br/>
-			<span><?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?></span>
+			<span><?php if($article->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(15); ?></span>
 			<ul>
 				<li>
 					Other Articles:
@@ -478,7 +478,7 @@ $timing->log('after header');
 						</a>
 					</h4>
 					<p>
-						<?php if($article->getCategoryCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(10); ?>
+						<?php if($article->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(10); ?>
 					</p>
 				</div>
 			</div>
