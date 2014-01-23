@@ -8,15 +8,21 @@ class CategoryController extends BaseController {
 		} else {
 			$pagenum = $matches['page'];
 		}
+
+		$articles = $category->getArticles($pagenum);
+		if (is_null($articles)) {
+			$articles = [];
+		}
+
 		$this->theme->appendData(array(
 			'category' => $category,
-			'pagenum' => $pagenum
+			'pagenum' => $pagenum,
+			'articles' => $articles,
 		));
+
 		$this->theme->setHierarchy(array(
 			$category->getCat() // category-{cat}.php
 		));
 		$this->theme->render('category');
 	}
 }
-
-?>

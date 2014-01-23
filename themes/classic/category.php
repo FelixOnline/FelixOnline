@@ -44,8 +44,6 @@ $theme->render('header', $header);
 		<?php
 			/* First page */
 			if($pagenum == 1) { 
-				$articles = $category->getArticles(1);
-
 				if (count($articles) < 2) {
 					?>There are no articles in this category<?php
 				}
@@ -68,7 +66,9 @@ $theme->render('header', $header);
 			}
 			/* Not first page */
 			else {
-				$articles = $category->getArticles($pagenum);
+				if (count($articles) == 0) { ?>
+					Could not find any articles
+			<?php }
 				foreach($articles as $key => $object) {
 					$article = new Article($object->id); ?>
 						<div class="featBox">
@@ -105,15 +105,15 @@ $theme->render('header', $header);
 				<?php }
 			}
 		?>
-	</div>
-	<!-- End of category articles -->
-	
+
 	<?php $theme->render('snippets/pagination', array(
 		'pagenum' => $pagenum,
 		'class' => $category,
 		'pages' => $category->getNumPages(),
 		'span' => NUMBER_OF_PAGES_IN_PAGE_LIST
 	)); ?>
+	</div>
+	<!-- End of category articles -->
 </div>
 <?php
 $timing->log('end of category page');
