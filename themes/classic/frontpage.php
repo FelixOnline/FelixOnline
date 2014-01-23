@@ -453,16 +453,22 @@ $timing->log('after header');
 <!-- Featured bar -->
 <div class="container_12 clearfix">
 	<?php
-	$cats = $frontpage->getFeaturedCategories();
+	$cats = (new \FelixOnline\Core\CategoryManager())
+		->filter('active = 1')
+		->filter('hidden = 0')
+		->filter('id > 0')
+		->filter('`order` > 0')
+		->order('order', 'ASC')
+		->values();
 	if (!is_null($cats)) {
 		foreach($cats as $key => $cat) {
-			$article = new Article($cat->top);
+			$article = new \FelixOnline\Core\Article($cat->getFields()['top_slider_1']);
 		?>
 			<div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
-				<div class="border <?php echo $cat->cat;?>">
+				<div class="border <?php echo $cat->getCat();?>">
 					<h3>
-						<a href="<?php echo STANDARD_URL.$cat->cat;?>/">
-							<?php echo $cat->label;?>
+						<a href="<?php echo STANDARD_URL.$cat->getCat();?>/">
+							<?php echo $cat->getLabel();?>
 						</a>
 					</h3>
 					<a href="<?php echo $article->getURL();?>">

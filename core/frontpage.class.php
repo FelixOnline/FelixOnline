@@ -88,28 +88,4 @@ class Frontpage extends BaseModel
 
 		return $articles[0];
 	}
-
-	/**
-	 * Get featured categories
-	 *
-	 * @return array of featured categories
-	 */
-	public function getFeaturedCategories()
-	{
-		$sql = $this->safesql->query(
-			"SELECT
-				id,
-				cat,
-				label,
-				top_slider_1 as top
-			FROM `category`
-			WHERE active = 1
-			AND hidden = 0
-			AND id > 0
-			AND `order` > 0
-			ORDER BY `order` ASC", array());
-		$cats = $this->db->get_results($sql);
-		return $cats;
-	}
 }
-
