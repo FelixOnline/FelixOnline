@@ -134,7 +134,7 @@ class Comment extends BaseModel {
 	 */
 	public function getArticle() { 
 		if(!$this->article) {
-			$this->article = new Article($this->fields['article']);
+			$this->article = new \FelixOnline\Core\Article($this->fields['article']);
 		}
 		return $this->article;
 	}
