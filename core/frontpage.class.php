@@ -74,13 +74,17 @@ class Frontpage extends BaseModel
 	 */
 	public function getEditorial()
 	{
-		$articles = (new \FelixOnline\Core\ArticleManager())
-			->filter("author = 'felix'") // TODO need to use article_author coloumn
+		$manager = (new \FelixOnline\Core\ArticleManager())
 			->filter('category = 2')
 			->filter('text1 IS NOT NULL')
 			->order('date', 'DESC')
-			->limit(0, 1)
-			->values();
+			->limit(0, 1);
+
+		$authorManager = (new \FelixOnline\Core\ArticleAuthorManager())
+			->filter("author = 'felix'");
+		$manager->join($authorManager);
+
+		$articles = $manager->values();
 
 		if (is_null($articles)) {
 			throw new InternalException('Cannot find editorial');

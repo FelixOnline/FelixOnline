@@ -9,6 +9,11 @@ class UserController extends BaseController {
 			$pagenum = $matches['page'];
 		}
 		$articles = $user->getArticles($pagenum);
+
+		if (is_null($articles)) {
+			$articles = array();
+		}
+
 		$comments = $user->getComments();
 
 		$this->theme->appendData(array(
@@ -23,4 +28,3 @@ class UserController extends BaseController {
 		$this->theme->render('user');
 	}
 }
-?>

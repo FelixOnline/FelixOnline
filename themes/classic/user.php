@@ -138,7 +138,7 @@ $theme->render('header', $header);
 				</div>
 			<?php } ?>
 		</form>
-		<?php if (!is_null($articles)) { ?>
+		<?php if (!empty($articles)) { ?>
 			<!-- Articles -->
 			<div id="articleListCont">
 				<h3 id="userArticleTitle">
@@ -146,149 +146,45 @@ $theme->render('header', $header);
 						<a href="rss.php?id=<?php echo $user->getUser();?>" target="_blank" id="userRSS">RSS Feed</a>
 					</span>
 				</h3>
-				<?php 
-				if ($pagenum == 1) {
-					$articles = $user->getArticles(1);
-						foreach($articles as $key => $object) {
-							$article = new Article($object->id);
-							if ($key < 4) { ?>
-								<div class="userArticle clearfix">
-									<div class="userArticleDate grid_1 alpha">
-										<span>
-											<?php echo date('jS', $article->getDate()); ?>
-										</span>
-										<br/>
-										<?php echo date('F Y',$article->getDate()); ?>
-										<br/>
-										<?php if ($currentuser->getUser() == $user->getUser()) { ?>
-											<div><?php echo $article->getHits(); ?> hits</div>
-										<?php } ?>
-									</div>
-									<div class="userArticleInfo grid_7 omega clearfix <?php if($article->getCategoryCat() == 'comment' || !$image = $article->getImage()) echo 'second';?>">
-										<h3>
-											<a href="<?php echo $article->getURL();?>">
-												<?php echo $article->getTitle();?>
+				<?php foreach($articles as $key => $article) { ?>
+					<div class="userArticle clearfix">
+						<div class="userArticleDate grid_1 alpha">
+							<span><?php echo date('jS',$article->getDate()); ?></span><br/>
+							<?php echo date('F Y',$article->getDate()); ?>
+							<?php if ($currentuser->getUser() == $user->getUser()) { ?>
+								<div><?php echo $article->getHits(); ?> hits</div>
+							<?php } ?>
+						</div>
+						<div class="userArticleInfo grid_7 omega second clearfix">
+							<h3>
+								<a href="<?php echo $article->getURL();?>">
+									<?php echo $article->getTitle();?>
+								</a>
+							</h3>
+							<div class="subHeader">
+								<p>
+									<?php echo $article->getPreview(30); ?>
+								</p>
+								<div id="storyMeta">
+									<ul class="metaList">
+										<li id="category">
+											<a href="<?php echo $article->getCategory()->getURL();?>" class="<?php echo $article->getCategory()->getCat();?>">
+												<?php echo $article->getCategory()->getLabel();?>
 											</a>
-										</h3>
-										<div class="subHeader <?php if($article->getImage() && $article->getImage()->isTall(220, 220)) echo 'wide';?>" >
-											<p>
-												<?php echo $article->getPreview(30); ?>
-											</p>
-											<div id="storyMeta">
-												<ul class="metaList">
-													<li id="category">
-														<a href="<?php echo $article->getCategory()->getURL();?>" class="<?php echo $article->getCategoryCat();?>">
-															<?php echo $article->getCategoryLabel();?>
-														</a>
-													</li>
-													<?php if($article->getNumComments()) { ?>
-														<li id="comments">
-															<a href="<?php echo $article->getURL();?>#commentHeader">
-																<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>
-															</a>
-														</li>
-													<?php } ?>
-												</ul>
-											</div>
-										</div>
-										<?php if($article->getCategoryCat() != 'comment') { 
-												if($article->getImage()) { ?>
-													<div id="secondStoryPic">
-														<a href="<?php echo $article->getURL();?>">
-															<?php if($article->getImage()->isTall(220, 220)) { ?>
-																<img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(120, 155); ?>">
-															<?php } else { ?>
-																<img id="secondStoryPhoto" alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(220, 150); ?>">
-															<?php } ?>
-														</a>
-													</div>
-										<?php   } 
-											} ?>
-									</div>
+										</li>
+										<?php if($article->getNumComments()) { ?>
+											<li id="comments">
+												<a href="<?php echo $article->getURL();?>#commentHeader">
+													<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>
+												</a>
+											</li>
+										<?php } ?>
+									</ul>
 								</div>
-						<?php } else { ?>
-								<div class="userArticle clearfix">
-									<div class="userArticleDate grid_1 alpha">
-										<span><?php echo date('jS',$article->getDate()); ?></span><br/>
-										<?php echo date('F Y',$article->getDate()); ?>
-										<?php if ($currentuser->getUser() == $user->getUser()) { ?>
-											<div><?php echo $article->getHits(); ?> hits</div>
-										<?php } ?>
-									</div>
-									<div class="userArticleInfo grid_7 omega second clearfix">
-										<h3>
-											<a href="<?php echo $article->getURL();?>">
-												<?php echo $article->getTitle();?>
-											</a>
-										</h3>
-										<div class="subHeader">
-											<p>
-												<?php echo $article->getPreview(30); ?>
-											</p>
-											<div id="storyMeta">
-												<ul class="metaList">
-													<li id="category">
-														<a href="<?php echo $article->getCategory()->getURL();?>" class="<?php echo $article->getCategory()->getCat();?>">
-															<?php echo $article->getCategory()->getLabel();?>
-														</a>
-													</li>
-													<?php if($article->getNumComments()) { ?>
-														<li id="comments">
-															<a href="<?php echo $article->getURL();?>#commentHeader">
-																<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>
-															</a>
-														</li>
-													<?php } ?>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>	
-					<?php   } 
-					} 
-				} else { 
-					$articles = $user->getArticles($pagenum);
-						foreach($articles as $key => $object) { 
-							$article = new Article($object->id); ?>
-								<div class="userArticle clearfix">
-									<div class="userArticleDate grid_1 alpha">
-										<span><?php echo date('jS',$article->getDate()); ?></span><br/>
-										<?php echo date('F Y',$article->getDate()); ?>
-										<?php if ($currentuser->getUser() == $user->getUser()) { ?>
-											<div><?php echo $article->getHits(); ?> hits</div>
-										<?php } ?>
-									</div>
-									<div class="userArticleInfo grid_7 omega second clearfix">
-										<h3>
-											<a href="<?php echo $article->getURL();?>">
-												<?php echo $article->getTitle();?>
-											</a>
-										</h3>
-										<div class="subHeader">
-											<p>
-												<?php echo $article->getPreview(30); ?>
-											</p>
-											<div id="storyMeta">
-												<ul class="metaList">
-													<li id="category">
-														<a href="<?php echo $article->getCategory()->getURL();?>" class="<?php echo $article->getCategory()->getCat();?>">
-															<?php echo $article->getCategory()->getLabel();?>
-														</a>
-													</li>
-													<?php if($article->getNumComments()) { ?>
-														<li id="comments">
-															<a href="<?php echo $article->getURL();?>#commentHeader">
-																<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>
-															</a>
-														</li>
-													<?php } ?>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>	
-					<?php }
-				} ?>
+							</div>
+						</div>
+					</div>	
+				<?php } ?> 
 			</div>
 			<!-- End of articles -->
 			

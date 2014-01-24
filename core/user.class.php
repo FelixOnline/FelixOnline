@@ -85,26 +85,21 @@ class User extends BaseModel {
 	 * Public: Get articles
 	 * Get all articles from user
 	 */
-	public function getArticles($page = NULL) {
-		$sql = "SELECT 
-				id 
-			FROM `article` 
-			INNER JOIN `article_author` 
-				ON (article.id=article_author.article) 
-			WHERE article_author.author='%s'
-			AND published < NOW()
-			ORDER BY article.date DESC";
-		if($page) {
-			$sql .= " LIMIT %i, %i";
-		}
+	public function getArticles($page) {
+		$manager = (new \FelixOnline\Core\ArticleManager())
+			->filter('published < NOW()')
+			->order('date', 'DESC');
 
-		$sql = $this->safesql->query($sql, array(
-			$this->getUser(),
-			($page-1) * ARTICLES_PER_USER_PAGE,
-			ARTICLES_PER_USER_PAGE,
-		));
-		$this->articles = $this->db->get_results($sql);	
-		return $this->articles;
+		$authorManager = (new \FelixOnline\Core\ArticleAuthorManager())
+			->filter("author = '%s'", array($this->getUser()));
+		$manager->join($authorManager);
+
+		$manager->limit(
+			($page - 1) * ARTICLES_PER_USER_PAGE,
+			ARTICLES_PER_USER_PAGE
+		);
+
+		return $manager->values();
 	}
 
 	/*
@@ -128,7 +123,7 @@ class User extends BaseModel {
 				));
 			$articles = $this->db->get_results($sql);
 			foreach($articles as $key => $obj) {
-				$this->popArticles[] = new Article($obj->id);
+				$this->popArticles[] = new \FelixOnline\Core\Article($obj->id);
 			}
 		}
 		return $this->popArticles;
