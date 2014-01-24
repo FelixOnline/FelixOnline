@@ -222,7 +222,7 @@ $theme->render('header', $header);
 						<p>Read our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
 					</div>
 				<?php } else { ?>
-					<h5>Leave a comment as <a href="<?php echo $currentuser->getURL();?>/" title="Profile Page"><?php echo $currentuser->getName();?></a></h5>
+					<h5>Leave a comment as <a href="<?php echo $currentuser->getURL();?>" title="Profile Page"><?php echo $currentuser->getName();?></a></h5>
 				<?php } ?>
 				<!-- Errors -->
 				<div class="error">
