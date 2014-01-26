@@ -52,6 +52,6 @@ $app['db'] = $db;
 $app['safesql'] = $safesql;
 
 $app['env'] = \FelixOnline\Core\Environment::getInstance();
-$app['currentuser'] = new \FelixOnline\Core\CurrentUser();
+$app['currentuser'] = new CurrentUser();
 
 $app->run();
