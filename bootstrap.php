@@ -48,10 +48,8 @@ $akismet = new \RzekaE\Akismet\Akismet($connector);
 $app = new \FelixOnline\Core\App($config);
 
 $app['db'] = $db;
-
 $app['safesql'] = $safesql;
 
-$app['env'] = \FelixOnline\Core\Environment::getInstance();
 $app['currentuser'] = new CurrentUser();
 
 $app->run();
