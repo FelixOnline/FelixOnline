@@ -10,7 +10,7 @@ $meta = '
 	<meta property="og:description" content="'.$user->getDescription().'"/>
 ';
 if($user->hasArticlesHiddenFromRobots() && $user->getUser!="felix" ) {
-	        $meta .= '<meta name="robots" content="noindex"/>';
+	$meta .= '<meta name="robots" content="noindex"/>';
 }
 $header = array(
 	'title' => $user->getName().' - '.'Felix Online',

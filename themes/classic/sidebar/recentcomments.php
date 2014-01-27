@@ -30,7 +30,7 @@
 								if($comment->isExternal()) { // external comment
 									echo $comment->getName();
 								} else { ?>
-									<a href="<?php echo $comment->getUser()->getURL();?>/">
+									<a href="<?php echo $comment->getUser()->getURL();?>">
 										<?php echo $comment->getName(); ?>
 									</a>
 							<?php } ?> 
