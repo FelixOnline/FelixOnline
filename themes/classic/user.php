@@ -22,11 +22,11 @@ $theme->render('header', $header);
 <div class="container_12 usercontainer">
 	<!-- Sidebar -->
 	<div class="sidebar grid_4 push_8">
-		<?php if ($articles > 2) { ?>
+		<?php if ($article_count > 2 && $popular_articles) { ?>
 			<div id="userPopular">
 				<h3>Most Popular Articles</h3>
 				<ol>
-				<?php foreach($user->getPopularArticles() as $article) { ?>
+				<?php foreach($popular_articles as $article) { ?>
 					<li id="userPopList">
 						<div id="popTitle">
 							<?php if($currentuser->isLoggedIn() == $user->getUser()) { ?>
@@ -81,9 +81,9 @@ $theme->render('header', $header);
 					<li><?php echo $info[1]; ?></li>
 				</ul>
 				<?php if ($articles || $comments) { ?>
-					<p><?php if ($articles){ echo 'Author of '.count($articles); ?> article<?php echo (count($articles) != 1 ? 's' : '');?><?php } ?>
+					<p><?php if ($articles){ echo 'Author of '.$article_count; ?> article<?php echo ($article_count != 1 ? 's' : '');?><?php } ?>
 					<?php if($comments && $articles){?> and <?php } ?>  
-					<?php if($comments) { echo count($comments);?> comment<?php echo (count($comments) != 1 ? 's' : ''); }?> 
+					<?php if($comments) { echo $comment_count;?> comment<?php echo ($comments != 1 ? 's' : ''); }?> 
 					since <?php echo date('d/m/Y',$user->getFirstLogin());?></p>
 					<p>Last login: <?php echo date('d/m/Y',$user->getLastLogin()); ?></p>
 				<?php } ?>

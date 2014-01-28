@@ -148,6 +148,15 @@ try {
 	ob_end_flush();
 	// End execution
 	exit();
+} catch (FelixOnline\Exceptions\InternalException $e) {
+	// If something bad happened
+	// time to bail out and display the emergency error page
+	ob_end_clean();
+	ob_start();
+	require('errors/index.php');
+	ob_end_flush();
+	// End execution
+	exit();
 }
 
 ob_end_flush();
