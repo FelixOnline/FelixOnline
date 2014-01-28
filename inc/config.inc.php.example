@@ -31,6 +31,7 @@
 		'db_host' => "localhost",
 		'db_user' => "DB_USER",
 		'db_pass' => "DB_PASSWORD",
+		'base_url' => STANDARD_URL,
 	);
 
 	/* Initialise ezSQL database connection */
