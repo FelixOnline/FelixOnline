@@ -31,6 +31,7 @@ $theme->render('header', $header);
 	<div class="sidebar grid_4 push_8">
 		<?php 
 			$theme->render('sidebar/categoryFeaturedBox');
+			$theme->render('sidebar/sexsurvey');
 			$theme->render('sidebar/mediaBox');
 			$theme->render('sidebar/socialLinks');
 			$theme->render('sidebar/fbActivity');
