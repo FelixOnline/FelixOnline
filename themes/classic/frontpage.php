@@ -364,7 +364,7 @@ $timing->log('after header');
 			<?php $article = $featured['one']; ?>
 			<a href="<?php echo $article->getURL(); ?>">
 				<div id="imgcont">
-					<?php if ($articleB->getImage()): ?>
+					<?php if ($article->getImage()): ?>
 						<img alt="<?php echo $article->getImage()->getTitle();?>" src="<?php echo $article->getImage()->getURL(290, 190);?>" width="290px">
 					<?php else: ?>
 						<img alt="" src="<?php echo IMAGE_URL.'290/190/'.DEFAULT_IMG_URI; ?>" width="290px">
