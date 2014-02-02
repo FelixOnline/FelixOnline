@@ -105,6 +105,9 @@ class Comment extends BaseModel {
 						UNIX_TIMESTAMP(`timestamp`) as timestamp,
 						`active`,
 						`IP` as ip,
+						`email`,
+						`useragent`,
+						`referer`,
 						`pending`,
 						`reply`,
 						`spam`,
@@ -343,6 +346,8 @@ class Comment extends BaseModel {
 		} else {
 			$this->setDbtable('comment_ext');
 			$this->setIp($_SERVER['REMOTE_ADDR']);
+			$this->setUseragent($_SERVER['HTTP_USER_AGENT']);
+			$this->setReferer($_SERVER['HTTP_REFERER']);
 
 			// check spam using akismet
 			$key_check = $akismet->keyCheck(AKISMET_API_KEY, STANDARD_URL);
@@ -356,9 +361,10 @@ class Comment extends BaseModel {
 				'comment_type' => 'comment',
 				'comment_author' => $this->getName(),
 				'comment_content' => $this->getContent(),
+				'comment_author_email' => $this->getEmail(),
 				'user_ip' => $this->getIp(),
-				'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-				'referrer' => $_SERVER['HTTP_REFERER'],
+				'user_agent' => $this->getUseragent(),
+				'referrer' => $this->getReferer(),
 			));
 
 			if ($check == true) { // if comment is spam

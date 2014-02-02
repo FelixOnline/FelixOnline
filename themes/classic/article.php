@@ -230,6 +230,9 @@ $theme->render('header', $header);
 					<?php if(isset($errorduplicate) && $errorduplicate) { ?>
 						<p>Looks like the comment you have just submitted is a duplicate. Please write something original and try again.</p>
 					<?php } ?>
+					<?php if(isset($erroremail) && $erroremail) { ?>
+						<p>You need to give you email address. If you haven't, there's something wrong with what you have given us. Don't worry, this won't be published.</p>
+					<?php } ?>
 					<?php if(isset($errorspam) && $errorspam) { ?>
 						<p>Our spam filters have flagged your comment as suspicious. If you are not a spammer then please <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
 					<?php } ?>
@@ -245,6 +248,9 @@ $theme->render('header', $header);
 					<?php if (!$currentuser->isLoggedIn()) { ?>
 						<label for="name">Name: </label>
 						<input name="name" id="name" value="<?php if(isset($_POST['name'])) echo $_POST['name'];?>"/>
+						<div class="clear"></div>
+						<label for="email">Email (will not be published): </label>
+						<input name="email" type="email" id="email" value="<?php if(isset($_POST['email'])) echo $_POST['email'];?>"/>
 						<div class="clear"></div>
 					<?php } else { ?>
 						<input type="hidden" value="<?php echo $currentuser->getUser(); ?>"/>
