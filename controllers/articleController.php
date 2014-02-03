@@ -99,7 +99,7 @@ class ArticleController extends BaseController
 		));
 		$this->theme->setHierarchy(array(
 			$article->getId(),
-			$article->getCategoryCat(),
+			$article->getCategory()->getCat(),
 		));
 		$this->theme->render('article');
 	}
