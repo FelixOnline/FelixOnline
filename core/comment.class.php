@@ -359,7 +359,7 @@ class Comment extends BaseModel {
 			$check = $akismet->check(array(
 				'permalink' => $this->getArticle()->getURL(),
 				'comment_type' => 'comment',
-				'comment_author' => $this->getName(),
+				'comment_author' => $this->fields['name'],
 				'comment_content' => $this->getContent(),
 				'comment_author_email' => $this->getEmail(),
 				'user_ip' => $this->getIp(),
