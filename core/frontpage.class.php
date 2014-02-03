@@ -58,7 +58,7 @@ class Frontpage extends BaseModel
 			$articles = array();
 			foreach ($list as $key => $a) {
 				if ($a != 0 && !is_null($a)) {
-					$articles[$key] = new Article($a);
+					$articles[$key] = new \FelixOnline\Core\Article($a);
 				}
 			}
 
@@ -74,38 +74,22 @@ class Frontpage extends BaseModel
 	 */
 	public function getEditorial()
 	{
-		$sql = $this->safesql->query(
-			"SELECT id FROM `article`
-			WHERE author='felix'
-			AND category='2'
-			AND text1 IS NOT NULL
-			ORDER BY date DESC
-			LIMIT 1", array());
-		$id = $this->db->get_var($sql);
-		return new Article($id);
-	}
+		$manager = (new \FelixOnline\Core\ArticleManager())
+			->filter('category = 2')
+			->filter('text1 IS NOT NULL')
+			->order('date', 'DESC')
+			->limit(0, 1);
 
-	/**
-	 * Get featured categories
-	 *
-	 * @return array of featured categories
-	 */
-	public function getFeaturedCategories()
-	{
-		$sql = $this->safesql->query(
-			"SELECT
-				id,
-				cat,
-				label,
-				top_slider_1 as top
-			FROM `category`
-			WHERE active = 1
-			AND hidden = 0
-			AND id > 0
-			AND `order` > 0
-			ORDER BY `order` ASC", array());
-		$cats = $this->db->get_results($sql);
-		return $cats;
+		$authorManager = (new \FelixOnline\Core\ArticleAuthorManager())
+			->filter("author = 'felix'");
+		$manager->join($authorManager);
+
+		$articles = $manager->values();
+
+		if (is_null($articles)) {
+			throw new InternalException('Cannot find editorial');
+		}
+
+		return $articles[0];
 	}
 }
-

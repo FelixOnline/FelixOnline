@@ -16,7 +16,7 @@ require_once(BASE_DIRECTORY.'/inc/ez_sql_core.php');
 require_once(BASE_DIRECTORY.'/inc/ez_sql_mysqli.php');
 require_once(BASE_DIRECTORY.'/inc/SafeSQL.class.php');
 require_once(BASE_DIRECTORY.'/glue.php');
-require_once(BASE_DIRECTORY.'/inc/config.inc.php');
+$config = require_once(BASE_DIRECTORY.'/inc/config.inc.php');
 require_once(BASE_DIRECTORY.'/inc/const.inc.php');
 require_once(BASE_DIRECTORY.'/inc/functions.inc.php'); // TODO move to utilities
 require_once(BASE_DIRECTORY.'/inc/validator.inc.php');
@@ -43,3 +43,13 @@ if (LOCAL) { // development connector
 	$connector = new \RzekaE\Akismet\Connector\Curl();
 }
 $akismet = new \RzekaE\Akismet\Akismet($connector);
+
+// Initialize App
+$app = new \FelixOnline\Core\App($config);
+
+$app['db'] = $db;
+$app['safesql'] = $safesql;
+
+$app['currentuser'] = new CurrentUser();
+
+$app->run();

@@ -10,11 +10,10 @@
 	</ul>
 	<div class="mostPopularTab" id="mostPopRead">
 		<?php 
-			$viewed_articles = Article::getMostPopular(POPULAR_ARTICLES);
+			$viewed_articles = (new \FelixOnline\Core\ArticleManager())->getMostPopular(POPULAR_ARTICLES);
 			if(!is_null($viewed_articles)) {
 				echo '<ol>';
-				foreach($viewed_articles as $object) {
-					$article = new Article($object->id);
+				foreach($viewed_articles as $article) {
 			?>
 				<li>
 					<a href="<?php echo $article->getURL(); ?>">
@@ -29,12 +28,10 @@
 	</div>
 	<div class="mostPopularTab" id="mostPopComment">
 		<?php
-			$commented_articles = Article::getMostCommented(MOST_POPULAR_INTERVAL, POPULAR_ARTICLES);
+			$commented_articles = (new \FelixOnline\Core\ArticleManager())->getMostCommented(POPULAR_ARTICLES);
 			if(!is_null($commented_articles)) {
 				echo '<ol>';
-				foreach ($commented_articles as $object) {
-					$article = new Article($object->id);
-			?>
+				foreach ($commented_articles as $article) { ?>
 				<li>
 					<a href="<?php echo $article->getURL(); ?>">
 						<?php echo $article->getTitle(); ?>

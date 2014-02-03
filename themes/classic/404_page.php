@@ -14,7 +14,7 @@ $timing->log('after header');
 	<div class="container_12">
 		<div class="grid_12 error">
 			<h2>Lost Cat</h2>
-			<img src="/img/felix_cat-300.jpg" id="lostcat" width="300px"/>
+			<img src="<?php echo IMAGE_URL; ?>felix_cat-300.jpg" id="lostcat" width="300px"/>
 			<div class="grid_8 push_2">
 				<p>Medium sized black and white cat, responds to "Felix". Likes to party and find entertaining gifs online. Mostly house trained but can bite without warning.</p>
 				<p>If found then please <a href="/contact/">contact us</a> or you can try searching for it here: </p>

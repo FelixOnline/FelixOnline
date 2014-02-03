@@ -16,14 +16,7 @@ class SearchController extends BaseController {
 		}
 
 		$search = new Search($query);
-		try  {
-			$articles = $search->articleTitles($page);
-		} catch (InternalException $e) {
-			$articles = array(
-				'count' => 0,
-				'articles' => [],
-			);
-		}
+		$articles = $search->articleTitles($page);
 
 		$people = $search->people();
 

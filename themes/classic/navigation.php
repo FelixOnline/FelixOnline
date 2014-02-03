@@ -5,18 +5,22 @@
 			<?php
 			// If article page
 			if ($theme->isPage('article')) {
-				$check = $article->getCategoryCat();
+				$check = $article->getCategory()->getCat();
 			} else if ($theme->isPage('category')) { // if category page
 				$check = $category->getCat();
 			}
 
-			$cats = Category::getCategories();
+			$cats = (new \FelixOnline\Core\CategoryManager())
+				->filter('hidden = 0')
+				->filter('id > 0')
+				->order('order', 'ASC')
+				->values();
 
 			if (!is_null($cats)) {
 				foreach($cats as $key => $cat) { ?>
-					<li class="<?php echo $cat->cat; ?> <?php if(isset($check) && $check == $cat->cat) echo 'selected'; ?> <?php if($cat->cat == 'news') echo 'first'; ?> <?php if($cat->cat == 'sport') echo 'last'; ?>">
-						<a href="<?php echo STANDARD_URL.$cat->cat; ?>/">
-							<?php echo $cat->label; ?>
+					<li class="<?php echo $cat->getCat(); ?> <?php if(isset($check) && $check == $cat->getCat()) echo 'selected'; ?> <?php if($key == 0) echo 'first'; ?> <?php if($key == count($cats) - 1) echo 'last'; ?>">
+						<a href="<?php echo STANDARD_URL.$cat->getCat(); ?>/">
+							<?php echo $cat->getLabel(); ?>
 						</a>
 					</li>
 			<?php }

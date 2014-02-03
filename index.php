@@ -118,20 +118,31 @@ try {
 	} else {
 		glue::stick($urls);
 	}
-} catch (NotFoundException $e) {
-	// If any exception which amounts to something not being found is raised
-	$prior_exception = $e;
-	try {
-		// First attempt to show nice 404 page. Throw away current theme data
-		ob_end_clean();
-		ob_start();
-		$controller = new NotFoundController();
-		$controller->GET(array($prior_exception));
-		ob_end_flush();
-		// End execution
-		exit();
-	} catch (Exception $e) {
-		// there is an exception in the above code - time to bail out and display the emergency error page
+} catch (Exception $e) {
+	if ($e instanceof NotFoundException || $e instanceof FelixOnline\Exceptions\NotFoundException) {
+		// If any exception which amounts to something not being found is raised
+		$prior_exception = $e;
+		try {
+			// First attempt to show nice 404 page. Throw away current theme data
+			ob_end_clean();
+			ob_start();
+			$controller = new NotFoundController();
+			$controller->GET(array($prior_exception));
+			ob_end_flush();
+			// End execution
+			exit();
+		} catch (Exception $e) {
+			// there is an exception in the above code - time to bail out and display the emergency error page
+			ob_end_clean();
+			ob_start();
+			require('errors/index.php');
+			ob_end_flush();
+			// End execution
+			exit();
+		}
+	} else {
+		// If something bad happened
+		// time to bail out and display the emergency error page
 		ob_end_clean();
 		ob_start();
 		require('errors/index.php');
@@ -139,15 +150,6 @@ try {
 		// End execution
 		exit();
 	}
-} catch (InternalException $e) {
-	// If something bad happened
-	// time to bail out and display the emergency error page
-	ob_end_clean();
-	ob_start();
-	require('errors/index.php');
-	ob_end_flush();
-	// End execution
-	exit();
 }
 
 ob_end_flush();

@@ -9,7 +9,7 @@ $meta = '
 	<meta property="og:type" content="article"/>
 	<meta property="og:locale" content="en_GB"/>
 	<meta property="og:description" content="'.$article->getTeaser().'"/>
-	<meta property="article:section" content="'.$article->getCategoryLabel().'"/>
+	<meta property="article:section" content="'.$article->getCategory()->getLabel().'"/>
 	<meta property="article:published_time" content="'.date('c', $article->getDate()).'"/>
 ';
 
@@ -24,7 +24,7 @@ if(!$article->getSearchable()) {
 	$meta .= '<meta name="robots" content="noindex">';
 }
 $header = array(
-	'title' => $article->getTitle().' - '.$article->getCategoryLabel().' - '.'Felix Online',
+	'title' => $article->getTitle().' - '.$article->getCategory()->getLabel().' - '.'Felix Online',
 	'meta' => $meta
 );
 
@@ -49,9 +49,9 @@ $theme->render('header', $header);
 	</div>
 	<!-- End of sidebar -->
 
-	<div class="article grid_8 pull_4 alpha <?php echo $article->getCategoryCat();?> instapaper_body hentry">
+	<div class="article grid_8 pull_4 alpha <?php echo $article->getCategory()->getCat();?> instapaper_body hentry">
 		<!-- Article header -->
-		<?php if ($article->getCategoryCat() == 'comment') { ?>
+		<?php if ($article->getCategory()->getCat() == 'comment') { ?>
 			<div class="grid_5">
 				<h2 class="instapaper_title entry-title"><?php echo $article->getTitle(); ?></h2>
 				<div class="subHeader"><?php echo $article->getTeaser(); ?></div>
@@ -77,9 +77,9 @@ $theme->render('header', $header);
 				<?php echo Utility::outputUserList($article->getAuthors()); ?>
 			</p>
 			<p>
-				<span class="<?php echo $article->getCategoryCat();?>">
-					<a href="<?php echo $article->getCategoryCat();?>/">
-						<?php echo $article->getCategoryLabel();?>
+				<span class="<?php echo $article->getCategory()->getCat();?>">
+					<a href="<?php echo $article->getCategory()->getCat();?>/">
+						<?php echo $article->getCategory()->getLabel();?>
 					</a>
 				</span> - <?php echo date("l F j, Y", $article->getDate());?>
 			</p>
