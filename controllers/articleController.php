@@ -50,29 +50,34 @@ class ArticleController extends BaseController {
 		/* External comment */
 		else if ($_POST['articlecomment_ext']) {
 			try {
-				$comment->setExternal(true);
-				$comment->setContent($_POST['comment']);
-				$comment->setName($_POST['name']);
-				if(isset($_POST['replyComment'])) {
-					$comment->setReply($_POST['replyComment']);
-				}
-
-				if ($comment->commentExists()) { // if comment already exists
-					$errorduplicate = true;
+				if($_POST['email'] == '' || !is_email($_POST['email'])) {
+					$erroremail = true;
 				} else {
-					if($id = $comment->save()) {
-						if($comment->isExternal() && $comment->getSpam() == 1) {
-							$errorspam = true;
-						} else {
-							Utility::redirect(
-								Utility::currentPageURL(), 
-								'', 
-								'comment'.$id
-							);
-							exit;
-						}
+					$comment->setExternal(true);
+					$comment->setContent($_POST['comment']);
+					$comment->setName($_POST['name']);
+					$comment->setEmail($_POST['email']);
+					if(isset($_POST['replyComment'])) {
+						$comment->setReply($_POST['replyComment']);
+					}
+
+					if ($comment->commentExists()) { // if comment already exists
+						$errorduplicate = true;
 					} else {
-						$errorinsert = true;
+						if($id = $comment->save()) {
+							if($comment->isExternal() && $comment->getSpam() == 1) {
+								$errorspam = true;
+							} else {
+								Utility::redirect(
+									Utility::currentPageURL(), 
+									'', 
+									'comment'.$id
+								);
+								exit;
+							}
+						} else {
+							$errorinsert = true;
+						}
 					}
 				}
 			} catch (ExternalException $e) {
@@ -84,6 +89,7 @@ class ArticleController extends BaseController {
 			'article' => $this->article,
 			'errorduplicate' => $errorduplicate,
 			'errorspam' => $errorspam,
+			'erroremail' => $erroremail,
 			'errorinsert' => $errorinsert,
 			'errorconnection' => $errorconnection,
 		));
