@@ -13,7 +13,7 @@ class RSSController extends BaseController {
 					->filter('cat = "%s"', array($matches['cat']))
 					->one();
 			} catch (Exceptions\InternalException $e) {
-				throw new xceptions\NotFoundException(
+				throw new Exceptions\NotFoundException(
 					$e->getMessage(),
 					Exceptions\UniversalException::EXCEPTION_NOTFOUND,
 					$e
