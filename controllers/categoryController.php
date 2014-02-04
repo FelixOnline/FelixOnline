@@ -1,5 +1,7 @@
 <?php
-	
+
+use FelixOnline\Exceptions;
+
 class CategoryController extends BaseController
 {
 	function GET($matches)
@@ -8,10 +10,10 @@ class CategoryController extends BaseController
 			$category = (new \FelixOnline\Core\CategoryManager())
 				->filter('cat = "%s"', array($matches['cat']))
 				->one();
-		} catch (\FelixOnline\Exceptions\InternalException $e) {
-			throw new \FelixOnline\Exceptions\NotFoundException(
+		} catch (Exceptions\InternalException $e) {
+			throw new Exceptions\NotFoundException(
 				$e->getMessage(),
-				\FelixOnline\Exceptions\UniversalException::EXCEPTION_NOTFOUND,
+				Exceptions\UniversalException::EXCEPTION_NOTFOUND,
 				$e
 			);
 		}
