@@ -4,11 +4,19 @@ class CategoryController extends BaseController
 {
 	function GET($matches)
 	{
-		$category = (new \FelixOnline\Core\CategoryManager())
-			->filter('cat = "%s"', array($matches['cat']))
-			->one();
+		try {
+			$category = (new \FelixOnline\Core\CategoryManager())
+				->filter('cat = "%s"', array($matches['cat']))
+				->one();
+		} catch (\FelixOnline\Exceptions\InternalException $e) {
+			throw new \FelixOnline\Exceptions\NotFoundException(
+				$e->getMessage(),
+				\FelixOnline\Exceptions\UniversalException::EXCEPTION_NOTFOUND,
+				$e
+			);
+		}
 
-		if(!$matches['page']) {
+		if (!$matches['page']) {
 			$pagenum = 1;
 		} else {
 			$pagenum = $matches['page'];
