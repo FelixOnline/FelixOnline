@@ -21,7 +21,7 @@ $timing->log('after header');
 			$theme->render('sidebar/fbActivity');
 			$theme->render('sidebar/mostPopular');
 			$theme->render('sidebar/iscience');
-			$theme->render('sidebar/recentcomments');
+			//$theme->render('sidebar/recentcomments');
 		?>
 	</div>
 	<?php $timing->log('after sidebar'); ?>
@@ -463,7 +463,7 @@ $timing->log('after header');
 		->values();
 	if (!is_null($cats)) {
 		foreach($cats as $key => $cat) {
-			$article = new \FelixOnline\Core\Article($cat->getFields()['top_slider_1']);
+			$article = $cat->getTopSlider_1();
 		?>
 			<div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
 				<div class="border <?php echo $cat->getCat();?>">

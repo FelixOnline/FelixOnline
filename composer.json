@@ -20,9 +20,8 @@
     ],
     "require": {
 		"felixonline/exporter": "0.1.*",
-		"robmorgan/phinx": "0.2.*",
 		"rzeka/akismet-api": "dev-master#3b59ac27e401ab0fe18565d38b6185868238045c",
-		"felixonline/core": "0.1.*"
+		"felixonline/core": "dev-master"
     },
 	"minimum-stability": "dev"
 }
