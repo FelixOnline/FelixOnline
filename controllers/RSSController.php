@@ -1,4 +1,6 @@
 <?php
+
+use FelixOnline\Exceptions;
 	
 class RSSController extends BaseController {
 	function GET($matches) {
@@ -6,9 +8,17 @@ class RSSController extends BaseController {
 
 		// RSS feed for category
 		if (array_key_exists('cat', $matches)) {
-			$category = (new \FelixOnline\Core\CategoryManager())
-				->filter('cat = "%s"', array($matches['cat']))
-				->one();
+			try {
+				$category = (new \FelixOnline\Core\CategoryManager())
+					->filter('cat = "%s"', array($matches['cat']))
+					->one();
+			} catch (Exceptions\InternalException $e) {
+				throw new Exceptions\NotFoundException(
+					$e->getMessage(),
+					Exceptions\UniversalException::EXCEPTION_NOTFOUND,
+					$e
+				);
+			}
 
 			$articleManager->filter('published IS NOT NULL')
 				->filter('published < NOW()')

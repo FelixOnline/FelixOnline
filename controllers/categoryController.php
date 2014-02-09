@@ -1,12 +1,22 @@
 <?php
-	
+
+use FelixOnline\Exceptions;
+
 class CategoryController extends BaseController
 {
 	function GET($matches)
 	{
-		$category = (new \FelixOnline\Core\CategoryManager())
-			->filter('cat = "%s"', array($matches['cat']))
-			->one();
+		try {
+			$category = (new \FelixOnline\Core\CategoryManager())
+				->filter('cat = "%s"', array($matches['cat']))
+				->one();
+		} catch (Exceptions\InternalException $e) {
+			throw new Exceptions\NotFoundException(
+				$e->getMessage(),
+				Exceptions\UniversalException::EXCEPTION_NOTFOUND,
+				$e
+			);
+		}
 
 		if(!isset($matches['page']) || !$matches['page']) {
 			$pagenum = 1;
