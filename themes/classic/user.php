@@ -199,7 +199,6 @@ $theme->render('header', $header);
 							</a>
 						</li>
 					<?php } 
-						$pages = $user->getNumPages();
 						if ($pages > 1) {
 							$span = ARTICLES_PER_USER_PAGE;
 							if ($pages > $span) { // more pages than limit

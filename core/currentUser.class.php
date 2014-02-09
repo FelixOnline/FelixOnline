@@ -17,7 +17,9 @@ class CurrentUser extends User {
 		$this->safesql = $safesql;
 
 		session_name("felix"); // set session name
-		session_start(); // start session
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start(); // start session
+		}
 		$this->session = session_id(); // store session id into $session variable
 		$this->ip = $_SERVER['REMOTE_ADDR'];
 		if($this->isLoggedIn()) {
@@ -69,7 +71,7 @@ class CurrentUser extends User {
 	 * Returns boolean
 	 */
 	public function isLoggedIn() {
-		if($_SESSION['felix']['loggedin'] && $this->isSessionRecent()){
+		if(isset($_SESSION['felix']) && $_SESSION['felix']['loggedin'] && $this->isSessionRecent()){
 			return $_SESSION['felix']['uname'];
 		} else {
 			// n.b. the session is cleared by isSessionRecent if invalid
@@ -230,7 +232,7 @@ class CurrentUser extends User {
 	}
 
 	public function getUser() {
-		if($this->fields['user']) {
+		if(isset($this->fields['user']) && $this->fields['user']) {
 			return $this->fields['user'];
 		} else {
 			return false;
@@ -339,7 +341,7 @@ class CurrentUser extends User {
 	}
 
 	public function getRole() {
-		if($this->fields['role']) {
+		if(isset($this->fields['role']) && $this->fields['role']) {
 			return $this->fields['role'];
 		} else {
 			return 0;

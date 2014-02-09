@@ -31,7 +31,7 @@
 	<meta property="og:site_name" content="Felix Online"/>
 	<meta property="fb:app_id" content="200482590030408" />
 	<?php 
-		if($meta) {
+		if(isset($meta)) {
 			echo $meta;
 		} 
 	?>

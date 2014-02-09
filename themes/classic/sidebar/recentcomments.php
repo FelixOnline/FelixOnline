@@ -10,12 +10,13 @@
 				->filter('active = 1')
 				->filter('pending = 0')
 				->filter('spam = 0')
+				->order('timestamp', 'DESC')
 				->limit(0, RECENT_COMMENTS)
 				->values();
 			
 			if (!is_null($recent_comments)) {
 				foreach($recent_comments as $key => $comment) { ?>
-				<li <?php if($key+1 == count($recent_comments)) echo 'class="last"';?>>
+				<li <?php if ($key+1 == count($recent_comments)) echo 'class="last"';?>>
 					<p id="article">
 						On <a href="<?php echo $comment->getArticle()->getURL(); ?>"><?php echo $comment->getArticle()->getTitle();?></a>
 					</p>

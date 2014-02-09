@@ -10,7 +10,7 @@
 		<div class="commentInfo">
 			<p id="commentUser">
 			<?php
-				if($comment->isExternal()) { // external comment
+				if($comment->getExternal()) { // external comment
 					echo $comment->getName();
 				} else { ?>
 					<a href="<?php echo $comment->getUser()->getURL();?>">

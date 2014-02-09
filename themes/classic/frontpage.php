@@ -21,7 +21,7 @@ $timing->log('after header');
 			$theme->render('sidebar/fbActivity');
 			$theme->render('sidebar/mostPopular');
 			$theme->render('sidebar/iscience');
-			//$theme->render('sidebar/recentcomments');
+			$theme->render('sidebar/recentcomments');
 		?>
 	</div>
 	<?php $timing->log('after sidebar'); ?>
