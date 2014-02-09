@@ -48,7 +48,7 @@ $theme->render('header', $header);
 				if (count($articles) < 2) {
 					?>There are no articles in this category<?php
 				}
-				foreach($articles as $article) {
+				foreach($articles as $key => $article) {
 					if($key == 0) { // top story 
 						$theme->render('snippets/articlelist/article_large', array(
 							'article' => $article
@@ -108,7 +108,7 @@ $theme->render('header', $header);
 	<?php $theme->render('snippets/pagination', array(
 		'pagenum' => $pagenum,
 		'class' => $category,
-		'pages' => $category->getNumPages(),
+		'pages' => $pages,
 		'span' => NUMBER_OF_PAGES_IN_PAGE_LIST
 	)); ?>
 	</div>
