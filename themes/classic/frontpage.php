@@ -463,8 +463,9 @@ $timing->log('after header');
 		->values();
 	if (!is_null($cats)) {
 		foreach($cats as $key => $cat) {
-			$article = new \FelixOnline\Core\Article($cat->getFields()['top_slider_1']);
-		?>
+			if ($top = $cat->getFields()['top_slider_1']) {
+				$article = new \FelixOnline\Core\Article($cat->getFields()['top_slider_1']);
+			?>
 			<div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
 				<div class="border <?php echo $cat->getCat();?>">
 					<h3>
@@ -490,6 +491,7 @@ $timing->log('after header');
 				</div>
 			</div>
 		<?php }
+		}
 		} ?>
 </div>
 
