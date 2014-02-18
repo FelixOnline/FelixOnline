@@ -119,9 +119,6 @@ try {
 		glue::stick($urls);
 	}
 } catch (Exception $e) {
-	// send exception to sentry
-	$app['sentry']->captureException($e);
-
 	if ($e instanceof NotFoundException || $e instanceof FelixOnline\Exceptions\NotFoundException) {
 		// If any exception which amounts to something not being found is raised
 		$prior_exception = $e;
@@ -135,6 +132,9 @@ try {
 			// End execution
 			exit();
 		} catch (Exception $e) {
+			// send exception to sentry
+			$app['sentry']->captureException($e);
+
 			// there is an exception in the above code - time to bail out and display the emergency error page
 			ob_end_clean();
 			ob_start();
@@ -144,6 +144,9 @@ try {
 			exit();
 		}
 	} else {
+		// send exception to sentry
+		$app['sentry']->captureException($e);
+
 		// If something bad happened
 		// time to bail out and display the emergency error page
 		ob_end_clean();
