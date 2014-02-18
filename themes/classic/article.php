@@ -10,7 +10,7 @@ $meta = '
 	<meta property="og:locale" content="en_GB"/>
 	<meta property="og:description" content="'.$article->getTeaser().'"/>
 	<meta property="article:section" content="'.$article->getCategory()->getLabel().'"/>
-	<meta property="article:published_time" content="'.date('c', $article->getDate()).'"/>
+	<meta property="article:published_time" content="'.date('c', $article->getPublished()).'"/>
 ';
 
 foreach ($article->getAuthors() as $author) {
@@ -81,7 +81,7 @@ $theme->render('header', $header);
 					<a href="<?php echo $article->getCategory()->getCat();?>/">
 						<?php echo $article->getCategory()->getLabel();?>
 					</a>
-				</span> - <?php echo date("l F j, Y", $article->getDate());?>
+				</span> - <?php echo date("l F j, Y", $article->getPublished());?>
 			</p>
 			<?php
 				$isSectionEditor = false;

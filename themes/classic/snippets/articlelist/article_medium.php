@@ -26,7 +26,7 @@
 						</li>
 					<?php } ?>
 					<li>
-						<?php echo date("l F j, Y",$article->getDate());?>
+						<?php echo date("l F j, Y",$article->getPublished());?>
 					</li>
 				</ul>
 			</div>
