@@ -81,7 +81,7 @@ $theme->render('header', $header);
 					<a href="<?php echo $article->getCategory()->getCat();?>/">
 						<?php echo $article->getCategory()->getLabel();?>
 					</a>
-				</span> - <?php echo $article->getPublished() ? date("l F j, Y", $article->getPublished()) : "<strong>Not published</strong>";?>
+				</span> - <?php echo $article->getPublished() ? date("l F j, Y", $article->getPublished()) : "<strong>Not Published</strong>";?>
 			</p>
 			<?php
 				$isSectionEditor = false;
