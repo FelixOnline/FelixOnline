@@ -119,6 +119,9 @@ try {
 		glue::stick($urls);
 	}
 } catch (Exception $e) {
+	// send exception to sentry
+	$app['sentry']->captureException($e);
+
 	if ($e instanceof NotFoundException || $e instanceof FelixOnline\Exceptions\NotFoundException) {
 		// If any exception which amounts to something not being found is raised
 		$prior_exception = $e;

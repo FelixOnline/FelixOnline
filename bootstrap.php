@@ -52,4 +52,7 @@ $app['safesql'] = $safesql;
 
 $app['currentuser'] = new CurrentUser();
 
+// Initialize Sentry
+$app['sentry'] = new \Raven_Client($app->getOption('sentry_dsn', NULL));
+
 $app->run();
