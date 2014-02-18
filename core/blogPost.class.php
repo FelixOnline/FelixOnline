@@ -24,18 +24,19 @@ class BlogPost extends BaseModel {
 		$this->safesql = $safesql;
 
 		if($id !== NULL) {
-			$sql = $sql = $this->safesql->query("SELECT
-													`id`,
-													`blog`,
-													`content`,
-													UNIX_TIMESTAMP(timestamp) as timestamp,
-													`author`,
-													`type`,
-													`meta`,
-													`visible`
-												FROM `blog_post`
-												WHERE id=%i", array($this->getId()));
-			parent::__construct($this->db->get_row($sql), 'BlogPost', $slug);
+			$sql = $sql = $this->safesql->query(
+				"SELECT
+					`id`,
+					`blog`,
+					`content`,
+					UNIX_TIMESTAMP(timestamp) as timestamp,
+					`author`,
+					`type`,
+					`meta`,
+					`visible`
+				FROM `blog_post`
+				WHERE id=%i", array($id));
+			parent::__construct($this->db->get_row($sql), 'BlogPost');
 			return $this;
 		} else {
 			// initialise new blog post
