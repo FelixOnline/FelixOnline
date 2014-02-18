@@ -10,8 +10,11 @@ $meta = '
 	<meta property="og:locale" content="en_GB"/>
 	<meta property="og:description" content="'.$article->getTeaser().'"/>
 	<meta property="article:section" content="'.$article->getCategory()->getLabel().'"/>
-	<meta property="article:published_time" content="'.date('c', $article->getPublished()).'"/>
 ';
+
+if ($article->getPublished()) {
+	$meta .= '<meta property="article:published_time" content="'.date('c', $article->getPublished()).'"/>';
+}
 
 foreach ($article->getAuthors() as $author) {
 	$meta .= '<meta property="article:author" content="'.$author->getURL().'"/>';
