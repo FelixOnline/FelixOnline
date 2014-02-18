@@ -32,7 +32,7 @@
 		'db_user' => "DB_USER",
 		'db_pass' => "DB_PASSWORD",
 		'base_url' => STANDARD_URL,
-        'sentry_dsn' => NULL,
+		'sentry_dsn' => NULL,
 	);
 
 	/* Initialise ezSQL database connection */
