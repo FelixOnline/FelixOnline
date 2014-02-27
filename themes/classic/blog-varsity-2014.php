@@ -28,15 +28,30 @@
 				<h1><a href="<?php echo STANDARD_URL; ?>">FELIX</a></h1>
 			</div>
 		</div>
+		<div class="masthead">
+		</div>
 
 		<div class="content row">
 			<div class="col-md-6 col-md-offset-1 feed">
-				<h1>Hello, world!</h1>
+				<?php
+					// Output posts
+					foreach ($posts as $post) {
+						$json = $post->toJSON();
+						$json['time'] = date('G:i', $json['timestamp']);
+
+						// load template
+						$template = $mustache->loadTemplate($json['type']);
+						echo $template->render($json);
+					}
+				?>
 			</div>
 		</div>
-    </div>
+	</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="//cdn.sockjs.org/sockjs-0.3.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.backbone.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
 	<?php
 		$theme->resources->replaceJS(array(
 			'liveblog.js',
@@ -45,6 +60,12 @@
 	<?php foreach($theme->resources->getJS() as $key => $value) { ?>
 		<script src="<?php echo $value; ?>"></script>
 	<?php } ?>
+
+	<script type="text/javascript">
+		$(function() {
+			LiveBlog.init([]);
+		});
+	</script>
 
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
