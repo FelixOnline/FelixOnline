@@ -38,3 +38,5 @@ themes/classic/css/*.css
 phinx.yml
 composer.phar
 composer.lock
+
+node_modules/

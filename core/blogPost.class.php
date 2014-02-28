@@ -54,4 +54,26 @@ class BlogPost extends BaseModel {
 		}
 		return $this->author;
 	}
+
+	/**
+	 * Return json encodable array
+	 */
+	public function toJSON()
+	{
+		$data = array(
+			'id' => $this->getId(),
+			'timestamp' => $this->getTimestamp(),
+		);
+
+		$content = Utility::jsonDecode($this->getContent());
+
+		$data = array_merge($data, $content);
+
+		$data['author'] = array(
+			'user' => $this->getAuthor()->getUser(),
+			'name' => $this->getAuthor()->getName(),
+		);
+
+		return $data;
+	}
 }

@@ -44,26 +44,27 @@ class Blog extends BaseModel {
 	 * returns array of BlogPost objects
 	 */
 	public function getPosts($page = NULL) {
-		if(!$this->posts) {
-			$sql = "
-				SELECT
-					id
-				FROM `blog_post`
-				WHERE blog = %i
-				ORDER BY timestamp DESC";
-			if($page) {
-				$sql .= "LIMIT %i,%i;";
-				$sql = $this->safesql->query($sql, array($this->getId(), (($page-1)*BLOG_POSTS_PER_PAGE), BLOG_POSTS_PER_PAGE));
-			} else {
-				$sql = $this->safesql->query($sql, array($this->getId()));
-			}
+		$sql = "
+			SELECT
+				id
+			FROM `blog_post`
+			WHERE blog = %i
+			ORDER BY timestamp DESC";
+		if($page) {
+			$sql .= " LIMIT %i,%i;";
+			$sql = $this->safesql->query($sql, array($this->getId(), (($page-1)*BLOG_POSTS_PER_PAGE), BLOG_POSTS_PER_PAGE));
+		} else {
+			$sql = $this->safesql->query($sql, array($this->getId()));
+		}
 
-			$posts = $this->db->get_results($sql);
-			foreach($posts as $object) {
-				$this->posts[] = new BlogPost($object->id);
+		$results = $this->db->get_results($sql);
+		$posts = array();
+		if ($results) {
+			foreach($results as $object) {
+				$posts[] = new BlogPost($object->id);
 			}
 		}
-		return $this->posts;
+		return $posts;
 	}
 }
 
