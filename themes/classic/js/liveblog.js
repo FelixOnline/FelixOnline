@@ -15,6 +15,9 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 			var template = templates[data.type];
 			var html = template.render(data);
 			$(html).hide().prependTo($feed).fadeIn(400);
+			if (data.type == 'tweet') {
+				twttr.widgets.load();
+			}
         };
 
         sockjs.onclose = function() {
