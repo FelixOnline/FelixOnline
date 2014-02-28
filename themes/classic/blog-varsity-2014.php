@@ -37,6 +37,7 @@
 			</div>
 		</div>
 		<div class="masthead">
+			<img src="<?php echo STANDARD_URL . "themes/" . THEME_NAME . "/img/varsity-basketball.jpg"; ?>"/>
 		</div>
 
 		<div class="row">
@@ -57,7 +58,7 @@
 				</div>
 				<div class="info-right">
 					<div class="fb-like" data-href="http://felixonline.co.uk/varsity-2014" data-width="100" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
-					<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://felixonline.co.uk/varsity-2014" data-via="feliximperial">Tweet</a>
+					<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://felixonline.co.uk/varsity-2014" data-via="feliximperial" data-hashtags="imgvarsity">Tweet</a>
 					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 				</div>
 			</div>
