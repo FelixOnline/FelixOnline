@@ -1,9 +1,14 @@
-<div class="post text-type row">
+<div class="post quote-type row">
     <div class="time col-md-1 col-xs-1">
         {{ time }}
     </div>
     <div class="body col-md-11 col-xs-11">
-        <img src="{{ image }}"/>
+        <blockquote>
+            <p>{{ quote }}</p>
+            {{#source}}
+                <footer>{{ source }}</footer>
+            {{/source}}
+        </blockquote>
         {{#content}}
             <p>{{ content }}</p>
         {{/content}}

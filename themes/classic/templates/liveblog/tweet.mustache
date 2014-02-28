@@ -4,7 +4,9 @@
     </div>
     <div class="body col-md-11 col-xs-11">
         {{{ tweet.html }}}
-        <p>{{ content }}</p>
+        {{#content}}
+            <p>{{ content }}</p>
+        {{/content}}
     </div>
 </div>
 
