@@ -65,7 +65,7 @@
 	</div>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="//cdn.sockjs.org/sockjs-0.3.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/sockjs-client/0.3.4/sockjs.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/hogan.js/3.0.0/hogan.js"></script>
 	<script src="//platform.twitter.com/widgets.js"></script>
 	<?php
