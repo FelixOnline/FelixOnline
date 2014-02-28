@@ -22,6 +22,14 @@
 	<?php } ?>
 </head>
 <body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=139621629514583";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
 	<div class="container">
 		<div class="header">
 			<div class="logo">
@@ -32,18 +40,25 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-6 col-md-offset-1 info">
+			<div class="col-md-6 col-md-offset-1 info clearfix">
 				<h3>Live Reporting</h3>
-				<div class="reporters">
-					By <a href="<?php echo STANDARD_URL . 'user/kmw13'; ?>">Kunal Wagle</a>
+				<div class="info-left">
+					<div class="reporters">
+						By <a href="<?php echo STANDARD_URL . 'user/kmw13'; ?>">Kunal Wagle</a>
+					</div>
+					<div class="status">
+						<div id="disconnected">
+							Disconnected.
+						</div>
+						<div id="connected" style="display: none;">
+							Connected. Page will update automatically.
+						</div>
+					</div>
 				</div>
-				<div class="status">
-					<div id="disconnected">
-						Disconnected.
-					</div>
-					<div id="connected" style="display: none;">
-						Connected. Page will update automatically.
-					</div>
+				<div class="info-right">
+					<div class="fb-like" data-href="http://felixonline.co.uk/varsity-2014" data-width="100" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+					<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://felixonline.co.uk/varsity-2014" data-via="feliximperial">Tweet</a>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 				</div>
 			</div>
 		</div>
