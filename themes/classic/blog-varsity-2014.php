@@ -31,6 +31,16 @@
 		<div class="masthead">
 		</div>
 
+		<div class="row">
+			<div class="col-md-6 col-md-offset-1 status">
+				<div id="disconnected">
+					Disconnected.
+				</div>
+				<div id="connected" style="display: none;">
+					Connected. Page will update automatically.
+				</div>
+			</div>
+		</div>
 		<div class="content row">
 			<div class="col-md-6 col-md-offset-1 feed">
 				<?php
@@ -50,10 +60,10 @@
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="//cdn.sockjs.org/sockjs-0.3.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.backbone.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/hogan.js/3.0.0/hogan.js"></script>
 	<?php
 		$theme->resources->replaceJS(array(
+			'liveblog-templates.js',
 			'liveblog.js',
 		));
 	?>
@@ -63,7 +73,7 @@
 
 	<script type="text/javascript">
 		$(function() {
-			LiveBlog.init([]);
+			LiveBlog.init('http://0.0.0.0:3000/varsity-2014', $('.feed'));
 		});
 	</script>
 
