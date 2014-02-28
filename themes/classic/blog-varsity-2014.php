@@ -32,12 +32,18 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-6 col-md-offset-1 status">
-				<div id="disconnected">
-					Disconnected.
+			<div class="col-md-6 col-md-offset-1 info">
+				<h3>Live Reporting</h3>
+				<div class="reporters">
+					By <a href="<?php echo STANDARD_URL . 'user/kmw13'; ?>">Kunal Wagle</a>
 				</div>
-				<div id="connected" style="display: none;">
-					Connected. Page will update automatically.
+				<div class="status">
+					<div id="disconnected">
+						Disconnected.
+					</div>
+					<div id="connected" style="display: none;">
+						Connected. Page will update automatically.
+					</div>
 				</div>
 			</div>
 		</div>
