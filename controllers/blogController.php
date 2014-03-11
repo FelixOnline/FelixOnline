@@ -7,9 +7,9 @@ class BlogController extends BaseController {
 	function GET($matches) {
 		$slug = substr($matches[0], 1);
 
-		// Remove trailing slash
-		if (substr($slug, -1) == '/') {
-			$slug = substr($slug, 0, -1);
+		// Remove trailing slash and anything after it
+		if (($pos = strpos($slug, '/')) !== false) {
+			$slug = substr($slug, 0, $pos);
 		}
 
 		$blog = new Blog($slug);
