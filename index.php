@@ -79,7 +79,7 @@ try {
 		if($blog->controller) {
 			$controller = $blog->controller;
 		}
-		$urls['/'.$blog->slug] = $controller;
+		$urls['/'.$blog->slug.'.*'] = $controller;
 	}
 } catch (Exception $e) {
 	$prior_exception = null;
