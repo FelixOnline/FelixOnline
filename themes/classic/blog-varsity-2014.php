@@ -99,7 +99,7 @@
 
 	<script type="text/javascript">
 		$(function() {
-			LiveBlog.init('http://sentry.letts.me:3000/varsity-2014', $('.feed'));
+			LiveBlog.init('http://176.34.227.200:3000/varsity-2014', $('.feed'));
 		});
 	</script>
 
