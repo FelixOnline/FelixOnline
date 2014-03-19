@@ -463,32 +463,34 @@ $timing->log('after header');
 		->values();
 	if (!is_null($cats)) {
 		foreach($cats as $key => $cat) {
-			$article = $cat->getTopSlider_1(); ?>
-			<div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
-				<div class="border <?php echo $cat->getCat();?>">
-					<h3>
-						<a href="<?php echo STANDARD_URL.$cat->getCat();?>/">
-							<?php echo $cat->getLabel();?>
-						</a>
-					</h3>
-					<a href="<?php echo $article->getURL();?>">
-						<?php if ($article->getImage()): ?>
-							<img id="featuredBarPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 120);?>" width="220px" height="120px">
-						<?php else: ?>
-							<img id="featuredBarPhoto" alt="" src="<?php echo IMAGE_URL.'220/120/'.DEFAULT_IMG_URI; ?>" width="220px" height="120px">
-						<?php endif; ?>
-					</a>
-					<h4>
+			$article = $cat->getTopSlider_1();
+			if ($article) { ?>
+				<div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
+					<div class="border <?php echo $cat->getCat();?>">
+						<h3>
+							<a href="<?php echo STANDARD_URL.$cat->getCat();?>/">
+								<?php echo $cat->getLabel();?>
+							</a>
+						</h3>
 						<a href="<?php echo $article->getURL();?>">
-							<?php echo $article->getTitle();?>
+							<?php if ($article->getImage()): ?>
+								<img id="featuredBarPhoto" alt="<?php echo $article->getImage()->getTitle(); ?>" src="<?php echo $article->getImage()->getURL(220, 120);?>" width="220px" height="120px">
+							<?php else: ?>
+								<img id="featuredBarPhoto" alt="" src="<?php echo IMAGE_URL.'220/120/'.DEFAULT_IMG_URI; ?>" width="220px" height="120px">
+							<?php endif; ?>
 						</a>
-					</h4>
-					<p>
-						<?php if($article->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(10); ?>
-					</p>
+						<h4>
+							<a href="<?php echo $article->getURL();?>">
+								<?php echo $article->getTitle();?>
+							</a>
+						</h4>
+						<p>
+							<?php if($article->getCategory()->getCat() == 'comment'): echo '<b>'.Utility::outputUserList($article->getAuthors()).':</b> '; endif; echo $article->getPreview(10); ?>
+						</p>
+					</div>
 				</div>
-			</div>
-		<?php }
+			<?php }
+		}
 	} ?>
 </div>
 
