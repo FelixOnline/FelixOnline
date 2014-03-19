@@ -31,7 +31,7 @@
 	<meta property="og:site_name" content="Felix Online"/>
 	<meta property="fb:app_id" content="200482590030408" />
 	<?php 
-		if(isset($meta)) {
+		if (isset($meta) && $meta) {
 			echo $meta;
 		} 
 	?>
@@ -40,7 +40,7 @@
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- CSS files -->
 	<?php foreach($theme->resources->getCSS() as $key => $value) { ?>
-			<link id="<?php echo $key;?>" rel="stylesheet" href="<?php echo $value; ?>">
+		<link id="<?php echo $key;?>" rel="stylesheet" href="<?php echo $value; ?>">
 	<?php } ?>
 
 	<script src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>js/libs/modernizr-2.5.3.min.js"></script>

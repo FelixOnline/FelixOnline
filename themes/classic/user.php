@@ -149,8 +149,8 @@ $theme->render('header', $header);
 				<?php foreach($articles as $key => $article) { ?>
 					<div class="userArticle clearfix">
 						<div class="userArticleDate grid_1 alpha">
-							<span><?php echo date('jS',$article->getDate()); ?></span><br/>
-							<?php echo date('F Y',$article->getDate()); ?>
+							<span><?php echo date('jS',$article->getPublished()); ?></span><br/>
+							<?php echo date('F Y',$article->getPublished()); ?>
 							<?php if ($currentuser->getUser() == $user->getUser()) { ?>
 								<div><?php echo $article->getHits(); ?> hits</div>
 							<?php } ?>

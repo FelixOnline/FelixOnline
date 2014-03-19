@@ -463,8 +463,7 @@ $timing->log('after header');
 		->values();
 	if (!is_null($cats)) {
 		foreach($cats as $key => $cat) {
-			$article = $cat->getTopSlider_1();
-		?>
+			$article = $cat->getTopSlider_1(); ?>
 			<div class="grid_3 featuredBar <?php if (($key+1) % 4 == 0) echo 'last';?>">
 				<div class="border <?php echo $cat->getCat();?>">
 					<h3>
@@ -490,7 +489,7 @@ $timing->log('after header');
 				</div>
 			</div>
 		<?php }
-		} ?>
+	} ?>
 </div>
 
 <!-- End of featured bar -->

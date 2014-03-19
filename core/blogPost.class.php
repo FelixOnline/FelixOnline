@@ -24,18 +24,19 @@ class BlogPost extends BaseModel {
 		$this->safesql = $safesql;
 
 		if($id !== NULL) {
-			$sql = $sql = $this->safesql->query("SELECT
-													`id`,
-													`blog`,
-													`content`,
-													UNIX_TIMESTAMP(timestamp) as timestamp,
-													`author`,
-													`type`,
-													`meta`,
-													`visible`
-												FROM `blog_post`
-												WHERE id=%i", array($this->getId()));
-			parent::__construct($this->db->get_row($sql), 'BlogPost', $slug);
+			$sql = $sql = $this->safesql->query(
+				"SELECT
+					`id`,
+					`blog`,
+					`content`,
+					UNIX_TIMESTAMP(timestamp) as timestamp,
+					`author`,
+					`type`,
+					`meta`,
+					`visible`
+				FROM `blog_post`
+				WHERE id=%i", array($id));
+			parent::__construct($this->db->get_row($sql), 'BlogPost');
 			return $this;
 		} else {
 			// initialise new blog post
@@ -52,5 +53,27 @@ class BlogPost extends BaseModel {
 			$this->author = new User($this->fields['author']);
 		}
 		return $this->author;
+	}
+
+	/**
+	 * Return json encodable array
+	 */
+	public function toJSON()
+	{
+		$data = array(
+			'id' => $this->getId(),
+			'timestamp' => $this->getTimestamp(),
+		);
+
+		$content = Utility::jsonDecode($this->getContent());
+
+		$data = array_merge($data, $content);
+
+		$data['author'] = array(
+			'user' => $this->getAuthor()->getUser(),
+			'name' => $this->getAuthor()->getName(),
+		);
+
+		return $data;
 	}
 }

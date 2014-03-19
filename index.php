@@ -79,7 +79,7 @@ try {
 		if($blog->controller) {
 			$controller = $blog->controller;
 		}
-		$urls['/'.$blog->slug] = $controller;
+		$urls['/'.$blog->slug.'.*'] = $controller;
 	}
 } catch (Exception $e) {
 	$prior_exception = null;
@@ -132,6 +132,9 @@ try {
 			// End execution
 			exit();
 		} catch (Exception $e) {
+			// send exception to sentry
+			$app['sentry']->captureException($e);
+
 			// there is an exception in the above code - time to bail out and display the emergency error page
 			ob_end_clean();
 			ob_start();
@@ -141,6 +144,9 @@ try {
 			exit();
 		}
 	} else {
+		// send exception to sentry
+		$app['sentry']->captureException($e);
+
 		// If something bad happened
 		// time to bail out and display the emergency error page
 		ob_end_clean();

@@ -50,8 +50,8 @@ $timing->log('after header');
 									if ($key < 4) { ?>
 										<div class="userArticle">
 											<div class="userArticleDate grid_1 alpha">
-												<span><?php echo date('jS',$article->getDate()); ?></span><br/>
-												<?php echo date('F Y',$article->getDate()); ?><br/>
+												<span><?php echo date('jS',$article->getPublished()); ?></span><br/>
+												<?php echo date('F Y',$article->getPublished()); ?><br/>
 											</div>
 											<div class="userArticleInfo grid_7 omega <?php if ($article->getCategory()->getCat() == 'comment') echo 'second';?>">
 												<h3><a href="<?php echo $article->getUrl();?>"><?php echo $article->getTitle();?></a></h3>
@@ -87,8 +87,8 @@ $timing->log('after header');
 									<?php } else { ?>
 										<div class="userArticle">
 											<div class="userArticleDate grid_1 alpha">
-												<span><?php echo date('jS',$article->getDate()); ?></span><br/>
-												<?php echo date('F Y',$article->getDate()); ?><br/>
+												<span><?php echo date('jS',$article->getPublished()); ?></span><br/>
+												<?php echo date('F Y',$article->getPublished()); ?><br/>
 											</div>
 											<div class="userArticleInfo grid_7 omega second">
 												<h3><a href="<?php echo $article->getUrl();?>"><?php echo $article->getTitle();?></a></h3>
@@ -114,8 +114,8 @@ $timing->log('after header');
 								<?php } else { ?>
 									<div class="userArticle">
 										<div class="userArticleDate grid_1 alpha">
-											<span><?php echo date('jS',$article->getDate()); ?></span><br/>
-											<?php echo date('F Y',$article->getDate()); ?><br/>
+											<span><?php echo date('jS',$article->getPublished()); ?></span><br/>
+											<?php echo date('F Y',$article->getPublished()); ?><br/>
 										</div>
 										<div class="userArticleInfo grid_7 omega second">
 											<h3><a href="<?php echo $article->getUrl();?>"><?php echo $article->getTitle();?></a></h3>

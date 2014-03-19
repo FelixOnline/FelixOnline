@@ -3,6 +3,8 @@
  * Export database and sanitise emails and other sensitive information
  */
 
+date_default_timezone_set('Europe/London');
+
 require dirname(__FILE__) . '/../vendor/autoload.php';
 require dirname(__FILE__) . '/../inc/ez_sql_core.php'; // TODO REMOVE
 require dirname(__FILE__) . '/../inc/ez_sql_mysqli.php'; // TODO REMOVE

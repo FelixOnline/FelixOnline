@@ -4,18 +4,34 @@
  * Handles all blog requests
  */
 class BlogController extends BaseController {
-	private $blog;
 	function GET($matches) {
-		$blog = substr($matches[0], 1, -1);
-		$this->blog = new Blog($blog);
+		$slug = substr($matches[0], 1);
+
+		// Remove trailing slash and anything after it
+		if (($pos = strpos($slug, '/')) !== false) {
+			$slug = substr($slug, 0, $pos);
+		}
+
+		$blog = new Blog($slug);
+
+		// get blog posts for page
+		$posts = $blog->getPosts(1);
+
+		// get mustache renderer
+		$mustache = new Mustache_Engine(array(
+			'cache' => CACHE_DIRECTORY,
+			'loader' => new Mustache_Loader_FilesystemLoader(BASE_DIRECTORY.'/themes/' . THEME_NAME . '/templates/liveblog'),
+		));
+
+
 		$this->theme->appendData(array(
-			'blog' => $this->blog
+			'blog' => $blog,
+			'posts' => $posts,
+			'mustache' => $mustache,
 		));
 		$this->theme->setHierarchy(array(
-			$this->blog->getSlug() // page-{slug}.php
+			$blog->getSlug() // page-{slug}.php
 		));
 		$this->theme->render('blog');
 	}
 }
-
-?>

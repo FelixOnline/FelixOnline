@@ -52,7 +52,7 @@ class RSSController extends BaseController {
 				$article->getURL(),
 				str_replace(array("&", "&8217;"), array("and", "'"), $article->getTitle()),
 				str_replace(array("&", "&8217;"), array(" and ", "'"), $article->getShortDesc(600)) . '...',
-				date("D, d M Y", $article->getDate())
+				date("D, d M Y", $article->getPublished())
 			);
 		}
 
