@@ -269,8 +269,7 @@ class CurrentUser extends User {
 				visits=visits+1,
 				ip='%s',
 				timestamp=NOW(),
-				info='%s',
-				email='%s'",
+				info='%s'",
 			array(
 				$username,
 				$name,
@@ -280,7 +279,6 @@ class CurrentUser extends User {
 				$name,
 				$_SERVER['REMOTE_ADDR'],
 				$info,
-				$email,
 			));
 			// note that this updated the last access time and the ip
 			// of the last access for this user, this is separate from the
