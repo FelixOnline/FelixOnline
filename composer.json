@@ -20,7 +20,7 @@
     ],
     "require": {
 		"felixonline/exporter": "0.1.*",
-		"felixonline/core": "dev-master",
+		"felixonline/core": "0.2.*",
 		"raven/raven": "0.8.0",
 		"mustache/mustache": "2.5.*"
     },
