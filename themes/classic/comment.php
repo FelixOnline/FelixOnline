@@ -45,7 +45,7 @@
 				if (!$currentuser->isLoggedIn()) {?>
 					<a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox" class="likeComment">Like</a>
 				<?php } else {
-					if ($liked = $comment->userLikedComment($currentuser->getUser())) echo 'Liked'; // if user has already liked or disliked comment then remove link
+					if ($liked = $comment->userLikedComment($currentuser)) echo 'Liked'; // if user has already liked or disliked comment then remove link
 					else {?>
 						<a href="<?php echo Utility::currentPageURL();?>#" id="like">Like</a>
 				<?php } } ?>

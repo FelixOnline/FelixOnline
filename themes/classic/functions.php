@@ -50,34 +50,32 @@ function contact_us($data) {
 	// Mail it
 	$email->send();
 	
-	return array(error => false, success => 'Your message has been sent, thank you!');
+	return array('error' => false, 'success' => 'Your message has been sent, thank you!');
 }
 
 $hooks->addAction('like_comment', 'like_comment');
 function like_comment($data) {
 	global $currentuser;
-	if($currentuser->isLoggedIn()) {
-		$user = $currentuser->getUser();
+	if ($currentuser->isLoggedIn()) {
 		$comment = $data['comment'];
-		$comment = new Comment($comment);
-		$count = $comment->likeComment($user);
-		return array(count => $count);
+		$comment = new \FelixOnline\Core\Comment($comment);
+		$count = $comment->likeComment($currentuser);
+		return array('count' => $count);
 	} else {
-		return (array(error => true, details => 'Not logged in'));
+		return (array('error' => true, 'details' => 'Not logged in'));
 	}
 }
 
 $hooks->addAction('dislike_comment', 'dislike_comment');
 function dislike_comment($data) {
 	global $currentuser;
-	if($currentuser->isLoggedIn()) {
-		$user = $currentuser->getUser();
+	if ($currentuser->isLoggedIn()) {
 		$comment = $data['comment'];
-		$comment = new Comment($comment);
-		$count = $comment->dislikeComment($user);
-		return array(count => $count);
+		$comment = new \FelixOnline\Core\Comment($comment);
+		$count = $comment->dislikeComment($currentuser);
+		return array('count' => $count);
 	} else {
-		return (array(error => true, details => 'Not logged in'));
+		return (array('error' => true, 'details' => 'Not logged in'));
 	}
 }
 
@@ -130,9 +128,8 @@ function profile_change($data) {
 		$user->setWebsitename($data['webname']);
 		$user->setWebsiteurl(Utility::addhttp($data['weburl']));
 		$user->save();
-		return (array(error => false));
+		return (array('error' => false));
 	} else {
-		return (array(error => true, details => 'Not logged in'));
+		return (array('error' => true, 'details' => 'Not logged in'));
 	}
 }
-?>
