@@ -26,13 +26,15 @@ class ArticleController extends BaseController
 	{
 		global $currentuser;
 		$article = new \FelixOnline\Core\Article($matches['id']);
-		$comment = new Comment();
+		$comment = new \FelixOnline\Core\Comment();
 		$comment->setArticle($article->getId());
 
+		$errorduplicate = $errorspam = $erroremail = $errorinsert = $errorconnection = false;
+
 		/* User comment */
-		if ($_POST['articlecomment']) {
+		if (isset($_POST['articlecomment'])) {
 			$comment->setExternal(false);
-			$comment->setContent($_POST['comment']);
+			$comment->setComment($_POST['comment']);
 			$comment->setUser($currentuser->isLoggedIn());
 			if(isset($_POST['replyComment'])) {
 				$comment->setReply($_POST['replyComment']);
@@ -40,7 +42,7 @@ class ArticleController extends BaseController
 			if ($comment->commentExists()) { // if comment already exists
 				$errorduplicate = true;
 			} else {
-				if($id = $comment->save()) { 
+				if ($id = $comment->save()) { 
 					Utility::redirect(Utility::currentPageURL(), 
 										'', 
 										'comment'.$id);
@@ -52,13 +54,13 @@ class ArticleController extends BaseController
 		}
 
 		/* External comment */
-		else if ($_POST['articlecomment_ext']) {
+		else if (isset($_POST['articlecomment_ext'])) {
 			try {
-				if($_POST['email'] == '' || !is_email($_POST['email'])) {
+				if ($_POST['email'] == '' || !is_email($_POST['email'])) {
 					$erroremail = true;
 				} else {
 					$comment->setExternal(true);
-					$comment->setContent($_POST['comment']);
+					$comment->setComment($_POST['comment']);
 					$comment->setName($_POST['name']);
 					$comment->setEmail($_POST['email']);
 					if(isset($_POST['replyComment'])) {
@@ -68,8 +70,8 @@ class ArticleController extends BaseController
 					if ($comment->commentExists()) { // if comment already exists
 						$errorduplicate = true;
 					} else {
-						if($id = $comment->save()) {
-							if($comment->isExternal() && $comment->getSpam() == 1) {
+						if ($id = $comment->save()) {
+							if ($comment->getExternal() && $comment->getSpam() == 1) {
 								$errorspam = true;
 							} else {
 								Utility::redirect(
