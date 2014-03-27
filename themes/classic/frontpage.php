@@ -14,7 +14,6 @@ $timing->log('after header');
 	<!-- Sidebar -->
 	<div class="sidebar grid_4 push_8">
 		<?php
-			$theme->render('sidebar/sexsurvey');
 			$theme->render('sidebar/fbLikeBox');
 			$theme->render('sidebar/mediaBox');
 			$theme->render('sidebar/socialLinks');
