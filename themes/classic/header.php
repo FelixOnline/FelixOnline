@@ -10,7 +10,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="keywords" content="felix, student news, student newspaper, felix online, imperial college union, imperial college, felixonline"/>
 	<meta name="description" content="Felix Online is the online companion to Felix, the student newspaper of Imperial College London.">
-	<meta name="author" content="Jonathan Kim">
 	<meta name="google-site-verification" content="V5LPwqv0BzMHvfMOIZvSjjJ-8tJc4Mi1A-L2AEbby50" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
