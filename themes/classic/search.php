@@ -24,7 +24,7 @@ $timing->log('after header');
 		
 		<!--Search container -->
 		<div class="grid_8 pull_4">
-			<?php if ($toofew) { ?>
+			<?php if (isset($toofew) && $toofew == true) { ?>
 				<p>Uh oh! You did not specify enough search terms. Please try again!</p>
 			<?php } else { ?>
 				<h2>Search results for "<?php echo $query; ?>" -  <?php echo $article_count; ?> results</h2>

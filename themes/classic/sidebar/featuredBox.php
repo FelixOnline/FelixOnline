@@ -9,9 +9,8 @@
 		'top_sidebar_4',
 		'top_sidebar_5',
 	) as $column) {
-		$fields = $category->getFields();
-		if (isset($fields[$column])) {
-			$featured[$column] = new \FelixOnline\Core\Article($fields[$column]);
+		if (isset($category->fields[$column]) && $category->fields[$column]->getValue()) {
+			$featured[$column] = $category->fields[$column]->getValue();
 		}
 	}	
 ?>

@@ -207,7 +207,7 @@ $theme->render('header', $header);
 			<div id="commentCont">
 				<?php
 					$comments = $article->getComments();
-					if(is_array($comments)) {
+					if (is_array($comments)) {
 						foreach($comments as $key => $comment) {
 							$theme->render('comment', array('comment' => $comment));
 						}

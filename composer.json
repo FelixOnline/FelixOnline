@@ -13,14 +13,15 @@
 		}
     ],
 	"repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/FelixOnline/Akismet-API"
-        }
-    ],
+		{
+			"type": "vcs",
+			"url": "https://github.com/FelixOnline/Service-Akismet.git"
+		}
+	],
     "require": {
 		"felixonline/exporter": "0.1.*",
-		"felixonline/core": "0.1.*",
+		"rzekanet/service-akismet": "dev-master#9fe7b38819f26376c78d03fee85de722d9cc1edf",
+		"felixonline/core": "0.2.*",
 		"raven/raven": "0.8.0",
 		"mustache/mustache": "2.5.*"
     },

@@ -6,13 +6,17 @@
 	<h3>Recent Comments</h3>
 	<ul>
 		<?php 
-			$recent_comments = Comment::getRecentComments(RECENT_COMMENTS);
+			$recent_comments = (new \FelixOnline\Core\CommentManager())
+				->filter('active = 1')
+				->filter('pending = 0')
+				->filter('spam = 0')
+				->order('timestamp', 'DESC')
+				->limit(0, RECENT_COMMENTS)
+				->values();
 			
-			if(!is_null($recent_comments)) {
-				foreach($recent_comments as $key => $object) {
-					$comment = new Comment($object->id);
-			?>
-				<li <?php if($key+1 == count($recent_comments)) echo 'class="last"';?>>
+			if (!is_null($recent_comments)) {
+				foreach($recent_comments as $key => $comment) { ?>
+				<li <?php if ($key+1 == count($recent_comments)) echo 'class="last"';?>>
 					<p id="article">
 						On <a href="<?php echo $comment->getArticle()->getURL(); ?>"><?php echo $comment->getArticle()->getTitle();?></a>
 					</p>
@@ -27,7 +31,7 @@
 						</a> 
 						<span id="commenter">
 							<?php
-								if($comment->isExternal()) { // external comment
+								if($comment->getExternal()) { // external comment
 									echo $comment->getName();
 								} else { ?>
 									<a href="<?php echo $comment->getUser()->getURL();?>">

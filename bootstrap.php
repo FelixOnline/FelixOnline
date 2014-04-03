@@ -36,21 +36,21 @@ foreach (glob(BASE_DIRECTORY.'/core/*.php') as $filename) {
 //require_once(BASE_DIRECTORY.'/inc/authentication.php');
 require_once(BASE_DIRECTORY.'/inc/rss.inc.php');
 
-// Initialize Akismet
-if (LOCAL) { // development connector
-	$connector = new \RzekaE\Akismet\Connector\Test();
-} else {
-	$connector = new \RzekaE\Akismet\Connector\Curl();
-}
-$akismet = new \RzekaE\Akismet\Akismet($connector);
-
 // Initialize App
 $app = new \FelixOnline\Core\App($config);
 
 $app['db'] = $db;
 $app['safesql'] = $safesql;
 
-$app['currentuser'] = new CurrentUser();
+if (LOCAL) { // development connector
+	// Initialize Akismet
+	$connector = new \Riv\Service\Akismet\Connector\Test();
+	$app['akismet'] = new \Riv\Service\Akismet\Akismet($connector);
+
+	// Initialize email
+	$transport = \Swift_NullTransport::newInstance();
+	$app['email'] = \Swift_Mailer::newInstance($transport);
+}
 
 // Initialize Sentry
 $app['sentry'] = new \Raven_Client($app->getOption('sentry_dsn', NULL));

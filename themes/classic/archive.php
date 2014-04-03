@@ -24,8 +24,8 @@ $theme->render('header', $header);
     <h3 class="grid_12">Decades</h3>
         <ul class="tabs">
         <?php foreach($decades as $key => $decade) { ?>  
-            <li <?php if($decade['selected']) echo 'class="current"'; ?> >
-                <?php if($decade['begin']) { ?>
+            <li <?php if(isset($decade['selected'])) echo 'class="current"'; ?> >
+                <?php if(isset($decade['begin'])) { ?>
                     <a href="<?php echo STANDARD_URL; ?>issuearchive/decade/<?php echo $decade['begin']; ?>"><?php echo $decade['begin']; ?>-<?php echo $decade['final']; ?></a>
                 <?php } else { ?>
                     <a href="<?php echo STANDARD_URL; ?>issuearchive/year/<?php echo $decade['final']; ?>"><?php echo $decade['final']; ?></a>

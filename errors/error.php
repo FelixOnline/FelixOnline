@@ -14,10 +14,14 @@
 			<div id="techdetails" class="technical_details" style="display: block;">
 				<p id="techdetails_hide"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'none'; document.getElementById('techdetails_show').style.display = 'block';">Hide the technical details</a></p>
 				<?php
+					if (!isset($prior_exception) || !$prior_exception) {
+						$prior_exception = null;
+					}
+
 					$exceptions = array($prior_exception, $e);
 					
 					foreach($exceptions as $exception) {
-						if($exception == null) {
+						if ($exception == null) {
 							continue;
 						}
 						

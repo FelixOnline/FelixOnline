@@ -2,8 +2,8 @@
 
 class UserController extends BaseController {
 	function GET($matches) {
-		$user = new User($matches['user']);
-		if(!$matches['page']) {
+		$user = new \FelixOnline\Core\User($matches['user']);
+		if(!isset($matches['page'])) {
 			$pagenum = 1;
 		} else {
 			$pagenum = $matches['page'];
@@ -44,11 +44,14 @@ class UserController extends BaseController {
 			->limit(0, NUMBER_OF_POPULAR_ARTICLES_USER)
 			->values();
 
+		$pages = ceil(($articleCount - ARTICLES_PER_USER_PAGE) / (ARTICLES_PER_USER_PAGE)) + 1;
+
 		$this->theme->appendData(array(
 			'user' => $user,
 			'pagenum' => $pagenum,
 			'articles' => $articles,
 			'article_count' => $articleCount,
+			'pages' => $pages,
 			'comments' => $comments,
 			'comment_count' => $commentCount,
 			'popular_articles' => $popularArticles,

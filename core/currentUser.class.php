@@ -243,17 +243,23 @@ class CurrentUser extends User {
 	 * Public: Update user details
 	 */
 	public function updateDetails($username) {
+		$username = strtolower($username);
+
 		/* update user details */
 		$name = $this->updateName($username);
 		$info = $this->updateInfo($username);
 
+		// TODO can you get this from ldap?
+		$email = $username . '@imperial.ac.uk';
+
 		$sql = $this->safesql->query(
 			"INSERT INTO `user` 
-				(user,name,visits,ip,info) 
+				(user,name,visits,ip,info,email) 
 			VALUES (
 				'%s',
 				'%s',
 				1,
+				'%s',
 				'%s',
 				'%s'
 			) 
@@ -269,6 +275,7 @@ class CurrentUser extends User {
 				$name,
 				$_SERVER['REMOTE_ADDR'],
 				$info,
+				$email,
 				$name,
 				$_SERVER['REMOTE_ADDR'],
 				$info,

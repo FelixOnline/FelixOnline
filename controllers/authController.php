@@ -92,11 +92,11 @@ class AuthController extends BaseController {
 
 					// comment like/dislike
 					if(isset($_POST['commenttype']) && isset($_POST['comment'])) {
-						$comment = new Comment($_POST['comment']);
+						$comment = new \FelixOnline\Core\Comment($_POST['comment']);
 						if($_POST['commenttype'] == 'like') {
-							$comment->likeComment($currentuser->getUser());
+							$comment->likeComment($currentuser);
 						} else if($_POST['commenttype'] == 'dislike') {
-							$comment->dislikeComment($currentuser->getUser());
+							$comment->dislikeComment($currentuser);
 						}
 						$hash = $comment->getId();
 					}

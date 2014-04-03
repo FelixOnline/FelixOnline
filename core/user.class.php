@@ -55,7 +55,7 @@ class User extends BaseModel {
 					`twitter`,
 					`websitename`,
 					`websiteurl`,
-					`img` 
+					`image` 
 				FROM `user` 
 				WHERE user='%s'",
 				array(

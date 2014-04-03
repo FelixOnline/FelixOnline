@@ -1,6 +1,8 @@
 <?php
 	// location
-	if(!$location) $location = Utility::currentPageURL();
+	if(!isset($location)) {
+		$location = Utility::currentPageURL();
+	}
 ?>
 <div id="loginBox">
 	<form action="<?php echo AUTHENTICATION_PATH; ?>login/?goto=<?php echo $location; ?>" id="loginForm" method="post">
