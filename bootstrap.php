@@ -38,11 +38,11 @@ require_once(BASE_DIRECTORY.'/inc/rss.inc.php');
 
 // Initialize Akismet
 if (LOCAL) { // development connector
-	$connector = new \RzekaE\Akismet\Connector\Test();
+	$connector = new \Riv\Service\Akismet\Connector\Test();
 } else {
-	$connector = new \RzekaE\Akismet\Connector\Curl();
+	$connector = new \Riv\Service\Akismet\Connector\Curl();
 }
-$akismet = new \RzekaE\Akismet\Akismet($connector);
+$akismet = new \Riv\Service\Akismet\Akismet($connector);
 
 // Initialize App
 $app = new \FelixOnline\Core\App($config);
