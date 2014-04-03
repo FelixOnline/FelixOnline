@@ -17,6 +17,10 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 	protected $count = 1;
 	function processTable($table)
 	{
+		if ($table == 'akismet_log') {
+			return false;
+		}
+
 		if ($table == 'article_visit') {
 			return false;
 		}
@@ -70,7 +74,7 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 
 	function processRow($row, $table)
 	{
-		if ($table == 'comment_ext') {
+		if ($table == 'comment') {
 			if ($row['spam'] == 1) {
 				return false;
 			}
