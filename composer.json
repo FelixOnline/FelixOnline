@@ -20,7 +20,7 @@
 	],
     "require": {
 		"felixonline/exporter": "0.1.*",
-		"rzekanet/service-akismet": "dev-master#9fe7b38819f26376c78d03fee85de722d9cc1edf",
+		"rzekanet/service-akismet": "dev-master#569a13c65058eb59d28b2645f9d9965b98ab3868",
 		"felixonline/core": "0.2.*",
 		"raven/raven": "0.8.0",
 		"mustache/mustache": "2.5.*"
