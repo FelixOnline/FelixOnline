@@ -12,12 +12,6 @@
 			"email": "kentphilip@gmail.com"
 		}
     ],
-	"repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/FelixOnline/Akismet-API"
-        }
-    ],
     "require": {
 		"felixonline/exporter": "0.1.*",
 		"felixonline/core": "0.1.*",
