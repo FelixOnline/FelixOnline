@@ -33,6 +33,7 @@
 		'db_pass' => "DB_PASSWORD",
 		'base_url' => STANDARD_URL,
 		'sentry_dsn' => NULL,
+		'akismet_api_key' => '',
 	);
 
 	/* Initialise ezSQL database connection */
