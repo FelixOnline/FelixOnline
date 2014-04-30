@@ -75,7 +75,7 @@ $theme->render('header', $header);
 			// cache
 			$cache = new Cache('icradio');
 			$cache->setExpiry(6*60*60); // set expiry to 6 hours
-			if($cache->start()) {
+			if ($cache->start()) {
 				$shows = $media->getRadioShows();
 				foreach($shows as $show) { ?>
 					<div class="grid_3 radiocont">
