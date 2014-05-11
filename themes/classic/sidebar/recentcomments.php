@@ -8,6 +8,7 @@
 				->filter('spam = 0')
 				->order('timestamp', 'DESC')
 				->limit(0, RECENT_COMMENTS)
+				->cache(true, 1800)
 				->values();
 			
 			if (!is_null($recent_comments)) {
