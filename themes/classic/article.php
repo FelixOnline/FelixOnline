@@ -121,6 +121,9 @@ $theme->render('header', $header);
 						<li id="redditShare">
 							<script type="text/javascript" src="http://www.reddit.com/static/button/button3.js"></script>
 						</li>
+						<li id="bufferShare">
+						    <a href="http://bufferapp.com/add" class="buffer-add-button" data-text="<?= $article->getTitle() ?>" data-count="horizontal" data-via="feliximperial">Buffer</a>
+                        </li>
 					</div>
 				</ul>
 			</div>
@@ -286,6 +289,7 @@ $theme->render('header', $header);
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 	})();
 </script>
-
+<!-- Buffer share button js -->
+<script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
 <?php $timing->log('end of article');?>
 <?php $theme->render('footer'); ?>
