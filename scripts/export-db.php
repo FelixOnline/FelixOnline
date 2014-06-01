@@ -79,7 +79,7 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 				return false;
 			}
 
-			$row['IP'] = NULL;
+			$row['ip'] = NULL;
 		}
 
 		if ($table == 'user') {
