@@ -1,7 +1,3 @@
-<?php
-	$cache = new Cache('recentComments');
-	if($cache->start()) {
-?>
 <div class="recentComments">
 	<h3>Recent Comments</h3>
 	<ul>
@@ -12,6 +8,7 @@
 				->filter('spam = 0')
 				->order('timestamp', 'DESC')
 				->limit(0, RECENT_COMMENTS)
+				->cache(true, 1800)
 				->values();
 			
 			if (!is_null($recent_comments)) {
@@ -47,5 +44,3 @@
 			<?php } ?>
 	</ul>
 </div>
-<?php } $cache->stop(); ?>
-<?php $timing->log('after recent comments'); ?>

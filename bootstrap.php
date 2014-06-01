@@ -50,6 +50,9 @@ if (LOCAL) { // development connector
 	// Initialize email
 	$transport = \Swift_NullTransport::newInstance();
 	$app['email'] = \Swift_Mailer::newInstance($transport);
+
+	// Don't cache in local mode
+	$app['cache'] = new \Stash\Pool();
 }
 
 // Initialize Sentry

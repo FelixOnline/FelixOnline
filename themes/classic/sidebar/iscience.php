@@ -2,7 +2,7 @@
 	// Caching
 	$cacheiScience = new Cache('iScience');
 	$cacheiScience->setExpiry(6*60*60); // set expiry to 6 hours
-	if($cacheiScience->start()) {
+	if ($cacheiScience->start()) {
 	?>
 	<div id="iscience">
 		<a href="http://www.isciencemag.co.uk/"><img src="img/iscience.png"/></a>

@@ -28,11 +28,6 @@ $timing->log('after header');
 	<!-- Front page articles -->
 	<div class="grid_8 pull_4 featCont layout1">
 		<?php
-			// Start caching
-			$cache = new Cache('frontpage');
-			if($cache->start()) {
-		?>
-		<?php
 			// Section a
 			$sectionA = $frontpage->getSection('a');
 			$timing->log('get frontpage articles');
@@ -397,8 +392,6 @@ $timing->log('after header');
 			<?php } ?>
 		</div>
 		<!-- End of featured articles -->
-
-		<?php } $cache->stop(); ?>
 
 		<?php $timing->log('end of frontpage articles'); ?>
 		<!-- Editorial -->
