@@ -11,6 +11,9 @@ $timing->log('after header');
 
 ?>
 <div class="container_12">
+	<div class="banner grid_12">
+		<p><b>We're off on our holidays but we'll be back soon!</b> Come back in late September for more exciting news from campus and beyond on our new look Felix Online. See you then!</p>
+	</div>
 	<!-- Sidebar -->
 	<div class="sidebar grid_4 push_8">
 		<?php
