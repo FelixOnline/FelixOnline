@@ -121,6 +121,19 @@ $orig_directory = getcwd();
 $backup_directory = realpath(dirname(__FILE__) . '/../backups');
 chdir($backup_directory);
 
+// Remove old backups
+$files = glob("*.sql.zip");
+$time = time();
+
+foreach ($files as $file) {
+	if (is_file($file) && !is_link($file)) {
+		if ($time - filemtime($file) >= 60 * 60 * 24 * 14) { // 14 days
+			unlink($file);
+		}
+	}
+}
+
+// Start export
 $db_file = $config['db_name'] . '-' . date("Y-m-d") . '.sql';
 
 $exporter = new FelixExporter(array(
