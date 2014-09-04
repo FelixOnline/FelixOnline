@@ -305,8 +305,6 @@ class LoginException extends UniversalException {
 
 function errorhandler($errno, $errstr, $errfile, $errline, $errcontext) {
 	throw new ErrorHandlerException($errstr, array('errno' => $errno, 'file' => $errfile, 'line' => $errline, 'context' => $errcontext));
-	
-	return null;
 }
 
 set_error_handler('errorhandler', E_ALL & ~E_NOTICE);
