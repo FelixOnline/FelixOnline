@@ -11,7 +11,7 @@ Maintained by Philip Kent (pk1811@imperial.ac.uk) and Jonathan Kim (hello@jkimbo
 ###Requirements:
 * Local LAMP stack (Apache, PHP and MySQL)
 * [Git](http://git-scm.com/)
-Have a look a our [installation guide](wiki/Installation) if you are unsure how to get the above. 
+Have a look a our [installation guide](//github.com/FelixOnline/FelixOnline/wiki/Installation) if you are unsure how to get the above. 
 
 ###Setup:
 * Clone the repo into the folder your local web server hosts from
