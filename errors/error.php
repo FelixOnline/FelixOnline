@@ -96,7 +96,7 @@
 				}
 			}
 
-			if(!LOCAL && $notify) {
+			if(!LOCAL) {
 				$notify = true;
 				if(file_exists(dirname(__FILE__).'/../emails/fatal_next_notify')) {
 					$next_notify = (int) file_get_contents(dirname(__FILE__).'/../emails/fatal_next_notify');
@@ -184,13 +184,12 @@
 
 				//$message = wordwrap($message, 70);
 				if($notify) {
-					$status = false;
+					$status = true;
 
 					foreach($to as $addressee) {
 						$successful = mail($addressee, $subject, $message);
-
-						if($successful) {
-							$status = true;
+						if(!$successful) {
+							$status = false;
 						}
 					}
 					
