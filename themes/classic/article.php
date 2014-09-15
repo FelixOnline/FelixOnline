@@ -221,56 +221,62 @@ $theme->render('header', $header);
 			
 			<!-- Comment form -->
 			<div id="commentForm">
-				<?php if (!$currentuser->isLoggedIn()) { ?>
-					<h5>Comment anonymously or <a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox">log in</a></h5>
-					<div id="info">
-						<p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and are moderated later. Your IP address will also be submitted to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
-						<p>Read our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
-					</div>
-				<?php } else { ?>
-					<h5>Leave a comment as <a href="<?php echo $currentuser->getURL();?>" title="Profile Page"><?php echo $currentuser->getName();?></a></h5>
-				<?php } ?>
-				<!-- Errors -->
-				<div class="error">
-					<?php if(isset($errorduplicate) && $errorduplicate) { ?>
-						<p>Looks like the comment you have just submitted is a duplicate. Please write something original and try again.</p>
-					<?php } ?>
-					<?php if(isset($erroremail) && $erroremail) { ?>
-						<p>You need to give you email address. If you haven't, there's something wrong with what you have given us. Don't worry, this won't be published.</p>
-					<?php } ?>
-					<?php if(isset($errorspam) && $errorspam) { ?>
-						<p>Our spam filters have flagged your comment as suspicious. If you are not a spammer then please <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
-					<?php } ?>
-					<?php if(isset($errorinsert) && $errorinsert) { ?>
-						<p>Uh oh. Looks like an error has occurred. Hopefully it is just a temporary problem so try submitting your comment again. If that still hasn't done the trick then <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
-					<?php } ?>
-					<?php if (isset($errorconnection) && $errorconnection) { ?>
-						<p>Sorry it looks like we are having trouble with our anti spam service. Please try again later.</p>
-					<?php } ?>
-				</div>
-				<!-- End of errors -->
-				<form method="post" action="<?php echo Utility::currentPageURL();?>">
+				<?php if ($article->canComment($currentuser)) { ?>
 					<?php if (!$currentuser->isLoggedIn()) { ?>
-						<label for="name">Name: </label>
-						<input name="name" id="name" value="<?php if(isset($_POST['name'])) echo $_POST['name'];?>"/>
-						<div class="clear"></div>
-						<label for="email">Email (will not be published): </label>
-						<input name="email" type="email" id="email" value="<?php if(isset($_POST['email'])) echo $_POST['email'];?>"/>
-						<div class="clear"></div>
+						<h5>Comment anonymously or <a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox">log in</a></h5>
+						<div id="info">
+							<p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and are moderated later. Your IP address will also be submitted to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
+							<p>Read our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
+						</div>
 					<?php } else { ?>
-						<input type="hidden" value="<?php echo $currentuser->getUser(); ?>"/>
+						<h5>Leave a comment as <a href="<?php echo $currentuser->getURL();?>" title="Profile Page"><?php echo $currentuser->getName();?></a></h5>
 					<?php } ?>
-					<div id="comentbox" class="clearfix">
-						<label for="comment" id="commentLabel">Comment: </label>
-						<div class="clear"></div>
-						<textarea name="comment" id="comment" rows="4" class="required"><?php if(isset($_POST['comment'])) echo $_POST['comment']; ?></textarea>
-						<label for="comment" class="error">Please write a comment</label>
+					<!-- Errors -->
+					<div class="error">
+						<?php if(isset($errorduplicate) && $errorduplicate) { ?>
+							<p>Looks like the comment you have just submitted is a duplicate. Please write something original and try again.</p>
+						<?php } ?>
+						<?php if(isset($erroremail) && $erroremail) { ?>
+							<p>You need to give you email address. If you haven't, there's something wrong with what you have given us. Don't worry, this won't be published.</p>
+						<?php } ?>
+						<?php if(isset($errorspam) && $errorspam) { ?>
+							<p>Our spam filters have flagged your comment as suspicious. If you are not a spammer then please <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
+						<?php } ?>
+						<?php if(isset($errorinsert) && $errorinsert) { ?>
+							<p>Uh oh. Looks like an error has occurred. Hopefully it is just a temporary problem so try submitting your comment again. If that still hasn't done the trick then <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
+						<?php } ?>
+						<?php if (isset($errorconnection) && $errorconnection) { ?>
+							<p>Sorry it looks like we are having trouble with our anti spam service. Please try again later.</p>
+						<?php } ?>
 					</div>
-					<input type="submit" value="Post your comment" id="submit" name="<?php if($currentuser->isLoggedIn()) echo 'articlecomment'; else echo 'articlecomment_ext';?>"/>
-				</form>
-				<!-- Commenting policy -->
-				<?php $theme->render('commentPolicy');?>
-				<!-- End of commenting policy -->
+					<!-- End of errors -->
+					<form method="post" action="<?php echo Utility::currentPageURL();?>">
+						<?php if (!$currentuser->isLoggedIn()) { ?>
+							<label for="name">Name: </label>
+							<input name="name" id="name" value="<?php if(isset($_POST['name'])) echo $_POST['name'];?>"/>
+							<div class="clear"></div>
+							<label for="email">Email (will not be published): </label>
+							<input name="email" type="email" id="email" value="<?php if(isset($_POST['email'])) echo $_POST['email'];?>"/>
+							<div class="clear"></div>
+						<?php } else { ?>
+							<input type="hidden" value="<?php echo $currentuser->getUser(); ?>"/>
+						<?php } ?>
+						<div id="comentbox" class="clearfix">
+							<label for="comment" id="commentLabel">Comment: </label>
+							<div class="clear"></div>
+							<textarea name="comment" id="comment" rows="4" class="required"><?php if(isset($_POST['comment'])) echo $_POST['comment']; ?></textarea>
+							<label for="comment" class="error">Please write a comment</label>
+						</div>
+						<input type="submit" value="Post your comment" id="submit" name="<?php if($currentuser->isLoggedIn()) echo 'articlecomment'; else echo 'articlecomment_ext';?>"/>
+					</form>
+					<!-- Commenting policy -->
+					<?php $theme->render('commentPolicy');?>
+					<!-- End of commenting policy -->
+				<?php } else { ?>
+					<div class="error">
+						<p>Comments are disabled for this article</p>
+					</div>
+				<?php } ?>
 			</div>
 			<!-- End of comment form -->
 		</div>
