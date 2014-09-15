@@ -31,63 +31,65 @@ class ArticleController extends BaseController
 
 		$errorduplicate = $errorspam = $erroremail = $errorinsert = $errorconnection = false;
 
-		/* User comment */
-		if (isset($_POST['articlecomment'])) {
-			$comment->setExternal(false);
-			$comment->setComment($_POST['comment']);
-			$comment->setUser($currentuser->isLoggedIn());
-			if(isset($_POST['replyComment'])) {
-				$comment->setReply($_POST['replyComment']);
-			}
-			if ($comment->commentExists()) { // if comment already exists
-				$errorduplicate = true;
-			} else {
-				if ($id = $comment->save()) { 
-					Utility::redirect(Utility::currentPageURL(), 
-										'', 
-										'comment'.$id);
-					exit;
+		if ($article->canComment($currentuser)) {
+			/* User comment */
+			if (isset($_POST['articlecomment'])) {
+				$comment->setExternal(false);
+				$comment->setComment($_POST['comment']);
+				$comment->setUser($currentuser->isLoggedIn());
+				if(isset($_POST['replyComment'])) {
+					$comment->setReply($_POST['replyComment']);
+				}
+				if ($comment->commentExists()) { // if comment already exists
+					$errorduplicate = true;
 				} else {
-					$errorinsert = true;
+					if ($id = $comment->save()) { 
+						Utility::redirect(Utility::currentPageURL(), 
+											'', 
+											'comment'.$id);
+						exit;
+					} else {
+						$errorinsert = true;
+					}
 				}
 			}
-		}
 
-		/* External comment */
-		else if (isset($_POST['articlecomment_ext'])) {
-			try {
-				if ($_POST['email'] == '' || !is_email($_POST['email'])) {
-					$erroremail = true;
-				} else {
-					$comment->setExternal(true);
-					$comment->setComment($_POST['comment']);
-					$comment->setName($_POST['name']);
-					$comment->setEmail($_POST['email']);
-					if(isset($_POST['replyComment'])) {
-						$comment->setReply($_POST['replyComment']);
-					}
-
-					if ($comment->commentExists()) { // if comment already exists
-						$errorduplicate = true;
+			/* External comment */
+			else if (isset($_POST['articlecomment_ext'])) {
+				try {
+					if ($_POST['email'] == '' || !is_email($_POST['email'])) {
+						$erroremail = true;
 					} else {
-						if ($id = $comment->save()) {
-							if ($comment->getExternal() && $comment->getSpam() == 1) {
-								$errorspam = true;
-							} else {
-								Utility::redirect(
-									Utility::currentPageURL(), 
-									'', 
-									'comment'.$id
-								);
-								exit;
-							}
+						$comment->setExternal(true);
+						$comment->setComment($_POST['comment']);
+						$comment->setName($_POST['name']);
+						$comment->setEmail($_POST['email']);
+						if(isset($_POST['replyComment'])) {
+							$comment->setReply($_POST['replyComment']);
+						}
+
+						if ($comment->commentExists()) { // if comment already exists
+							$errorduplicate = true;
 						} else {
-							$errorinsert = true;
+							if ($id = $comment->save()) {
+								if ($comment->getExternal() && $comment->getSpam() == 1) {
+									$errorspam = true;
+								} else {
+									Utility::redirect(
+										Utility::currentPageURL(), 
+										'', 
+										'comment'.$id
+									);
+									exit;
+								}
+							} else {
+								$errorinsert = true;
+							}
 						}
 					}
+				} catch (\FelixOnline\Exceptions\ExternalException $e) {
+					$errorconnection = true;
 				}
-			} catch (\FelixOnline\Exceptions\ExternalException $e) {
-				$errorconnection = true;
 			}
 		}
 		
