@@ -6,7 +6,7 @@ $header = array(
 	'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
 );
 
-$theme->render('header', $header); 
+$theme->render('components/header', $header); 
 $timing->log('after header');
 
 ?>
@@ -188,4 +188,4 @@ $timing->log('after header');
 	</div>
 	
 <?php $timing->log('end of search');?>
-<?php $theme->render('footer'); ?>
+<?php $theme->render('components/footer'); ?>

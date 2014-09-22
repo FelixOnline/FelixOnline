@@ -6,7 +6,7 @@ $header = array(
 	'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
 );
 
-$theme->render('header', $header);
+$theme->render('components/header', $header);
 ?>
 <!-- Section header -->
 		<div class="section-title section-title-<?php echo $category->getCat(); ?>">
@@ -80,5 +80,5 @@ $theme->render('header', $header);
 
 <?php
 $timing->log('end of category page');
-$theme->render('footer');
+$theme->render('components/footer');
 ?>

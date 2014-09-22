@@ -17,7 +17,7 @@ $header = array(
 	'meta' => $meta
 );
 
-$theme->render('header', $header);
+$theme->render('components/header', $header);
 ?>
 <div class="container_12 usercontainer">
 	<!-- Sidebar -->
@@ -249,4 +249,4 @@ $theme->render('header', $header);
 	</div>
 </div>
 <?php $timing->log('end of user page');?>
-<?php $theme->render('footer'); ?>
+<?php $theme->render('components/footer'); ?>

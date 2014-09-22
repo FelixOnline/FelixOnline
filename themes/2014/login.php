@@ -4,7 +4,7 @@ $header = array(
 	'title' => 'Login to Felix Online'
 ); 
 
-$theme->render('header', $header);
+$theme->render('components/header', $header);
 ?>
 <!-- Page wrapper -->
 <div class="container_12">
@@ -16,7 +16,7 @@ $theme->render('header', $header);
 					<p>Login failed. Please try again.</p>
 				</div>
 			<?php }
-				$theme->render('loginBox', array('location' => STANDARD_URL));
+				$theme->render('components/loginBox', array('location' => STANDARD_URL));
 			?>
 		</div>
 	</div>
@@ -25,4 +25,4 @@ $theme->render('header', $header);
 <!-- End of page -->
 
 <?php $timing->log('end of login');?>
-<?php $theme->render('footer'); ?>
+<?php $theme->render('components/footer'); ?>

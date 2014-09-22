@@ -7,7 +7,7 @@ $header = array(
 
 $theme->resources->addCSS(array('archive.less'));
 
-$theme->render('header', $header);
+$theme->render('components/header', $header);
 ?>
 <!-- Archive wrapper -->
 <div class="container_12 archive">
@@ -84,4 +84,4 @@ $theme->render('header', $header);
 </div>
 <!-- End of archive wrapper -->
 <?php $timing->log('end of issue archive');?>
-<?php $theme->render('footer'); ?>
+<?php $theme->render('components/footer'); ?>

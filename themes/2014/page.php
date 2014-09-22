@@ -4,7 +4,7 @@ $header = array(
 	'title' => $page->getTitle().' - Felix Online'
 ); 
 
-$theme->render('header', $header);
+$theme->render('components/header', $header);
 ?>
 <!-- Page wrapper -->
 <div class="container_12">
@@ -38,4 +38,4 @@ $theme->render('header', $header);
 <!-- End of page -->
 
 <?php $timing->log('end of page');?>
-<?php $theme->render('footer'); ?>
+<?php $theme->render('components/footer'); ?>

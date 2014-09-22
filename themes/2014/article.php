@@ -31,7 +31,7 @@ $header = array(
 	'meta' => $meta
 );
 
-$theme->render('header', $header);
+$theme->render('components/header', $header);
 ?>
 <!-- Article wrapper -->
 <div class="container_12">
@@ -291,4 +291,4 @@ $theme->render('header', $header);
 <!-- Buffer share button js -->
 <script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
 <?php $timing->log('end of article');?>
-<?php $theme->render('footer'); ?>
+<?php $theme->render('components/footer'); ?>

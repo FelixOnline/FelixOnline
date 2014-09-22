@@ -4,7 +4,7 @@ $header = array(
 	'title' => $blog->getName().' - Felix Online'
 ); 
 
-$theme->render('header', $header);
+$theme->render('components/header', $header);
 ?>
 <!-- Blog wrapper -->
 <div class="container_12">
@@ -40,4 +40,4 @@ $theme->render('header', $header);
 </div>
 <!-- End of blog -->
 <?php $timing->log('end of blog');?>
-<?php $theme->render('footer'); ?>
+<?php $theme->render('components/footer'); ?>

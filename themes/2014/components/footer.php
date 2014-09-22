@@ -1,5 +1,14 @@
-
-		<div class="felix-footer felix-footer-news">
+<?php
+	// If article page
+	if ($theme->isPage('article')) {
+		$check = $article->getCategory()->getCat();
+	} else if ($theme->isPage('category')) { // if category page
+		$check = $category->getCat();
+	} else {
+		$check = 'home';
+	}
+?>
+		<div class="felix-footer felix-footer-<?php echo $check; ?>">
 			<div class="row">
 				<div class="medium-12 columns text-center">
 					<div class="felix-nametype"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/white logo.png" style="width: 1.5em; height: 1.5em;">&nbsp;Felix</div>
