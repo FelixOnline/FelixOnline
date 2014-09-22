@@ -14,16 +14,16 @@ global $hooks;
 /*
  * Load in theme specific functions
  */
-require_once(THEME_DIRECTORY.'/functions.php');
+require_once(THEME_DIRECTORY.'/core/functions.php');
 
 /*
  * Set default site wide resources
  */
 $this->resources = new ResourceManager(
 	/* CSS files */
-	array('style.css'), 
+	array('foundation.css', 'felix.css', '../slick/slick.css'), 
 	/* JS files */
-	array('plugins.js', 'script.js')
+	array('vendor/jquery.js', 'foundation.min.js', 'foundation/foundation.reveal.js', '../slick/slick.js')
 );
 
 ?>

@@ -14,17 +14,6 @@ $(document).ready(function() {
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 	
-	/* Phoenix box */
-	$('#phoenixcont .acts').hover(function(){
-		if (!$(this).find(".cover").hasClass('animated')) {
-			$(this).find(".cover").dequeue().stop().animate({ left: '300px' });
-		}
-	}, function() {
-		$(this).find(".cover").addClass('animated').animate({ left: '0' }, "normal", "linear", function() {
-			$(this).removeClass('animated').dequeue();
-		});
-	});
-	
 	// Load sharing links
 	if ($('.sidebar2 #sharebuttons').length) { // If sidebar 2 exists
 		var facebook = '<div class="fb-like" data-width="140px" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>';
@@ -46,17 +35,6 @@ $(document).ready(function() {
 		$('#googleShare2').append(google2);
 	}
 
-	// Media box tabs 
-	var mediaTabContainers = $('div#mediaBox > div');
-	$('div#mediaBox ul.mediaBoxNav a').click(function () {
-		mediaTabContainers.hide().filter(this.hash).show();
-		$('div#mediaBox ul.mediaBoxNav a').parent().removeClass('selected');
-		$(this).parent().addClass('selected');
-		return false;
-	});
-	//.filter(':first').click()
-	
-	
 	// Most popular tabs 
 	var tabContainers = $('div#mostPopular > div'); 
 	$('div#mostPopular ul.popularNav a').click(function () {
@@ -67,27 +45,6 @@ $(document).ready(function() {
 		return false;
 	}).filter(':first').click();
 	
-	//Captify plugin
-	$('img.captify').captify({
-		speedOver: 100,
-		// speed of the mouseout effect
-		speedOut: 100,
-		// how long to delay the hiding of the caption after mouseout (ms)
-		hideDelay: 50,  
-		// 'fade', 'slide', 'always-on'
-		animation: 'slide',	 
-		// text/html to be placed at the beginning of every caption
-		prefix: '',	 
-		// opacity of the caption on mouse over
-		opacity: '0.7',				 
-		// the name of the CSS class to apply to the caption box
-		className: 'caption-bottom',	
-		// position of the caption (top or bottom)
-		position: 'bottom',
-		// caption span % of the image
-		spanWidth: '100%'
-	});
-
 	$('.likeComment').bind('click', function() {
 		if ($('#loginForm #commenttype').length){
 			$('#loginForm #commenttype').remove();
@@ -106,14 +63,8 @@ $(document).ready(function() {
 		$('#loginForm').prepend('<input type="hidden" value="dislike" name="commenttype" id="commenttype"/><input type="hidden" value="'+comment+'" name="comment" id="comment"/>');
 	});
 	
-	$('a[rel*=facebox]').facebox();
-	
-	$(document).bind('reveal.facebox', function() { 
-		$('#loginForm #user').focus();
-	});
-	
 	//Twitter style countdown on comment form
-	$("#commentForm #comment").charCount();
+	//$("#commentForm #comment").charCount();
 	
 	//Comment form validation
 	$("#commentForm form").submit(function() {
@@ -128,29 +79,6 @@ $(document).ready(function() {
 			//} 
 		}
 	});
-	
-	function validateCaptcha() {
-		challengeField = $("input#recaptcha_challenge_field").val();
-		responseField = $("input#recaptcha_response_field").val();
-		var html = $.ajax({
-			type: "POST",
-			url: "inc/ajax.recaptcha.php",
-			data: "recaptcha_challenge_field=" + challengeField + "&recaptcha_response_field=" + responseField,
-			async: false
-		}).responseText;
-	 
-		if(html == "success") {
-			//Add the Action to the Form
-			//Indicate a Successful Captcha
-			$("#captchaStatus").removeClass('error').addClass('success').html("Success!").show();
-			// Uncomment the following line in your application
-			return true;
-		} else {
-			$("#captchaStatus").html("The security code you entered did not match. Please try again.").show();
-			Recaptcha.reload();
-			return false;
-		}
-	}   
 	
 	//Post a comment 
 	$('#postComment').click(function() {
