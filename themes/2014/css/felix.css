@@ -1,0 +1,813 @@
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: 'Alegreya Sans', sans-serif;
+}
+
+button, .button {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+}
+
+.small {
+	font-size: smaller;
+}
+
+.tabs dd > a, .tabs .tab-title > a {
+	padding: 0.5rem 1rem !important;
+	background: white;
+	font-family: 'Noto Serif', serif !important;
+}
+
+.tabs dd.active a, .tabs .tab-title.active a {
+	background: #444444;
+	color: white;
+}
+
+div.felix-header, div.felix-footer, div.felix-header .row, div.felix-footer .row {
+	background: #0085AB;
+}
+
+div.felix-header .row div, div.felix-footer .row div {
+	color: white !important;
+}
+
+div.felix-footer {
+	margin-top: 2em;
+}
+
+div.felix-title, div.felix-title .row {
+	background: #b2e4f2;
+}
+
+div.felix-title-logo img {
+	width: 10em !important;
+	vertical-align: middle;
+	margin-bottom: 0.8em;
+	max-height: 70pt;
+	max-width: 70pt;
+}
+
+div.felix-title .row div {
+	margin-bottom: -0.2em;
+}
+
+div.felix-title .row div h1 {
+	color: black !important;
+	font-family: 'Sorts Mill Goudy', serif;
+	font-size: 65pt;
+	margin: 0;
+	display: inline;
+	margin-left: 0.2em;
+	vertical-align: middle;
+}
+
+div.felix-search {
+	margin-bottom: 0.8em;
+	margin-top: -0.4em;
+}
+
+@media only screen and (max-width: 64em) {
+	div.felix-title .row div h1 {
+		color: black !important;
+		font-family: 'Sorts Mill Goudy', serif;
+		font-size: 35pt;
+		margin-top: 0.2em;
+	}
+
+	div.felix-title .row div {
+		margin-top: 0.2em;
+		margin-bottom: 0;
+	}
+
+	div.felix-title-logo img {
+		height: 35pt !important;
+		width: 35pt !important;
+	}
+
+	div.felix-search {
+		margin-top: -0.2em !important;
+	}
+}
+
+@media only screen and (max-width: 40em) {
+	div.felix-title .row div h1 {
+		color: black !important;
+		font-family: 'Sorts Mill Goudy', serif;
+		font-size: 35pt;
+		margin-top: 0.2em;
+	}
+
+	div.felix-title .row div {
+		margin-top: 0.2em;
+		margin-bottom: 0;
+	}
+
+	div.felix-title-logo {
+		text-align: center;
+	}
+
+	div.felix-buttons, div.felix-header-actions {
+		text-align: center !important;
+	}
+
+	div.felix-title-logo img {
+		height: 35pt !important;
+		width: 35pt !important;
+	}
+
+	blockquote {
+		float: none !important;
+		margin: none !important;
+	}
+
+	div.felix-search {
+		margin-bottom: 1em !important;
+	}
+}
+
+div.felix-title .row .felix-subtitle {
+	color: black;
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	margin-top: -0.5em;
+	padding-bottom: 1em;
+}
+
+div.felix-nav {
+	border-top: 3px double black;
+	border-bottom: 3px double cyan; /* Overridden based on section chosen */
+}
+
+div.felix-subtitle {
+	margin-bottom: 10px;
+	padding-left: 125px;
+}
+
+.felix-search-box {
+	padding: 2px !important;
+	padding-left: 5px !important;
+	margin: 0 !important;
+	height: auto !important;
+}
+
+img.felix-header-icon {
+	width: 2em;
+	margin-top: 1em;
+}
+
+div.felix-nametype {
+	font-family: 'Noto Serif', serif;
+	padding-top: 0.5em;
+	padding-bottom: 0.25em;
+	font-size: 2em;
+}
+
+nav.top-bar, nav.top-bar .top-bar-section li, nav.top-bar .top-bar-section a {
+	background: none !important;
+}
+
+nav.top-bar .top-bar-section ul li > a {
+	font-family: 'Noto Serif', serif;
+	color: cyan; /* Overridden based on section chosen */
+	font-weight: bold;
+	font-size: 12pt
+}
+
+nav.top-bar .top-bar-section li.active, nav.top-bar .top-bar-section li.active > a {
+	background: cyan !important; /* Overridden based on section chosen */
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li:hover, nav.top-bar .top-bar-section li:hover > a {
+	background: magenta !important; /* Overridden based on section chosen */
+	color: white !important;
+}
+
+.felix-mini-tell-us {
+	margin-top: 1em;
+	font-weight: bold;
+}
+
+.felix-tell-us h5, .felix-tell-us a, .felix-browser h5, .felix-browser a {
+	font-weight: bold;
+}
+
+.felix-item-title {
+	border-bottom: 1px solid cyan;
+}
+
+.felix-item-title h2, .felix-item-title h3 {
+	color: cyan;
+	margin: 0;
+	font-family: 'Sorts Mill Goudy', serif;
+}
+
+.felix-item-title a {
+	color: black;
+}
+
+.felix-pad-top {
+	margin-top: 1em;
+}
+
+div.article-title {
+	padding-top: 1em;
+	border-bottom: 3px double cyan;
+	padding-bottom: 1em;
+	margin-bottom: 1em;
+}
+
+div.article-comments-zone {
+	border-top: 3px double cyan;
+	margin-bottom: 1em;
+}
+
+div.article-comments-zone h3 {
+	font-weight: bold;
+}
+
+div.article-comment {
+	border-top: 1px solid #333333;
+	margin-top: 1em;
+	clear: both;
+}
+
+div.article-comment h4 {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+div.comment-meta {
+	color: #333333 !important;
+	margin-bottom: 0.5em;
+	margin-top: -0.5em;
+}
+
+div.comment-tools {
+	float: right;
+	border-left: 1px dotted #333333;
+	margin-left: 1em;
+	margin-bottom: 0.5em;
+}
+
+div.comment-tools ul {
+	margin: 0;
+	padding: 0;
+	padding-left: 1em;
+}
+
+div.comment-tools ul li {
+	list-style-type: none;
+	padding-bottom: 0.5em;
+}
+
+div.article-title h1, div.article-title h2 {
+	font-family: 'Noto Serif', serif;
+}
+
+div.article-title h1 {
+	font-weight: bold;
+	font-size: 1.6em;
+}
+
+div.article-title h2 {
+	font-size: 1em;
+}
+
+div.article-image {
+	margin-bottom: 1em;
+}
+
+div.article-meta {
+	margin-top: 0.5em;
+	border-left: 1px dotted #333333;
+}
+
+p.article-first {
+	font-weight: bold;
+}
+
+blockquote {
+	float: right;
+	margin-left: 1em;
+	margin-bottom: 1em;
+	font-size: larger;
+}
+
+blockquote p {
+	font-size: larger;
+}
+
+blockquote cite {
+	font-size: 0.8em;
+}
+
+@media only screen and (max-width: 40em) {
+	div.article-meta {
+		border: none;
+	}
+
+	div.article-meta div.text-right {
+		text-align: center !important;
+	}
+}
+
+span.comment-count {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	color: #551111;
+	margin-right: 0.2em;
+}
+
+span.felix-front-news-date, span.felix-item-cat {
+	font-weight: bold;
+	font-size: small;
+	color: #555;
+	text-transform: uppercase;
+}
+
+.felix-news-dotted {
+	border-bottom: 1px dotted #444444;
+	margin-bottom: 1em !important;
+}
+
+div.felix-front-news-main, div.felix-front-comment {
+	margin-top: 1em !important;
+}
+
+div.felix-front-news-main-text h3 {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	font-size: 1.2em;
+}
+
+div.felix-front-news-main-text p {
+	margin-bottom: 0;
+}
+
+div.felix-front-news-secondary, div.felix-front-news-main {
+	padding-bottom: 1em;
+}
+
+div.felix-front-news-secondary-text h3 {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	font-size: 0.9em;
+	margin-top: 0 !important;
+	margin-bottom: 0em;
+}
+
+div.felix-front-comment-text h3 {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	font-size: 0.9em;
+	margin-top: 0 !important;
+	margin-bottom: 0.8em;
+}
+
+
+div.felix-front-comment div.row, div.felix-front-sport div.row {
+	margin-bottom: 1em;
+}
+
+div.felix-item-panel {
+	padding: 0;
+	margin-top: 0.8em;
+}
+
+div.felix-item-panel p {
+	font-size: 0.9em;
+	line-height: 1.1;
+}
+
+span.felix-item-cat {
+	color: cyan;
+}
+
+h4.felix-item-title {
+	border: none;
+	color: black;
+	font-weight: bold;
+	font-size: 0.9em;
+	line-height: 1.2;
+	font-family: 'Noto Serif', serif;
+}
+
+div.felix-item-text {
+	padding-right: 0 !important;
+	padding-left: 1.5em;
+	padding-top: 0.2em;
+}
+
+div.felix-horoscope-slider {
+	text-align: center;
+}
+
+div.felix-horoscope-slider h4 {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	font-size: 1.2em;
+}
+
+button.slick-prev {
+	left: 10px;
+}
+
+button.slick-next {
+	right: 10px;
+}
+
+button.slick-prev, button.slick-next, button.slick-prev:hover, button.slick-next:hover {
+	background: rgba(255, 255, 255, 0.8);
+	height: 30px;
+	width: 30px;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+.slick-slide img {
+	display: inline !important;
+	margin-bottom: 1em;
+}
+
+.felix-marquee-row {
+	padding-top: 2em;
+}
+
+.felix-marquee-row p {
+	margin-top: -0.5em;
+	margin-bottom: 0;
+}
+
+.felix-marquee-number {
+	font-size: 40pt;
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	color: #551111;
+}
+
+.top-bar .name h1 a, .top-bar .toggle-topbar a {
+	color: black !important;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.top-bar.expanded .title-area {
+	background: none;
+}
+
+div.section-breadcrumbs {
+	font-size: small;
+	margin-top: 0.5em;
+	margin-right: 1em;
+	float: left;
+}
+
+.section-subcategories {
+	float: right;
+	clear: both;
+	margin: 0 !important;
+	margin-top: 0.3em !important;
+}
+
+.section-editors {
+	margin-top: 0.3em
+}
+
+div.section-title {
+	border-bottom: 3px double magenta;
+	padding-bottom: 0.5em;
+	margin-bottom: 1em;
+}
+
+div.section-title h1 {
+	font-family: 'Sorts Mill Goudy', serif;
+	color: magenta;
+	margin-bottom: -0.3em;
+}
+
+/* SECTION COLOUR MODIFIERS */
+nav.top-bar .top-bar-section li.nav-home:hover,
+nav.top-bar .top-bar-section li.nav-home:hover > a,
+nav.top-bar .top-bar-section li.nav-home.active,
+nav.top-bar .top-bar-section li.nav-home.active > a  {
+	background: black !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-home > a {
+	color: black !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-home.active > a {
+	color: white !important;
+}
+
+div.felix-nav.nav-home {
+	border-bottom-color: black;
+}
+
+div.article-comment label {
+	margin: 0;
+}
+
+div.article-comments-zone-news {
+	border-top-color: #551111;
+}
+
+div.felix-nav.nav-news, div.section-title-news, div.article-title-news {
+	border-bottom-color: #551111;
+}
+
+div.article-comments-zone-comment {
+	border-top-color: #3F7F88;
+}
+
+div.felix-nav.nav-comment, div.section-title-comment, div.article-title-comment {
+	border-bottom-color: #3F7F88;
+}
+
+div.article-comments-zone-science {
+	border-top-color: #22A457;
+}
+
+div.felix-nav.nav-science, div.section-title-science, div.article-title-science {
+	border-bottom-color: #22A457;
+}
+
+nav.top-bar .top-bar-section li.nav-news:hover,
+nav.top-bar .top-bar-section li.nav-news:hover > a,
+nav.top-bar .top-bar-section li.nav-news.active,
+nav.top-bar .top-bar-section li.nav-news.active > a  {
+	background: #551111 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-news > a {
+	color: #551111;
+}
+
+nav.top-bar .top-bar-section ul li.nav-news.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-comment:hover,
+nav.top-bar .top-bar-section li.nav-comment:hover > a,
+nav.top-bar .top-bar-section li.nav-comment.active,
+nav.top-bar .top-bar-section li.nav-comment.active > a  {
+	background: #3F7F88 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-comment > a {
+	color: #3F7F88;
+}
+
+nav.top-bar .top-bar-section ul li.nav-comment.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-features:hover,
+nav.top-bar .top-bar-section li.nav-features:hover > a,
+nav.top-bar .top-bar-section li.nav-features.active,
+nav.top-bar .top-bar-section li.nav-features.active > a  {
+	background: #551111 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-features > a {
+	color: #551111;
+}
+
+nav.top-bar .top-bar-section ul li.nav-features.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-science:hover,
+nav.top-bar .top-bar-section li.nav-science:hover > a,
+nav.top-bar .top-bar-section li.nav-science.active,
+nav.top-bar .top-bar-section li.nav-science.active > a  {
+	background: #22A457 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-science > a {
+	color: #22A457;
+}
+
+nav.top-bar .top-bar-section ul li.nav-science.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-technology:hover,
+nav.top-bar .top-bar-section li.nav-technology:hover > a,
+nav.top-bar .top-bar-section li.nav-technology.active,
+nav.top-bar .top-bar-section li.nav-technology.active > a  {
+	background: #016299 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-technology > a {
+	color: #016299;
+}
+
+nav.top-bar .top-bar-section ul li.nav-technology.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-lifestyle:hover,
+nav.top-bar .top-bar-section li.nav-lifestyle:hover > a,
+nav.top-bar .top-bar-section li.nav-lifestyle.active,
+nav.top-bar .top-bar-section li.nav-lifestyle.active > a  {
+	background: #00A5D5 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-lifestyle > a {
+	color: #00A5D5;
+}
+
+nav.top-bar .top-bar-section ul li.nav-lifestyle.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-coffeebreak:hover,
+nav.top-bar .top-bar-section li.nav-coffeebreak:hover > a,
+nav.top-bar .top-bar-section li.nav-coffeebreak.active,
+nav.top-bar .top-bar-section li.nav-coffeebreak.active > a  {
+	background: #50B968 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-coffeebreak > a {
+	color: #50B968;
+}
+
+nav.top-bar .top-bar-section ul li.nav-coffeebreak.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-sports:hover,
+nav.top-bar .top-bar-section li.nav-sports:hover > a,
+nav.top-bar .top-bar-section li.nav-sports.active,
+nav.top-bar .top-bar-section li.nav-sports.active > a  {
+	background: #344B3F !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-sports > a {
+	color: #344B3F;
+}
+
+nav.top-bar .top-bar-section ul li.nav-sports.active > a {
+	color: white !important;
+}
+
+div.section-title.section-title-news h1 {
+	color: #551111;
+}
+
+div.section-title.section-title-comment h1 {
+	color: #3F7F88;
+}
+
+div.section-title.section-title-science h1 {
+	color: #22A457;
+}
+
+div.felix-title-news, div.felix-title-news .row {
+	background: #d98c8c;
+}
+
+div.felix-title-science, div.felix-title-science .row {
+	background: #80e5a9;
+}
+
+/* ITEM TITLE CUSTOMS */
+
+.felix-item-title-news {
+	border-bottom: 1px solid #551111;
+}
+
+.felix-item-title-news h2, .felix-item-title-news h3 {
+	color: #551111;
+}
+
+.felix-item-title-comment {
+	border-bottom: 1px solid #3F7F88;
+}
+
+.felix-item-title-comment h2, .felix-item-title-comment h3 {
+	color: #3F7F88;
+}
+
+.felix-item-title-featured {
+	border-bottom: 1px solid #50B968;
+}
+
+.felix-item-title-featured h2, .felix-item-title-featured h3 {
+	color: #50B968;
+}
+
+.felix-item-title-sports {
+	border-bottom: 1px solid #344B3F;
+}
+
+.felix-item-title-sport h2, .felix-item-title-sports h3 {
+	color: #344B3F;
+}
+
+.felix-item-title-generic {
+	border-bottom: 1px solid #444444;
+}
+
+.felix-item-title-generic h2, .felix-item-title-generic h3 {
+	color: #444444;
+}
+
+div.felix-header-news, div.felix-footer-news, div.felix-header-news .row, div.felix-footer-news .row {
+	background: #551111;	
+}
+
+div.felix-header-science, div.felix-footer-science, div.felix-header-science .row, div.felix-footer-science .row {
+	background: #22A457;	
+}
+
+/* FRONT PAGE SLIDER */
+
+div.felix-featured-slider {
+	height: 300px;
+}
+
+div.felix-featured-image {
+	height: 250px;
+	overflow: hidden;
+	position: relative;
+	top: -150px;
+	z-index: -10;
+}
+
+div.article-image-image {
+	position: normal;
+	top: 0;
+	max-height: 350px;
+	overflow: hidden;
+}
+
+div.felix-featured-caption, div.felix-featured-subcaption, div.article-image-subcaption {
+	font-family: 'Noto Serif', serif;
+}
+
+div.felix-featured-caption {
+	position: relative;
+	top: 20px;
+	left: 20px;
+	z-index: 100;
+	font-weight: bold;
+	color: white;
+	font-size: xx-large;
+	text-shadow: 2px 2px black;
+	height: 150px;
+	overflow: hidden;
+	line-height: 1.1;
+	width: 90%;
+}
+
+div.felix-featured-caption a {
+	color: white;
+}
+
+div.felix-featured-subcaption, div.article-image-subcaption {
+	background: black;
+	color: white;
+	padding: 5px;
+	padding-left: 15px;
+	position: relative;
+	top: -155px;
+}
+
+div.article-image-subcaption {
+	position: static;
+}
+
+.slick-prev:before, .slick-next:before {
+	color: black !important; /* bugfix */
+}
+
+/* BUBBLES */
+  .bubble {
+    position: relative;
+    width: 50px;
+    height: 25px;
+    padding: 0px;
+    background: #8595ff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+  .bubble:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 20px;
+    border-style: solid;
+    border-width: 10px 5px 0;
+    border-color: #8595ff transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+}
