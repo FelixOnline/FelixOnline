@@ -24,10 +24,28 @@
 		<?php foreach($theme->resources->getCSS() as $key => $value) { ?>
 			<link id="<?php echo $key;?>" rel="stylesheet" href="<?php echo $value; ?>">
 		<?php } ?>
+
+		<title>
+			<?php if($title) {
+				echo $title;
+			} else {
+				echo 'Felix Online - The student voice of Imperial College London';
+			} ?> 
+		</title>
 	</head>
 	<body>
+<?php
+	// If article page
+	if ($theme->isPage('article')) {
+		$check = $article->getCategory()->getCat();
+	} else if ($theme->isPage('category')) { // if category page
+		$check = $category->getCat();
+	} else {
+		$check = 'home';
+	}
+?>
 		<div id="fb-root"></div>
-		<div class="felix-header felix-header-news">
+		<div class="felix-header felix-header-<?php echo $check; ?>">
 			<div class="row">
 				<div class="medium-6 columns felix-header-actions">
 					Monday 22nd October • <a href="<?php echo STANDARD_URL; ?>issuearchive/">Issue Archive</a>
@@ -48,7 +66,7 @@
 			</div>
 		</div>
 
-		<div class="felix-title felix-title-news">
+		<div class="felix-title felix-title-<?php echo $check; ?>">
 			<div class="row">
 				<div class="medium-8 columns felix-title-logo">
 					<div>
