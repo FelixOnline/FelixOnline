@@ -38,10 +38,6 @@ $theme->render('header', $header);
 	<!-- Sidebar -->
 	<div class="sidebar grid_4 push_8">
 		<?php
-			$theme->render('sidebar/featuredBox');
-			$theme->render('sidebar/socialLinks');
-			$theme->render('sidebar/mostPopular');
-			$theme->render('sidebar/fbActivity');
 
 			$timing->log('after sidebar');
 		?>
