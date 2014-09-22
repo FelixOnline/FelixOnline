@@ -42,7 +42,7 @@
 						<a href="<?php echo $currentuser->getURL(); ?>" title="Profile Page">
 							<?php echo $currentuser->getName();?>
 						</a> • 
-						<a href="<?php echo STANDARD_URL.'logout/?goto='.Utility::currentPageURL(); ?>">Log out</a>
+						<a href="<?php echo STANDARD_URL.'auth/?logout&goto='.Utility::currentPageURL(); ?>">Log out</a>
 					<?php } ?> • Contact us • Advertising • About us
 				</div>
 			</div>

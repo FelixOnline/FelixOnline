@@ -13,21 +13,14 @@ $timing->log('after header');
 		<div class="row felix-pad-top">
 			<div class="medium-8 columns">
 				<div class="felix-featured-slider">
-					<div>
-						<div class="felix-featured-caption">Caption One.</div>
-						<div class="felix-featured-image"><img src="http://placekitten.com/g/1200/1200" alt="slide 1"></div>
-						<div class="felix-featured-subcaption">Blah blah blah.</div>
-					</div>
-					<div>
-						<div class="felix-featured-caption">Caption Two.</div>
-						<div class="felix-featured-image"><img src="http://placekitten.com/g/1000/1000" alt="slide 2"></div>
-						<div class="felix-featured-subcaption">Blah blah blah.</div>
-					</div>
-					<div>
-						<div class="felix-featured-caption">Caption Three.</div>
-						<div class="felix-featured-image"><img src="http://placekitten.com/g/1200/1000" alt="slide 3"></div>
-						<div class="felix-featured-subcaption">Blah blah blah.</div>
-					</div>
+					<?php $featured = $frontpage->getSection('featured'); ?>
+					<?php
+						foreach($featured as $article) {
+							$theme->render('components/articlelist/featured_spinner', array(
+								'article' => $article
+							));
+						}
+					?>
 				</div>
 			</div>
 			<div class="medium-4 columns show-for-medium-up">
