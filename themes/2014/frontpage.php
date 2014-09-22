@@ -39,12 +39,12 @@ $timing->log('after header');
 					->filter('published < NOW()')
 					->filter('category = %i', array(NEWS_CATEGORY_ID))
 					->order('published', 'DESC')
-					->limit(0, 11)
+					->limit(0, 12)
 					->values();
 
 					foreach($articles as $key => $article) {
-						if($key >= 7) { continue; }
-						$theme->render('components/articlelist/frontpage_news', array(
+						if($key >= 8) { continue; }
+						$theme->render('components/articlelist/article_medium', array(
 							'article' => $article
 						));
 					}
@@ -52,15 +52,15 @@ $timing->log('after header');
 				<div class="row">
 					<div class="medium-6 columns">
 						<?php
-							$theme->render('components/articlelist/frontpage_news_secondary', array(
-								'article' => $articles[7]
+							$theme->render('components/articlelist/article_small', array(
+								'article' => $articles[8]
 							));
 						?>
 					</div>
 					<div class="medium-6 columns">
 						<?php
-							$theme->render('components/articlelist/frontpage_news_secondary', array(
-								'article' => $articles[8]
+							$theme->render('components/articlelist/article_small', array(
+								'article' => $articles[9]
 							));
 						?>
 					</div>
@@ -68,15 +68,15 @@ $timing->log('after header');
 				<div class="row">
 					<div class="medium-6 columns">
 						<?php
-							$theme->render('components/articlelist/frontpage_news_secondary', array(
-								'article' => $articles[9]
+							$theme->render('components/articlelist/article_small', array(
+								'article' => $articles[10]
 							));
 						?>
 					</div>
 					<div class="medium-6 columns">
 						<?php
-							$theme->render('components/articlelist/frontpage_news_secondary', array(
-								'article' => $articles[10]
+							$theme->render('components/articlelist/article_small', array(
+								'article' => $articles[11]
 							));
 						?>
 					</div>
@@ -97,19 +97,11 @@ $timing->log('after header');
 				?>
 				<center><a class="button" href="<?php echo STANDARD_URL; ?>issuearchive/">Read more online</a></center>
 
-				<div class="felix-item-title felix-item-title felix-item-title-generic">
-					<h3>write for us!</h3>
-				</div>
-				<p>Interested in becoming a news reporter? Or just have a favourite something to share with Imperial? Write for Felix - it's easy!</p>
-				<p>Got a tip you'd like to share? We welcome anonymous messages too.</p>
-				<center><a class="button" href="<?php echo STANDARD_URL; ?>issuearchive/">Find out how to contribute</a></center>	
+				<?php
+					$theme->render('sidebar/contributionPolicy');
 
-				<div class="felix-item-title felix-item-title-generic">
-					<h3>@feliximperial on twitter</h3>
-				</div>
-				<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/feliximperial"  data-widget-id="346347929105219584" data-chrome="noheader nofooter noborders noscrollbar transparent" data-tweet-limit="4">Tweets by @feliximperial</a>
-				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
+					$theme->render('sidebar/twitter');
+				?>
 			</div>
 		</div>
 

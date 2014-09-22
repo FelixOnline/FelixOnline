@@ -2,7 +2,7 @@
 				<div class="panel felix-item-panel">
 					<div class="row">
 						<div class="small-6 columns felix-item-text">
-							<span class="felix-item-cat felix-item-cat-<?php echo $article->getCategory()->getCat(); ?>"><?php echo $article->getCategory()->getCat(); ?></span>
+							<span class="felix-item-cat felix-item-cat-<?php echo $article->getCategory()->getCat(); ?>"><?php echo $article->getCategory()->getLabel(); ?></span>
 							<h4 class="felix-item-title"><a href="<?php echo $article->getURL();?>"><?php echo $article->getTitle(); ?></a></h4>
 						</div>
 						<div class="small-6 columns felix-item-pic">

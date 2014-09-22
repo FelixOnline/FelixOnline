@@ -1,52 +1,26 @@
-<div class="featBox">
-	<div class="border clearfix">
-		<h3>
-			<a href="<?php echo $article->getURL();?>">
-				<?php echo $article->getTitle();?>
-			</a>
-		</h3>
-		<div class="subHeader <?php if($article->getImage() && $article->getImage()->isTall(160, 160)) { echo ' tallpic'; }?>">
-			<p>
-				<?php 
-					echo $article->getPreview(35);
-				?>
-			</p>
-			<div id="storyMeta" class="<?php if(!$article->getNumComments()) echo 'extra';?>">
-				<ul class="metaList">
-					<?php if ($article->getCategory()->getCat() == 'comment') { ?>
-					<li id="articleAuthor">
-						<?php echo Utility::outputUserList($article->getAuthors()); ?>
-					</li>
-					<?php } ?>
-					<?php if($article->getNumComments()) { ?>
-						<li id="comments">
-							<a href="<?php echo $article->getURL();?>#commentHeader">
-								<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>
-							</a>
-						</li>
-					<?php } ?>
-					<li>
-						<?php echo date("l F j, Y",$article->getPublished());?>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<?php if ($image = $article->getImage()) { ?>
-			<div id="secondStoryPic">
-				<a href="<?php echo $article->getURL();?>">
-				<?php if($image->isTall(220, 220)) { ?>
-					<img id="secondStoryPhoto" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(120, 130);?>">
-				<?php } else { ?>
-					<img id="secondStoryPhoto" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(220, 120);?>">
-				<?php } ?>
-				</a>
-			</div>
-		<?php } else { ?>
-			<div id="secondStoryPic">
-				<a href="<?php echo $article->getURL();?>">
-					<img id="secondStoryPhoto" alt="" src="<?php echo IMAGE_URL.'220/120/'.DEFAULT_IMG_URI; ?>">
-				</a>
-			</div>
-		<?php } ?>
-	</div>
-</div>
+<!-- Top story -->
+				<div class="felix-front-news-main felix-news-dotted">
+					<div class="row">
+						<div class="medium-4 columns felix-front-news-main-img">
+						<?php if ($image = $article->getImage()) { ?>
+								<a href="<?php echo $article->getURL();?>">
+								<?php if($image->isTall(800, 800)) { ?>
+									<img alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(500, 600);?>">
+								<?php } else { ?>
+									<img alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(800, 600);?>">
+								<?php } ?>
+								</a>
+						<?php } else { ?>
+								<a href="<?php echo $article->getURL();?>">
+									<img alt="" src="<?php echo IMAGE_URL.'800/600/'.DEFAULT_IMG_URI; ?>">
+								</a>
+						<?php } ?>
+						</div>
+						<div class="medium-8 columns felix-front-news-main-text">
+							<span class="felix-front-news-date"><?php echo date("l F j, Y",$article->getPublished());?><?php if(isset($show_authors)): echo " • ".Utility::outputUserList($article->getAuthors()); endif; ?></span>
+							<h3><a href="<?php echo $article->getURL();?>"><?php echo $article->getTitle();?></a></h3>
+							<p><?php echo $article->getTeaser();?></p>
+						</div>
+					</div>
+				</div>
+<!-- End of top story -->
