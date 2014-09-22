@@ -31,8 +31,6 @@ $header = array(
 	'meta' => $meta
 );
 
-$theme->resources->addCSS(array('print.less'));
-
 $theme->render('header', $header);
 ?>
 <!-- Article wrapper -->
@@ -44,7 +42,6 @@ $theme->render('header', $header);
 			$theme->render('sidebar/socialLinks');
 			$theme->render('sidebar/mostPopular');
 			$theme->render('sidebar/fbActivity');
-			$theme->render('sidebar/mediaBox');
 
 			$timing->log('after sidebar');
 		?>
@@ -212,7 +209,7 @@ $theme->render('header', $header);
 					$comments = $article->getComments();
 					if (is_array($comments)) {
 						foreach($comments as $key => $comment) {
-							$theme->render('comment', array('comment' => $comment));
+							$theme->render('components/comment', array('comment' => $comment));
 						}
 					}
 				?>
