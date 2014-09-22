@@ -34,7 +34,7 @@ varsity/
 /vendor/
 *.sql
 
-themes/classic/css/*.css
+themes/*/css/*.css
 phinx.yml
 composer.phar
 composer.lock
