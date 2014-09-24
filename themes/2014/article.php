@@ -33,251 +33,203 @@ $header = array(
 
 $theme->render('components/header', $header);
 ?>
-<!-- Article wrapper -->
-<div class="container_12">
-	<!-- Sidebar -->
-	<div class="sidebar grid_4 push_8">
-		<?php
-
-			$timing->log('after sidebar');
-		?>
-	</div>
-	<!-- End of sidebar -->
-
-	<div class="article grid_8 pull_4 alpha <?php echo $article->getCategory()->getCat();?> instapaper_body hentry">
-		<!-- Article header -->
-		<?php if ($article->getCategory()->getCat() == 'comment') { ?>
-			<div class="grid_5">
-				<h2 class="instapaper_title entry-title"><?php echo $article->getTitle(); ?></h2>
-				<div class="subHeader"><?php echo $article->getTeaser(); ?></div>
-			</div>
-			<div class="grid_3 alpha omega" id="commentArticlePic">
-				<?php
-					$author = $article->getAuthors()[0];
-					$image = $author->getImage();
-				?>
-				<a href="user/<?php echo $author->getUser(); ?>/" title="<?php echo $author->getName(); ?>">
-					<img id="articlePic" alt="<?php echo $author->getName(); ?>" src="<?php echo $image->getURL(220, 160); ?>"></a>
-			</div>
-		<?php } else { ?>
-			<h2 class="grid_8 instapaper_title entry-title">
-				<?php echo $article->getTitle(); ?>
-			</h2>
-			<div class="subHeader grid_8">
-				<?php echo $article->getTeaser(); ?>
-			</div>
-		<?php } ?>
-		<div class="articleInfo grid_8">
-			<p>
-				<?php echo Utility::outputUserList($article->getAuthors()); ?>
-			</p>
-			<p>
-				<span class="<?php echo $article->getCategory()->getCat();?>">
-					<a href="<?php echo $article->getCategory()->getCat();?>/">
-						<?php echo $article->getCategory()->getLabel();?>
-					</a>
-				</span> - <?php echo $article->getPublished() ? date("l F j, Y", $article->getPublished()) : "<strong>Not Published</strong>";?>
-			</p>
-			<?php
-				$isSectionEditor = false;
-				if($article->getCategory()->getEditors() != null) {
-					foreach($article->getCategory()->getEditors() as $user) {
-						if($currentuser->getUser() == $user->getUser()) {
-							$isSectionEditor = true;
+<!-- Article header -->
+		<div class="article-title article-title-<?php echo $article->getCategory()->getCat(); ?>">
+			<div class="row">
+				<div class="medium-8 columns">
+					<h1><?php echo $article->getTitle(); ?></h1>
+					<h2><?php echo $article->getTeaser(); ?></h2>
+				</div>
+				<div class="medium-4 columns article-meta">
+					<div class="article-authors text-right">By <b><?php echo Utility::outputUserList($article->getAuthors(), true); ?></b>.</div>
+					<div class="article-date text-right">Published on <?php echo $article->getPublished() ? date('l F j, Y \a\t H:m', $article->getPublished()) : "<strong>Not Published</strong>";?>.</div>
+					<div class="article-comments text-right"><span class="comment-count"><a href="<?php echo Utility::currentPageURL().'#commentHeader';?>"><?php echo $article->getNumComments().'</a></span> comment'.($article->getNumComments() != 1 ? 's' : '');?>.<?php if ($article->canComment($currentuser)) { ?> <a href="<?php echo Utility::currentPageURL().'#commentForm';?>">Post your own now</a>!<?php } ?></div>
+					<?php
+						$isSectionEditor = false;
+						if($article->getCategory()->getEditors() != null) {
+							foreach($article->getCategory()->getEditors() as $user) {
+								if($currentuser->getUser() == $user->getUser()) {
+									$isSectionEditor = true;
+								}
+							}
 						}
-					}
-				}
-			?>
-			<?php if($currentuser->getRole() >= 25 || $isSectionEditor): ?>
-				<span id="editpage"><a href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Page</a></span>
-			<?php endif; ?>
-		</div>
-		<!-- End of article header -->
-
-		<?php $timing->log('after article header'); ?>
-
-		<!-- Sidebar 2 -->
-		<div class="sidebar2 grid_2 push_6 entry-unrelated">
-			<div id="sharebuttonsCont">
-				<h6>Sharing</h6>
-				<ul>
-					<div id="sharebuttons">
-						<li id="facebookLike">
-							
-						</li>
-						<li id="twitterShare">
-
-						</li>
-						<li id="googleShare">
-							
-						</li>
-						<li id="redditShare">
-							<script type="text/javascript" src="http://www.reddit.com/static/button/button3.js"></script>
-						</li>
-						<li id="bufferShare">
-						    <a href="http://bufferapp.com/add" class="buffer-add-button" data-text="<?= $article->getTitle() ?>" data-count="horizontal" data-via="feliximperial">Buffer</a>
-                        </li>
-					</div>
-				</ul>
+					?>
+					<?php if($currentuser->getRole() >= 25 || $isSectionEditor): ?>
+						<div class="article-edit text-right"><b><a class="button tiny" href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Article</a></b></div>
+					<?php endif; ?>
+				</div>
 			</div>
-			<ul class="metaList">
-				<li id="comments">
-					<a href="<?php echo Utility::currentPageURL().'#commentHeader';?>">
-						<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>
-					</a>
-				</li>
-				<li>
-					<a href="#" id="print-article">Print Article</a>
-				</li>
-			</ul>
 		</div>
-		<!-- End of Sidebar 2 -->
-		<?php $timing->log('after sidebar 2'); ?>
+<!-- End of article header -->
 
-		<!-- Content -->
-		<div class="content grid_6 pull_2 omega entry-content">
-			<?php if($image = $article->getImage()) { ?>
-				<div id="imgCont" class="<?php if($image->isTall()) echo "right";?>">
+		<div class="row">
+			<!-- Content -->
+			<div class="medium-8 columns">
+				<?php if($image = $article->getImage()) { ?>
+				<div class="article-image tall-image">
+					<div class="article-image-image">
 					<?php if($image->isTall()) { ?>
-						<img id="articlePic" class="vertical" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(240);?>">
+						<img id="articlePic" class="vertical" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(350);?>">
 					<?php } else { ?>
-						<img id="articlePic" class="horizontal" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(460);?>">
+						<img id="articlePic" class="horizontal" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(650);?>">
 					<?php } ?>
+					</div>
+
 					<?php if ( $image->getCaption() || $image->getAttribution()) { ?>
-						<div id="imageCaption">
+						<div class="article-image-subcaption">
 							<?php if ($image->getCaption()) { ?> 
 								<span><?php echo $image->getCaption();?></span>
 							<?php } ?>
 							<?php if($image->getAttribution()) { ?>
-								<div id="imageAttr">
-									<?php if($image->getCaption()) echo ' - ';?>
+								<div class="imageAttr">
 									<?php if($image->getAttrLink()) { ?>
 										<a href="<?php echo $image->getAttrLink(); ?>">
 									<?php } ?>
-										Credit: <?php echo $image->getAttribution();?>
+									Credit: <?php echo $image->getAttribution();?>
 									<?php if($image->getAttrLink()) echo '</a>'?>
 								</div>
 							<?php } ?>
 						</div>
 					<?php } ?>
 				</div>
-			<?php } ?>
-			<?php $timing->log('after image'); ?>
-			<?php
-				echo $article->getContent();
-			?>
-			<?php $timing->log('after content'); ?>
-		</div>
-		<!-- End of content -->
-
-		<!-- Article share -->
-		<div class="articleShare grid_8">
-			<ul>
-				<li>
-					<div id="shareText">Share: </div>
-				</li>
-				<li>
-					<div id="twitterShare2">
-
-					</div>
-				</li>
-				<li>
-					<div id="googleShare2">
-						
-					</div>
-				</li>
-				<li>
-					<div id="facebookLike2">
-						
-					</div>
-				</li>
-			</ul>
-		</div>
-		<!-- End of article share -->
-
-		<?php $timing->log('beginning of comments');?>
-		<!-- Comments -->
-		<div class="grid_8 comments" id="commentHeader">
-			<h3>Comments <span>(<?php echo $article->getNumComments().' comment'.($article->getNumComments() != 1 ? 's' : '');?>)</span></h3>
-			<!-- Comments container -->
-			<div id="commentCont">
-				<?php
-					$comments = $article->getComments();
-					if (is_array($comments)) {
-						foreach($comments as $key => $comment) {
-							$theme->render('components/comment', array('comment' => $comment));
-						}
-					}
-				?>
-			</div>
-			<!-- End of comments container -->
-			
-			<!-- Comment form -->
-			<div id="commentForm">
-				<?php if ($article->canComment($currentuser)) { ?>
-					<?php if (!$currentuser->isLoggedIn()) { ?>
-						<h5>Comment anonymously or <a href="<?php echo Utility::currentPageURL();?>#loginBox" rel="facebox">log in</a></h5>
-						<div id="info">
-							<p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and are moderated later. Your IP address will also be submitted to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
-							<p>Read our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
-						</div>
-					<?php } else { ?>
-						<h5>Leave a comment as <a href="<?php echo $currentuser->getURL();?>" title="Profile Page"><?php echo $currentuser->getName();?></a></h5>
-					<?php } ?>
-					<!-- Errors -->
-					<div class="error">
-						<?php if(isset($errorduplicate) && $errorduplicate) { ?>
-							<p>Looks like the comment you have just submitted is a duplicate. Please write something original and try again.</p>
-						<?php } ?>
-						<?php if(isset($erroremail) && $erroremail) { ?>
-							<p>You need to give you email address. If you haven't, there's something wrong with what you have given us. Don't worry, this won't be published.</p>
-						<?php } ?>
-						<?php if(isset($errorspam) && $errorspam) { ?>
-							<p>Our spam filters have flagged your comment as suspicious. If you are not a spammer then please <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
-						<?php } ?>
-						<?php if(isset($errorinsert) && $errorinsert) { ?>
-							<p>Uh oh. Looks like an error has occurred. Hopefully it is just a temporary problem so try submitting your comment again. If that still hasn't done the trick then <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.</p>
-						<?php } ?>
-						<?php if (isset($errorconnection) && $errorconnection) { ?>
-							<p>Sorry it looks like we are having trouble with our anti spam service. Please try again later.</p>
-						<?php } ?>
-					</div>
-					<!-- End of errors -->
-					<form method="post" action="<?php echo Utility::currentPageURL();?>">
-						<?php if (!$currentuser->isLoggedIn()) { ?>
-							<label for="name">Name: </label>
-							<input name="name" id="name" value="<?php if(isset($_POST['name'])) echo $_POST['name'];?>"/>
-							<div class="clear"></div>
-							<label for="email">Email (will not be published): </label>
-							<input name="email" type="email" id="email" value="<?php if(isset($_POST['email'])) echo $_POST['email'];?>"/>
-							<div class="clear"></div>
-						<?php } else { ?>
-							<input type="hidden" value="<?php echo $currentuser->getUser(); ?>"/>
-						<?php } ?>
-						<div id="comentbox" class="clearfix">
-							<label for="comment" id="commentLabel">Comment: </label>
-							<div class="clear"></div>
-							<textarea name="comment" id="comment" rows="4" class="required"><?php if(isset($_POST['comment'])) echo $_POST['comment']; ?></textarea>
-							<label for="comment" class="error">Please write a comment</label>
-						</div>
-						<input type="submit" value="Post your comment" id="submit" name="<?php if($currentuser->isLoggedIn()) echo 'articlecomment'; else echo 'articlecomment_ext';?>"/>
-					</form>
-					<!-- Commenting policy -->
-					<?php $theme->render('commentPolicy');?>
-					<!-- End of commenting policy -->
-				<?php } else { ?>
-					<div class="error">
-						<p>Comments are disabled for this article</p>
-					</div>
 				<?php } ?>
+				<?php $timing->log('after image'); ?>
+				<?php if ($article->getCategory()->getCat() == 'comment') { ?>
+					<?php
+						$author = $article->getAuthors()[0];
+						$image = $author->getImage();
+					?>
+				<a href="user/<?php echo $author->getUser(); ?>/" title="<?php echo $author->getName(); ?>" class="article-author-image">
+					<img id="articlePic" alt="<?php echo $author->getName(); ?>" src="<?php echo $image->getURL(220, 160); ?>">
+				</a>
+				<?php } ?>
+				<div class="article-text">
+				<?php
+					echo $article->getContent();
+				?>
+				</div>
+				<?php $timing->log('after content'); ?>
+				<!-- End of content -->
+
+				<?php $timing->log('beginning of comments');?>
+				<!-- Comments -->
+				<div class="article-comments-zone article-comments-zone-news" id="commentHeader">
+					<h3>Comments <span>(<?php echo $article->getNumComments(); ?>)</span></h3>
+					<?php if ($article->canComment($currentuser)) { ?><span class="article-comments-say">Have something to say? <a href="<?php echo Utility::currentPageURL().'#commentForm';?>"><b>Post your comment now</b></a>.</span><?php } ?>
+
+					<!-- Comments container -->
+					<?php
+						$comments = $article->getComments();
+						if (is_array($comments)) {
+							foreach($comments as $key => $comment) {
+								$theme->render('components/comment', array('comment' => $comment));
+							}
+						}
+					?>
+					<!-- End of comments container -->
+					
+					<!-- Comment form -->
+					<div class="article-comment" id="commentForm">
+						<?php if ($article->canComment($currentuser)) { ?>
+							<?php if (!$currentuser->isLoggedIn()) { ?>
+								<h4>Comment anonymously or <a href="#" data-reveal-id="loginModal">log in</a></h4>
+								<div id="info">
+									<p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and are moderated later. Even if you are logged in, your comment can be published anonymous. Your IP address will also be submitted to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
+									<p>Read our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
+								</div>
+							<?php } else { ?>
+								<h4>Leave a comment as <a href="<?php echo $currentuser->getURL();?>" title="Profile Page"><?php echo $currentuser->getName();?></a></h4>
+							<?php } ?>
+
+							<?php if(isset($errorduplicate) || isset($erroremail) || isset($errorspam) || isset($errorinsert) || isset($errorconnection)): ?>
+							<!-- Errors -->
+							<div class="alert-box">
+								<?php if(isset($errorduplicate) && $errorduplicate) { ?>
+									Looks like the comment you have just submitted is a duplicate. Please write something original and try again.
+								<?php } ?>
+								<?php if(isset($erroremail) && $erroremail) { ?>
+									You need to give you email address. If you haven't, there's something wrong with what you have given us. Don't worry, this won't be published.
+								<?php } ?>
+								<?php if(isset($errorspam) && $errorspam) { ?>
+									Our spam filters have flagged your comment as suspicious. If you are not a spammer then please <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.
+								<?php } ?>
+								<?php if(isset($errorinsert) && $errorinsert) { ?>
+									Uh oh. Looks like an error has occurred. Hopefully it is just a temporary problem so try submitting your comment again. If that still hasn't done the trick then <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.
+								<?php } ?>
+								<?php if (isset($errorconnection) && $errorconnection) { ?>
+									Sorry it looks like we are having trouble with our anti spam service. Please try again later.
+								<?php } ?>
+							</div>
+							<!-- End of errors -->
+							<?php endif; ?>
+
+							<form method="post" action="<?php echo Utility::currentPageURL();?>">
+								<div class="row">
+									<div class="large-9 small-12 columns">
+										<?php if (!$currentuser->isLoggedIn()) { ?>
+										<div class="row">
+											<div class="medium-3 columns">
+												<label class="inline" for="name">Name to show</label>
+											</div>
+											<div class="medium-9 columns">
+												<input type="text" name="name" id="right-label" value="<?php if(isset($_POST['name'])) echo $_POST['name'];?>">
+											</div>
+										</div>
+										<div class="row">
+											<div class="medium-3 columns">
+												<label class="inline" for="email">Email (will not be published)</label>
+											</div>
+											<div class="medium-9 columns">
+												<input type="text" name="email" id="right-label" value="<?php if(isset($_POST['email'])) echo $_POST['email'];?>">
+											</div>
+										</div>
+									<?php } else { ?>
+										<input type="hidden" value="<?php echo $currentuser->getUser(); ?>"/>
+									<?php } ?>
+										<div class="row">
+											<div class="medium-3 columns">
+												<label class="inline" for="comment">Your comment</label>
+											</div>
+											<div class="medium-9 columns">
+												<textarea name="comment" id="comment" rows="4"><?php if(isset($_POST['comment'])) echo $_POST['comment']; ?></textarea>
+											</div>
+										</div>
+										<div class="row">
+											<div class="medium-3 columns">
+											</div>
+											<div class="medium-4 columns">
+												<input type="submit" class="button postfix" value="Post comment">
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+							<!-- Commenting policy -->
+							
+							<!-- End of commenting policy -->
+						<?php } else { ?>
+							<br>
+							<div class="alert-box">
+								<b>Comments are disabled for this article</b>
+							</div>
+						<?php } ?>
+					</div>
+					<!-- End of comment form -->
+				</div>
+				<!-- End of comments -->
+				<?php $timing->log('end of comments');?>
+				<?php $timing->log('end of article content');?>
 			</div>
-			<!-- End of comment form -->
+			<div class="medium-4 columns">
+				<?php $theme->render('sidebar/shareArticle', array('article' => $article)); ?>
+
+				<?php $theme->render('sidebar/contributionPolicy', array('category' => $article->getCategory())); ?>
+
+				<?php $theme->render('sidebar/mostPopular'); ?>
+
+				<?php $theme->render('sidebar/twitter'); ?>
+			</div>
 		</div>
-		<!-- End of comments -->
-		<?php $timing->log('end of comments');?>
-	</div>
-	<?php $timing->log('end of article content');?>
-</div>
 
 <!-- Google plus one script -->
 <script type="text/javascript">

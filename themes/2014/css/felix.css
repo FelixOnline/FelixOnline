@@ -274,7 +274,17 @@ div.article-title h2 {
 }
 
 div.article-image {
-	margin-bottom: 1em;
+	margin-bottom: 2em;
+}
+
+div.tall-image {
+	width: 50%;
+	float: right;
+}
+
+div.article-image-image img.vertical {
+	width: 100%;
+	margin-left: 1em;
 }
 
 div.article-meta {
@@ -291,6 +301,7 @@ blockquote {
 	margin-left: 1em;
 	margin-bottom: 1em;
 	font-size: larger;
+	width: 50%;
 }
 
 blockquote p {
@@ -470,7 +481,7 @@ div.section-breadcrumbs {
 	margin-top: 0.3em !important;
 }
 
-.section-editors {
+.section-editors, .user-meta {
 	margin-top: 0.3em
 }
 
@@ -484,6 +495,150 @@ div.section-title h1 {
 	font-family: 'Sorts Mill Goudy', serif;
 	color: magenta;
 	margin-bottom: -0.3em;
+}
+
+div.user-title {
+	border-bottom: 3px double #0085AB;
+	padding-bottom: 0.5em;
+	margin-bottom: 1em;
+}
+
+div.user-title h1 {
+	font-family: 'Sorts Mill Goudy', serif;
+	color: #0085AB;
+	margin-bottom: -0.3em;
+}
+
+.loading {
+    padding-left: 20px;
+    background: url('../img/spin-loader.gif') 0 0 no-repeat;
+    display: none
+}
+
+#userPopular {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+#userPopular
+li {
+    padding-bottom: 5px;
+    color: #999;
+    font-weight: bold;
+}
+
+#userPopular li:hover {
+    color: #333
+}
+
+#userPopular li
+a {
+    font-weight: normal;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+#userPopular li a:hover {
+    text-decoration: underline
+}
+
+#userPopular li a:active {
+    color: #fff;
+    background: #1f4f82
+}
+
+#userPopList
+span {
+    font-size: 13px
+}
+
+#userPopList span:hover {
+    color: #999
+}
+
+#userPopList #popTitle
+a {
+    width: 200px
+}
+
+#userPopList
+#popHits {
+    float: right;
+    position: relative;
+    font-weight: normal;
+    font-size: 14px
+}
+
+#userPopular li:hover
+#popHits {
+    color: #999
+}
+
+.user #articleList li, .user #commentList
+li {
+    margin-bottom: 3px
+}
+
+#commentListCont {
+    margin-top: 15px;
+    border-top: 1px solid #bebebe;
+    padding-top: 5px
+}
+
+#commentListCont
+h3 {
+    padding-bottom: 2px
+}
+
+.user
+#commentList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+    margin-bottom: 20px
+}
+
+#recentComments
+span#popularity {
+    color: #555;
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em
+}
+
+#recentComments
+ul {
+    list-style-type: none;
+    margin-left: 0;
+}
+
+#recentComments
+li {
+    margin-bottom: 5px;
+    border-top: 1px dotted #333333;
+}
+
+#recentComments li
+a {
+    text-decoration: none;
+    font-size: 15px;
+}
+
+#recentComments li a:hover {
+    text-decoration: underline
+}
+
+#recentComments li a:active {
+    color: #fff;
+    background: #1f4f82
+}
+
+#recentComments li
+p {
+    margin-top: 3px;
+    font-size: smaller;
+    margin-bottom: 10px
 }
 
 /* SECTION COLOUR MODIFIERS */
@@ -738,6 +893,10 @@ div.felix-featured-image {
 	z-index: -10;
 }
 
+div.tall-image {
+	margin-left: 1em;
+}
+
 div.article-image-image {
 	position: normal;
 	top: 0;
@@ -745,8 +904,57 @@ div.article-image-image {
 	overflow: hidden;
 }
 
+div.article-image-image img {
+	width: 100%;
+	vertical-align: top;
+}
+
+div.imageAttr, div.imageAttr a {
+	color: white !important;
+	font-size: smaller;
+	font-style: italic;
+}
+
+div.alert-box {
+	padding: 0.5em !important;
+	padding-left: 1em !important;
+}
+
+div.article-edit a {
+	margin-bottom: 0;
+}
+
 div.felix-featured-caption, div.felix-featured-subcaption, div.article-image-subcaption {
 	font-family: 'Noto Serif', serif;
+}
+
+a.article-author-image {
+	float: left;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	border-bottom: 1px solid #333333;
+	width: 175px;
+}
+
+a.article-author-image img {
+	width: 175px;
+}
+
+div#sharebuttons {
+	margin-bottom: 1em;
+	text-align: center;
+}
+
+div#sharebuttons li {
+	float: left;
+	vertical-align: center;
+	list-style-type: none;
+	margin-right: 0.1em;
+	text-align: center;
+}
+
+div.clear {
+	clear: both;
 }
 
 div.felix-featured-caption {
