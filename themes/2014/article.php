@@ -66,7 +66,7 @@ $theme->render('components/header', $header);
 			<!-- Content -->
 			<div class="medium-8 columns">
 				<?php if($image = $article->getImage()) { ?>
-				<div class="article-image tall-image">
+				<div class="article-image<?php if($image->isTall()) { ?> tall-image<?php } ?>">
 					<div class="article-image-image">
 					<?php if($image->isTall()) { ?>
 						<img id="articlePic" class="vertical" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(350);?>">
