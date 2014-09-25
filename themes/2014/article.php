@@ -68,9 +68,9 @@ $theme->render('components/header', $header);
 				<div class="article-image<?php if($image->isTall()) { ?> tall-image<?php } ?>">
 					<div class="article-image-image">
 					<?php if($image->isTall()) { ?>
-						<img id="articlePic" class="vertical" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(350);?>">
+						<img class="vertical" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(750);?>">
 					<?php } else { ?>
-						<img id="articlePic" class="horizontal" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(1280);?>">
+						<img class="horizontal" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(1280);?>">
 					<?php } ?>
 					</div>
 
