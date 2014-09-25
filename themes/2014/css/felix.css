@@ -1006,6 +1006,18 @@ div.article-image-subcaption, #imageCaption {
 	color: black !important; /* bugfix */
 }
 
+ul.search-people-list {
+	margin-top: 1em !important;
+	margin-left: 0 !important;
+}
+
+ul.search-people-list li {
+	list-style-type: none;
+	margin-bottom: 0.2em;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
 /* BUBBLES */
   .bubble {
     position: relative;

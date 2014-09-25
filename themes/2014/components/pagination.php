@@ -8,7 +8,7 @@
 				</a>
 			</li>
 		<?php } else { ?>
-			 <li class="arrow unavailable" aria-disabled="true"><a href="">&laquo; Previous</a></li>
+			 <li class="arrow unavailable" aria-disabled="true"><a>&laquo; Previous</a></li>
 		<?php }
 			if ($pages > 1) {
 				if ($pages > $span) { // more pages than limit
@@ -44,7 +44,7 @@
 					</a>
 				</li>
 			<?php } else { ?>
-				<li class="arrow unavailable" aria-disabled="true"><a href="">Next &raquo;</a></li>
+				<li class="arrow unavailable" aria-disabled="true"><a>Next &raquo;</a></li>
 			<?php }
 		?>
 	</ul>
