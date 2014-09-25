@@ -239,7 +239,7 @@ div.article-comment h4 {
 div.comment-meta {
 	color: #333333 !important;
 	margin-bottom: 0.5em;
-	margin-top: -0.5em;
+	margin-top: 0.5em;
 }
 
 div.comment-tools {
@@ -260,20 +260,22 @@ div.comment-tools ul li {
 	padding-bottom: 0.5em;
 }
 
-div.article-title h1, div.article-title h2 {
+div.article-title-area h1, div.article-title-area h2 {
 	font-family: 'Noto Serif', serif;
 }
 
-div.article-title h1 {
+div.article-title-area h1 {
 	font-weight: bold;
-	font-size: 1.6em;
+	font-size: 1.8em;
 }
 
-div.article-title h2 {
+div.article-title-area h2 {
 	font-size: 1em;
+	color: #666666;
+	margin-bottom: 1em;
 }
 
-div.article-image {
+div.article-image, #imgCont {
 	margin-bottom: 2em;
 }
 
@@ -289,7 +291,8 @@ div.article-image-image img.vertical {
 
 div.article-meta {
 	margin-top: 0.5em;
-	border-left: 1px dotted #333333;
+	margin-bottom: 1em;
+	padding-bottom: 0.5em;
 }
 
 p.article-first {
@@ -893,25 +896,38 @@ div.felix-featured-image {
 	z-index: -10;
 }
 
+div.article-authors {
+	font-family: 'Noto Serif', serif;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #333333;
+	margin-bottom: 0.5em;
+}
+
+div.article-date, div.article-comments {
+	color: #666666;
+}
+
 div.tall-image {
 	margin-left: 1em;
 }
 
-div.article-image-image {
-	position: normal;
-	top: 0;
-	max-height: 350px;
-	overflow: hidden;
+div.article-share-buttons {
+	margin-top: 0.7em !important;
+	margin-bottom: 1.5em !important;
 }
 
-div.article-image-image img {
+div.article-image-image, #articlePic {
+	position: normal;
+	top: 0;
+}
+
+div.article-image-image img, #articlePic {
 	width: 100%;
 	vertical-align: top;
 }
 
-div.imageAttr, div.imageAttr a {
+div.imageAttr, div#imageAttr, div.imageAttr a, #imageAttr a {
 	color: white !important;
-	font-size: smaller;
 	font-style: italic;
 }
 
@@ -920,11 +936,7 @@ div.alert-box {
 	padding-left: 1em !important;
 }
 
-div.article-edit a {
-	margin-bottom: 0;
-}
-
-div.felix-featured-caption, div.felix-featured-subcaption, div.article-image-subcaption {
+div.felix-featured-caption, div.felix-featured-subcaption, div.article-image-subcaption, #imageCaption {
 	font-family: 'Noto Serif', serif;
 }
 
@@ -976,7 +988,7 @@ div.felix-featured-caption a {
 	color: white;
 }
 
-div.felix-featured-subcaption, div.article-image-subcaption {
+div.felix-featured-subcaption, div.article-image-subcaption, #imageCaption {
 	background: black;
 	color: white;
 	padding: 5px;
@@ -985,8 +997,9 @@ div.felix-featured-subcaption, div.article-image-subcaption {
 	top: -155px;
 }
 
-div.article-image-subcaption {
+div.article-image-subcaption, #imageCaption {
 	position: static;
+	font-size: 0.8em;
 }
 
 .slick-prev:before, .slick-next:before {

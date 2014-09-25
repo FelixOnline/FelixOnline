@@ -33,17 +33,18 @@ $header = array(
 
 $theme->render('components/header', $header);
 ?>
-<!-- Article header -->
-		<div class="article-title article-title-<?php echo $article->getCategory()->getCat(); ?>">
-			<div class="row">
-				<div class="medium-8 columns">
+		<div class="row felix-pad-top">
+			<div class="medium-8 columns">
+				<div class="article-title-area">
 					<h1><?php echo $article->getTitle(); ?></h1>
 					<h2><?php echo $article->getTeaser(); ?></h2>
 				</div>
-				<div class="medium-4 columns article-meta">
-					<div class="article-authors text-right">By <b><?php echo Utility::outputUserList($article->getAuthors(), true); ?></b>.</div>
-					<div class="article-date text-right">Published on <?php echo $article->getPublished() ? date('l F j, Y \a\t H:m', $article->getPublished()) : "<strong>Not Published</strong>";?>.</div>
-					<div class="article-comments text-right"><span class="comment-count"><a href="<?php echo Utility::currentPageURL().'#commentHeader';?>"><?php echo $article->getNumComments().'</a></span> comment'.($article->getNumComments() != 1 ? 's' : '');?>.<?php if ($article->canComment($currentuser)) { ?> <a href="<?php echo Utility::currentPageURL().'#commentForm';?>">Post your own now</a>!<?php } ?></div>
+			</div>
+			<div class="medium-4 columns">
+				<div class="article-meta">
+					<div class="article-authors">By <b><?php echo Utility::outputUserList($article->getAuthors(), true); ?></b>.</div>
+					<div class="article-date">Published on <?php echo $article->getPublished() ? date('l F j, Y \a\t H:i', $article->getPublished()) : "<strong>Not Published</strong>";?>.</div>
+					<div class="article-comments"><span class="comment-count"><a href="<?php echo Utility::currentPageURL().'#commentHeader';?>"><?php echo $article->getNumComments().'</a></span> comment'.($article->getNumComments() != 1 ? 's' : '');?>.<?php if ($article->canComment($currentuser)) { ?> <a href="<?php echo Utility::currentPageURL().'#commentForm';?>">Post your own now</a>!<?php } ?></div>
 					<?php
 						$isSectionEditor = false;
 						if($article->getCategory()->getEditors() != null) {
@@ -55,13 +56,11 @@ $theme->render('components/header', $header);
 						}
 					?>
 					<?php if($currentuser->getRole() >= 25 || $isSectionEditor): ?>
-						<div class="article-edit text-right"><b><a class="button tiny" href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Article</a></b></div>
+						<div class="article-edit"><b><a class="button tiny" href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Article</a></b></div>
 					<?php endif; ?>
 				</div>
 			</div>
 		</div>
-<!-- End of article header -->
-
 		<div class="row">
 			<!-- Content -->
 			<div class="medium-8 columns">
@@ -71,7 +70,7 @@ $theme->render('components/header', $header);
 					<?php if($image->isTall()) { ?>
 						<img id="articlePic" class="vertical" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(350);?>">
 					<?php } else { ?>
-						<img id="articlePic" class="horizontal" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(650);?>">
+						<img id="articlePic" class="horizontal" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(1280);?>">
 					<?php } ?>
 					</div>
 
@@ -135,7 +134,7 @@ $theme->render('components/header', $header);
 								<h4>Comment anonymously or <a href="#" data-reveal-id="loginModal">log in</a></h4>
 								<div id="info">
 									<p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and are moderated later. Even if you are logged in, your comment can be published anonymous. Your IP address will also be submitted to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
-									<p>Read our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> for more information.</p>
+									<p>Read our <a href="#" data-reveal-id="commentPolicy">commenting policy</a> for more information.</p>
 								</div>
 							<?php } else { ?>
 								<h4>Leave a comment as <a href="<?php echo $currentuser->getURL();?>" title="Profile Page"><?php echo $currentuser->getName();?></a></h4>
@@ -204,8 +203,9 @@ $theme->render('components/header', $header);
 									</div>
 								</div>
 							</form>
+
 							<!-- Commenting policy -->
-							
+							<?php $theme->render('components/commentPolicy'); ?>
 							<!-- End of commenting policy -->
 						<?php } else { ?>
 							<br>
