@@ -286,7 +286,6 @@ div.tall-image {
 
 div.article-image-image img.vertical {
 	width: 100%;
-	margin-left: 1em;
 }
 
 div.article-meta {
@@ -518,130 +517,78 @@ div.user-title h1 {
     display: none
 }
 
-#userPopular {
+.user-popular {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 }
 
-#userPopular
-li {
+.user-popular li {
     padding-bottom: 5px;
     color: #999;
     font-weight: bold;
 }
 
-#userPopular li:hover {
-    color: #333
-}
-
-#userPopular li
-a {
+.user-popular li a {
     font-weight: normal;
     font-size: 15px;
     text-decoration: none;
 }
 
-#userPopular li a:hover {
-    text-decoration: underline
-}
-
-#userPopular li a:active {
-    color: #fff;
-    background: #1f4f82
-}
-
-#userPopList
-span {
+.user-popular-item span {
     font-size: 13px
 }
 
-#userPopList span:hover {
-    color: #999
-}
-
-#userPopList #popTitle
-a {
+.user-popular-item .popular-item-title a {
     width: 200px
 }
 
-#userPopList
-#popHits {
+.user-popular-item .popular-item-hits {
     float: right;
     position: relative;
     font-weight: normal;
     font-size: 14px
 }
 
-#userPopular li:hover
-#popHits {
+.user-popular-item:hover .user-popular-hits {
     color: #999
 }
 
-.user #articleList li, .user #commentList
-li {
-    margin-bottom: 3px
-}
-
-#commentListCont {
-    margin-top: 15px;
-    border-top: 1px solid #bebebe;
-    padding-top: 5px
-}
-
-#commentListCont
-h3 {
-    padding-bottom: 2px
-}
-
-.user
-#commentList {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    margin-top: 5px;
-    margin-bottom: 20px
-}
-
-#recentComments
-span#popularity {
+.user-comments span.comment-popularity {
     color: #555;
     display: block;
     margin-top: 0.5em;
     margin-bottom: 0.5em
 }
 
-#recentComments
-ul {
+.user-comments ul {
     list-style-type: none;
     margin-left: 0;
 }
 
-#recentComments
-li {
+.user-comments li {
     margin-bottom: 5px;
     border-top: 1px dotted #333333;
 }
 
-#recentComments li
-a {
+.user-comments li a {
     text-decoration: none;
     font-size: 15px;
 }
 
-#recentComments li a:hover {
-    text-decoration: underline
-}
-
-#recentComments li a:active {
-    color: #fff;
-    background: #1f4f82
-}
-
-#recentComments li
-p {
+.user-comments li p {
     margin-top: 3px;
     font-size: smaller;
     margin-bottom: 10px
+}
+
+div.felix-contact-area {
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+div.felix-contact-row p {
+	padding-top: 0.8em;
+	font-weight: bold;
 }
 
 /* SECTION COLOUR MODIFIERS */
@@ -1016,6 +963,17 @@ ul.search-people-list li {
 	margin-bottom: 0.2em;
 	font-weight: bold;
 	text-transform: uppercase;
+}
+
+div.felix-contribute {
+	margin-top: 1em;
+}
+
+div.felix-contribute a {
+	padding: 1em !important;
+	padding-top: 0.7em !important;
+	padding-bottom: 0.7em !important;
+	margin-top: -0.5em;
 }
 
 /* BUBBLES */
