@@ -27,14 +27,11 @@ $theme->render('components/header', $header);
 				<div class="medium-6 columns">
 					<div class="user-meta text-right show-for-medium-up">
 					<?php if ($articles || $comments) { ?>
-						<?php if ($articles){ echo 'Author of <b>'.$article_count; ?></b> article<?php echo ($article_count != 1 ? 's' : '');?><?php } ?>
-						<?php if($comments && $articles){?>and <?php } ?>  
-						<?php if($comments) { echo '<b>'.$comment_count;?></b> comment<?php echo ($comments != 1 ? 's' : ''); }?> 
-						since <b><?php echo date('d/m/Y',$user->getFirstLogin());?></b>
-						<br>
+						Since <b><?php echo date('d/m/Y',$user->getFirstLogin());?></b>, <?php echo $user->getFirstName(); ?> has written:<br>
+						<?php if ($articles){ echo '<b>'.$article_count; ?></b> article<?php echo ($article_count != 1 ? 's' : '');?><?php } ?>
+						<?php if($comments && $articles){?>and <?php } ?>
+						<?php if($comments) { echo '<b>'.$comment_count;?></b> comment<?php echo ($comments != 1 ? 's' : ''); }?>
 					<?php } ?>
-
-					<div class="user-email" <?php if(!$user->getEmail()) echo 'style="display:none;"'; ?>>Contact <?php echo $user->getName(); ?>: <b><?php echo Utility::hideEmail($user->getEmail()); ?></b></div>
 					</div>
 				</div>
 			</div>
@@ -45,11 +42,6 @@ $theme->render('components/header', $header);
 	<!-- End of sidebar -->
 		<?php if (!empty($articles)) { ?>
 			<!-- Articles -->
-				<div class="felix-item-title felix-item-title felix-item-title-generic">
-					<h2>
-						articles
-					</h2>
-				</div>
 				<?php foreach($articles as $key => $article) {
 					$theme->render('components/articlelist/article_medium', array(
 						'article' => $article
@@ -68,34 +60,80 @@ $theme->render('components/header', $header);
 		<?php } ?>
 	</div>
 	<div class="medium-4 columns">
+		<div class="felix-item-title felix-item-title felix-item-title-generic">
+			<h3>contact <?php echo $user->getFirstName(); ?></h3>
+		</div>
+		<div class="felix-contact-area">
+			<?php if($user->getEmail()): ?>
+			<div class="row felix-contact-row">
+				<div class="small-3 columns">
+					<a href="mailto:<?php echo $user->getEmail(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/email.png"></a>
+				</div>
+				<div class="small-9 columns">
+					<p><a href="mailto:<?php echo $user->getEmail(); ?>"><?php echo $user->getEmail(); ?></a></p>
+				</div>
+			</div>
+			<?php endif; ?>
+			<?php if($user->getFacebook()): ?>
+			<div class="row felix-contact-row">
+				<div class="small-3 columns">
+					<a href="http://facebook.com/<?php echo $user->getFacebook(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/fb.png"></a>
+				</div>
+				<div class="small-9 columns">
+					<p><a href="<?php echo $user->getFacebook(); ?>">Facebook</a></p>
+				</div>
+			</div>
+			<?php endif; ?>
+			<?php if($user->getTwitter()): ?>
+			<div class="row felix-contact-row">
+				<div class="small-3 columns">
+					<a href="http://twitter.com/<?php echo $user->getTwitter(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/twitter.png"></a>
+				</div>
+				<div class="small-9 columns">
+					<p><a href="http://twitter.com/<?php echo $user->getTwitter(); ?>">@<?php echo $user->getTwitter(); ?></a></p>
+				</div>
+			</div>
+			<?php endif; ?>
+			<?php if($user->getWebsitename() && $user->getWebsiteurl()): ?>
+			<div class="row felix-contact-row">
+				<div class="small-3 columns">
+					<a href="<?php echo $category->getWebsiteurl(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/web.png"></a>
+				</div>
+				<div class="small-9 columns">
+					<p><a href="<?php echo $category->getWebsiteurl(); ?>"><?php echo $user->getWebsitename(); ?></a></p>
+				</div>
+			</div>
+			<?php endif; ?>
+		</div>
+
 		<?php if ($article_count > 2 && $popular_articles) { ?>
 			<div class="felix-item-title felix-item-title felix-item-title-generic">
 				<h3>most popular articles</h3>
 			</div>
-				<ol id="userPopular">
-				<?php foreach($popular_articles as $article) { ?>
-					<li id="userPopList">
-						<div id="popTitle">
-							<?php if($currentuser->isLoggedIn() == $user->getUser()) { ?>
-							<div id="popHits">
-								<?php echo $article->getHits(); ?> hits
-							</div>
-							<?php } ?>
-							<a href="<?php echo $article->getURL();?>"><?php echo $article->getTitle();?></a>
+			<ol class="user-popular">
+			<?php foreach($popular_articles as $article) { ?>
+				<li class="user-popular-item">
+					<div class="popular-item-title">
+						<?php if($currentuser->isLoggedIn() == $user->getUser()) { ?>
+						<div class="popular-item-hits">
+							<?php echo $article->getHits(); ?> hits
 						</div>
-					</li>
-				<?php } ?>
-				</ol>
+						<?php } ?>
+						<a href="<?php echo $article->getURL();?>"><?php echo $article->getTitle();?></a>
+					</div>
+				</li>
+			<?php } ?>
+			</ol>
 		<?php } ?>
 		<?php if ($comments) { ?>
 			<div class="felix-item-title felix-item-title felix-item-title-generic">
 				<h3>recent comments</h3>
 			</div>
-			<div id="recentComments">
+			<div class="user-comments">
 				<?php if ($popularity = $user->getCommentPopularity()) { ?>
-					<span id="popularity">(Popularity: <?php echo $popularity;?>% over <?php echo ($user->getLikes() + $user->getDislikes());?> ratings)</span>
+					<span class="comment-popularity">(Popularity: <?php echo $popularity;?>% over <?php echo ($user->getLikes() + $user->getDislikes());?> ratings)</span>
 				<?php } ?>
-				<ul id="commentList">
+				<ul class="user-comments-list">
 					<?php foreach ($comments as $comment) { ?>
 						<li>
 							<a href="<?php echo $comment->getURL(); ?>"><?php echo $comment->getArticle()->getTitle(); ?></a> <p><?php echo Utility::trimText($comment->getContent(), 130, false); ?></p>
