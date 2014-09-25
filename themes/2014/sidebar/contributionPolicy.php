@@ -2,12 +2,16 @@
 				<div class="felix-item-title felix-item-title felix-item-title-generic">
 					<h3>write for us</h3>
 				</div>
-				<p>Interested in becoming a news reporter? Or just have a favourite something to share with Imperial? Write for Felix - it's easy!</p>
-				<p>Got a tip you'd like to share? We welcome anonymous messages too.</p>
-				<center><a class="button" href="<?php echo STANDARD_URL; ?>issuearchive/">Find out how to contribute</a></center>
+				<div class="felix-contribute">
+					<p>Interested in becoming a news reporter? Or just have a favourite something to share with Imperial? Write for Felix - it's easy!</p>
+					<p>Got a tip you'd like to share? We welcome anonymous messages too.</p>
+					<center><a class="button small" href="<?php echo STANDARD_URL; ?>issuearchive/">Find out how to contribute</a></center>
+				</div>
 			<?php else: ?>
 				<div class="felix-item-title felix-item-title felix-item-title-generic">
 					<h3>write for <?php echo $category->getLabel(); ?></h3>
 				</div>
-				<p><b>TO BE IMPLEMENTED!!!</b></p>
+				<div class="felix-contribute">
+					<p>Want to write for this section? Drop the editors a line via the contact details above and they'll let you how to get involved - contributors always welcome!</p>
+				</div>
 			<?php endif; ?>
