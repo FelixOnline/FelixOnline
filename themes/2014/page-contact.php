@@ -9,29 +9,27 @@ $theme->resources->addJS(array('contact.js'));
 $theme->render('components/header', $header);
 ?>
 <!-- Page wrapper -->
-<div class="container_12">
-	<!-- Sidebar -->
-	<div class="sidebar grid_4 push_8 contact">
-		<?php 
-			$theme->setSidebar(array(
-				'fbActivity', 
-				//'mediaBox',
-				'mostPopular'
-			));
-			$theme->renderSidebar();
-		?>
-	</div>
-	<!-- End of sidebar -->
-
-	<!-- Page container -->
-	<div class="grid_8 pull_4">
-		<h2><?php echo $page->getTitle(); ?></h2>
-		<div class="content">
-			<?php echo $page->getContent(); ?>
+	<div class="row felix-pad-top">
+		<div class="medium-8 columns">
+			<h1><?php echo $page->getTitle(); ?></h1>
+			<div class="content">
+				<?php 
+					/*
+					 * Outputs content and evaluates any php code
+					 */
+					echo $page->getContent(); 
+				?>
+			</div>
 		</div>
+		<div class="medium-4 columns">
+				<?php $theme->render('sidebar/contributionPolicy'); ?>
+
+				<?php $theme->render('sidebar/mostPopular'); ?>
+
+				<?php $theme->render('sidebar/twitter'); ?>
+		</div>
+	<!-- End of page container -->
 	</div>
-	<!-- End of contact container -->
-</div>
 <!-- End of page -->
 
 <?php $timing->log('end of page');?>

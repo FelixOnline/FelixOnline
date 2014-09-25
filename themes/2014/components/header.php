@@ -61,7 +61,7 @@
 							<?php echo $currentuser->getName();?>
 						</a> • 
 						<a href="<?php echo STANDARD_URL.'auth/?logout&goto='.Utility::currentPageURL(); ?>">Log out</a>
-					<?php } ?> • Contact us • Advertising • About us
+					<?php } ?> • <a href="<?php echo STANDARD_URL; ?>contact">Contact us</a><!-- • Advertising • About us -->
 				</div>
 			</div>
 		</div>
@@ -70,12 +70,14 @@
 			<div class="row">
 				<div class="medium-8 columns felix-title-logo">
 					<div>
-						<img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/black logo.png"> 
-						<h1>Felix Online</h1>
+						<a href="<?php echo STANDARD_URL; ?>">
+							<img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/black logo.png"> 
+							<h1>Felix Online</h1>
+						</a>
 					</div>
 				</div>
 				<div class="medium-4 columns text-right felix-buttons">
-					<p><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/fb.png" class="felix-header-icon"> <img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/twitter.png" class="felix-header-icon"> <img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/email.png" class="felix-header-icon"> <img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/rss.gif" class="felix-header-icon"></p>
+					<p><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/fb.png" class="felix-header-icon"> <img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/twitter.png" class="felix-header-icon"> <a href="<?php echo STANDARD_URL; ?>contact"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/email.png" class="felix-header-icon"></a> <img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/rss.gif" class="felix-header-icon"></p>
 				</div>
 			</div>
 			<div class="row">
@@ -83,7 +85,9 @@
 					<span class="felix-subtitle show-for-medium-up">The official website of Imperial's student newspaper</span>
 				</div>
 				<div class="medium-4 columns felix-search">
-					<input type="text" placeholder="Search..." class="felix-search-box">
+					<form action="search/" method="get">
+						<input type="text" name="q" placeholder="Search..." class="felix-search-box">
+					</form>
 				</div>
 			</div>
 		</div>
