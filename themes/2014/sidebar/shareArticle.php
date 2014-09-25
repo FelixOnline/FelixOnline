@@ -3,7 +3,6 @@
 				</div>
 				<div class="row article-share-buttons">
 					<div class="small-4 columns">
-						Facebook
 						<div class="fb-like" data-width="140px" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 					</div>
 					<div class="small-4 columns">
