@@ -11,22 +11,16 @@ $timing->log('after header');
 
 ?>
 	<!-- Article wrapper -->
-	<div class="container_12">
-		<div class="grid_12 error">
-			<h2>Lost Cat</h2>
-			<img src="<?php echo IMAGE_URL; ?>felix_cat-300.jpg" id="lostcat" width="300px"/>
-			<div class="grid_8 push_2">
-				<p>Medium sized black and white cat, responds to "Felix". Likes to party and find entertaining gifs online. Mostly house trained but can bite without warning.</p>
-				<p>If found then please <a href="/contact/">contact us</a> or you can try searching for it here: </p>
-				<form action="/search/" id="cse-search-box">
-					<input type="text" name="q" size="31" id="searchBox" class="faded" autocomplete="off" onclick="if(this.value == 'Search Felix Online...') {this.value=''; this.style.color='#222';}" onblur="if(this.value.length == 0){ this.value='Search Felix Online...'; this.style.color='#999';};" value="Search Felix Online..."/>
-					<input type="submit" name="sa" value="" id="searchButton"/>
-				</form>
-				<p>Or just return to the <a href="/">homepage</a> to begin again.</p>
-			</div>
-		</div>
-		<div class="clear"></div>
-		<div class="grid_12 error">
+	<div class="row felix-pad-top">
+		<div class="small-12 columns">
+			<h1>Sorry, couldn't find that</h1>
+			<p>We are sorry, we couldn't find what you were looking for.</p>
+			<ul>
+				<li>If you have clicked a link on Felix Online, <a href="<?php echo STANDARD_URL; ?>contact">please let us know</a>.</li>
+				<li>If not, try searching for the content you are looking for.</li>
+				<li>Alternatively, return to the <a href="<?php echo STANDARD_URL; ?>">front page</a>.</li>
+			</ul>
+
 			<?php if(LOCAL || ($e->getUser() instanceof CurrentUser && $e->getUser()->getRole() == 100)) { ?>
 			<p id="techdetails_show" style="display: none;"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'block'; document.getElementById('techdetails_show').style.display = 'none';">View some technical details</a></p>
 			<div id="techdetails" class="technical_details" style="display: block;">
@@ -108,6 +102,7 @@ $timing->log('after header');
 				}
 			}
 			?>
+			</div>
 		</div>
 	</div>
 	<!-- End of article wrapper -->

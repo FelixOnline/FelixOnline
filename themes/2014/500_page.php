@@ -11,14 +11,13 @@ $timing->log('after header');
 
 ?>
 	<!-- Article wrapper -->
-	<div class="container_12">
-		<div class="grid_12 error">
+	<div class="row felix-pad-top">
+		<div class="small-12 columns">
 			<?php
 				$notify = false;
 				require(BASE_DIRECTORY.'/errors/error.php');
 			?>
 		</div>
-		<div class="clear"></div>
 	</div>
 	<!-- End of article wrapper -->
 
