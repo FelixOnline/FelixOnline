@@ -38,7 +38,11 @@ $theme->render('components/header', $header);
 		</div>
 	<div class="row">
 		<div class="medium-8 columns">
-
+			<?php if ($currentuser->getUser() == $user->getUser()): ?>
+				<?php
+					$theme->render('components/editProfile', array('user' => $user));
+				?>
+			<?php endif; ?>
 	<!-- End of sidebar -->
 		<?php if (!empty($articles)) { ?>
 			<!-- Articles -->
@@ -103,6 +107,9 @@ $theme->render('components/header', $header);
 					<p><a href="<?php echo $category->getWebsiteurl(); ?>"><?php echo $user->getWebsitename(); ?></a></p>
 				</div>
 			</div>
+			<?php endif; ?>
+			<?php if ($currentuser->getUser() == $user->getUser()): ?>
+				<center><a href="#" data-reveal-id="editProfileModal" class="button small">Update your details</a></center>
 			<?php endif; ?>
 		</div>
 

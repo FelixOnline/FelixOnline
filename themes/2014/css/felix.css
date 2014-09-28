@@ -22,6 +22,12 @@ button, .button {
 	color: white;
 }
 
+p.form-help {
+	font-size: smaller;
+	color: #333333;
+	margin-top: -1em;
+}
+
 div.felix-header, div.felix-footer, div.felix-header .row, div.felix-footer .row {
 	background: #0085AB;
 }
@@ -500,14 +506,14 @@ div.section-title h1 {
 }
 
 div.user-title {
-	border-bottom: 3px double #0085AB;
+	border-bottom: 3px double black;
 	padding-bottom: 0.5em;
 	margin-bottom: 1em;
 }
 
 div.user-title h1 {
 	font-family: 'Sorts Mill Goudy', serif;
-	color: #0085AB;
+	color: black;
 	margin-bottom: -0.3em;
 }
 
