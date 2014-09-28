@@ -55,7 +55,7 @@
 		<div class="felix-header felix-header-<?php echo $check; ?>">
 			<div class="row">
 				<div class="medium-6 columns felix-header-actions">
-					Monday 22nd October • <a href="<?php echo STANDARD_URL; ?>issuearchive/">Issue Archive</a>
+					<?php echo date("l jS F"); ?> • <a href="<?php echo STANDARD_URL; ?>issuearchive/">Issue Archive</a>
 					<?php if ($currentuser->isLoggedIn() && $currentuser->getRole() > 0) {
 						echo ' • <a href="'.STANDARD_URL.'engine/">Author Zone</a>'; ?>
 					<?php } ?>
