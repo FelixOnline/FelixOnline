@@ -21,44 +21,20 @@
     }
 }
 
-.archive {
-    .tabs { 
-        list-style-type:none; 
-        li {
-            display:inline;
-            padding:5px 9px;
-        }
-        a {
-            font-family:times, serif;
-            font-size:24px;
-            text-decoration:none;
-        }
-    }
-    .tabsyear { 
-        list-style-type:none; 
-        li {
-            display:inline;
-            padding:5px 10px;
-            a {
-                font-family:times, serif;
-                font-size:22px;
-                text-decoration:none;
-            } 
+.archive-title {
+    border-top: 3px double black;
+    border-bottom: 3px double black;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
 
-            &.current a { 
-                text-decoration:underline; 
-            }
-        }
+    h1 {
+        color: black;
+        font-family: 'Sorts Mill Goudy', serif;
+        margin-bottom: -0.3em;
     }
 }
 
-.archive .tabsyear a:hover, .archive .tabs a:hover { 
-    text-decoration:underline; 
-}
-
-.issuecont { 
-    margin-top:20px; 
-
+.issuecont {
     .thumbLink { 
         text-decoration:none; 
         &:hover {
@@ -72,24 +48,18 @@
     }
 
     .thumb {
-        margin-bottom: 10px;
-        margin-left: 10px;
-        margin-right: 10px;
-        padding-bottom: 10px;
         .issue {
             text-align: center;
             color: #666;
-            font-family: Georgia, Times, serif;
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 5px;
+            font-family: 'Noto Serif', serif !important;
         }
         .date,
         .relevance {
             text-align: center;
-        }
-        img {
-            margin-left: 30px;
+            font-size: smaller;
         }
     }
 }

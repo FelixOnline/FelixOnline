@@ -2,45 +2,55 @@
 $timing->log('issue archive page');
 
 $header = array(
-    'title' => 'Issue Archive - '.'Felix Online'
+	'title' => 'Issue Archive - '.'Felix Online'
 );
 
 $theme->resources->addCSS(array('archive.less'));
 
 $theme->render('components/header', $header);
 ?>
-<!-- Archive wrapper -->
-<div class="container_12 archive">
-    <!-- Search -->
-    <div id="archivesearchbar" class="grid_12">
-        <h3>Search the Felix archive</h3>
-        <form method="GET" action="" class="grid_8">
-            <input type="text" name="q" size="40" placeholder="Search the archive.." value="<?php echo $query; ?>" id="searchinput" />
-            <input type="submit" value="Search" id="searchbuttonfwd" />
-        </form>
-		<div class="search-count grid_4">
-			<p><?php echo count($search_results); ?> results</p>
+		<div class="archive-title">
+			<div class="row">
+				<div class="medium-12 columns">
+					<h1>Issue Archive</h1>
+				</div>
+			</div>
 		</div>
-    </div>
-    <div class="clear"></div>
-
-    
-    <div class="issuecont clearfix">
-		<?php if(!empty($search_results)) { ?>
-			<?php foreach($search_results as $key => $issue) {
-				$theme->render('snippets/issue', array(
-					'issue' => $issue
-				));
-				if(($key + 1) % 6 == 0) { ?>
-					<div class="clear"></div>
-				<?php } ?>
+<!-- Archive wrapper -->
+<div class="row">
+	<div class="medium-3 columns medium-push-9">
+		<!-- Search -->
+		<div id="archivesearchbar" class="medium">
+			<div class="felix-item-title felix-item-title felix-item-title-generic">
+				<h3>archive search</h3>
+			</div>
+			<br>
+			<form method="get" action="">
+				<input type="text" name="q" size="40" placeholder="Type your query and press enter..." id="searchinput" />
+			</form>
+			<a href="<?php STANDARD_URL; ?>issuearchive" class="button small">Back to Issue Archive</a>
+		</div>
+	</div>
+	<div class="medium-9 medium-pull-3 columns">
+		<div class="felix-item-title felix-item-title felix-item-title-generic">
+			<h2>search results (<?php echo count($search_results); ?>)</h2>
+		</div>
+		<br>
+		<div class="row issuecont">
+			<?php if(!empty($search_results)) {
+				foreach($search_results as $key => $issue) {
+					if(($key + 1) % 4 == 0) { $last = true;	} else { $last = false; }
+					$theme->render('components/issue', array(
+						'issue' => $issue,
+						'last' => $last
+					));
+					if($last): ?></div><div class="row issuecont"><?php endif;
+				}
+			} else { ?> 
+				<div class="medium-12 columns"><div class="alert-box">No issues found.</div></div>
 			<?php } ?>
-		<?php } else { ?> 
-			<p class="grid_12">No issues found.</p>
-		<?php } ?>
-    </div>
-
-    <div class="clear"></div>
+		</div>
+	</div>    
 </div>
 <!-- End of archive wrapper -->
 <?php $timing->log('end of issue archive');?>
