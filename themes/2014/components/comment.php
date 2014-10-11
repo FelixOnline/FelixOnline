@@ -34,15 +34,16 @@
 							<a href="<?php echo Utility::currentPageURL();?>#" id="dislike"><b>DISLIKE</b></a>
 					<?php } }?>
 					<span id="dislikecounter">(<?php echo $comment->getDislikes(); ?>)</span>
-					 • 
 				</span>
 				<span id="likespinner_<?php echo $comment->getId(); ?>" style="display: none;">
 					<span class="loading"><b>PLEASE WAIT...</b></span>
-					 • 
 				</span>
+				<?php if ($article->canComment($currentuser)) { ?>
+				 • 
 				<span>
 					<a href="<?php echo Utility::currentPageURL().'#comment'.$comment->getId(); ?>" id="<?php echo $comment->getId();?>" class="replyToComment"><b>REPLY TO</b></a>
 				</span>
+				<?php } ?>
 			<?php } ?>
 		</div>
 
