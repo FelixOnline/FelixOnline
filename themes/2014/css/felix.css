@@ -528,23 +528,27 @@ div.user-title h1 {
     margin-bottom: 0.5em;
 }
 
-.user-popular li {
+.recent-items-content ol {
+	margin-bottom: 0;
+}
+
+.user-popular li, .recent-items-content li {
     padding-bottom: 5px;
     color: #999;
     font-weight: bold;
 }
 
-.user-popular li a {
+.user-popular li a, .recent-items-content li a {
     font-weight: normal;
     font-size: 15px;
     text-decoration: none;
 }
 
-.user-popular-item span {
+.user-popular-item span, .recent-items-content span {
     font-size: 13px
 }
 
-.user-popular-item .popular-item-title a {
+.user-popular-item .popular-item-title a, .recent-items-content a {
     width: 200px
 }
 

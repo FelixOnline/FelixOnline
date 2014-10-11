@@ -7,7 +7,7 @@
 		<dd><a href="#panel2">Commented</a></dd>
 	</dl>
 	<div class="tabs-content">
-		<div class="content active" id="panel1">
+		<div class="content active recent-items-content" id="panel1">
 			<?php 
 				$viewed_articles = (new \FelixOnline\Core\ArticleManager())->getMostPopular(POPULAR_ARTICLES);
 				if (!is_null($viewed_articles)) { ?>
@@ -24,7 +24,7 @@
 					It doesn't look like any articles have been read recently...
 				<?php } ?>
 		</div>
-		<div class="content" id="panel2">
+		<div class="content recent-items-content" id="panel2">
 			<?php
 				$commented_articles = (new \FelixOnline\Core\ArticleManager())->getMostCommented(POPULAR_ARTICLES);
 				if (!is_null($commented_articles)) { ?>
