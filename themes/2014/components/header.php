@@ -84,7 +84,7 @@
 					</div>
 				</div>
 				<div class="medium-4 columns text-right felix-buttons">
-					<p><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/fb.png" class="felix-header-icon"> <img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/twitter.png" class="felix-header-icon"> <a href="<?php echo STANDARD_URL; ?>contact"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/email.png" class="felix-header-icon"></a> <a href="<?php echo STANDARD_URL.'rss'; ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/rss.png" class="felix-header-icon"></a></p>
+					<p><a href="https://www.facebook.com/FelixImperial"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/fb.png" class="felix-header-icon"></a> <a href="https://twitter.com/feliximperial"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/twitter.png" class="felix-header-icon"></a> <a href="<?php echo STANDARD_URL; ?>contact"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/email.png" class="felix-header-icon"></a> <a href="<?php echo STANDARD_URL.'rss'; ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/rss.png" class="felix-header-icon"></a></p>
 				</div>
 			</div>
 			<div class="row">
