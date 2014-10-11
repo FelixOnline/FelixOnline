@@ -10,7 +10,7 @@
 		<!--<h4><a href="<?php echo Utility::currentPageURL().'#comment'.$comment->getId();?>">Untitled comment</a></h4>-->
 
 		<div class="comment-meta small">
-			<b><?php echo $comment->getName(); ?></b> • 
+			<b class="comment-author"><?php echo $comment->getName(); ?></b> • 
 			<?php echo date('l F d Y H:i', $comment->getTimestamp()); ?>
 			<?php if(!$comment->isRejected() && !$comment->isPending()) { ?> • 
 				<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken($comment->getId().'ratecomment'); ?>"/>
@@ -52,6 +52,10 @@
 				<i>This comment did not follow our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> and has been rejected</i>
 			<?php } else { 
 				// Comment content 
+				try {
+					$reply_comment = $comment->getReply();
+					echo '<b class="comment-reply"><a href="<?php echo Utility::currentPageURL();?>#comment<?php echo $reply_comment->getId();?>">@'.$reply_comment->getName().'</a>: </b>';
+				} catch(Exception $e) {}
 				echo $comment->getContent(); 
 			}
 		?>

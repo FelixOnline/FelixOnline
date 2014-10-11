@@ -138,11 +138,15 @@ $theme->render('components/header', $header);
 								</div>
 							<?php } else { ?>
 								<h4>Leave a comment as <a href="<?php echo $currentuser->getURL();?>" title="Profile Page"><?php echo $currentuser->getName();?></a></h4>
+								<p>Your comment will be retrospectively moderated according to our <a href="#" data-reveal-id="commentPolicy">commenting policy</a>.</p>
 							<?php } ?>
 
-							<?php if(isset($errorduplicate) || isset($erroremail) || isset($errorspam) || isset($errorinsert) || isset($errorconnection)): ?>
+							<?php if(isset($errorempty) || isset($errorduplicate) || isset($erroremail) || isset($errorspam) || isset($errorinsert) || isset($errorconnection)): ?>
 							<!-- Errors -->
 							<div class="alert-box">
+								<?php if(isset($errorempty) && $errorempty) { ?>
+									Don't forget to write a comment.
+								<?php } ?>
 								<?php if(isset($errorduplicate) && $errorduplicate) { ?>
 									Looks like the comment you have just submitted is a duplicate. Please write something original and try again.
 								<?php } ?>
@@ -162,10 +166,11 @@ $theme->render('components/header', $header);
 							<!-- End of errors -->
 							<?php endif; ?>
 
-							<form method="post" action="<?php echo Utility::currentPageURL();?>">
+							<form method="post" action="<?php echo Utility::currentPageURL();?>#commentForm">
 								<div class="row">
 									<div class="large-9 small-12 columns">
-										<?php if (!$currentuser->isLoggedIn()) { ?>
+									<?php if (!$currentuser->isLoggedIn()) { ?>
+										<input type="hidden" name="articlecomment_ext" value="1" />
 										<div class="row">
 											<div class="medium-3 columns">
 												<label class="inline" for="name">Name to show</label>
@@ -183,7 +188,8 @@ $theme->render('components/header', $header);
 											</div>
 										</div>
 									<?php } else { ?>
-										<input type="hidden" value="<?php echo $currentuser->getUser(); ?>"/>
+										<input type="hidden" name="name" value="<?php echo $currentuser->getUser(); ?>"/>
+										<input type="hidden" name="articlecomment" value="1" />
 									<?php } ?>
 										<div class="row">
 											<div class="medium-3 columns">
