@@ -49,12 +49,14 @@
 
 		<?php
 			if($comment->isRejected()) { // if comment rejected ?>
-				<i>This comment did not follow our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a> and has been rejected</i>
+				<i>This comment did not follow our <a href="#" data-reveal-id="commentPolicy">commenting policy</a> and has been rejected</i>
 			<?php } else { 
 				// Comment content 
 				try {
 					$reply_comment = $comment->getReply();
-					echo '<b class="comment-reply"><a href="<?php echo Utility::currentPageURL();?>#comment<?php echo $reply_comment->getId();?>">@'.$reply_comment->getName().'</a>: </b>';
+					if($reply_comment != null) {
+						echo '<b class="comment-reply"><a href="<?php echo Utility::currentPageURL();?>#comment<?php echo $reply_comment->getId();?>">@'.$reply_comment->getName().'</a>: </b>';
+					}
 				} catch(Exception $e) {}
 				echo $comment->getContent(); 
 			}
@@ -63,7 +65,7 @@
 	</div>
 	<?php if($comment->isPending()) { ?>
 		<div class="alert-box">
-			This comment is awaiting approval and will appear shortly if it follows our <a href="<?php echo Utility::currentPageURL(); ?>#commentPolicy" rel="facebox">commenting policy</a>. If you have an Imperial ID, you can avoid this delay by <a href="#" data-reveal-id="loginModal">logging in</a> before commenting.
+			This comment is awaiting approval and will appear shortly if it follows our <a href="#" data-reveal-id="commentPolicy">commenting policy</a>. If you have an Imperial ID, you can avoid this delay by <a href="#" data-reveal-id="loginModal">logging in</a> before commenting.
 		</div>
 	<?php } ?>
 </div>
