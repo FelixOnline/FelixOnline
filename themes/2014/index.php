@@ -23,7 +23,7 @@ $this->resources = new ResourceManager(
 	/* CSS files */
 	array('foundation.css', 'felix.css', '../slick/slick.css'), 
 	/* JS files */
-	array('vendor/jquery.js', 'foundation.min.js', 'foundation/foundation.reveal.js', '../slick/slick.js')
+	array('vendor/jquery.js', 'foundation.min.js', 'foundation/foundation.reveal.js', '../slick/slick.js', 'script.js')
 );
 
 ?>

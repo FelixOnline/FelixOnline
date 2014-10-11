@@ -1,11 +1,10 @@
 /*
- * Author: J.Kim
+ * Author: J.Kim, P.Kent
  */
 
 $(document).ready(function() {
-	
-	// Reload css to fix @font face issue in IE8
-	//$('#main_css')[0].href=$('#main_css')[0].href;
+	/* Facebook */
+
 	(function(d, s, id) {
 		var js, fjs = d.getElementsByTagName(s)[0];
 		if (d.getElementById(id)) return;
@@ -14,37 +13,8 @@ $(document).ready(function() {
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 	
-	// Load sharing links
-	if ($('.sidebar2 #sharebuttons').length) { // If sidebar 2 exists
-		var facebook = '<div class="fb-like" data-width="140px" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>';
-		var twitter = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>';
-		var google = '<div class="g-plusone" data=size="medium" data-annotation="inline" data-width="140"></div>';
-		
-		$('#facebookLike').append(facebook);
-		$('#twitterShare').append(twitter);
-		$('#googleShare').append(google);
-	}
-	
-	if ($('.articleShare').length) { //If the sharing thing at the bottom exists
-		var facebook2 = '<div class="fb-like" data-width="300px" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>';
-		var twitter2 = '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="feliximperial">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>';
-		var google2 = '<div class="g-plusone" data-size="medium"></div>';
+	/* Comment Binders */
 
-		$('#facebookLike2').append(facebook2);
-		$('#twitterShare2').append(twitter2);
-		$('#googleShare2').append(google2);
-	}
-
-	// Most popular tabs 
-	var tabContainers = $('div#mostPopular > div'); 
-	$('div#mostPopular ul.popularNav a').click(function () {
-	tabContainers.hide().filter(this.hash).show();
-		
-	$('div#mostPopular ul.popularNav a').parent().removeClass('selected');
-		$(this).parent().addClass('selected');
-		return false;
-	}).filter(':first').click();
-	
 	$('.likeComment').bind('click', function() {
 		if ($('#loginForm #commenttype').length){
 			$('#loginForm #commenttype').remove();
@@ -63,38 +33,11 @@ $(document).ready(function() {
 		$('#loginForm').prepend('<input type="hidden" value="dislike" name="commenttype" id="commenttype"/><input type="hidden" value="'+comment+'" name="comment" id="comment"/>');
 	});
 	
-	//Twitter style countdown on comment form
-	//$("#commentForm #comment").charCount();
-	
-	//Comment form validation
-	$("#commentForm form").submit(function() {
-		var commentText = $("#commentForm #comment").val();
-		if(!commentText) {
-			$("#commentForm label.error").show();
-			return false;
-		} else {
-			$("#commentForm label.error").hide();
-			//if(!validateCaptcha()) {
-				//return false;
-			//} 
-		}
-	});
-	
-	//Post a comment 
-	$('#postComment').click(function() {
-		if ($('#commentForm #name').length) { // if #name exits
-			$('#name').focus();
-		} else {
-			$('#comment').focus();
-		}
-		return false;
-	});
-	
 	//Reply to comment
-	$('.replyToComment').live("click", function() {
+	$(document).on("click", '.replyToComment', function() {
 		var comment = $(this).attr('id');
 		var commentURL = $(this).attr('href');
-		var name = $(this).parents('.singleComment').find('#commentUser').text().trim();
+		var name = $(this).parents('.comment-meta').find('.comment-author').text().trim();
 		if ($('#commentReply').length) {
 			$('#commentReply').children('#replyLink').attr('href', commentURL).text('@'+name);
 			$('#commentReply').children('#replyURL').attr('value', commentURL);
@@ -109,15 +52,13 @@ $(document).ready(function() {
 	});
 	
 	//Remove reply
-	$('#removeReply').live("click", function() {
+	$(document).on("click", "#removeReply", function() {
 		$(this).parent().remove();
 		$('#commentLabel').show();
 		return false;
 	});
 	
-/* ------------------------------------------- */
-/* AJAX Helper */
-/* ------------------------------------------- */
+	/* AJAX Helper */
 
 	function ajaxHelper(form, method, data, spinner, hideme, showme, successbox, failbox, callback) {
 		method = method || 'POST';
@@ -244,19 +185,15 @@ $(document).ready(function() {
 		});
 	}
 
-/* ------------------------------------------- */
-/* Edit user profile */
-/* ------------------------------------------- */
 
-	$('#editProfile').live('click', function() {
-		$('#personalCont').hide();
-		$('#personalCont.edit').show();
-		$(this).hide();
-		$('#editProfileSave').show();
-		return false;
+	$('input').change(function() {
+		$(this).removeClass('invalidField');
+	});
+	$('textarea').change(function() {
+		$(this).removeClass('invalidField');
 	});
 
-	$("#profileform").validate();
+	/* User Profile */
 
 	$('#editProfileSave').click( function() {
 		$('#personalLinksEdit label.error').hide();
@@ -308,16 +245,16 @@ $(document).ready(function() {
 		return false;
 	});
 
-/* END */
+	/* Comment Rating */
 
 	//Like comment
-	$('.commentAction #like').live("click", function() {
+	$(document).on("click", '.commentAction #like', function() {
 		rateComment(this, 'like');
 		return false;
 	});
 	
 	//Dislike comment
-	$('.commentAction #dislike').live("click", function() {
+	$(document).on("click", '.commentAction #dislike', function() {
 		rateComment(this, 'dislike');
 		return false;
 	});
@@ -364,32 +301,5 @@ $(document).ready(function() {
 
 		return false;
 	}
-
-	$('.circle').mosaic({
-		opacity: 0.8		//Opacity for overlay (0-1)
-	});
-
-	$('.play').mosaic({
-		opacity: 0.8		//Opacity for overlay (0-1)
-	});
-
-	function toggleBox(box) {
-		$(box).show();
-		$(box).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300);
-		$(box).delay(300).hide();
-	}
-	
-	$('input').change(function() {
-		$(this).removeClass('invalidField');
-	});
-	$('textarea').change(function() {
-		$(this).removeClass('invalidField');
-	});
-
-	// Print link
-	$('#print-article').click(function(event) {
-		window.print();
-		return false;
-	});
 });
 
