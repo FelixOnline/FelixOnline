@@ -5,6 +5,7 @@ function contact_us($data) {
 	$name = $data['name'];
 	$emailaddress = $data['email'];
 	$message = $data['message'];
+	$app = \FelixOnline\Core\App::getInstance();
 	
 	try {
 		Validator::Check(array(
@@ -27,7 +28,7 @@ function contact_us($data) {
 		return array(error => true, details => 'There has been an issue with some of your data, please check the highlighted fields and try again', validator => true, validator_data => $failed_fields);
 	}
 
-	$email = new Email(); 
+	$email = \Swift_Message::newInstance(); 
 
 	$email->setTo('felix@imperial.ac.uk');
 
@@ -36,19 +37,18 @@ function contact_us($data) {
 	else
 		$email->setSubject('Anonymous message');
 	
-	$email->setContent($message);
+	$email->setBody($message, 'text/plain');
 	
 	if($emailaddress) {
 		if($name) {
-			$email->setFrom($emailaddress, $name);
+			$email->setFrom(array($emailaddress => $name));
 		} else {
-			$email->setFrom($emailaddress);
+			$email->setFrom(array($emailaddress));
 		}
-		$email->setReplyTo($emailaddress);
 	}
 	
 	// Mail it
-	$email->send();
+	$app['email']->send($email);
 	
 	return array('error' => false, 'success' => 'Your message has been sent, thank you!');
 }

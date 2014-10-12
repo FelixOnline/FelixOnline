@@ -893,6 +893,19 @@ div.alert-box {
 	padding-left: 1em !important;
 }
 
+.invalidField {
+	border: 2px solid red;
+}
+
+.alert-box a {
+	color: white;
+	border-bottom: 1px dotted white;
+}
+
+.alert-box a:hover {
+	border-bottom: 1px solid white;
+}
+
 div.felix-featured-caption, div.felix-featured-subcaption, div.article-image-subcaption, #imageCaption {
 	font-family: 'Noto Serif', serif;
 }

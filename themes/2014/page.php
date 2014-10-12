@@ -15,7 +15,7 @@ $theme->render('components/header', $header);
 					/*
 					 * Outputs content and evaluates any php code
 					 */
-					echo $page->getContent(); 
+					echo $page->getContent($csrf_token); 
 				?>
 			</div>
 		</div>

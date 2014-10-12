@@ -20,6 +20,6 @@ class PageController extends BaseController {
 		$this->theme->setHierarchy(array(
 			$this->page->getSlug() // page-{slug}.php
 		));
-		$this->theme->render('page');
+		$this->theme->render('page', array('csrf_token' => $this->page->getToken()));
 	}
 }
