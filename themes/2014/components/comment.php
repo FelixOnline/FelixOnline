@@ -9,7 +9,7 @@
 	<div class="comment">
 		<!--<h4><a href="<?php echo Utility::currentPageURL().'#comment'.$comment->getId();?>">Untitled comment</a></h4>-->
 
-		<div class="comment-meta small">
+		<div class="comment-meta small" id="<?php echo $comment->getId();?>">
 			<b class="comment-author"><?php echo $comment->getName(); ?></b> • 
 			<?php echo date('l F d Y H:i', $comment->getTimestamp()); ?>
 			<?php if(!$comment->isRejected() && !$comment->isPending()) { ?> • 

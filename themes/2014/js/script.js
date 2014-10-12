@@ -248,20 +248,20 @@ $(document).ready(function() {
 	/* Comment Rating */
 
 	//Like comment
-	$(document).on("click", '.commentAction #like', function() {
+	$(document).on("click", '.comment-meta #like', function() {
 		rateComment(this, 'like');
 		return false;
 	});
 	
 	//Dislike comment
-	$(document).on("click", '.commentAction #dislike', function() {
+	$(document).on("click", '.comment-meta #dislike', function() {
 		rateComment(this, 'dislike');
 		return false;
 	});
 	
 	function rateComment(cobj, action) {
-		var comment = $(cobj).parents('.commentAction').attr('id');
-		var token = $(cobj).parents('.commentAction').find('#token').val();
+		var comment = $(cobj).parents('.comment-meta').attr('id');
+		var token = $(cobj).parents('.comment-meta').find('#token').val();
 		var check = comment+'ratecomment';
 		
 		data = {};
@@ -284,8 +284,8 @@ $(document).ready(function() {
 		function likeAjaxCallback(data, msg) {
 			var likelink = $('#comment-'+window.com+'-like a');
 			likelink.next('#likecounter').text('('+msg.count+')');
-			likelink.parent().prepend('Liked');
-			likelink.parent().next().prepend('Disliked');
+			likelink.parent().prepend('<b>YOU LIKED THIS</b>');
+			likelink.parent().next().prepend('<b>DISLIKES</b>');
 			likelink.parent().next().children('a').remove();
 			likelink.remove();
 		}
@@ -293,8 +293,8 @@ $(document).ready(function() {
 		function dislikeAjaxCallback(data, msg) {
 			var likelink = $('#comment-'+window.com+'-dislike a');
 			likelink.next('#dislikecounter').text('('+msg.count+')');
-			likelink.parent().prepend('Disliked');
-			likelink.parent().prev().prepend('Liked');
+			likelink.parent().prepend('<b>YOU DISLIKED THIS</b>');
+			likelink.parent().prev().prepend('<b>LIKES</b>');
 			likelink.parent().prev().children('a').remove();
 			likelink.remove();
 		}
