@@ -195,53 +195,23 @@ $(document).ready(function() {
 
 	/* User Profile */
 
-	$('#editProfileSave').click( function() {
-		$('#personalLinksEdit label.error').hide();
-
+	$(document).on("click", '#editProfileSubmit', function() {
 		var data = {};
-		data.desc = $('#descCont textarea').val();
-		data.facebook = $('.facebook input').val();
-		data.twitter = $('.twitter input').val();
-		data.email = $('.useremail input').val();
-		data.webname = $('.website #name').val();
-		data.weburl = $('.website #url').val();
+		data.facebook = $('.profile-facebook').val();
+		data.twitter = $('.profile-twitter').val();
+		data.email = $('.profile-email').val();
+		data.webname = $('.profile-webname').val();
+		data.weburl = $('.profile-weburl').val();
 		data.action = 'profile_change';
 		data.token = $('#token').val();
-		data.check = 'userprofile';
+		data.check = 'edit_profile';
 
-		ajaxHelper('profileform', 'POST', data, '#userInfoCont .loading', ['#editProfileSave'], null, null, null, ajaxCallback);
+		ajaxHelper('profileform', 'POST', data, '.profile-spinner', ['.profile-saver'], ['.profile-saver'], null, null, profileAjaxCallback);
 
-		function ajaxCallback(data, message) {
-			// Change profile info
-			if(data.desc) {
-				$('#descCont').text($("<div/>").html(data.desc).text());
-			} else $('#descCont').text('Add some personal info....');
-			if(data.facebook) {
-				$('#personalLinks .facebook a').attr('href', data.facebook);
-				$('#personalLinks .facebook').show();
-			} else $('#personalLinks .facebook').hide();
-			if(data.twitter) {
-				$('#personalLinks .twitter a').attr('href', 'http://www.twitter.com/'+data.twitter).text($("<div/>").html('@'+data.twitter).text());
-				$('#personalLinks .twitter').show();
-			} else $('#personalLinks .twitter').hide();
-			if(data.email) {
-				$('#personalLinks .useremail a').attr('href', 'mailto:'+data.email+$("<div/>").html(data.email).text());
-				$('#personalLinks .useremail').show();
-			} else $('#personalLinks .useremail').hide();
-			if(data.weburl) {
-				$('#personalLinks .website a').attr('href', data.weburl);
-				if(data.webname)
-					$('#personalLinks .website a').text($("<div />").html(data.webname).text());
-				else
-					$('#personalLinks .website a').text(data.weburl);
-				$('#personalLinks .website').show();
-			} else $('#personalLinks .website').hide();
-			$('#personalCont').show();
-			$('#personalCont.edit').hide();
-			$('#editProfileSave').hide();
-			$('#editProfile').show();
+		function profileAjaxCallback(data, message) {
+			location.reload();
 		}
-		
+
 		return false;
 	});
 

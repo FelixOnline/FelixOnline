@@ -68,6 +68,9 @@ $theme->render('components/header', $header);
 			<h3>contact <?php echo $user->getFirstName(); ?></h3>
 		</div>
 		<div class="felix-contact-area">
+			<?php if(!$user->getEmail() && !$user->getFacebook() && !$user->getTwitter() && !($user->getWebsitename() && $user->getWebsiteurl())): ?>
+			<p>Sorry, there are no contact details available.</p>
+			<?php endif; ?>
 			<?php if($user->getEmail()): ?>
 			<div class="row felix-contact-row">
 				<div class="small-3 columns">
@@ -101,10 +104,10 @@ $theme->render('components/header', $header);
 			<?php if($user->getWebsitename() && $user->getWebsiteurl()): ?>
 			<div class="row felix-contact-row">
 				<div class="small-3 columns">
-					<a href="<?php echo $category->getWebsiteurl(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/web.png"></a>
+					<a href="<?php echo $user->getWebsiteurl(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/web.png"></a>
 				</div>
 				<div class="small-9 columns">
-					<p><a href="<?php echo $category->getWebsiteurl(); ?>"><?php echo $user->getWebsitename(); ?></a></p>
+					<p><a href="<?php echo $user->getWebsiteurl(); ?>"><?php echo $user->getWebsitename(); ?></a></p>
 				</div>
 			</div>
 			<?php endif; ?>

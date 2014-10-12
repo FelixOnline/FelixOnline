@@ -894,7 +894,7 @@ div.alert-box {
 }
 
 .invalidField {
-	border: 2px solid red;
+	border: 2px solid red !important;
 }
 
 .alert-box a {

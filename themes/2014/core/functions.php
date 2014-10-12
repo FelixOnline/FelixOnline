@@ -121,7 +121,6 @@ function profile_change($data) {
 		}
 		
 		$user->setUser($currentuser->getUser());
-		$user->setDescription($data['desc']);
 		$user->setEmail($data['email']);
 		$user->setFacebook(Utility::addhttp($data['facebook']));
 		$user->setTwitter($data['twitter']);
