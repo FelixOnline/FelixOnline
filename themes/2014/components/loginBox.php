@@ -4,7 +4,9 @@
 		$location = Utility::currentPageURL();
 	}
 ?>
+<?php if(!isset($nomodal) || !$nomodal): ?>
 <div id="loginModal" class="reveal-modal" data-reveal>
+<?php endif; ?>
 	<form action="<?php echo AUTHENTICATION_PATH; ?>login/?goto=<?php echo $location; ?>" id="loginForm" method="post">
 		<div class="row">
 			<div class="medium-8 small-12 columns">
@@ -49,5 +51,7 @@
 			</div>
 		</div>
 	</form>
+<?php if(!isset($nomodal) || !$nomodal): ?>
 	<a class="close-reveal-modal">&#215;</a>
 </div>
+<?php endif; ?>
