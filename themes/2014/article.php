@@ -39,31 +39,7 @@ $theme->render('components/header', $header);
 					<h1><?php echo $article->getTitle(); ?></h1>
 					<h2><?php echo $article->getTeaser(); ?></h2>
 				</div>
-			</div>
-			<div class="medium-4 columns">
-				<div class="article-meta">
-					<div class="article-authors">By <b><?php echo Utility::outputUserList($article->getAuthors(), true); ?></b>.</div>
-					<div class="article-date">Published on <?php echo $article->getPublished() ? date('l F j, Y \a\t H:i', $article->getPublished()) : "<strong>Not Published</strong>";?>.</div>
-					<div class="article-comments"><span class="comment-count"><a href="<?php echo Utility::currentPageURL().'#commentHeader';?>"><?php echo $article->getNumComments().'</a></span> comment'.($article->getNumComments() != 1 ? 's' : '');?>.<?php if ($article->canComment($currentuser)) { ?> <a href="<?php echo Utility::currentPageURL().'#commentForm';?>">Post your own now</a>!<?php } ?></div>
-					<?php
-						$isSectionEditor = false;
-						if($article->getCategory()->getEditors() != null) {
-							foreach($article->getCategory()->getEditors() as $user) {
-								if($currentuser->getUser() == $user->getUser()) {
-									$isSectionEditor = true;
-								}
-							}
-						}
-					?>
-					<?php if($currentuser->getRole() >= 25 || $isSectionEditor): ?>
-						<div class="article-edit"><b><a class="button tiny" href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Article</a></b></div>
-					<?php endif; ?>
-				</div>
-			</div>
-		</div>
-		<div class="row">
 			<!-- Content -->
-			<div class="medium-8 columns">
 				<?php if($image = $article->getImage()) { ?>
 				<div class="article-image<?php if($image->isTall()) { ?> tall-image<?php } ?>">
 					<div class="article-image-image">
@@ -112,7 +88,7 @@ $theme->render('components/header', $header);
 
 				<?php $timing->log('beginning of comments');?>
 				<!-- Comments -->
-				<div class="article-comments-zone article-comments-zone-news" id="commentHeader">
+				<div class="article-comments-zone article-comments-zone-<?php echo $article->getCategory()->getCat(); ?>" id="commentHeader">
 					<h3>Comments <span>(<?php echo $article->getNumComments(); ?>)</span></h3>
 					<?php if ($article->canComment($currentuser)) { ?><span class="article-comments-say">Have something to say? <a href="<?php echo Utility::currentPageURL().'#commentForm';?>"><b>Post your comment now</b></a>.</span><?php } ?>
 
@@ -227,6 +203,24 @@ $theme->render('components/header', $header);
 				<?php $timing->log('end of article content');?>
 			</div>
 			<div class="medium-4 columns">
+				<div class="article-meta">
+					<div class="article-authors">By <b><?php echo Utility::outputUserList($article->getAuthors(), true); ?></b>.</div>
+					<div class="article-date">Published on <?php echo $article->getPublished() ? date('l F j, Y \a\t H:i', $article->getPublished()) : "<strong>Not Published</strong>";?>.</div>
+					<div class="article-comments"><span class="comment-count"><a href="<?php echo Utility::currentPageURL().'#commentHeader';?>"><?php echo $article->getNumComments().'</a></span> comment'.($article->getNumComments() != 1 ? 's' : '');?>.<?php if ($article->canComment($currentuser)) { ?> <a href="<?php echo Utility::currentPageURL().'#commentForm';?>">Post your own now</a>!<?php } ?></div>
+					<?php
+						$isSectionEditor = false;
+						if($article->getCategory()->getEditors() != null) {
+							foreach($article->getCategory()->getEditors() as $user) {
+								if($currentuser->getUser() == $user->getUser()) {
+									$isSectionEditor = true;
+								}
+							}
+						}
+					?>
+					<?php if($currentuser->getRole() >= 25 || $isSectionEditor): ?>
+						<div class="article-edit"><b><a class="button tiny" href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Article</a></b></div>
+					<?php endif; ?>
+				</div>
 				<?php $theme->render('sidebar/shareArticle', array('article' => $article)); ?>
 
 				<?php $theme->render('sidebar/contributionPolicy', array('category' => $article->getCategory())); ?>
