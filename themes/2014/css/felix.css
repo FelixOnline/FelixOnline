@@ -98,7 +98,7 @@ div.felix-search {
 	div.felix-title .row div h1 {
 		color: black !important;
 		font-family: 'Sorts Mill Goudy', serif;
-		font-size: 35pt;
+		font-size: 30pt;
 		margin-top: 0.2em;
 	}
 
@@ -167,6 +167,10 @@ div.felix-nametype {
 	font-size: 2em;
 }
 
+div.felix-header {
+	padding-bottom: 0.2em;
+}
+
 nav.top-bar, nav.top-bar .top-bar-section li, nav.top-bar .top-bar-section a {
 	background: none !important;
 }
@@ -175,7 +179,7 @@ nav.top-bar .top-bar-section ul li > a {
 	font-family: 'Noto Serif', serif;
 	color: cyan; /* Overridden based on section chosen */
 	font-weight: bold;
-	font-size: 12pt
+	font-size: 12pt;
 }
 
 nav.top-bar .top-bar-section li.active, nav.top-bar .top-bar-section li.active > a {
@@ -613,7 +617,7 @@ nav.top-bar .top-bar-section ul li.nav-home > a {
 	color: black !important;
 }
 
-nav.top-bar .top-bar-section ul li.nav-home.active > a {
+nav.top-bar .top-bar-section ul li.nav-home.active > a, nav.top-bar .top-bar-section ul li.nav-home:hover > a {
 	color: white !important;
 }
 
@@ -626,11 +630,11 @@ div.article-comment label {
 }
 
 div.article-comments-zone-news {
-	border-top-color: #551111;
+	border-top-color: #970010;
 }
 
 div.felix-nav.nav-news, div.section-title-news, div.article-title-news {
-	border-bottom-color: #551111;
+	border-bottom-color: #970010;
 }
 
 div.article-comments-zone-comment {
@@ -649,15 +653,127 @@ div.felix-nav.nav-science, div.section-title-science, div.article-title-science 
 	border-bottom-color: #22A457;
 }
 
+div.article-comments-zone-politics {
+	border-top-color: #E9A9A7;
+}
+
+div.felix-nav.nav-politics, div.section-title-politics, div.article-title-politics {
+	border-bottom-color: #E9A9A7;
+}
+
+div.article-comments-zone-biz {
+	border-top-color: #10B4F2;
+}
+
+div.felix-nav.nav-biz, div.section-title-biz, div.article-title-biz {
+	border-bottom-color: #10B4F2;
+}
+
+div.article-comments-zone-arts {
+	border-top-color: #AD7F5D;
+}
+
+div.felix-nav.nav-arts, div.section-title-arts, div.article-title-arts {
+	border-bottom-color: #AD7F5D;
+}
+
+div.article-comments-zone-music {
+	border-top-color: #004E2A;
+}
+
+div.felix-nav.nav-music, div.section-title-music, div.article-title-music {
+	border-bottom-color: #004E2A;
+}
+
+div.article-comments-zone-film {
+	border-top-color: #1C6A78;
+}
+
+div.felix-nav.nav-film, div.section-title-film, div.article-title-film {
+	border-bottom-color: #1C6A78;
+}
+
+div.article-comments-zone-fashion {
+	border-top-color: #4A1A60;
+}
+
+div.felix-nav.nav-fashion, div.section-title-fashion, div.article-title-fashion {
+	border-bottom-color: #4A1A60;
+}
+
+div.article-comments-zone-games {
+	border-top-color: #974929;
+}
+
+div.felix-nav.nav-games, div.section-title-games, div.article-title-games {
+	border-bottom-color: #974929;
+}
+
+div.article-comments-zone-tech {
+	border-top-color: #0056A5;
+}
+
+div.felix-nav.nav-tech, div.section-title-tech, div.article-title-tech {
+	border-bottom-color: #0056A5;
+}
+
+div.article-comments-zone-travel {
+	border-top-color: #00929C;
+}
+
+div.felix-nav.nav-travel, div.section-title-travel, div.article-title-travel {
+	border-bottom-color: #00929C;
+}
+
+div.article-comments-zone-food {
+	border-top-color: #9B5C34;
+}
+
+div.felix-nav.nav-food, div.section-title-food, div.article-title-food {
+	border-bottom-color: #9B5C34;
+}
+
+div.article-comments-zone-tv {
+	border-top-color: #182447;
+}
+
+div.felix-nav.nav-tv, div.section-title-tv, div.article-title-tv {
+	border-bottom-color: #182447;
+}
+
+div.article-comments-zone-books {
+	border-top-color: #6B003E;
+}
+
+div.felix-nav.nav-books, div.section-title-books, div.article-title-books {
+	border-bottom-color: #6B003E;
+}
+
+div.article-comments-zone-sport {
+	border-top-color: #3E5B42;
+}
+
+div.felix-nav.nav-sport, div.section-title-sport, div.article-title-sport {
+	border-bottom-color: #3E5B42;
+}
+
+div.article-comments-zone-features {
+	border-top-color: #8C0028;
+}
+
+div.felix-nav.nav-features, div.section-title-features, div.article-title-features {
+	border-bottom-color: #8C0028;
+}
+
 nav.top-bar .top-bar-section li.nav-news:hover,
 nav.top-bar .top-bar-section li.nav-news:hover > a,
 nav.top-bar .top-bar-section li.nav-news.active,
 nav.top-bar .top-bar-section li.nav-news.active > a  {
-	background: #551111 !important;
+	background: #970010 !important;
 }
 
 nav.top-bar .top-bar-section ul li.nav-news > a {
-	color: #551111;
+	color: #970010;
 }
 
 nav.top-bar .top-bar-section ul li.nav-news.active > a {
@@ -683,11 +799,11 @@ nav.top-bar .top-bar-section li.nav-features:hover,
 nav.top-bar .top-bar-section li.nav-features:hover > a,
 nav.top-bar .top-bar-section li.nav-features.active,
 nav.top-bar .top-bar-section li.nav-features.active > a  {
-	background: #551111 !important;
+	background: #8C0028 !important;
 }
 
 nav.top-bar .top-bar-section ul li.nav-features > a {
-	color: #551111;
+	color: #8C0028;
 }
 
 nav.top-bar .top-bar-section ul li.nav-features.active > a {
@@ -709,33 +825,183 @@ nav.top-bar .top-bar-section ul li.nav-science.active > a {
 	color: white !important;
 }
 
-nav.top-bar .top-bar-section li.nav-technology:hover,
-nav.top-bar .top-bar-section li.nav-technology:hover > a,
-nav.top-bar .top-bar-section li.nav-technology.active,
-nav.top-bar .top-bar-section li.nav-technology.active > a  {
-	background: #016299 !important;
+nav.top-bar .top-bar-section li.nav-arts:hover,
+nav.top-bar .top-bar-section li.nav-arts:hover > a,
+nav.top-bar .top-bar-section li.nav-arts.active,
+nav.top-bar .top-bar-section li.nav-arts.active > a  {
+	background: #AD7F5D !important;
 }
 
-nav.top-bar .top-bar-section ul li.nav-technology > a {
-	color: #016299;
+nav.top-bar .top-bar-section ul li.nav-arts > a {
+	color: #AD7F5D;
 }
 
-nav.top-bar .top-bar-section ul li.nav-technology.active > a {
+nav.top-bar .top-bar-section ul li.nav-arts.active > a {
 	color: white !important;
 }
 
-nav.top-bar .top-bar-section li.nav-lifestyle:hover,
-nav.top-bar .top-bar-section li.nav-lifestyle:hover > a,
-nav.top-bar .top-bar-section li.nav-lifestyle.active,
-nav.top-bar .top-bar-section li.nav-lifestyle.active > a  {
-	background: #00A5D5 !important;
+nav.top-bar .top-bar-section li.nav-tech:hover,
+nav.top-bar .top-bar-section li.nav-tech:hover > a,
+nav.top-bar .top-bar-section li.nav-tech.active,
+nav.top-bar .top-bar-section li.nav-tech.active > a  {
+	background: #0056A5 !important;
 }
 
-nav.top-bar .top-bar-section ul li.nav-lifestyle > a {
-	color: #00A5D5;
+nav.top-bar .top-bar-section ul li.nav-tech > a {
+	color: #0056A5;
 }
 
-nav.top-bar .top-bar-section ul li.nav-lifestyle.active > a {
+nav.top-bar .top-bar-section ul li.nav-tech.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-biz:hover,
+nav.top-bar .top-bar-section li.nav-biz:hover > a,
+nav.top-bar .top-bar-section li.nav-biz.active,
+nav.top-bar .top-bar-section li.nav-biz.active > a  {
+	background: #10B4F2 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-biz > a {
+	color: #10B4F2;
+}
+
+nav.top-bar .top-bar-section ul li.nav-biz.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-politics:hover,
+nav.top-bar .top-bar-section li.nav-politics:hover > a,
+nav.top-bar .top-bar-section li.nav-politics.active,
+nav.top-bar .top-bar-section li.nav-politics.active > a  {
+	background: #E9A9A7 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-politics > a {
+	color: #E9A9A7;
+}
+
+nav.top-bar .top-bar-section ul li.nav-politics.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-music:hover,
+nav.top-bar .top-bar-section li.nav-music:hover > a,
+nav.top-bar .top-bar-section li.nav-music.active,
+nav.top-bar .top-bar-section li.nav-music.active > a  {
+	background: #004E2A !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-music > a {
+	color: #004E2A;
+}
+
+nav.top-bar .top-bar-section ul li.nav-music.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-film:hover,
+nav.top-bar .top-bar-section li.nav-film:hover > a,
+nav.top-bar .top-bar-section li.nav-film.active,
+nav.top-bar .top-bar-section li.nav-film.active > a  {
+	background: #1C6A78 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-film > a {
+	color: #1C6A78;
+}
+
+nav.top-bar .top-bar-section ul li.nav-film.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-fashion:hover,
+nav.top-bar .top-bar-section li.nav-fashion:hover > a,
+nav.top-bar .top-bar-section li.nav-fashion.active,
+nav.top-bar .top-bar-section li.nav-fashion.active > a  {
+	background: #4A1A60 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-fashion > a {
+	color: #4A1A60;
+}
+
+nav.top-bar .top-bar-section ul li.nav-fashion.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-games:hover,
+nav.top-bar .top-bar-section li.nav-games:hover > a,
+nav.top-bar .top-bar-section li.nav-games.active,
+nav.top-bar .top-bar-section li.nav-games.active > a  {
+	background: #974929 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-games > a {
+	color: #974929;
+}
+
+nav.top-bar .top-bar-section ul li.nav-games.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-travel:hover,
+nav.top-bar .top-bar-section li.nav-travel:hover > a,
+nav.top-bar .top-bar-section li.nav-travel.active,
+nav.top-bar .top-bar-section li.nav-travel.active > a  {
+	background: #00929C !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-travel > a {
+	color: #00929C;
+}
+
+nav.top-bar .top-bar-section ul li.nav-tv.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-food:hover,
+nav.top-bar .top-bar-section li.nav-food:hover > a,
+nav.top-bar .top-bar-section li.nav-food.active,
+nav.top-bar .top-bar-section li.nav-food.active > a  {
+	background: #9B5C34 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-food > a {
+	color: #9B5C34;
+}
+
+nav.top-bar .top-bar-section ul li.nav-tv.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-tv:hover,
+nav.top-bar .top-bar-section li.nav-tv:hover > a,
+nav.top-bar .top-bar-section li.nav-tv.active,
+nav.top-bar .top-bar-section li.nav-tv.active > a  {
+	background: #182447 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-tv > a {
+	color: #182447;
+}
+
+nav.top-bar .top-bar-section ul li.nav-tv.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-books:hover,
+nav.top-bar .top-bar-section li.nav-books:hover > a,
+nav.top-bar .top-bar-section li.nav-books.active,
+nav.top-bar .top-bar-section li.nav-books.active > a  {
+	background: #6B003E !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-books > a {
+	color: #6B003E;
+}
+
+nav.top-bar .top-bar-section ul li.nav-books.active > a {
 	color: white !important;
 }
 
@@ -754,23 +1020,23 @@ nav.top-bar .top-bar-section ul li.nav-coffeebreak.active > a {
 	color: white !important;
 }
 
-nav.top-bar .top-bar-section li.nav-sports:hover,
-nav.top-bar .top-bar-section li.nav-sports:hover > a,
-nav.top-bar .top-bar-section li.nav-sports.active,
-nav.top-bar .top-bar-section li.nav-sports.active > a  {
-	background: #344B3F !important;
+nav.top-bar .top-bar-section li.nav-sport:hover,
+nav.top-bar .top-bar-section li.nav-sport:hover > a,
+nav.top-bar .top-bar-section li.nav-sport.active,
+nav.top-bar .top-bar-section li.nav-sport.active > a  {
+	background: #3E5B42 !important;
 }
 
-nav.top-bar .top-bar-section ul li.nav-sports > a {
-	color: #344B3F;
+nav.top-bar .top-bar-section ul li.nav-sport > a {
+	color: #3E5B42;
 }
 
-nav.top-bar .top-bar-section ul li.nav-sports.active > a {
+nav.top-bar .top-bar-section ul li.nav-sport.active > a {
 	color: white !important;
 }
 
 div.section-title.section-title-news h1 {
-	color: #551111;
+	color: #970010;
 }
 
 div.section-title.section-title-comment h1 {
@@ -781,12 +1047,198 @@ div.section-title.section-title-science h1 {
 	color: #22A457;
 }
 
-div.felix-title-news, div.felix-title-news .row {
-	background: #d98c8c;
+div.section-title.section-title-politics h1 {
+	color: #E9A9A7;
+}
+
+div.section-title.section-title-biz h1 {
+	color: #10B4F2;
+}
+
+div.section-title.section-title-arts h1 {
+	color: #AD7F5D;
+}
+
+div.section-title.section-title-music h1 {
+	color: #004E2A;
+}
+
+div.section-title.section-title-film h1 {
+	color: #1C6A78;
+}
+
+div.section-title.section-title-fashion h1 {
+	color: #4A1A60;
+}
+
+div.section-title.section-title-games h1 {
+	color: #974929;
+}
+
+div.section-title.section-title-tech h1 {
+	color: #0056A5;
+}
+
+div.section-title.section-title-travel h1 {
+	color: #00929C;
+}
+
+div.section-title.section-title-food h1 {
+	color: #9B5C34;
+}
+
+div.section-title.section-title-tv h1 {
+	color: #182447;
+}
+
+div.section-title.section-title-books h1 {
+	color: #6B003E;
+}
+
+div.section-title.section-title-sport h1 {
+	color: #3E5B42;
+}
+
+div.section-title.section-title-features h1 {
+	color: #8C0028;
+}
+
+div.felix-title-news, div.felix-title-news .row,
+div.felix-title-home, div.felix-title-home .row {
+	background: #eacccf;
 }
 
 div.felix-title-science, div.felix-title-science .row {
-	background: #80e5a9;
+	background: #d2ecdd;
+}
+
+div.felix-title-comment, div.felix-title-comment .row {
+	background: #c5d8db;
+}
+
+div.felix-title-politics, div.felix-title-politics .row {
+	background: #faeded;
+}
+
+div.felix-title-biz, div.felix-title-biz .row {
+	background: #cff0fc;
+}
+
+div.felix-title-arts, div.felix-title-arts .row {
+	background: #decbbe;
+}
+
+div.felix-title-music, div.felix-title-music .row {
+	background: #ccdbd4;
+}
+
+div.felix-title-film, div.felix-title-film .row {
+	background: #d1e1e4;
+}
+
+div.felix-title-fashion, div.felix-title-fashion .row {
+	background: #dad1df;
+}
+
+div.felix-title-games, div.felix-title-games .row {
+	background: #dfc8be;
+}
+
+div.felix-title-tech, div.felix-title-tech .row {
+	background: #b2cce4;
+}
+
+div.felix-title-travel, div.felix-title-travel .row {
+	background: #cce9eb;
+}
+
+div.felix-title-food, div.felix-title-food .row {
+	background: #e1cec2;
+}
+
+div.felix-title-books, div.felix-title-books .row {
+	background: #E1CCD8;
+}
+
+div.felix-title-tv, div.felix-title-tv .row {
+	background: #d0d3da;
+}
+
+div.felix-title-sport, div.felix-title-sport .row {
+	background: #d8ded9;
+}
+
+div.felix-title-features, div.felix-title-features .row {
+	background: #e8ccd4;
+}
+
+div.felix-header-news, div.felix-footer-news, div.felix-header-news .row, div.felix-footer-news .row,
+div.felix-header-home, div.felix-footer-home, div.felix-header-home .row, div.felix-footer-home .row {
+	background: #970010;	
+}
+
+div.felix-header-comment, div.felix-footer-comment, div.felix-header-comment .row, div.felix-footer-comment .row {
+	background: #3F7F88;	
+}
+
+div.felix-header-science, div.felix-footer-science, div.felix-header-science .row, div.felix-footer-science .row {
+	background: #22A457;	
+}
+
+div.felix-header-politics, div.felix-footer-politics, div.felix-header-politics .row, div.felix-footer-politics .row {
+	background: #E9A9A7;	
+}
+
+div.felix-header-biz, div.felix-footer-biz, div.felix-header-biz .row, div.felix-footer-biz .row {
+	background: #10B4F2;	
+}
+
+div.felix-header-arts, div.felix-footer-arts, div.felix-header-arts .row, div.felix-footer-arts .row {
+	background: #AD7F5D;
+}
+
+div.felix-header-music, div.felix-footer-music, div.felix-header-music .row, div.felix-footer-music .row {
+	background: #004E2A;	
+}
+
+div.felix-header-film, div.felix-footer-film, div.felix-header-film .row, div.felix-footer-film .row {
+	background: #1C6A78;	
+}
+
+div.felix-header-fashion, div.felix-footer-fashion, div.felix-header-fashion .row, div.felix-footer-fashion .row {
+	background: #4A1A60;	
+}
+
+div.felix-header-games, div.felix-footer-games, div.felix-header-games .row, div.felix-footer-games .row {
+	background: #974929;	
+}
+
+div.felix-header-tech, div.felix-footer-tech, div.felix-header-tech .row, div.felix-footer-tech .row {
+	background: #0056A5;	
+}
+
+div.felix-header-travel, div.felix-footer-travel, div.felix-header-travel .row, div.felix-footer-travel .row {
+	background: #00929C;	
+}
+
+div.felix-header-food, div.felix-footer-food, div.felix-header-food .row, div.felix-footer-food .row {
+	background: #9B5C34;	
+}
+
+div.felix-header-tv, div.felix-footer-tv, div.felix-header-tv .row, div.felix-footer-tv .row {
+	background: #182447;	
+}
+
+div.felix-header-books, div.felix-footer-books, div.felix-header-books .row, div.felix-footer-books .row {
+	background: #6B003E;	
+}
+
+div.felix-header-sport, div.felix-footer-sport, div.felix-header-sport .row, div.felix-footer-sport .row {
+	background: #3E5B42;	
+}
+
+div.felix-header-features, div.felix-footer-features, div.felix-header-features .row, div.felix-footer-features .row {
+	background: #8C0028;	
 }
 
 /* ITEM TITLE CUSTOMS */
@@ -829,14 +1281,6 @@ div.felix-title-science, div.felix-title-science .row {
 
 .felix-item-title-generic h2, .felix-item-title-generic h3 {
 	color: #444444;
-}
-
-div.felix-header-news, div.felix-footer-news, div.felix-header-news .row, div.felix-footer-news .row {
-	background: #551111;	
-}
-
-div.felix-header-science, div.felix-footer-science, div.felix-header-science .row, div.felix-footer-science .row {
-	background: #22A457;	
 }
 
 /* FRONT PAGE SLIDER */
@@ -897,12 +1341,12 @@ div.alert-box {
 	border: 2px solid red !important;
 }
 
-.alert-box a {
+.alert-box a, .felix-header a, .felix-footer a {
 	color: white;
 	border-bottom: 1px dotted white;
 }
 
-.alert-box a:hover {
+.alert-box a:hover, .felix-header a:hover, .felix-footer a:hover {
 	border-bottom: 1px solid white;
 }
 
