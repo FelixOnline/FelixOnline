@@ -646,11 +646,11 @@ div.felix-nav.nav-comment, div.section-title-comment, div.article-title-comment 
 }
 
 div.article-comments-zone-science {
-	border-top-color: #22A457;
+	border-top-color: #388F2E;
 }
 
 div.felix-nav.nav-science, div.section-title-science, div.article-title-science {
-	border-bottom-color: #22A457;
+	border-bottom-color: #388F2E;
 }
 
 div.article-comments-zone-politics {
@@ -814,11 +814,11 @@ nav.top-bar .top-bar-section li.nav-science:hover,
 nav.top-bar .top-bar-section li.nav-science:hover > a,
 nav.top-bar .top-bar-section li.nav-science.active,
 nav.top-bar .top-bar-section li.nav-science.active > a  {
-	background: #22A457 !important;
+	background: #388F2E !important;
 }
 
 nav.top-bar .top-bar-section ul li.nav-science > a {
-	color: #22A457;
+	color: #388F2E;
 }
 
 nav.top-bar .top-bar-section ul li.nav-science.active > a {
@@ -1044,7 +1044,7 @@ div.section-title.section-title-comment h1 {
 }
 
 div.section-title.section-title-science h1 {
-	color: #22A457;
+	color: #388F2E;
 }
 
 div.section-title.section-title-politics h1 {
@@ -1109,7 +1109,7 @@ div.felix-title-home, div.felix-title-home .row {
 }
 
 div.felix-title-science, div.felix-title-science .row {
-	background: #d2ecdd;
+	background: #d7e8d5;
 }
 
 div.felix-title-comment, div.felix-title-comment .row {
@@ -1182,7 +1182,7 @@ div.felix-header-comment, div.felix-footer-comment, div.felix-header-comment .ro
 }
 
 div.felix-header-science, div.felix-footer-science, div.felix-header-science .row, div.felix-footer-science .row {
-	background: #22A457;	
+	background: #388F2E;	
 }
 
 div.felix-header-politics, div.felix-footer-politics, div.felix-header-politics .row, div.felix-footer-politics .row {
