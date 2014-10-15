@@ -78,13 +78,13 @@
 				<div class="medium-8 columns felix-title-logo">
 					<div>
 						<a href="<?php echo STANDARD_URL; ?>">
-							<img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/black logo.png"> 
+							<img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/black logo.png" alt=""> 
 							<h1>Felix Online</h1>
 						</a>
 					</div>
 				</div>
 				<div class="medium-4 columns text-right felix-buttons">
-					<p><a href="https://www.facebook.com/FelixImperial"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/fb.png" class="felix-header-icon"></a> <a href="https://twitter.com/feliximperial"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/twitter.png" class="felix-header-icon"></a> <a href="<?php echo STANDARD_URL; ?>contact"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/email.png" class="felix-header-icon"></a> <a href="<?php echo STANDARD_URL.'rss'; ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/rss.png" class="felix-header-icon"></a></p>
+					<p><a href="https://www.facebook.com/FelixImperial"><img alt="Facebook" src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/fb.png" class="felix-header-icon"></a> <a href="https://twitter.com/feliximperial"><img alt="Twitter" src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/twitter.png" class="felix-header-icon"></a> <a href="<?php echo STANDARD_URL; ?>contact"><img alt="Contact Us" src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/email.png" class="felix-header-icon"></a> <a href="<?php echo STANDARD_URL.'rss'; ?>"><img alt="RSS Feed" src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/rss.png" class="felix-header-icon"></a></p>
 				</div>
 			</div>
 			<div class="row">
@@ -93,7 +93,7 @@
 				</div>
 				<div class="medium-4 columns felix-search">
 					<form action="search/" method="get">
-						<input type="text" name="q" placeholder="Search..." class="felix-search-box">
+						<input type="search" required name="q" placeholder="Type something to search and press enter..." class="felix-search-box">
 					</form>
 				</div>
 			</div>
