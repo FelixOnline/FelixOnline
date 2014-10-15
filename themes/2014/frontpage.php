@@ -98,6 +98,8 @@ $timing->log('after header');
 				<center><a class="button" href="<?php echo STANDARD_URL; ?>issuearchive/">Read more online</a></center>
 
 				<?php
+					$theme->render('sidebar/fbLikeBox');
+
 					$theme->render('sidebar/contributionPolicy');
 
 					$theme->render('sidebar/twitter');
