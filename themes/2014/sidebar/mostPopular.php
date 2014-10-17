@@ -24,7 +24,7 @@
 					It doesn't look like any articles have been read recently...
 				<?php } ?>
 		</div>
-		<div class="content recent-items-content" id="most-comment">
+		<div class="content recent-items-content" id="most-commented">
 			<?php
 				$commented_articles = (new \FelixOnline\Core\ArticleManager())->getMostCommented(POPULAR_ARTICLES);
 				if (!is_null($commented_articles)) { ?>
