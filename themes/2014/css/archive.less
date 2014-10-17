@@ -1,0 +1,66 @@
+/*
+ * Issue archive style
+ */
+
+#archivesearchbar {
+    margin-bottom:10px;
+    margin-top:10px;
+    input {
+        padding:5px;
+        font-size:16px;
+        border:1px solid #bebebe;
+    }
+
+    .search-count {
+        font-weight: bold;
+        font-size: 18px;
+        text-align: right;
+        margin-right: 0px;
+        margin-left: 0px;
+        width: 290px;
+    }
+}
+
+.archive-title {
+    border-top: 3px double black;
+    border-bottom: 3px double black;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+
+    h1 {
+        color: black;
+        font-family: 'Sorts Mill Goudy', serif;
+        margin-bottom: -0.3em;
+    }
+}
+
+.issuecont {
+    .thumbLink { 
+        text-decoration:none; 
+        &:hover {
+            .issue {
+                text-decoration: underline;
+            }
+            .date {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .thumb {
+        .issue {
+            text-align: center;
+            color: #666;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-family: 'Noto Serif', serif !important;
+        }
+        .date,
+        .relevance {
+            text-align: center;
+            font-size: smaller;
+        }
+    }
+}
+

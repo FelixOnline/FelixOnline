@@ -11,6 +11,7 @@
 class Page extends BaseModel {
 	protected $db;
 	protected $safesql;
+	protected $csrf_token;
 
 	function __construct($slug=NULL) {
 		global $db, $safesql;
@@ -29,6 +30,7 @@ class Page extends BaseModel {
 					$slug,	
 				));
 			parent::__construct($this->db->get_row($sql), 'Page', $slug);
+			$this->csrf_token = Utility::generateCSRFToken('generic_page');
 			return $this;
 		} else {
 			// initialise new page
@@ -39,19 +41,19 @@ class Page extends BaseModel {
 	 * Private: Take string and eval any php
 	 * Find any instances of php tags in string and replaces it with the evaluated php
 	 */
-	private function evalPHP($string) {
+	private function evalPHP($string, $token = '') {
 		ob_start();
 		eval("?>$string<?php ");
 		$output = ob_get_contents();
 		ob_end_clean();
-		return $output;
+		return str_replace('__CSRF_TOKEN__', $token, $output);
 	}
 
 	/*
 	 * Public: Get page content
 	 */
-	public function getContent() {
-		return $this->evalPHP($this->fields['content']);
+	public function getContent($token = '') {
+		return $this->evalPHP($this->fields['content'], $token);
 	}
 
 	/**
@@ -61,5 +63,14 @@ class Page extends BaseModel {
 	 */
 	public function getSlug() {
 		return $this->fields['slug'];				
+	}
+
+	/**
+	 * Public: Get CSRF token
+	 *
+	 * @return string token
+	 */
+	public function getToken() {
+		return $this->csrf_token;
 	}
 }

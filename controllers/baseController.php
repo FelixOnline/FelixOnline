@@ -15,7 +15,7 @@ class BaseController {
 		/*
 		 * Set theme here so that it can be overridden by a controller if necessary
 		 */
-		$theme = new Theme('classic');
+		$theme = new Theme('2014');
 		$this->theme = $theme->getClass(); // used so that theme can specify a theme class if necessary
 		$this->theme->setSite('main');
 	}

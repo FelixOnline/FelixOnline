@@ -33,6 +33,7 @@ class ArticleController extends BaseController
 
 		if ($article->canComment($currentuser)) {
 			/* User comment */
+
 			if (isset($_POST['articlecomment'])) {
 				$comment->setExternal(false);
 				$comment->setComment($_POST['comment']);
@@ -40,7 +41,9 @@ class ArticleController extends BaseController
 				if(isset($_POST['replyComment'])) {
 					$comment->setReply($_POST['replyComment']);
 				}
-				if ($comment->commentExists()) { // if comment already exists
+				if($_POST['comment'] == '') {
+					$errorempty = true;
+				} elseif ($comment->commentExists()) { // if comment already exists
 					$errorduplicate = true;
 				} else {
 					if ($id = $comment->save()) { 
@@ -68,7 +71,9 @@ class ArticleController extends BaseController
 							$comment->setReply($_POST['replyComment']);
 						}
 
-						if ($comment->commentExists()) { // if comment already exists
+						if($_POST['comment'] == '') {
+							$errorempty = true;
+						} elseif ($comment->commentExists()) { // if comment already exists
 							$errorduplicate = true;
 						} else {
 							if ($id = $comment->save()) {
@@ -95,6 +100,7 @@ class ArticleController extends BaseController
 		
 		$this->theme->appendData(array(
 			'article' => $article,
+			'errorempty' => $errorempty,
 			'errorduplicate' => $errorduplicate,
 			'errorspam' => $errorspam,
 			'erroremail' => $erroremail,

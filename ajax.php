@@ -15,7 +15,7 @@ $currentuser = new CurrentUser();
  * Set up hooks
  */
 $hooks = new Hooks();
-$theme = new Theme('classic'); // TODO
+$theme = new Theme('2014'); // TODO
 
 $clean_request = array();
 foreach($_POST as $key => $val) {

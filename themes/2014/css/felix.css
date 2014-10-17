@@ -1,0 +1,1471 @@
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: 'Alegreya Sans', sans-serif;
+}
+
+button, .button {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+}
+
+.small {
+	font-size: smaller;
+}
+
+.tabs dd > a, .tabs .tab-title > a {
+	padding: 0.5rem 1rem !important;
+	background: white;
+	font-family: 'Noto Serif', serif !important;
+}
+
+.tabs dd.active a, .tabs .tab-title.active a {
+	background: #444444;
+	color: white;
+}
+
+p.form-help {
+	font-size: smaller;
+	color: #333333;
+	margin-top: -1em;
+}
+
+div.felix-header, div.felix-footer, div.felix-header .row, div.felix-footer .row {
+	background: #0085AB;
+}
+
+div.felix-header .row div, div.felix-footer .row div {
+	color: white !important;
+}
+
+div.felix-footer {
+	margin-top: 2em;
+}
+
+div.felix-title, div.felix-title .row {
+	background: #b2e4f2;
+}
+
+div.felix-title-logo img {
+	width: 10em !important;
+	vertical-align: middle;
+	margin-bottom: 0.8em;
+	max-height: 70pt;
+	max-width: 70pt;
+}
+
+div.felix-title .row div {
+	margin-bottom: -0.2em;
+}
+
+div.felix-title .row div h1 {
+	color: black !important;
+	font-family: 'Sorts Mill Goudy', serif;
+	font-size: 65pt;
+	margin: 0;
+	display: inline;
+	margin-left: 0.2em;
+	vertical-align: middle;
+}
+
+div.felix-search {
+	margin-bottom: 0.8em;
+	margin-top: -0.4em;
+}
+
+@media only screen and (max-width: 64em) {
+	div.felix-title .row div h1 {
+		color: black !important;
+		font-family: 'Sorts Mill Goudy', serif;
+		font-size: 35pt;
+		margin-top: 0.2em;
+	}
+
+	div.felix-title .row div {
+		margin-top: 0.2em;
+		margin-bottom: 0;
+	}
+
+	div.felix-title-logo img {
+		height: 35pt !important;
+		width: 35pt !important;
+	}
+
+	div.felix-search {
+		margin-top: -0.2em !important;
+	}
+}
+
+@media only screen and (max-width: 40em) {
+	div.felix-title .row div h1 {
+		color: black !important;
+		font-family: 'Sorts Mill Goudy', serif;
+		font-size: 30pt;
+		margin-top: 0.2em;
+	}
+
+	div.felix-title .row div {
+		margin-top: 0.2em;
+		margin-bottom: 0;
+	}
+
+	div.felix-title-logo {
+		text-align: center;
+	}
+
+	div.felix-buttons, div.felix-header-actions {
+		text-align: center !important;
+	}
+
+	div.felix-title-logo img {
+		height: 35pt !important;
+		width: 35pt !important;
+	}
+
+	blockquote {
+		float: none !important;
+		margin: none !important;
+	}
+
+	div.felix-search {
+		margin-bottom: 1em !important;
+	}
+}
+
+div.felix-title .row .felix-subtitle {
+	color: black;
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	margin-top: -0.5em;
+	padding-bottom: 1em;
+}
+
+div.felix-nav {
+	border-top: 3px double black;
+	border-bottom: 3px double cyan; /* Overridden based on section chosen */
+}
+
+div.felix-subtitle {
+	margin-bottom: 10px;
+	padding-left: 125px;
+}
+
+.felix-search-box {
+	padding: 2px !important;
+	padding-left: 5px !important;
+	margin: 0 !important;
+	height: auto !important;
+}
+
+img.felix-header-icon {
+	width: 2em;
+	margin-top: 1em;
+}
+
+div.felix-nametype {
+	font-family: 'Noto Serif', serif;
+	padding-top: 0.5em;
+	padding-bottom: 0.25em;
+	font-size: 2em;
+}
+
+div.felix-header {
+	padding-bottom: 0.2em;
+}
+
+nav.top-bar, nav.top-bar .top-bar-section li, nav.top-bar .top-bar-section a {
+	background: none !important;
+}
+
+nav.top-bar .top-bar-section ul li > a {
+	font-family: 'Noto Serif', serif;
+	color: cyan; /* Overridden based on section chosen */
+	font-weight: bold;
+	font-size: 12pt;
+}
+
+nav.top-bar .top-bar-section li.active, nav.top-bar .top-bar-section li.active > a {
+	background: cyan !important; /* Overridden based on section chosen */
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li:hover, nav.top-bar .top-bar-section li:hover > a {
+	background: magenta !important; /* Overridden based on section chosen */
+	color: white !important;
+}
+
+.felix-mini-tell-us {
+	margin-top: 1em;
+	font-weight: bold;
+}
+
+.felix-tell-us h5, .felix-tell-us a, .felix-browser h5, .felix-browser a {
+	font-weight: bold;
+}
+
+.felix-item-title {
+	border-bottom: 1px solid cyan;
+}
+
+.felix-item-title h2, .felix-item-title h3 {
+	color: cyan;
+	margin: 0;
+	font-family: 'Sorts Mill Goudy', serif;
+}
+
+.felix-item-title a {
+	color: black;
+}
+
+.felix-pad-top {
+	margin-top: 1em;
+}
+
+div.article-title {
+	padding-top: 1em;
+	border-bottom: 3px double cyan;
+	padding-bottom: 1em;
+	margin-bottom: 1em;
+}
+
+div.article-comments-zone {
+	border-top: 3px double cyan;
+	margin-bottom: 1em;
+}
+
+div.article-comments-zone h3 {
+	font-weight: bold;
+}
+
+div.article-comment {
+	border-top: 1px solid #333333;
+	margin-top: 1em;
+	clear: both;
+}
+
+div.article-comment h4 {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+div.comment-meta {
+	color: #333333 !important;
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+}
+
+div.comment-tools {
+	float: right;
+	border-left: 1px dotted #333333;
+	margin-left: 1em;
+	margin-bottom: 0.5em;
+}
+
+div.comment-tools ul {
+	margin: 0;
+	padding: 0;
+	padding-left: 1em;
+}
+
+div.comment-tools ul li {
+	list-style-type: none;
+	padding-bottom: 0.5em;
+}
+
+div.article-title-area h1, div.article-title-area h2 {
+	font-family: 'Noto Serif', serif;
+}
+
+div.article-title-area h1 {
+	font-weight: bold;
+	font-size: 1.8em;
+}
+
+div.article-title-area h2 {
+	font-size: 1em;
+	color: #666666;
+	margin-bottom: 1em;
+}
+
+div.article-image, #imgCont {
+	margin-bottom: 2em;
+}
+
+div.tall-image {
+	width: 50%;
+	float: right;
+}
+
+div.article-image-image img.vertical {
+	width: 100%;
+}
+
+div.article-meta {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+	padding-bottom: 0.5em;
+}
+
+p.article-first {
+	font-weight: bold;
+}
+
+blockquote {
+	float: right;
+	margin-left: 1em;
+	margin-bottom: 1em;
+	font-size: larger;
+	width: 50%;
+}
+
+blockquote p {
+	font-size: larger;
+}
+
+blockquote cite {
+	font-size: 0.8em;
+}
+
+@media only screen and (max-width: 40em) {
+	div.article-meta {
+		border: none;
+	}
+
+	div.article-meta div.text-right {
+		text-align: center !important;
+	}
+}
+
+span.comment-count {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	color: #551111;
+	margin-right: 0.2em;
+}
+
+span.felix-front-news-date, span.felix-item-cat {
+	font-weight: bold;
+	font-size: small;
+	color: #555;
+	text-transform: uppercase;
+}
+
+.felix-news-dotted {
+	border-bottom: 1px dotted #444444;
+	margin-bottom: 1em !important;
+}
+
+div.felix-front-news-main, div.felix-front-comment {
+	margin-top: 1em !important;
+}
+
+div.felix-front-news-main-text h3 {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	font-size: 1.2em;
+}
+
+div.felix-front-news-main-text p {
+	margin-bottom: 0;
+}
+
+div.felix-front-news-secondary, div.felix-front-news-main {
+	padding-bottom: 1em;
+}
+
+div.felix-front-news-secondary-text h3 {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	font-size: 0.9em;
+	margin-top: 0 !important;
+	margin-bottom: 0em;
+}
+
+div.felix-front-comment-text h3 {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	font-size: 0.9em;
+	margin-top: 0 !important;
+	margin-bottom: 0.8em;
+}
+
+
+div.felix-front-comment div.row, div.felix-front-sport div.row {
+	margin-bottom: 1em;
+}
+
+div.felix-item-panel {
+	padding: 0;
+	margin-top: 0.8em;
+}
+
+div.felix-item-panel p {
+	font-size: 0.9em;
+	line-height: 1.1;
+}
+
+span.felix-item-cat {
+	color: #666666;
+}
+
+h4.felix-item-title {
+	border: none;
+	color: black;
+	font-weight: bold;
+	font-size: 0.9em;
+	line-height: 1.2;
+	font-family: 'Noto Serif', serif;
+}
+
+div.felix-item-text {
+	padding-right: 0 !important;
+	padding-left: 1.5em;
+	padding-top: 0.2em;
+}
+
+div.felix-horoscope-slider {
+	text-align: center;
+}
+
+div.felix-horoscope-slider h4 {
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	font-size: 1.2em;
+}
+
+button.slick-prev {
+	left: 10px;
+}
+
+button.slick-next {
+	right: 10px;
+}
+
+button.slick-prev, button.slick-next, button.slick-prev:hover, button.slick-next:hover {
+	background: rgba(255, 255, 255, 0.8);
+	height: 30px;
+	width: 30px;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+.slick-slide img {
+	display: inline !important;
+	margin-bottom: 1em;
+}
+
+.felix-marquee-row {
+	padding-top: 2em;
+}
+
+.felix-marquee-row p {
+	margin-top: -0.5em;
+	margin-bottom: 0;
+}
+
+.felix-marquee-number {
+	font-size: 40pt;
+	font-weight: bold;
+	font-family: 'Noto Serif', serif;
+	color: #551111;
+}
+
+.top-bar .name h1 a, .top-bar .toggle-topbar a {
+	color: black !important;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.top-bar.expanded .title-area {
+	background: none;
+}
+
+div.section-breadcrumbs {
+	font-size: small;
+	margin-top: 0.5em;
+	margin-right: 1em;
+	float: left;
+}
+
+.section-subcategories {
+	float: right;
+	clear: both;
+	margin: 0 !important;
+	margin-top: 0.3em !important;
+}
+
+.section-editors, .user-meta {
+	margin-top: 0.3em
+}
+
+div.section-title {
+	border-bottom: 3px double magenta;
+	padding-bottom: 0.5em;
+	margin-bottom: 1em;
+}
+
+div.section-title h1 {
+	font-family: 'Sorts Mill Goudy', serif;
+	color: magenta;
+	margin-bottom: -0.3em;
+}
+
+div.user-title {
+	border-bottom: 3px double black;
+	padding-bottom: 0.5em;
+	margin-bottom: 1em;
+}
+
+div.user-title h1 {
+	font-family: 'Sorts Mill Goudy', serif;
+	color: black;
+	margin-bottom: -0.3em;
+}
+
+.loading {
+    padding-left: 20px;
+    background: url('../img/spin-loader.gif') 0 0 no-repeat;
+    display: none
+}
+
+.user-popular {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.recent-items-content ol {
+	margin-bottom: 0;
+}
+
+.user-popular li, .recent-items-content li {
+    padding-bottom: 5px;
+    color: #999;
+    font-weight: bold;
+}
+
+.user-popular li a, .recent-items-content li a {
+    font-weight: normal;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.user-popular-item span, .recent-items-content span {
+    font-size: 13px
+}
+
+.user-popular-item .popular-item-title a, .recent-items-content a {
+    width: 200px
+}
+
+.user-popular-item .popular-item-hits {
+    float: right;
+    position: relative;
+    font-weight: normal;
+    font-size: 14px
+}
+
+.user-popular-item:hover .user-popular-hits {
+    color: #999
+}
+
+.user-comments span.comment-popularity {
+    color: #555;
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em
+}
+
+.user-comments ul {
+    list-style-type: none;
+    margin-left: 0;
+}
+
+.user-comments li {
+    margin-bottom: 5px;
+    border-top: 1px dotted #333333;
+}
+
+.user-comments li a {
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.user-comments li p {
+    margin-top: 3px;
+    font-size: smaller;
+    margin-bottom: 10px
+}
+
+div.felix-contact-area {
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+div.felix-contact-row p {
+	padding-top: 0.8em;
+	font-weight: bold;
+}
+
+/* SECTION COLOUR MODIFIERS */
+nav.top-bar .top-bar-section li.nav-home:hover,
+nav.top-bar .top-bar-section li.nav-home:hover > a,
+nav.top-bar .top-bar-section li.nav-home.active,
+nav.top-bar .top-bar-section li.nav-home.active > a  {
+	background: black !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-home > a {
+	color: black !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-home.active > a, nav.top-bar .top-bar-section ul li.nav-home:hover > a {
+	color: white !important;
+}
+
+div.felix-nav.nav-home {
+	border-bottom-color: black;
+}
+
+div.article-comment label {
+	margin: 0;
+}
+
+div.article-comments-zone-news {
+	border-top-color: #970010;
+}
+
+div.felix-nav.nav-news, div.section-title-news, div.article-title-news {
+	border-bottom-color: #970010;
+}
+
+div.article-comments-zone-comment {
+	border-top-color: #3F7F88;
+}
+
+div.felix-nav.nav-comment, div.section-title-comment, div.article-title-comment {
+	border-bottom-color: #3F7F88;
+}
+
+div.article-comments-zone-science {
+	border-top-color: #388F2E;
+}
+
+div.felix-nav.nav-science, div.section-title-science, div.article-title-science {
+	border-bottom-color: #388F2E;
+}
+
+div.article-comments-zone-politics {
+	border-top-color: #E9A9A7;
+}
+
+div.felix-nav.nav-politics, div.section-title-politics, div.article-title-politics {
+	border-bottom-color: #E9A9A7;
+}
+
+div.article-comments-zone-biz {
+	border-top-color: #10B4F2;
+}
+
+div.felix-nav.nav-biz, div.section-title-biz, div.article-title-biz {
+	border-bottom-color: #10B4F2;
+}
+
+div.article-comments-zone-arts {
+	border-top-color: #AD7F5D;
+}
+
+div.felix-nav.nav-arts, div.section-title-arts, div.article-title-arts {
+	border-bottom-color: #AD7F5D;
+}
+
+div.article-comments-zone-music {
+	border-top-color: #004E2A;
+}
+
+div.felix-nav.nav-music, div.section-title-music, div.article-title-music {
+	border-bottom-color: #004E2A;
+}
+
+div.article-comments-zone-film {
+	border-top-color: #1C6A78;
+}
+
+div.felix-nav.nav-film, div.section-title-film, div.article-title-film {
+	border-bottom-color: #1C6A78;
+}
+
+div.article-comments-zone-fashion {
+	border-top-color: #4A1A60;
+}
+
+div.felix-nav.nav-fashion, div.section-title-fashion, div.article-title-fashion {
+	border-bottom-color: #4A1A60;
+}
+
+div.article-comments-zone-games {
+	border-top-color: #974929;
+}
+
+div.felix-nav.nav-games, div.section-title-games, div.article-title-games {
+	border-bottom-color: #974929;
+}
+
+div.article-comments-zone-tech {
+	border-top-color: #0056A5;
+}
+
+div.felix-nav.nav-tech, div.section-title-tech, div.article-title-tech {
+	border-bottom-color: #0056A5;
+}
+
+div.article-comments-zone-travel {
+	border-top-color: #00929C;
+}
+
+div.felix-nav.nav-travel, div.section-title-travel, div.article-title-travel {
+	border-bottom-color: #00929C;
+}
+
+div.article-comments-zone-food {
+	border-top-color: #9B5C34;
+}
+
+div.felix-nav.nav-food, div.section-title-food, div.article-title-food {
+	border-bottom-color: #9B5C34;
+}
+
+div.article-comments-zone-tv {
+	border-top-color: #182447;
+}
+
+div.felix-nav.nav-tv, div.section-title-tv, div.article-title-tv {
+	border-bottom-color: #182447;
+}
+
+div.article-comments-zone-books {
+	border-top-color: #6B003E;
+}
+
+div.felix-nav.nav-books, div.section-title-books, div.article-title-books {
+	border-bottom-color: #6B003E;
+}
+
+div.article-comments-zone-sport {
+	border-top-color: #3E5B42;
+}
+
+div.felix-nav.nav-sport, div.section-title-sport, div.article-title-sport {
+	border-bottom-color: #3E5B42;
+}
+
+div.article-comments-zone-features {
+	border-top-color: #8C0028;
+}
+
+div.felix-nav.nav-features, div.section-title-features, div.article-title-features {
+	border-bottom-color: #8C0028;
+}
+
+nav.top-bar .top-bar-section li.nav-news:hover,
+nav.top-bar .top-bar-section li.nav-news:hover > a,
+nav.top-bar .top-bar-section li.nav-news.active,
+nav.top-bar .top-bar-section li.nav-news.active > a  {
+	background: #970010 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-news > a {
+	color: #970010;
+}
+
+nav.top-bar .top-bar-section ul li.nav-news.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-comment:hover,
+nav.top-bar .top-bar-section li.nav-comment:hover > a,
+nav.top-bar .top-bar-section li.nav-comment.active,
+nav.top-bar .top-bar-section li.nav-comment.active > a  {
+	background: #3F7F88 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-comment > a {
+	color: #3F7F88;
+}
+
+nav.top-bar .top-bar-section ul li.nav-comment.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-features:hover,
+nav.top-bar .top-bar-section li.nav-features:hover > a,
+nav.top-bar .top-bar-section li.nav-features.active,
+nav.top-bar .top-bar-section li.nav-features.active > a  {
+	background: #8C0028 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-features > a {
+	color: #8C0028;
+}
+
+nav.top-bar .top-bar-section ul li.nav-features.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-science:hover,
+nav.top-bar .top-bar-section li.nav-science:hover > a,
+nav.top-bar .top-bar-section li.nav-science.active,
+nav.top-bar .top-bar-section li.nav-science.active > a  {
+	background: #388F2E !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-science > a {
+	color: #388F2E;
+}
+
+nav.top-bar .top-bar-section ul li.nav-science.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-arts:hover,
+nav.top-bar .top-bar-section li.nav-arts:hover > a,
+nav.top-bar .top-bar-section li.nav-arts.active,
+nav.top-bar .top-bar-section li.nav-arts.active > a  {
+	background: #AD7F5D !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-arts > a {
+	color: #AD7F5D;
+}
+
+nav.top-bar .top-bar-section ul li.nav-arts.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-tech:hover,
+nav.top-bar .top-bar-section li.nav-tech:hover > a,
+nav.top-bar .top-bar-section li.nav-tech.active,
+nav.top-bar .top-bar-section li.nav-tech.active > a  {
+	background: #0056A5 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-tech > a {
+	color: #0056A5;
+}
+
+nav.top-bar .top-bar-section ul li.nav-tech.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-biz:hover,
+nav.top-bar .top-bar-section li.nav-biz:hover > a,
+nav.top-bar .top-bar-section li.nav-biz.active,
+nav.top-bar .top-bar-section li.nav-biz.active > a  {
+	background: #10B4F2 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-biz > a {
+	color: #10B4F2;
+}
+
+nav.top-bar .top-bar-section ul li.nav-biz.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-politics:hover,
+nav.top-bar .top-bar-section li.nav-politics:hover > a,
+nav.top-bar .top-bar-section li.nav-politics.active,
+nav.top-bar .top-bar-section li.nav-politics.active > a  {
+	background: #E9A9A7 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-politics > a {
+	color: #E9A9A7;
+}
+
+nav.top-bar .top-bar-section ul li.nav-politics.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-music:hover,
+nav.top-bar .top-bar-section li.nav-music:hover > a,
+nav.top-bar .top-bar-section li.nav-music.active,
+nav.top-bar .top-bar-section li.nav-music.active > a  {
+	background: #004E2A !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-music > a {
+	color: #004E2A;
+}
+
+nav.top-bar .top-bar-section ul li.nav-music.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-film:hover,
+nav.top-bar .top-bar-section li.nav-film:hover > a,
+nav.top-bar .top-bar-section li.nav-film.active,
+nav.top-bar .top-bar-section li.nav-film.active > a  {
+	background: #1C6A78 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-film > a {
+	color: #1C6A78;
+}
+
+nav.top-bar .top-bar-section ul li.nav-film.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-fashion:hover,
+nav.top-bar .top-bar-section li.nav-fashion:hover > a,
+nav.top-bar .top-bar-section li.nav-fashion.active,
+nav.top-bar .top-bar-section li.nav-fashion.active > a  {
+	background: #4A1A60 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-fashion > a {
+	color: #4A1A60;
+}
+
+nav.top-bar .top-bar-section ul li.nav-fashion.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-games:hover,
+nav.top-bar .top-bar-section li.nav-games:hover > a,
+nav.top-bar .top-bar-section li.nav-games.active,
+nav.top-bar .top-bar-section li.nav-games.active > a  {
+	background: #974929 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-games > a {
+	color: #974929;
+}
+
+nav.top-bar .top-bar-section ul li.nav-games.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-travel:hover,
+nav.top-bar .top-bar-section li.nav-travel:hover > a,
+nav.top-bar .top-bar-section li.nav-travel.active,
+nav.top-bar .top-bar-section li.nav-travel.active > a  {
+	background: #00929C !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-travel > a {
+	color: #00929C;
+}
+
+nav.top-bar .top-bar-section ul li.nav-tv.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-food:hover,
+nav.top-bar .top-bar-section li.nav-food:hover > a,
+nav.top-bar .top-bar-section li.nav-food.active,
+nav.top-bar .top-bar-section li.nav-food.active > a  {
+	background: #9B5C34 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-food > a {
+	color: #9B5C34;
+}
+
+nav.top-bar .top-bar-section ul li.nav-tv.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-tv:hover,
+nav.top-bar .top-bar-section li.nav-tv:hover > a,
+nav.top-bar .top-bar-section li.nav-tv.active,
+nav.top-bar .top-bar-section li.nav-tv.active > a  {
+	background: #182447 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-tv > a {
+	color: #182447;
+}
+
+nav.top-bar .top-bar-section ul li.nav-tv.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-books:hover,
+nav.top-bar .top-bar-section li.nav-books:hover > a,
+nav.top-bar .top-bar-section li.nav-books.active,
+nav.top-bar .top-bar-section li.nav-books.active > a  {
+	background: #6B003E !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-books > a {
+	color: #6B003E;
+}
+
+nav.top-bar .top-bar-section ul li.nav-books.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-coffeebreak:hover,
+nav.top-bar .top-bar-section li.nav-coffeebreak:hover > a,
+nav.top-bar .top-bar-section li.nav-coffeebreak.active,
+nav.top-bar .top-bar-section li.nav-coffeebreak.active > a  {
+	background: #50B968 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-coffeebreak > a {
+	color: #50B968;
+}
+
+nav.top-bar .top-bar-section ul li.nav-coffeebreak.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-sport:hover,
+nav.top-bar .top-bar-section li.nav-sport:hover > a,
+nav.top-bar .top-bar-section li.nav-sport.active,
+nav.top-bar .top-bar-section li.nav-sport.active > a  {
+	background: #3E5B42 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-sport > a {
+	color: #3E5B42;
+}
+
+nav.top-bar .top-bar-section ul li.nav-sport.active > a {
+	color: white !important;
+}
+
+div.section-title.section-title-news h1 {
+	color: #970010;
+}
+
+div.section-title.section-title-comment h1 {
+	color: #3F7F88;
+}
+
+div.section-title.section-title-science h1 {
+	color: #388F2E;
+}
+
+div.section-title.section-title-politics h1 {
+	color: #E9A9A7;
+}
+
+div.section-title.section-title-biz h1 {
+	color: #10B4F2;
+}
+
+div.section-title.section-title-arts h1 {
+	color: #AD7F5D;
+}
+
+div.section-title.section-title-music h1 {
+	color: #004E2A;
+}
+
+div.section-title.section-title-film h1 {
+	color: #1C6A78;
+}
+
+div.section-title.section-title-fashion h1 {
+	color: #4A1A60;
+}
+
+div.section-title.section-title-games h1 {
+	color: #974929;
+}
+
+div.section-title.section-title-tech h1 {
+	color: #0056A5;
+}
+
+div.section-title.section-title-travel h1 {
+	color: #00929C;
+}
+
+div.section-title.section-title-food h1 {
+	color: #9B5C34;
+}
+
+div.section-title.section-title-tv h1 {
+	color: #182447;
+}
+
+div.section-title.section-title-books h1 {
+	color: #6B003E;
+}
+
+div.section-title.section-title-sport h1 {
+	color: #3E5B42;
+}
+
+div.section-title.section-title-features h1 {
+	color: #8C0028;
+}
+
+div.felix-title-news, div.felix-title-news .row,
+div.felix-title-home, div.felix-title-home .row {
+	background: #eacccf;
+}
+
+div.felix-title-science, div.felix-title-science .row {
+	background: #d7e8d5;
+}
+
+div.felix-title-comment, div.felix-title-comment .row {
+	background: #c5d8db;
+}
+
+div.felix-title-politics, div.felix-title-politics .row {
+	background: #faeded;
+}
+
+div.felix-title-biz, div.felix-title-biz .row {
+	background: #cff0fc;
+}
+
+div.felix-title-arts, div.felix-title-arts .row {
+	background: #decbbe;
+}
+
+div.felix-title-music, div.felix-title-music .row {
+	background: #ccdbd4;
+}
+
+div.felix-title-film, div.felix-title-film .row {
+	background: #d1e1e4;
+}
+
+div.felix-title-fashion, div.felix-title-fashion .row {
+	background: #dad1df;
+}
+
+div.felix-title-games, div.felix-title-games .row {
+	background: #dfc8be;
+}
+
+div.felix-title-tech, div.felix-title-tech .row {
+	background: #b2cce4;
+}
+
+div.felix-title-travel, div.felix-title-travel .row {
+	background: #cce9eb;
+}
+
+div.felix-title-food, div.felix-title-food .row {
+	background: #e1cec2;
+}
+
+div.felix-title-books, div.felix-title-books .row {
+	background: #E1CCD8;
+}
+
+div.felix-title-tv, div.felix-title-tv .row {
+	background: #d0d3da;
+}
+
+div.felix-title-sport, div.felix-title-sport .row {
+	background: #d8ded9;
+}
+
+div.felix-title-features, div.felix-title-features .row {
+	background: #e8ccd4;
+}
+
+div.felix-header-news, div.felix-footer-news, div.felix-header-news .row, div.felix-footer-news .row,
+div.felix-header-home, div.felix-footer-home, div.felix-header-home .row, div.felix-footer-home .row {
+	background: #970010;	
+}
+
+div.felix-header-comment, div.felix-footer-comment, div.felix-header-comment .row, div.felix-footer-comment .row {
+	background: #3F7F88;	
+}
+
+div.felix-header-science, div.felix-footer-science, div.felix-header-science .row, div.felix-footer-science .row {
+	background: #388F2E;	
+}
+
+div.felix-header-politics, div.felix-footer-politics, div.felix-header-politics .row, div.felix-footer-politics .row {
+	background: #E9A9A7;	
+}
+
+div.felix-header-biz, div.felix-footer-biz, div.felix-header-biz .row, div.felix-footer-biz .row {
+	background: #10B4F2;	
+}
+
+div.felix-header-arts, div.felix-footer-arts, div.felix-header-arts .row, div.felix-footer-arts .row {
+	background: #AD7F5D;
+}
+
+div.felix-header-music, div.felix-footer-music, div.felix-header-music .row, div.felix-footer-music .row {
+	background: #004E2A;	
+}
+
+div.felix-header-film, div.felix-footer-film, div.felix-header-film .row, div.felix-footer-film .row {
+	background: #1C6A78;	
+}
+
+div.felix-header-fashion, div.felix-footer-fashion, div.felix-header-fashion .row, div.felix-footer-fashion .row {
+	background: #4A1A60;	
+}
+
+div.felix-header-games, div.felix-footer-games, div.felix-header-games .row, div.felix-footer-games .row {
+	background: #974929;	
+}
+
+div.felix-header-tech, div.felix-footer-tech, div.felix-header-tech .row, div.felix-footer-tech .row {
+	background: #0056A5;	
+}
+
+div.felix-header-travel, div.felix-footer-travel, div.felix-header-travel .row, div.felix-footer-travel .row {
+	background: #00929C;	
+}
+
+div.felix-header-food, div.felix-footer-food, div.felix-header-food .row, div.felix-footer-food .row {
+	background: #9B5C34;	
+}
+
+div.felix-header-tv, div.felix-footer-tv, div.felix-header-tv .row, div.felix-footer-tv .row {
+	background: #182447;	
+}
+
+div.felix-header-books, div.felix-footer-books, div.felix-header-books .row, div.felix-footer-books .row {
+	background: #6B003E;	
+}
+
+div.felix-header-sport, div.felix-footer-sport, div.felix-header-sport .row, div.felix-footer-sport .row {
+	background: #3E5B42;	
+}
+
+div.felix-header-features, div.felix-footer-features, div.felix-header-features .row, div.felix-footer-features .row {
+	background: #8C0028;	
+}
+
+/* ITEM TITLE CUSTOMS */
+
+.felix-item-title-news {
+	border-bottom: 1px solid #551111;
+}
+
+.felix-item-title-news h2, .felix-item-title-news h3 {
+	color: #551111;
+}
+
+.felix-item-title-comment {
+	border-bottom: 1px solid #3F7F88;
+}
+
+.felix-item-title-comment h2, .felix-item-title-comment h3 {
+	color: #3F7F88;
+}
+
+.felix-item-title-featured {
+	border-bottom: 1px solid #50B968;
+}
+
+.felix-item-title-featured h2, .felix-item-title-featured h3 {
+	color: #50B968;
+}
+
+.felix-item-title-sports {
+	border-bottom: 1px solid #344B3F;
+}
+
+.felix-item-title-sport h2, .felix-item-title-sports h3 {
+	color: #344B3F;
+}
+
+.felix-item-title-generic {
+	border-bottom: 1px solid #444444;
+}
+
+.felix-item-title-generic h2, .felix-item-title-generic h3 {
+	color: #444444;
+}
+
+/* FRONT PAGE SLIDER */
+
+div.felix-featured-slider {
+	height: 300px;
+}
+
+div.felix-featured-image {
+	height: 250px;
+	overflow: hidden;
+	position: relative;
+	top: -150px;
+	z-index: -10;
+}
+
+div.article-authors {
+	font-family: 'Noto Serif', serif;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #333333;
+	margin-bottom: 0.5em;
+}
+
+div.article-date, div.article-comments {
+	color: #666666;
+}
+
+div.tall-image {
+	margin-left: 1em;
+}
+
+div.article-share-buttons {
+	margin-top: 0.7em !important;
+	margin-bottom: 1.5em !important;
+}
+
+div.article-image-image, #articlePic {
+	position: normal;
+	top: 0;
+}
+
+div.article-image-image img, #articlePic {
+	width: 100%;
+	vertical-align: top;
+}
+
+div.imageAttr, div#imageAttr, div.imageAttr a, #imageAttr a {
+	color: white !important;
+	font-style: italic;
+}
+
+div.alert-box {
+	padding: 0.5em !important;
+	padding-left: 1em !important;
+}
+
+.invalidField {
+	border: 2px solid red !important;
+}
+
+.alert-box a, .felix-header a, .felix-footer a {
+	color: white;
+	border-bottom: 1px dotted white;
+}
+
+.alert-box a:hover, .felix-header a:hover, .felix-footer a:hover {
+	border-bottom: 1px solid white;
+}
+
+div.felix-featured-caption, div.felix-featured-subcaption, div.article-image-subcaption, #imageCaption {
+	font-family: 'Noto Serif', serif;
+}
+
+a.article-author-image {
+	float: left;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	border-bottom: 1px solid #333333;
+	width: 175px;
+}
+
+a.article-author-image img {
+	width: 175px;
+}
+
+div#sharebuttons {
+	margin-bottom: 1em;
+	text-align: center;
+}
+
+div#sharebuttons li {
+	float: left;
+	vertical-align: center;
+	list-style-type: none;
+	margin-right: 0.1em;
+	text-align: center;
+}
+
+div.clear {
+	clear: both;
+}
+
+div.felix-featured-caption {
+	position: relative;
+	top: 20px;
+	left: 20px;
+	z-index: 100;
+	font-weight: bold;
+	color: white;
+	font-size: xx-large;
+	text-shadow: 2px 2px black;
+	height: 150px;
+	overflow: hidden;
+	line-height: 1.1;
+	width: 90%;
+}
+
+div.felix-featured-caption a {
+	color: white;
+}
+
+div.felix-featured-subcaption, div.article-image-subcaption, #imageCaption {
+	background: black;
+	color: white;
+	padding: 5px;
+	padding-left: 15px;
+	position: relative;
+	top: -155px;
+}
+
+div.article-image-subcaption, #imageCaption {
+	position: static;
+	font-size: 0.8em;
+}
+
+.slick-prev:before, .slick-next:before {
+	color: black !important; /* bugfix */
+}
+
+ul.search-people-list {
+	margin-top: 1em !important;
+	margin-left: 0 !important;
+}
+
+ul.search-people-list li {
+	list-style-type: none;
+	margin-bottom: 0.2em;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+div.felix-contribute {
+	margin-top: 1em;
+}
+
+div.felix-contribute a {
+	padding: 1em !important;
+	padding-top: 0.7em !important;
+	padding-bottom: 0.7em !important;
+	margin-top: -0.5em;
+}
+
+/* BUBBLES */
+  .bubble {
+    position: relative;
+    width: 50px;
+    height: 25px;
+    padding: 0px;
+    background: #8595ff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+  .bubble:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 20px;
+    border-style: solid;
+    border-width: 10px 5px 0;
+    border-color: #8595ff transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+}

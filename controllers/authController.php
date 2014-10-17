@@ -63,6 +63,9 @@ class AuthController extends BaseController {
 				throw new LoginException("Internal error", $this->session, LOGIN_EXCEPTION_SESSION);
 			}
 			// show main exception page if something goes wrong here - do not catch!!!
+		} elseif(isset($_GET['logout'])) {
+			$this->logout();
+			Utility::redirect($_GET['goto']);
 		} else {
 			if($currentuser->isLoggedIn()) {
 				Utility::redirect(STANDARD_URL);
