@@ -661,6 +661,30 @@ div.felix-nav.nav-politics, div.section-title-politics, div.article-title-politi
 	border-bottom-color: #E9A9A7;
 }
 
+div.article-comments-zone-welfare {
+	border-top-color: #376BC5;
+}
+
+div.felix-nav.nav-welfare, div.section-title-welfare, div.article-title-welfare {
+	border-bottom-color: #376BC5;
+}
+
+div.article-comments-zone-cands {
+	border-top-color: #10B4F2;
+}
+
+div.felix-nav.nav-cands, div.section-title-cands, div.article-title-cands {
+	border-bottom-color: #10B4F2;
+}
+
+div.article-comments-zone-cands {
+	border-top-color: #31c19e;
+}
+
+div.felix-nav.nav-cands, div.section-title-cands, div.article-title-cands {
+	border-bottom-color: #31c19e;
+}
+
 div.article-comments-zone-biz {
 	border-top-color: #10B4F2;
 }
@@ -852,6 +876,36 @@ nav.top-bar .top-bar-section ul li.nav-tech > a {
 }
 
 nav.top-bar .top-bar-section ul li.nav-tech.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-welfare:hover,
+nav.top-bar .top-bar-section li.nav-welfare:hover > a,
+nav.top-bar .top-bar-section li.nav-welfare.active,
+nav.top-bar .top-bar-section li.nav-welfare.active > a  {
+	background: #376BC5 !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-welfare > a {
+	color: #376BC5;
+}
+
+nav.top-bar .top-bar-section ul li.nav-welfare.active > a {
+	color: white !important;
+}
+
+nav.top-bar .top-bar-section li.nav-cands:hover,
+nav.top-bar .top-bar-section li.nav-cands:hover > a,
+nav.top-bar .top-bar-section li.nav-cands.active,
+nav.top-bar .top-bar-section li.nav-cands.active > a  {
+	background: #31C19E !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-cands > a {
+	color: #31C19E;
+}
+
+nav.top-bar .top-bar-section ul li.nav-cands.active > a {
 	color: white !important;
 }
 
@@ -1051,6 +1105,14 @@ div.section-title.section-title-politics h1 {
 	color: #E9A9A7;
 }
 
+div.section-title.section-title-welfare h1 {
+	color: #376BC5;
+}
+
+div.section-title.section-title-cands h1 {
+	color: #31C19E;
+}
+
 div.section-title.section-title-biz h1 {
 	color: #10B4F2;
 }
@@ -1120,6 +1182,14 @@ div.felix-title-politics, div.felix-title-politics .row {
 	background: #faeded;
 }
 
+div.felix-title-welfare, div.felix-title-welfare .row {
+	background: #c3d2ed;
+}
+
+div.felix-title-cands, div.felix-title-cands .row {
+	background: #d5f2eb;
+}
+
 div.felix-title-biz, div.felix-title-biz .row {
 	background: #cff0fc;
 }
@@ -1187,6 +1257,14 @@ div.felix-header-science, div.felix-footer-science, div.felix-header-science .ro
 
 div.felix-header-politics, div.felix-footer-politics, div.felix-header-politics .row, div.felix-footer-politics .row {
 	background: #E9A9A7;	
+}
+
+div.felix-header-welfare, div.felix-footer-welfare, div.felix-header-welfare .row, div.felix-footer-welfare .row {
+	background: #376BC5;	
+}
+
+div.felix-header-cands, div.felix-footer-cands, div.felix-header-cands .row, div.felix-footer-cands .row {
+	background: #31C19E;	
 }
 
 div.felix-header-biz, div.felix-footer-biz, div.felix-header-biz .row, div.felix-footer-biz .row {

@@ -222,6 +222,8 @@ $theme->render('components/header', $header);
 					<?php endif; ?>
 				</div>
 				<?php $theme->render('sidebar/shareArticle', array('article' => $article)); ?>
+				
+				<?php $theme->render('sidebar/advert'); ?>
 
 				<?php $theme->render('sidebar/contributionPolicy', array('category' => $article->getCategory())); ?>
 
