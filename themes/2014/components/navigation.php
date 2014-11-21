@@ -23,7 +23,7 @@
 							<ul class="left">
 								<li class="nav-home <?php if(isset($check) && $check == 'home') echo 'active'; ?>">
 									<a href="<?php echo STANDARD_URL; ?>/">
-										home
+										Home
 									</a>
 								</li>
 								<?php
