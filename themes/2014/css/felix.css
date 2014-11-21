@@ -1300,7 +1300,7 @@ div.felix-featured-image-container {
 	overflow: hidden;
 	position: relative;
 	z-index: -1;
-	top: -60px;
+	top: -100px;
 }
 
 div.felix-featured-image {
