@@ -15,14 +15,13 @@ $timing->log('after header');
 			<?php if (isset($toofew) && $toofew == true) { ?>
 				<div class="alert-box">Uh oh! You did not specify enough search terms. Please try again!</div>
 			<?php } else { ?>
-				<h1>Search results</h1>
-				<p>You searched for "<?php echo $query; ?>" and got <?php echo $article_count; ?> results.</p>
+				<div class="alert-box"><b>You searched for "<?php echo $query; ?>" and got <?php echo $article_count; ?> results.</b></div>
 				<?php if ($article_count == 0 && $people_count == 0) { ?>
 					<div class="alert-box">Uh oh! We couldn't find what you were looking for. Please try again!</div>
 				<?php } else { ?>
 					<?php if ($article_count !== 0) { ?>
 						<div class="felix-item-title felix-item-title felix-item-title-generic">
-							<h2>articles</h2>
+							<h2>Articles</h2>
 						</div>
 						<?php foreach ($articles as $key => $article) { ?>
 							<?php

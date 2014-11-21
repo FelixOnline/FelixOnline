@@ -37,7 +37,7 @@
 									foreach($cats as $key => $cat) { ?>
 										<li class="nav-<?php echo $cat->getCat(); ?> <?php if(isset($check) && $check == $cat->getCat()) echo 'active'; ?>">
 											<a href="<?php echo STANDARD_URL.$cat->getCat(); ?>/">
-												<?php echo strtolower($cat->getLabel()); ?>
+												<?php echo $cat->getLabel(); ?>
 											</a>
 										</li>
 								<?php }

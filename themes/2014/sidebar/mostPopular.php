@@ -1,6 +1,6 @@
 <div id="mostPopular">
 	<div class="felix-item-title felix-item-title felix-item-title-generic">
-		<h3>recent activity</h3>
+		<h3>Recent Activity</h3>
 	</div>
 	<dl class="tabs" data-tab>
 		<dd class="active"><a href="#most-read">Read</a></dd>

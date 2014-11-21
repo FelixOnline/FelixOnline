@@ -22,7 +22,7 @@ $theme->render('components/header', $header);
 		<!-- Search -->
 		<div id="archivesearchbar" class="medium">
 			<div class="felix-item-title felix-item-title felix-item-title-generic">
-				<h3>archive search</h3>
+				<h3>Archive Search</h3>
 			</div>
 			<br>
 			<form method="get" action="">
@@ -33,7 +33,7 @@ $theme->render('components/header', $header);
 	</div>
 	<div class="medium-9 medium-pull-3 columns">
 		<div class="felix-item-title felix-item-title felix-item-title-generic">
-			<h2>search results (<?php echo count($search_results); ?>)</h2>
+			<h2>Search Results (<?php echo count($search_results); ?>)</h2>
 		</div>
 		<br>
 		<div class="row issuecont">

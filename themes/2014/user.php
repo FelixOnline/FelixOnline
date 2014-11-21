@@ -65,7 +65,7 @@ $theme->render('components/header', $header);
 	</div>
 	<div class="medium-4 columns">
 		<div class="felix-item-title felix-item-title felix-item-title-generic">
-			<h3>contact <?php echo $user->getFirstName(); ?></h3>
+			<h3>Contact <?php echo $user->getFirstName(); ?></h3>
 		</div>
 		<div class="felix-contact-area">
 			<?php if(!$user->getEmail() && !$user->getFacebook() && !$user->getTwitter() && !($user->getWebsitename() && $user->getWebsiteurl())): ?>
@@ -118,7 +118,7 @@ $theme->render('components/header', $header);
 
 		<?php if ($article_count > 2 && $popular_articles) { ?>
 			<div class="felix-item-title felix-item-title felix-item-title-generic">
-				<h3>most popular articles</h3>
+				<h3>Most Popular Articles</h3>
 			</div>
 			<ol class="user-popular">
 			<?php foreach($popular_articles as $article) { ?>
@@ -137,7 +137,7 @@ $theme->render('components/header', $header);
 		<?php } ?>
 		<?php if ($comments) { ?>
 			<div class="felix-item-title felix-item-title felix-item-title-generic">
-				<h3>recent comments</h3>
+				<h3>Recent Comments</h3>
 			</div>
 			<div class="user-comments">
 				<?php if ($popularity = $user->getCommentPopularity()) { ?>
