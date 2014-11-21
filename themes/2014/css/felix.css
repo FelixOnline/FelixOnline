@@ -1480,6 +1480,7 @@ div.felix-featured-caption {
 	font-size: xx-large;
 	text-shadow: 2px 2px black;
 	overflow: hidden;
+	height: 100px;
 	line-height: 1.1;
 }
 
