@@ -1,5 +1,5 @@
 				<div class="felix-item-title felix-item-title felix-item-title-generic">
-					<h3>share this article</h3>
+					<h3>Share this Article</h3>
 				</div>
 				<div class="row article-share-buttons">
 					<div class="small-4 columns">

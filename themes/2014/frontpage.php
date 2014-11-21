@@ -31,7 +31,7 @@ $timing->log('after header');
 		<div class="row">
 			<div class="medium-8 small-12 columns">
 				<div class="felix-item-title felix-item-title-news">
-					<h2>latest news</h2>
+					<h2>Latest News</h2>
 				</div>
 
 				<?php
@@ -84,7 +84,7 @@ $timing->log('after header');
 			</div>
 			<div class="medium-4 small-12 columns">
 				<div class="felix-item-title felix-item-title-featured">
-					<h2>in Felix this week</h2>
+					<h2>In <i>Felix</i> This Week</h2>
 				</div>
 
 				<?php $featured = $frontpage->getSection('b'); ?>

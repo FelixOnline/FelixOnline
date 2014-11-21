@@ -22,7 +22,7 @@ $theme->render('components/header', $header);
 		<!-- Search -->
 		<div id="archivesearchbar" class="medium">
 			<div class="felix-item-title felix-item-title felix-item-title-generic">
-				<h3>archive search</h3>
+				<h3>Archive Search</h3>
 			</div>
 			<br>
 			<form method="get" action="">
@@ -31,7 +31,7 @@ $theme->render('components/header', $header);
 		</div>
 		
 		<div class="felix-item-title felix-item-title felix-item-title-generic">
-			<h3>decade browser</h3>
+			<h3>Browser</h3>
 		</div>
 		<dl class="tabs">
 			<?php foreach($decades as $key => $decade) { ?>  
@@ -75,7 +75,7 @@ $theme->render('components/header', $header);
 		
 		<?php if (!empty($daily)) { ?>
 			<div class="felix-item-title felix-item-title felix-item-title-generic">
-				<h2>the felix daily 2011</h2>
+				<h2>The Felix Daily</h2>
 			</div>
 			<br>
 			<div class="row issuecont">

@@ -1,5 +1,5 @@
 				<div class="felix-item-title felix-item-title felix-item-title-generic">
-					<h3>contact <?php echo $category->getLabel(); ?></h3>
+					<h3>Contact <?php echo $category->getLabel(); ?></h3>
 				</div>
 				<div class="felix-contact-area">
 					<div class="row felix-contact-row">

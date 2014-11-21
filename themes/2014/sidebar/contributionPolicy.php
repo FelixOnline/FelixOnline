@@ -1,6 +1,6 @@
 			<?php if(!isset($category)): ?>
 				<div class="felix-item-title felix-item-title felix-item-title-generic">
-					<h3>write for us</h3>
+					<h3>Write for <i>Felix</i></h3>
 				</div>
 				<div class="felix-contribute">
 					<p>Interested in becoming a news reporter? Or just have a favourite something to share with Imperial? Write for Felix &mdash; it's easy!</p>
@@ -9,7 +9,7 @@
 				</div>
 			<?php else: ?>
 				<div class="felix-item-title felix-item-title felix-item-title-generic">
-					<h3>write for <?php echo $category->getLabel(); ?></h3>
+					<h3>Write for <?php echo $category->getLabel(); ?></h3>
 				</div>
 				<div class="felix-contribute">
 					<p>Want to write for this section? Drop the editors a line via the contact details above and they'll let you how to get involved - contributors always welcome!</p>
