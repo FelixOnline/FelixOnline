@@ -30,6 +30,20 @@ $timing->log('after header');
 
 		<div class="row">
 			<div class="medium-8 small-12 columns">
+				<div class="show-for-medium-up">
+					<br>
+					<div class="row">
+						<div class="medium-4 columns">
+							<center><a class="button" href="<?php echo STANDARD_URL; ?>issuearchive/">Download a <i>Felix</i> PDF</a></center>
+						</div>
+						<div class="medium-4 columns">
+							<?php $theme->render('sidebar/fbLikeBox', array("well" => false)); ?>
+						</div>
+						<div class="medium-4 columns">
+							<center><a class="button" href="<?php echo STANDARD_URL; ?>contribute/">Contribute to <i>Felix</i></a></center>
+						</div>
+					</div>
+				</div>
 				<div class="felix-item-title felix-item-title-news">
 					<h2>Latest News</h2>
 				</div>
@@ -95,10 +109,12 @@ $timing->log('after header');
 						));
 					}
 				?>
-				<center><a class="button" href="<?php echo STANDARD_URL; ?>issuearchive/">Read more online</a></center>
+				<div class="show-for-small-only"><center><a class="button" href="<?php echo STANDARD_URL; ?>issuearchive/">Read more online</a></center></div>
 
 				<?php
-					$theme->render('sidebar/fbLikeBox');
+				?>
+					<div class="show-for-small-only"><?php $theme->render('sidebar/fbLikeBox', array("well" => true)); ?></div>
+				<?php
 
 					$theme->render('sidebar/contributionPolicy');
 
