@@ -431,12 +431,18 @@ div.felix-horoscope-slider h4 {
 	font-size: 1.2em;
 }
 
+ul.slick-dots {
+	margin-left: 0;
+}
+
 button.slick-prev {
 	left: 10px;
+	margin: 0;
 }
 
 button.slick-next {
 	right: 10px;
+	margin: 0;
 }
 
 button.slick-prev, button.slick-next, button.slick-prev:hover, button.slick-next:hover {
@@ -1289,12 +1295,17 @@ div.felix-featured-slider {
 	height: 300px;
 }
 
-div.felix-featured-image {
-	height: 250px;
+div.felix-featured-image-container {
+	height: 300px;
 	overflow: hidden;
 	position: relative;
-	top: -150px;
-	z-index: -10;
+	z-index: -1;
+	top: -60px;
+}
+
+div.felix-featured-image {
+	height: 240px;
+	overflow: hidden;
 }
 
 div.article-authors {
@@ -1384,18 +1395,14 @@ div.clear {
 }
 
 div.felix-featured-caption {
-	position: relative;
-	top: 20px;
-	left: 20px;
-	z-index: 100;
+	padding-top: 20px;
+	padding-left: 20px;
 	font-weight: bold;
 	color: white;
 	font-size: xx-large;
 	text-shadow: 2px 2px black;
-	height: 150px;
 	overflow: hidden;
 	line-height: 1.1;
-	width: 90%;
 }
 
 div.felix-featured-caption a {
@@ -1407,8 +1414,6 @@ div.felix-featured-subcaption, div.article-image-subcaption, #imageCaption {
 	color: white;
 	padding: 5px;
 	padding-left: 15px;
-	position: relative;
-	top: -155px;
 }
 
 div.article-image-subcaption, #imageCaption {

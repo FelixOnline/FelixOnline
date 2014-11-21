@@ -1,6 +1,7 @@
 <!-- Spinner story -->
 					<div>
 						<div class="felix-featured-caption"><a href="<?php echo $article->getURL();?>"><?php echo $article->getTitle(); ?></a></div>
+						<div class="felix-featured-image-container">
 						<div class="felix-featured-image">
 						<?php if ($image = $article->getImage()) { ?>
 								<a href="<?php echo $article->getURL();?>">
@@ -13,5 +14,6 @@
 						<?php } ?>
 						</div>
 						<div class="felix-featured-subcaption"><?php echo $article->getTeaser();?></div>
+						</div>
 					</div>
 <!-- End of spinner story -->
