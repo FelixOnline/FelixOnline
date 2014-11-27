@@ -63,9 +63,4 @@
 		?>
 		</p>
 	</div>
-	<?php if($comment->isPending()) { ?>
-		<div class="alert-box">
-			This comment is awaiting approval and will appear shortly if it follows our <a href="#" data-reveal-id="commentPolicy">commenting policy</a>. If you have an Imperial ID, you can avoid this delay by <a href="#" data-reveal-id="loginModal">logging in</a> before commenting.
-		</div>
-	<?php } ?>
 </div>

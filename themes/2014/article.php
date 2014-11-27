@@ -109,8 +109,8 @@ $theme->render('components/header', $header);
 							<?php if (!$currentuser->isLoggedIn()) { ?>
 								<h4>Comment anonymously or <a href="#" data-reveal-id="loginModal">log in</a></h4>
 								<div id="info">
-									<p>Anonymous comments are moderated before appearing on the website. Comments posted while logged in appear immediately and are moderated later. Even if you are logged in, your comment can be published anonymous. Your IP address will also be submitted to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
-									<p>Read our <a href="#" data-reveal-id="commentPolicy">commenting policy</a> for more information.</p>
+									<p>If you do not log in, your details will be sent to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
+									<p>Read our <a href="#" data-reveal-id="commentPolicy">commenting policy</a> for more information and for details on how we moderate.</p>
 								</div>
 							<?php } else { ?>
 								<h4>Leave a comment as <a href="<?php echo $currentuser->getURL();?>" title="Profile Page"><?php echo $currentuser->getName();?></a></h4>
