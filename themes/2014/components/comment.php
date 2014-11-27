@@ -55,7 +55,7 @@
 				try {
 					$reply_comment = $comment->getReply();
 					if($reply_comment != null) {
-						echo '<b class="comment-reply"><a href="<?php echo Utility::currentPageURL();?>#comment<?php echo $reply_comment->getId();?>">@'.$reply_comment->getName().'</a>: </b>';
+						echo '<b class="comment-reply"><a href="'.Utility::currentPageURL().'#comment'.$reply_comment->getId().'">@'.$reply_comment->getName().'</a>: </b>';
 					}
 				} catch(Exception $e) {}
 				echo $comment->getContent(); 
