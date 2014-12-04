@@ -1378,7 +1378,7 @@ div.felix-featured-image-container {
 	overflow: hidden;
 	position: relative;
 	z-index: -1;
-	top: -100px;
+	top: -300px;
 }
 
 div.felix-featured-image {
@@ -1480,7 +1480,7 @@ div.felix-featured-caption {
 	font-size: xx-large;
 	text-shadow: 2px 2px black;
 	overflow: hidden;
-	height: 100px;
+	height: 300px;
 	line-height: 1.1;
 }
 
