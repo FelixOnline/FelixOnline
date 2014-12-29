@@ -143,6 +143,8 @@ class ArchiveController extends BaseController {
 		// we don't want to corrupt the data we send
 		@error_reporting(0);
 
+		$filesize = filesize($filename);
+
 		// Send standard headers
 		header("Content-Type: $contenttype");
 		header("Content-Length: $filesize");
