@@ -112,9 +112,8 @@ class Issue extends BaseModel {
 	public function getFileName() {
 		if (!array_key_exists('file_name', $this->fields)) {
 			$file = $this->getFile();
-			preg_match('/\/(\w+)_[A-Z]/', $file, $matches);
-			$filename = $matches[1] . '.pdf';
-			$this->fields['file_name'] = $file_name;
+			$components = explode('/', $file);
+			$this->fields['file_name'] = end($components);
 		}
 		return $this->fields['file_name'];
 	}
