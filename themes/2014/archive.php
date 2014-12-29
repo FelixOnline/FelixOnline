@@ -59,28 +59,21 @@ $theme->render('components/header', $header);
 		</dl>
 		<br>
 		<div class="row issuecont">
-			<?php if(!empty($issues)) {
-				foreach($issues as $key => $issue) {
-					if(($key + 1) % 4 == 0) { $last = true;	} else { $last = false; }
-					$theme->render('components/issue', array(
-						'issue' => $issue,
-						'last' => $last
-					));
-					if($last): ?></div><div class="row issuecont"><?php endif;
-				}
-			} else { ?> 
-				<div class="medium-12 columns"><div class="alert-box">No issues this year.</div></div>
-			<?php } ?>
-		</div>
-		
-		<?php if (!empty($daily)) { ?>
-			<div class="felix-item-title felix-item-title felix-item-title-generic">
-				<h2>The Felix Daily</h2>
-			</div>
-			<br>
-			<div class="row issuecont">
-				<?php if(!empty($daily)) {
-					foreach($daily as $key => $issue) {
+			<?php foreach($issues as $PubId => $DataArray) {
+				$PubName = $DataArray[0];
+				$PubIssues = $DataArray[1];
+				
+				if(!empty($PubIssues)) {
+					if($PubId != 1) {
+						?>
+						<div class="felix-item-title felix-item-title felix-item-title-generic">
+							<h2><?php echo $PubName; ?></h2>
+						</div>
+						<br>
+						<?php
+					}
+
+					foreach($PubIssues as $key => $issue) {
 						if(($key + 1) % 4 == 0) { $last = true;	} else { $last = false; }
 						$theme->render('components/issue', array(
 							'issue' => $issue,
@@ -88,11 +81,11 @@ $theme->render('components/header', $header);
 						));
 						if($last): ?></div><div class="row issuecont"><?php endif;
 					}
-				} else { ?> 
-					<div class="medium-12 columns"><div class="alert-box">No issues found.</div></div>
+				} elseif($PubId == 1) { ?> 
+					<div class="medium-12 columns"><div class="alert-box">No issues this year.</div></div>
 				<?php } ?>
-			</div>
-		<?php } ?>
+			<?php } ?>
+		</div>
 	</div>    
 </div>
 <!-- End of archive wrapper -->

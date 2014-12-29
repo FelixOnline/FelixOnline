@@ -83,4 +83,23 @@ class IssueManager extends BaseManager
 		}
 		return $issues;
 	}
+
+	/*
+	 * Public static: Get publications
+	 *
+	 * Return array of ID => Publication Name
+	 */
+	public function getPublications() {
+		$sql = $this->safesql->query("SELECT PubNo, PubName FROM Publications", array());
+		$result = $this->dba->get_results($sql);
+
+		$pubs = array();
+
+		if ($result) {
+			foreach($result as $obj) {
+				$pubs[$obj->PubNo] = $obj->PubName;
+			}
+		}
+		return $pubs;
+	}
 }
