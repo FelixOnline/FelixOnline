@@ -74,7 +74,7 @@ $theme->render('components/header', $header);
 					}
 
 					foreach($PubIssues as $key => $issue) {
-						if(($key + 1) % 4 == 0) { $last = true;	} else { $last = false; }
+						if(($key + 1) % 4 == 0 || !array_key_exists(($key + 1), $PubIssues)) { $last = true; } else { $last = false; }
 						$theme->render('components/issue', array(
 							'issue' => $issue,
 							'last' => $last
