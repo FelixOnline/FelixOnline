@@ -16,6 +16,8 @@ class RSSController extends BaseController {
 				throw new Exceptions\NotFoundException(
 					$e->getMessage(),
 					Exceptions\UniversalException::EXCEPTION_NOTFOUND,
+					$matches,
+					'RSSController',
 					$e
 				);
 			}

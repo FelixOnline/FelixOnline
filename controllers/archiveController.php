@@ -2,6 +2,9 @@
 /*
  * Archive controller
  */
+
+use FelixOnline\Exceptions;
+
 class ArchiveController extends BaseController {
 	private $currentyear;
 	private $year;
@@ -39,7 +42,12 @@ class ArchiveController extends BaseController {
 			
 			// Make sure the files exists, otherwise we are wasting our time
 			if (!file_exists($file)) {
-				throw new NotFoundException("Issue doesn't exists on server");
+				throw new Exceptions\NotFoundException(
+					"Issue Not Found",
+					Exceptions\UniversalException::EXCEPTION_NOTFOUND,
+					$matches,
+					'ArchiveController'
+				);
 			}
 
 			$this->serveFile($file, $filename, 'application/pdf');

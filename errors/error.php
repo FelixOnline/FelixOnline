@@ -1,14 +1,15 @@
 		<?php
-			require_once('inc/exceptions.inc.php');
 			restore_error_handler();
 			restore_exception_handler();
+
+			use \FelixOnline\Exceptions;
 		?>
 		
 		<div class="error_text">
 			<h1>He's Dead, Jim!</h1>
 			<p>Felix Online is experiencing technical difficulties at the moment. The cat has already been notified, and things should be back up and running soon.</p>
 			<p>In the meantime, please enjoy this video:</p>
-			<iframe width="480" height="360" src="http://www.youtube.com/embed/QgkGogPLacA?rel=0" frameborder="0" allowfullscreen></iframe>
+			<iframe width="480" height="360" src="https://www.youtube.com/embed/QgkGogPLacA?rel=0" frameborder="0" allowfullscreen></iframe>
 			<?php if(LOCAL || ($e->getUser() instanceof CurrentUser && $e->getUser()->getRole() == 100)) { ?>
 			<p id="techdetails_show" style="display: none;"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'block'; document.getElementById('techdetails_show').style.display = 'none';">View some technical details</a></p>
 			<div id="techdetails" class="technical_details" style="display: block;">
@@ -27,51 +28,56 @@
 						
 						$data = array();
 
-						if(!($exception instanceof Exception) && $exception->getUser() instanceof CurrentUser && $exception->getUser()->getUser() instanceof User) {
-							$username = $exception->getUser()->getUser()->getName();
-						} else {
-							$username = '<i>Unauthenticated</i>';
+						if(method_exists($exception, 'getUser') && $exception->getUser() instanceof CurrentUser) {
+							$username = $exception->getUser()->getName().' ('.$exception->getUser()->getUser().')';
+						} elseif($exception instanceof \Exception) {
+							$username = '<i>Unknown</i>';
 						}
 
-						switch ($exception->getCode()) {
-							case EXCEPTION_ERRORHANDLER:
+						switch($exception->getCode()) {
+							case Exceptions\UniversalException::EXCEPTION_ERRORHANDLER:
 								$header = 'Internal error';
 								$data['Details'] = $exception->getMessage();
 								$data['File'] = $exception->getErrorFile();
 								$data['Line'] = $exception->getErrorLine();
 								break;
-							case EXCEPTION_GLUE:
+							case Exceptions\UniversalException::EXCEPTION_GLUE:
 								$header = 'Misconfigured glue';
 								$data['URL'] = $exception->getUrl();
-								$data['Class requested'] = $exception->getItem();
-								$data['Method requested'] = $exception->getVerb();
+								$data['Class requested'] = $exception->getClass();
+								$data['Method requested'] = $exception->getMethod();
 								break;
-							case EXCEPTION_GLUE_URL:
+							case Exceptions\UniversalException::EXCEPTION_GLUE_URL:
 								$header = 'URL is not valid';
 								$data['URL'] = $exception->getUrl();
 								break;
-							case EXCEPTION_IMAGE_NOTFOUND:
+							case Exceptions\UniversalException::EXCEPTION_IMAGE_NOTFOUND:
 								$dimensions = $exception->getImageDimensions();
 								$header = 'Image could not be found';
 								$data['Containing page'] = $exception->getPage();
 								$data['Image URL'] = $exception->getImageUrl();
 								$data['Requested dimensions'] = $dimensions['width'].'x'.$dimensions['height'];
 								break;
-							case EXCEPTION_MODEL:
+							case Exceptions\UniversalException::EXCEPTION_MODEL:
 								$header = 'Misconfigured model';
 								$data['Item type'] = $exception->getClass();
 								$data['Item identifier'] = $exception->getItem();
 								$data['Action'] = $exception->getVerb();
 								$data['Property'] = $exception->getProperty();
 								break;
-							case EXCEPTION_MODEL_NOTFOUND:
+							case Exceptions\UniversalException::EXCEPTION_MODEL_NOTFOUND:
 								$header = 'Item is not in database';
 								$data['Item type'] = $exception->getClass();
-								$data['Item identifier'] = $exception->getItem();
+								$data['Item identifier'] = json_encode($exception->getItem());
 								break;
-							case EXCEPTION_VIEW_NOTFOUND:
+							case Exceptions\UniversalException::EXCEPTION_VIEW_NOTFOUND:
 								$header = 'Template does not exist';
 								$data['Template'] = $exception->getView();
+								break;
+							case Exceptions\UniversalException::EXCEPTION_NOTFOUND:
+								$header = $exception->getMessage();
+								$data['Matches'] = json_encode($exception->getMatches());
+								$data['Controller'] = $exception->getController();
 								break;
 							default:
 								$header = 'Internal exception';
@@ -117,52 +123,61 @@
 						$data = array();
 						$data['Details'] = $exception->getMessage();
 						
-						if(!($exception instanceof Exception) && $exception->getUser()->getUser() instanceof User) {
-							$username = $exception->getUser()->getUser()->getName();
+						if(method_exists($exception, 'getUser') && $exception->getUser() instanceof CurrentUser) {
+							$username = $exception->getUser()->getName().' ('.$exception->getUser()->getUser().')';
 						} else {
 							$username = 'Unauthenticated';
 						}
-						switch ($exception->getCode()) {
-							case EXCEPTION_ERRORHANDLER:
+						switch($exception->getCode()) {
+							case Exceptions\UniversalException::EXCEPTION_ERRORHANDLER:
 								$header = 'Internal error';
+								$data['Details'] = $exception->getMessage();
 								$data['File'] = $exception->getErrorFile();
 								$data['Line'] = $exception->getErrorLine();
 								break;
-							case EXCEPTION_GLUE:
+							case Exceptions\UniversalException::EXCEPTION_GLUE:
 								$header = 'Misconfigured glue';
 								$data['URL'] = $exception->getUrl();
-								$data['Class requested'] = $exception->getItem();
-								$data['Method requested'] = $exception->getVerb();
+								$data['Class requested'] = $exception->getClass();
+								$data['Method requested'] = $exception->getMethod();
 								break;
-							case EXCEPTION_GLUE_URL:
+							case Exceptions\UniversalException::EXCEPTION_GLUE_URL:
 								$header = 'URL is not valid';
 								$data['URL'] = $exception->getUrl();
 								break;
-							case EXCEPTION_IMAGE_NOTFOUND:
+							case Exceptions\UniversalException::EXCEPTION_IMAGE_NOTFOUND:
 								$dimensions = $exception->getImageDimensions();
 								$header = 'Image could not be found';
 								$data['Containing page'] = $exception->getPage();
 								$data['Image URL'] = $exception->getImageUrl();
 								$data['Requested dimensions'] = $dimensions['width'].'x'.$dimensions['height'];
 								break;
-							case EXCEPTION_MODEL:
+							case Exceptions\UniversalException::EXCEPTION_MODEL:
 								$header = 'Misconfigured model';
 								$data['Item type'] = $exception->getClass();
 								$data['Item identifier'] = $exception->getItem();
 								$data['Action'] = $exception->getVerb();
 								$data['Property'] = $exception->getProperty();
 								break;
-							case EXCEPTION_MODEL_NOTFOUND:
+							case Exceptions\UniversalException::EXCEPTION_MODEL_NOTFOUND:
 								$header = 'Item is not in database';
 								$data['Item type'] = $exception->getClass();
-								$data['Item identifier'] = $exception->getItem();
+								$data['Item identifier'] = json_encode($exception->getItem());
 								break;
-							case EXCEPTION_VIEW_NOTFOUND:
+							case Exceptions\UniversalException::EXCEPTION_VIEW_NOTFOUND:
 								$header = 'Template does not exist';
 								$data['Template'] = $exception->getView();
 								break;
+							case Exceptions\UniversalException::EXCEPTION_NOTFOUND:
+								$header = $exception->getMessage();
+								$data['Matches'] = json_encode($exception->getMatches());
+								$data['Controller'] = $exception->getController();
+								break;
 							default:
 								$header = 'Internal exception';
+								$data['Details'] = $exception->getMessage();
+								$data['File'] = $exception->getFile();
+								$data['Line'] = $exception->getLine();
 								break;
 						}
 

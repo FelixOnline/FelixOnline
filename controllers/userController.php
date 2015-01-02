@@ -30,15 +30,6 @@ class UserController extends BaseController {
 			$articles = array();
 		}
 
-		// Comments
-		$m2 = (new \FelixOnline\Core\CommentManager())
-			->filter("user = '%s'", array($user->getUser()))
-			->order('timestamp', 'DESC')
-			->limit(0, NUMBER_OF_POPULAR_COMMENTS_USER);
-
-		$commentCount = $m2->count();
-		$comments = $m2->values();
-
 		// Popular articles
 		$popularArticles = $manager->order('hits', 'DESC')
 			->limit(0, NUMBER_OF_POPULAR_ARTICLES_USER)
@@ -52,8 +43,6 @@ class UserController extends BaseController {
 			'articles' => $articles,
 			'article_count' => $articleCount,
 			'pages' => $pages,
-			'comments' => $comments,
-			'comment_count' => $commentCount,
 			'popular_articles' => $popularArticles,
 		));
 		$this->theme->setHierarchy(array(

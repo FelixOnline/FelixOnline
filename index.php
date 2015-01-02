@@ -3,10 +3,11 @@
  * Felix Online
  */
 
+use FelixOnline\Core;
+
 ob_start();
 
 try {
-	require_once('inc/exceptions.inc.php');
 	require_once('bootstrap.php');
 
 	require_once('inc/timing.inc.php');
@@ -19,9 +20,9 @@ try {
 	}
 	 */
 
-	$currentuser = new CurrentUser();
+	$currentuser = new Core\CurrentUser();
 
-	$hooks = new Hooks();
+	$hooks = new Core\Hooks();
 
 	/*
 	 * Routes
@@ -55,32 +56,6 @@ try {
 		foreach($pages as $key => $page) {
 			$urls['/'.$page->slug] = 'pageController';
 		}
-	}
-
-	/*
-	 * Sites
-	 */
-	$media = array(
-		'/media' => 'MediaController',
-		'/media/(?P<type>[a-zA-Z0-9_-]+)' => 'MediaController',
-		'/media/(?P<type>[a-zA-Z0-9_-]+)/(?P<id>[0-9]+)/.*' => 'MediaController'
-	);
-
-	foreach($media as $route => $controller) {
-		$urls[$route] = $controller;
-	}
-
-	/*
-	 * Add blogs to routes
-	 */
-	$sql = "SELECT `id`, `name`, `slug`, `controller` FROM `blogs`";
-	$blogs = $db->get_results($sql);
-	foreach($blogs as $key => $blog) {
-		$controller = 'blogController';
-		if($blog->controller) {
-			$controller = $blog->controller;
-		}
-		$urls['/'.$blog->slug.'.*'] = $controller;
 	}
 } catch (Exception $e) {
 	$prior_exception = null;
@@ -119,6 +94,7 @@ try {
 	} else {
 		glue::stick($urls);
 	}
+
 } catch (Exception $e) {
 	if ($e instanceof NotFoundException || $e instanceof FelixOnline\Exceptions\NotFoundException) {
 		// If any exception which amounts to something not being found is raised

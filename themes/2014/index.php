@@ -5,6 +5,8 @@
  * Date: 30/12/2011
  */
 
+use FelixOnline\Core;
+
 if(!defined('THEME_DIRECTORY')) define('THEME_DIRECTORY', dirname(__FILE__));
 if(!defined('THEME_NAME')) define('THEME_NAME', '2014');
 if(!defined('THEME_URL')) define('THEME_URL', STANDARD_URL.'themes/'.THEME_NAME.'/');
@@ -19,7 +21,7 @@ require_once(THEME_DIRECTORY.'/core/functions.php');
 /*
  * Set default site wide resources
  */
-$this->resources = new ResourceManager(
+$this->resources = new Core\ResourceManager(
 	/* CSS files */
 	array('foundation.css', 'felix.css', '../slick/slick.css'), 
 	/* JS files */

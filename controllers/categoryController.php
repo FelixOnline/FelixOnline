@@ -14,6 +14,8 @@ class CategoryController extends BaseController
 			throw new Exceptions\NotFoundException(
 				$e->getMessage(),
 				Exceptions\UniversalException::EXCEPTION_NOTFOUND,
+				$matches,
+				'CategoryController',
 				$e
 			);
 		}

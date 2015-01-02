@@ -11,6 +11,9 @@
  * -> redirects user back to login page with session id and flags for remember and where the user came from (goto)
  * -> 
  */
+
+use FelixOnline\Exceptions;
+
 class AuthController extends BaseController {
 	private $session; // session id used in login
 
@@ -60,7 +63,7 @@ class AuthController extends BaseController {
 				
 				Utility::redirect($_GET['goto']);
 			} else {
-				throw new LoginException("Internal error", $this->session, LOGIN_EXCEPTION_SESSION);
+				throw new Exceptions\ExternalException("Internal error - the session is not valid for this user");
 			}
 			// show main exception page if something goes wrong here - do not catch!!!
 		} elseif(isset($_GET['logout'])) {
@@ -118,10 +121,10 @@ class AuthController extends BaseController {
 						'goto' => $_GET['goto']
 					), $hash);
 			  } else {
-					throw new LoginException("Invalid credentials", $_POST['username'], LOGIN_EXCEPTION_CREDENTIALS);
+					throw new Exceptions\ExternalException("Invalid credentials");
 					// Catch this elsewhere
 		 	  }
-	 		} catch (LoginException $e) {
+	 		} catch (Exceptions\ExternalException $e) {
 				Utility::redirect(STANDARD_URL.'login', array(
 					'failed' => true
 				));
