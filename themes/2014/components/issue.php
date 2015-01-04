@@ -6,7 +6,7 @@
 			</div>
 			<center><img src="<?php echo $issue->getThumbnailURL();?>" alt="<?php echo $issue->getId();?>"/></center>
 			<div class="date">
-				<?php echo date("l jS F", $issue->getPubDate()); ?>
+				<?php echo date("l jS F", strtotime($issue->getPubDate())); ?>
 			</div>
 			<?php if ($issue->hasRelevance()) { ?>
 				<div class="relevance">

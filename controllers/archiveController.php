@@ -4,6 +4,8 @@
  */
 
 use FelixOnline\Exceptions;
+use FelixOnline\Core\IssueManager;
+use FelixOnline\Core\Issue;
 
 class ArchiveController extends BaseController {
 	private $currentyear;
@@ -89,7 +91,7 @@ class ArchiveController extends BaseController {
 			$decades = $this->getDecades($start, $end, $currentdecade);
 
 			// 1949 edge case
-			array_unshift($decades, array('final' => '1949'));
+			array_unshift($decades, array('begin' => '1949', 'final' => '1949', 'selected' => false));
 			if($this->year == '1949') { // if selected year is 1949
 				$decades[0]['selected'] = true;
 				$currentdecade = $decades[0];

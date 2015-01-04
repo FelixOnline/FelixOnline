@@ -35,8 +35,8 @@ $theme->render('components/header', $header);
 		</div>
 		<dl class="tabs">
 			<?php foreach($decades as $key => $decade) { ?>  
-				<dd <?php if($currentdecade['begin'] == $decade['begin']) echo 'class="active"'; ?> >
-					<?php if(isset($decade['begin'])) { ?>
+				<dd <?php if($decade['selected']) echo 'class="active"'; ?> >
+					<?php if($decade['begin'] != $decade['final']) { ?>
 						<a href="<?php echo STANDARD_URL; ?>issuearchive/decade/<?php echo $decade['begin']; ?>"><?php echo $decade['begin']; ?>-<?php echo $decade['final']; ?></a>
 					<?php } else { ?>
 						<a href="<?php echo STANDARD_URL; ?>issuearchive/year/<?php echo $decade['final']; ?>"><?php echo $decade['final']; ?></a>
@@ -48,9 +48,6 @@ $theme->render('components/header', $header);
 	<div class="medium-9 medium-pull-3 columns">
 		<dl class="tabs archive-years">
 			<?php 
-				if(!$currentdecade['begin']) {
-					$currentdecade['begin'] = $currentdecade['final']; 
-				}
 				for($i = $currentdecade['begin']; $i <= $currentdecade['final']; $i++) { ?>
 				<dd class="<?php if($i == $year) { ?>active<?php } ?>">
 					<a href="<?php STANDARD_URL; ?>issuearchive/year/<?php echo $i; ?>"><?php echo $i; ?></a>
