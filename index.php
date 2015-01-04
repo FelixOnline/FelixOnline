@@ -49,14 +49,18 @@ try {
 
 	/*
 	 * Add pages to routes
-	 */
-	$sql = "SELECT `id`, `slug` FROM `pages`";
-	$pages = $db->get_results($sql);
-	if (!is_null($pages)) {
-		foreach($pages as $key => $page) {
-			$urls['/'.$page->slug] = 'pageController';
+ */
+	try {
+		$pages = (new \FelixOnline\Core\PageManager())
+			->all();
+
+		foreach($pages as $page) {
+			$urls['/'.$page->getSlug()] = 'pageController';
 		}
+	} catch (Exceptions\InternalException $e) {
+
 	}
+
 } catch (Exception $e) {
 	$prior_exception = null;
 	require('errors/index.php');

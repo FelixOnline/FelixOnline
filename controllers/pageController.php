@@ -3,8 +3,9 @@
  * Page Controller
  * Handles all page requests
  */
+use \FelixOnline\Exceptions;
+
 class PageController extends BaseController {
-	private $page;
 	function GET($matches) {
 		$page = substr($matches[0], 1);
 
@@ -13,13 +14,26 @@ class PageController extends BaseController {
 			$page = substr($page, 0, -1);
 		}
 
-		$this->page = new Page($page);
+		try {
+			$page = (new \FelixOnline\Core\PageManager())
+				->filter('slug = "%s"', array($page))
+				->one();
+		} catch (Exceptions\InternalException $e) {
+			throw new Exceptions\NotFoundException(
+				$e->getMessage(),
+				Exceptions\UniversalException::EXCEPTION_NOTFOUND,
+				$matches,
+				'PageController',
+				$e
+			);
+		}
+
 		$this->theme->appendData(array(
-			'page' => $this->page
+			'page' => $page
 		));
 		$this->theme->setHierarchy(array(
-			$this->page->getSlug() // page-{slug}.php
+			$page->getSlug() // page-{slug}.php
 		));
-		$this->theme->render('page', array('csrf_token' => $this->page->getToken()));
+		$this->theme->render('page', array('csrf_token' => $page->getToken()));
 	}
 }
