@@ -15,7 +15,7 @@ class SearchController extends BaseController {
 			return false;
 		}
 
-		$search = new Search($query);
+		$search = new \FelixOnline\Core\Search($query);
 		$articles = $search->articleTitles($page);
 
 		$people = $search->people();

@@ -88,7 +88,7 @@ $timing->log('after header');
 		<div class="medium-4 columns">
 			<?php if (isset($people_count) && $people_count !== 0) { ?>
 				<div class="felix-item-title felix-item-title felix-item-title-generic">
-					<h3>people</h3>
+					<h3>People</h3>
 				</div>
 				<ul class="search-people-list">
 					<?php foreach ($people as $person) { ?>
