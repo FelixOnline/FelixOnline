@@ -54,7 +54,17 @@ class ArchiveController extends BaseController {
 
 			$this->serveFile($file, $filename, 'application/pdf');
 		} else if(array_key_exists('id', $matches)) {
-			echo 'Issue page';
+			try {
+				$issue = new Issue($matches['id']);
+				echo 'Issue page';
+			} catch(Exceptions\ModelNotFoundException $e) {
+				throw new Exceptions\NotFoundException(
+					"Issue Not Found",
+					Exceptions\UniversalException::EXCEPTION_NOTFOUND,
+					$matches,
+					'ArchiveController'
+				);
+			}
 		} else {
 			$issue_manager = new IssueManager();
 
