@@ -13,9 +13,8 @@ $timing->log('after header');
 		<div class="row felix-pad-top">
 			<div class="medium-8 columns">
 				<div class="felix-featured-slider">
-					<?php $featured = $frontpage->getSection('featured'); ?>
 					<?php
-						foreach($featured as $article) {
+						foreach($spinner as $article) {
 							$theme->render('components/articlelist/featured_spinner', array(
 								'article' => $article
 							));
@@ -101,9 +100,8 @@ $timing->log('after header');
 					<h2>In <i>Felix</i> This Week</h2>
 				</div>
 
-				<?php $featured = $frontpage->getSection('b'); ?>
 				<?php
-					foreach($featured as $article) {
+					foreach($thisweek as $article) {
 						$theme->render('components/articlelist/frontpage_box', array(
 							'article' => $article
 						));

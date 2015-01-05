@@ -1,4 +1,5 @@
 <!-- Spinner story -->
+					<?php $article = $article->getArticle(); ?>
 					<div>
 						<div class="felix-featured-caption"><a href="<?php echo $article->getURL();?>"><?php echo $article->getTitle(); ?></a></div>
 						<div class="felix-featured-image-container">

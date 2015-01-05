@@ -1,4 +1,5 @@
 <!-- In This Issue story -->
+				<?php $article = $article->getArticle(); ?>
 				<div class="panel felix-item-panel">
 					<div class="row">
 						<div class="small-6 columns felix-item-text">
