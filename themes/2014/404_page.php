@@ -1,6 +1,7 @@
 <?php
 
 use FelixOnline\Exceptions;
+use FelixOnline\Core\CurrentUser;
 
 $timing->log('404 error');
 
@@ -38,7 +39,7 @@ $timing->log('after header');
 
 						$data = array();
 
-						if(method_exists($exception, 'getUser') && $exception->getUser() instanceof CurrentUser) {
+						if(method_exists($exception, 'getUser') && $exception->getUser() instanceof CurrentUser && $exception->getUser()->pk != null) {
 							$username = $exception->getUser()->getName().' ('.$exception->getUser()->getUser().')';
 						} else {
 							$username = '<i>Unauthenticated</i>';

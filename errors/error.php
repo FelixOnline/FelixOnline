@@ -3,6 +3,7 @@
 			restore_exception_handler();
 
 			use \FelixOnline\Exceptions;
+			use \FelixOnline\Core\CurrentUser;
 		?>
 		
 		<div class="error_text">
@@ -28,7 +29,7 @@
 						
 						$data = array();
 
-						if(method_exists($exception, 'getUser') && $exception->getUser() instanceof CurrentUser) {
+						if(method_exists($exception, 'getUser') && $exception->getUser() instanceof CurrentUser && $exception->getUser()->pk != null) {
 							$username = $exception->getUser()->getName().' ('.$exception->getUser()->getUser().')';
 						} elseif($exception instanceof \Exception) {
 							$username = '<i>Unknown</i>';
@@ -123,7 +124,7 @@
 						$data = array();
 						$data['Details'] = $exception->getMessage();
 						
-						if(method_exists($exception, 'getUser') && $exception->getUser() instanceof CurrentUser) {
+						if(method_exists($exception, 'getUser') && $exception->getUser() instanceof CurrentUser && $exception->getUser()->pk != null) {
 							$username = $exception->getUser()->getName().' ('.$exception->getUser()->getUser().')';
 						} else {
 							$username = 'Unauthenticated';
