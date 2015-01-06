@@ -43,6 +43,7 @@
 		$config['db_pass'],
 		$config['db_name'],
 		'localhost',
+		3306,
 		'utf8'
 	);
 	$safesql = new \SafeSQL_MySQLi($db->dbh);

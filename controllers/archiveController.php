@@ -22,6 +22,7 @@ class ArchiveController extends BaseController {
 			$this->db->dbpassword,
 			$dbaname,
 			$this->db->dbhost,
+			3306,
 			'utf8'
 		);
 		$this->safesql = new SafeSQL_MySQLi($dba->dbh);
