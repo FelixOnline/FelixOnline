@@ -15,15 +15,20 @@
 	"repositories": [
 		{
 			"type": "vcs",
-			"url": "https://github.com/FelixOnline/Service-Akismet.git"
+			"url": "https://github.com/dominicsayers/isemail.git"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/mrclay/minify.git"
 		}
 	],
     "require": {
 		"felixonline/exporter": "0.1.*",
-		"rzekanet/service-akismet": "dev-master#8734a95d3eb1faae0d3093a97c4b3057a7fcc7aa",
 		"felixonline/core": "0.2.*",
 		"raven/raven": "0.8.0",
-		"mustache/mustache": "2.5.*"
+		"dominicsayers/isemail": "dev-master",
+		"leafo/lessphp": "0.4.*",
+		"mrclay/minify": "2.2.*"
     },
 	"minimum-stability": "dev"
 }
