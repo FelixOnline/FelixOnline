@@ -20,6 +20,7 @@ try {
 	}
 	 */
 
+	global $currentuser;
 	$currentuser = new Core\CurrentUser();
 
 	$hooks = new Core\Hooks();
@@ -100,8 +101,8 @@ try {
 	}
 
 } catch (Exception $e) {
-	if ($e instanceof NotFoundException || $e instanceof FelixOnline\Exceptions\NotFoundException) {
-		// If any exception which amounts to something not being found is raised
+	if ($e instanceof NotFoundException) {
+		// If any exception which amounts to something not being found
 		$prior_exception = $e;
 		try {
 			// First attempt to show nice 404 page. Throw away current theme data

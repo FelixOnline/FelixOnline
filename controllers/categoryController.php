@@ -11,11 +11,11 @@ class CategoryController extends BaseController
 				->filter('cat = "%s"', array($matches['cat']))
 				->one();
 		} catch (Exceptions\InternalException $e) {
-			throw new Exceptions\NotFoundException(
+			throw new NotFoundException(
 				$e->getMessage(),
-				Exceptions\UniversalException::EXCEPTION_NOTFOUND,
 				$matches,
 				'CategoryController',
+				FrontendException::EXCEPTION_NOTFOUND,
 				$e
 			);
 		}

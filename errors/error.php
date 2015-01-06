@@ -35,58 +35,58 @@
 							$username = '<i>Unknown</i>';
 						}
 
+						$data['Details'] = $exception->getMessage();
+
 						switch($exception->getCode()) {
-							case Exceptions\UniversalException::EXCEPTION_ERRORHANDLER:
-								$header = 'Internal error';
-								$data['Details'] = $exception->getMessage();
-								$data['File'] = $exception->getErrorFile();
-								$data['Line'] = $exception->getErrorLine();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_GLUE:
-								$header = 'Misconfigured glue';
-								$data['URL'] = $exception->getUrl();
-								$data['Class requested'] = $exception->getClass();
-								$data['Method requested'] = $exception->getMethod();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_GLUE_URL:
-								$header = 'URL is not valid';
-								$data['URL'] = $exception->getUrl();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_IMAGE_NOTFOUND:
-								$dimensions = $exception->getImageDimensions();
-								$header = 'Image could not be found';
-								$data['Containing page'] = $exception->getPage();
-								$data['Image URL'] = $exception->getImageUrl();
-								$data['Requested dimensions'] = $dimensions['width'].'x'.$dimensions['height'];
-								break;
-							case Exceptions\UniversalException::EXCEPTION_MODEL:
-								$header = 'Misconfigured model';
-								$data['Item type'] = $exception->getClass();
-								$data['Item identifier'] = $exception->getItem();
-								$data['Action'] = $exception->getVerb();
-								$data['Property'] = $exception->getProperty();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_MODEL_NOTFOUND:
-								$header = 'Item is not in database';
-								$data['Item type'] = $exception->getClass();
-								$data['Item identifier'] = json_encode($exception->getItem());
-								break;
-							case Exceptions\UniversalException::EXCEPTION_VIEW_NOTFOUND:
-								$header = 'Template does not exist';
-								$data['Template'] = $exception->getView();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_NOTFOUND:
+							case FrontendException::EXCEPTION_NOTFOUND:
 								$header = $exception->getMessage();
+								$data['URL'] = $exception->getURL();
 								$data['Matches'] = json_encode($exception->getMatches());
 								$data['Controller'] = $exception->getController();
 								break;
+							case FrontendException::EXCEPTION_GLUE:
+								$header = 'Glue misconfigured';
+								$data['URL'] = $exception->getURL();
+								$data['Class'] = $exception->getClass();
+								$data['Method'] = $exception->getMethod();
+								break;
+							case FrontendException::EXCEPTION_GLUE_URL:
+								$header = 'No match for URL in glue';
+								$data['URL'] = $exception->getURL();
+								break;
+							case FrontendException::EXCEPTION_FRONTEND:
+								$header = 'Frontend exception';
+								$data['URL'] = $exception->getURL();
+								break;
+							case Exceptions\UniversalException::EXCEPTION_ERRORHANDLER:
+								$header = 'Error handled';
+								$data['Error number'] = $exception->getErrno();
+								$data['File'] = $exception->getErrorFile();
+								$data['Line'] = $exception->getErrorLine();
+								$data['Context'] = $exception->getContext();
+								break;
+							case Exceptions\UniversalException::EXCEPTION_MODEL:
+								$header = 'Misconfigured model';
+								$data['Verb'] = $exception->getVerb();
+								$data['Property'] = $exception->getProperty();
+								$data['Class'] = $exception->getClass();
+								$data['Item'] = $exception->getItem();
+								break;
+							case Exceptions\UniversalException::EXCEPTION_MODEL_NOTFOUND:
+								$header = 'Model Not Found';
+								$data['Table'] = $exception->getClass();
+								$data['Primary Key'] = $exception->getItem();
+								break;
+							case Exceptions\UniversalException::EXCEPTION_INTERNAL:
+								$header = 'Internal Exception';
+								break;
 							default:
-								$header = 'Internal exception';
-								$data['Details'] = $exception->getMessage();
-								$data['File'] = $exception->getFile();
-								$data['Line'] = $exception->getLine();
+								$header = 'Unknown exception';
 								break;
 						}
+
+						$data['File'] = $exception->getFile();
+						$data['Line'] = $exception->getLine();
 					?>
 					<h2><?php echo $header; ?></h2>
 					<ul>
@@ -100,120 +100,6 @@
 					<?php
 					echo '<h3>Backtrace</h3>';
 					echo '<pre>'.$exception->getTraceAsString().'</pre>';
-				}
-			}
-
-			if(!LOCAL) {
-				$notify = true;
-				if(file_exists(dirname(__FILE__).'/../emails/fatal_next_notify')) {
-					$next_notify = (int) file_get_contents(dirname(__FILE__).'/../emails/fatal_next_notify');
-					if($next_notify > time()) {
-						// We have notified already, don't notify again
-						$notify = false;
-					}
-				}
-				$to = explode(',', EMAIL_ERRORS);
-				$subject = 'Felix Online error';
-				$message = "An error has occured on Felix Online\n";
-				$message .= "Details on the error is below. If there are multiple errors, the first is the main one, the second prevented the usual error page from being shown\n\n";
-				
-				$exceptions = array($prior_exception, $e);
-
-				foreach($exceptions as $exception) {
-					if ($exception) {
-						$data = array();
-						$data['Details'] = $exception->getMessage();
-						
-						if(method_exists($exception, 'getUser') && $exception->getUser() instanceof CurrentUser && $exception->getUser()->pk != null) {
-							$username = $exception->getUser()->getName().' ('.$exception->getUser()->getUser().')';
-						} else {
-							$username = 'Unauthenticated';
-						}
-						switch($exception->getCode()) {
-							case Exceptions\UniversalException::EXCEPTION_ERRORHANDLER:
-								$header = 'Internal error';
-								$data['Details'] = $exception->getMessage();
-								$data['File'] = $exception->getErrorFile();
-								$data['Line'] = $exception->getErrorLine();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_GLUE:
-								$header = 'Misconfigured glue';
-								$data['URL'] = $exception->getUrl();
-								$data['Class requested'] = $exception->getClass();
-								$data['Method requested'] = $exception->getMethod();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_GLUE_URL:
-								$header = 'URL is not valid';
-								$data['URL'] = $exception->getUrl();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_IMAGE_NOTFOUND:
-								$dimensions = $exception->getImageDimensions();
-								$header = 'Image could not be found';
-								$data['Containing page'] = $exception->getPage();
-								$data['Image URL'] = $exception->getImageUrl();
-								$data['Requested dimensions'] = $dimensions['width'].'x'.$dimensions['height'];
-								break;
-							case Exceptions\UniversalException::EXCEPTION_MODEL:
-								$header = 'Misconfigured model';
-								$data['Item type'] = $exception->getClass();
-								$data['Item identifier'] = $exception->getItem();
-								$data['Action'] = $exception->getVerb();
-								$data['Property'] = $exception->getProperty();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_MODEL_NOTFOUND:
-								$header = 'Item is not in database';
-								$data['Item type'] = $exception->getClass();
-								$data['Item identifier'] = json_encode($exception->getItem());
-								break;
-							case Exceptions\UniversalException::EXCEPTION_VIEW_NOTFOUND:
-								$header = 'Template does not exist';
-								$data['Template'] = $exception->getView();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_NOTFOUND:
-								$header = $exception->getMessage();
-								$data['Matches'] = json_encode($exception->getMatches());
-								$data['Controller'] = $exception->getController();
-								break;
-							default:
-								$header = 'Internal exception';
-								$data['Details'] = $exception->getMessage();
-								$data['File'] = $exception->getFile();
-								$data['Line'] = $exception->getLine();
-								break;
-						}
-
-						$data['Exception file'] = $exception->getFile();
-						$data['Exception line'] = $exception->getLine();
-
-						$message .= $header."\n";
-						$message .= "URL accessed: http://".STANDARD_SERVER.$_SERVER["REQUEST_URI"]."\n";
-						$message .= "Method: ".$_SERVER['REQUEST_METHOD']."\n";
-						$message .= "Username: ".$username."\n";
-						foreach($data as $name => $value) {
-							$message .= $name.": ".$value."\n";
-						}
-						$message .= "\nBacktrace:\n";
-						$message .= $exception->getTraceAsString();
-						$message .= "\n\n\n";
-					}
-				}
-
-				//$message = wordwrap($message, 70);
-				if($notify) {
-					$status = true;
-
-					foreach($to as $addressee) {
-						$successful = mail($addressee, $subject, $message);
-						if(!$successful) {
-							$status = false;
-						}
-					}
-					
-					if(!$status) {
-						echo '<p><b>We couldn\'t notify the Felix Online developers, please contact us at felix@imperial.ac.uk for further assistance.</b></p>';
-					} else {
-						file_put_contents(dirname(__FILE__).'/../emails/fatal_next_notify', time() + 900);
-					}
 				}
 			}
 			?>

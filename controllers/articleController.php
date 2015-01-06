@@ -92,7 +92,7 @@ class ArticleController extends BaseController
 							}
 						}
 					}
-				} catch (\FelixOnline\Exceptions\ExternalException $e) {
+				} catch (\FelixOnline\Exceptions\InternalException $e) {
 					$errorconnection = true;
 				}
 			}

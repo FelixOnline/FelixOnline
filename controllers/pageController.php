@@ -21,9 +21,9 @@ class PageController extends BaseController {
 		} catch (Exceptions\InternalException $e) {
 			throw new Exceptions\NotFoundException(
 				$e->getMessage(),
-				Exceptions\UniversalException::EXCEPTION_NOTFOUND,
 				$matches,
 				'PageController',
+				null,
 				$e
 			);
 		}

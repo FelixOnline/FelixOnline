@@ -44,9 +44,8 @@ class ArchiveController extends BaseController {
 			
 			// Make sure the files exists, otherwise we are wasting our time
 			if (!file_exists($file)) {
-				throw new Exceptions\NotFoundException(
+				throw new NotFoundException(
 					"Issue Not Found",
-					Exceptions\UniversalException::EXCEPTION_NOTFOUND,
 					$matches,
 					'ArchiveController'
 				);
@@ -58,9 +57,8 @@ class ArchiveController extends BaseController {
 				$issue = new Issue($matches['id']);
 				echo 'Issue page';
 			} catch(Exceptions\ModelNotFoundException $e) {
-				throw new Exceptions\NotFoundException(
+				throw new NotFoundException(
 					"Issue Not Found",
-					Exceptions\UniversalException::EXCEPTION_NOTFOUND,
 					$matches,
 					'ArchiveController'
 				);

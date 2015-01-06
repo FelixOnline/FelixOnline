@@ -29,7 +29,7 @@ class AuthController extends BaseController {
 				
 				Utility::redirect($_GET['goto']);
 			} else {
-				throw new Exceptions\ExternalException("Internal error - the session is not valid for this user");
+				throw new FrontendException("Internal error - the session is not valid for this user");
 			}
 			// show main exception page if something goes wrong here - do not catch!!!
 		} elseif(isset($_GET['logout'])) {
@@ -80,10 +80,10 @@ class AuthController extends BaseController {
 						'goto' => $_GET['goto']
 					), $hash);
 			  } else {
-					throw new Exceptions\ExternalException("Invalid credentials");
+					throw new Exceptions\InternalException("Invalid credentials");
 					// Catch this elsewhere
 		 	  }
-	 		} catch (Exceptions\ExternalException $e) {
+	 		} catch (Exceptions\InternalException $e) {
 				Utility::redirect(STANDARD_URL.'login', array(
 					'failed' => true
 				));

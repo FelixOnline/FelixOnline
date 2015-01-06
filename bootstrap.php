@@ -12,6 +12,16 @@ if(!defined('CACHE_DIRECTORY')) define('CACHE_DIRECTORY', BASE_DIRECTORY.'/cache
 // Composer
 require BASE_DIRECTORY.'/vendor/autoload.php';
 
+/*
+ * Exceptions
+ */
+require_once(BASE_DIRECTORY.'/exceptions/FrontendException.php');
+require_once(BASE_DIRECTORY.'/exceptions/GlueURLException.php');
+
+foreach (glob(BASE_DIRECTORY.'/exceptions/*.php') as $filename) {
+	require_once($filename);
+}
+
 require_once(BASE_DIRECTORY.'/inc/ez_sql_core.php');
 require_once(BASE_DIRECTORY.'/inc/ez_sql_mysqli.php');
 require_once(BASE_DIRECTORY.'/inc/SafeSQL.class.php');

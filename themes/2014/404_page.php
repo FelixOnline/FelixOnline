@@ -42,56 +42,20 @@ $timing->log('after header');
 						if(method_exists($exception, 'getUser') && $exception->getUser() instanceof CurrentUser && $exception->getUser()->pk != null) {
 							$username = $exception->getUser()->getName().' ('.$exception->getUser()->getUser().')';
 						} else {
-							$username = '<i>Unauthenticated</i>';
+							$username = '<i>Unknown</i>';
 						}
 
 						switch ($exception->getCode()) {
-							case Exceptions\UniversalException::EXCEPTION_ERRORHANDLER:
-								$header = 'Internal error';
-								$data['Details'] = $exception->getMessage();
-								$data['File'] = $exception->getErrorFile();
-								$data['Line'] = $exception->getErrorLine();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_GLUE:
-								$header = 'Misconfigured glue';
-								$data['URL'] = $exception->getUrl();
-								$data['Class requested'] = $exception->getClass();
-								$data['Method requested'] = $exception->getMethod();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_GLUE_URL:
-								$header = 'URL is not valid';
-								$data['URL'] = $exception->getUrl();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_IMAGE_NOTFOUND:
-								$dimensions = $exception->getImageDimensions();
-								$header = 'Image could not be found';
-								$data['Containing page'] = $exception->getPage();
-								$data['Image URL'] = $exception->getImageUrl();
-								$data['Requested dimensions'] = $dimensions['width'].'x'.$dimensions['height'];
-								break;
-							case Exceptions\UniversalException::EXCEPTION_MODEL:
-								$header = 'Misconfigured model';
-								$data['Item type'] = $exception->getClass();
-								$data['Item identifier'] = $exception->getItem();
-								$data['Action'] = $exception->getVerb();
-								$data['Property'] = $exception->getProperty();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_MODEL_NOTFOUND:
-								$header = 'Item is not in database';
-								$data['Item type'] = $exception->getClass();
-								$data['Item identifier'] = json_encode($exception->getItem());
-								break;
-							case Exceptions\UniversalException::EXCEPTION_VIEW_NOTFOUND:
-								$header = 'Template does not exist';
-								$data['Template'] = $exception->getView();
-								break;
-							case Exceptions\UniversalException::EXCEPTION_NOTFOUND:
+							case FrontendException::EXCEPTION_NOTFOUND:
 								$header = $exception->getMessage();
+								$data['URL'] = $exception->getURL();
 								$data['Matches'] = json_encode($exception->getMatches());
 								$data['Controller'] = $exception->getController();
+								$data['File'] = $exception->getFile();
+								$data['Line'] = $exception->getLine();
 								break;
 							default:
-								$header = 'Internal exception';
+								$header = 'Unknown Error';
 								$data['Details'] = $exception->getMessage();
 								$data['File'] = $exception->getFile();
 								$data['Line'] = $exception->getLine();
