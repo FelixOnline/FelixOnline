@@ -10,7 +10,6 @@ ob_start();
 try {
 	require_once('bootstrap.php');
 
-	require_once('inc/timing.inc.php');
 	$timing = new Timing('log-themes');
 
 	/* If the url is on the union servers then redirect to custom url */

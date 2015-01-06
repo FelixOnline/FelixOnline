@@ -16,19 +16,13 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/dominicsayers/isemail.git"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/mrclay/minify.git"
 		}
 	],
     "require": {
 		"felixonline/exporter": "0.1.*",
 		"felixonline/core": "0.2.*",
 		"raven/raven": "0.8.0",
-		"dominicsayers/isemail": "dev-master",
-		"leafo/lessphp": "0.4.*",
-		"mrclay/minify": "2.2.*"
+		"dominicsayers/isemail": "dev-master"
     },
 	"minimum-stability": "dev"
 }
