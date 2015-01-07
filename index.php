@@ -60,7 +60,6 @@ try {
 	} catch (Exceptions\InternalException $e) {
 
 	}
-
 } catch (Exception $e) {
 	$prior_exception = null;
 	require('errors/error.php');
@@ -113,8 +112,6 @@ try {
 			// End execution
 			exit();
 		} catch (Exception $e) {
-			// send exception to sentry
-			$app['sentry']->captureException($e);
 
 			// there is an exception in the above code - time to bail out and display the emergency error page
 			ob_end_clean();
@@ -125,9 +122,6 @@ try {
 			exit();
 		}
 	} else {
-		// send exception to sentry
-		$app['sentry']->captureException($e);
-
 		// If something bad happened
 		// time to bail out and display the emergency error page
 		ob_end_clean();

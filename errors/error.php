@@ -47,6 +47,7 @@
 			<p id="techdetails_show" style="display: none;"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'block'; document.getElementById('techdetails_show').style.display = 'none';">View some technical details</a></p>
 			<div id="techdetails" class="technical_details" style="display: block;">
 				<p id="techdetails_hide"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'none'; document.getElementById('techdetails_show').style.display = 'block';">Hide the technical details</a></p>
+			<?php } ?>
 				<?php
 					if (!isset($prior_exception) || !$prior_exception) {
 						$prior_exception = null;
@@ -124,6 +125,7 @@
 						$data['File'] = $exception->getFile();
 						$data['Line'] = $exception->getLine();
 					?>
+				<?php if(LOCAL || ($e->getUser() instanceof CurrentUser && $e->getUser()->getRole() == 100)) { ?>
 					<h2><?php echo $header; ?></h2>
 					<ul>
 						<li><b>Username:</b> <?php echo $username; ?></li>
@@ -137,7 +139,17 @@
 					echo '<h3>Backtrace</h3>';
 					echo '<pre>'.$exception->getTraceAsString().'</pre>';
 				}
+
+				unset($data['File']);
+				unset($data['Line']);
+				unset($data['URL']);
+
+				$data['Username'] = strip_tags($username);
+
+				$event_id = $app['sentry']->getIdent($app['sentry']->captureException($exception, array('extra' => $data)));
+				echo '<p>Created event ID '.$event_id.'</p>';
 			}
+
 			?>
 		</div>
 		&copy; Felix Imperial
