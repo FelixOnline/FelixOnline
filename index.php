@@ -63,7 +63,7 @@ try {
 
 } catch (Exception $e) {
 	$prior_exception = null;
-	require('errors/index.php');
+	require('errors/error.php');
 	exit();
 }
 
@@ -119,7 +119,7 @@ try {
 			// there is an exception in the above code - time to bail out and display the emergency error page
 			ob_end_clean();
 			ob_start();
-			require('errors/index.php');
+			require('errors/error.php');
 			ob_end_flush();
 			// End execution
 			exit();
@@ -132,7 +132,7 @@ try {
 		// time to bail out and display the emergency error page
 		ob_end_clean();
 		ob_start();
-		require('errors/index.php');
+		require('errors/error.php');
 		ob_end_flush();
 		// End execution
 		exit();

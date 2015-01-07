@@ -1,14 +1,46 @@
-		<?php
-			restore_error_handler();
-			restore_exception_handler();
+<?php
+	use \FelixOnline\Exceptions;
+	use \FelixOnline\Core\CurrentUser;
+	restore_error_handler();
+	restore_exception_handler();
+?>
 
-			use \FelixOnline\Exceptions;
-			use \FelixOnline\Core\CurrentUser;
-		?>
-		
+<?php try { ?>
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js" xmlns:fb="http://ogp.me/ns/fb#"> <!--<![endif]-->
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# feliximperial: http://ogp.me/ns/fb/feliximperial#">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<base href="<?php echo STANDARD_URL; ?>">
+
+	<!-- Title -->
+	<title>
+	   	Felix Online - The student voice of Imperial College London 
+	</title>
+
+	<!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+	<link rel="shortcut icon" href="favicon.ico">
+	<!-- CSS files -->
+	<link rel="stylesheet" href="<?php echo STANDARD_URL; ?>errors/styles.css">
+</head>
+<body>
+	<div class="header">
+		<img class="felix" alt="FELIX" src="<?php echo STANDARD_URL; ?>img/title.jpg" />
+	</div>
+	<div class="box">
 		<div class="error_text">
-			<h1>He's Dead, Jim!</h1>
-			<p>Felix Online is experiencing technical difficulties at the moment. The cat has already been notified, and things should be back up and running soon.</p>
+			<h1>We are sorry, an error has occured</h1>
+			<p><small>Error #<?php echo $e->getCode(); ?></small></p>
+			<p>Unfortunately we are experiencing difficulty in loading the page you have requested.</p>
+			<p>We may only be having trouble with this page, and so you may be able to browse the rest of the website.</p>
+			<p>The error has been reported to our technical team and will be fixed as soon as possible. We apologise for the inconvenience this causes.</p>
 			<p>In the meantime, please enjoy this video:</p>
 			<iframe width="480" height="360" src="https://www.youtube.com/embed/QgkGogPLacA?rel=0" frameborder="0" allowfullscreen></iframe>
 			<?php if(LOCAL || ($e->getUser() instanceof CurrentUser && $e->getUser()->getRole() == 100)) { ?>
@@ -77,6 +109,10 @@
 								$data['Table'] = $exception->getClass();
 								$data['Primary Key'] = $exception->getItem();
 								break;
+							case Exceptions\UniversalException::EXCEPTION_SQL:
+								$header = 'SQL Error';
+								$data['Query'] = $exception->getQuery();
+								break;
 							case Exceptions\UniversalException::EXCEPTION_INTERNAL:
 								$header = 'Internal Exception';
 								break;
@@ -104,3 +140,8 @@
 			}
 			?>
 		</div>
+		&copy; Felix Imperial
+	</div>
+</body>
+</html>
+<?php } catch (Exception $e) {} ?>
