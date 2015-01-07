@@ -45,7 +45,7 @@ class Timing {
 		$this->filename = $name;
 		$this->directory = $dir;
 		if(!is_writable($this->directory.$this->filename)) {
-			throw new InternalException('Log file '.$this->directory.$this->filename.' is not writable');
+			throw new FrontendException('Log file '.$this->directory.$this->filename.' is not writable');
 		}
 		
 		if(defined('TIMING') && TIMING == true) {
