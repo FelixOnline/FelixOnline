@@ -34,9 +34,14 @@ varsity/
 /vendor/
 *.sql
 
-themes/classic/css/*.css
 phinx.yml
 composer.phar
 composer.lock
 
 node_modules/
+
+backups/
+admin/
+
+themes/2014/css/*.min.css
+themes/2014/css/archive.css

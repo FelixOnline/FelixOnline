@@ -127,7 +127,7 @@ $time = time();
 
 foreach ($files as $file) {
 	if (is_file($file) && !is_link($file)) {
-		if ($time - filemtime($file) >= 60 * 60 * 24 * 14) { // 14 days
+		if ($time - filemtime($file) >= 60 * 60 * 24 * 2) { // 2 days - get older stuff from ICU backup
 			unlink($file);
 		}
 	}
