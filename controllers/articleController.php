@@ -6,7 +6,16 @@ class ArticleController extends BaseController
 
 	function GET($matches)
 	{
-		$article = new \FelixOnline\Core\Article($matches['id']);
+		try {
+			$article = new \FelixOnline\Core\Article($matches['id']);
+		} catch(Exception $e) {
+			throw new NotFoundException(
+				"Article not found",
+				$matches,
+				'ArticleController'
+			);
+		}
+
 		$this->theme->appendData(array(
 			'article' => $article
 		));

@@ -2,7 +2,16 @@
 
 class UserController extends BaseController {
 	function GET($matches) {
-		$user = new \FelixOnline\Core\User($matches['user']);
+		try {
+			$user = new \FelixOnline\Core\User($matches['user']);
+		} catch(Exception $e) {
+			throw new NotFoundException(
+				"User Not Found",
+				$matches,
+				'UserController'
+			);
+		}
+
 		if(!isset($matches['page'])) {
 			$pagenum = 1;
 		} else {
