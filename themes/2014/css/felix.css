@@ -1388,9 +1388,16 @@ div.felix-featured-image {
 
 div.article-authors {
 	font-family: 'Noto Serif', serif;
-	padding-bottom: 0.5em;
 	border-bottom: 1px solid #333333;
 	margin-bottom: 0.5em;
+}
+
+div.article-authors div.row {
+	padding-top: 0.5em;
+}
+
+div.article-authors div.row iframe {
+	margin-top: 0.2em;
 }
 
 div.article-date, div.article-comments {
@@ -1552,4 +1559,8 @@ div.felix-contribute a {
     display: block;
     width: 0;
     z-index: 1;
+}
+
+.article-user-pic {
+	max-height: 55px;
 }

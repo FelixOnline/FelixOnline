@@ -39,6 +39,11 @@ $theme->render('components/header', $header);
 					<h1><?php echo $article->getTitle(); ?></h1>
 					<h2><?php echo $article->getTeaser(); ?></h2>
 				</div>
+				<div class="show-for-small-only">
+					<?php $theme->render('components/articleMeta', array('article' => $article)); ?>
+
+					<?php $theme->render('sidebar/shareArticle', array('article' => $article, 'hidetitle' => true)); ?>
+				</div>
 			<!-- Content -->
 				<?php if($image = $article->getImage()) { ?>
 				<div class="article-image<?php if($image->isTall()) { ?> tall-image<?php } ?>">
@@ -69,20 +74,15 @@ $theme->render('components/header', $header);
 				</div>
 				<?php } ?>
 				<?php $timing->log('after image'); ?>
-				<?php if ($article->getCategory()->getCat() == 'comment') { ?>
-					<?php
-						$author = $article->getAuthors()[0];
-						$image = $author->getImage();
-					?>
-				<a href="user/<?php echo $author->getUser(); ?>/" title="<?php echo $author->getName(); ?>" class="article-author-image">
-					<img id="articlePic" alt="<?php echo $author->getName(); ?>" src="<?php echo $image->getURL(220, 160); ?>">
-				</a>
-				<?php } ?>
+			
 				<div class="article-text">
 				<?php
 					echo $article->getContent();
 				?>
 				</div>
+
+				<?php $theme->render('sidebar/shareArticle', array('article' => $article, 'hidetitle' => true)); ?>
+
 				<?php $timing->log('after content'); ?>
 				<!-- End of content -->
 
@@ -203,26 +203,17 @@ $theme->render('components/header', $header);
 				<?php $timing->log('end of article content');?>
 			</div>
 			<div class="medium-4 columns">
-				<div class="article-meta">
-					<div class="article-authors">By <b><?php echo Utility::outputUserList($article->getAuthors(), true); ?></b>.</div>
-					<div class="article-twitters"><?php echo Utility::outputUserTwitterList($article->getAuthors()); ?></div>
-					<div class="article-date">Published on <?php echo $article->getPublished() ? date('l F j, Y \a\t H:i', $article->getPublished()) : "<strong>Not Published</strong>";?>.</div>
-					<div class="article-comments"><span class="comment-count"><a href="<?php echo Utility::currentPageURL().'#commentHeader';?>"><?php echo $article->getNumComments().'</a></span> comment'.($article->getNumComments() != 1 ? 's' : '');?>.<?php if ($article->canComment($currentuser)) { ?> <a href="<?php echo Utility::currentPageURL().'#commentForm';?>">Post your own now</a>!<?php } ?></div>
-					<?php
-						$isSectionEditor = false;
-						if($article->getCategory()->getEditors() != null) {
-							foreach($article->getCategory()->getEditors() as $user) {
-								if($currentuser->getUser() == $user->getUser()) {
-									$isSectionEditor = true;
-								}
-							}
-						}
-					?>
-					<?php if($currentuser->getRole() >= 25 || $isSectionEditor): ?>
-						<div class="article-edit"><b><a class="button tiny" href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Article</a></b></div>
-					<?php endif; ?>
+				<div class="show-for-medium-up">
+					<?php $theme->render('components/articleMeta', array('article' => $article)); ?>
 				</div>
-				<?php $theme->render('sidebar/shareArticle', array('article' => $article)); ?>
+
+				<?php if($currentuser->getRole() >= 25 || $isSectionEditor): ?>
+					<div class="article-edit"><b><a class="button tiny" href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Article</a></b></div>
+				<?php endif; ?>
+
+				<div class="show-for-medium-up">
+					<?php $theme->render('sidebar/shareArticle', array('article' => $article, 'hidetitle' => false)); ?>
+				</div>
 				
 				<?php $theme->render('sidebar/advert'); ?>
 
@@ -234,16 +225,5 @@ $theme->render('components/header', $header);
 			</div>
 		</div>
 
-<!-- Google plus one script -->
-<script type="text/javascript">
-	window.___gcfg = {lang: 'en-GB'};
-	(function() {
-		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-		po.src = 'https://apis.google.com/js/plusone.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-	})();
-</script>
-<!-- Buffer share button js -->
-<script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
 <?php $timing->log('end of article');?>
 <?php $theme->render('components/footer'); ?>
