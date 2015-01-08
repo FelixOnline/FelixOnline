@@ -38,9 +38,9 @@ class ArticleController extends BaseController
 		$comment = new \FelixOnline\Core\Comment();
 		$comment->setArticle($article->getId());
 
-		$errorduplicate = $errorspam = $erroremail = $errorinsert = $errorconnection = false;
+		$errorduplicate = $errorspam = $erroremail = $errorinsert = $errorconnection = $errorempty = false;
 
-		if ($article->canComment($currentuser)) {
+		if ($article->canComment($currentuser) && $_POST['comment'] != '') {
 			/* User comment */
 
 			if (isset($_POST['articlecomment'])) {
@@ -105,6 +105,10 @@ class ArticleController extends BaseController
 					$errorconnection = true;
 				}
 			}
+		}
+
+		if($_POST['comment'] == '') {
+			$errorempty = true;
 		}
 		
 		$this->theme->appendData(array(
