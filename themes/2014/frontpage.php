@@ -58,7 +58,8 @@ $timing->log('after header');
 					foreach($articles as $key => $article) {
 						if($key >= 8) { continue; }
 						$theme->render('components/articlelist/article_medium', array(
-							'article' => $article
+							'article' => $article,
+							'show_authors' => true
 						));
 					}
 				?>
