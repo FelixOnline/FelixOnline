@@ -41,12 +41,10 @@ class ArticleController extends BaseController
 		$errorduplicate = $errorspam = $erroremail = $errorinsert = $errorconnection = $errorempty = false;
 
 		if ($article->canComment($currentuser) && $_POST['comment'] != '') {
-			/* All comments are now external */
 			try {
 				if ($_POST['email'] == '' || !is_email($_POST['email'])) {
 					$erroremail = true;
 				} else {
-					$comment->setExternal(true);
 					$comment->setComment($_POST['comment']);
 					if($currentuser->isLoggedIn()): $comment->setUser($currentuser->getUser()); endif;
 					$comment->setName($_POST['name']);
@@ -61,7 +59,7 @@ class ArticleController extends BaseController
 						$errorduplicate = true;
 					} else {
 						if ($id = $comment->save()) {
-							if ($comment->getExternal() && $comment->getSpam() == 1) {
+							if ($comment->getSpam() == 1) {
 								$errorspam = true;
 							} else {
 								Utility::redirect(
