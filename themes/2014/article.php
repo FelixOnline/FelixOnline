@@ -114,7 +114,8 @@ $theme->render('components/header', $header);
 								</div>
 							<?php } else { ?>
 								<h4>Leave a comment as <a href="<?php echo $currentuser->getURL();?>" title="Profile Page"><?php echo $currentuser->getName();?></a></h4>
-								<p>Your comment will be retrospectively moderated according to our <a href="#" data-reveal-id="commentPolicy">commenting policy</a>.</p>
+								<p>You may still comment anonymously if you wish. Your comment will <b>not</b> be sent to our <a href="http://akismet.com/">Akismet</a> spam detection service.</p>
+								<p>Read our <a href="#" data-reveal-id="commentPolicy">commenting policy</a> for more information and for details on how we moderate.</p>
 							<?php } ?>
 
 							<?php if(isset($errorempty) || isset($errorduplicate) || isset($erroremail) || isset($errorspam) || isset($errorinsert) || isset($errorconnection)): ?>
@@ -145,14 +146,13 @@ $theme->render('components/header', $header);
 							<form method="post" action="<?php echo Utility::currentPageURL();?>#commentForm">
 								<div class="row">
 									<div class="large-9 small-12 columns">
-									<?php if (!$currentuser->isLoggedIn()) { ?>
 										<input type="hidden" name="articlecomment_ext" value="1" />
 										<div class="row">
 											<div class="medium-3 columns">
 												<label class="inline" for="name">Name to show</label>
 											</div>
 											<div class="medium-9 columns">
-												<input type="text" name="name" id="right-label" value="<?php if(isset($_POST['name'])) echo $_POST['name'];?>">
+												<input type="text" name="name" id="right-label" value="<?php if(isset($_POST['name'])): echo $_POST['name']; elseif($currentuser->isLoggedIn()): echo $currentuser->getName(); endif;?>">
 											</div>
 										</div>
 										<div class="row">
@@ -160,13 +160,9 @@ $theme->render('components/header', $header);
 												<label class="inline" for="email">Email (will not be published)</label>
 											</div>
 											<div class="medium-9 columns">
-												<input type="text" name="email" id="right-label" value="<?php if(isset($_POST['email'])) echo $_POST['email'];?>">
+												<input type="text" name="email" id="right-label" value="<?php if(isset($_POST['email'])): echo $_POST['email']; elseif($currentuser->isLoggedIn()): echo $currentuser->getEmail(); endif;?>">
 											</div>
 										</div>
-									<?php } else { ?>
-										<input type="hidden" name="name" value="<?php echo $currentuser->getUser(); ?>"/>
-										<input type="hidden" name="articlecomment" value="1" />
-									<?php } ?>
 										<div class="row">
 											<div class="medium-3 columns">
 												<label class="inline" for="comment">Your comment</label>

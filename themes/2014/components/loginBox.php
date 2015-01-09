@@ -9,7 +9,7 @@
 <?php endif; ?>
 	<form action="<?php echo AUTHENTICATION_PATH; ?>login/?goto=<?php echo $location; ?>" id="loginForm" method="post">
 		<div class="row">
-			<div class="medium-8 small-12 columns">
+			<div class="medium-12 small-12 columns">
 				<h3>Login to Felix Online</h3>
 				<div class="row">
 					<div class="small-3 columns">
@@ -40,14 +40,6 @@
 						<input type="submit" value="Login (SSL)" name="login" id="submit" class="button small radius" />
 					</div>
 				</div>
-			</div>
-			<div class="medium-4 show-for-medium-up columns">
-				<h4>Why log in</h4>
-				<p>Logging into Felix Online has a number of benefits:</p>
-				<ul>
-					<li>Comment without having your comments pre-moderated (you may still comment anonymously)</li>
-					<li>Write for Felix from the comfort of your web browser</li>
-				</ul>
 			</div>
 		</div>
 	</form>
