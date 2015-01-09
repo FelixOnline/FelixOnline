@@ -146,7 +146,6 @@ $theme->render('components/header', $header);
 							<form method="post" action="<?php echo Utility::currentPageURL();?>#commentForm">
 								<div class="row">
 									<div class="large-9 small-12 columns">
-										<input type="hidden" name="articlecomment_ext" value="1" />
 										<div class="row">
 											<div class="medium-3 columns">
 												<label class="inline" for="name">Name to show</label>
