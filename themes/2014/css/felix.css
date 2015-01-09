@@ -644,11 +644,11 @@ div.felix-nav.nav-news, div.section-title-news, div.article-title-news {
 }
 
 div.article-comments-zone-comment {
-	border-top-color: #3F7F88;
+	border-top-color: #6C162C;
 }
 
 div.felix-nav.nav-comment, div.section-title-comment, div.article-title-comment {
-	border-bottom-color: #3F7F88;
+	border-bottom-color: #6C162C;
 }
 
 div.article-comments-zone-science {
@@ -814,11 +814,11 @@ nav.top-bar .top-bar-section li.nav-comment:hover,
 nav.top-bar .top-bar-section li.nav-comment:hover > a,
 nav.top-bar .top-bar-section li.nav-comment.active,
 nav.top-bar .top-bar-section li.nav-comment.active > a  {
-	background: #3F7F88 !important;
+	background: #6C162C !important;
 }
 
 nav.top-bar .top-bar-section ul li.nav-comment > a {
-	color: #3F7F88;
+	color: #6C162C;
 }
 
 nav.top-bar .top-bar-section ul li.nav-comment.active > a {
@@ -1100,7 +1100,7 @@ div.section-title.section-title-news h1 {
 }
 
 div.section-title.section-title-comment h1 {
-	color: #3F7F88;
+	color: #6C162C;
 }
 
 div.section-title.section-title-science h1 {
@@ -1171,8 +1171,11 @@ div.section-title.section-title-features h1 {
 	color: #8C0028;
 }
 
-div.felix-title-news, div.felix-title-news .row,
 div.felix-title-home, div.felix-title-home .row {
+	background: white;
+}
+
+div.felix-title-news, div.felix-title-news .row {
 	background: #eacccf;
 }
 
@@ -1181,7 +1184,7 @@ div.felix-title-science, div.felix-title-science .row {
 }
 
 div.felix-title-comment, div.felix-title-comment .row {
-	background: #c5d8db;
+	background: #d2b9bf;
 }
 
 div.felix-title-politics, div.felix-title-politics .row {
@@ -1248,13 +1251,16 @@ div.felix-title-features, div.felix-title-features .row {
 	background: #e8ccd4;
 }
 
-div.felix-header-news, div.felix-footer-news, div.felix-header-news .row, div.felix-footer-news .row,
 div.felix-header-home, div.felix-footer-home, div.felix-header-home .row, div.felix-footer-home .row {
-	background: #970010;	
+	background: #555555;
+}
+
+div.felix-header-news, div.felix-footer-news, div.felix-header-news .row, div.felix-footer-news .row {
+	background: #970010;
 }
 
 div.felix-header-comment, div.felix-footer-comment, div.felix-header-comment .row, div.felix-footer-comment .row {
-	background: #3F7F88;	
+	background: #6C162C;	
 }
 
 div.felix-header-science, div.felix-footer-science, div.felix-header-science .row, div.felix-footer-science .row {
