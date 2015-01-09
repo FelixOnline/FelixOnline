@@ -29,20 +29,6 @@ $timing->log('after header');
 
 		<div class="row">
 			<div class="medium-8 small-12 columns">
-				<div class="show-for-medium-up">
-					<br>
-					<div class="row">
-						<div class="medium-4 columns">
-							<center><a class="button" href="<?php echo STANDARD_URL; ?>issuearchive/">Download a <i>Felix</i> PDF</a></center>
-						</div>
-						<div class="medium-4 columns">
-							<?php $theme->render('sidebar/fbLikeBox', array("well" => false)); ?>
-						</div>
-						<div class="medium-4 columns">
-							<center><a class="button" href="<?php echo STANDARD_URL; ?>contribute/">Contribute to <i>Felix</i></a></center>
-						</div>
-					</div>
-				</div>
 				<div class="felix-item-title felix-item-title-news">
 					<h2>Latest News</h2>
 				</div>
@@ -97,6 +83,12 @@ $timing->log('after header');
 				</div>
 			</div>
 			<div class="medium-4 small-12 columns">
+				<?php $theme->render('sidebar/fbLikeBox', array("well" => false)); ?>
+				<br><br>
+				<a class="button expand" href="<?php echo STANDARD_URL; ?>issuearchive/">Download a <i>Felix</i> PDF</a>
+				<br>
+				<a class="button expand" href="<?php echo STANDARD_URL; ?>contribute/">Contribute to <i>Felix</i></a>
+
 				<div class="felix-item-title felix-item-title-featured">
 					<h2>In <i>Felix</i> This Week</h2>
 				</div>
