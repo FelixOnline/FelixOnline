@@ -38,6 +38,11 @@ div.felix-header .row div, div.felix-footer .row div {
 
 div.felix-footer {
 	margin-top: 2em;
+	padding-bottom: 1em;
+}
+
+div.felix-footer p {
+	margin-bottom: 0.2em;
 }
 
 div.felix-title, div.felix-title .row {
@@ -179,7 +184,10 @@ nav.top-bar .top-bar-section ul li > a {
 	font-family: 'Noto Serif', serif;
 	color: cyan; /* Overridden based on section chosen */
 	font-weight: bold;
-	font-size: 12pt;
+	font-size: 11pt;
+	height: 40px;
+	line-height: 38px !important;
+	padding: 0 15px !important;
 }
 
 nav.top-bar .top-bar-section li.active, nav.top-bar .top-bar-section li.active > a {
@@ -1171,163 +1179,87 @@ div.section-title.section-title-features h1 {
 	color: #8C0028;
 }
 
-div.felix-title-home, div.felix-title-home .row {
+div.felix-title, div.felix-title .row {
 	background: white;
 }
 
-div.felix-title-news, div.felix-title-news .row {
-	background: #eacccf;
-}
-
-div.felix-title-science, div.felix-title-science .row {
-	background: #d7e8d5;
-}
-
-div.felix-title-comment, div.felix-title-comment .row {
-	background: #d2b9bf;
-}
-
-div.felix-title-politics, div.felix-title-politics .row {
-	background: #faeded;
-}
-
-div.felix-title-welfare, div.felix-title-welfare .row {
-	background: #c3d2ed;
-}
-
-div.felix-title-cands, div.felix-title-cands .row {
-	background: #d5f2eb;
-}
-
-div.felix-title-biz, div.felix-title-biz .row {
-	background: #cff0fc;
-}
-
-div.felix-title-arts, div.felix-title-arts .row {
-	background: #decbbe;
-}
-
-div.felix-title-music, div.felix-title-music .row {
-	background: #ccdbd4;
-}
-
-div.felix-title-film, div.felix-title-film .row {
-	background: #d1e1e4;
-}
-
-div.felix-title-fashion, div.felix-title-fashion .row {
-	background: #dad1df;
-}
-
-div.felix-title-games, div.felix-title-games .row {
-	background: #dfc8be;
-}
-
-div.felix-title-tech, div.felix-title-tech .row {
-	background: #b2cce4;
-}
-
-div.felix-title-travel, div.felix-title-travel .row {
-	background: #cce9eb;
-}
-
-div.felix-title-food, div.felix-title-food .row {
-	background: #e1cec2;
-}
-
-div.felix-title-books, div.felix-title-books .row {
-	background: #E1CCD8;
-}
-
-div.felix-title-tv, div.felix-title-tv .row {
-	background: #d0d3da;
-}
-
-div.felix-title-sport, div.felix-title-sport .row {
-	background: #d8ded9;
-}
-
-div.felix-title-features, div.felix-title-features .row {
-	background: #e8ccd4;
-}
-
-div.felix-header-home, div.felix-footer-home, div.felix-header-home .row, div.felix-footer-home .row {
+div.felix-header-home, div.felix-footer, div.felix-header-home .row, div.felix-footer .row {
 	background: #555555;
 }
 
-div.felix-header-news, div.felix-footer-news, div.felix-header-news .row, div.felix-footer-news .row {
+div.felix-header-news, div.felix-header-news .row {
 	background: #970010;
 }
 
-div.felix-header-comment, div.felix-footer-comment, div.felix-header-comment .row, div.felix-footer-comment .row {
+div.felix-header-comment, div.felix-header-comment .row {
 	background: #6C162C;	
 }
 
-div.felix-header-science, div.felix-footer-science, div.felix-header-science .row, div.felix-footer-science .row {
+div.felix-header-science, div.felix-header-science .row {
 	background: #388F2E;	
 }
 
-div.felix-header-politics, div.felix-footer-politics, div.felix-header-politics .row, div.felix-footer-politics .row {
+div.felix-header-politics, div.felix-header-politics .row {
 	background: #E9A9A7;	
 }
 
-div.felix-header-welfare, div.felix-footer-welfare, div.felix-header-welfare .row, div.felix-footer-welfare .row {
+div.felix-header-welfare, div.felix-header-welfare .row {
 	background: #376BC5;	
 }
 
-div.felix-header-cands, div.felix-footer-cands, div.felix-header-cands .row, div.felix-footer-cands .row {
+div.felix-header-cands, div.felix-header-cands .row {
 	background: #31C19E;	
 }
 
-div.felix-header-biz, div.felix-footer-biz, div.felix-header-biz .row, div.felix-footer-biz .row {
+div.felix-header-biz, div.felix-header-biz .row {
 	background: #10B4F2;	
 }
 
-div.felix-header-arts, div.felix-footer-arts, div.felix-header-arts .row, div.felix-footer-arts .row {
+div.felix-header-arts, div.felix-header-arts .row {
 	background: #AD7F5D;
 }
 
-div.felix-header-music, div.felix-footer-music, div.felix-header-music .row, div.felix-footer-music .row {
+div.felix-header-music, div.felix-header-music .row {
 	background: #004E2A;	
 }
 
-div.felix-header-film, div.felix-footer-film, div.felix-header-film .row, div.felix-footer-film .row {
+div.felix-header-film, div.felix-header-film .row {
 	background: #1C6A78;	
 }
 
-div.felix-header-fashion, div.felix-footer-fashion, div.felix-header-fashion .row, div.felix-footer-fashion .row {
+div.felix-header-fashion, div.felix-header-fashion .row {
 	background: #4A1A60;	
 }
 
-div.felix-header-games, div.felix-footer-games, div.felix-header-games .row, div.felix-footer-games .row {
+div.felix-header-games, div.felix-header-games .row {
 	background: #974929;	
 }
 
-div.felix-header-tech, div.felix-footer-tech, div.felix-header-tech .row, div.felix-footer-tech .row {
+div.felix-header-tech, div.felix-header-tech .row {
 	background: #0056A5;	
 }
 
-div.felix-header-travel, div.felix-footer-travel, div.felix-header-travel .row, div.felix-footer-travel .row {
+div.felix-header-travel, div.felix-header-travel .row {
 	background: #00929C;	
 }
 
-div.felix-header-food, div.felix-footer-food, div.felix-header-food .row, div.felix-footer-food .row {
+div.felix-header-food, div.felix-header-food .row {
 	background: #9B5C34;	
 }
 
-div.felix-header-tv, div.felix-footer-tv, div.felix-header-tv .row, div.felix-footer-tv .row {
+div.felix-header-tv, div.felix-header-tv .row {
 	background: #182447;	
 }
 
-div.felix-header-books, div.felix-footer-books, div.felix-header-books .row, div.felix-footer-books .row {
+div.felix-header-books, div.felix-header-books .row {
 	background: #6B003E;	
 }
 
-div.felix-header-sport, div.felix-footer-sport, div.felix-header-sport .row, div.felix-footer-sport .row {
+div.felix-header-sport, div.felix-header-sport .row {
 	background: #3E5B42;	
 }
 
-div.felix-header-features, div.felix-footer-features, div.felix-header-features .row, div.felix-footer-features .row {
+div.felix-header-features, div.felix-header-features .row {
 	background: #8C0028;	
 }
 

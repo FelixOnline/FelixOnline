@@ -21,11 +21,6 @@
 
 						<section class="top-bar-section">
 							<ul class="left">
-								<li class="nav-home <?php if(isset($check) && $check == 'home') echo 'active'; ?>">
-									<a href="<?php echo STANDARD_URL; ?>/">
-										Home
-									</a>
-								</li>
 								<?php
 								$cats = (new \FelixOnline\Core\CategoryManager())
 									->filter('hidden = 0')
