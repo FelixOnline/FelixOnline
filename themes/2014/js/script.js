@@ -12,7 +12,7 @@ $(document).ready(function() {
 		js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=200482590030408";
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
-	
+
 	/* Comment Binders */
 
 	$('.likeComment').bind('click', function() {
@@ -305,5 +305,60 @@ $(document).ready(function() {
 
 		return false;
 	});
+
+	/* Abuse modal */
+	$(document).on("click", '.reportAbusive', function() {
+		$('#abuseModalBlurbResult').hide();
+		$('#abuseModalBlurb').show();
+		$('#abuseModalButtons').show();
+		$('#abuseModalButtonsResult').hide();
+		$('#bad-comment-id').html('');
+		var comment = $(this).attr('id');
+		$('#bad-comment-id').html(comment);
+
+		$('#abuseModal').foundation('reveal', 'open');
+
+		return false;
+	});
+
+	$(document).on("click", '.closeAbusive', function() {
+		$('#abuseModal').foundation('reveal', 'close');
+
+		$('#bad-comment-id').html('');
+
+		return false;
+	});
+
+	$(document).on("click", '.confirmAbusive', function() {
+		abuseComment(this);
+		return false;
+	});
+
+	function abuseComment(cobj) {
+		var comment = $('#bad-comment-id').html();
+		var token = $('#'+comment).find('#token').val();
+		var check = comment+'ratecomment';
+
+		data = {};
+		data.comment = comment;
+		data.token = token;
+		data.check = check;
+		data.action = 'report_abuse';
+		
+		call = reportAjaxCallback;
+
+		ajaxHelper(null, 'POST', data, '#abuseModalBlurbWait', ['#abuseModalBlurb', '#abuseModalButtons'], null, null, null, call);
+
+		function reportAjaxCallback(data, msg) {
+			$('#abuseModalBlurbResult').html(msg.msg);
+			$('#abuseModalBlurbResult').show();
+			$('#abuseModalBlurb').hide();
+			$('#abuseModalButtons').hide();
+			$('#abuseModalButtonsResult').show();
+			$('#'+comment).find('#token').val(msg.newtoken);
+		}
+
+		return false;
+	}
 });
 

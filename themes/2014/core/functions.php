@@ -79,6 +79,18 @@ function dislike_comment($data) {
 	}
 }
 
+$hooks->addAction('report_abuse', 'report_abuse');
+function report_abuse($data) {
+	try {
+		$comment = $data['comment'];
+		$comment = new \FelixOnline\Core\Comment($comment);
+		$count = $comment->reportAbuse();
+		return array('msg' => 'Thank you, your report has been received. We will look into your report as soon as possible.');
+	} catch(Exception $e) {
+		return array('msg' => 'Sorry, that didn\'t work. Please try again later or contact us at felix@imperial.ac.uk.');
+	}
+}
+
 $hooks->addAction('profile_change', 'profile_change');
 function profile_change($data) {
 	global $currentuser;
@@ -127,6 +139,7 @@ function profile_change($data) {
 		$user->setWebsitename($data['webname']);
 		$user->setWebsiteurl(Utility::addhttp($data['weburl']));
 		$user->save();
+
 		return (array('error' => false));
 	} else {
 		return (array('error' => true, 'details' => 'Not logged in'));

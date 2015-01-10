@@ -44,6 +44,8 @@
 					<a href="<?php echo Utility::currentPageURL().'#comment'.$comment->getId(); ?>" id="<?php echo $comment->getId();?>" class="replyToComment"><b>REPLY TO</b></a>
 				</span>
 				<?php } ?>
+				 • 
+				<a href="<?php echo Utility::currentPageURL().'#comment'.$comment->getId(); ?>" id="<?php echo $comment->getId();?>" class="reportAbusive"><b>REPORT COMMENT</b></a>
 			<?php } ?>
 		</div>
 

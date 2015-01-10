@@ -193,6 +193,25 @@ $theme->render('components/header', $header);
 					</div>
 					<!-- End of comment form -->
 				</div>
+
+				<div id="abuseModal" class="reveal-modal medium" data-reveal>
+					<div class="row">
+						<div class="medium-12 small-12 columns">
+							<h3>Report comment</h3>
+							<p id="abuseModalBlurb">Would you like to report this comment as being abusive or containing inappropriate content? Felix will investigate all reported comments at the soonest possible opportunity. You will not receive a reply from Felix.</p>
+							<p id="abuseModalBlurbResult" style="display: none;"></p>
+							<p id="abuseModalBlurbWait" style="display: none;">Please wait...</p>
+							<div id="abuseModalButtons" class="text-right">
+								<div id="bad-comment-id" style="display: none;"></div>
+								<a href="<?php echo Utility::currentPageURL(); ?>#commentHeader" class="button confirmAbusive">Yes</a>
+								<a href="<?php echo Utility::currentPageURL(); ?>#commentHeader" class="button closeAbusive">No</a>
+							</div>
+							<div id="abuseModalButtonsResult" class="text-right" style="display: none;">
+								<a href="<?php echo Utility::currentPageURL(); ?>#commentHeader" class="button closeAbusive">Close</a>
+							</div>
+						</div>
+					</div>
+				</div>
 				<!-- End of comments -->
 				<?php $timing->log('end of comments');?>
 				<?php $timing->log('end of article content');?>
