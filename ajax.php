@@ -7,15 +7,14 @@
  * Load Felix Online environment
  */
 require_once('bootstrap.php');
-require_once('inc/exceptions.inc.php');
 
-$currentuser = new CurrentUser();
+$currentuser = new \FelixOnline\Core\CurrentUser();
 
 /*
  * Set up hooks
  */
-$hooks = new Hooks();
-$theme = new Theme('2014'); // TODO
+$hooks = new \FelixOnline\Core\Hooks();
+$theme = new \FelixOnline\Core\Theme('2014'); // TODO
 
 $clean_request = array();
 foreach($_POST as $key => $val) {
