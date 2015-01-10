@@ -83,7 +83,7 @@ $hooks->addAction('profile_change', 'profile_change');
 function profile_change($data) {
 	global $currentuser;
 	if($currentuser->isLoggedIn()) {
-		$user = new User();
+		$user = $currentuser;
 		try {
 			Validator::Check(array(
 				'email' => $data['email'],
