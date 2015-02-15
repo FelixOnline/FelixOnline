@@ -1,5 +1,6 @@
 <!-- In This Issue story -->
 				<?php $article = $article->getArticle(); ?>
+				<div class="medium-4 columns">
 				<div class="panel felix-item-panel">
 					<div class="row">
 						<div class="small-6 columns felix-item-text">
@@ -18,5 +19,6 @@
 						<?php } ?>
 						</div>
 					</div>
+				</div>
 				</div>
 <!-- End of In This Issue story -->

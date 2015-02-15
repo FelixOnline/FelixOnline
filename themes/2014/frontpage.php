@@ -27,6 +27,28 @@ $timing->log('after header');
 			</div>
 		</div>
 
+		<?php
+			$i = 0;
+			
+			foreach($thisweek as $article) {
+				if($i == 0) {
+					echo '<div class="row show-for-medium-up">';
+				}
+
+				$i++;
+		
+				$theme->render('components/articlelist/frontpage_box', array(
+					'article' => $article
+				));
+
+				if($i == 3) {
+					echo '</div>';
+					$i = 0;
+				}
+			}
+			?>
+		</div>
+
 		<div class="row">
 			<div class="medium-8 small-12 columns">
 				<div class="felix-item-title felix-item-title-news">
@@ -89,18 +111,10 @@ $timing->log('after header');
 				<br>
 				<a class="button expand" href="<?php echo STANDARD_URL; ?>contribute/">Contribute to <i>Felix</i></a>
 
-				<div class="felix-item-title felix-item-title-featured">
-					<h2>In <i>Felix</i> This Week</h2>
 				</div>
 
 				<?php
-					foreach($thisweek as $article) {
-						$theme->render('components/articlelist/frontpage_box', array(
-							'article' => $article
-						));
-					}
 				?>
-				<div class="show-for-small-only"><center><a class="button" href="<?php echo STANDARD_URL; ?>issuearchive/">Read more online</a></center></div>
 
 				<?php
 				?>
