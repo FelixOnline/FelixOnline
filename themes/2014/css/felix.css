@@ -818,6 +818,14 @@ div.section-title-features, div.article-title-features {
 	border-bottom-color: #8C0028;
 }
 
+div.article-comments-zone-puzzles {
+	border-top-color: #D36E2E;
+}
+
+div.section-title-puzzles, div.article-title-puzzles {
+	border-bottom-color: #D36E2E;
+}
+
 nav.top-bar .top-bar-section li.nav-news:hover,
 nav.top-bar .top-bar-section li.nav-news:hover > a,
 nav.top-bar .top-bar-section li.nav-news.active,
@@ -1038,6 +1046,17 @@ nav.top-bar .top-bar-section ul li.nav-sport.active > a {
 	color: white !important;
 }
 
+nav.top-bar .top-bar-section li.nav-puzzles:hover,
+nav.top-bar .top-bar-section li.nav-puzzles:hover > a,
+nav.top-bar .top-bar-section li.nav-puzzles.active,
+nav.top-bar .top-bar-section li.nav-puzzles.active > a  {
+	background: #D36E2E !important;
+}
+
+nav.top-bar .top-bar-section ul li.nav-puzzles.active > a {
+	color: white !important;
+}
+
 div.section-title.section-title-news h1 {
 	color: #970010;
 }
@@ -1112,6 +1131,10 @@ div.section-title.section-title-sport h1 {
 
 div.section-title.section-title-features h1 {
 	color: #8C0028;
+}
+
+div.section-title.section-title-puzzles h1 {
+	color: #D36E2E;
 }
 
 div.felix-title, div.felix-title .row {
@@ -1198,38 +1221,34 @@ div.felix-header-features, div.felix-header-features .row {
 	background: #8C0028;	
 }
 
+div.felix-header-puzzles, div.felix-header-puzzles .row {
+	background: #D36E2E;	
+}
+
 /* ITEM TITLE CUSTOMS */
 
 .felix-item-title-news {
-	border-bottom: 1px solid #551111;
+	border-bottom: 1px solid #970010;
 }
 
 .felix-item-title-news h2, .felix-item-title-news h3 {
-	color: #551111;
+	color: #970010;
 }
 
 .felix-item-title-comment {
-	border-bottom: 1px solid #3F7F88;
+	border-bottom: 1px solid #6C162C;
 }
 
 .felix-item-title-comment h2, .felix-item-title-comment h3 {
-	color: #3F7F88;
-}
-
-.felix-item-title-featured {
-	border-bottom: 1px solid #50B968;
-}
-
-.felix-item-title-featured h2, .felix-item-title-featured h3 {
-	color: #50B968;
+	color: #6C162C;
 }
 
 .felix-item-title-sports {
-	border-bottom: 1px solid #344B3F;
+	border-bottom: 1px solid #3E5B42;
 }
 
 .felix-item-title-sport h2, .felix-item-title-sports h3 {
-	color: #344B3F;
+	color: #3E5B42;
 }
 
 .felix-item-title-generic {
