@@ -44,6 +44,9 @@ class UserController extends BaseController {
 			->limit(0, NUMBER_OF_POPULAR_ARTICLES_USER)
 			->values();
 
+		// Sections
+		$categories = $user->getCategories();
+
 		$pages = ceil(($articleCount - ARTICLES_PER_USER_PAGE) / (ARTICLES_PER_USER_PAGE)) + 1;
 
 		$this->theme->appendData(array(
@@ -52,8 +55,10 @@ class UserController extends BaseController {
 			'articles' => $articles,
 			'article_count' => $articleCount,
 			'pages' => $pages,
+			'categories' => $categories,
 			'popular_articles' => $popularArticles,
 		));
+
 		$this->theme->setHierarchy(array(
 			$user->getUser() // user-{user}.php
 		));

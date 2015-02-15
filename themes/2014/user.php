@@ -141,26 +141,21 @@ $theme->render('components/header', $header);
 			<?php } ?>
 			</ol>
 		<?php } ?>
-		<?php if ($comments) { ?>
+		<?php if ($categories) { ?>
 			<div class="felix-item-title felix-item-title felix-item-title-generic">
-				<h3>Recent Comments</h3>
+				<h3><?php echo $user->getFirstName(); ?> Edits</h3>
 			</div>
-			<div class="user-comments">
-				<?php if ($popularity = $user->getCommentPopularity()) { ?>
-					<span class="comment-popularity">(Popularity: <?php echo $popularity;?>% over <?php echo ($user->getLikes() + $user->getDislikes());?> ratings)</span>
-				<?php } ?>
-				<ul class="user-comments-list">
-					<?php foreach ($comments as $comment) { ?>
-						<li>
-							<a href="<?php echo $comment->getURL(); ?>"><?php echo $comment->getArticle()->getTitle(); ?></a> <p><?php echo Utility::trimText($comment->getContent(), 130, false); ?></p>
-						</li>
-					<?php } ?>
-				</ul>
-			</div>
+			<ul class="user-popular">
+			<?php foreach($categories as $category) { ?>
+				<li class="user-popular-item">
+					<a href="<?php echo STANDARD_URL.$category->getCat(); ?>/">
+						<b><?php echo $category->getLabel(); ?></b>
+					</a>
+				</li>
+			<?php } ?>
+			</ul>
+			<p>Contact <?php echo $user->getFirstName(); ?> if you would like to get involved in any of these sections of <i>Felix</i> - new writers always welcome!</p>
 		<?php } ?>
-		<?php 
-			$theme->render('sidebar/mostPopular');
-		?>
 	</div>
 </div>
 <?php $timing->log('end of user page');?>
