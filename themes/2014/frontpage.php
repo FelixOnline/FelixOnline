@@ -106,14 +106,30 @@ $timing->log('after header');
 			</div>
 			<div class="medium-4 small-12 columns">
 				<?php $theme->render('sidebar/fbLikeBox', array("well" => false)); ?>
-				<br><br>
-				<a class="button expand" href="<?php echo STANDARD_URL; ?>issuearchive/">Download a <i>Felix</i> PDF</a>
-				<br>
-				<a class="button expand" href="<?php echo STANDARD_URL; ?>contribute/">Contribute to <i>Felix</i></a>
 
+				<div class="felix-item-title felix-item-title felix-item-title-generic">
+					<h3>Download the latest <i>Felix</i></h3>
 				</div>
-
+				<br>
 				<?php
+					$link = new ArchiveLink();
+					$issue = $link->getLatestForPublication(1);
+
+					if($issue):
+				?>
+				<center>
+					<a href="<a href="<?php echo $issue->getDownloadURL(); ?>" class="thumbLink">
+						<img src="<?php echo $issue->getThumbnailURL();?>" alt="<?php echo $issue->getId();?>"/>
+					</a>
+					<p>
+						<b><?php echo date("l jS F", strtotime($issue->getPubDate())); ?></b><br>
+						<a href="<?php echo STANDARD_URL.'/archive'; ?>">Issue archive</a>
+					</p>
+				</center>
+				<?php
+					else:
+						echo '<p>No issues found.</p>';
+					endif;
 				?>
 
 				<?php
