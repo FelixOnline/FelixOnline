@@ -72,9 +72,9 @@ $theme->render('components/header', $header);
 			)); ?>
 			</div>
 			<div class="medium-4 columns">
-				<?php $theme->render('sidebar/contactSection', array('section' => $section)); ?>
+				<?php $theme->render('sidebar/contactSection', array('section' => $category)); ?>
 
-				<?php $theme->render('sidebar/contributionPolicy', array('section' => $section)); ?>
+				<?php $theme->render('sidebar/contributionPolicy', array('section' => $category)); ?>
 
 				<?php $theme->render('sidebar/mostPopular'); ?>
 
