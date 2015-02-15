@@ -10,10 +10,10 @@
 	}
 ?>
 
-		<div class="felix-nav nav-<?php echo $check; ?>">
+		<div class="felix-nav">
 			<div class="row">
 				<div class="small-12 columns">
-					<nav class="top-bar" data-topbar="" role="navigation">
+					<nav class="top-bar nav-<?php echo $check; ?>" data-topbar="" role="navigation">
 						<ul class="title-area">
 							<li class="name"><h1 class="show-for-small-only"><b><?php echo strtoupper($check); ?></b></h1></li>
 							<li class="toggle-topbar"><a href=""><span>Toggle Menu</span></a></li>

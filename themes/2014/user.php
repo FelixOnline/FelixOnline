@@ -36,6 +36,11 @@ $theme->render('components/header', $header);
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="small-12 columns">
+				<div class="section-bar section-generic"></div>
+			</div>
+		</div>
 	<div class="row">
 		<div class="medium-8 columns">
 			<?php if ($currentuser->getUser() == $user->getUser()): ?>

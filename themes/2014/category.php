@@ -19,6 +19,11 @@ $theme->render('components/header', $header);
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="small-12 columns">
+				<div class="section-bar section-title-<?php echo $category->getCat(); ?>"></div>
+			</div>
+		</div>
 <!-- End of section header -->
 
 	<!-- Category articles -->
