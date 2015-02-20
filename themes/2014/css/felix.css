@@ -1251,6 +1251,14 @@ div.felix-header-puzzles, div.felix-header-puzzles .row {
 	color: #3E5B42;
 }
 
+.felix-item-title-cands {
+	border-bottom: 1px solid #31c19e;
+}
+
+.felix-item-title-cands h2, .felix-item-title-cands h3 {
+	color: #31c19e;
+}
+
 .felix-item-title-generic {
 	border-bottom: 1px solid #444444;
 }

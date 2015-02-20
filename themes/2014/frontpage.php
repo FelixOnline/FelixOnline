@@ -23,30 +23,10 @@ $timing->log('after header');
 				</div>
 			</div>
 			<div class="medium-4 columns show-for-medium-up">
-				<?php $theme->render('sidebar/mostPopular'); ?>
+				<?php $theme->render('sidebar/downloadBlock'); ?>
+				<a href="<?php echo STANDARD_URL.'/contribute'; ?>" class="button expand">Get involved with <i>Felix</i> - it's easy</a>
+				<?php $theme->render('sidebar/fbLikeBox', array("well" => false)); ?>
 			</div>
-		</div>
-
-		<?php
-			$i = 0;
-			
-			foreach($thisweek as $article) {
-				if($i == 0) {
-					echo '<div class="row show-for-medium-up">';
-				}
-
-				$i++;
-		
-				$theme->render('components/articlelist/frontpage_box', array(
-					'article' => $article
-				));
-
-				if($i == 3) {
-					echo '</div>';
-					$i = 0;
-				}
-			}
-			?>
 		</div>
 
 		<div class="row">
@@ -75,14 +55,18 @@ $timing->log('after header');
 					<div class="medium-6 columns">
 						<?php
 							$theme->render('components/articlelist/article_small', array(
-								'article' => $articles[8]
+								'article' => $articles[8],
+								'show_authors' => false,
+								'show_dates' => true
 							));
 						?>
 					</div>
 					<div class="medium-6 columns">
 						<?php
 							$theme->render('components/articlelist/article_small', array(
-								'article' => $articles[9]
+								'article' => $articles[9],
+								'show_authors' => false,
+								'show_dates' => true
 							));
 						?>
 					</div>
@@ -91,53 +75,91 @@ $timing->log('after header');
 					<div class="medium-6 columns">
 						<?php
 							$theme->render('components/articlelist/article_small', array(
-								'article' => $articles[10]
+								'article' => $articles[10],
+								'show_authors' => false,
+								'show_dates' => true
 							));
 						?>
 					</div>
 					<div class="medium-6 columns">
 						<?php
 							$theme->render('components/articlelist/article_small', array(
-								'article' => $articles[11]
+								'article' => $articles[11],
+								'show_authors' => false,
+								'show_dates' => true
 							));
 						?>
 					</div>
 				</div>
 			</div>
 			<div class="medium-4 small-12 columns">
-				<?php $theme->render('sidebar/fbLikeBox', array("well" => false)); ?>
-
-				<div class="felix-item-title felix-item-title felix-item-title-generic">
-					<h3>Download the latest <i>Felix</i></h3>
+				<div class="felix-item-title felix-item-title felix-item-title-comment">
+					<h3>Comment</h3>
 				</div>
 				<br>
 				<?php
-					$link = new ArchiveLink();
-					$issue = $link->getLatestForPublication(1);
+					$articles = (new \FelixOnline\Core\ArticleManager())
+					->filter('published < NOW()')
+					->filter('category = %i', array(COMMENT_CATEGORY_ID))
+					->order('published', 'DESC')
+					->limit(0, 2)
+					->values();
 
-					if($issue):
+					foreach($articles as $key => $article) {
+						$theme->render('components/articlelist/article_small', array(
+							'article' => $article,
+							'show_dates' => false,
+							'show_authors' => true
+						));
+					}
 				?>
-				<center>
-					<a href="<a href="<?php echo $issue->getDownloadURL(); ?>" class="thumbLink">
-						<img src="<?php echo $issue->getThumbnailURL();?>" alt="<?php echo $issue->getId();?>"/>
-					</a>
-					<p>
-						<b><?php echo date("l jS F", strtotime($issue->getPubDate())); ?></b><br>
-						<a href="<?php echo STANDARD_URL.'/archive'; ?>">Issue archive</a>
-					</p>
-				</center>
+				<div class="felix-item-title felix-item-title felix-item-title-cands">
+					<h3>Clubs and Socs</h3>
+				</div>
+				<br>
 				<?php
-					else:
-						echo '<p>No issues found.</p>';
-					endif;
-				?>
+					$articles = (new \FelixOnline\Core\ArticleManager())
+					->filter('published < NOW()')
+					->filter('category = %i', array(CANDS_CATEGORY_ID))
+					->order('published', 'DESC')
+					->limit(0, 3)
+					->values();
 
-				<?php
+					foreach($articles as $key => $article) {
+						$theme->render('components/articlelist/article_small', array(
+							'article' => $article,
+							'show_dates' => false,
+							'show_authors' => true
+						));
+					}
 				?>
-					<div class="show-for-small-only"><?php $theme->render('sidebar/fbLikeBox', array("well" => true)); ?></div>
+				<div class="felix-item-title felix-item-title felix-item-title-sports">
+					<h3>Sport</h3>
+				</div>
+				<br>
 				<?php
+					$articles = (new \FelixOnline\Core\ArticleManager())
+					->filter('published < NOW()')
+					->filter('category = %i', array(SPORT_CATEGORY_ID))
+					->order('published', 'DESC')
+					->limit(0, 3)
+					->values();
 
-					$theme->render('sidebar/contributionPolicy');
+					foreach($articles as $key => $article) {
+						$theme->render('components/articlelist/article_small', array(
+							'article' => $article,
+							'show_dates' => true,
+							'show_authors' => false
+						));
+					}
+				?>
+				<div class="show-for-small-only">
+					<?php $theme->render('sidebar/downloadBlock'); ?>
+					<a href="<?php echo STANDARD_URL.'/contribute'; ?>" class="button expand">Get involved with <i>Felix</i> - it's easy</a>
+					<?php $theme->render('sidebar/fbLikeBox', array("well" => false)); ?>
+				</div>
+				<?php
+					$theme->render('sidebar/mostPopular');
 
 					$theme->render('sidebar/twitter');
 				?>

@@ -17,7 +17,8 @@
 						<?php } ?>
 						</div>
 						<div class="small-7 columns felix-front-news-secondary-text">
-							<span class="felix-front-news-date"><?php echo date("l F j, Y",$article->getPublished());?></span>
+							<?php if($show_dates): ?><span class="felix-front-news-date"><?php echo date("l F j, Y",$article->getPublished());?></span><?php endif; ?>
+							<?php if($show_authors): ?><span class="felix-front-news-date"><?php echo strip_tags($article->getAuthorsEnglish()); ?></span><?php endif; ?>
 							<h3><a href="<?php echo $article->getURL();?>"><?php echo $article->getTitle();?></a></h3>
 						</div>
 					</div>

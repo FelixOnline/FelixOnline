@@ -46,7 +46,10 @@
 	if(!defined('CACHE_LENGTH'))					define('CACHE_LENGTH', 1800); // Default cache length (20 mins)
 	if(!defined('BLOG_POSTS_PER_PAGE'))				define('BLOG_POSTS_PER_PAGE', 20); // number of posts to show on blog page
 	if(!defined('SERVER_ENV'))						define('SERVER_ENV', 'production'); // server environment
-	if(!defined('NEWS_CATEGORY_ID'))				define('NEWS_CATEGORY_ID', 1); // server environment
+	if(!defined('NEWS_CATEGORY_ID'))				define('NEWS_CATEGORY_ID', 1); // for front page
+	if(!defined('COMMENT_CATEGORY_ID'))				define('COMMENT_CATEGORY_ID', 2); // for front page
+	if(!defined('SPORT_CATEGORY_ID'))				define('SPORT_CATEGORY_ID', 18); // for front page
+	if(!defined('CANDS_CATEGORY_ID'))				define('CANDS_CATEGORY_ID', 23); // for front page - clubs and socs
 
 	/* Media Page */
 	if(!defined('NUMBER_OF_ALBUMS_FRONT_PAGE'))	 	define('NUMBER_OF_ALBUMS_FRONT_PAGE',4); // number of media items on front page
