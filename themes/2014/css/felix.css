@@ -133,6 +133,15 @@ div.felix-search {
 	div.felix-search {
 		margin-bottom: 1em !important;
 	}
+
+	nav.top-bar {
+		height: 36px !important;
+	}
+
+	nav.top-bar.expanded {
+		height: auto !important;
+		max-height: 9000px;
+	}
 }
 
 div.felix-title .row .felix-subtitle {
@@ -180,16 +189,18 @@ nav.top-bar {
 	border-top: 3px double white;
 	border-bottom: 3px double white;
 	line-height: 10px !important;
-	height: 36px;
+	min-height: 0px;
+	height: auto;
+	max-height: 72px;
 }
 
 nav.top-bar .top-bar-section ul li > a {
 	font-family: 'Noto Serif', serif;
 	color: white;
 	font-weight: bold;
-	font-size: 9pt;
+	font-size: 8pt;
 	line-height: 10px !important;
-	padding: 10px 8px 10px 8px !important;
+	padding: 10px 7px 10px 7px !important;
 }
 
 nav.top-bar .top-bar-section li.active, nav.top-bar .top-bar-section li.active > a {
