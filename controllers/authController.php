@@ -70,6 +70,8 @@ class AuthController extends BaseController {
 						}
 						$hash = $comment->getId();
 					}
+
+					$currentuser->syncLdap(); // Update email etc.
 					
 					// Close the session here, as we do not want lingering sessions on the auth server
 					$session = $currentuser->stashSession();
