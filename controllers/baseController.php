@@ -22,4 +22,11 @@ class BaseController {
 		$this->theme = $theme->getClass(); // used so that theme can specify a theme class if necessary
 		$this->theme->setSite('main');
 	}
+
+	function HEAD($matches)
+	{
+		// Used by updowntester
+		ob_end_flush();
+		exit;
+	}
 }
