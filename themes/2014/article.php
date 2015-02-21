@@ -154,14 +154,18 @@ $theme->render('components/header', $header);
 												<input type="text" name="name" id="right-label" value="<?php if(isset($_POST['name'])): echo $_POST['name']; elseif($currentuser->isLoggedIn()): echo $currentuser->getName(); endif;?>">
 											</div>
 										</div>
+										<?php if (!$currentuser->isLoggedIn()) { ?>
 										<div class="row">
 											<div class="medium-3 columns">
 												<label class="inline" for="email">Email (will not be published)</label>
 											</div>
 											<div class="medium-9 columns">
-												<input type="text" name="email" id="right-label" value="<?php if(isset($_POST['email'])): echo $_POST['email']; elseif($currentuser->isLoggedIn()): echo $currentuser->getEmail(); endif;?>">
+												<input type="text" name="email" id="right-label" value="<?php if(isset($_POST['email'])): echo $_POST['email']; endif;?>">
 											</div>
 										</div>
+										<?php } else { ?>
+											<input type="hidden" name="email" value="<?php if($currentuser->isLoggedIn()): echo $currentuser->getEmail(); endif;?>">
+										<?php endif; ?>
 										<div class="row">
 											<div class="medium-3 columns">
 												<label class="inline" for="comment">Your comment</label>
