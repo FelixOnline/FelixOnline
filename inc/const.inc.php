@@ -57,12 +57,10 @@
 	if(!defined('IMAGE_BASE_URL'))	 			define('IMAGE_BASE_URL', '/home/www/htdocs/media/felix/gallery/gallery_images/images/'); // base image url [depreciated]
 
 	/* RSS */
-	define('RSS_IMG',(STANDARD_URL.DEFAULT_IMG_URI));
-	define('RSS_NAME','Felix Online RSS Feed');
+	define('RSS_IMG',(IMAGE_URL.'/800/600/'.DEFAULT_IMG_URI));
+	define('RSS_NAME','Felix Online');
 	define('RSS_DESCRIPTION','Latest articles from Felix Online');
-	define('RSS_COPYRIGHT',('Felix Online | '.date('Y')));
-	define('RSS_AUTHOR','Felix');
-	define('RSS_SUBJECT','News for students and staff at Imperial College London');
+	define('RSS_COPYRIGHT',('(c) Felix Online | '.date('Y')));
 	define('RSS_ARTICLES',30);
 
 	/* ARTICLE */

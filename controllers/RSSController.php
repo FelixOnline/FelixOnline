@@ -22,6 +22,8 @@ class RSSController extends BaseController {
 				);
 			}
 
+			$author = $category->getEmail().' (Felix '.$category->getLabel().')';
+
 			$articleManager->filter('published IS NOT NULL')
 				->filter('published < NOW()')
 				->filter('category = %i', array($category->getId()))
@@ -33,28 +35,34 @@ class RSSController extends BaseController {
 				->filter('published < NOW()')
 				->limit(0, RSS_ARTICLES)
 				->order('published', 'DESC');
+
+			$author = "felix@imperial.ac.uk (Felix)";
 		}
 
 		$articles = $articleManager->values();
 
+		$name = RSS_NAME;
+		if (array_key_exists('cat', $matches)) {
+			$name = $category->getLabel().' - '.RSS_NAME;
+		}
+
 		$newsfeed = new RSSFeed();
 		$newsfeed->SetChannel(
 			'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
-			RSS_NAME,
+			$name,
 			RSS_DESCRIPTION,
 			'en-gb',
 			RSS_COPYRIGHT,
-			RSS_AUTHOR,
-			RSS_SUBJECT
+			$author
 		);
 		$newsfeed->SetImage(RSS_IMG);
 
 		foreach($articles as $article) {
 			$newsfeed->setItem(
 				$article->getURL(),
-				str_replace(array("&", "&8217;"), array("and", "'"), $article->getTitle()),
-				str_replace(array("&", "&8217;"), array(" and ", "'"), $article->getShortDesc(600)) . '...',
-				date("D, d M Y", $article->getPublished())
+				str_replace(array(' & ', '&'), array(' and ', 'and'), html_entity_decode($article->getTitle())),
+				str_replace(array(' & ', '&'), array(' and ', 'and'), html_entity_decode($article->getShortDesc(600))) . '...',
+				date("r", $article->getPublished())
 			);
 		}
 
