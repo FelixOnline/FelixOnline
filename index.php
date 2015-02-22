@@ -10,8 +10,6 @@ ob_start();
 try {
 	require_once('bootstrap.php');
 
-	$timing = new Timing('log-themes');
-
 	/* If the url is on the union servers then redirect to custom url */
 	/*
 	if (strstr($_SERVER['HTTP_HOST'],"union.ic.ac.uk") !== false) {
@@ -73,7 +71,6 @@ require_once(BASE_DIRECTORY.'/controllers/baseController.php');
 foreach (glob(BASE_DIRECTORY.'/controllers/*.php') as $filename) {
 	require_once($filename);
 }
-$timing->log('After setup');
 
 // set X-Robots-Tag if not on live server
 if (PRODUCTION_FLAG == false) {

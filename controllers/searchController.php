@@ -2,9 +2,6 @@
 
 class SearchController extends BaseController {
 	function GET($matches) {
-		global $timing;
-		$timing->log('Search controller');
-
 		$_query = trim(strip_tags($_GET['q']));
 		$query = str_replace(" ", "%", trim($_query));
 

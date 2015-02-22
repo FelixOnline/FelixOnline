@@ -1,6 +1,4 @@
 <?php
-$timing->log('category page');
-
 $header = array(
 	'title' => $category->getLabel().' - '.'Felix Online',
 	'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
@@ -84,6 +82,5 @@ $theme->render('components/header', $header);
 	<!-- End of category articles -->
 
 <?php
-$timing->log('end of category page');
 $theme->render('components/footer');
 ?>

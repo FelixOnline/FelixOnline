@@ -1,5 +1,4 @@
 <?php
-$timing->log('blog');
 $header = array(
 	'title' => $blog->getName().' - Felix Online'
 ); 
@@ -27,5 +26,4 @@ $theme->render('components/header', $header);
 	</div>
 <!-- End of page -->
 
-<?php $timing->log('end of blog');?>
 <?php $theme->render('components/footer'); ?>

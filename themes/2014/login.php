@@ -1,5 +1,4 @@
 <?php
-$timing->log('login');
 $header = array(
 	'title' => 'Login to Felix Online'
 ); 
@@ -27,5 +26,4 @@ $theme->render('components/header', $header);
 </div>
 <!-- End of page -->
 
-<?php $timing->log('end of login');?>
 <?php $theme->render('components/footer'); ?>

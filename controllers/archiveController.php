@@ -37,7 +37,6 @@ class ArchiveController extends BaseController {
 	}
 
 	function GET($matches) {
-		global $timing;
 		if(array_key_exists('id', $matches) && array_key_exists('download', $matches)) { // viewing a specific issue
 			$issue = new Issue($matches['id']);
 			$file = BASE_DIRECTORY.'/archive/'.$issue->getFile();

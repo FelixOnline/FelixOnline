@@ -1,6 +1,4 @@
 <?php
-$timing->log('article page');
-
 $meta = '
 	<meta name="twitter:card" content="summary_large_image"/>
 	<meta name="twitter:site" content="@feliximperial"/>
@@ -73,7 +71,6 @@ $theme->render('components/header', $header);
 					<?php } ?>
 				</div>
 				<?php } ?>
-				<?php $timing->log('after image'); ?>
 			
 				<div class="article-text">
 				<?php
@@ -83,10 +80,8 @@ $theme->render('components/header', $header);
 
 				<?php $theme->render('sidebar/shareArticle', array('article' => $article, 'hidetitle' => true)); ?>
 
-				<?php $timing->log('after content'); ?>
 				<!-- End of content -->
 
-				<?php $timing->log('beginning of comments');?>
 				<!-- Comments -->
 				<div class="article-comments-zone article-comments-zone-<?php echo $article->getCategory()->getCat(); ?>" id="commentHeader">
 					<h3>Comments <span>(<?php echo $article->getNumComments(); ?>)</span></h3>
@@ -217,8 +212,6 @@ $theme->render('components/header', $header);
 					</div>
 				</div>
 				<!-- End of comments -->
-				<?php $timing->log('end of comments');?>
-				<?php $timing->log('end of article content');?>
 			</div>
 			<div class="medium-4 columns">
 				<div class="show-for-medium-up">
@@ -243,5 +236,4 @@ $theme->render('components/header', $header);
 			</div>
 		</div>
 
-<?php $timing->log('end of article');?>
 <?php $theme->render('components/footer'); ?>

@@ -1,6 +1,4 @@
 <?php
-$timing->log('issue archive page');
-
 $header = array(
 	'title' => 'Issue Archive - '.'Felix Online'
 );
@@ -86,5 +84,4 @@ $theme->render('components/header', $header);
 	</div>    
 </div>
 <!-- End of archive wrapper -->
-<?php $timing->log('end of issue archive');?>
 <?php $theme->render('components/footer'); ?>

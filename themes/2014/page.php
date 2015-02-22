@@ -1,5 +1,4 @@
 <?php
-$timing->log('page');
 $header = array(
 	'title' => $page->getTitle().' - Felix Online'
 ); 
@@ -30,5 +29,4 @@ $theme->render('components/header', $header);
 	</div>
 <!-- End of page -->
 
-<?php $timing->log('end of page');?>
 <?php $theme->render('components/footer'); ?>

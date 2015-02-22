@@ -1,5 +1,4 @@
 <?php
-$timing->log('user page');
 
 $meta = '
 	<meta property="og:title" content="'.$user->getName().'"/>
@@ -158,5 +157,4 @@ $theme->render('components/header', $header);
 		<?php } ?>
 	</div>
 </div>
-<?php $timing->log('end of user page');?>
 <?php $theme->render('components/footer'); ?>

@@ -1,5 +1,4 @@
 <?php
-$timing->log('frontpage');
 
 $header = array(
 	'title' => 'Felix Online - The student voice of Imperial College London',
@@ -7,7 +6,6 @@ $header = array(
 );
 
 $theme->render('components/header', $header);
-$timing->log('after header');
 
 ?>
 		<div class="row felix-pad-top">
@@ -167,7 +165,6 @@ $timing->log('after header');
 		</div>
 
 	<!-- End of front page articles -->
-	<?php $timing->log('end of frontpage'); ?>
 
 
 <!-- End of featured bar -->
