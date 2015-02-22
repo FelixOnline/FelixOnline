@@ -6,9 +6,7 @@
 	/*
 	 * Change these urls to your local versions, e.g http://localhost/felix
 	 */
-	define('STANDARD_SERVER', 'felixonline.local');
 	define('STANDARD_URL','http://felixonline.local/');
-	define('BASE_URL','http://localhost/felix/');
 	define('ADMIN_URL','http://localhost/felix/engine/');
 	define('AUTHENTICATION_SERVER','localhost'); // authentication server
 	define('AUTHENTICATION_PATH','http://localhost/felix/'); // authentication path
@@ -19,10 +17,6 @@
 
 	define('SERVER_ENV', 'development'); // development or production
 
-	/* Third party */
-	define('ISCIENCE', false);
-	define('ICRADIO', false);
-	
 	/* Archive */
 	define('ARCHIVE_DATABASE', 'media_felix_archive');
 
