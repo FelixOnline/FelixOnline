@@ -165,7 +165,7 @@ $theme->render('components/header', $header);
 										</div>
 										<?php } else { ?>
 											<input type="hidden" name="email" value="<?php if($currentuser->isLoggedIn()): echo $currentuser->getEmail(); endif;?>">
-										<?php endif; ?>
+										<?php } ?>
 										<div class="row">
 											<div class="medium-3 columns">
 												<label class="inline" for="comment">Your comment</label>
