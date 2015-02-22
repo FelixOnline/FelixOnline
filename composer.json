@@ -20,7 +20,7 @@
 	],
     "require": {
 		"felixonline/exporter": "0.1.*",
-		"felixonline/core": "0.3.*",
+		"felixonline/core": "dev-master",
 		"raven/raven": "0.8.0",
 		"dominicsayers/isemail": "dev-master"
     },
