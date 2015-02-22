@@ -12,6 +12,7 @@
 	if(!defined('AUTHENTICATION_SERVER'))			define('AUTHENTICATION_SERVER','dougal.union.ic.ac.uk'); // authentication server
 	if(!defined('AUTHENTICATION_PATH'))				define('AUTHENTICATION_PATH','https://dougal.union.ic.ac.uk/media/felix/'); // authentication path
 	if(!defined('DEFAULT_IMG_URI'))					define('DEFAULT_IMG_URI','defaultimage.jpg'); // default image
+	if(!defined('CURRENT_THEME'))					define('CURRENT_THEME', 2014);
 
 	/* NAVIGATION */
 	if(!defined('POPULAR_ARTICLES'))				define('POPULAR_ARTICLES',5); // used for commented and viewed

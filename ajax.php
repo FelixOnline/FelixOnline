@@ -14,7 +14,7 @@ $currentuser = new \FelixOnline\Core\CurrentUser();
  * Set up hooks
  */
 $hooks = new \FelixOnline\Core\Hooks();
-$theme = new \FelixOnline\Core\Theme('2014'); // TODO
+$theme = new \FelixOnline\Core\Theme(CURRENT_THEME); // TODO
 
 $clean_request = array();
 foreach($_POST as $key => $val) {
