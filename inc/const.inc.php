@@ -23,7 +23,6 @@
 	if(!defined('NUMBER_OF_POPULAR_ARTICLES_USER')) define('NUMBER_OF_POPULAR_ARTICLES_USER',5); // max number of popular articles on user page
 	if(!defined('IMAGE_URL'))					   define('IMAGE_URL', 'http://img.felixonline.co.uk/'); // image url 
 	if(!defined('LOCAL'))						   define('LOCAL', false); // if true then site is hosted locally - don't use pam_auth etc. 
-	if(!defined('SERVER_ENV'))						define('SERVER_ENV', 'production'); // server environment
 
 	/* FRONT PAGE */
 	if(!defined('NEWS_CATEGORY_ID'))				define('NEWS_CATEGORY_ID', 1); // for front page

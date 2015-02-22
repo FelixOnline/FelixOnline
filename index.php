@@ -76,7 +76,7 @@ foreach (glob(BASE_DIRECTORY.'/controllers/*.php') as $filename) {
 $timing->log('After setup');
 
 // set X-Robots-Tag if not on live server
-if (SERVER_ENV !== 'production') {
+if (PRODUCTION_FLAG == false) {
 	header("X-Robots-Tag: noindex, nofollow, noarchive");
 }
 

@@ -15,8 +15,6 @@
 	define('PRODUCTION_FLAG', false); // if set to true css and js will be minified etc..
 	define('LOCAL', true); // if true then site is hosted locally - don't use pam_auth etc.
 
-	define('SERVER_ENV', 'development'); // development or production
-
 	/* Archive */
 	define('ARCHIVE_DATABASE', 'media_felix_archive');
 
