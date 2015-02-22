@@ -22,14 +22,16 @@ class AuthController extends BaseController {
 		global $currentuser;
 		if(isset($_GET['session'])) { // catch login
 			// check if session is recent and that ip is the same
-			if($currentuser->restoreSession($_GET['session'])) {
+			$loginCheck = $currentuser->restoreSession($_GET['session']);
+
+			if($loginCheck === TRUE) {
 				if($_GET['remember'] == 'rememberme') {
 					$currentuser->setCookie();
 				}
 				
 				Utility::redirect($_GET['goto']);
 			} else {
-				throw new FrontendException("Internal error - the session is not valid for this user");
+				throw new FrontendException("Internal error - the session is not valid for this user - ".implode(' ', $loginCheck));
 			}
 			// show main exception page if something goes wrong here - do not catch!!!
 		} elseif(isset($_GET['logout'])) {
