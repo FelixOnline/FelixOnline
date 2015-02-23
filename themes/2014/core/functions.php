@@ -98,16 +98,11 @@ function profile_change($data) {
 		$user = $currentuser;
 		try {
 			Validator::Check(array(
-				'email' => $data['email'],
 				'weburl' => $data['weburl'],
 				'facebook' => $data['facebook'],
 				'webname' => $data['webname'],
 				'twitter' => $data['twitter']
 			), array (
-				'email' => array(
-					Validator::validator_email => null,
-					Validator::validator_maxlength => 50
-				),
 				'weburl' => array(
 					Validator::validator_maxlength => 50,
 					Validator::validator_url => null
@@ -132,8 +127,14 @@ function profile_change($data) {
 			return array(error => true, details => 'There has been an issue with some of your data, please check the highlighted fields and try again', validator => true, validator_data => $failed_fields);
 		}
 		
+		if(array_key_exists('email', $data) && $data['email'] == '1') {
+			$showEmail = true;
+		} else {
+			$showEmail = false;
+		}
+
 		$user->setUser($currentuser->getUser());
-		$user->setEmail($data['email']);
+		$user->setShowEmail($showEmail);
 		$user->setFacebook(Utility::addhttp($data['facebook']));
 		$user->setTwitter($data['twitter']);
 		$user->setWebsitename($data['webname']);

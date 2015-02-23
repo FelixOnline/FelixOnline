@@ -76,10 +76,10 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 			<h3>Contact <?php echo $user->getFirstName(); ?></h3>
 		</div>
 		<div class="felix-contact-area">
-			<?php if(!$user->getEmail() && !$user->getFacebook() && !$user->getTwitter() && !($user->getWebsitename() && $user->getWebsiteurl())): ?>
+			<?php if(!$user->getShowEmail() && !$user->getFacebook() && !$user->getTwitter() && !($user->getWebsitename() && $user->getWebsiteurl())): ?>
 			<p>Sorry, there are no contact details available.</p>
 			<?php endif; ?>
-			<?php if($user->getEmail()): ?>
+			<?php if($user->getShowEmail()): ?>
 			<div class="row felix-contact-row">
 				<div class="small-3 columns">
 					<a href="mailto:<?php echo $user->getEmail(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/email.png"></a>

@@ -15,7 +15,7 @@
 				<label for="email" class="right inline">Email address</label>
 			</div>
 			<div class="small-9 columns">
-				<input type="text" name="email" id="email" class="profile-email" placeholder="" value="<?php echo $user->getEmail(); ?>"/>
+				<label for="email"><input type="checkbox" name="email" id="email" value="1" class="profile-email"<?php if($user->getShowEmail()): ?> checked <?php endif; ?>"/> Show College email address in your profile.</label>
 			</div>
 		</div>
 		<div class="row">
