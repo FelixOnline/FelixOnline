@@ -24,8 +24,8 @@ foreach (glob(BASE_DIRECTORY.'/exceptions/*.php') as $filename) {
 
 require_once(BASE_DIRECTORY.'/glue.php');
 require_once(BASE_DIRECTORY.'/inc/config.inc.php');
-require_once(BASE_DIRECTORY.'/inc/const.inc.php');
 require_once(BASE_DIRECTORY.'/vendor/felixonline/core/constants.php');
+require_once(BASE_DIRECTORY.'/inc/const.inc.php');
 
 /*
  * Models
