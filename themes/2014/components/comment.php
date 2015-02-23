@@ -12,7 +12,7 @@
 		<div class="comment-meta small" id="<?php echo $comment->getId();?>">
 			<b class="comment-author"><?php echo $comment->getName(); ?></b> • 
 			<?php echo date('l F d Y H:i', $comment->getTimestamp()); ?>
-			<?php if(!$comment->isRejected() && !$comment->isPending()) { ?> • 
+			<?php if(!$comment->isRejected()) { ?> • 
 				<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken($comment->getId().'ratecomment'); ?>"/>
 				<span id="comment-<?php echo $comment->getId(); ?>-like">
 					<?php if (!$currentuser->isLoggedIn()) { ?>
