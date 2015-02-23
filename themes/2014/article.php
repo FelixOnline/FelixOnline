@@ -169,6 +169,14 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 												<label class="inline" for="comment">Your comment</label>
 											</div>
 											<div class="medium-9 columns">
+												<?php if($_POST['replyURL']): ?>
+												<div id="commentReply">
+													<a href="<?php echo $_POST['replyURL']; ?>" id="replyLink">@<?php echo $_POST['replyName']; ?></a> <a href="#" id="removeReply"><img src="img/x_11x11.png" title="Remove reply"/></a>
+													<input type="hidden" id="replyURL" name="replyURL" value="<?php echo $_POST['replyURL']; ?>"/>
+													<input type="hidden" id="replyName" name="replyName" value="<?php echo $_POST['replyName']; ?>"/>
+													<input type="hidden" id="replyComment" name="replyComment" value="<?php echo $_POST['replyComment']; ?>"/>
+												</div>
+												<?php endif; ?>
 												<textarea name="comment" id="comment" rows="4"><?php if(isset($_POST['comment'])) echo $_POST['comment']; ?></textarea>
 											</div>
 										</div>
