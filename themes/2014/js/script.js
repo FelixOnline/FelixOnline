@@ -207,7 +207,7 @@ $(document).ready(function() {
 		data.token = $('#token').val();
 		data.check = 'edit_profile';
 
-		ajaxHelper('profileform', 'POST', data, '.profile-spinner', ['.profile-saver'], ['.profile-saver'], null, null, profileAjaxCallback);
+		ajaxHelper('profileform', 'POST', data, '#profile-spinner', ['#profile-saver'], ['#profile-saver'], null, null, profileAjaxCallback);
 
 		function profileAjaxCallback(data, message) {
 			location.reload();
