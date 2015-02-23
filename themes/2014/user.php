@@ -17,6 +17,9 @@ $header = array(
 );
 
 $theme->render('components/header', $header);
+
+$theme->render('components/noticeBlock', array('no_frontpage_only' => true));
+
 ?>
 		<div class="user-title">
 			<div class="row">

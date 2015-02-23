@@ -5,6 +5,9 @@ $header = array(
 );
 
 $theme->render('components/header', $header);
+
+$theme->render('components/noticeBlock', array('no_frontpage_only' => true));
+
 ?>
 <!-- Section header -->
 		<div class="section-title section-title-<?php echo $category->getCat(); ?>">

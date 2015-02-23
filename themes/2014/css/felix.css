@@ -1346,6 +1346,11 @@ div.imageAttr, div#imageAttr, div.imageAttr a, #imageAttr a {
 div.alert-box {
 	padding: 0.5em !important;
 	padding-left: 1em !important;
+	background-color: #6C162C;
+}
+
+.notice {
+	font-size: 0.9em;
 }
 
 .invalidField {

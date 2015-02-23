@@ -30,6 +30,9 @@ $header = array(
 );
 
 $theme->render('components/header', $header);
+
+$theme->render('components/noticeBlock', array('no_frontpage_only' => true));
+
 ?>
 		<div class="row felix-pad-top">
 			<div class="medium-8 columns">
