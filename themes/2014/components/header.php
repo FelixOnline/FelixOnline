@@ -14,6 +14,7 @@
 		
 		<base href="<?php echo STANDARD_URL; ?>">
 		<link href='https://fonts.googleapis.com/css?family=Alegreya+Sans:400,700,400italic,700italic|Noto+Serif:400,700,400italic,700italic|Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 		<script src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>js/vendor/modernizr.js"></script>
 
 		<?php

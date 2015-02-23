@@ -3,7 +3,7 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-	font-size: 0.95em;
+	font-size: 1em;
 }
 
 button, .button {
@@ -242,6 +242,11 @@ nav.top-bar .top-bar-section li:hover, nav.top-bar .top-bar-section li:hover > a
 
 .felix-pad-top {
 	margin-top: 1em;
+}
+
+div.article-text p {
+	line-height: 1.8;
+	font-family: 'Arimo', sans-serif;
 }
 
 div.article-title {
@@ -1368,6 +1373,7 @@ div.alert-box {
 
 div.felix-featured-caption, div.felix-featured-subcaption, div.article-image-subcaption, #imageCaption {
 	font-family: 'Noto Serif', serif;
+	font-size: 0.9em;
 }
 
 a.article-author-image {
