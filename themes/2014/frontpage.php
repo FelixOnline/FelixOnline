@@ -24,7 +24,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => false));
 			</div>
 			<div class="medium-4 columns show-for-medium-up">
 				<?php $theme->render('sidebar/downloadBlock'); ?>
-				<a href="<?php echo STANDARD_URL.'/contribute'; ?>" class="button expand">Get involved with <i>Felix</i> - it's easy</a>
+				<a href="<?php echo STANDARD_URL.'/contribute'; ?>" class="button expand radius">Get involved with <i>Felix</i> - it's easy</a>
 				<?php $theme->render('sidebar/fbLikeBox', array("well" => false)); ?>
 			</div>
 		</div>

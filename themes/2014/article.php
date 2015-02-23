@@ -184,7 +184,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 											<div class="medium-3 columns">
 											</div>
 											<div class="medium-4 columns">
-												<input type="submit" class="button postfix" value="Post comment">
+												<input type="submit" class="button postfix radius" value="Post comment">
 											</div>
 										</div>
 									</div>
@@ -230,7 +230,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 				</div>
 
 				<?php if($currentuser->getRole() >= 25 || $isSectionEditor): ?>
-					<div class="article-edit"><b><a class="button tiny" href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Article</a></b></div>
+					<div class="article-edit"><b><a class="button tiny radius" href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Article</a></b></div>
 				<?php endif; ?>
 
 				<div class="show-for-medium-up">
