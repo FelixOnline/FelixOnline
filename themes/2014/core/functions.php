@@ -139,6 +139,7 @@ function profile_change($data) {
 		$user->setTwitter($data['twitter']);
 		$user->setWebsitename($data['webname']);
 		$user->setWebsiteurl(Utility::addhttp($data['weburl']));
+		$user->setDescription($data['bio']);
 		$user->save();
 
 		return (array('error' => false));

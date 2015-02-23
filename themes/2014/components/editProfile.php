@@ -60,6 +60,15 @@
 				<p class="form-help">We need a name to show for your website too.</p>
 			</div>
 		</div>
+		<div class="row">
+			<div class="small-3 columns">
+				<label for="bio" class="right inline">About you</label>
+			</div>
+			<div class="small-9 columns">
+				<textarea name="bio" id="bio" class="profile-bio"><?php echo $user->getDescription(); ?></textarea>
+				<p class="form-help">No HTML, please.</p>
+			</div>
+		</div>
 		<div class="row" id="profile-saver">
 			<div class="small-3 push-3 columns">
 				<input type="submit" value="Save" name="save" id="editProfileSubmit" class="button small radius" />

@@ -202,6 +202,7 @@ $(document).ready(function() {
 		data.email = $('.profile-email').val();
 		data.webname = $('.profile-webname').val();
 		data.weburl = $('.profile-weburl').val();
+		data.bio = $('.profile-bio').val();
 		data.action = 'profile_change';
 		data.token = $('#token').val();
 		data.check = 'edit_profile';
