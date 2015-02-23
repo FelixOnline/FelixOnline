@@ -16,7 +16,7 @@
 				<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken($comment->getId().'ratecomment'); ?>"/>
 				<span id="comment-<?php echo $comment->getId(); ?>-like">
 					<?php if (!$currentuser->isLoggedIn()) { ?>
-						<a href="#" data-reveal-id="loginModal"><b>LIKE</b></a>
+						<a href="#" data-reveal-id="loginModal" class="likeComment"><b>LIKE</b></a>
 					<?php } else {
 						if ($liked = $comment->userLikedComment($currentuser)) echo '<b>LIKED</b>'; // if user has already liked or disliked comment then remove link
 						else {?>
@@ -27,7 +27,7 @@
 				</span>
 				<span id="comment-<?php echo $comment->getId(); ?>-dislike">
 					<?php if (!$currentuser->isLoggedIn()) { ?>
-						<a href="#" data-reveal-id="loginModal"><b>DISLIKE</b></a>
+						<a href="#" data-reveal-id="loginModal" class="dislikeComment"><b>DISLIKE</b></a>
 					<?php } else {
 						if ($liked) echo '<b>DISLIKED</b>';
 						else {?>

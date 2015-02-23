@@ -20,7 +20,7 @@ $(document).ready(function() {
 			$('#loginForm #commenttype').remove();
 			$('#loginForm #comment').remove();
 		}
-		var comment = $(this).parents('.commentAction').attr('id');
+		var comment = $(this).parents('.comment-meta').attr('id');
 		$('#loginForm').prepend('<input type="hidden" value="like" name="commenttype" id="commenttype"/><input type="hidden" value="'+comment+'" name="comment" id="comment"/>');
 	});
 	
@@ -29,7 +29,7 @@ $(document).ready(function() {
 			$('#loginForm #commenttype').remove();
 			$('#loginForm #comment').remove();
 		}
-		var comment = $(this).parents('.commentAction').attr('id');
+		var comment = $(this).parents('.comment-meta').attr('id');
 		$('#loginForm').prepend('<input type="hidden" value="dislike" name="commenttype" id="commenttype"/><input type="hidden" value="'+comment+'" name="comment" id="comment"/>');
 	});
 	
