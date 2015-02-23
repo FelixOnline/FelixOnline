@@ -24,11 +24,44 @@ class RSSController extends BaseController {
 
 			$author = $category->getEmail().' (Felix '.$category->getLabel().')';
 
+			$name = $category->getLabel().' - '.RSS_NAME;
+
 			$articleManager->filter('published IS NOT NULL')
 				->filter('published < NOW()')
 				->filter('category = %i', array($category->getId()))
 				->limit(0, RSS_ARTICLES)
 				->order('published', 'DESC');
+
+		} elseif (array_key_exists('user', $matches)) {
+			try {
+				$user = new \FelixOnline\Core\User($matches['user']);
+			} catch (Exceptions\InternalException $e) {
+				throw new Exceptions\NotFoundException(
+					$e->getMessage(),
+					$matches,
+					'RSSController',
+					null,
+					$e
+				);
+			}
+
+			if($user->getShowEmail()) {
+				$author = $user->getEmail().' ('.$user->getName().')';
+			} else {
+				$author = '('.$user->getName().')';
+			}
+
+			$name = $user->getName().' - '.RSS_NAME;
+
+			$articleManager = (new \FelixOnline\Core\ArticleManager())
+				->filter('published < NOW()')
+				->order('date', 'DESC');
+
+			$authorManager = (new \FelixOnline\Core\ArticleAuthorManager())
+				->filter("author = '%s'", array($user->getUser()));
+			$articleManager->join($authorManager);
+
+			$articleManager->limit(0, RSS_ARTICLES);
 
 		} else {
 			$articleManager->filter('published IS NOT NULL')
@@ -37,14 +70,11 @@ class RSSController extends BaseController {
 				->order('published', 'DESC');
 
 			$author = "felix@imperial.ac.uk (Felix)";
+
+			$name = RSS_NAME;
 		}
 
 		$articles = $articleManager->values();
-
-		$name = RSS_NAME;
-		if (array_key_exists('cat', $matches)) {
-			$name = $category->getLabel().' - '.RSS_NAME;
-		}
 
 		$newsfeed = new RSSFeed();
 		$newsfeed->SetChannel(
@@ -57,13 +87,15 @@ class RSSController extends BaseController {
 		);
 		$newsfeed->SetImage(RSS_IMG);
 
-		foreach($articles as $article) {
-			$newsfeed->setItem(
-				$article->getURL(),
-				str_replace(array(' & ', '&'), array(' and ', 'and'), html_entity_decode($article->getTitle())),
-				str_replace(array(' & ', '&'), array(' and ', 'and'), html_entity_decode($article->getShortDesc(600))) . '...',
-				date("r", $article->getPublished())
-			);
+		if(count($articles) > 0) {
+			foreach($articles as $article) {
+				$newsfeed->setItem(
+					$article->getURL(),
+					str_replace(array(' & ', '&'), array(' and ', 'and'), html_entity_decode($article->getTitle())),
+					str_replace(array(' & ', '&'), array(' and ', 'and'), html_entity_decode($article->getShortDesc(600))) . '...',
+					date("r", $article->getPublished())
+				);
+			}
 		}
 
 		header("Content-Type: application/rss+xml; charset=utf-8");

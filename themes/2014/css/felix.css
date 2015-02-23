@@ -549,7 +549,8 @@ div.section-title {
 	padding-bottom: 0.5em;
 }
 
-div.section-title div.row, div.section-title div.row img {
+div.section-title div.row, div.section-title div.row img,
+div.user-title div.row, div.user-title div.row img {
 	height: 50px !important;
 }
 

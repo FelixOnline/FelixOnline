@@ -43,6 +43,7 @@ try {
 		'/issuearchive/.*' => 'ArchiveController',
 		'/rss' => 'RSSController',
 		'/rss/(?P<cat>[a-zA-Z]+)' => 'RSSController',
+		'/rss/user/(?P<user>[a-zA-Z0-9]+)' => 'RSSController',
 	);
 
 	/*

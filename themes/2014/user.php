@@ -23,18 +23,11 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 ?>
 		<div class="user-title">
 			<div class="row">
-				<div class="medium-6 columns">
+				<div class="small-9 columns">
 					<h1><?php echo $user->getName(); ?></h1>
 				</div>
-				<div class="medium-6 columns">
-					<div class="user-meta text-right show-for-medium-up">
-					<?php if ($articles || $comments) { ?>
-						<?php if ($articles){ ?>
-						Since <b><?php echo date('d/m/Y',$user->getFirstLogin());?></b>, <?php echo $user->getFirstName(); ?> has written:<br>
-						<?php echo '<b>'.$article_count; ?></b> article<?php echo ($article_count != 1 ? 's' : '');?>
-						<?php } ?>
-					<?php } ?>
-					</div>
+				<div class="small-3 columns">
+					<div class="text-right"><a href="<?php echo STANDARD_URL.'rss/user/'.$user->getUser(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/rss.png"></a></div>
 				</div>
 			</div>
 		</div>
