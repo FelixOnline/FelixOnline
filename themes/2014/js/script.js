@@ -199,11 +199,11 @@ $(document).ready(function() {
 		var data = {};
 		data.facebook = $('.profile-facebook').val();
 		data.twitter = $('.profile-twitter').val();
-		data.email = $('.profile-email').val();
+		if($('.profile-email').is(':checked')) { data.email = 1 } else { data.email = 0 };
 		data.webname = $('.profile-webname').val();
 		data.weburl = $('.profile-weburl').val();
 		data.bio = $('.profile-bio').val();
-		data.ldap = $('.profile-ldap').val();
+		if($('.profile-ldap').is(':checked')) { data.ldap = 1 } else { data.ldap = 0 };
 		data.action = 'profile_change';
 		data.token = $('#token').val();
 		data.check = 'edit_profile';

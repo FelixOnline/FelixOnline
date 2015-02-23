@@ -72,7 +72,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 		<?php } ?>
 	</div>
 	<div class="medium-4 columns">
-		<?php if($user->getShowLdap() || $user->getDescription()) { ?>
+		<?php if(($user->getShowLdap() && $data = $user->getInfo()) || $user->getDescription()) { ?>
 		<div class="felix-item-title felix-item-title felix-item-title-generic">
 			<h3>About <?php echo $user->getFirstName(); ?></h3>
 		</div>
