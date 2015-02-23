@@ -72,12 +72,18 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 		<?php } ?>
 	</div>
 	<div class="medium-4 columns">
-		<?php if($user->getDescription()) { ?>
+		<?php if($user->getShowLdap() || $user->getDescription()) { ?>
 		<div class="felix-item-title felix-item-title felix-item-title-generic">
 			<h3>About <?php echo $user->getFirstName(); ?></h3>
 		</div>
 		<br>
-		<p><?php echo nl2br($user->getDescription()); ?></p>
+		<?php if($user->getDescription()): ?><p><?php echo nl2br($user->getDescription()); ?></p><?php endif; ?>
+		<?php if($user->getShowLdap() && $data = $user->getInfo()): ?>
+		<ul>
+			<li><b>Course/Title:</b> <?php echo $data[0]; ?></li>
+			<li><b>Department:</b> <?php echo $data[2]; ?></li>
+		</ul>
+		<?php endif; ?>
 		<?php } ?>
 		<div class="felix-item-title felix-item-title felix-item-title-generic">
 			<h3>Contact <?php echo $user->getFirstName(); ?></h3>
@@ -127,7 +133,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 			</div>
 			<?php endif; ?>
 			<?php if ($currentuser->getUser() == $user->getUser()): ?>
-				<center><a href="#" data-reveal-id="editProfileModal" class="button small">Update your details</a></center>
+				<center><a href="#" data-reveal-id="editProfileModal" class="button small radius">Update your details</a></center>
 			<?php endif; ?>
 		</div>
 

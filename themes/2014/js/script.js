@@ -203,6 +203,7 @@ $(document).ready(function() {
 		data.webname = $('.profile-webname').val();
 		data.weburl = $('.profile-weburl').val();
 		data.bio = $('.profile-bio').val();
+		data.ldap = $('.profile-ldap').val();
 		data.action = 'profile_change';
 		data.token = $('#token').val();
 		data.check = 'edit_profile';

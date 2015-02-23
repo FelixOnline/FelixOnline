@@ -133,6 +133,12 @@ function profile_change($data) {
 			$showEmail = false;
 		}
 
+		if(array_key_exists('ldap', $data) && $data['ldap'] == '1') {
+			$showLdap = true;
+		} else {
+			$showLdap = false;
+		}
+
 		$user->setUser($currentuser->getUser());
 		$user->setShowEmail($showEmail);
 		$user->setFacebook(Utility::addhttp($data['facebook']));
@@ -140,6 +146,7 @@ function profile_change($data) {
 		$user->setWebsitename($data['webname']);
 		$user->setWebsiteurl(Utility::addhttp($data['weburl']));
 		$user->setDescription($data['bio']);
+		$user->setShowLdap($showLdap);
 		$user->save();
 
 		return (array('error' => false));

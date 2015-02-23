@@ -15,7 +15,7 @@
 				<label for="email" class="right inline">Email address</label>
 			</div>
 			<div class="small-9 columns">
-				<label for="email"><input type="checkbox" name="email" id="email" value="1" class="profile-email"<?php if($user->getShowEmail()): ?> checked <?php endif; ?>"/> Show College email address in your profile.</label>
+				<input type="checkbox" name="email" id="email" value="1" class="profile-email"<?php if($user->getShowEmail()): ?> checked <?php endif; ?>"/> Show College email address in your profile.
 			</div>
 		</div>
 		<div class="row">
@@ -67,6 +67,14 @@
 			<div class="small-9 columns">
 				<textarea name="bio" id="bio" class="profile-bio"><?php echo $user->getDescription(); ?></textarea>
 				<p class="form-help">No HTML, please.</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-3 columns">
+				<label for="ldap" class="right inline">Course information</label>
+			</div>
+			<div class="small-9 columns">
+				<input type="checkbox" name="ldap" id="ldap" value="1" class="profile-ldap"<?php if($user->getShowLdap()): ?> checked <?php endif; ?>"/> Show your course and department in your profile.
 			</div>
 		</div>
 		<div class="row" id="profile-saver">
