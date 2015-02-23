@@ -5,7 +5,7 @@
 	}
 ?>
 <?php if(!isset($nomodal) || !$nomodal): ?>
-<div id="loginModal" class="reveal-modal" data-reveal>
+<div id="loginModal" class="reveal-modal small" data-reveal>
 <?php endif; ?>
 	<form action="<?php echo AUTHENTICATION_PATH; ?>login/?goto=<?php echo $location; ?>" id="loginForm" method="post">
 		<div class="row">
