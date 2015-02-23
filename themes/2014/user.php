@@ -29,10 +29,10 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 				<div class="medium-6 columns">
 					<div class="user-meta text-right show-for-medium-up">
 					<?php if ($articles || $comments) { ?>
+						<?php if ($articles){ ?>
 						Since <b><?php echo date('d/m/Y',$user->getFirstLogin());?></b>, <?php echo $user->getFirstName(); ?> has written:<br>
-						<?php if ($articles){ echo '<b>'.$article_count; ?></b> article<?php echo ($article_count != 1 ? 's' : '');?><?php } ?>
-						<?php if($comments && $articles){?>and <?php } ?>
-						<?php if($comments) { echo '<b>'.$comment_count;?></b> comment<?php echo ($comments != 1 ? 's' : ''); }?>
+						<?php echo '<b>'.$article_count; ?></b> article<?php echo ($article_count != 1 ? 's' : '');?>
+						<?php } ?>
 					<?php } ?>
 					</div>
 				</div>
