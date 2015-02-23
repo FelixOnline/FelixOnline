@@ -1433,6 +1433,11 @@ div.article-image-subcaption, #imageCaption {
 	font-size: 0.8em;
 }
 
+div.felix-featured-subcaption {
+	overflow: hidden;
+	max-height: 57px;
+}
+
 .slick-prev:before, .slick-next:before {
 	color: black !important; /* bugfix */
 }
