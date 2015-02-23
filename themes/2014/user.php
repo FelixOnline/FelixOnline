@@ -69,6 +69,8 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 				'span' => ARTICLES_PER_USER_PAGE
 			)); ?>
 			<!-- End of page list -->
+		<?php } else { ?>
+			<p>Uh oh, <?php echo $user->getFirstName(); ?> has not written any articles for Felix. What a shame!</p>
 		<?php } ?>
 	</div>
 	<div class="medium-4 columns">
