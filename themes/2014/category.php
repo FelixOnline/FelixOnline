@@ -12,11 +12,11 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 <!-- Section header -->
 		<div class="section-title section-title-<?php echo $category->getCat(); ?>">
 			<div class="row">
-				<div class="medium-6 columns">
+				<div class="small-9 columns">
 					<h1><?php echo $category->getLabel(); ?></h1>
 				</div>
-				<div class="medium-6 columns">
-					<div class="section-editors text-right show-for-medium-up">Edited by<br><b><?php echo Utility::outputUserList($category->getEditors(), true);?></b></div>
+				<div class="small-3 columns">
+					<div class="text-right"><a href="<?php echo STANDARD_URL.'rss/'.$category->getCat(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/rss.png"></a></div>
 				</div>
 			</div>
 		</div>

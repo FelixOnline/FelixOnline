@@ -549,6 +549,10 @@ div.section-title {
 	padding-bottom: 0.5em;
 }
 
+div.section-title div.row, div.section-title div.row img {
+	height: 50px !important;
+}
+
 div.section-bar {
 	border-bottom: 3px double magenta;
 	margin-bottom: 1em;
