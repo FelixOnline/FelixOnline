@@ -32,7 +32,7 @@
 			try {
 				$issue_manager = new \FelixOnline\Core\IssueManager();
 
-				$issues = $issue_manager->getAllPublicationIssues($pubid);
+				$issues = $issue_manager->getLatestPublicationIssue($pubid);
 
 				$issue = end($issues);
 				return $issue;
