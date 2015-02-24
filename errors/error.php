@@ -83,6 +83,12 @@
 								$data['Class'] = $exception->getClass();
 								$data['Method'] = $exception->getMethod();
 								break;
+							case FrontendException::EXCEPTION_GLUE_METHOD:
+								$header = 'Glue misconfigured - method not valid for class';
+								$data['URL'] = $exception->getURL();
+								$data['Class'] = $exception->getClass();
+								$data['Method'] = $exception->getMethod();
+								break;
 							case FrontendException::EXCEPTION_GLUE_URL:
 								$header = 'No match for URL in glue';
 								$data['URL'] = $exception->getURL();

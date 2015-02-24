@@ -64,7 +64,7 @@
 						if (method_exists($obj, $method)) {
 							$obj->$method($matches);
 						} else {
-							throw new GlueInternalException("Could not find specified method in the class", $path, $class, $method);
+							throw new GlueMethodException("Could not find specified method in the class", $path, $class, $method);
 						}
 					} else {
 						throw new GlueInternalException("Could not find specified class", $path, $class, $method);
