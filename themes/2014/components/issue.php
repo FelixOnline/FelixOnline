@@ -1,3 +1,8 @@
+<?php
+try {
+	// prime issue
+	$issue->getThumbnailURL();
+?>
 <a href="<?php echo $issue->getDownloadURL(); ?>" class="thumbLink">
 	<div class="medium-3 columns thumb<?php if($last): ?> end <?php endif; ?>">
 		<div class="panel">
@@ -16,3 +21,8 @@
 		</div>
 	</div>
 </a>
+<?php
+} catch(\FelixOnline\Exceptions\InternalException $e) {
+	echo '<p><b>Sorry, we are having some trouble loading this issue '.$issue->getIssueNo().'. Please try again later.</b></p>';
+}
+?>
