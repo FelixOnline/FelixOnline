@@ -23,7 +23,7 @@
 					<p>
 						<b><?php echo date("l jS F", strtotime($issue->getPubDate())); ?></b>
 						<br>Issue <?php echo $issue->getIssueNo(); ?><br>
-						<a href="<?php echo STANDARD_URL.'archive'; ?>">More issues</a>
+						<a href="<?php echo STANDARD_URL.'issuearchive'; ?>">More issues</a>
 					</p>
 				</div>
 				</div>
