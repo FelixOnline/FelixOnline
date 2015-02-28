@@ -14,7 +14,7 @@
 				<div class="row">
 				<div class="small-4 columns">
 					<center>
-					<a href="<a href="<?php echo $issue->getDownloadURL(); ?>" class="thumbLink">
+					<a href="<?php echo $issue->getDownloadURL(); ?>" class="thumbLink">
 						<img src="<?php echo $issue->getThumbnailURL();?>" alt="<?php echo $issue->getId();?>"/>
 					</a>
 					</center>
@@ -23,7 +23,7 @@
 					<p>
 						<b><?php echo date("l jS F", strtotime($issue->getPubDate())); ?></b>
 						<br>Issue <?php echo $issue->getIssueNo(); ?><br>
-						<a href="<?php echo STANDARD_URL.'/archive'; ?>">More issues</a>
+						<a href="<?php echo STANDARD_URL.'archive'; ?>">More issues</a>
 					</p>
 				</div>
 				</div>
@@ -35,3 +35,4 @@
 						echo '<p>No issues found.</p>';
 					endif;
 				?>
+				<br>
