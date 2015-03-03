@@ -74,13 +74,21 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 					<?php } ?>
 				</div>
 				<?php } ?>
-			
+				<?php if($polls): ?>
+					<?php foreach($polls as $poll): ?>
+						<?php $theme->render('components/poll', array('poll' => $poll, 'bottom' => false)); ?>
+					<?php endforeach; ?>
+				<?php endif; ?>
 				<div class="article-text">
 				<?php
 					echo $article->getContent();
 				?>
 				</div>
-
+				<?php if($polls): ?>
+					<?php foreach($polls as $poll): ?>
+						<?php $theme->render('components/poll', array('poll' => $poll, 'bottom' => true)); ?>
+					<?php endforeach; ?>
+				<?php endif; ?>
 				<?php $theme->render('sidebar/shareArticle', array('article' => $article, 'hidetitle' => true)); ?>
 
 				<!-- End of content -->

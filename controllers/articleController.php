@@ -16,6 +16,56 @@ class ArticleController extends BaseController
 			);
 		}
 
+		if(array_key_exists('poll', $_GET) && array_key_exists('option', $_GET)) {
+			try {
+				$poll = new \FelixOnline\Core\Poll($_GET['poll']);
+
+				// is poll open
+				if($poll->getEnded()) {
+					throw new Exception('Poll is closed');
+				}
+
+				// can user vote
+				if(!$poll->canUserRespond()) {
+					throw new Exception('Already responded');
+				}
+
+				$found = false;
+
+				// validate poll for article
+				$articles = $poll->getArticles();
+				foreach($articles as $p_article) {
+					if($p_article->getArticle()->getId() == $article->getId()) {
+						$found = true;
+					}
+				}
+
+				if(!$found) {
+					throw new Exception('Wrong poll');
+				}
+
+				// get option
+				$option = new \FelixOnline\Core\PollOption($_GET['option']);
+
+				// is option valid
+				if($option->getPoll()->getId() != $poll->getId()) {
+					throw new Exception('Invalid option for this poll');
+				}
+
+				$response = new \FelixOnline\Core\PollResponse();
+				$response->setPoll($poll);
+				$response->setOption($option);
+				$response->setIp($_SERVER['REMOTE_ADDR']);
+				$response->setUseragent($_SERVER['HTTP_USER_AGENT']);
+				$response->save();
+			} catch(Exception $e) { }
+
+			// reload page
+			Utility::redirect($article->getURL());
+
+			exit;
+		}
+
 		$this->theme->appendData(array(
 			'article' => $article
 		));
