@@ -61,7 +61,7 @@ class ArticleController extends BaseController
 			} catch(Exception $e) { }
 
 			// reload page
-			Utility::redirect($article->getURL());
+			Utility::redirect($article->getURL().'#poll-'.$poll->getId());
 
 			exit;
 		}
