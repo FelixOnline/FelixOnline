@@ -7,6 +7,13 @@
 						$resps = $resp['answers'];
 					?>
 					<?php foreach($resps as $resp): ?>
+						<?php
+							if($count == 0) {
+								$percent = 0;
+							} else {
+								$percent = ($resp['count']/$count);
+							}
+						?>
 						<div>
 							<b><?php echo $resp['label']; ?> <?php if(($poll->getHideResults() == TRUE && (!$poll->canUserRespond())) || $poll->getHideResults() == FALSE): ?>(<?php echo $resp['count']; ?>)<?php endif; ?></b>
 							<?php if($poll->canUserRespond()): ?>	
@@ -15,7 +22,7 @@
 							<?php if(($poll->getHideResults() == TRUE && (!$poll->canUserRespond())) || $poll->getHideResults() == FALSE): ?>
 							<br>
 							<div class="progress">
-								<span class="meter" style="width: <?php echo(($resp['count']/$count)*100); ?>%"></span>
+								<span class="meter" style="width: <?php echo($percent*100); ?>%"></span>
 							</div>
 							<?php endif; ?>
 						</div>
