@@ -28,6 +28,21 @@ class ArticleController extends BaseController
 		// Log article visit
 		$article->logVisit();
 
+		// Are there any polls?
+		$pollArticles = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\ArticlePolls', 'article_polls')
+			->filter("article = %i", array($article->getId()));
+
+		$pollArticles = $pollArticles->values();
+
+		$polls = array();
+		foreach($pollArticles as $pollArticle) {
+			$polls[] = $pollArticle->getPoll();
+		}
+
+		$this->theme->appendData(array(
+			'polls' => $polls
+		));
+
 		$this->theme->render('article');
 	}
 
