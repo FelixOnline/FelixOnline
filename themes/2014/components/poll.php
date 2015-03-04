@@ -1,4 +1,4 @@
-				<?php if($bottom == $poll->getBottom()): ?>
+				<?php if(($bottom && $poll->getLocation() != 0) || (!$bottom && $poll->getLocation() != 1)): ?>
 				<div class="panel radius">
 					<a name="poll-<?php echo $poll->getId(); ?>"></a>
 					<h5><?php echo $poll->getQuestion(); ?></h5>
