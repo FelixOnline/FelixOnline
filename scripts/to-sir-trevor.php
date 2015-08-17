@@ -7,8 +7,6 @@ date_default_timezone_set('Europe/London');
 
 require dirname(__FILE__) . '/../bootstrap.php';
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 libxml_use_internal_errors(true);
 
 $res = $app['db']->get_results(
