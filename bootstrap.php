@@ -35,7 +35,6 @@ foreach (glob(BASE_DIRECTORY.'/core/*.php') as $filename) {
 }
 
 // Initialize App
-global $app;
 $app = new \FelixOnline\Core\App($config);
 
 $app['db'] = $db;
