@@ -68,8 +68,8 @@ class ArticleController extends BaseController
 
 		$converter = new \Sioen\Converter();
 
-		$text = preg_replace('/<p[^>]*><\\/p[^>]*>/i', '', $converter->toHTML($article->getContent()));
-		$text = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $text); // Some <p>^B</p> tags can get through some times
+		$text = $converter->toHTML($article->getContent());
+		$text = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $text); // Some <p>^B</p> tags can get through some times. Should not happen with the current migration script
 
 		// More text tidying
 		$text = strip_tags($text, '<p><a><div><b><i><br><blockquote><object><param><embed><li><ul><ol><strong><img><h1><h2><h3><h4><h5><h6><em><iframe><strike>'); // Gets rid of html tags except <p><a><div>
