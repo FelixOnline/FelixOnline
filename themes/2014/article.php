@@ -81,7 +81,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 				<?php endif; ?>
 				<div class="article-text">
 				<?php
-					echo $article->getContent();
+					echo $text;
 				?>
 				</div>
 				<?php if($polls): ?>

@@ -5,6 +5,8 @@
 		->filter('end_time > NOW()')
 		->filter('start_time < NOW()');
 
+	$converter = new \Sioen\Converter();
+
 	if($no_frontpage_only) {
 		$notices->filter('frontpage = TRUE');
 	}
@@ -17,7 +19,15 @@
 			<div class="small-12 columns">
 				<?php
 		foreach($notices as $notice) { ?>
-					<div data-alert class="alert-box notice"><small><?php echo strtoupper(date('D j M, g:i A', $notice->getStartTime())); ?></small> <?php echo $notice->getContent(); ?></div>
+			<?php
+				$text = preg_replace('/<p[^>]*><\\/p[^>]*>/i', '', $converter->toHTML($notice->getContent()));
+				$text = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $text); // Some <p>^B</p> tags can get through some times
+				$text = strip_tags($text, '<b><i><u><a><p>'); // Shrink down the valid tag list
+				$text = preg_replace("/<p[^>]*?>/", "", $text);
+				$text = str_replace("</p>", "<br />", $text); // Replace p with br as p is messy in the notice area
+			?>
+
+					<div data-alert class="alert-box notice"><small><?php echo strtoupper(date('D j M, g:i A', $notice->getStartTime())); ?></small> <?php echo $text; ?></div>
 		<?php }
 				?>
 			</div>

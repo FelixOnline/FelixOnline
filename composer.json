@@ -16,13 +16,18 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/dominicsayers/isemail.git"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/FelixOnline/sir-trevor-php.git"
 		}
 	],
     "require": {
 		"felixonline/exporter": "0.1.*",
-		"felixonline/core": "0.4.*",
+		"felixonline/core": "dev-master",
 		"raven/raven": "0.8.0",
-		"dominicsayers/isemail": "dev-master"
+		"dominicsayers/isemail": "dev-master",
+        "woutersioen/sir-trevor-php": "dev-master"
     },
 	"minimum-stability": "dev"
 }
