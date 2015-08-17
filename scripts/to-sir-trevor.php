@@ -23,14 +23,13 @@ foreach($res as $row) {
 	try {
 		$converter = new \Sioen\Converter();
 		$json = $converter->toJson($text);
-
 		$object = new \FelixOnline\Core\Text($row->id);
 		$object->setContent($json);
 		$object->setConverted(1);
 		$object->save();
 		echo "DONE\n";
 	} catch(\Exception $e) {
-		echo "FAILED - ".$e->getMessage().". ";
+		echo "FAILED - ".$e->getMessage()."\n";
 	}
 }
 
