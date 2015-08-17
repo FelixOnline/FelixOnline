@@ -16,6 +16,43 @@ class ArticleController extends BaseController
 			);
 		}
 
+		global $currentuser;
+
+		if(!$article->getPublished()) {
+			$authors = $article->getAuthors();
+
+			$isAuthorised = false;
+
+			if(is_array($authors)) {
+				foreach($authors as $user) {
+					if($currentuser->getUser() == $user->getUser()) {
+						$isAuthorised = true;
+					}
+				}
+			}
+
+			if($article->getCategory()->getEditors() != null) {
+				foreach($article->getCategory()->getEditors() as $user) {
+					if($currentuser->getUser() == $user->getUser()) {
+						$isAuthorised = true;
+					}
+				}
+			}
+
+			if($currentuser->getRole() >= 25) {
+				$isAuthorised = true;
+			}
+
+			if(!$isAuthorised) {
+				// Cannot see unpublished articles
+				throw new NotFoundException(
+					"Article not found",
+					$matches,
+					'ArticleController'
+				);
+			}
+		}
+
 		if(array_key_exists('poll', $_GET) && array_key_exists('option', $_GET)) {
 			try {
 				$poll = new \FelixOnline\Core\Poll($_GET['poll']);
