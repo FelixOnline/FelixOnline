@@ -29,7 +29,7 @@ class CategoryController extends BaseController
 		$manager = (new \FelixOnline\Core\ArticleManager())
 			->filter('published < NOW()')
 			->filter('category = %i', array($category->getId()))
-			->order('published', 'DESC')
+			->order(array('published', 'id'), 'DESC')
 			->limit(($pagenum - 1) * ARTICLES_PER_CAT_PAGE, ARTICLES_PER_CAT_PAGE);
 
 		$count = $manager->count();
