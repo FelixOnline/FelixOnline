@@ -25,6 +25,7 @@
 								$cats = (new \FelixOnline\Core\CategoryManager())
 									->filter('hidden = 0')
 									->filter('id > 0')
+									->filter('parent IS NULL')
 									->order('order', 'ASC')
 									->values();
 
