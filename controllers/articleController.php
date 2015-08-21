@@ -39,10 +39,6 @@ class ArticleController extends BaseController
 				}
 			}
 
-			if($currentuser->getRole() >= 25) {
-				$isAuthorised = true;
-			}
-
 			if(!$isAuthorised) {
 				// Cannot see unpublished articles
 				throw new NotFoundException(

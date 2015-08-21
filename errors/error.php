@@ -131,7 +131,7 @@
 						$data['File'] = $exception->getFile();
 						$data['Line'] = $exception->getLine();
 					?>
-				<?php if(LOCAL || (method_exists($e, 'getUser') && $e->getUser() instanceof CurrentUser && $e->getUser()->pk != null && $e->getUser()->getRole() == 100)) { ?>
+				<?php if(LOCAL) { ?>
 					<h2><?php echo $header; ?></h2>
 					<ul>
 						<li><b>Username:</b> <?php echo $username; ?></li>

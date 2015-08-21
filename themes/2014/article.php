@@ -237,7 +237,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 					<?php $theme->render('components/articleMeta', array('article' => $article)); ?>
 				</div>
 
-				<?php if($currentuser->getRole() >= 25 || $isSectionEditor): ?>
+				<?php if($isSectionEditor): ?>
 					<div class="article-edit"><b><a class="button tiny radius" href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Article</a></b></div>
 				<?php endif; ?>
 

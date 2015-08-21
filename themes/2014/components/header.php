@@ -57,7 +57,7 @@
 			<div class="row">
 				<div class="medium-6 columns felix-header-actions">
 					<?php echo date("l jS F"); ?> • <a href="<?php echo STANDARD_URL; ?>issuearchive/">Issue Archive</a>
-					<?php if ($currentuser->isLoggedIn() && $currentuser->getRole() > 0) {
+					<?php if ($currentuser->isLoggedIn()) {
 						echo ' • <a href="'.STANDARD_URL.'engine/">Author Zone</a>'; ?>
 					<?php } ?>
 				</div>
