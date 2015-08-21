@@ -20,11 +20,7 @@
 				<?php
 		foreach($notices as $notice) { ?>
 			<?php
-				$text = preg_replace('/<p[^>]*><\\/p[^>]*>/i', '', $converter->toHTML($notice->getContent()));
-				$text = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $text); // Some <p>^B</p> tags can get through some times
-				$text = strip_tags($text, '<b><i><u><a><p>'); // Shrink down the valid tag list
-				$text = preg_replace("/<p[^>]*?>/", "", $text);
-				$text = str_replace("</p>", "<br />", $text); // Replace p with br as p is messy in the notice area
+				$text = strip_tags($notice->getContent(), '<b><i><a>');
 			?>
 
 					<div data-alert class="alert-box notice"><small><?php echo strtoupper(date('D j M, g:i A', $notice->getStartTime())); ?></small> <?php echo $text; ?></div>
