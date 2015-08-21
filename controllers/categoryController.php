@@ -30,10 +30,10 @@ class CategoryController extends BaseController
 			->filter('published < NOW()')
 			->filter('category = %i', array($category->getId()))
 			->order(array('published', 'id'), 'DESC')
-			->limit(($pagenum - 1) * ARTICLES_PER_CAT_PAGE, ARTICLES_PER_CAT_PAGE);
+			->limit(($pagenum - 1) * \FelixOnline\Core\Settings::get('articles_per_cat_page'), \FelixOnline\Core\Settings::get('articles_per_cat_page'));
 
 		$count = $manager->count();
-		$pages = ceil(($count - ARTICLES_PER_CAT_PAGE) / (ARTICLES_PER_SECOND_CAT_PAGE)) + 1;
+		$pages = ceil(($count - \FelixOnline\Core\Settings::get('articles_per_cat_page')) / (\FelixOnline\Core\Settings::get('articles_per_second_cat_page'))) + 1;
 
 		$articles = $manager->values();
 			

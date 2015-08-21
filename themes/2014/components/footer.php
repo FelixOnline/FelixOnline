@@ -11,7 +11,7 @@
 		<div class="felix-footer felix-footer-<?php echo $check; ?>">
 			<div class="row">
 				<div class="medium-12 columns text-center">
-					<div class="felix-nametype"><img alt="" src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/white logo.png" style="width: 1.5em; height: 1.5em;">&nbsp;Felix</div>
+					<div class="felix-nametype"><img alt="" src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/white logo.png" style="width: 1.5em; height: 1.5em;">&nbsp;Felix</div>
 					<p><b>Felix</b> • Beit Quad • Prince Consort Road • London • SW7 2BB</p>
 					<p><b>Email:</b> <a href="mailto:felix@imperial.ac.uk">felix@imperial.ac.uk</a> • <b>Phone:</b> <a href="tel:02075948072">020 7594 8072</a> • <b>Twitter:</b> @<a href="http://www.twitter.com/FelixImperial">FelixImperial</a></p>
 					<p>Web design by Philippa Skett, Philip Kent, and Jonathan Kim • &copy; Felix Imperial, All Rights Reserved</p>

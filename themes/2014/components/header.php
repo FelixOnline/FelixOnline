@@ -15,7 +15,7 @@
 		<base href="<?php echo STANDARD_URL; ?>">
 		<link href='https://fonts.googleapis.com/css?family=Alegreya+Sans:400,700,400italic,700italic|Noto+Serif:400,700,400italic,700italic|Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-		<script src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>js/vendor/modernizr.js"></script>
+		<script src="<?php echo STANDARD_URL.'themes/2014/'; ?>js/vendor/modernizr.js"></script>
 
 		<?php
 			if (isset($meta) && $meta) {
@@ -79,13 +79,13 @@
 				<div class="medium-8 columns felix-title-logo">
 					<div>
 						<a href="<?php echo STANDARD_URL; ?>">
-							<img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/black logo.png" alt=""> 
+							<img src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/black logo.png" alt=""> 
 							<h1>Felix Online</h1>
 						</a>
 					</div>
 				</div>
 				<div class="medium-4 columns text-right felix-buttons">
-					<p><a href="https://www.facebook.com/FelixImperial"><img alt="Facebook" src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/fb.png" class="felix-header-icon"></a> <a href="https://twitter.com/feliximperial"><img alt="Twitter" src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/twitter.png" class="felix-header-icon"></a> <a href="<?php echo STANDARD_URL; ?>contact"><img alt="Contact Us" src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/email.png" class="felix-header-icon"></a> <a href="<?php echo STANDARD_URL.'rss'; ?>"><img alt="RSS Feed" src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/rss.png" class="felix-header-icon"></a></p>
+					<p><a href="https://www.facebook.com/FelixImperial"><img alt="Facebook" src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/fb.png" class="felix-header-icon"></a> <a href="https://twitter.com/feliximperial"><img alt="Twitter" src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/twitter.png" class="felix-header-icon"></a> <a href="<?php echo STANDARD_URL; ?>contact"><img alt="Contact Us" src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/email.png" class="felix-header-icon"></a> <a href="<?php echo STANDARD_URL.'rss'; ?>"><img alt="RSS Feed" src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/rss.png" class="felix-header-icon"></a></p>
 				</div>
 			</div>
 			<div class="row">

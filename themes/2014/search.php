@@ -43,9 +43,9 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 								<?php } else { ?>
 									 <li class="arrow unavailable" aria-disabled="true"><a>&laquo; Previous</a></li>
 								<?php }		
-									$pages = ceil(($article_count - ARTICLES_PER_USER_PAGE)/ARTICLES_PER_USER_PAGE) + 1;
+									$pages = ceil(($article_count - \FelixOnline\Core\Settings::get('articles_per_search_page'))/\FelixOnline\Core\Settings::get('articles_per_search_page')) + 1;
 									if ($pages>1) {
-										$span = NUMBER_OF_PAGES_IN_PAGE_LIST;
+										$span = \FelixOnline\Core\Settings::get('number_of_pages_in_page_list');
 										if ($pages > $span) {
 											if ($page >= ($span/2)) {
 												$start = ($page - $span/2)+1;

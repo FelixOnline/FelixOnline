@@ -27,7 +27,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 					<h1><?php echo $user->getName(); ?></h1>
 				</div>
 				<div class="small-3 columns">
-					<div class="text-right"><a href="<?php echo STANDARD_URL.'rss/user/'.$user->getUser(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/rss.png"></a></div>
+					<div class="text-right"><a href="<?php echo STANDARD_URL.'rss/user/'.$user->getUser(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.\FelixOnline\Core\Settings::get('theme_name').'/'; ?>img/rss.png"></a></div>
 				</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 				'pagenum' => $pagenum,
 				'class' => $user,
 				'pages' => $pages,
-				'span' => ARTICLES_PER_USER_PAGE
+				'span' => \FelixOnline\Core\Settings::get('articles_per_user_page')
 			)); ?>
 			<!-- End of page list -->
 		<?php } else { ?>
@@ -90,7 +90,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 			<?php if($user->getShowEmail()): ?>
 			<div class="row felix-contact-row">
 				<div class="small-3 columns">
-					<a href="mailto:<?php echo $user->getEmail(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/email.png"></a>
+					<a href="mailto:<?php echo $user->getEmail(); ?>"><img src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/email.png"></a>
 				</div>
 				<div class="small-9 columns">
 					<p><a href="mailto:<?php echo $user->getEmail(); ?>"><?php echo $user->getEmail(); ?></a></p>
@@ -100,7 +100,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 			<?php if($user->getFacebook()): ?>
 			<div class="row felix-contact-row">
 				<div class="small-3 columns">
-					<a href="http://facebook.com/<?php echo $user->getFacebook(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/fb.png"></a>
+					<a href="http://facebook.com/<?php echo $user->getFacebook(); ?>"><img src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/fb.png"></a>
 				</div>
 				<div class="small-9 columns">
 					<p><a href="<?php echo $user->getFacebook(); ?>">Facebook</a></p>
@@ -110,7 +110,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 			<?php if($user->getTwitter()): ?>
 			<div class="row felix-contact-row">
 				<div class="small-3 columns">
-					<a href="http://twitter.com/<?php echo $user->getTwitter(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/twitter.png"></a>
+					<a href="http://twitter.com/<?php echo $user->getTwitter(); ?>"><img src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/twitter.png"></a>
 				</div>
 				<div class="small-9 columns">
 					<p><a href="http://twitter.com/<?php echo $user->getTwitter(); ?>">@<?php echo $user->getTwitter(); ?></a></p>
@@ -120,7 +120,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 			<?php if($user->getWebsitename() && $user->getWebsiteurl()): ?>
 			<div class="row felix-contact-row">
 				<div class="small-3 columns">
-					<a href="<?php echo $user->getWebsiteurl(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/web.png"></a>
+					<a href="<?php echo $user->getWebsiteurl(); ?>"><img src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/web.png"></a>
 				</div>
 				<div class="small-9 columns">
 					<p><a href="<?php echo $user->getWebsiteurl(); ?>"><?php echo $user->getWebsitename(); ?></a></p>

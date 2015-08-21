@@ -24,12 +24,12 @@ class RSSController extends BaseController {
 
 			$author = $category->getEmail().' (Felix '.$category->getLabel().')';
 
-			$name = $category->getLabel().' - '.RSS_NAME;
+			$name = $category->getLabel().' - '.\FelixOnline\Core\Settings::get('rss_name');
 
 			$articleManager->filter('published IS NOT NULL')
 				->filter('published < NOW()')
 				->filter('category = %i', array($category->getId()))
-				->limit(0, RSS_ARTICLES)
+				->limit(0, \FelixOnline\Core\Settings::get('rss_articles'))
 				->order('published', 'DESC');
 
 		} elseif (array_key_exists('user', $matches)) {
@@ -51,7 +51,7 @@ class RSSController extends BaseController {
 				$author = '('.$user->getName().')';
 			}
 
-			$name = $user->getName().' - '.RSS_NAME;
+			$name = $user->getName().' - '.\FelixOnline\Core\Settings::get('rss_name');
 
 			$articleManager = (new \FelixOnline\Core\ArticleManager())
 				->filter('published < NOW()')
@@ -61,17 +61,17 @@ class RSSController extends BaseController {
 				->filter("author = '%s'", array($user->getUser()));
 			$articleManager->join($authorManager);
 
-			$articleManager->limit(0, RSS_ARTICLES);
+			$articleManager->limit(0, \FelixOnline\Core\Settings::get('rss_articles'));
 
 		} else {
 			$articleManager->filter('published IS NOT NULL')
 				->filter('published < NOW()')
-				->limit(0, RSS_ARTICLES)
+				->limit(0, \FelixOnline\Core\Settings::get('rss_articles'))
 				->order('published', 'DESC');
 
 			$author = "felix@imperial.ac.uk (Felix)";
 
-			$name = RSS_NAME;
+			$name = \FelixOnline\Core\Settings::get('rss_name');
 		}
 
 		$articles = $articleManager->values();
@@ -80,12 +80,12 @@ class RSSController extends BaseController {
 		$newsfeed->SetChannel(
 			'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
 			$name,
-			RSS_DESCRIPTION,
+			\FelixOnline\Core\Settings::get('rss_description'),
 			'en-gb',
-			RSS_COPYRIGHT,
+			\FelixOnline\Core\Settings::get('rss_copyright'),
 			$author
 		);
-		$newsfeed->SetImage(RSS_IMG);
+		$newsfeed->SetImage(\FelixOnline\Core\Settings::get('image_url').'/800/600/'.\FelixOnline\Core\Settings::get('rss_img'));
 
 		if(count($articles) > 0) {
 			foreach($articles as $article) {

@@ -38,7 +38,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => false));
 				<?php
 					$articles = (new \FelixOnline\Core\ArticleManager())
 					->filter('published < NOW()')
-					->filter('category = %i', array(NEWS_CATEGORY_ID))
+					->filter('category = %i', array(\FelixOnline\Core\Settings::get('news_category_id')))
 					->order('published', 'DESC')
 					->limit(0, 12)
 					->values();
@@ -100,7 +100,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => false));
 				<?php
 					$articles = (new \FelixOnline\Core\ArticleManager())
 					->filter('published < NOW()')
-					->filter('category = %i', array(COMMENT_CATEGORY_ID))
+					->filter('category = %i', array(\FelixOnline\Core\Settings::get('comment_category_id')))
 					->order('published', 'DESC')
 					->limit(0, 2)
 					->values();
@@ -120,7 +120,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => false));
 				<?php
 					$articles = (new \FelixOnline\Core\ArticleManager())
 					->filter('published < NOW()')
-					->filter('category = %i', array(CANDS_CATEGORY_ID))
+					->filter('category = %i', array(\FelixOnline\Core\Settings::get('cands_category_id')))
 					->order('published', 'DESC')
 					->limit(0, 3)
 					->values();
@@ -140,7 +140,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => false));
 				<?php
 					$articles = (new \FelixOnline\Core\ArticleManager())
 					->filter('published < NOW()')
-					->filter('category = %i', array(SPORT_CATEGORY_ID))
+					->filter('category = %i', array(\FelixOnline\Core\Settings::get('sport_category_id')))
 					->order('published', 'DESC')
 					->limit(0, 3)
 					->values();

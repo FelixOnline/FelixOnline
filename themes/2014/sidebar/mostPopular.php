@@ -9,7 +9,7 @@
 	<div class="tabs-content">
 		<div class="content active recent-items-content" id="most-read">
 			<?php 
-				$viewed_articles = (new \FelixOnline\Core\ArticleManager())->getMostPopular(POPULAR_ARTICLES);
+				$viewed_articles = (new \FelixOnline\Core\ArticleManager())->getMostPopular(\FelixOnline\Core\Settings::get('popular_articles'));
 				if (!is_null($viewed_articles)) { ?>
 				<ol>
 					<?php foreach($viewed_articles as $article) { ?>
@@ -26,7 +26,7 @@
 		</div>
 		<div class="content recent-items-content" id="most-commented">
 			<?php
-				$commented_articles = (new \FelixOnline\Core\ArticleManager())->getMostCommented(POPULAR_ARTICLES);
+				$commented_articles = (new \FelixOnline\Core\ArticleManager())->getMostCommented(\FelixOnline\Core\Settings::get('popular_articles'));
 				if (!is_null($commented_articles)) { ?>
 				<ol>
 					<?php foreach ($commented_articles as $article) { ?>

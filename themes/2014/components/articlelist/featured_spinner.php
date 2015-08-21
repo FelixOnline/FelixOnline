@@ -10,7 +10,7 @@
 								</a>
 						<?php } else { ?>
 								<a href="<?php echo $article->getURL();?>">
-									<img alt="" src="<?php echo IMAGE_URL.'650/300/'.DEFAULT_IMG_URI; ?>">
+									<img alt="" src="<?php echo \FelixOnline\Core\Settings::get('image_url').'650/300/'.\FelixOnline\Core\Settings::get('default_image_uri'); ?>">
 								</a>
 						<?php } ?>
 						</div>

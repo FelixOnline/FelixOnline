@@ -17,7 +17,7 @@
 				<div class="felix-contact-area">
 					<div class="row felix-contact-row">
 						<div class="small-3 columns">
-							<a href="mailto:<?php echo $category->getEmail(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/email.png"></a>
+							<a href="mailto:<?php echo $category->getEmail(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.\FelixOnline\Core\Settings::get('theme_name').'/'; ?>img/email.png"></a>
 						</div>
 						<div class="small-9 columns">
 							<p><a href="mailto:<?php echo $category->getEmail(); ?>"><?php echo $category->getEmail(); ?></a></p>
@@ -26,7 +26,7 @@
 					<?php if($category->getTwitter()): ?>
 					<div class="row felix-contact-row">
 						<div class="small-3 columns">
-							<a href="http://twitter.com/<?php echo $category->getTwitter(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/twitter.png"></a>
+							<a href="http://twitter.com/<?php echo $category->getTwitter(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.\FelixOnline\Core\Settings::get('theme_name').'/'; ?>img/twitter.png"></a>
 						</div>
 						<div class="small-9 columns">
 							<p><a href="http://twitter.com/<?php echo $category->getTwitter(); ?>">@<?php echo $category->getTwitter(); ?></a></p>

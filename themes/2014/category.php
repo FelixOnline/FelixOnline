@@ -16,7 +16,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 					<h1><?php echo $category->getLabel(); ?></h1>
 				</div>
 				<div class="small-3 columns">
-					<div class="text-right"><a href="<?php echo STANDARD_URL.'rss/'.$category->getCat(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.THEME_NAME.'/'; ?>img/rss.png"></a></div>
+					<div class="text-right"><a href="<?php echo STANDARD_URL.'rss/'.$category->getCat(); ?>"><img src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/rss.png"></a></div>
 				</div>
 			</div>
 		</div>
@@ -69,7 +69,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 				'pagenum' => $pagenum,
 				'class' => $category,
 				'pages' => $pages,
-				'span' => NUMBER_OF_PAGES_IN_PAGE_LIST
+				'span' => \FelixOnline\Core\Settings::get('number_of_pages_in_page_list')
 			)); ?>
 			</div>
 			<div class="medium-4 columns">

@@ -28,8 +28,8 @@ class UserController extends BaseController {
 		$manager->join($authorManager);
 
 		$manager->limit(
-			($pagenum - 1) * ARTICLES_PER_USER_PAGE,
-			ARTICLES_PER_USER_PAGE
+			($pagenum - 1) * \FelixOnline\Core\Settings::get('articles_per_user_page'),
+			\FelixOnline\Core\Settings::get('articles_per_user_page')
 		);
 
 		$articleCount = $manager->count();
@@ -41,13 +41,13 @@ class UserController extends BaseController {
 
 		// Popular articles
 		$popularArticles = $manager->order('hits', 'DESC')
-			->limit(0, NUMBER_OF_POPULAR_ARTICLES_USER)
+			->limit(0, \FelixOnline\Core\Settings::get('number_of_popular_articles_user'))
 			->values();
 
 		// Sections
 		$categories = $user->getCategories();
 
-		$pages = ceil(($articleCount - ARTICLES_PER_USER_PAGE) / (ARTICLES_PER_USER_PAGE)) + 1;
+		$pages = ceil(($articleCount - \FelixOnline\Core\Settings::get('articles_per_user_page')) / (\FelixOnline\Core\Settings::get('articles_per_user_page'))) + 1;
 
 		$this->theme->appendData(array(
 			'user' => $user,
