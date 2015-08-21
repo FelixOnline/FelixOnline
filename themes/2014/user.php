@@ -27,7 +27,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 					<h1><?php echo $user->getName(); ?></h1>
 				</div>
 				<div class="small-3 columns">
-					<div class="text-right"><a href="<?php echo STANDARD_URL.'rss/user/'.$user->getUser(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.\FelixOnline\Core\Settings::get('theme_name').'/'; ?>img/rss.png"></a></div>
+					<div class="text-right"><a href="<?php echo STANDARD_URL.'rss/user/'.$user->getUser(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.\FelixOnline\Core\Settings::get('current_theme').'/'; ?>img/rss.png"></a></div>
 				</div>
 			</div>
 		</div>

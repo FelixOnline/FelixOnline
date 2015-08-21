@@ -14,7 +14,7 @@
 								</a>
 						<?php } else { ?>
 								<a href="<?php echo $article->getURL();?>">
-									<img alt="" src="<?php echo \FelixOnline\Core\Settings::get('image_url').'850/850/'.\FelixOnline\Core\Settings::get('default_image_uri'); ?>">
+									<img alt="" src="<?php echo \FelixOnline\Core\Settings::get('image_url').'850/850/'.\FelixOnline\Core\Settings::get('default_img_uri'); ?>">
 								</a>
 						<?php } ?>
 						</div>
