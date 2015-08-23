@@ -16,6 +16,7 @@ require BASE_DIRECTORY.'/vendor/autoload.php';
  * Exceptions
  */
 require_once(BASE_DIRECTORY.'/exceptions/FrontendException.php');
+require_once(BASE_DIRECTORY.'/exceptions/NotFoundException.php');
 require_once(BASE_DIRECTORY.'/exceptions/GlueURLException.php');
 
 foreach (glob(BASE_DIRECTORY.'/exceptions/*.php') as $filename) {
