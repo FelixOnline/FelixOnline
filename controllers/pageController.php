@@ -19,7 +19,7 @@ class PageController extends BaseController {
 				->filter('slug = "%s"', array($page))
 				->one();
 		} catch (Exceptions\InternalException $e) {
-			throw new Exceptions\NotFoundException(
+			throw new NotFoundException(
 				$e->getMessage(),
 				$matches,
 				'PageController',
