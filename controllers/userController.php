@@ -40,8 +40,19 @@ class UserController extends BaseController {
 		}
 
 		// Popular articles
-		$popularArticles = $manager->order('hits', 'DESC')
-			->limit(0, \FelixOnline\Core\Settings::get('number_of_popular_articles_user'))
+		$artManager = (new \FelixOnline\Core\ArticleManager())->filter('published < NOW()')->group('id');
+
+		$autManager = (new \FelixOnline\Core\ArticleAuthorManager())
+			->filter("author = '%s'", array($user->getUser()));
+
+		$artManager->join($autManager);
+
+		$visManager = (\FelixOnline\Core\BaseManager::build('FelixOnline\Core\Article', 'article_visit', 'article'));
+		$artManager->order("COUNT(`article_visit`.id)", "DESC");
+
+		$artManager->join($visManager);
+
+		$popularArticles = $artManager->limit(0, \FelixOnline\Core\Settings::get('number_of_popular_articles_user'))
 			->values();
 
 		// Sections
