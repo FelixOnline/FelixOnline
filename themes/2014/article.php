@@ -56,10 +56,10 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 					<?php } ?>
 					</div>
 
-					<?php if ( $image->getCaption() || $image->getAttribution()) { ?>
+					<?php if ( $article->getImgCaption() || $image->getAttribution()) { ?>
 						<div class="article-image-subcaption">
-							<?php if ($image->getCaption()) { ?> 
-								<span><?php echo $image->getCaption();?></span>
+							<?php if ($article->getImgCaption()) { ?> 
+								<span><?php echo $article->getImgCaption();?></span>
 							<?php } ?>
 							<?php if($image->getAttribution()) { ?>
 								<div class="imageAttr">
