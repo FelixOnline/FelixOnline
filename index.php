@@ -45,6 +45,7 @@ try {
 		'/rss/(?P<cat>[a-zA-Z]+)' => 'RSSController',
 		'/rss/user/(?P<user>[a-zA-Z0-9]+)' => 'RSSController',
 		'/go/(?P<link>[a-zA-Z0-9]+)' => 'LinkController',
+		'/redirect/(?P<advert>[0-9]+)' => 'LinkController',
 	);
 
 	/*
