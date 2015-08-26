@@ -2,6 +2,8 @@
 
 class UserController extends BaseController {
 	function GET($matches) {
+		global $currentuser;
+		
 		try {
 			$user = new \FelixOnline\Core\User($matches['user']);
 		} catch(Exception $e) {
@@ -26,6 +28,15 @@ class UserController extends BaseController {
 		$authorManager = (new \FelixOnline\Core\ArticleAuthorManager())
 			->filter("author = '%s'", array($user->getUser()));
 		$manager->join($authorManager);
+
+		$categoryManager = (new \FelixOnline\Core\CategoryManager())
+			->filter("active = 1");
+
+		if(!$currentuser->isLoggedIn()) {
+			$categoryManager->filter('secret = 0');
+		}
+
+		$manager->join($categoryManager, null, 'category');
 
 		$manager->limit(
 			($pagenum - 1) * \FelixOnline\Core\Settings::get('articles_per_user_page'),

@@ -6,9 +6,12 @@ class CategoryController extends BaseController
 {
 	function GET($matches)
 	{
+		global $currentuser;
+		
 		try {
 			$category = (new \FelixOnline\Core\CategoryManager())
 				->filter('cat = "%s"', array($matches['cat']))
+				->filter('active = 1')
 				->one();
 		} catch (Exceptions\InternalException $e) {
 			throw new NotFoundException(
@@ -17,6 +20,15 @@ class CategoryController extends BaseController
 				'CategoryController',
 				FrontendException::EXCEPTION_NOTFOUND,
 				$e
+			);
+		}
+
+		if($category->getSecret() && !$currentuser->isLoggedIn()) {
+			// Cannot see articles in inactive categories
+			throw new NotFoundException(
+				"Category is not accessible",
+				$matches,
+				'CategoryController'
 			);
 		}
 

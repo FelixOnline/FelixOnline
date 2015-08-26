@@ -4,6 +4,8 @@ use FelixOnline\Exceptions;
 	
 class RSSController extends BaseController {
 	function GET($matches) {
+		global $currentuser;
+		
 		$articleManager = new \FelixOnline\Core\ArticleManager();
 
 		// RSS feed for category
@@ -11,7 +13,13 @@ class RSSController extends BaseController {
 			try {
 				$category = (new \FelixOnline\Core\CategoryManager())
 					->filter('cat = "%s"', array($matches['cat']))
-					->one();
+					->filter('active = 1');
+
+				if(!$currentuser->isLoggedIn()) {
+					$category->filter('secret = 0');
+				}
+
+				$category = $category->one();
 			} catch (Exceptions\InternalException $e) {
 				throw new Exceptions\NotFoundException(
 					$e->getMessage(),
@@ -61,6 +69,15 @@ class RSSController extends BaseController {
 				->filter("author = '%s'", array($user->getUser()));
 			$articleManager->join($authorManager);
 
+			$categoryManager = (new \FelixOnline\Core\CategoryManager())
+				->filter("active = 1");
+
+			if(!$currentuser->isLoggedIn()) {
+				$categoryManager->filter('secret = 0');
+			}
+
+			$articleManager->join($categoryManager, null, 'category');
+
 			$articleManager->limit(0, \FelixOnline\Core\Settings::get('rss_articles'));
 
 		} else {
@@ -68,6 +85,15 @@ class RSSController extends BaseController {
 				->filter('published < NOW()')
 				->limit(0, \FelixOnline\Core\Settings::get('rss_articles'))
 				->order('published', 'DESC');
+
+			$categoryManager = (new \FelixOnline\Core\CategoryManager())
+				->filter("active = 1");
+
+			if(!$currentuser->isLoggedIn()) {
+				$categoryManager->filter('secret = 0');
+			}
+
+			$articleManager->join($categoryManager, null, 'category');
 
 			$author = "felix@imperial.ac.uk (Felix)";
 

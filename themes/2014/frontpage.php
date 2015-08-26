@@ -15,6 +15,11 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => false));
 				<div class="felix-featured-slider">
 					<?php
 						foreach($spinner as $article) {
+							if(!$article->getArticle()->getCategory()->getActive() ||
+								(!$currentuser->isLoggedIn() && $article->getArticle()->getCategory()->getSecret())) {
+								continue;
+							}
+
 							$theme->render('components/articlelist/featured_spinner', array(
 								'article' => $article
 							));

@@ -49,6 +49,27 @@ class ArticleController extends BaseController
 			}
 		}
 
+		// Check the category
+		$category = $article->getCategory();
+
+		if(!$category->getActive()) {
+			// Cannot see articles in inactive categories
+			throw new NotFoundException(
+				"Category is not active",
+				$matches,
+				'ArticleController'
+			);
+		}
+
+		if($category->getSecret() && !$currentuser->isLoggedIn()) {
+			// Cannot see articles in inactive categories
+			throw new NotFoundException(
+				"Category is not accessible",
+				$matches,
+				'ArticleController'
+			);
+		}
+
 		if(array_key_exists('poll', $_GET) && array_key_exists('option', $_GET)) {
 			try {
 				$poll = new \FelixOnline\Core\Poll($_GET['poll']);
