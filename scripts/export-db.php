@@ -30,7 +30,7 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 			return false;
 		}
 
-		if ($table == 'comment_spam') {
+		if ($table == 'email_validation') {
 			return false;
 		}
 
@@ -38,31 +38,7 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 			return false;
 		}
 
-		if ($table == 'ffs_completers') {
-			return false;
-		}
-
-		if ($table == 'ffs_responses') {
-			return false;
-		}
-
 		if ($table == 'login') {
-			return false;
-		}
-
-		if ($table == 'optimise') {
-			return false;
-		}
-
-		if ($table == 'preview_email') {
-			return false;
-		}
-
-		if ($table == 'text_story_bkp') {
-			return false;
-		}
-
-		if ($table == 'thephig_users') {
 			return false;
 		}
 
@@ -106,6 +82,15 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 			} else {
 				return false;
 			}
+		}
+
+		if ($table == 'comment') {
+			// Create email_validation record
+			$this->db->query(
+				"INSERT INTO email_validation VALUES(NULL, 'test-".$this->count."@example.com', '', 1)");
+
+			$row['email'] = 'test-'.$this->count.'@example.com';
+			$this->count++;
 		}
 
 		return $row;
