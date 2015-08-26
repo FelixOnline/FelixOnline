@@ -120,18 +120,7 @@ class ArticleController extends BaseController
 			exit;
 		}
 
-		$converter = new \Sioen\Converter();
-
-		$text = $converter->toHTML($article->getContent());
-		$text = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $text); // Some <p>^B</p> tags can get through some times. Should not happen with the current migration script
-
-		// More text tidying
-		$text = strip_tags($text, '<p><a><div><b><i><br><blockquote><object><param><embed><li><ul><ol><strong><img><h1><h2><h3><h4><h5><h6><em><iframe><strike>'); // Gets rid of html tags except <p><a><div>
-		$text = preg_replace('/(<br(| |\/|( \/))>)/i', '', $text); // strip br tag
-		$text = preg_replace('#<div[^>]*(?:/>|>(?:\s|&nbsp;)*</div>)#im', '', $text); // Removes empty html div tags
-		$text = preg_replace('#<span*(?:/>|>(?:\s|&nbsp;)[^>]*</span>)#im', '', $text); // Removes empty html span tags
-		$text = preg_replace('#<p[^>]*(?:/>|>(?:\s|&nbsp;)*</p>)#im', '', $text); // Removes empty html p tags
-		$text = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $text); // Remove style attributes
+		$text = Utility::tidyText($article->getContent());
 
 		$this->theme->appendData(array(
 			'article' => $article,
@@ -282,18 +271,7 @@ class ArticleController extends BaseController
 			exit;
 		}
 		
-		$converter = new \Sioen\Converter();
-
-		$text = $converter->toHTML($article->getContent());
-		$text = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $text); // Some <p>^B</p> tags can get through some times. Should not happen with the current migration script
-
-		// More text tidying
-		$text = strip_tags($text, '<p><a><div><b><i><br><blockquote><object><param><embed><li><ul><ol><strong><img><h1><h2><h3><h4><h5><h6><em><iframe><strike>'); // Gets rid of html tags except <p><a><div>
-		$text = preg_replace('/(<br(| |\/|( \/))>)/i', '', $text); // strip br tag
-		$text = preg_replace('#<div[^>]*(?:/>|>(?:\s|&nbsp;)*</div>)#im', '', $text); // Removes empty html div tags
-		$text = preg_replace('#<span*(?:/>|>(?:\s|&nbsp;)[^>]*</span>)#im', '', $text); // Removes empty html span tags
-		$text = preg_replace('#<p[^>]*(?:/>|>(?:\s|&nbsp;)*</p>)#im', '', $text); // Removes empty html p tags
-		$text = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $text); // Remove style attributes
+		$text = Utility::tidyText($article->getContent());
 
 		$this->theme->appendData(array(
 			'article' => $article,
