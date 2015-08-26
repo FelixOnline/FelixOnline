@@ -5,7 +5,7 @@ use FelixOnline\Exceptions;
 class RSSController extends BaseController {
 	function GET($matches) {
 		global $currentuser;
-		
+
 		$articleManager = new \FelixOnline\Core\ArticleManager();
 
 		// RSS feed for category
@@ -115,10 +115,18 @@ class RSSController extends BaseController {
 
 		if(count($articles) > 0) {
 			foreach($articles as $article) {
+				$converter = new \Sioen\Converter();
+
+				$text = $converter->toHTML($article->getContent());
+				$text = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $text); // Some <p>^B</p> tags can get through some times. Should not happen with the current migration script
+
+				// More text tidying
+				$text = strip_tags($text);
+
 				$newsfeed->setItem(
 					$article->getURL(),
 					str_replace(array(' & ', '&'), array(' and ', 'and'), html_entity_decode($article->getTitle())),
-					str_replace(array(' & ', '&'), array(' and ', 'and'), html_entity_decode($article->getShortDesc(600))) . '...',
+					str_replace(array(' & ', '&'), array(' and ', 'and'), html_entity_decode(substr($text, 0, 600))) . '...',
 					date("r", $article->getPublished())
 				);
 			}
