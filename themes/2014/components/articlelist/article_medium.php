@@ -20,7 +20,7 @@
 							<span class="felix-front-news-date"><?php echo date("l F j, Y",$article->getPublished());?><?php if($show_authors): echo " • ".Utility::outputUserList($article->getAuthors()); endif; ?></span>
 							<h3><a href="<?php echo $article->getURL();?>"><?php echo $article->getTitle();?></a></h3>
 							<p><?php echo $article->getTeaser();?></p>
-							<div class="article-comments"><span class="comment-count"><a href="<?php echo $article->getURL().'#commentHeader';?>"><?php echo $article->getNumComments().'</a></span> comment'.($article->getNumComments() != 1 ? 's' : '');?>.<?php if ($article->canComment($currentuser)) { ?> <a href="<?php echo $article->getURL().'#commentForm';?>">Post your own now</a>!<?php } ?></div>
+							<div class="article-comments"><span class="comment-count"><a href="<?php echo $article->getURL().'#commentHeader';?>"><?php echo $article->getNumValidatedComments().'</a></span> comment'.($article->getNumValidatedComments() != 1 ? 's' : '');?>.<?php if ($article->canComment($currentuser)) { ?> <a href="<?php echo $article->getURL().'#commentForm';?>">Post your own now</a>!<?php } ?></div>
 						</div>
 					</div>
 				</div>

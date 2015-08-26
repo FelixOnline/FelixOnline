@@ -197,17 +197,71 @@ class ArticleController extends BaseController
 						if ($id = $comment->save()) {
 							if ($comment->getSpam() == 1) {
 								$errorspam = true;
-							} else {
-								Utility::redirect(
-									Utility::currentPageURL(), 
-									'', 
-									'comment'.$id
-								);
-								exit;
 							}
 						} else {
 							$errorinsert = true;
 						}
+					}
+
+					// Create a validation code, if it returns false one is not needed
+					$validationcode = \FelixOnline\Core\EmailValidation::create(strtolower($_POST['email']));
+
+					if(!$validationcode) {
+						// We may still not be validated
+						if(!\FelixOnline\Core\EmailValidation::isEmailValidated(strtolower($_POST['email']))) {
+							$manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\EmailValidation', 'email_validation');
+							$manager->filter('email = "%s"', array(strtolower($_POST['email'])));
+							$values = $manager->one();
+
+							$validationcode = $values->getCode();
+						}
+					}
+
+					if($currentuser->isLoggedIn()) {
+						// Auto validate logged in users
+
+						$validationcode = false;
+
+						$manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\EmailValidation', 'email_validation');
+						$manager->filter('email = "%s"', array(strtolower($_POST['email'])));
+						$values = $manager->one();
+
+						if($values) {
+							$values->setConfirmed(1)->save();
+						}
+					} elseif($validationcode) {
+						// Send an email
+						$app = \FelixOnline\Core\App::getInstance();
+
+						// Create message
+						$message = \Swift_Message::newInstance()
+							->setSubject('Please verify your email address')
+							->setFrom(array(\FelixOnline\Core\Settings::get('email_replyto_addr') => \FelixOnline\Core\Settings::get('email_replyto_name')));
+
+						// Get content
+						ob_start();
+						$data = array(
+							'app' => $app,
+							'name' => $_POST['name'],
+							'code' => STANDARD_URL.'validate/'.$validationcode,
+						);
+
+						// Render email template
+						call_user_func(function() use($data) {
+							extract($data);
+							include realpath(__DIR__ . '/../templates/') . '/email_validation.php';
+						});
+
+						$content = ob_get_contents();
+						ob_end_clean();
+
+						$message->setBody($content, 'text/html')
+							->setTo(array(
+								$_POST['email'] => $_POST['name'],
+							));
+
+						// Send email
+						$app['email']->send($message);
 					}
 				}
 			} catch (\FelixOnline\Exceptions\InternalException $e) {
@@ -218,15 +272,39 @@ class ArticleController extends BaseController
 		if($_POST['comment'] == '') {
 			$errorempty = true;
 		}
+
+		if(!$errorempty && !$errorduplicate && !$erroremail && !$errorspam && !$validationcode && !$errorinsert && !$errorconnection) {
+			Utility::redirect(
+				Utility::currentPageURL(), 
+				'', 
+				'comment'.$id
+			);
+			exit;
+		}
 		
+		$converter = new \Sioen\Converter();
+
+		$text = $converter->toHTML($article->getContent());
+		$text = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $text); // Some <p>^B</p> tags can get through some times. Should not happen with the current migration script
+
+		// More text tidying
+		$text = strip_tags($text, '<p><a><div><b><i><br><blockquote><object><param><embed><li><ul><ol><strong><img><h1><h2><h3><h4><h5><h6><em><iframe><strike>'); // Gets rid of html tags except <p><a><div>
+		$text = preg_replace('/(<br(| |\/|( \/))>)/i', '', $text); // strip br tag
+		$text = preg_replace('#<div[^>]*(?:/>|>(?:\s|&nbsp;)*</div>)#im', '', $text); // Removes empty html div tags
+		$text = preg_replace('#<span*(?:/>|>(?:\s|&nbsp;)[^>]*</span>)#im', '', $text); // Removes empty html span tags
+		$text = preg_replace('#<p[^>]*(?:/>|>(?:\s|&nbsp;)*</p>)#im', '', $text); // Removes empty html p tags
+		$text = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $text); // Remove style attributes
+
 		$this->theme->appendData(array(
 			'article' => $article,
+			'text' => $text,
 			'errorempty' => $errorempty,
 			'errorduplicate' => $errorduplicate,
 			'errorspam' => $errorspam,
 			'erroremail' => $erroremail,
 			'errorinsert' => $errorinsert,
 			'errorconnection' => $errorconnection,
+			'validationcode' => $validationcode
 		));
 		$this->theme->setHierarchy(array(
 			$article->getId(),

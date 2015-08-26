@@ -95,12 +95,13 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 
 				<!-- Comments -->
 				<div class="article-comments-zone article-comments-zone-<?php echo $article->getCategory()->getCat(); ?>" id="commentHeader">
-					<h3>Comments <span>(<?php echo $article->getNumComments(); ?>)</span></h3>
+					<h3>Comments <span>(<?php echo $article->getNumValidatedComments(); ?>)</span></h3>
 					<?php if ($article->canComment($currentuser)) { ?><span class="article-comments-say">Have something to say? <a href="<?php echo Utility::currentPageURL().'#commentForm';?>"><b>Post your comment now</b></a>.</span><?php } ?>
 
 					<!-- Comments container -->
 					<?php
-						$comments = $article->getComments();
+						$comments = $article->getValidatedComments();
+
 						if (is_array($comments)) {
 							foreach($comments as $key => $comment) {
 								$theme->render('components/comment', array('comment' => $comment));
@@ -124,7 +125,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 								<p>Read our <a href="#" data-reveal-id="commentPolicy">commenting policy</a> for more information and for details on how we moderate.</p>
 							<?php } ?>
 
-							<?php if(isset($errorempty) || isset($errorduplicate) || isset($erroremail) || isset($errorspam) || isset($errorinsert) || isset($errorconnection)): ?>
+							<?php if(isset($errorempty) || isset($errorduplicate) || isset($erroremail) || isset($errorspam) ||isset($validationcode) || isset($errorinsert) || isset($errorconnection)): ?>
 							<!-- Errors -->
 							<div class="alert-box">
 								<?php if(isset($errorempty) && $errorempty) { ?>
@@ -144,6 +145,10 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 								<?php } ?>
 								<?php if (isset($errorconnection) && $errorconnection) { ?>
 									Sorry it looks like we are having trouble with our anti spam service. Please try again later.
+								<?php } ?>
+								<?php if (isset($validationcode) && $validationcode) { ?>
+									Thank you for your comment, you now need to validate your email before it will show up. Check your inbox for a validation code.
+									<?php $_POST = array(); /* Clear form */ ?>
 								<?php } ?>
 							</div>
 							<!-- End of errors -->
