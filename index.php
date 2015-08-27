@@ -40,6 +40,7 @@ try {
 		'/issuearchive/year/(?P<year>[0-9]+)' => 'ArchiveController',
 		'/issuearchive/issue/(?P<id>[0-9]+)' => 'ArchiveController',
 		'/issuearchive/issue/(?P<id>[0-9]+)/(?P<download>download)' => 'ArchiveController',
+		'/issuearchive/issue/(?P<id>[0-9]+)/(?P<download>download/(?P<part>[a-zA-Z]+))' => 'ArchiveController',
 		'/issuearchive/.*' => 'ArchiveController',
 		'/rss' => 'RSSController',
 		'/rss/(?P<cat>[a-zA-Z]+)' => 'RSSController',

@@ -42,6 +42,8 @@ $theme->render('components/header', $header);
 				</dd>
 			<?php } ?>
 		</dl>
+		<br>
+		<p>The issue archive was made possible through kind donations from <a href="http://www.imperialcollegeunion.org/">Imperial College Union</a> and the IC Trust.</p>
 	</div>
 	<div class="medium-9 medium-pull-3 columns">
 		<dl class="tabs archive-years">

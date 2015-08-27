@@ -1,43 +1,50 @@
 #archivesearchbar {
-  margin-bottom:10px;
-  margin-top:10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 #archivesearchbar input {
-  padding:5px;
-  font-size:16px;
-  border:1px solid #bebebe;
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #bebebe;
 }
 #archivesearchbar .search-count {
-  font-weight:bold;
-  font-size:18px;
-  text-align:right;
-  margin-right:0px;
-  margin-left:0px;
-  width:290px;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: right;
+  margin-right: 0px;
+  margin-left: 0px;
+  width: 290px;
 }
 .archive-title {
-  border-top:3px double black;
-  border-bottom:3px double black;
-  padding-bottom:0.5em;
-  margin-bottom:1em;
+  border-top: 3px double black;
+  border-bottom: 3px double black;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
 }
 .archive-title h1 {
-  color:black;
-  font-family:'Sorts Mill Goudy', serif;
-  margin-bottom:-0.3em;
+  color: black;
+  font-family: 'Sorts Mill Goudy', serif;
+  margin-bottom: -0.3em;
 }
-.issuecont .thumbLink { text-decoration:none; }
-.issuecont .thumbLink:hover .issue { text-decoration:underline; }
-.issuecont .thumbLink:hover .date { text-decoration:underline; }
+.issuecont .thumbLink {
+  text-decoration: none;
+}
+.issuecont .thumbLink:hover .issue {
+  text-decoration: underline;
+}
+.issuecont .thumbLink:hover .date {
+  text-decoration: underline;
+}
 .issuecont .thumb .issue {
-  text-align:center;
-  color:#666666;
-  font-size:18px;
-  font-weight:bold;
-  margin-bottom:5px;
-  font-family:'Noto Serif', serif !important;
+  text-align: center;
+  color: #666;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-family: 'Noto Serif', serif !important;
 }
-.issuecont .thumb .date, .issuecont .thumb .relevance {
-  text-align:center;
-  font-size:smaller;
+.issuecont .thumb .date,
+.issuecont .thumb .relevance {
+  text-align: center;
+  font-size: smaller;
 }
