@@ -7,7 +7,7 @@
 
 use FelixOnline\Core;
 
-if(!defined('THEME_DIRECTORY')) define('THEME_DIRECTORY', dirname(__FILE__));
+if(!defined('THEME_DIRECTORY')) define('THEME_DIRECTORY', dirname(__FILE__).'/');
 if(!defined('THEME_URL')) define('THEME_URL', STANDARD_URL.'themes/2014/');
 
 global $hooks;
