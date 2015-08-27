@@ -3,8 +3,13 @@
 				</div>
 				<br>
 				<?php
-					$link = new ArchiveLink();
-					$issue = $link->getLatestForPublication(1);
+					$manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\ArchiveIssue', 'archive_issue');
+					$issue = $manager->filter('publication = %i', array(\FelixOnline\Core\Settings::get('frontpage_publication')))
+									 ->filter('inactive = 0')
+									 ->order('date', 'DESC')
+									 ->limit(0, 1)
+									 ->values();
+					$issue = $issue[0];
 
 					if($issue):
 						try {
@@ -21,15 +26,15 @@
 				</div>
 				<div class="small-8 columns">
 					<p>
-						<b><?php echo date("l jS F", strtotime($issue->getPubDate())); ?></b>
-						<br>Issue <?php echo $issue->getIssueNo(); ?><br>
+						<b><?php echo date("l jS F", $issue->getDate()); ?></b>
+						<br>Issue <?php echo $issue->getIssue(); ?><br>
 						<a href="<?php echo STANDARD_URL.'issuearchive'; ?>">More issues</a>
 					</p>
 				</div>
 				</div>
 				<?php
 						} catch(\FelixOnline\Exceptions\InternalException $e) {
-							echo '<p><b>Sorry, we are having some trouble loading this issue '.$issue->getIssueNo().'. Please try again later.</b></p>';
+							echo '<p><b>Sorry, we are having some trouble loading issue '.$issue->getIssue().'. Please try again later.</b></p>';
 						}
 					else:
 						echo '<p>No issues found.</p>';
