@@ -248,6 +248,7 @@ class ArchiveController extends BaseController {
 			FROM archive_file, archive_issue
 			WHERE archive_file.issue_id = archive_issue.id
 			AND archive_file.issue_id IS NOT NULL
+			AND archive_issue.inactive = 0
 			HAVING Relevance > 0
 			ORDER BY Relevance DESC",
 			array(
@@ -265,6 +266,11 @@ class ArchiveController extends BaseController {
 		$maxr = 0; // max relevance
 		foreach($results as $obj) {
 			$issue = new ArchiveIssue($obj->id);
+
+			if($issue->getPublication()->getInactive()) {
+				continue; // Inactive publication
+			}
+
 			$issues[] = $issue;
 			if ($maxr == 0) {
 				$maxr = $obj->Relevance;
