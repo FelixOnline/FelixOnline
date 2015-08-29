@@ -24,7 +24,7 @@ $this->resources = new Core\ResourceManager(
 	/* CSS files */
 	array('foundation.css', 'felix.css', '../slick/slick.css', 'rrssb.css'), 
 	/* JS files */
-	array('vendor/jquery.js', 'foundation.min.js', 'foundation/foundation.reveal.js', '../slick/slick.js', 'script.js', 'rrssb.min.js')
+	array('vendor/jquery.js', 'foundation.min.js', 'foundation/foundation.reveal.js', '../slick/slick.js', 'jquery-visible.js', 'script.js', 'rrssb.min.js')
 );
 
 ?>

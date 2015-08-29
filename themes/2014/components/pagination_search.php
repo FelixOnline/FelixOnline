@@ -36,7 +36,7 @@
 									}
 									if ($page != $pages) { // Next page arrow ?>
 										<li class="arrow">
-											<?php echo '<a href="search/?q='.$query.'&p='.($page+1).'" data-page="'.($page+1).'" data-type="search" data-key="'.$query.'">'; ?>
+											<?php echo '<a href="search/?q='.$query.'&p='.($page+1).'" data-page="'.($page+1).'" class="next" data-type="search" data-key="'.$query.'">'; ?>
 												Next &raquo;
 											</a>
 										</li>

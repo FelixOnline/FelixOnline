@@ -39,7 +39,7 @@
 			<?php }
 			if ($pagenum != $pages) { // Next page arrow ?>
 				<li class="arrow">
-					<a href="<?php echo $class->getURL($pagenum+1);?>" data-page="<?php echo $pagenum+1; ?>" data-type="<?php echo $type; ?>" data-key="<?php echo $key; ?>">
+					<a href="<?php echo $class->getURL($pagenum+1);?>" data-page="<?php echo $pagenum+1; ?>" class="next" data-type="<?php echo $type; ?>" data-key="<?php echo $key; ?>">
 						Next &raquo;
 					</a>
 				</li>
