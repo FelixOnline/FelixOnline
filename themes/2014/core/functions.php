@@ -124,7 +124,10 @@ function profile_change($data) {
 				$failed_fields[] = $failedField;
 			}
 			
-			return array(error => true, details => 'There has been an issue with some of your data, please check the highlighted fields and try again', validator => true, validator_data => $failed_fields);
+			return array("error" => true,
+				"details" => 'There has been an issue with some of your data, please check the highlighted fields and try again',
+				"validator" => true,
+				"validator_data" => $failed_fields);
 		}
 		
 		if(array_key_exists('email', $data) && $data['email'] == '1') {
@@ -153,4 +156,132 @@ function profile_change($data) {
 	} else {
 		return (array('error' => true, 'details' => 'Not logged in'));
 	}
+}
+
+$hooks->addAction('get_category_page', 'get_category_page');
+function get_category_page($data) {
+	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
+	require_once(BASE_DIRECTORY.'/controllers/categoryController.php');
+
+	try {
+		$data = CategoryController::fetch($data['key'], $data['page']);
+	} catch(\Exception $e) {
+		return (array('error' => true, 'details' => $e->getMessage()));
+	}
+
+	$theme = new \FelixOnline\Core\Theme(2014);
+
+	$theme->appendData(array(
+		'category' => $data['category'],
+		'pagenum' => $data['pagenum'],
+		'articles' => $data['articles'],
+		'pages' => $data['pages'],
+	));
+
+	// Render the output to a buffer
+	ob_start();
+
+	$theme->setHierarchy(array(
+		$data['category']->getCat() // category-{cat}.php
+	));
+
+	$theme->render('components/category_page');
+
+	$theme->render('components/pagination', array(
+			'pagenum' => $data['pagenum'],
+			'class' => $data['category'],
+			'pages' => $data['pages'],
+			'span' => \FelixOnline\Core\Settings::get('number_of_pages_in_page_list'),
+			'type' => 'category',
+			'key' => $data['category']->getCat()));
+
+	$output = ob_get_contents();
+
+	ob_end_clean();
+
+	return (array('error' => false, 'content' => $output));
+}
+
+$hooks->addAction('get_user_page', 'get_user_page');
+function get_user_page($data) {
+	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
+	require_once(BASE_DIRECTORY.'/controllers/userController.php');
+
+	try {
+		$data = UserController::fetch($data['key'], $data['page']);
+	} catch(\Exception $e) {
+		return (array('error' => true, 'details' => $e->getMessage()));
+	}
+
+	$theme = new \FelixOnline\Core\Theme(2014);
+
+	$theme->appendData(array(
+		'user' => $data['user'],
+		'pagenum' => $data['pagenum'],
+		'articles' => $data['articles'],
+		'article_count' => $data['articleCount'],
+		'pages' => $data['pages']
+	));
+
+
+	// Render the output to a buffer
+	ob_start();
+
+	$theme->setHierarchy(array(
+		$data['user']->getUser() // user_page-{user}.php
+	));
+
+	$theme->render('components/user_page');
+
+	$theme->render('components/pagination', array(
+					'pagenum' => $data['pagenum'],
+					'class' => $data['user'],
+					'pages' => $data['pages'],
+					'span' => \FelixOnline\Core\Settings::get('articles_per_user_page'),
+					'type' => 'user',
+					'key' => $data['user']->getUser()));
+
+	$output = ob_get_contents();
+
+	ob_end_clean();
+
+	return (array('error' => false, 'content' => $output));
+}
+
+$hooks->addAction('get_search_page', 'get_search_page');
+function get_search_page($data) {
+	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
+	require_once(BASE_DIRECTORY.'/controllers/searchController.php');
+
+	try {
+		$data = SearchController::fetch($data['key'], $data['page']);
+	} catch(\Exception $e) {
+		return (array('error' => true, 'details' => $e->getMessage()));
+	}
+
+	$theme = new \FelixOnline\Core\Theme(2014);
+
+	$theme->appendData(array(
+		'articles' => $data['articles']['articles'],
+		'article_count' => $data['articles']['count'],
+		'query' => $data['query'],
+		'page' => $data['page']
+	));
+
+
+	// Render the output to a buffer
+	ob_start();
+
+	$theme->render('components/search_page');
+
+	$theme->render('components/pagination_search', array(
+		'page' => $data['page'],
+		'query' => $data['query']
+	));
+
+	$output = ob_get_contents();
+
+	ob_end_clean();
+
+	return (array('error' => false, 'content' => $output));
 }

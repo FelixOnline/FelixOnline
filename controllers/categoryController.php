@@ -4,24 +4,13 @@ use FelixOnline\Exceptions;
 
 class CategoryController extends BaseController
 {
-	function GET($matches)
-	{
+	public static function fetch($category, $pagenum = 1) {
 		global $currentuser;
 		
-		try {
-			$category = (new \FelixOnline\Core\CategoryManager())
-				->filter('cat = "%s"', array($matches['cat']))
-				->filter('active = 1')
-				->one();
-		} catch (Exceptions\InternalException $e) {
-			throw new NotFoundException(
-				$e->getMessage(),
-				$matches,
-				'CategoryController',
-				FrontendException::EXCEPTION_NOTFOUND,
-				$e
-			);
-		}
+		$category = (new \FelixOnline\Core\CategoryManager())
+			->filter('cat = "%s"', array($category))
+			->filter('active = 1')
+			->one();
 
 		if($category->getSecret() && !$currentuser->isLoggedIn()) {
 			// Cannot see articles in inactive categories
@@ -30,12 +19,6 @@ class CategoryController extends BaseController
 				$matches,
 				'CategoryController'
 			);
-		}
-
-		if(!isset($matches['page']) || !$matches['page']) {
-			$pagenum = 1;
-		} else {
-			$pagenum = $matches['page'];
 		}
 
 		$manager = (new \FelixOnline\Core\ArticleManager())
@@ -53,15 +36,41 @@ class CategoryController extends BaseController
 			$articles = [];
 		}
 
-		$this->theme->appendData(array(
-			'category' => $category,
+		return array('category' => $category,
 			'pagenum' => $pagenum,
 			'articles' => $articles,
-			'pages' => $pages,
+			'pages' => $pages);
+	}
+
+	function GET($matches)
+	{
+		try {
+			if(!isset($matches['page'])) {
+				$pagenum = 1;
+			} else {
+				$pagenum = $matches['page'];
+			}
+
+			$data = self::fetch($matches['cat'], $pagenum);
+		} catch (Exceptions\InternalException $e) {
+			throw new NotFoundException(
+				$e->getMessage(),
+				$matches,
+				'CategoryController',
+				FrontendException::EXCEPTION_NOTFOUND,
+				$e
+			);
+		}
+
+		$this->theme->appendData(array(
+			'category' => $data['category'],
+			'pagenum' => $data['pagenum'],
+			'articles' => $data['articles'],
+			'pages' => $data['pages'],
 		));
 
 		$this->theme->setHierarchy(array(
-			$category->getCat() // category-{cat}.php
+			$data['category']->getCat() // category-{cat}.php
 		));
 		$this->theme->render('category');
 	}

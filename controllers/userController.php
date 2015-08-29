@@ -1,24 +1,10 @@
 <?php
 
 class UserController extends BaseController {
-	function GET($matches) {
+	function fetch($user, $pagenum = 1) {
 		global $currentuser;
-		
-		try {
-			$user = new \FelixOnline\Core\User($matches['user']);
-		} catch(Exception $e) {
-			throw new NotFoundException(
-				"User Not Found",
-				$matches,
-				'UserController'
-			);
-		}
 
-		if(!isset($matches['page'])) {
-			$pagenum = 1;
-		} else {
-			$pagenum = $matches['page'];
-		}
+		$user = new \FelixOnline\Core\User($user);
 
 		// Articles
 		$manager = (new \FelixOnline\Core\ArticleManager())
@@ -50,6 +36,36 @@ class UserController extends BaseController {
 			$articles = array();
 		}
 
+		$pages = ceil(($articleCount - \FelixOnline\Core\Settings::get('articles_per_user_page')) / (\FelixOnline\Core\Settings::get('articles_per_user_page'))) + 1;
+
+		return array('user' => $user,
+			'pagenum' => $pagenum,
+			'articles' => $articles,
+			'pages' => $pages,
+			'articleCount' => $articleCount);
+	}
+
+	function GET($matches) {
+		global $currentuser;
+		
+		if(!isset($matches['page'])) {
+			$pagenum = 1;
+		} else {
+			$pagenum = $matches['page'];
+		}
+
+		try {
+			$data = self::fetch($matches['user'], $pagenum);
+		} catch(Exception $e) {
+			throw new NotFoundException(
+				"User Not Found",
+				$matches,
+				'UserController'
+			);
+		}
+
+		$user = $data['user'];
+
 		// Popular articles
 		$artManager = (new \FelixOnline\Core\ArticleManager())->filter('published < NOW()')->group('id');
 
@@ -69,14 +85,12 @@ class UserController extends BaseController {
 		// Sections
 		$categories = $user->getCategories();
 
-		$pages = ceil(($articleCount - \FelixOnline\Core\Settings::get('articles_per_user_page')) / (\FelixOnline\Core\Settings::get('articles_per_user_page'))) + 1;
-
 		$this->theme->appendData(array(
 			'user' => $user,
-			'pagenum' => $pagenum,
-			'articles' => $articles,
-			'article_count' => $articleCount,
-			'pages' => $pages,
+			'pagenum' => $data['pagenum'],
+			'articles' => $data['articles'],
+			'article_count' => $data['articleCount'],
+			'pages' => $data['pages'],
 			'categories' => $categories,
 			'popular_articles' => $popularArticles,
 		));

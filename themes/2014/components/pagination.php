@@ -3,7 +3,7 @@
 	<ul class="pagination" role="menubar" aria-label="Pagination">
 		<?php if ($pagenum != 1) { // Previous page arrow ?>
 			<li class="arrow">
-				<a href="<?php echo $class->getURL($pagenum-1); ?>">
+				<a href="<?php echo $class->getURL($pagenum-1); ?>" data-page="<?php echo $pagenum-1; ?>" data-type="<?php echo $type; ?>" data-key="<?php echo $key; ?>">
 					&laquo; Previous
 				</a>
 			</li>
@@ -30,7 +30,7 @@
 				for ($i=$start;$i<=$limit;$i++) {
 					?>
 					<li<?php if($pagenum==$i) { ?> class="current"<?php } ?>>
-						<a href="<?php echo $class->getURL($i); ?>"><?php echo $i; ?></a>
+						<a href="<?php echo $class->getURL($i); ?>" data-page="<?php echo $i; ?>" data-type="<?php echo $type; ?>" data-key="<?php echo $key; ?>"><?php echo $i; ?></a>
 					</li>
 					<?php
 				}
@@ -39,7 +39,7 @@
 			<?php }
 			if ($pagenum != $pages) { // Next page arrow ?>
 				<li class="arrow">
-					<a href="<?php echo $class->getURL($pagenum+1);?>">
+					<a href="<?php echo $class->getURL($pagenum+1);?>" data-page="<?php echo $pagenum+1; ?>" data-type="<?php echo $type; ?>" data-key="<?php echo $key; ?>">
 						Next &raquo;
 					</a>
 				</li>
@@ -48,5 +48,8 @@
 			<?php }
 		?>
 	</ul>
+	<div class="pagination-spin" style="display: none;">
+		<img src="<?php echo STANDARD_URL; ?>/img/loading.gif" alt="Loading">
+	</div>
 </div>
 <!-- End of page list -->

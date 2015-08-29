@@ -45,23 +45,27 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 			<?php endif; ?>
 	<!-- End of sidebar -->
 		<?php if (!empty($articles)) { ?>
-			<!-- Articles -->
-				<?php foreach($articles as $key => $article) {
-					$theme->render('components/articlelist/article_medium', array(
-						'article' => $article,
-						'show_authors' => true
+			<div class="pagination-content">
+				<?php
+					$theme->setHierarchy(array(
+						$user->getUser() // user_page-{user}.php
 					));
-				} ?> 
-			<!-- End of articles -->
-			
-			<!-- Page list -->
-			<?php $theme->render('components/pagination', array(
-				'pagenum' => $pagenum,
-				'class' => $user,
-				'pages' => $pages,
-				'span' => \FelixOnline\Core\Settings::get('articles_per_user_page')
-			)); ?>
-			<!-- End of page list -->
+
+					$theme->render('components/user_page');
+				?>
+
+				<!-- Page list -->
+				<?php $theme->render('components/pagination', array(
+					'pagenum' => $pagenum,
+					'class' => $user,
+					'pages' => $pages,
+					'span' => \FelixOnline\Core\Settings::get('articles_per_user_page'),
+					'type' => 'user',
+					'key' => $user->getUser()
+				)); ?>
+				<!-- End of page list -->
+			</div>
+			<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken('pagination'); ?>">
 		<?php } else { ?>
 			<p>Uh oh, <?php echo $user->getFirstName(); ?> has not written any articles for Felix. What a shame!</p>
 		<?php } ?>

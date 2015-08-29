@@ -23,62 +23,17 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 						<div class="felix-item-title felix-item-title felix-item-title-generic">
 							<h2>Articles</h2>
 						</div>
-						<?php foreach ($articles as $key => $article) { ?>
-							<?php
-							$theme->render('components/articlelist/article_medium', array(
-								'article' => $article,
-								'show_authors' => true
-							));
-							?>
-						<?php } ?>
-						<!-- Page list -->
-						<div class="pagination-centered">
-							<ul class="pagination" role="menubar" aria-label="Pagination">
-								<?php if ($page != 1) { // Previous page arrow ?>
-									<li class="arrow">
-										<?php echo '<a href="search/?q='.$query.'&p='.($page-1).'">'; ?>
-											&laquo; Previous
-										</a>
-									</li>
-								<?php } else { ?>
-									 <li class="arrow unavailable" aria-disabled="true"><a>&laquo; Previous</a></li>
-								<?php }		
-									$pages = ceil(($article_count - \FelixOnline\Core\Settings::get('articles_per_search_page'))/\FelixOnline\Core\Settings::get('articles_per_search_page')) + 1;
-									if ($pages>1) {
-										$span = \FelixOnline\Core\Settings::get('number_of_pages_in_page_list');
-										if ($pages > $span) {
-											if ($page >= ($span/2)) {
-												$start = ($page - $span/2)+1;
-												$limit = $page + $span/2;
-												if ($limit > $pages) {
-													$limit = $pages;
-													$start = $limit - $span;
-												}
-											} else {
-												$start = 1;
-												$limit = $span;
-											}
-										} else {
-											$limit = $pages;
-											$start = 1;
-										}
-										for ($i=$start;$i<=$limit;$i++)
-											echo (($page==$i)?'<li class="current">':('<li>')).'<a href="search/?q='.$query.'&p='.$i.'">'.$i.'</a></li>';
-									} else {
-										echo '<li class="current">1</li>';
-									}
-									if ($page != $pages) { // Next page arrow ?>
-										<li class="arrow">
-											<?php echo '<a href="search/?q='.$query.'&p='.($page+1).'">'; ?>
-												Next &raquo;
-											</a>
-										</li>
-									<?php } else { ?>
-										<li class="arrow unavailable" aria-disabled="true"><a>Next &raquo;</a></li>
-									<?php }
-								?>
-							</ul>
+
+						<div class="pagination-content">
+							<?php $theme->render('components/search_page'); ?>
+
+							<?php $theme->render('components/pagination_search', array(
+								'page' => $page,
+								'query' => $query
+							)); ?>
 						</div>
+
+						<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken('pagination'); ?>">
 					<?php } else { ?>
 						<div class="alert-box">No articles were found, but we did find some people - check the sidebar.</div>
 					<?php } ?>

@@ -50,6 +50,49 @@ $(document).ready(function() {
 		$('#comment').focus();
 		return false;  
 	});
+
+	//Paginator page
+	$(document).on("click", 'ul.pagination li a', function() {
+		var item = $(this);
+
+		if(!item.attr('data-page') || !item.attr('data-type') || !item.attr('data-key')) {
+			return true;
+		}
+
+		switch(item.attr('data-type')) {
+			case 'category':
+				var action = "get_category_page";
+				break;
+			case 'user':
+				var action = "get_user_page";
+				break;
+			case 'search':
+				var action = "get_search_page";
+				break;
+			default:
+				return true; // not supported yet
+				break;
+		}
+
+		// Run ajax
+		data = {
+			"action": action,
+			"token": $('#token').val(),
+			"check": "pagination",
+			"key": item.attr('data-key'),
+			"page": item.attr('data-page')
+		};
+
+		ajaxHelper(null, 'POST', data, '.pagination-spin', ['.pagination'], null, null, null, function(data, json) {
+			$('.pagination-content').html(json.content);
+
+			$('html, body').animate({
+				scrollTop: $("body").offset().top
+			}, 500);
+		});
+
+		return false;
+	});
 	
 	//Remove reply
 	$(document).on("click", "#removeReply", function() {

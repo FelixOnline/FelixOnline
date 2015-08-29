@@ -29,48 +29,25 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 
 	<!-- Category articles -->
 		<div class="row">
-			<div class="medium-8 columns">
+			<div class="medium-8 columns pagination-content">
+
 			<?php
-				/* First page */
-				if($pagenum == 1) { 
-					if (count($articles) == 0) {
-						?>There are no articles in this category.<?php
-					} else {
-						foreach($articles as $key => $article) {
-							if($key == 0) { // top story 
-								$theme->render('components/articlelist/article_large', array(
-									'article' => $article,
-									'show_authors' => true
-								));
-							} else { // middle stories 
-								$theme->render('components/articlelist/article_medium', array(
-									'article' => $article,
-									'show_authors' => true
-								));
-							}
-						}
-					}
-				} else {
-					/* Not first page */
-					if (count($articles) == 0) {
-						 ?> Could not find any articles.<?php
-					} else {
-						foreach($articles as $article) {
-							$theme->render('components/articlelist/article_medium', array(
-								'article' => $article,
-								'show_authors' => true
-							));
-						}
-					}
-				}
+				$theme->setHierarchy(array(
+					$category->getCat() // category_page-{cat}.php
+				));
+
+				$theme->render('components/category_page');
 			?>
 
 			<?php $theme->render('components/pagination', array(
 				'pagenum' => $pagenum,
 				'class' => $category,
 				'pages' => $pages,
-				'span' => \FelixOnline\Core\Settings::get('number_of_pages_in_page_list')
+				'span' => \FelixOnline\Core\Settings::get('number_of_pages_in_page_list'),
+				'type' => 'category',
+				'key' => $category->getCat()
 			)); ?>
+
 			</div>
 			<div class="medium-4 columns">
 				<?php $theme->render('sidebar/contactSection', array('section' => $category)); ?>
@@ -82,6 +59,8 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 				<?php $theme->render('sidebar/twitter'); ?>
 			</div>
 		</div>
+		<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken('pagination'); ?>">
+
 	<!-- End of category articles -->
 
 <?php
