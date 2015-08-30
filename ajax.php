@@ -46,6 +46,16 @@ if($action = $hooks->getAction($action)) {
 	}
 	// Check if it is an ajax request
 	if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+		if(isset($return['error']) && $return['error']) {
+			header("HTTP/1.1 500 Internal Server Error");
+		} else {
+			header("HTTP/1.1 200 OK");
+		}
+
+		header("Cache-Control: no-cache, must-revalidate", false);
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT", false);
+		header("Content-Type: text/json", false);
+
 		$return['newtoken'] = Utility::generateCSRFToken($check);
 		$return = json_encode($return);
 		echo $return;

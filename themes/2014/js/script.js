@@ -295,7 +295,7 @@ $(document).ready(function() {
 			async:true,
 			success: function(msg){
 				try {
-					var message = JSON.parse(msg);
+					var message = msg;
 				} catch(err) {
 					var message = {};
 					message.error = err;
@@ -339,13 +339,25 @@ $(document).ready(function() {
 				return true;
 			},
 			error: function(msg){
-				error(msg, failbox);
-				
+				try {
+					var message = JSON.parse(msg.responseText);
+				} catch(err) {
+					var message = {};
+					message.error = err;
+					message.reload = false;
+				}
+
+				if(message.validator) {
+					handleValidation(message.validator_data, form);
+				}
+			console.log(msg);	
+				error(message.details, failbox);
+
 				if(message.reload) {
 					location.reload();
 				}
-				$(token_name).val(message.newtoken);
 				hideEnd(hideme, showme, spinner);
+				$(token_name).val(message.newtoken);
 				return false;
 			}
 		});
