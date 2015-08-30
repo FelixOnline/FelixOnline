@@ -78,6 +78,36 @@ $(document).ready(function() {
 
 	});
 
+	//Post comment
+	$(document).on("click", '.comment-form input[type="submit"]', function() {
+		var data = {
+			"action": "post_comment",
+			"token": $('#new-token').val(),
+			"check": "new_comment",
+			"article": $('.comment-form input[name="article"]').val(),
+			"name": $('.comment-form input[name="name"]').val(),
+			"email": $('.comment-form input[name="email"]').val(),
+			"comment": $('.comment-form textarea[name="comment"]').val(),
+			"reply_to": $('.comment-form input[name="replyComment"]').val()
+		};
+
+		ajaxHelper(null, 'POST', data, '.comment-form-spin', ['.comment-form'], null, null, '.ajax-comment-error', function(data, response) {
+			if(!response.content) {
+				$('.ajax-comment-error').text(response.details);
+				$('.ajax-comment-error').show();
+			} else {
+				$('.article-comment').last().before(response.content);
+			}
+
+			if(response.clearform) {
+				$('.comment-form').trigger("reset");
+				$('#commentReply').remove();
+			}
+		}, '#new-token');
+
+		return false;
+	});
+
 	// Callback runs at end of pagination ajax
 	function handlePaginator(item, callback) {
 		if(!item.attr('data-page') || !item.attr('data-type') || !item.attr('data-key')) {
@@ -122,7 +152,7 @@ $(document).ready(function() {
 	
 	/* AJAX Helper */
 
-	function ajaxHelper(form, method, data, spinner, hideme, showme, successbox, failbox, callback) {
+	function ajaxHelper(form, method, data, spinner, hideme, showme, successbox, failbox, callback, token_name) {
 		method = method || 'POST';
 		data = data || {};
 		spinner = spinner || null;
@@ -131,6 +161,7 @@ $(document).ready(function() {
 		successbox = successbox || null;
 		failbox = failbox || null;
 		callback = callback || null;
+		token_name = token_name || "#token";
 		
 		// hidemes are hidden during the AJAX call and are shown again at the end
 		// showme are shown at the beginning of the call and are hidden at the end
@@ -144,6 +175,14 @@ $(document).ready(function() {
 				$(obj).show();
 			});
 			
+			if(successbox) {
+				$(successbox).show();
+			}
+
+			if(failbox) {
+				$(failbox).hide();
+			}
+
 			if(spinner != null) {
 				$(spinner).show();
 			}
@@ -166,7 +205,7 @@ $(document).ready(function() {
 		function error(error, failbox) {
 			if(failbox != null) {
 				$(failbox).text(error);
-				$(failbox).toggle();
+				$(failbox).show();
 			} else {
 				alert(error);
 			}
@@ -208,12 +247,12 @@ $(document).ready(function() {
 						location.reload();
 					}
 					hideEnd(hideme, showme, spinner);
-					$('#token').val(message.newtoken);
+					$(token_name).val(message.newtoken);
 					return false;
 				}
 				
 				// Set new token
-				$('#token').val(message.newtoken);
+				$(token_name).val(message.newtoken);
 
 				hideEnd(hideme, showme, spinner);
 				
@@ -229,7 +268,7 @@ $(document).ready(function() {
 						$(successbox).text('Success');
 					}
 					
-					$(successbox).toggle();
+					$(successbox).show();
 				}
 								
 				return true;
@@ -240,7 +279,7 @@ $(document).ready(function() {
 				if(message.reload) {
 					location.reload();
 				}
-				$('#token').val(message.newtoken);
+				$(token_name).val(message.newtoken);
 				hideEnd(hideme, showme, spinner);
 				return false;
 			}
@@ -295,7 +334,7 @@ $(document).ready(function() {
 	
 	function rateComment(cobj, action) {
 		var comment = $(cobj).parents('.comment-meta').attr('id');
-		var token = $(cobj).parents('.comment-meta').find('#token').val();
+		var token = $('#token-rate-'+comment).val();
 		var check = comment+'ratecomment';
 		
 		data = {};
@@ -400,7 +439,7 @@ $(document).ready(function() {
 
 	function abuseComment(cobj) {
 		var comment = $('#bad-comment-id').html();
-		var token = $('#'+comment).find('#token').val();
+		var token = $('#token-rate-'+comment).val();
 		var check = comment+'ratecomment';
 
 		data = {};

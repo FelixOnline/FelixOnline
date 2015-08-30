@@ -13,7 +13,7 @@
 			<b class="comment-author"><?php echo $comment->getName(); ?></b> • 
 			<?php echo date('l F d Y H:i', $comment->getTimestamp()); ?>
 			<?php if(!$comment->isRejected()) { ?> • 
-				<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken($comment->getId().'ratecomment'); ?>"/>
+				<input type="hidden" name="token-rate-<?php echo $comment->getId();?>" id="token-rate-<?php echo $comment->getId();?>" value="<?php echo Utility::generateCSRFToken($comment->getId().'ratecomment'); ?>"/>
 				<span id="comment-<?php echo $comment->getId(); ?>-like">
 					<?php if (!$currentuser->isLoggedIn()) { ?>
 						<a href="#" data-reveal-id="loginModal" class="likeComment"><b>LIKE</b></a>

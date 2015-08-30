@@ -25,7 +25,7 @@ function contact_us($data) {
 			$failed_fields[] = $failedField;
 		}
 		
-		return array(error => true, details => 'There has been an issue with some of your data, please check the highlighted fields and try again', validator => true, validator_data => $failed_fields);
+		return array("error" => true, "details" => 'There has been an issue with some of your data, please check the highlighted fields and try again', validator => true, validator_data => $failed_fields);
 	}
 
 	$email = \Swift_Message::newInstance(); 
@@ -246,6 +246,44 @@ function get_user_page($data) {
 	ob_end_clean();
 
 	return (array('error' => false, 'content' => $output));
+}
+
+$hooks->addAction('post_comment', 'post_comment');
+function post_comment($data) {
+	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
+	require_once(BASE_DIRECTORY.'/controllers/articleController.php');
+
+	try {
+		$article = new \FelixOnline\Core\Article($data['article']);
+
+		ArticleController::checkAccess($article);
+
+		$status = ArticleController::postComment($article, $data['name'], $data['email'], $data['comment'], $data['reply_to']);
+	} catch(\Exception $e) {
+		return (array('error' => true, 'details' => 'An internal error occured so your comment could not be posted.', 'clearform' => false));
+	}
+
+	if(count($status['errors']) > 0) {
+		return (array('error' => true, 'details' => implode(' ', $status['errors']), 'clearform' => false));
+	}
+
+	if($status['validationcode']) {
+		return (array('error' => false, 'details' => 'Thank you for your comment, you now need to validate your email before your comment will show up. Check your inbox for a validation code.', 'clearform' => true));
+	}
+
+	$theme = new \FelixOnline\Core\Theme(2014);
+
+	// Render the output to a buffer
+	ob_start();
+
+	// Reload the comment object to get the correct timestamp and so forth
+	$theme->render('components/comment', array('comment' => (new \FelixOnline\Core\Comment($status['comment']->getId())), 'article' => $article));
+
+	$output = ob_get_contents();
+
+	ob_end_clean();
+
+	return (array('error' => false, 'content' => $output, 'clearform' => true));
 }
 
 $hooks->addAction('get_search_page', 'get_search_page');

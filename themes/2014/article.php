@@ -116,7 +116,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 							<?php if (!$currentuser->isLoggedIn()) { ?>
 								<h4>Comment anonymously or <a href="#" data-reveal-id="loginModal">log in</a></h4>
 								<div id="info">
-									<p>If you do not log in, your details will be sent to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
+									<p>If you do not log in, your details will be sent to <a href="http://akismet.com/">Akismet</a> for spam detection purposes. If you do not log in, you will also need to verify your email address by clicking a link we send you. You will only need to do this once per email address.</p>
 									<p>Read our <a href="#" data-reveal-id="commentPolicy">commenting policy</a> for more information and for details on how we moderate.</p>
 								</div>
 							<?php } else { ?>
@@ -125,36 +125,25 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 								<p>Read our <a href="#" data-reveal-id="commentPolicy">commenting policy</a> for more information and for details on how we moderate.</p>
 							<?php } ?>
 
-							<?php if(isset($errorempty) || isset($errorduplicate) || isset($erroremail) || isset($errorspam) ||isset($validationcode) || isset($errorinsert) || isset($errorconnection)): ?>
+							<?php if(isset($comment_status)): ?>
 							<!-- Errors -->
 							<div class="alert-box">
-								<?php if(isset($errorempty) && $errorempty) { ?>
-									Don't forget to write a comment.
-								<?php } ?>
-								<?php if(isset($errorduplicate) && $errorduplicate) { ?>
-									Looks like the comment you have just submitted is a duplicate. Please write something original and try again.
-								<?php } ?>
-								<?php if(isset($erroremail) && $erroremail) { ?>
-									You need to give you email address. If you haven't, there's something wrong with what you have given us. Don't worry, this won't be published.
-								<?php } ?>
-								<?php if(isset($errorspam) && $errorspam) { ?>
-									Our spam filters have flagged your comment as suspicious. If you are not a spammer then please <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.
-								<?php } ?>
-								<?php if(isset($errorinsert) && $errorinsert) { ?>
-									Uh oh. Looks like an error has occurred. Hopefully it is just a temporary problem so try submitting your comment again. If that still hasn't done the trick then <a href="<?php echo STANDARD_URL.'contact/'; ?>">contact us</a>.
-								<?php } ?>
-								<?php if (isset($errorconnection) && $errorconnection) { ?>
-									Sorry it looks like we are having trouble with our anti spam service. Please try again later.
-								<?php } ?>
-								<?php if (isset($validationcode) && $validationcode) { ?>
-									Thank you for your comment, you now need to validate your email before it will show up. Check your inbox for a validation code.
-									<?php $_POST = array(); /* Clear form */ ?>
-								<?php } ?>
+								<?php echo $comment_status; ?>
 							</div>
-							<!-- End of errors -->
 							<?php endif; ?>
 
-							<form method="post" action="<?php echo Utility::currentPageURL();?>#commentForm">
+							<?php if($comment_validate_email): ?>
+							<!-- Email Validation -->
+							<div class="alert-box">
+								Thank you for your comment, you now need to validate your email before your comment will show up. Check your inbox for a validation code.
+								<?php $_POST = array(); /* Clear form */ ?>
+							</div>
+							<?php endif; ?>
+
+							<div class="alert-box ajax-comment-error" style="display: none;">
+							</div>
+
+							<form method="post" action="<?php echo Utility::currentPageURL();?>#commentForm" class="comment-form">
 								<div class="row">
 									<div class="large-9 small-12 columns">
 										<div class="row">
@@ -193,16 +182,23 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 												<textarea name="comment" id="comment" rows="4"><?php if(isset($_POST['comment'])) echo $_POST['comment']; ?></textarea>
 											</div>
 										</div>
+										<input type="hidden" name="article" value="<?php echo $article->getId(); ?>">
 										<div class="row">
 											<div class="medium-3 columns">
 											</div>
 											<div class="medium-4 columns">
-												<input type="submit" class="button postfix radius" value="Post comment">
+												<input type="submit" class="button postfix" value="Post comment">
 											</div>
 										</div>
 									</div>
 								</div>
 							</form>
+
+							<div class="comment-form-spin" style="display: none;">
+								<img src="<?php echo STANDARD_URL; ?>/img/loading.gif" alt="Loading">
+							</div>
+
+							<input type="hidden" name="new-token" id="new-token" value="<?php echo Utility::generateCSRFToken('new_comment'); ?>"/>
 
 							<!-- Commenting policy -->
 							<?php $theme->render('components/commentPolicy'); ?>
