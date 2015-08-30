@@ -18,7 +18,8 @@
 					<?php if (!$currentuser->isLoggedIn()) { ?>
 						<a href="#" data-reveal-id="loginModal" class="likeComment"><b>LIKE</b></a>
 					<?php } else {
-						if ($liked = $comment->userLikedComment($currentuser)) echo '<b>LIKED</b>'; // if user has already liked or disliked comment then remove link
+						if ($comment->userLikedComment($currentuser)) echo '<b>YOU LIKED THIS</b>';
+						elseif ($comment->userDislikedComment($currentuser)) echo '<b>LIKES</b>';
 						else {?>
 							<a href="<?php echo Utility::currentPageURL();?>#" id="like"><b>LIKE</b></a>
 					<?php } } ?>
@@ -29,7 +30,8 @@
 					<?php if (!$currentuser->isLoggedIn()) { ?>
 						<a href="#" data-reveal-id="loginModal" class="dislikeComment"><b>DISLIKE</b></a>
 					<?php } else {
-						if ($liked) echo '<b>DISLIKED</b>';
+						if ($comment->userDislikedComment($currentuser)) echo '<b>YOU DISLIKED THIS</b>';
+						elseif ($comment->userLikedComment($currentuser)) echo '<b>DISLIKES</b>';
 						else {?>
 							<a href="<?php echo Utility::currentPageURL();?>#" id="dislike"><b>DISLIKE</b></a>
 					<?php } }?>
