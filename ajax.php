@@ -39,9 +39,9 @@ if($action = $hooks->getAction($action)) {
 		$return = call_user_func($action, $clean_request);
 	} catch (ValidatorException $e) {
 		if($e->getMessage() == 1 && key($e->getData()) == 'csrf') {
-			$return = array(error => true, details => 'A security error has occured, this page will now be reloaded', reload => true);
+			$return = array("error" => true, "details" => 'A security error has occured, this page will now be reloaded', "reload" => true);
 		} else {
-			$return = array(error => true, details => $e->getMessage().' '.json_encode($e->getData()));
+			$return = array("error" => true, "details" => $e->getMessage().' '.json_encode($e->getData()));
 		}
 	}
 	// Check if it is an ajax request

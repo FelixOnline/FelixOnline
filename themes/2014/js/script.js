@@ -130,6 +130,47 @@ $(document).ready(function() {
 		return false;
 	});
 
+	//Ajax login
+	$(document).on("click", '.login-button', function() {
+		var pollid = $(this).attr('data-poll');
+
+		var data = {
+			"action": "login_authenticate",
+			"token": $('#login-token').val(),
+			"check": "login",
+			"username": $('#loginForm input[name="username"]').val(),
+			"password": $('#loginForm input[name="password"]').val(),
+			"commenttype": $('#loginForm input[name="commenttype"]').val(),
+			"comment": $('#loginForm input[name="comment"]').val()
+		};
+
+		ajaxHelper(null, 'POST', data, '.login-spin', ['#loginForm'], null, null, '.ajax-login-error', function(data, response) {
+			// We can assume a succesful login. We now need to load in the session
+
+			if(response.hash) {
+				var direction = $('#loginForm input[name="goto"]').val() + '#' + response.hash;
+			} else {
+				var direction = $('#loginForm input[name="goto"]').val();
+			}
+
+			var data = {
+				"action": "login_session",
+				"token": $('#login-token').val(),
+				"check": "login",
+				"session": response.session
+			};
+
+			ajaxHelper(null, 'POST', data, '.login-spin', ['#loginForm'], null, '.ajax-login-error', '.ajax-login-error', function(data, response) {
+				$('#loginForm .row .columns .row').each(function() { $(this).remove(); });
+
+				window.location.replace(direction);
+			}, '#login-token');
+
+		}, '#login-token', $('#loginForm input[name="endpoint"]').val());
+
+		return false;
+	});
+
 
 	// Callback runs at end of pagination ajax
 	function handlePaginator(item, callback) {
@@ -175,7 +216,7 @@ $(document).ready(function() {
 	
 	/* AJAX Helper */
 
-	function ajaxHelper(form, method, data, spinner, hideme, showme, successbox, failbox, callback, token_name) {
+	function ajaxHelper(form, method, data, spinner, hideme, showme, successbox, failbox, callback, token_name, endpoint) {
 		method = method || 'POST';
 		data = data || {};
 		spinner = spinner || null;
@@ -185,6 +226,7 @@ $(document).ready(function() {
 		failbox = failbox || null;
 		callback = callback || null;
 		token_name = token_name || "#token";
+		endpoint = endpoint || "ajax.php";
 		
 		// hidemes are hidden during the AJAX call and are shown again at the end
 		// showme are shown at the beginning of the call and are hidden at the end
@@ -247,7 +289,7 @@ $(document).ready(function() {
 		hideStart(hideme, showme, spinner);
 		
 		$.ajax({
-			url: "ajax.php",
+			url: endpoint,
 			type: method,
 			data: data,
 			async:true,

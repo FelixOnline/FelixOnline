@@ -18,22 +18,29 @@ class AuthController extends BaseController {
 	/*
 	 *
 	 */
+	static function restoreSession($session, $remember = false) {
+		global $currentuser;
+		// check if session is recent and that ip is the same
+		$loginCheck = $currentuser->restoreSession($session);
+
+		if($loginCheck === TRUE) {
+			if($remember == 'rememberme') {
+				$currentuser->setCookie();
+			}
+			
+			return true;
+		} else {
+			throw new FrontendException("Internal error - the session is not valid for this user.");
+		}
+		// show main exception page if something goes wrong here - do not catch!!!
+	}
+
 	function GET($matches) {
 		global $currentuser;
 		if(isset($_GET['session'])) { // catch login
-			// check if session is recent and that ip is the same
-			$loginCheck = $currentuser->restoreSession($_GET['session']);
-
-			if($loginCheck === TRUE) {
-				if($_GET['remember'] == 'rememberme') {
-					$currentuser->setCookie();
-				}
-				
+			if(self::restoreSession($_GET['session'], $_GET['remember'])) {
 				Utility::redirect($_GET['goto']);
-			} else {
-				throw new FrontendException("Internal error - the session is not valid for this user - ".implode(' ', $loginCheck));
 			}
-			// show main exception page if something goes wrong here - do not catch!!!
 		} elseif(isset($_GET['logout'])) {
 			$this->logout();
 			Utility::redirect($_GET['goto']);
@@ -51,48 +58,53 @@ class AuthController extends BaseController {
 		}
 	}
 
-	/*
-	 * 
-	 */
-	function POST($matches) {
+	static function createSession($username, $password, $commenttype = null, $comment = null) {
 		global $currentuser;
+
+		if(self::authenticate($username, $password)) {
+			$currentuser->setUser($username);
+			$currentuser->createSession();
+
+			// comment like/dislike
+			if(isset($commenttype) && isset($comment)) {
+				$comment = new \FelixOnline\Core\Comment($comment);
+				if($commenttype == 'like') {
+					$comment->likeComment($currentuser);
+				} else if($commenttype == 'dislike') {
+					$comment->dislikeComment($currentuser);
+				}
+				$hash = $comment->getId();
+			}
+
+			$currentuser->syncLdap(); // Update email etc.
+
+			// Close the session here, as we do not want lingering sessions on the auth server
+			$session = $currentuser->stashSession();
+
+			return array("session" => $session, "hash" => $hash);
+		} else {
+			throw new Exceptions\InternalException("Invalid credentials");
+			// Catch this elsewhere
+		}
+	}
+
+	function POST($matches) {
 		if(isset($_POST['username']) && isset($_POST['password'])) {
 			try {
-  			  if($this->authenticate($_POST['username'], $_POST['password'])) {
-  			  		$currentuser->setUser($_POST['username']);
-  			  		$currentuser->createSession();
+				$session = self::createSession($_POST['username'], $_POST['password'], $_POST['commenttype'], $_POST['comment']);
 
-					// comment like/dislike
-					if(isset($_POST['commenttype']) && isset($_POST['comment'])) {
-						$comment = new \FelixOnline\Core\Comment($_POST['comment']);
-						if($_POST['commenttype'] == 'like') {
-							$comment->likeComment($currentuser);
-						} else if($_POST['commenttype'] == 'dislike') {
-							$comment->dislikeComment($currentuser);
-						}
-						$hash = $comment->getId();
-					}
-
-					$currentuser->syncLdap(); // Update email etc.
-					
-					// Close the session here, as we do not want lingering sessions on the auth server
-					$session = $currentuser->stashSession();
-	
-					Utility::redirect(STANDARD_URL.'login/', array(
-						'session' => $session,
-						'remember' => $_POST['remember'],
-						'goto' => $_GET['goto']
-					), $hash);
-			  } else {
-					throw new Exceptions\InternalException("Invalid credentials");
-					// Catch this elsewhere
-		 	  }
+		 		Utility::redirect(STANDARD_URL.'login/', array(
+					'session' => $session['session'],
+					'remember' => $_POST['remember'],
+					'goto' => $_GET['goto']
+				), $session['hash']);
 	 		} catch (Exceptions\InternalException $e) {
 				Utility::redirect(STANDARD_URL.'login', array(
 					'failed' => true
 				));
 			}
 		}
+
 		if(isset($_POST['logout'])) {
 			$this->logout();
 			Utility::redirect($_GET['goto']);
@@ -100,9 +112,9 @@ class AuthController extends BaseController {
 	}
 
 	/*
-	 * Private: Authenticate user
+	 * Authenticate user
 	 */
-	private function authenticate($username, $password) {
+	static function authenticate($username, $password) {
 		global $currentuser;
 		if(!LOCAL) { // if executed on union servers
 			/* authenticate user using global function pam_auth - returns true

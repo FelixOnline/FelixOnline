@@ -326,6 +326,54 @@ function poll_vote($data) {
 	return (array('error' => false, 'content' => $output));
 }
 
+$hooks->addAction('login_authenticate', 'login_authenticate');
+function login_authenticate($data) {
+	// AUTH SERVER FUNCTION
+
+	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
+	require_once(BASE_DIRECTORY.'/controllers/authController.php');
+
+	// Cross domain AJAX - verify origin
+	if(stripos($_SERVER['HTTP_ORIGIN'], STANDARD_URL) === 0 || STANDARD_URL == AUTHENTICATION_PATH) {
+		// If at start of string, accept CORS
+		header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN'] . "", false);
+	} else {
+		return (array('error' => true, 'details' => 'You are not permitted to access this endpoint.'.AUTHENTICATION_PATH.'-'.STANDARD_URL, 'reload' => false));
+	}
+
+	// Sanity check
+	if($data['username'] == '' || $data['password'] == '') {
+		return (array('error' => true, 'details' => 'Please provide your username and password'));
+	}
+
+	// Log the user in and get the session ID. We will then pass the session back to be reloaded on the right side.
+	try {
+		$output = AuthController::createSession($data['username'], $data['password'], $data['commenttype'], $data['comment']);
+	} catch(\Exception $e) {
+		return (array('error' => true, 'details' => $e->getMessage()));
+	}
+
+	return (array('error' => false, 'session' => $output['session'], 'hash' => $output['hash']));
+}
+
+$hooks->addAction('login_session', 'login_session');
+function login_session($data) {
+	// NON-AUTH SERVER FUNCTION
+
+	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
+	require_once(BASE_DIRECTORY.'/controllers/authController.php');
+
+	// Reload the session ID we have been given from the auth server to complete the login
+	try {
+		AuthController::restoreSession($data['session'], $data['remember']);
+	} catch(\Exception $e) {
+		return (array('error' => true, 'details' => 'Login failed, please try again.'));
+	}
+
+	return (array('error' => false, 'success' => 'You have been logged in. Please wait...'));
+}
+
+
 $hooks->addAction('get_search_page', 'get_search_page');
 function get_search_page($data) {
 	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
