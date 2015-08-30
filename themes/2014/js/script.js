@@ -108,6 +108,29 @@ $(document).ready(function() {
 		return false;
 	});
 
+	//Poll vote
+	$(document).on("click", '.poll-option', function() {
+		var pollid = $(this).attr('data-poll');
+
+		var data = {
+			"action": "poll_vote",
+			"token": $('#poll-token').val(),
+			"check": "poll_vote",
+			"article": $(this).attr('data-article'),
+			"poll": $(this).attr('data-poll'),
+			"option": $(this).attr('data-option')
+		};
+
+		ajaxHelper(null, 'POST', data, '.poll-spin-'+pollid, ['.poll-form-'+pollid], null, null, null, function(data, response) {
+			$('.poll-area-'+pollid).each(function() {
+				$(this).html(response.content);	
+			});
+		}, '#poll-token');
+
+		return false;
+	});
+
+
 	// Callback runs at end of pagination ajax
 	function handlePaginator(item, callback) {
 		if(!item.attr('data-page') || !item.attr('data-type') || !item.attr('data-key')) {

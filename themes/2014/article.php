@@ -213,6 +213,8 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 					<!-- End of comment form -->
 				</div>
 
+				<input type="hidden" name="poll-token" id="poll-token" value="<?php echo Utility::generateCSRFToken('poll_vote'); ?>"/>
+
 				<div id="abuseModal" class="reveal-modal medium" data-reveal>
 					<div class="row">
 						<div class="medium-12 small-12 columns">

@@ -286,6 +286,46 @@ function post_comment($data) {
 	return (array('error' => false, 'content' => $output, 'clearform' => true));
 }
 
+$hooks->addAction('poll_vote', 'poll_vote');
+function poll_vote($data) {
+	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
+	require_once(BASE_DIRECTORY.'/controllers/articleController.php');
+
+	try {
+		$article = new \FelixOnline\Core\Article($data['article']);
+
+		ArticleController::checkAccess($article);
+
+		$poll = new \FelixOnline\Core\Poll($data['poll']);
+
+		$status = ArticleController::voteOnPoll($article, $poll, $data['option']);
+	} catch(\Exception $e) {
+		return (array('error' => true, 'details' => 'An internal error occured so your vote could not be cast.'));
+	}
+
+	$theme = new \FelixOnline\Core\Theme(2014);
+
+	// Render the output to a buffer
+	ob_start();
+
+	$poll = $status['poll'];
+
+	// The poll will not render if the bottom/top status is incorrect
+	if($poll->getLocation() != 0) {
+		$bottom = true;
+	} elseif($poll->getLocation() != 1) {
+		$bottom = false;
+	}
+
+	$theme->render('components/poll', array('poll' => $poll, 'article' => $article, 'bottom' => $bottom));
+
+	$output = ob_get_contents();
+
+	ob_end_clean();
+
+	return (array('error' => false, 'content' => $output));
+}
+
 $hooks->addAction('get_search_page', 'get_search_page');
 function get_search_page($data) {
 	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
