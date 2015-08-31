@@ -16,6 +16,7 @@ $theme->render('components/header', $header);
 		</div>
 <!-- Archive wrapper -->
 <div class="row">
+	<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 	<div class="medium-3 columns medium-push-9">
 		<!-- Search -->
 		<div id="archivesearchbar" class="medium">
@@ -28,6 +29,7 @@ $theme->render('components/header', $header);
 			</form>
 			<a href="<?php STANDARD_URL; ?>issuearchive" class="button small">Back to Issue Archive</a>
 		</div>
+		<?php $theme->render('components/advert', array('sidebar' => true)); ?>
 	</div>
 	<div class="medium-9 medium-pull-3 columns">
 		<div class="felix-item-title felix-item-title felix-item-title-generic">

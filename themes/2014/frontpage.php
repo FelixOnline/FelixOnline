@@ -11,6 +11,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => false));
 
 ?>
 		<div class="row felix-pad-top">
+			<?php $theme->render('components/advert', array('sidebar' => false)); ?>
 			<div class="medium-8 columns">
 				<div class="felix-featured-slider">
 					<?php
@@ -118,6 +119,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => false));
 						));
 					}
 				?>
+				<?php $theme->render('components/advert', array('sidebar' => true, 'article' => false, 'section' => false)); ?>
 				<div class="felix-item-title felix-item-title felix-item-title-cands">
 					<h3>Clubs and Socs</h3>
 				</div>

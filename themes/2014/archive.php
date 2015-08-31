@@ -15,7 +15,8 @@ $theme->render('components/header', $header);
 			</div>
 		</div>
 <!-- Archive wrapper -->
-<div class="row">
+<div class="row felix-pad-top">
+	<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 	<div class="medium-3 columns medium-push-9">
 		<!-- Search -->
 		<div id="archivesearchbar" class="medium">
@@ -44,6 +45,7 @@ $theme->render('components/header', $header);
 		</dl>
 		<br>
 		<p>The issue archive was made possible through kind donations from <a href="http://www.imperialcollegeunion.org/">Imperial College Union</a> and the IC Trust.</p>
+		<?php $theme->render('components/advert', array('sidebar' => true)); ?>
 	</div>
 	<div class="medium-9 medium-pull-3 columns">
 		<dl class="tabs archive-years">

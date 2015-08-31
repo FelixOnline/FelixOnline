@@ -4,6 +4,9 @@ $header = array(
 ); 
 
 $theme->render('components/header', $header);
+
+$theme->render('components/noticeBlock', array('no_frontpage_only' => true));
+
 ?>
 <!-- Page wrapper -->
 <div class="container_12">

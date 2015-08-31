@@ -35,6 +35,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 
 ?>
 		<div class="row felix-pad-top">
+			<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 			<div class="medium-8 columns">
 				<div class="article-title-area">
 					<h1><?php echo $article->getTitle(); ?></h1>
@@ -248,7 +249,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 					<?php $theme->render('sidebar/shareArticle', array('article' => $article, 'hidetitle' => false)); ?>
 				</div>
 				
-				<?php $theme->render('sidebar/advert'); ?>
+				<?php $theme->render('components/advert', array('sidebar' => true)); ?>
 
 				<?php $theme->render('sidebar/contributionPolicy', array('category' => $article->getCategory())); ?>
 

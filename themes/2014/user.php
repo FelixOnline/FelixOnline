@@ -37,6 +37,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 			</div>
 		</div>
 	<div class="row">
+		<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 		<div class="medium-8 columns">
 			<?php if ($currentuser->getUser() == $user->getUser()): ?>
 				<?php
@@ -135,6 +136,8 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 				<center><a href="#" data-reveal-id="editProfileModal" class="button small radius">Update your details</a></center>
 			<?php endif; ?>
 		</div>
+
+		<?php $theme->render('components/advert', array('sidebar' => true)); ?>
 
 		<?php if ($article_count > 2 && $popular_articles) { ?>
 			<div class="felix-item-title felix-item-title felix-item-title-generic">

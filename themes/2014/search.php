@@ -11,6 +11,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 
 ?>
 	<div class="row felix-pad-top">
+		<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 		<div class="medium-8 columns">
 			<?php if (isset($toofew) && $toofew == true) { ?>
 				<div class="alert-box">Uh oh! You did not specify enough search terms. Please try again!</div>
@@ -51,6 +52,8 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 					<?php } ?>
 				</ul>
 			<?php } ?>
+
+			<?php $theme->render('components/advert', array('sidebar' => true)); ?>
 
 			<?php $theme->render('sidebar/contributionPolicy'); ?>
 

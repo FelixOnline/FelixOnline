@@ -29,28 +29,31 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 
 	<!-- Category articles -->
 		<div class="row">
-			<div class="medium-8 columns pagination-content">
+			<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
+			<div class="medium-8 columns">
+				<div class="pagination-content">
+					<?php
+						$theme->setHierarchy(array(
+							$category->getCat() // category_page-{cat}.php
+						));
 
-			<?php
-				$theme->setHierarchy(array(
-					$category->getCat() // category_page-{cat}.php
-				));
+						$theme->render('components/category_page');
+					?>
 
-				$theme->render('components/category_page');
-			?>
-
-			<?php $theme->render('components/pagination', array(
-				'pagenum' => $pagenum,
-				'class' => $category,
-				'pages' => $pages,
-				'span' => \FelixOnline\Core\Settings::get('number_of_pages_in_page_list'),
-				'type' => 'category',
-				'key' => $category->getCat()
-			)); ?>
-
+					<?php $theme->render('components/pagination', array(
+						'pagenum' => $pagenum,
+						'class' => $category,
+						'pages' => $pages,
+						'span' => \FelixOnline\Core\Settings::get('number_of_pages_in_page_list'),
+						'type' => 'category',
+						'key' => $category->getCat()
+					)); ?>
+				</div>
 			</div>
 			<div class="medium-4 columns">
 				<?php $theme->render('sidebar/contactSection', array('section' => $category)); ?>
+
+				<?php $theme->render('components/advert', array('sidebar' => true)); ?>
 
 				<?php $theme->render('sidebar/contributionPolicy', array('section' => $category)); ?>
 

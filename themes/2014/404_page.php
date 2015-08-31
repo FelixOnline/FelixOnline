@@ -14,6 +14,7 @@ $theme->render('components/header', $header);
 	<!-- Article wrapper -->
 	<div class="row felix-pad-top">
 		<div class="small-12 columns">
+			<?php $theme->render('components/advert', array('sidebar' => false)); ?>
 			<h1>Sorry, couldn't find that</h1>
 			<p>We are sorry, we couldn't find what you were looking for.</p>
 			<ul>

@@ -10,6 +10,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 ?>
 <!-- Page wrapper -->
 	<div class="row felix-pad-top">
+		<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 		<div class="medium-8 columns">
 			<h1><?php echo $page->getTitle(); ?></h1>
 			<div class="content">
@@ -22,6 +23,8 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 			</div>
 		</div>
 		<div class="medium-4 columns">
+				<?php $theme->render('components/advert', array('sidebar' => true)); ?>
+				
 				<?php $theme->render('sidebar/contributionPolicy'); ?>
 
 				<?php $theme->render('sidebar/mostPopular'); ?>

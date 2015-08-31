@@ -1500,3 +1500,13 @@ div.felix-contribute a {
 .article-user-pic {
 	max-height: 55px;
 }
+
+.external-img-top {
+	margin-top: -16px;
+	margin-bottom: 16px;
+}
+
+.external-img-side {
+	margin-top: 0px;
+	margin-bottom: 16px;
+}
