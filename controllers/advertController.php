@@ -9,7 +9,7 @@ use \FelixOnline\Core\Advert;
 class AdvertController extends BaseController {
 	function GET($matches) {
 		try {
-			$advert = new Link($matches['advert']);
+			$advert = new Advert($matches['advert']);
 
 			if(!$advert->getActive()) {
 				throw new Exceptions\InternalException('This advert is not currently active');
@@ -18,7 +18,7 @@ class AdvertController extends BaseController {
 			throw new NotFoundException(
 				$e->getMessage(),
 				$matches,
-				'LinkController',
+				'AdvertController',
 				null,
 				$e
 			);
