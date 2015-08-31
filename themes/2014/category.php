@@ -29,7 +29,6 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 
 	<!-- Category articles -->
 		<div class="row">
-			<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 			<div class="medium-8 columns">
 				<div class="pagination-content">
 					<?php

@@ -1,3 +1,5 @@
+			<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
+
 			<?php
 				/* First page */
 				if($pagenum == 1) { 

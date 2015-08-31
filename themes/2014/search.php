@@ -11,13 +11,14 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 
 ?>
 	<div class="row felix-pad-top">
-		<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 		<div class="medium-8 columns">
 			<?php if (isset($toofew) && $toofew == true) { ?>
+				<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 				<div class="alert-box">Uh oh! You did not specify enough search terms. Please try again!</div>
 			<?php } else { ?>
 				<div class="alert-box"><b>You searched for "<?php echo $query; ?>" and got <?php echo $article_count; ?> results.</b></div>
 				<?php if ($article_count == 0 && $people_count == 0) { ?>
+					<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 					<div class="alert-box">Uh oh! We couldn't find what you were looking for. Please try again!</div>
 				<?php } else { ?>
 					<?php if ($article_count !== 0) { ?>
@@ -36,6 +37,7 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 
 						<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken('pagination'); ?>">
 					<?php } else { ?>
+						<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 						<div class="alert-box">No articles were found, but we did find some people - check the sidebar.</div>
 					<?php } ?>
 				<?php } ?> 

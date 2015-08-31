@@ -37,7 +37,6 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 			</div>
 		</div>
 	<div class="row">
-		<div class="felix-pad-top"><?php $theme->render('components/advert', array('sidebar' => false)); ?></div>
 		<div class="medium-8 columns">
 			<?php if ($currentuser->getUser() == $user->getUser()): ?>
 				<?php
