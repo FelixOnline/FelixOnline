@@ -1,6 +1,6 @@
 <?php
 /**
- * Convert text fields to use Sir Trevor format
+ * Delete spam older than 30 days
  */
 
 date_default_timezone_set('Europe/London');
