@@ -8,7 +8,7 @@ date_default_timezone_set('Europe/London');
 require dirname(__FILE__) . '/../bootstrap.php';
 
 $manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Image', 'image');
-$manager->filter("width = 0", array(), array("height = 0", array()));
+$manager->filter("width = 0", array(), array(array("height = 0", array())));
 
 $values = $manager->values();
 
