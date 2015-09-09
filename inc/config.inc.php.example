@@ -7,7 +7,7 @@
 	 * Change these urls to your local versions, e.g http://localhost/felix
 	 */
 	define('STANDARD_URL','http://felixonline.local/');
-	define('ADMIN_URL','http://localhost/felix/engine/');
+	define('ADMIN_URL','http://localhost/felix/admin/');
 	define('AUTHENTICATION_SERVER','localhost'); // authentication server
 	define('AUTHENTICATION_PATH','http://localhost/felix/'); // authentication path
 	define('RELATIVE_PATH','/felix'); // relative path from root
