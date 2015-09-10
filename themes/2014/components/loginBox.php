@@ -8,8 +8,6 @@
 <div id="loginModal" class="reveal-modal small" data-reveal>
 <?php endif; ?>
 	<form action="<?php echo AUTHENTICATION_PATH; ?>login/?goto=<?php echo $location; ?>" id="loginForm" method="post">
-		<input type="hidden" name="goto" value="<?php echo $location; ?>">
-		<input type="hidden" name="endpoint" value="<?php echo AUTHENTICATION_PATH; ?>ajax.php">
 		<div class="row">
 			<div class="medium-12 small-12 columns">
 				<h3>Login to Felix Online</h3>
@@ -47,12 +45,7 @@
 			</div>
 		</div>
 	</form>
-	<div class="login-spin" style="display: none;">
-		<h3>Login to Felix Online</h3>
-		<img src="<?php echo STANDARD_URL; ?>/img/loading.gif" alt="Loading">
-	</div>
 <?php if(!isset($nomodal) || !$nomodal): ?>
 	<a class="close-reveal-modal">&#215;</a>
 </div>
 <?php endif; ?>
-<input type="hidden" name="login-token" id="login-token" value="<?php echo Utility::generateCSRFToken('login'); ?>"/>
