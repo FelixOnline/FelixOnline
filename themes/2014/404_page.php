@@ -23,7 +23,7 @@ $theme->render('components/header', $header);
 				<li>Alternatively, return to the <a href="<?php echo STANDARD_URL; ?>">front page</a>.</li>
 			</ul>
 
-			<?php if(LOCAL) { ?>
+			<?php if(LOCAL || DEBUG_MODE) { ?>
 			<p id="techdetails_show" style="display: none;"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'block'; document.getElementById('techdetails_show').style.display = 'none';">View some technical details</a></p>
 			<div id="techdetails" class="technical_details" style="display: block;">
 				<p id="techdetails_hide"><a href="javascript:void();" onClick="document.getElementById('techdetails').style.display = 'none'; document.getElementById('techdetails_show').style.display = 'block';">Hide the technical details</a></p>
