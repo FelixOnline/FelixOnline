@@ -7,7 +7,8 @@ Unless instructions are explicitly provided below, just run *composer update* an
 A significant number of changes have been made in this release which make the upgrade procedure more complex. For a successful update, follow the steps below:
 
 1. Back up your database!!
-3.  Ensure that, if you use the issue archive, the database user Phinx connects using has at least read access to the archive database - make a note of the database name
+3. Ensure that, if you use the issue archive, the database user Phinx connects using has at least read access to the archive database - make a note of the database name
+3. Update the config file according to the example - note there have been quite a few changes
 3. Run *composer update* to download the latest release of Core and side components
 4. Run the script *fixup.php* in the scripts folder. This corrects any inconsistencies identified in the database
 6. Run the Phinx migration process to upgrade the database. This may take upwards of 15 minutes in some circumstances. Report any breakages you find. Provide the archive database name when prompted (or use CTRL-D to cancel the migration step)

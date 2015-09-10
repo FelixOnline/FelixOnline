@@ -23,8 +23,8 @@ foreach (glob(BASE_DIRECTORY.'/exceptions/*.php') as $filename) {
 	require_once($filename);
 }
 
-require_once(BASE_DIRECTORY.'/glue.php');
-require_once(BASE_DIRECTORY.'/inc/config.inc.php');
+require_once(BASE_DIRECTORY.'/core/glue.php');
+$config = require_once(BASE_DIRECTORY.'/inc/config.inc.php');
 require_once(BASE_DIRECTORY.'/vendor/felixonline/core/constants.php');
 require_once(BASE_DIRECTORY.'/inc/const.inc.php');
 
@@ -38,6 +38,25 @@ foreach (glob(BASE_DIRECTORY.'/core/*.php') as $filename) {
 // Initialize App
 $app = new \FelixOnline\Core\App($config);
 
+/* Initialise ezSQL database connection */
+$db = new \ezSQL_mysqli();
+$db->quick_connect(
+	$config['db_user'],
+	$config['db_pass'],
+	$config['db_name'],
+	$config['db_host'],
+	$config['db_port'],
+	'utf8'
+);
+$safesql = new \SafeSQL_MySQLi($db->dbh);
+
+/* Set settings for caching (turned off by defualt) */
+// Cache expiry
+$db->cache_timeout = 24; // Note: this is hours
+$db->use_disk_cache = true;
+$db->cache_dir = 'inc/ezsql_cache'; // Specify a cache dir. Path is taken from calling script
+$db->show_errors();
+
 $app['db'] = $db;
 $app['safesql'] = $safesql;
 
@@ -45,10 +64,6 @@ if (LOCAL) { // development connector
 	// Initialize Akismet
 	$connector = new \Riv\Service\Akismet\Connector\Test();
 	$app['akismet'] = new \Riv\Service\Akismet\Akismet($connector);
-
-	// Initialize email
-	$transport = \Swift_NullTransport::newInstance();
-	$app['email'] = \Swift_Mailer::newInstance($transport);
 
 	// Don't cache in local mode
 	$app['cache'] = new \Stash\Pool();
