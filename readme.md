@@ -18,8 +18,11 @@ Have a look a our [installation guide](//github.com/FelixOnline/FelixOnline/wiki
 * Import media\_felix.sql into your MySql database
 * Install [composer](http://getcomposer.org/download/) if you haven't already got it and run `composer install`
 * Make your own config.inc.php to connect to your local database and change default links. There is a config.sample.php in the inc/ folder so use that as a base.
-* Grant write access to log, cache, and the generated folder inside the CSS (and JS if applicable) for your theme
+* Grant write access to the css and js folders inside your theme
+* Set the self-explanatory settings in the settings database table
 * Go to local site (e.g. http://localhost/felix/)
+
+You may wish to add the two role scripts in the scripts folder, and the spam cleaning script to a cron task.
 
 ### Database Migrations
 * Run `./vendor/bin/phinx init` to create a `phinx.yml` file in the root directory and fill it in with your database credentials

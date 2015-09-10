@@ -12,7 +12,8 @@ A significant number of changes have been made in this release which make the up
 4. Run the script *fixup.php* in the scripts folder. This corrects any inconsistencies identified in the database
 6. Run the Phinx migration process to upgrade the database. This may take upwards of 15 minutes in some circumstances. Report any breakages you find. Provide the archive database name when prompted (or use CTRL-D to cancel the migration step)
 7. Run the *to-sir-trevor.php* script to upgrade article content  to the new JSON-Markdown based format
-8. Finally, run the *clearcache.php* script to ensure the cache contains no old data
+8. Run the *clearcache.php* script to ensure the cache contains no old data
+9. Set up the self-explanatory settings in the Settings table
 
 You are now up to date. Please note that all admin permissions except for Super Users have been lost, however you can run:
 
