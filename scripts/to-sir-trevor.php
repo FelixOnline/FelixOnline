@@ -22,7 +22,7 @@ foreach($res as $row) {
 
 	try {
 		$converter = new \Sioen\Converter();
-		$json = $converter->toJson($text);
+		$json = $converter->toJson(str_replace("&nbsp;<a", " <a", str_replace("</a>&nbsp;", "</a> ", $text))); // Fix for bug 53 in thephpleague/html-to-markdown
 		$object = new \FelixOnline\Core\Text($row->id);
 		$object->setContent($json);
 		$object->setConverted(1);
