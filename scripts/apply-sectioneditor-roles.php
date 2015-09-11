@@ -3,6 +3,10 @@
  * Give all section editors an Editor role
  */
 
+if(php_sapi_name() === 'cli') {
+	die('CLI only');
+}
+
 date_default_timezone_set('Europe/London');
 
 require dirname(__FILE__) . '/../bootstrap.php';

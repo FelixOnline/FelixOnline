@@ -1,7 +1,11 @@
 <?php
 /**
- * Tidy common index errors
+ * Tidy common foreign key errors
  */
+
+if(php_sapi_name() === 'cli') {
+    die('CLI only');
+}
 
 date_default_timezone_set('Europe/London');
 
@@ -28,7 +32,7 @@ foreach(fetchall('SELECT DISTINCT user FROM article_visit') as $user) {
 }
 
 
-// Assess whether the users exist before we migrate
+// Assess whether the users exist from liveblog posts
 foreach(fetchall('SELECT DISTINCT author FROM blog_post') as $user) {
     $count = fetchall('SELECT * FROM user WHERE user = "'.$user['author'].'"');
 
