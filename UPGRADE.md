@@ -23,7 +23,7 @@ You are now up to date. Please note that all admin permissions except for Super 
 
 These scripts are optional.
 
-You may, also optionally, wish to run *fix-missing-image-size.php*, *script to be written* and *clean-old-spam.php*, the first and second fixes some missing entries in the database (only run the second if you migrated the archive database in Phinx), and the last removes spam comments older than one month.
+You may, also optionally, wish to run *fix-missing-image-size.php* and *clean-old-spam.php*, the first fixes some missing entries in the database, and the last removes spam comments older than one month.
 
 You may wish to add *clean-old-spam.php*, and the two role scripts to a cron job.
 
