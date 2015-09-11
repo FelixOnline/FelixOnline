@@ -27,30 +27,3 @@ You may wish to add the two role scripts in the scripts folder, and the spam cle
 ### Database Migrations
 * Run `./vendor/bin/phinx init` to create a `phinx.yml` file in the root directory and fill it in with your database credentials
 * Run `./vendor/bin/phinx migrate` to run all migrations
-
-##Contributing:
-We are always looking for help from people so please free to contribute to the site if you find a bug or have thought up a new feature. Here is a step by step way of doing it:
-
-* Fork this repo (button is in the top right corner)
-* Clone your fork
-* Create a topic branch for your changes (name it something recognisable!)
-* Do some awesome coding
-* Commit your branch to your forked repo on github
-* Switch branches on the github site
-* Click the "Pull Request" button at the top of the page
-* Write a pithy description of your pull request
-* Profit!
-
-We will then review your changes, making sure it doesn't break anything etc, and merge it into the master to be pushed to the live site.
-You can read more about pull requests here: http://help.github.com/send-pull-requests/
-
-##License
-Copyright (c) 2011 Felix Imperial, Jonathan Kim, Philip Kent, Chris Birkett
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Includes the is_email() method from http://code.google.com/p/isemail/, licensed under the BSD License

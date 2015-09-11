@@ -27,7 +27,8 @@
 		"felixonline/core": "dev-master",
 		"raven/raven": "0.8.0",
 		"dominicsayers/isemail": "dev-master",
-        "woutersioen/sir-trevor-php": "dev-master"
+        "woutersioen/sir-trevor-php": "dev-master",
+        "league/html-to-markdown": "~4.0"
     },
 	"minimum-stability": "dev"
 }
