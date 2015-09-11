@@ -5,8 +5,9 @@ use FelixOnline\Exceptions;
 class CategoryController extends BaseController
 {
 	public static function fetch($category, $pagenum = 1) {
-		global $currentuser;
-		
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
+
 		$category = (new \FelixOnline\Core\CategoryManager())
 			->filter('cat = "%s"', array($category))
 			->filter('active = 1')

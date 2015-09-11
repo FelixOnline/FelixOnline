@@ -6,8 +6,6 @@ class ValidationController extends BaseController
 {
 	function GET($matches)
 	{
-		global $currentuser;
-		
 		try {
 			$code = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\EmailValidation', 'email_validation')
 				->filter('code = "%s"', array($matches['code']))

@@ -17,9 +17,6 @@ try {
 	}
 	 */
 
-	global $currentuser;
-	$currentuser = new Core\CurrentUser();
-
 	$hooks = new Core\Hooks();
 
 	/*

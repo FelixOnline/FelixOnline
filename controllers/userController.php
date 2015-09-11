@@ -2,7 +2,8 @@
 
 class UserController extends BaseController {
 	function fetch($user, $pagenum = 1) {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		$user = new \FelixOnline\Core\User($user);
 
@@ -46,8 +47,9 @@ class UserController extends BaseController {
 	}
 
 	function GET($matches) {
-		global $currentuser;
-		
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
+
 		if(!isset($matches['page'])) {
 			$pagenum = 1;
 		} else {

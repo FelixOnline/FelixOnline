@@ -19,7 +19,9 @@ class AuthController extends BaseController {
 	 *
 	 */
 	static function restoreSession($session, $remember = false) {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
+
 		// check if session is recent and that ip is the same
 		$loginCheck = $currentuser->restoreSession($session);
 
@@ -36,7 +38,9 @@ class AuthController extends BaseController {
 	}
 
 	function GET($matches) {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
+
 		if(isset($_GET['session'])) { // catch login
 			if(self::restoreSession($_GET['session'], $_GET['remember'])) {
 				Utility::redirect($_GET['goto']);
@@ -59,7 +63,8 @@ class AuthController extends BaseController {
 	}
 
 	static function createSession($username, $password, $commenttype = null, $comment = null) {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		if(self::authenticate($username, $password)) {
 			$currentuser->setUser($username);
@@ -115,7 +120,9 @@ class AuthController extends BaseController {
 	 * Authenticate user
 	 */
 	static function authenticate($username, $password) {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
+
 		if(!LOCAL) { // if executed on union servers
 			/* authenticate user using global function pam_auth - returns true
 			 * if user is Imperial student, false if not (Union server only)
@@ -142,7 +149,8 @@ class AuthController extends BaseController {
 	 * Private: Logout
 	 */
 	private function logout() {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		$currentuser->resetSession();
 		$currentuser->removeCookie();

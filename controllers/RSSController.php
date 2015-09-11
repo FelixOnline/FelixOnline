@@ -4,7 +4,8 @@ use FelixOnline\Exceptions;
 	
 class RSSController extends BaseController {
 	function GET($matches) {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		$articleManager = new \FelixOnline\Core\ArticleManager();
 

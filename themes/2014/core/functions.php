@@ -55,7 +55,9 @@ function contact_us($data) {
 
 $hooks->addAction('like_comment', 'like_comment');
 function like_comment($data) {
-	global $currentuser;
+	$app = \FelixOnline\Core\App::getInstance();
+	$currentuser = $app['currentuser'];
+
 	if ($currentuser->isLoggedIn()) {
 		$comment = $data['comment'];
 		$comment = new \FelixOnline\Core\Comment($comment);
@@ -68,7 +70,9 @@ function like_comment($data) {
 
 $hooks->addAction('dislike_comment', 'dislike_comment');
 function dislike_comment($data) {
-	global $currentuser;
+	$app = \FelixOnline\Core\App::getInstance();
+	$currentuser = $app['currentuser'];
+
 	if ($currentuser->isLoggedIn()) {
 		$comment = $data['comment'];
 		$comment = new \FelixOnline\Core\Comment($comment);
@@ -93,7 +97,9 @@ function report_abuse($data) {
 
 $hooks->addAction('profile_change', 'profile_change');
 function profile_change($data) {
-	global $currentuser;
+	$app = \FelixOnline\Core\App::getInstance();
+	$currentuser = $app['currentuser'];
+
 	if($currentuser->isLoggedIn()) {
 		$user = $currentuser;
 		try {

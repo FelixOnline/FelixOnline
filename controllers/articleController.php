@@ -5,7 +5,8 @@ class ArticleController extends BaseController
 	private $article;
 
 	public function postComment($article, $name, $email, $message, $reply = false) {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		$comment = new \FelixOnline\Core\Comment();
 		$comment->setArticle($article->getId());
@@ -191,7 +192,8 @@ class ArticleController extends BaseController
 	}
 
 	function checkAccess($article) {
-		global $currentuser;
+		$app = \FelixOnline\Core\App::getInstance();
+		$currentuser = $app['currentuser'];
 
 		if(!$article->getPublished()) {
 			$authors = $article->getAuthors();
