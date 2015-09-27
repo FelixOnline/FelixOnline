@@ -3,6 +3,21 @@
 use FelixOnline\Core;
 
 class Utility extends Core\Utility {
+	// From http://gilbert.pellegrom.me/php-relative-time-function/
+	static function getRelativeTime($date, $postfix = ' ago', $fallback = 'D j M Y, g:ia') {
+	    $diff = time() - $date;
+	    if($diff < 60)
+	        return $diff . ' second'. ($diff != 1 ? 's' : '') . $postfix;
+	    $diff = round($diff/60);
+	    if($diff < 60)
+	        return $diff . ' minute'. ($diff != 1 ? 's' : '') . $postfix;
+	    $diff = round($diff/60);
+	    if($diff < 24)
+	        return $diff . ' hour'. ($diff != 1 ? 's' : '') . $postfix;
+
+	    return date($fallback, $date);
+	}
+
 	static function getResponsibilities(Core\User $user) {
 		try {
 			$categories = $user->getCategories();
