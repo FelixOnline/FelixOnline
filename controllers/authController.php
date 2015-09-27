@@ -43,11 +43,17 @@ class AuthController extends BaseController {
 
 		if(isset($_GET['session'])) { // catch login
 			if(self::restoreSession($_GET['session'], $_GET['remember'])) {
-				Utility::redirect($_GET['goto']);
+				Utility::redirect($_GET['goto'], null, $_GET['hash']);
 			}
-		} elseif(isset($_GET['logout'])) {
+		} elseif(isset($matches['logout'])) {
 			$this->logout();
-			Utility::redirect($_GET['goto']);
+			if($_GET['goto']) {
+				$goto = $_GET['goto'];
+			} else {
+				$goto = STANDARD_URL;
+			}
+
+			Utility::redirect($goto);
 		} else {
 			if($currentuser->isLoggedIn()) {
 				Utility::redirect(STANDARD_URL);
@@ -73,10 +79,13 @@ class AuthController extends BaseController {
 			// comment like/dislike
 			if(isset($commenttype) && isset($comment)) {
 				$comment = new \FelixOnline\Core\Comment($comment);
-				if($commenttype == 'like') {
-					$comment->likeComment($currentuser);
-				} else if($commenttype == 'dislike') {
-					$comment->dislikeComment($currentuser);
+
+				if(!$comment->userLikedOrDislikedComment($currentuser)) {
+					if($commenttype == 'like') {
+						$comment->likeComment($currentuser);
+					} else if($commenttype == 'dislike') {
+						$comment->dislikeComment($currentuser);
+					}
 				}
 				$hash = $comment->getId();
 			}
@@ -101,7 +110,8 @@ class AuthController extends BaseController {
 		 		Utility::redirect(STANDARD_URL.'login/', array(
 					'session' => $session['session'],
 					'remember' => $_POST['remember'],
-					'goto' => $_GET['goto']
+					'goto' => $_GET['goto'],
+					'hash' => $session['hash']
 				), $session['hash']);
 	 		} catch (Exceptions\InternalException $e) {
 				Utility::redirect(STANDARD_URL.'login', array(
