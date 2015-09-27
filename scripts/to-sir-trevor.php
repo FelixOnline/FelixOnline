@@ -3,7 +3,7 @@
  * Convert text fields to use Sir Trevor format
  */
 
-if(php_sapi_name() === 'cli') {
+if(php_sapi_name() !== 'cli') {
 	die('CLI only');
 }
 
@@ -26,7 +26,7 @@ foreach($res as $row) {
 
 	try {
 		$converter = new \Sioen\Converter();
-		$json = $converter->toJson(str_replace("&nbsp;<a", " <a", str_replace("</a>&nbsp;", "</a> ", $text))); // Fix for bug 53 in thephpleague/html-to-markdown
+		$json = $converter->toJson(str_replace("&nbsp;<a", " <a", str_replace("</a>&nbsp;", "</a> ", $text))); // Fix for some odd behaviour from the old formatter
 		$object = new \FelixOnline\Core\Text($row->id);
 		$object->setContent($json);
 		$object->setConverted(1);

@@ -3,7 +3,7 @@
  * Fix missing image width/height
  */
 
-if(php_sapi_name() === 'cli') {
+if(php_sapi_name() !== 'cli') {
 	die('CLI only');
 }
 
