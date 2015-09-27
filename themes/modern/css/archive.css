@@ -1,0 +1,52 @@
+.archive-years dd a {
+  font-size: smaller;
+  font-weight: 200;
+}
+.side-nav li a {
+  font-weight: 200;
+}
+.side-nav li.active a {
+  font-weight: bold !important;
+}
+.issue-panel {
+  border: none;
+  background: #eeeeee;
+}
+.results {
+  margin-bottom: 0;
+}
+#archivesearchbar .search-count {
+  font-weight: bold;
+  font-size: 18px;
+  text-align: right;
+  margin-right: 0px;
+  margin-left: 0px;
+  width: 290px;
+}
+.issuecont .thumbLink {
+  text-decoration: none;
+}
+.issuecont .thumbLink:hover .issue {
+  text-decoration: underline;
+}
+.issuecont .thumbLink:hover .date {
+  text-decoration: underline;
+}
+.issuecont .thumb .issue {
+  text-align: center;
+  color: #666;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.issuecont .thumb .date,
+.issuecont .thumb .relevance,
+.issuecont .thumb .source {
+  text-align: center;
+  font-size: smaller;
+  font-weight: 200;
+  margin-top: 0.25rem;
+}
+.issuecont .thumb img {
+  height: 100px;
+}

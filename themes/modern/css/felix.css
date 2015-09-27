@@ -1,0 +1,768 @@
+.advert-area {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+.section-bar,
+.section-bar.expanded .title-area,
+.section-bar .top-bar-section ul li,
+.section-bar .top-bar-section li:not(.has-form) a:not(.button) {
+	background: #800020;
+}
+
+.section-bar {
+	margin-bottom: 1.5rem;
+}
+
+.title-area .name img {
+	padding-left: 1rem;
+}
+
+.title-area .name h1 a {
+	padding-left: 0;
+	font-size: 3rem;
+	padding-top: 1rem;
+}
+
+.sticky {
+	margin-bottom: 1.5rem;
+}
+
+.article-block {
+	background: #eeeeee;
+	margin-bottom: 1.5rem;
+	position: relative;
+}
+
+.article-block.large {
+	min-height: 30rem;
+}
+
+.article-block.medium {
+	min-height: 9.5rem;
+}
+
+.article-block.small {
+}
+
+.article-block.date {
+	min-height: 11rem;
+}
+
+.article-block .article-time span,
+.article-block .article-author span {
+	vertical-align: baseline;
+	margin-right: 0.5rem;
+}
+
+.article-block.date .article-img {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	min-height: 11rem;
+}
+
+.article-block.date .article-title {
+	padding: 1rem;
+	padding-bottom: 0;
+	padding-left: 0;
+	font-weight: bold;
+}
+
+.article-block.date .article-byline {
+	padding: 1rem;
+	padding-top: 0.5rem;
+	padding-left: 0;
+	font-size: smaller;
+}
+
+.article-block.date .article-time, .article-block.date .article-author {
+	padding: 1rem;
+	padding-top: 0;
+	padding-left: 0;
+	font-size: smaller;
+	font-weight: 200;
+}
+
+@media not screen and (min-width: 40.063em) and (max-width: 64em) {
+	.article-block.date .article-title,
+	.article-block.date .article-byline,
+	.article-block.date .article-time,
+	.article-block.date .article-author {
+		padding-left: 1rem;
+	}
+
+	.article-block.date .article-img {
+		min-height: 15rem;
+	}
+}
+
+.article-block.date .article-comments {
+	position: absolute;
+	right: 2rem;
+	top: 1rem;
+}
+
+.article-block .article-category {
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+}
+
+.secondary-articles .article-block.small:last-child {
+	margin-bottom: 0rem;
+}
+
+.section-date {
+	font-weight: 200;
+	font-size: 1.25rem;
+	color: #800020;
+}
+
+.article-block.carousel .article-img {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 30rem;
+}
+
+.article-block.carousel .article-title {
+	padding: 1rem;
+	padding-bottom: 0;
+	font-weight: bold;
+	font-size: 2rem;
+}
+
+.article-block.carousel .article-byline {
+	padding: 1rem;
+	padding-top: 0.5rem;
+	font-size: smaller;
+	font-size: 1rem;
+}
+
+.article-block.carousel .article-comments {
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+}
+
+.article-block.large .article-img {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 30rem;
+}
+
+.article-block.large .article-title {
+	padding: 1rem;
+	padding-bottom: 0;
+	font-weight: bold;
+	font-size: 2rem;
+}
+
+.article-block.large .article-byline {
+	padding: 1rem;
+	padding-top: 0.5rem;
+	font-size: smaller;
+	font-size: 1rem;
+}
+
+.article-block.large .article-comments {
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+}
+
+.article-block.large .article-time, .article-block.large .article-author {
+	padding: 1rem;
+	padding-top: 0;
+	font-weight: 200;
+}
+
+@media only screen and (max-width: 40em) {
+	.article-block.large .article-img,
+	.article-block.carousel .article-img {
+		height: 20rem;
+	}
+}
+
+.article-block.medium .article-title {
+	font-size: 1rem;
+	font-weight: bold;
+	position: absolute;
+	bottom: 1rem;
+	left: 1rem;
+	color: white;
+	width: 80%;
+	text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000;
+}
+
+.article-block.small .editor-icons {
+	padding-top: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	margin-bottom: -1rem;
+}
+
+.article-block.small .editor-icons .authors {
+	padding-left: 1rem;
+	font-weight: 200;
+}
+
+.article-block.small .article-img {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 11rem;
+}
+
+.article-block.small .article-title {
+	padding: 1rem;
+	padding-bottom: 0;
+	font-weight: bold;
+}
+
+.article-block.small .article-byline {
+	padding: 1rem;
+	padding-top: 0.5rem;
+	font-size: smaller;
+}
+
+.article-block.small .article-comments {
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+}
+
+.article-block.small .article-time, .article-block.small .article-author {
+	padding: 1rem;
+	padding-top: 0;
+	font-weight: 200;
+	font-size: smaller;
+}
+
+.article-comments, .article-category {
+	padding: 0.5rem;
+	background: #800020;
+	position: absolute;
+	color: white;
+	font-weight: 200;
+}
+
+.article-category {
+	background: #CCCCCC;
+}
+
+.article-comments.radius, .article-category.radius {
+	border-radius: 5%;
+}
+
+.article-comments span {
+	font-size: smaller;
+	vertical-align: baseline;
+	margin-right: 0.2rem;
+}
+
+.article-block.large .article-comments,
+.article-block.medium .article-comments {
+	right: 1rem;
+	top: 1rem;
+}
+
+.article-block.carousel {
+	margin-bottom: 0.5rem;
+}
+
+.article-block.carousel .article-comments {
+	right: 2rem;
+	top: 1rem;
+}
+
+.article-block.carousel .article-category {
+	left: 2rem;
+	top: 1rem;
+}
+
+.info-box {
+	background: #eeeeee;
+	padding: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.section-social {
+	font-size: 1.5rem;
+}
+
+.section-social span {
+	vertical-align: -25%;
+}
+
+.editor-icons img {
+	border-radius: 50%;
+	margin-bottom: 1rem;
+}
+
+.editor-icons p {
+	margin-bottom: 0;
+	font-size: 0.9rem;
+	text-align: center;
+	margin-top: 0.2rem;
+	font-weight: 200;
+}
+
+.info-box h1 {
+	margin-top: 0;
+	padding-top: 0;
+	font-size: 2rem;
+}
+
+.trending-block .tabs a {
+	font-size: smaller;
+	font-weight: 200;
+}
+
+.comment-header-block h1 {
+	font-weight: 200;
+}
+
+.comment-header-block h1 span {
+	vertical-align: -10%;
+}
+
+.section-info-box h2 {
+	margin-top: 0;
+	padding-top: 0;
+	font-size: 1.5rem;
+}
+
+.section-info-box .info {
+	font-size: smaller;
+}
+
+.article-info-box .date {
+	margin-bottom: 0.5rem;
+	font-weight: 200;
+}
+
+.article-info-box span {
+	vertical-align: -5%;
+}
+
+.article-info-box .comments {
+	font-weight: 200;
+	margin-bottom: 0rem;
+}
+
+.article-info-box .editor-icons p {
+	font-size: 1.2rem;
+	text-align: left;
+	margin-top: 0;
+	margin-left: 1rem;
+	font-weight: 200;
+}
+
+.article-info-box .editor-icons span {
+	vertical-align: sub;
+	margin-left: 0.5rem;
+}
+
+.comment-actions {
+	font-size: 1rem;
+	font-weight: 200;
+	margin-bottom: 0.5rem;
+}
+
+.comment-actions span.glyphicons {
+	vertical-align: -10%;
+	margin-left: 0.5rem;
+}
+
+.comment-meta {
+	margin-bottom: 0.5rem;
+	font-size: 0.75rem;
+}
+
+.comment-meta span {
+	vertical-align: -5%;
+}
+
+.comment-meta .comment-author {
+	font-weight: bold;
+}
+
+.comment-meta .comment-date {
+	font-weight: 200;
+}
+
+.comment-actions a, .comment-actions a:hover {
+	border-bottom: none;
+}
+
+.article-comment {
+	border-top: 1px solid #DDDDDD;
+	margin-bottom: 1.5rem;
+	padding-top: 0.5rem;
+}
+
+.positive-comment {
+	color: #006400;
+}
+
+.negative-comment {
+	color: #8B0000;
+}
+
+.date-row {
+	margin: 0 0 1rem 0 !important;
+}
+
+.title-row {
+	margin-bottom: 1rem;
+}
+
+.title-row h2 {
+	font-weight: 500;
+	letter-spacing: -2px;
+}
+
+.title-row h3 {
+	font-weight: 200;
+	letter-spacing: -0.5px;
+}
+
+@media only screen and (max-width: 64em) {
+	.top-row {
+		margin-bottom: 1.5rem;
+	}
+}
+
+.date-block {
+	padding-right: 0;
+	padding-left: 0;
+}
+
+hr.month-divider {
+	margin-bottom: 0;
+	border-color: #800020;
+}
+
+@media only screen and (min-width: 40.063em) {
+	.section-bar .top-bar-section ul.right {
+		margin-top: 1rem;
+	}
+
+	.section-bar .right li:not(.has-form) > a:not(.button):hover,
+	.section-bar .right li.active:not(.has-form) > a:not(.button):hover {
+		background: #b3002d !important;
+	}
+
+	.section-bar .right li.active:not(.has-form) > a:not(.button) {
+		background: #4d0013;
+	}
+
+	.section-bar .right ul.dropdown li:not(.has-form) > a:not(.button):hover,
+	.section-bar .right ul.dropdown li.active:not(.has-form) > a:not(.button):hover {
+		background: #222222 !important;
+	}
+
+	.section-bar .right ul.dropdown li.active:not(.has-form) > a:not(.button) {
+		background: #4d0013 !important;
+	}
+}
+
+@media only screen and (max-width: 40em) {
+	.section-bar .top-bar-section ul li,
+	.section-bar .top-bar-section li:not(.has-form) a:not(.button) {
+		background: #333333;
+	}
+
+	.section-bar .top-bar-section ul {
+		border-top: 1px solid white;
+	}
+}
+
+.section-bar, .section-bar .title-area {
+	height: 5rem;
+}
+
+.search-button {
+	padding: 0;
+}
+
+.row.full-width {
+	max-width: 100%;
+}
+
+.row.features-row {
+	margin-bottom: 1.5rem;
+}
+
+.white {
+	background: white;
+	padding: 0.5rem;
+}
+
+nav .glyphicons, nav .social {
+	display: inline;
+	vertical-align: -20%;
+	font-size: 1.25rem;
+	text-align: center;
+}
+
+.section-bar.expanded .toggle-topbar a {
+	color: #4d0013;
+}
+
+.section-bar.expanded .toggle-topbar span::after {
+	box-shadow: 0 0 0 1px #4d0013,
+				0 7px 0 1px #4d0013,
+				0 14px 0 1px #4d0013 !important;
+}
+
+nav .has-tip {
+	border-bottom: none !important;
+}
+
+nav .icon-text-pad {
+	padding-left: 0.5rem;
+}
+
+.social-icons {
+	font-size: 1.5rem;
+}
+
+.social-icons div.social:hover {
+	background: #222222;
+}
+
+.sub-nav {
+	background-color: #eeeeee;
+	padding: 10px 10px 10px 0;
+}
+
+.sub-nav dt {
+	color: black;
+}
+
+.sub-nav dd a {
+	color: #800020;
+}
+
+footer {
+	background: #333333;
+	color: #777777;
+	font-size: smaller;
+	font-weight: 200;
+	margin-top: 1rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+footer a {
+	color: #e7e7e7;
+}
+
+footer a:hover {
+	color: #888888;
+}
+
+footer img {
+	padding-bottom: 1rem;
+}
+
+.footer-links {
+	display: inline-block;
+	font-weight: bold;
+	font-size: 0.875rem;
+	vertical-align: -100%;
+}
+
+.footer-links li {
+}
+
+footer .social {
+	font-size: 1.75rem;
+	vertical-align: -100%;
+}
+
+@media only screen and (max-width: 40em) {
+	footer .social {
+		vertical-align: 0;
+		padding-bottom: 1rem;
+	}
+}
+
+.breadcrumbs {
+	padding: 0;
+	background: none;
+	border: none;
+}
+
+blockquote {
+	font-weight: 200;
+	border-left: 3px solid #eeeeee;
+}
+
+blockquote p {
+	font-size: larger;
+	margin-bottom: 0;
+	font-weight: 200;
+}
+
+@media only screen and (min-width: 64.063em) {
+	blockquote {
+		width: 50%;
+		float: left;
+		margin-right: 2rem;
+		font-size: larger;
+		clear: both;
+		border-left: 0;
+		border-right: 3px solid #eeeeee;
+		padding-left: 0;
+
+	}
+
+	blockquote p {
+	}
+}
+
+.article-text {
+	margin-top: 1rem;
+}
+
+.article-text p {
+	line-height: 2;
+}
+
+.article-image-subcaption, #imgCont #imageCaption {
+	background: #eeeeee;
+	padding: 0.75rem;
+	font-weight: 200;
+}
+
+.article-image-subcaption span, #imgCont #imageAttr {
+	font-size: x-small;
+	font-weight: 200;
+	display: inline;
+}
+
+#imgCont img {
+	width: 100%;
+}
+
+#imgCont {
+	margin-bottom: 1.5rem;
+	clear: both;
+}
+
+.tall-image {
+	width: 50%;
+	float: right;
+	margin-left: 1.5rem;
+	margin-top: 1.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.trending, .recent-comments {
+	background: white;
+	padding-left: 1rem;
+	margin-left: 0;
+	margin-bottom: 0;
+}
+
+.recent-comments {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.trending li, .recent-comments li {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	font-size: 1.5rem;
+	margin-left: 2rem;
+	font-weight: 200;
+	background: white;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+.recent-comments li {
+	font-size: 1rem;
+	font-weight: normal;
+	margin-left: 0;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+
+.recent-comments li .comment-meta {
+	font-size: 0.75rem;
+	font-weight: 200;
+}
+
+.recent-comments li .comment-meta .comment-name,
+.recent-comments li .comment-meta .comment-article {
+	font-weight: bold;
+}
+
+.trending li:last-child, .recent-comments li:last-child {
+	border-bottom: 0;
+}
+
+.trending li a {
+	font-size: 1rem;
+	font-weight: normal;
+}
+
+.input-help {
+	font-size: 0.75rem;
+	margin-top: 0;
+	padding-top: 0;
+	font-style: italic;
+}
+
+.issue-no {
+	font-weight: bold;
+}
+
+.issue-date {
+	font-weight: 200;
+}
+
+.issue-pic {
+	width: 100%;
+}
+
+.slick-dots {
+	margin-left: 0;
+	margin-top: -2rem;
+}
+
+.poll h5 {
+	font-weight: 200;
+}
+
+.comment-like span, .comment-dislike span {
+	color: black;
+}
+
+.blue-thumb {
+	color: #000066 !important;
+}
+
+#replyLink {
+	font-size: smaller;
+}
+
+#removeReply span.glyphicons {
+	vertical-align: -10%;
+}
+
+.comment-replies {
+	margin-left: 1rem;
+	margin-top: 1rem;
+	border-left: 3px solid #DDDDDD;
+	padding-left: 1rem;
+}
+
+.comment-replies .article-comment:last-child {
+	margin-bottom: 0;
+}
