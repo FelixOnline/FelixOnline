@@ -117,7 +117,8 @@ $theme->render('components/noticeBlock', array('no_frontpage_only' => true));
 							<?php if (!$currentuser->isLoggedIn()) { ?>
 								<h4>Comment anonymously or <a href="#" data-reveal-id="loginModal">log in</a></h4>
 								<div id="info">
-									<p>If you do not log in, your details will be sent to <a href="http://akismet.com/">Akismet</a> for spam detection purposes. If you do not log in, you will also need to verify your email address by clicking a link we send you. You will only need to do this once per email address.</p>
+									<p>If you do not log in, your details will be sent to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
+									<p><b>If you do not log in, you will also need to verify your email address by clicking a link we send you.</b> You will only need to do this once per email address.</p>
 									<p>Read our <a href="#" data-reveal-id="commentPolicy">commenting policy</a> for more information and for details on how we moderate.</p>
 								</div>
 							<?php } else { ?>
