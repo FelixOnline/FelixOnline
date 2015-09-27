@@ -125,6 +125,8 @@ class ArchiveController extends BaseController {
 
 				$issues = $this->searchContent($query);
 
+				$this->theme->setSite('archive');
+
 				$this->theme->render('archive-search', array(
 					'search_results' => $issues,
 					'query' => $query,
@@ -181,6 +183,8 @@ class ArchiveController extends BaseController {
 				'year' => $this->year,
 				'issues' => $issues
 			));
+
+			$this->theme->setSite('archive');
 
 			$this->theme->render('archive');
 		}
