@@ -7,16 +7,16 @@
     <div id="search-dropdown" data-dropdown-content class="f-dropdown medium content" aria-autoclose="false" aria-hidden="true" tabindex="-1">
       <div class="row">
         <div class="large-12 columns">
-          <div class="row collapse">
-            <form action="<?php echo STANDARD_URL; ?>search/" method="GET">
+          <form action="<?php echo STANDARD_URL; ?>search/" method="GET">
+            <div class="row collapse">
               <div class="small-10 columns">
-                <input type="text" placeholder="Search for something">
+                <input type="text" name="q" placeholder="Search for something">
               </div>
               <div class="small-2 columns">
                 <button type="submit" class="button search-button postfix">Search</button>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
