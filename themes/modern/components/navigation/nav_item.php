@@ -26,7 +26,7 @@
 	}
 ?>
 	<li class="<?php if($active) echo 'active '; if(!is_null($cats2)) echo 'has-dropdown'; ?>">
-		<a href="<?php echo STANDARD_URL.$item->getCat(); ?>/">
+		<a href="<?php echo $item->getURL(); ?>">
 			<?php echo $item->getLabel(); ?>
 		</a>
 <?php
