@@ -42,6 +42,16 @@
 	<body>
 		<div id="fb-root"></div>
 
+	<?php
+		if(isset($article)) {
+			$theme->render('components/helpers/block_advert', array('frontpage' => false, 'article' => $article, 'category' => false));
+		} elseif(isset($category)) {
+			$theme->render('components/helpers/block_advert', array('frontpage' => false, 'article' => false, 'category' => $category));
+		} else {
+			$theme->render('components/helpers/block_advert', array('frontpage' => true, 'article' => false, 'category' => false));
+		}
+	?>
+
 	<?php 
 		$theme->render('components/globals/navigation'); 
 	?>

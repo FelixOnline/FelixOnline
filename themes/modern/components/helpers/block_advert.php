@@ -14,7 +14,7 @@
 
 		if($advert) {
 			if(!$sidebar) {
-				$class = 'external-img-top';
+				$class = 'external-img-top advert-area';
 			} else {
 				$class = 'external-img-side';
 			}
