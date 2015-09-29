@@ -20,15 +20,19 @@
         </div>
       </div>
     </div>
+    
+    <!-- Commenting policy -->
+    <?php $theme->render('components/modals/box_comment_policy'); ?>
+    <!-- End of commenting policy -->
 
     <footer>
       <div class="row full-width" data-equalizer="footer">
         <div class="small-12 medium-10 columns clearfix small-only-text-center medium-text-left" data-equalizer-watch="footer">
           <a href="#"><img src="logo.png" style="height: 4.8rem;"></a>
           <ul class="footer-links inline-list">
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Get Involved</a></li>
-            <li><a href="#">Complaints and Policies</a></li>
+            <li><a href="http://felixonline.co.uk/contact/">Contact</a></li>
+            <li><a href="http://felixonline.co.uk/contribute/">Get Involved</a></li>
+            <li><a href="http://felixonline.co.uk/policies/">Complaints and Policies</a></li>
             <li><a href="http://www.felixonline.co.uk/api">API</a></li>
             <li><a href="http://www.github.com/FelixOnline">GitHub</a></li>
           </li>

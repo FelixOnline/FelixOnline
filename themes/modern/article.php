@@ -219,10 +219,6 @@ $theme->render('components/globals/header', $header);
 					</div>
 
 					<input type="hidden" name="new-token" id="new-token" value="<?php echo Utility::generateCSRFToken('new_comment'); ?>"/>
-
-					<!-- Commenting policy -->
-					<?php $theme->render('components/modals/box_comment_policy'); ?>
-					<!-- End of commenting policy -->
 				</div>
 				<?php } else { ?>
 					<div class="alert-box">
