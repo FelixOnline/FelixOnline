@@ -69,21 +69,61 @@ class CategoryController extends BaseController
 			);
 		}
 
-		$this->theme->appendData(array(
-			'category' => $data['category'],
-			'pagenum' => $data['pagenum'],
-			'articles' => $data['articles'],
-			'pages' => $data['pages'],
-		));
+		if(count($data['articles']) == 0 && $data['category']->getChildren()) {
+			// Special case - show summary of children
 
-		$this->theme->setHierarchy(array(
-			$data['category']->getCat() // category-{cat}.php
-		));
+			$app = \FelixOnline\Core\App::getInstance();
+			$currentuser = $app['currentuser'];
 
-		if($pagenum == 1) {
-			$this->theme->render('category_page1');
+			$articles = array();
+
+			foreach($data['category']->getChildren() as $child) {
+				if($child->getSecret() && !$currentuser->isLoggedIn()) {
+					continue;
+				}
+
+				$manager = (new \FelixOnline\Core\ArticleManager())
+					->filter('published < NOW()')
+					->filter('category = %i', array($child->getId()))
+					->order(array('published', 'id'), 'DESC')
+					->limit(0, 4)
+					->values();
+
+				if(!is_array($manager)) {
+					$articles[$child->getCat()] = array();
+				} else {
+					$articles[$child->getCat()] = $manager;
+				}
+			}
+
+			$this->theme->appendData(array(
+				'category' => $data['category'],
+				'children' => $data['category']->getChildren(),
+				'articles' => $articles
+			));
+
+			$this->theme->setHierarchy(array(
+				$data['category']->getCat() // category-{cat}.php
+			));
+
+			$this->theme->render('category_summary');
 		} else {
-			$this->theme->render('category');
+			$this->theme->appendData(array(
+				'category' => $data['category'],
+				'pagenum' => $data['pagenum'],
+				'articles' => $data['articles'],
+				'pages' => $data['pages'],
+			));
+
+			$this->theme->setHierarchy(array(
+				$data['category']->getCat() // category-{cat}.php
+			));
+
+			if($pagenum == 1) {
+				$this->theme->render('category_page1');
+			} else {
+				$this->theme->render('category');
+			}
 		}
 	}
 }
