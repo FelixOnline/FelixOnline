@@ -1,11 +1,20 @@
 <?php
 // Hook setup
 $hooks->addAction('rate_comment', 'rate_comment');
-$hooks->addAction('contact_us', 'contact_us');
 $hooks->addAction('report_abuse', 'report_abuse');
 $hooks->addAction('post_comment', 'post_comment');
 
-// Helpers
+$hooks->addAction('profile_change', 'profile_change');
+
+$hooks->addAction('poll_vote', 'poll_vote');
+
+$hooks->addAction('get_category_page', 'get_category_page');
+$hooks->addAction('get_user_page', 'get_user_page');
+$hooks->addAction('get_search_page', 'get_search_page');
+
+$hooks->addAction('contact_us', 'contact_us');
+
+/* HELPERS */
 function _get_theme() {
 	return new \FelixOnline\Core\Theme('modern');
 }
@@ -23,7 +32,40 @@ function _refresh_comment($comment) {
 	return $output;
 }
 
-// Pages
+function _fetch_articles($data) {
+	$articles = array();
+
+	foreach($data['articles'] as $article) {
+		if(!array_key_exists(date('F-Y', $article->getDate()), $articles)) {
+			$articles[date('F-Y', $article->getDate())] = array();
+		}
+
+		$theme = _get_theme();
+
+		// Render the output to a buffer
+		ob_start();
+
+		if(isset($data['category'])) {
+			$theme->setHierarchy(array(
+				$data['category']->getCat() // block_date-{cat}.php
+			));
+		}
+
+		$theme->render('components/category/block_date', array(
+			'article' => $article,
+			'equalizer' => date('F-Y', $article->getDate()),
+			'show_category' => $ajaxdata['categories'],
+			'headshot' => $ajaxdata['headshots']));
+
+		$articles[date('F-Y', $article->getDate())][] = ob_get_contents();
+
+		ob_end_clean();
+	}
+
+	return $articles;
+}
+
+/* PAGES */
 function contact_us($data) {
 	$name = $data['name'];
 	$emailaddress = $data['email'];
@@ -76,7 +118,7 @@ function contact_us($data) {
 	return array('error' => false, 'success' => 'Your message has been sent, thank you!');
 }
 
-// Comments
+/* COMMENTS */
 function rate_comment($data) {
 	$app = \FelixOnline\Core\App::getInstance();
 	$currentuser = $app['currentuser'];
@@ -139,7 +181,7 @@ function post_comment($data) {
 	return (array('error' => false, 'content' => $output, 'comment_id' => $comment->getId(), 'clearform' => true));
 }
 
-$hooks->addAction('profile_change', 'profile_change');
+/* USER */
 function profile_change($data) {
 	$app = \FelixOnline\Core\App::getInstance();
 	$currentuser = $app['currentuser'];
@@ -208,36 +250,24 @@ function profile_change($data) {
 	}
 }
 
-$hooks->addAction('get_category_page', 'get_category_page');
-function get_category_page($data) {
+/* PAGINATION */
+function get_category_page($ajaxdata) {
 	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
 	require_once(BASE_DIRECTORY.'/controllers/categoryController.php');
 
 	try {
-		$data = CategoryController::fetch($data['key'], $data['page']);
+		$data = CategoryController::fetch($ajaxdata['key'], $ajaxdata['page']);
 	} catch(\Exception $e) {
 		return (array('error' => true, 'details' => $e->getMessage()));
 	}
 
-	$theme = new \FelixOnline\Core\Theme('modern');
+	$theme = _get_theme();
 
-	$theme->appendData(array(
-		'category' => $data['category'],
-		'pagenum' => $data['pagenum'],
-		'articles' => $data['articles'],
-		'pages' => $data['pages'],
-	));
+	$articles = _fetch_articles($data);
 
-	// Render the output to a buffer
 	ob_start();
 
-	$theme->setHierarchy(array(
-		$data['category']->getCat() // category-{cat}.php
-	));
-
-	$theme->render('components/category_page');
-
-	$theme->render('components/pagination', array(
+	$theme->render('components/helpers/pagination', array(
 			'pagenum' => $data['pagenum'],
 			'class' => $data['category'],
 			'pages' => $data['pages'],
@@ -245,14 +275,13 @@ function get_category_page($data) {
 			'type' => 'category',
 			'key' => $data['category']->getCat()));
 
-	$output = ob_get_contents();
+	$paginator = ob_get_contents();
 
 	ob_end_clean();
 
-	return (array('error' => false, 'content' => $output));
+	return (array('error' => false, 'paginator' => $paginator, 'articles' => $articles));
 }
 
-$hooks->addAction('get_user_page', 'get_user_page');
 function get_user_page($data) {
 	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
 	require_once(BASE_DIRECTORY.'/controllers/userController.php');
@@ -263,27 +292,13 @@ function get_user_page($data) {
 		return (array('error' => true, 'details' => $e->getMessage()));
 	}
 
-	$theme = new \FelixOnline\Core\Theme('modern');
+	$theme = _get_theme();
 
-	$theme->appendData(array(
-		'user' => $data['user'],
-		'pagenum' => $data['pagenum'],
-		'articles' => $data['articles'],
-		'article_count' => $data['articleCount'],
-		'pages' => $data['pages']
-	));
+	$articles = _fetch_articles($data);
 
-
-	// Render the output to a buffer
 	ob_start();
 
-	$theme->setHierarchy(array(
-		$data['user']->getUser() // user_page-{user}.php
-	));
-
-	$theme->render('components/user_page');
-
-	$theme->render('components/pagination', array(
+	$theme->render('components/helpers/pagination', array(
 					'pagenum' => $data['pagenum'],
 					'class' => $data['user'],
 					'pages' => $data['pages'],
@@ -291,16 +306,42 @@ function get_user_page($data) {
 					'type' => 'user',
 					'key' => $data['user']->getUser()));
 
-	$output = ob_get_contents();
+	$paginator = ob_get_contents();
 
 	ob_end_clean();
 
-	return (array('error' => false, 'content' => $output));
+	return (array('error' => false, 'paginator' => $paginator, 'articles' => $articles));
 }
 
+function get_search_page($data) {
+	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
+	require_once(BASE_DIRECTORY.'/controllers/searchController.php');
 
+	try {
+		$data = SearchController::fetch($data['key'], $data['page']);
+	} catch(\Exception $e) {
+		return (array('error' => true, 'details' => $e->getMessage()));
+	}
 
-$hooks->addAction('poll_vote', 'poll_vote');
+	$theme = _get_theme();
+
+	$articles = _fetch_articles($data);
+
+	ob_start();
+
+	$theme->render('components/helpers/pagination_search', array(
+		'page' => $data['page'],
+		'query' => $data['query']
+	));
+
+	$paginator = ob_get_contents();
+
+	ob_end_clean();
+
+	return (array('error' => false, 'paginator' => $paginator, 'articles' => $articles));
+}
+
+/* ARTICLES */
 function poll_vote($data) {
 	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
 	require_once(BASE_DIRECTORY.'/controllers/articleController.php');
@@ -332,44 +373,6 @@ function poll_vote($data) {
 	}
 
 	$theme->render('components/poll', array('poll' => $poll, 'article' => $article, 'bottom' => $bottom));
-
-	$output = ob_get_contents();
-
-	ob_end_clean();
-
-	return (array('error' => false, 'content' => $output));
-}
-
-$hooks->addAction('get_search_page', 'get_search_page');
-function get_search_page($data) {
-	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
-	require_once(BASE_DIRECTORY.'/controllers/searchController.php');
-
-	try {
-		$data = SearchController::fetch($data['key'], $data['page']);
-	} catch(\Exception $e) {
-		return (array('error' => true, 'details' => $e->getMessage()));
-	}
-
-	$theme = new \FelixOnline\Core\Theme('modern');
-
-	$theme->appendData(array(
-		'articles' => $data['articles']['articles'],
-		'article_count' => $data['articles']['count'],
-		'query' => $data['query'],
-		'page' => $data['page']
-	));
-
-
-	// Render the output to a buffer
-	ob_start();
-
-	$theme->render('components/search_page');
-
-	$theme->render('components/pagination_search', array(
-		'page' => $data['page'],
-		'query' => $data['query']
-	));
 
 	$output = ob_get_contents();
 

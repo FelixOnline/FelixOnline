@@ -174,33 +174,6 @@ $(document).ready(function() {
 		return false;
 	}
 
-	//Paginator page
-	$(document).on("click", 'ul.pagination li a', function() {
-		var item = $(this);
-
-		return handlePaginator(item, function(data, json) {
-			$('.pagination-content').html(json.content);
-
-			$('html, body').animate({
-				scrollTop: $("body").offset().top
-			}, 500);
-		});
-	});
-
-	//Paginator page
-	$(document).scroll(function() {
-		if($('ul.pagination li a.next').visible(false, true)) {
-			var item = $('ul.pagination li a.next');
-
-			return handlePaginator(item, function(data, json) {
-				$('.pagination-centered').remove();
-
-				$('.pagination-content').append(json.content);
-			});
-		}
-
-	});
-
 	//Poll vote
 	$(document).on("click", '.poll-option', function() {
 		var pollid = $(this).attr('data-poll');
@@ -223,8 +196,73 @@ $(document).ready(function() {
 		return false;
 	});
 
+	/* PAGINATION */
+
+	//Paginator page - click
+	$(document).on("click", 'ul.pagination li a', function() {
+		var item = $(this);
+
+		return handlePaginator(item, $("#pag-category").val(), $("#pag-headshot").val(), function(data, json) {
+			$('.paginator-bit').html(json.paginator);
+
+			return handlePaginator(item, $("#pag-category").val(), $("#pag-headshot").val(), function(data, json) {
+				$('.paginator-bit').html(json.paginator);
+
+				$('#month-viewer').data('final-month', '');
+				$('#month-viewer').html('');
+
+				process_dateview(json);
+
+				$('html, body').animate({
+					scrollTop: $("#month-viewer").offset().top
+				}, 500);
+			});
+		});
+	});
+
+	function process_dateview(json) {
+		for(var month in json.articles) {
+			// Assess whether to create a new area for articles
+			if($('#month-viewer').data('final-month') != month) {
+				// Create area
+				$('#month-viewer').append('<hr class="month-divider"><div class="row full-width"><div class="small-12 columns"><p class="section-date">'+month.replace('-', ' ')+'</p></div></div><div class="row full-width date-row" data-equalizer="'+month+'" id="'+month+'"></div>');
+
+				$('#month-viewer').data('final-month', month);
+			}
+
+			// Remove end tags
+			$('#'+month).find('.date-article').removeClass('end');
+
+			// Add articles
+			json.articles[month].forEach(function(article) {
+				$('#'+month).append('<div class="small-12 large-4 columns date-article">'+article+'</div>');
+			});
+
+			// Add end tag
+			$('#'+month).find('.date-article').last().addClass('end');
+		}
+
+		init_foundation();
+
+		setTimeout(function() { init_foundation(); }, 500); // Wait for end of reflow
+	}
+
+	//Paginator page - scroll
+	$(document).scroll(function() {
+		if($('ul.pagination li a.next').visible(false, true)) {
+			var item = $('ul.pagination li a.next');
+
+			return handlePaginator(item, $("#pag-category").val(), $("#pag-headshot").val(), function(data, json) {
+				$('.paginator-bit').html(json.paginator);
+
+				process_dateview(json);
+			});
+		}
+
+	});
+
 	// Callback runs at end of pagination ajax
-	function handlePaginator(item, callback) {
+	function handlePaginator(item, categories, headshots, callback) {
 		if(!item.attr('data-page') || !item.attr('data-type') || !item.attr('data-key')) {
 			return true;
 		}
@@ -250,7 +288,9 @@ $(document).ready(function() {
 			"token": $('#token').val(),
 			"check": "pagination",
 			"key": item.attr('data-key'),
-			"page": item.attr('data-page')
+			"page": item.attr('data-page'),
+			"categories": categories,
+			"headshots": headshots
 		};
 
 		ajaxHelper(null, 'POST', data, '.pagination-spin', ['.pagination'], null, null, null, callback);
@@ -394,7 +434,7 @@ $(document).ready(function() {
 				if(message.validator) {
 					handleValidation(message.validator_data, form);
 				}
-			console.log(msg);	
+
 				error(message.details, failbox);
 
 				if(message.reload) {
@@ -427,7 +467,7 @@ $(document).ready(function() {
 		data.bio = $('.profile-bio').val();
 		if($('.profile-ldap').is(':checked')) { data.ldap = 1 } else { data.ldap = 0 };
 		data.action = 'profile_change';
-		data.token = $('#token').val();
+		data.token = $('#edit_profile_token').val();
 		data.check = 'edit_profile';
 
 		ajaxHelper('profileform', 'POST', data, '#profile-spinner', ['#profile-saver'], ['#profile-saver'], null, null, profileAjaxCallback);

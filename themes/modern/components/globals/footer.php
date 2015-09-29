@@ -56,11 +56,15 @@
 			<script src="<?php echo $value; ?>"></script>
 		<?php } ?>
 		<script>
-			$(document).foundation({
-        equalizer : {
-          equalize_on_stack: true
-        }
-      });
+      function init_foundation() {
+  			$(document).foundation({
+          equalizer : {
+            equalize_on_stack: true
+          }
+        });
+      }
+
+      init_foundation();
 
 			$(document).ready(function(){
 				$('.carousel-block').slick({

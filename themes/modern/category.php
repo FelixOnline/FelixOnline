@@ -22,7 +22,7 @@ $theme->render('components/globals/header', $header);
 			<div class="header-info-icons">
 				<a href="mailto:<?php echo $category->getEmail(); ?>"><span class="social social-e-mail"></span>&nbsp;<?php echo $category->getEmail(); ?></a>
 <?php if($category->getTwitter()): ?>
-				<a href="http://twitter.com/<?php echo $category->getTwitter(); ?>"><span class="social social-twitter"></span>&nbsp;<?php echo $category->getTwitter(); ?></a>
+				<a href="http://twitter.com/<?php echo $category->getTwitter(); ?>"><span class="social social-twitter"></span>&nbsp;@<?php echo $category->getTwitter(); ?></a>
 <?php endif; ?>
 			</div>
 		</div>
@@ -44,7 +44,7 @@ $theme->render('components/globals/header', $header);
 	)); ?>
 <?php endif; ?>
 	<div class="row full-width">
-		<div class="small-12 columns">
+		<div class="small-12 columns paginator-bit">
 			<?php $theme->render('components/helpers/pagination', array(
 				'pagenum' => $pagenum,
 				'class' => $category,
@@ -56,6 +56,8 @@ $theme->render('components/globals/header', $header);
 		</div>
 	</div>
 	<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken('pagination'); ?>">
+	<input type="hidden" name="pag-category" id="pag-category" value="0">
+	<input type="hidden" name="pag-headshot" id="pag-headshot" value="0">
 <?php
 $theme->render('components/globals/footer');
 ?>

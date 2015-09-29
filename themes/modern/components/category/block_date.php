@@ -27,7 +27,7 @@
                   	  ?>
                       <div class="article-title"><a href="<?php echo $article->getUrl(); ?>"><?php echo $article->getTitle(); ?></a></div>
                       <div class="article-byline"><?php echo $article->getTeaser(); ?></div>
-                      <div class="article-time"><span class="glyphicons glyphicons-clock"></span><?php echo Utility::getRelativeTime($article->getDate()); ?></div>
+                      <div class="article-time"><span class="glyphicons glyphicons-clock"></span><?php echo Utility::getRelativeTime($article->getPublished()); ?></div>
                     </div>
                   </div>
                 </div>
