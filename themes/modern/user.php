@@ -48,26 +48,24 @@ $theme->render('components/globals/header', $header);
 			<?php endif; ?>
 	<!-- End of sidebar -->
 		<?php if (!empty($articles)) { ?>
-			<div class="pagination-content">
-				<?php $theme->render('components/helpers/month_article_view', array(
-					'articles' => $articles,
-					'show_category' => true,
-					'headshot' => false
-					)); ?>
+			<?php $theme->render('components/helpers/month_article_view', array(
+				'articles' => $articles,
+				'show_category' => true,
+				'headshot' => false
+				)); ?>
 
-				<div class="row">
-					<div class="small-12 columns paginator-bit">
-						<!-- Page list -->
-						<?php $theme->render('components/helpers/pagination', array(
-							'pagenum' => $pagenum,
-							'class' => $user,
-							'pages' => $pages,
-							'span' => \FelixOnline\Core\Settings::get('articles_per_user_page'),
-							'type' => 'user',
-							'key' => $user->getUser()
-						)); ?>
-						<!-- End of page list -->
-					</div>
+			<div class="row">
+				<div class="small-12 columns paginator-bit">
+					<!-- Page list -->
+					<?php $theme->render('components/helpers/pagination', array(
+						'pagenum' => $pagenum,
+						'class' => $user,
+						'pages' => $pages,
+						'span' => \FelixOnline\Core\Settings::get('articles_per_user_page'),
+						'type' => 'user',
+						'key' => $user->getUser()
+					)); ?>
+					<!-- End of page list -->
 				</div>
 			</div>
 			<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken('pagination'); ?>">

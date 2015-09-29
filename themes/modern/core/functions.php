@@ -323,6 +323,10 @@ function get_search_page($data) {
 		return (array('error' => true, 'details' => $e->getMessage()));
 	}
 
+	$data = array('articles' => $data['articles']['articles'],
+			'page' => $data['page'],
+			'query' => $data['query']);
+
 	$theme = _get_theme();
 
 	$articles = _fetch_articles($data);
