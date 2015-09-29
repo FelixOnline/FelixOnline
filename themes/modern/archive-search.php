@@ -13,7 +13,7 @@ $theme->render('components/globals/header', $header);
 	<div class="medium-5 large-3 columns medium-push-7 large-push-9">
 		<?php $theme->render('components/home/block_pdf'); ?>
 
-		<?php $theme->render('components/archive/block_search', array('back' => true)); ?>
+		<?php $theme->render('components/issuearchive/block_search', array('back' => true)); ?>
 
 		<?php $theme->render('components/helpers/block_advert', array('sidebar' => true)); ?>
 	</div>
@@ -27,7 +27,7 @@ $theme->render('components/globals/header', $header);
 			<?php if(!empty($search_results)) {
 				foreach($search_results as $key => $issue) {
 					if(($key + 1) % 4 == 0) { $last = true;	} else { $last = false; }
-					$theme->render('components/archive/issue', array(
+					$theme->render('components/issuearchive/issue', array(
 						'issue' => $issue,
 						'last' => $last
 					));

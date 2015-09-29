@@ -13,7 +13,7 @@ $theme->render('components/globals/header', $header);
 	<div class="medium-5 large-3 columns medium-push-7 large-push-9">
 		<?php $theme->render('components/home/block_pdf'); ?>
 
-		<?php $theme->render('components/archive/block_search', array('back' => false)); ?>
+		<?php $theme->render('components/issuearchive/block_search', array('back' => false)); ?>
 		
 		<div id="archivebrowser" class="info-box">
 			<h3>Browser</h3>
@@ -64,7 +64,7 @@ $theme->render('components/globals/header', $header);
 
 					foreach($PubIssues as $key => $issue) {
 						if(($key + 1) % 4 == 0 || !array_key_exists(($key + 1), $PubIssues)) { $last = true; } else { $last = false; }
-						$theme->render('components/archive/issue', array(
+						$theme->render('components/issuearchive/issue', array(
 							'issue' => $issue,
 							'last' => $last
 						));
