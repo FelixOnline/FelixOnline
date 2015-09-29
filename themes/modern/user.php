@@ -19,23 +19,28 @@ $header = array(
 $theme->render('components/globals/header', $header);
 
 ?>
-		<div class="user-title">
-			<div class="row">
-				<div class="small-9 columns">
-					<h1><?php echo $user->getName(); ?></h1>
-				</div>
-				<div class="small-3 columns">
-					<div class="text-right"><a href="<?php echo STANDARD_URL.'rss/user/'.$user->getUser(); ?>"><img src="<?php echo STANDARD_URL.'themes/'.\FelixOnline\Core\Settings::get('current_theme').'/'; ?>img/rss.png"></a></div>
-				</div>
+	<div class="row full-width">
+		<div class="small-12 columns">
+			<h1><img src="<?php echo $user->getImage()->getUrl(400,400); ?>" class="headshot" alt="Headshot"><?php echo $user->getName(); ?></h1>
+			<div class="header-info-icons">
+				<?php if($user->getShowEmail()): ?>
+				<a href="mailto:<?php echo $user->getEmail(); ?>"><span class="social social-e-mail"></span>&nbsp;<?php echo $user->getEmail(); ?></a>
+				<?php endif; ?>
+				<?php if($user->getFacebook()): ?>
+				<a href="<?php echo $user->getFacebook(); ?>"><span class="social social-facebook"></span>&nbsp;Facebook</a>
+				<?php endif; ?>
+				<?php if($user->getTwitter()): ?>
+				<a href="http://twitter.com/<?php echo $user->getTwitter(); ?>"><span class="social social-twitter"></span>&nbsp;@<?php echo $user->getTwitter(); ?></a>
+				<?php endif; ?>
+				<?php if($user->getWebsitename() && $user->getWebsiteurl()): ?>
+				<a href="<?php echo $user->getWebsiteurl(); ?>"><span class="glyphicons glyphicons-globe-af"></span>&nbsp;<?php echo $user->getWebsitename(); ?></a>
+				<?php endif; ?>
 			</div>
 		</div>
-		<div class="row">
-			<div class="small-12 columns">
-				<div class="section-bar section-generic"></div>
-			</div>
-		</div>
-	<div class="row">
-		<div class="medium-8 columns">
+	</div>
+
+	<div class="row full-width">
+		<div class="small-12 large-9 columns">
 			<?php if ($currentuser->getUser() == $user->getUser()): ?>
 				<?php
 					$theme->render('components/user/edit_profile', array('user' => $user));
@@ -44,131 +49,85 @@ $theme->render('components/globals/header', $header);
 	<!-- End of sidebar -->
 		<?php if (!empty($articles)) { ?>
 			<div class="pagination-content">
-				<?php
-					$theme->setHierarchy(array(
-						$user->getUser() // page_user-{user}.php
-					));
+				<?php $theme->render('components/helpers/month_article_view', array(
+					'articles' => $articles,
+					'show_category' => true,
+					'headshot' => false
+					)); ?>
 
-					$theme->render('components/paginators/page_user');
-				?>
-
-				<!-- Page list -->
-				<?php $theme->render('components/helpers/pagination', array(
-					'pagenum' => $pagenum,
-					'class' => $user,
-					'pages' => $pages,
-					'span' => \FelixOnline\Core\Settings::get('articles_per_user_page'),
-					'type' => 'user',
-					'key' => $user->getUser()
-				)); ?>
-				<!-- End of page list -->
+				<div class="row">
+					<div class="small-12 columns paginator-bit">
+						<!-- Page list -->
+						<?php $theme->render('components/helpers/pagination', array(
+							'pagenum' => $pagenum,
+							'class' => $user,
+							'pages' => $pages,
+							'span' => \FelixOnline\Core\Settings::get('articles_per_user_page'),
+							'type' => 'user',
+							'key' => $user->getUser()
+						)); ?>
+						<!-- End of page list -->
+					</div>
+				</div>
 			</div>
 			<input type="hidden" name="token" id="token" value="<?php echo Utility::generateCSRFToken('pagination'); ?>">
+			<input type="hidden" name="pag-category" id="pag-category" value="1">
+			<input type="hidden" name="pag-headshot" id="pag-headshot" value="0">
 		<?php } else { ?>
 			<p>Uh oh, <?php echo $user->getFirstName(); ?> has not written any articles for Felix. What a shame!</p>
 		<?php } ?>
 	</div>
-	<div class="medium-4 columns">
+	<div class="small-12 large-3 columns">
 		<?php if(($user->getShowLdap() && $data = $user->getInfo()) || $user->getDescription()) { ?>
-		<div class="felix-item-title felix-item-title felix-item-title-generic">
-			<h3>About <?php echo $user->getFirstName(); ?></h3>
+		<div class="info-box">
+			<h1>About <?php echo $user->getFirstName(); ?></h1>
+			<?php if($user->getDescription()): ?><p><?php echo nl2br($user->getDescription()); ?></p><?php endif; ?>
+			<?php if($user->getShowLdap() && $data = $user->getInfo()): ?>
+			<ul>
+				<li><b>Course/Title:</b> <?php echo $data[0]; ?></li>
+				<li><b>Department:</b> <?php echo $data[2]; ?></li>
+			</ul>
 		</div>
-		<br>
-		<?php if($user->getDescription()): ?><p><?php echo nl2br($user->getDescription()); ?></p><?php endif; ?>
-		<?php if($user->getShowLdap() && $data = $user->getInfo()): ?>
-		<ul>
-			<li><b>Course/Title:</b> <?php echo $data[0]; ?></li>
-			<li><b>Department:</b> <?php echo $data[2]; ?></li>
-		</ul>
 		<?php endif; ?>
 		<?php } ?>
-		<div class="felix-item-title felix-item-title felix-item-title-generic">
-			<h3>Contact <?php echo $user->getFirstName(); ?></h3>
-		</div>
-		<div class="felix-contact-area">
-			<?php if(!$user->getShowEmail() && !$user->getFacebook() && !$user->getTwitter() && !($user->getWebsitename() && $user->getWebsiteurl())): ?>
-			<p>Sorry, there are no contact details available.</p>
-			<?php endif; ?>
-			<?php if($user->getShowEmail()): ?>
-			<div class="row felix-contact-row">
-				<div class="small-3 columns">
-					<a href="mailto:<?php echo $user->getEmail(); ?>"><img src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/email.png"></a>
-				</div>
-				<div class="small-9 columns">
-					<p><a href="mailto:<?php echo $user->getEmail(); ?>"><?php echo $user->getEmail(); ?></a></p>
-				</div>
-			</div>
-			<?php endif; ?>
-			<?php if($user->getFacebook()): ?>
-			<div class="row felix-contact-row">
-				<div class="small-3 columns">
-					<a href="http://facebook.com/<?php echo $user->getFacebook(); ?>"><img src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/fb.png"></a>
-				</div>
-				<div class="small-9 columns">
-					<p><a href="<?php echo $user->getFacebook(); ?>">Facebook</a></p>
-				</div>
-			</div>
-			<?php endif; ?>
-			<?php if($user->getTwitter()): ?>
-			<div class="row felix-contact-row">
-				<div class="small-3 columns">
-					<a href="http://twitter.com/<?php echo $user->getTwitter(); ?>"><img src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/twitter.png"></a>
-				</div>
-				<div class="small-9 columns">
-					<p><a href="http://twitter.com/<?php echo $user->getTwitter(); ?>">@<?php echo $user->getTwitter(); ?></a></p>
-				</div>
-			</div>
-			<?php endif; ?>
-			<?php if($user->getWebsitename() && $user->getWebsiteurl()): ?>
-			<div class="row felix-contact-row">
-				<div class="small-3 columns">
-					<a href="<?php echo $user->getWebsiteurl(); ?>"><img src="<?php echo STANDARD_URL.'themes/2014/'; ?>img/web.png"></a>
-				</div>
-				<div class="small-9 columns">
-					<p><a href="<?php echo $user->getWebsiteurl(); ?>"><?php echo $user->getWebsitename(); ?></a></p>
-				</div>
-			</div>
-			<?php endif; ?>
-			<?php if ($currentuser->getUser() == $user->getUser()): ?>
-				<center><a href="#" data-reveal-id="editProfileModal" class="button small radius">Update your details</a></center>
-			<?php endif; ?>
-		</div>
+		<?php if ($currentuser->getUser() == $user->getUser()): ?>
+			<center><a href="#" data-reveal-id="editProfileModal" class="button small radius">Update your details</a></center>
+		<?php endif; ?>
 
-		<?php $theme->render('components/advert', array('sidebar' => true)); ?>
+		<?php $theme->render('components/helpers/block_advert', array('sidebar' => true)); ?>
 
 		<?php if ($article_count > 2 && $popular_articles) { ?>
-			<div class="felix-item-title felix-item-title felix-item-title-generic">
-				<h3>Most Popular Articles</h3>
+			<div class="info-box trending-block">
+				<h1>Most Popular Articles</h1>
+				<div class="recent-items-content">
+					<ol class="user-popular trending">
+					<?php foreach($popular_articles as $article) { ?>
+						<li class="user-popular-item">
+							<a href="<?php echo $article->getURL();?>">
+								<?php echo $article->getTitle();?>
+							</a>
+						</li>
+					<?php } ?>
+					</ol>
+				</div>
 			</div>
-			<ol class="user-popular">
-			<?php foreach($popular_articles as $article) { ?>
-				<li class="user-popular-item">
-					<div class="popular-item-title">
-						<?php if($currentuser->isLoggedIn() == $user->getUser()) { ?>
-						<div class="popular-item-hits">
-							<?php echo $article->getHits(); ?> hits
-						</div>
-						<?php } ?>
-						<a href="<?php echo $article->getURL();?>"><?php echo $article->getTitle();?></a>
-					</div>
-				</li>
-			<?php } ?>
-			</ol>
 		<?php } ?>
 		<?php if ($categories) { ?>
-			<div class="felix-item-title felix-item-title felix-item-title-generic">
-				<h3><?php echo $user->getFirstName(); ?> Edits</h3>
+			<div class="info-box trending-block">
+				<h1><?php echo $user->getFirstName(); ?> Edits</h1>
+				<div class="recent-items-content">
+					<ul class="user-popular trending">
+					<?php foreach($categories as $category) { ?>
+						<li class="user-popular-item">
+							<a href="<?php echo STANDARD_URL.$category->getCat(); ?>/">
+								<b><?php echo $category->getLabel(); ?></b>
+							</a>
+						</li>
+					<?php } ?>
+					</ul>
+				</div>
+				<p>Contact <?php echo $user->getFirstName(); ?> if you would like to get involved in any of these sections of Felix - new contributors always welcome!</p>
 			</div>
-			<ul class="user-popular">
-			<?php foreach($categories as $category) { ?>
-				<li class="user-popular-item">
-					<a href="<?php echo STANDARD_URL.$category->getCat(); ?>/">
-						<b><?php echo $category->getLabel(); ?></b>
-					</a>
-				</li>
-			<?php } ?>
-			</ul>
-			<p>Contact <?php echo $user->getFirstName(); ?> if you would like to get involved in any of these sections of <i>Felix</i> - new writers always welcome!</p>
 		<?php } ?>
 	</div>
 </div>

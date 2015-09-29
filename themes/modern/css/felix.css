@@ -117,6 +117,10 @@
 	top: 1rem;
 }
 
+.article-block.date .article-category {
+	left: 2rem;
+}
+
 .secondary-articles .article-block.small:last-child {
 	margin-bottom: 0rem;
 }
@@ -704,6 +708,7 @@ blockquote p {
 	font-weight: 200;
 	background: white;
 	border-bottom: 1px solid #EEEEEE;
+	padding-right: 0.5rem;
 }
 
 .recent-comments li {
@@ -804,4 +809,19 @@ h1.breadcrumb-after {
 
 .header-info-icons span {
 	vertical-align: -5%
+}
+
+h1 img.headshot {
+	border-radius: 50%;
+	height: 3rem;
+	vertical-align: -10%;
+	margin-right: 1rem;
+}
+
+.trending-block p {
+	margin-top: 1rem;
+}
+
+.small {
+	font-size: smaller;
 }
