@@ -86,7 +86,7 @@ class CategoryController extends BaseController
 					->filter('published < NOW()')
 					->filter('category = %i', array($child->getId()))
 					->order(array('published', 'id'), 'DESC')
-					->limit(0, 4)
+					->limit(0, \FelixOnline\Core\Settings::get('articles_per_summary_section'))
 					->values();
 
 				if(!is_array($manager)) {
