@@ -19,7 +19,7 @@
 	<ul class="breadcrumbs">
 		<li><a href="<?php echo STANDARD_URL; ?>">Home</a></li>
 		<?php foreach($elements as $element) { ?>
-		<li><a href="<?php echo STANDARD_URL.$element->getURL(); ?>"><?php echo $element->getLabel(); ?></a></li>
+		<li><a href="<?php echo $element->getURL(); ?>"><?php echo $element->getLabel(); ?></a></li>
 		<?php } ?>
 		<li class="current"></li>
 	</ul>
