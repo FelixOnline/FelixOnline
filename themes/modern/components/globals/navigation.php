@@ -89,3 +89,5 @@
         </section>
       </nav>
 <!-- End of Navigation -->
+
+    <?php $theme->render('components/helpers/block_notices', array('all_pages' => !$theme->isPage('frontpage'))); ?>

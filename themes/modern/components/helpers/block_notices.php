@@ -5,9 +5,7 @@
 		->filter('end_time > NOW()')
 		->filter('start_time < NOW()');
 
-	$converter = new \Sioen\Converter();
-
-	if($no_frontpage_only) {
+	if($all_pages) {
 		$notices->filter('frontpage = TRUE');
 	}
 
@@ -15,7 +13,7 @@
 
 	if (!is_null($notices)) {
 		?>
-		<div class="row felix-pad-top">
+		<div class="row full-width">
 			<div class="small-12 columns">
 				<?php
 		foreach($notices as $notice) { ?>
@@ -23,7 +21,7 @@
 				$text = strip_tags($notice->getContent(), '<b><i><a>');
 			?>
 
-					<div data-alert class="alert-box notice"><small><?php echo strtoupper(date('D j M, g:i A', $notice->getStartTime())); ?></small> <?php echo $text; ?></div>
+					<div data-alert class="alert-box notice secondary"><small><?php echo strtoupper(date('D j M, g:i A', $notice->getStartTime())); ?></small> <?php echo $text; ?></div>
 		<?php }
 				?>
 			</div>
