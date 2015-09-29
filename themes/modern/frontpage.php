@@ -146,9 +146,11 @@ if(!$currentuser->isLoggedIn()) {
 		->limit(0, 3)
 		->values();
 
+		$i = 0;
 		foreach($articles as $key => $article) {
+			$i++;
 	?>
-      <div class="small-12 medium-6 large-3 columns" data-equalizer-watch="opinion">
+      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>" data-equalizer-watch="opinion">
     <?php
       	$theme->render('components/category/block_normal', array(
 			'article' => $article,
@@ -183,9 +185,11 @@ if(!$currentuser->isLoggedIn()) {
 		->limit(0, 2)
 		->values();
 
+		$i = 0;
 		foreach($articles as $key => $article) {
+			$i++;
 	?>
-      <div class="small-12 medium-6 large-3 columns" data-equalizer-watch="cands">
+      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>" data-equalizer-watch="cands">
     <?php
       	$theme->render('components/category/block_normal', array(
 			'article' => $article,
@@ -208,9 +212,11 @@ if(!$currentuser->isLoggedIn()) {
 		->limit(0, 2)
 		->values();
 
+		$i = 0;
 		foreach($articles as $key => $article) {
+			$i++;
 	?>
-      <div class="small-12 medium-6 large-3 columns" data-equalizer-watch="cands">
+      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>" data-equalizer-watch="cands">
     <?php
       	$theme->render('components/category/block_normal', array(
 			'article' => $article,
@@ -233,19 +239,20 @@ if(!$currentuser->isLoggedIn()) {
       </div>
       	<div class="small-12 large-9 columns">
 		<?php
+			$i = 0;
 			foreach($thisweek as $article) {
 				if(!$article->getArticle()->getCategory()->getActive() ||
 					(!$currentuser->isLoggedIn() && $article->getArticle()->getCategory()->getSecret())) {
 					continue;
 				}
 
-				if(floor($i/3) == $i/3) {
+				if($i % 3 == 0) {
 					echo '<div class="row features-row" data-equalizer="features-end">';
 				}
 
 				$i++;
 
-				if($i == count($thisweek) && (floor($i/3) == $i/3)) {
+				if($i == count($thisweek)) {
 					$end = ' end';
 				} else {
 					$end = '';
