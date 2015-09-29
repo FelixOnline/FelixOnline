@@ -73,6 +73,11 @@ class CategoryController extends BaseController
 		$this->theme->setHierarchy(array(
 			$data['category']->getCat() // category-{cat}.php
 		));
-		$this->theme->render('category');
+
+		if($pagenum == 1) {
+			$this->theme->render('category_page1');
+		} else {
+			$this->theme->render('category');
+		}
 	}
 }

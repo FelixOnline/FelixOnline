@@ -44,7 +44,7 @@ if(!$currentuser->isLoggedIn()) {
 		?>
           <div class="small-12 large-4 columns" data-equalizer-watch="carousel">
             <div class="row" data-equalizer="news-side">
-              <div class="medium-6 large-12 columns" data-equalizer-watch="news-side">
+              <div class="medium-6 large-12 columns">
               	<?php
               		$theme->render('components/category/block_normal', array(
 						'article' => $articles[0],
@@ -54,7 +54,7 @@ if(!$currentuser->isLoggedIn()) {
 					));
 				?>
               </div>
-              <div class="medium-6 large-12 columns" data-equalizer-watch="news-side">
+              <div class="medium-6 large-12 columns">
               	<?php
               		$theme->render('components/category/block_normal', array(
 						'article' => $articles[1],

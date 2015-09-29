@@ -58,7 +58,7 @@
 		<script>
 			$(document).foundation({
         equalizer : {
-          equalize_on_stack: false
+          equalize_on_stack: true
         }
       });
 

@@ -11,6 +11,10 @@
 	}
 
 	$elements = array_reverse($elements);
+
+	if($type == 'category') {
+		array_pop($elements);
+	}
 ?>
 	<ul class="breadcrumbs">
 		<li><a href="<?php echo STANDARD_URL; ?>">Home</a></li>

@@ -84,6 +84,10 @@
 	font-weight: 200;
 }
 
+.article-block.date .editor-icons {
+	padding-left: 0rem;
+}
+
 @media not screen and (min-width: 40.063em) and (max-width: 64em) {
 	.article-block.date .article-title,
 	.article-block.date .article-byline,
@@ -94,6 +98,10 @@
 
 	.article-block.date .article-img {
 		min-height: 15rem;
+	}
+
+	.article-block.date .editor-icons {
+		padding-left: 1rem;
 	}
 }
 
@@ -197,14 +205,20 @@
 	text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000;
 }
 
-.article-block.small .editor-icons {
+.article-block .editor-icons {
 	padding-top: 1rem;
 	padding-left: 1rem;
 	padding-right: 1rem;
-	margin-bottom: -1rem;
+	margin-bottom: -1rem;;
 }
 
-.article-block.small .editor-icons .authors {
+.article-block .editor-icons img {
+	width: 100%;
+	max-width: 60px;
+	margin-bottom: 0;
+}
+
+.article-block .editor-icons .authors {
 	padding-left: 1rem;
 	font-weight: 200;
 }
@@ -302,12 +316,32 @@
 	margin-bottom: 1rem;
 }
 
-.editor-icons p {
+.section-info-box img {
+	width: 100%;
+	max-width: 60px;
+}
+
+.editor-icons p, .contact-area p {
 	margin-bottom: 0;
-	font-size: 0.9rem;
-	text-align: center;
-	margin-top: 0.2rem;
+	font-size: 1.2rem;
+	text-align: left;
+	margin-top: 0;
+	margin-left: 1rem;
 	font-weight: 200;
+}
+
+.contact-area p {
+	font-size: 1rem;
+	margin-left: 0;
+}
+
+.contact-area span {
+	font-size: 1.5rem;
+}
+
+.editor-icons span {
+	vertical-align: sub;
+	margin-left: 0.5rem;
 }
 
 .info-box h1 {
@@ -351,19 +385,6 @@
 .article-info-box .comments {
 	font-weight: 200;
 	margin-bottom: 0rem;
-}
-
-.article-info-box .editor-icons p {
-	font-size: 1.2rem;
-	text-align: left;
-	margin-top: 0;
-	margin-left: 1rem;
-	font-weight: 200;
-}
-
-.article-info-box .editor-icons span {
-	vertical-align: sub;
-	margin-left: 0.5rem;
 }
 
 .comment-actions {
@@ -765,4 +786,22 @@ blockquote p {
 
 .comment-replies .article-comment:last-child {
 	margin-bottom: 0;
+}
+
+.breadcrumb-float-top .breadcrumbs {
+	float: left;
+	margin-top: 1rem;
+}
+
+h1.breadcrumb-after {
+	clear: right;
+	margin-top: 0rem;
+}
+
+.header-info-icons a {
+	margin-right: 1rem;
+}
+
+.header-info-icons span {
+	vertical-align: -5%
 }

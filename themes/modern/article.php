@@ -47,7 +47,7 @@ $theme->render('components/globals/header', $header);
 					<div class="article-edit"><b><a class="button tiny radius" href="<?php echo ADMIN_URL; ?>?page=addarticle&amp;article=<?php echo $article->getId(); ?>">Edit Article</a></b></div>
 				<?php endif; ?>
 
-				<?php $theme->render('components/helpers/block_advert', array('sidebar' => true)); ?>
+				<?php $theme->render('components/helpers/block_advert', array('sidebar' => true, 'article' => $article, 'section' => false)); ?>
 
 				<?php $theme->render('components/article/meta_share', array('article' => $article, 'hidetitle' => false)); ?>
 			</div>
