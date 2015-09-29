@@ -19,12 +19,16 @@ $theme->render('components/globals/header', $header);
 		<div class="small-12 large-8 columns breadcrumb-float-top">
 			<?php $theme->render('components/helpers/breadcrumbs', array('origin' => $category, 'type' => 'category')); ?>
 			<h1 class="breadcrumb-after"><?php echo $category->getLabel(); ?></h1>
+<?php if($category->getTwitter() || $category->getEmail()): ?>
 			<div class="header-info-icons">
+<?php if($category->getEmail()): ?>
 				<a href="mailto:<?php echo $category->getEmail(); ?>"><span class="social social-e-mail"></span>&nbsp;<?php echo $category->getEmail(); ?></a>
+<?php endif; ?>
 <?php if($category->getTwitter()): ?>
 				<a href="http://twitter.com/<?php echo $category->getTwitter(); ?>"><span class="social social-twitter"></span>&nbsp;@<?php echo $category->getTwitter(); ?></a>
 <?php endif; ?>
 			</div>
+<?php endif; ?>
 		</div>
 		<div class="small-12 large-4 columns text-right">
 			<?php $theme->render('components/helpers/block_advert', array('sidebar' => true, 'article' => false, 'section' => $category)); ?>

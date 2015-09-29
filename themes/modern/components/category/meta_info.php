@@ -8,11 +8,13 @@
 							$theme->render('components/article/meta_author', array('user' => $author));
 						}
 					} else {
-						echo '<p>Nobody edits this section. Why not you?</p>';
+						echo '<p>Nobody edits this section. Why not get involved?</p>';
 					}
 					?>
+					<?php if($category->getTwitter() || $category->getEmail()): ?>
 					<p>Contact <?php echo $category->getLabel(); ?></p>
 					<div class="contact-area">
+						<?php if($category->getEmail()): ?>
 						<div class="row">
 							<div class="small-2 columns">
 								<a href="mailto:<?php echo $category->getEmail(); ?>"><span class="social social-e-mail"></span></a>
@@ -21,6 +23,7 @@
 								<p><a href="mailto:<?php echo $category->getEmail(); ?>"><?php echo $category->getEmail(); ?></a></p>
 							</div>
 						</div>
+						<?php endif; ?>
 						<?php if($category->getTwitter()): ?>
 						<div class="row">
 							<div class="small-2 columns">
@@ -32,4 +35,5 @@
 						</div>
 						<?php endif; ?>
 					</div>
+					<?php endif; ?>
 				</div>
