@@ -5,7 +5,7 @@
 	}
 ?>
 <?php if(!isset($nomodal) || !$nomodal): ?>
-<div id="loginModal" class="reveal-modal small info-box" data-reveal>
+<div id="loginModal" class="reveal-modal medium info-box" data-reveal>
 <?php endif; ?>
 	<h1>Login to Felix Online</h1>
 	<form action="<?php echo AUTHENTICATION_PATH; ?>login/?goto=<?php echo $location; ?>" id="loginForm" class="" method="post">
@@ -38,7 +38,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="small-3 push-3 columns">
+					<div class="small-3 small-centered columns">
 						<input type="submit" value="Login (SSL)" name="login" id="submit" class="login-button button small radius" />
 					</div>
 				</div>

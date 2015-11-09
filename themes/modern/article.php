@@ -185,7 +185,7 @@ $theme->render('components/globals/header', $header);
 								<?php } ?>
 								<div class="row">
 									<div class="medium-2 columns">
-										<label class="inline" for="comment">Your comment</label>
+										<label class="inline" for="comment">Comment</label>
 									</div>
 									<div class="medium-9 columns end">
 										<?php if($_POST['replyComment']): ?>
