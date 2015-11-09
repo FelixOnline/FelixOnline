@@ -35,7 +35,7 @@
               <form action="<?php echo STANDARD_URL; ?>search/" method="GET">
                 <div class="row collapse">
                   <div class="large-8 small-9 columns">
-                    <input type="text" placeholder="Find Stuff">
+                    <input type="text" name="q" placeholder="Find Stuff">
                   </div>
                   <div class="large-4 small-3 columns">
                     <button type="submit" class="button search-button expand alert">Search</button>
@@ -70,8 +70,8 @@
                 <span class="glyphicons glyphicons-search"></span>
               </a>
             </li>
-            <li<?php if($check == 'Issue Archive'): echo ' class="active"'; endif; ?>>
-              <a href="<?php echo STANDARD_URL.'issuearchive'; ?>" data-tooltip aria-haspopup="true" data-options="disable_for_touch:true" class="has-tip" title="Issue Archive">
+            <li<?php if($check == 'Issue Archive'): echo ' class="active"'; endif; ?> >
+                <a href="<?php echo STANDARD_URL.'issuearchive'; ?>" data-tooltip aria-haspopup="true" data-options="show_on:medium;disable_for_touch:true" class="has-tip" title="Issue Archive">
                 <span class="glyphicons glyphicons-newspaper"></span>
                 <span>
                   <span class="show-for-small-only icon-text-pad">Issue Archive</span>

@@ -12,27 +12,13 @@
 					}
 					?>
 					<?php if($category->getTwitter() || $category->getEmail()): ?>
-					<p>Contact <?php echo $category->getLabel(); ?></p>
+					Contact <?php echo $category->getLabel(); ?>
 					<div class="contact-area">
 						<?php if($category->getEmail()): ?>
-						<div class="row">
-							<div class="small-2 columns">
-								<a href="mailto:<?php echo $category->getEmail(); ?>"><span class="social social-e-mail"></span></a>
-							</div>
-							<div class="small-10 columns">
-								<p><a href="mailto:<?php echo $category->getEmail(); ?>"><?php echo $category->getEmail(); ?></a></p>
-							</div>
-						</div>
+						<p><a href="mailto:<?php echo $category->getEmail(); ?>"><span class="social social-e-mail"></span> <?php echo $category->getEmail(); ?></a></p>
 						<?php endif; ?>
 						<?php if($category->getTwitter()): ?>
-						<div class="row">
-							<div class="small-2 columns">
-								<a href="http://twitter.com/<?php echo $category->getTwitter(); ?>"><span class="social social-twitter"></span></a>
-							</div>
-							<div class="small-10 columns">
-								<p><a href="http://twitter.com/<?php echo $category->getTwitter(); ?>">@<?php echo $category->getTwitter(); ?></a></p>
-							</div>
-						</div>
+						<p><a href="http://twitter.com/<?php echo $category->getTwitter(); ?>"><span class="social social-twitter"></span> @<?php echo $category->getTwitter(); ?></a></p>
 						<?php endif; ?>
 					</div>
 					<?php endif; ?>
