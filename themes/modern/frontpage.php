@@ -43,7 +43,7 @@ if(!$currentuser->isLoggedIn()) {
 			->values();
 		?>
           <div class="small-12 large-4 columns" data-equalizer-watch="carousel">
-            <div class="row" data-equalizer="news-side">
+            <div class="row" data-equalizer="news-side" data-equalizer-mq="medium-only">
               <div class="medium-6 large-12 columns">
               	<?php
               		$theme->render('components/category/block_normal', array(
@@ -68,7 +68,7 @@ if(!$currentuser->isLoggedIn()) {
           </div>
         </div>
        	<div class="row" data-equalizer="news">
-          <div class="small-12 medium-4 columns" data-equalizer-watch="news">
+          <div class="small-12 medium-4 columns">
           	<?php
           		$theme->render('components/category/block_normal', array(
 					'article' => $articles[2],
@@ -78,7 +78,7 @@ if(!$currentuser->isLoggedIn()) {
 				));
 			?>
           </div>
-          <div class="small-12 medium-4 columns" data-equalizer-watch="news">
+          <div class="small-12 medium-4 columns">
           	<?php
           		$theme->render('components/category/block_normal', array(
 					'article' => $articles[3],
@@ -88,7 +88,7 @@ if(!$currentuser->isLoggedIn()) {
 				));
 			?>
           </div>
-          <div class="small-12 medium-4 columns" data-equalizer-watch="news">
+          <div class="small-12 medium-4 columns">
           	<?php
           		$theme->render('components/category/block_normal', array(
 					'article' => $articles[4],
@@ -102,27 +102,27 @@ if(!$currentuser->isLoggedIn()) {
       </div>
       <div class="small-12 large-3 columns" data-equalizer-watch="top">
         <div class="row">
-          <div class="small-12 medium-6 large-12 columns">
+          <div class="small-12 medium-6 large-12 columns info-always-margin">
           	<?php
     			$theme->render('components/home/block_pdf');
 			?>
           </div>
-          <div class="small-12 medium-6 large-12 columns">
+          <div class="small-12 medium-6 large-12 columns info-always-margin">
           	<?php
           		$theme->render('components/helpers/block_popular');
           	?>
           </div>
-          <div class="small-12 medium-6 large-12 columns">
+          <div class="small-12 medium-6 large-12 columns info-always-margin">
             <?php
             	$theme->render('components/helpers/block_advert', array('sidebar' => true, 'article' => false, 'section' => false));
             ?>
           </div>
-          <div class="small-12 medium-6 large-12 columns">
+          <div class="small-12 medium-6 large-12 columns info-always-margin">
             <?php
             	$theme->render('components/home/block_contribute');
             ?>
           </div>
-          <div class="small-12 medium-6 large-12 columns">
+          <div class="small-12 medium-6 large-12 columns info-always-margin">
           	<?php
           		$theme->render('components/home/block_facebook');
           	?>
@@ -150,7 +150,7 @@ if(!$currentuser->isLoggedIn()) {
 		foreach($articles as $key => $article) {
 			$i++;
 	?>
-      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>" data-equalizer-watch="opinion">
+      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>">
     <?php
       	$theme->render('components/category/block_normal', array(
 			'article' => $article,
@@ -189,7 +189,7 @@ if(!$currentuser->isLoggedIn()) {
 		foreach($articles as $key => $article) {
 			$i++;
 	?>
-      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>" data-equalizer-watch="cands">
+      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>">
     <?php
       	$theme->render('components/category/block_normal', array(
 			'article' => $article,
@@ -216,7 +216,7 @@ if(!$currentuser->isLoggedIn()) {
 		foreach($articles as $key => $article) {
 			$i++;
 	?>
-      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>" data-equalizer-watch="cands">
+      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>">
     <?php
       	$theme->render('components/category/block_normal', array(
 			'article' => $article,
@@ -237,17 +237,14 @@ if(!$currentuser->isLoggedIn()) {
       <div class="small-12 columns">
         <p class="section-date">Best of the paper</p>
       </div>
-      	<div class="small-12 large-9 columns">
+      	<div class="small-12 large-9 columns" data-equalizer="features-end">
+      		<div class="row">
 		<?php
 			$i = 0;
 			foreach($thisweek as $article) {
 				if(!$article->getArticle()->getCategory()->getActive() ||
 					(!$currentuser->isLoggedIn() && $article->getArticle()->getCategory()->getSecret())) {
 					continue;
-				}
-
-				if($i % 3 == 0) {
-					echo '<div class="row features-row" data-equalizer="features-end">';
 				}
 
 				$i++;
@@ -259,7 +256,7 @@ if(!$currentuser->isLoggedIn()) {
 				}
 
 		?>
-			<div class="small-12 medium-6 large-4 columns<?php echo $end; ?>" data-equalizer-watch="features-end">
+				<div class="small-12 medium-6 large-4 columns<?php echo $end; ?>">
 		<?php
 		      	$theme->render('components/category/block_normal', array(
 					'article' => $article->getArticle(),
@@ -268,15 +265,13 @@ if(!$currentuser->isLoggedIn()) {
 					'headshot' => false
 				));
 		?>
-			</div>
+				</div>
 		<?php
 
-				if(floor($i/3) == $i/3) {
-					echo '</div>';
-				}
 			}
 		?>
-		</div></div>
+			</div>
+		</div>
 		<div class="small-12 large-3 columns">
 		<?php
 	      	$theme->render('components/home/block_twitter');

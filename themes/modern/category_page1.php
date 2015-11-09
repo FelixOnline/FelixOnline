@@ -22,7 +22,7 @@ $theme->render('components/globals/header', $header);
 		</div>
 		<div class="small-12 large-3 columns">
 <?php else: ?>
-	<div class="row full-width top-row" data-equalizer="master" data-equalizer-mq="large-only">
+	<div class="row full-width top-row" data-equalizer="master" data-equalizer-mq="large-up">
 		<div class="small-12 large-6 columns">
 			<?php
 				if(isset($articles[0])) {
@@ -85,7 +85,7 @@ $theme->render('components/globals/header', $header);
 <?php endif; ?>
 	</div>
 
-	<div class="row full-width" data-equalizer="master2">
+	<div class="row full-width secondary-top-row" data-equalizer="master2">
 <?php
 	for($i = 3; $i < 7; $i++) {
 		if(!isset($articles[$i])) { continue; }

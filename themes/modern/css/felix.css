@@ -36,6 +36,7 @@
 
 .article-block.large {
 	min-height: 30rem;
+	margin-bottom: 0;
 }
 
 .article-block.medium {
@@ -307,6 +308,14 @@
 	margin-bottom: 1.5rem;
 }
 
+.info-box:last-child {
+	margin-bottom: 0;
+}
+
+.info-always-margin .info-box:last-child {
+	margin-bottom: 1.5rem;
+}
+
 .section-social {
 	font-size: 1.5rem;
 }
@@ -459,6 +468,10 @@
 	.top-row {
 		margin-bottom: 1.5rem;
 	}
+
+	.article-block.large {
+		margin-bottom: 1.5rem;
+	}
 }
 
 .date-block {
@@ -504,6 +517,10 @@ hr.month-divider {
 	.section-bar .top-bar-section ul {
 		border-top: 1px solid white;
 	}
+
+	.info-box:last-child {
+		margin-bottom: 1.5rem;
+	}
 }
 
 .section-bar, .section-bar .title-area {
@@ -516,10 +533,6 @@ hr.month-divider {
 
 .row.full-width {
 	max-width: 100%;
-}
-
-.row.features-row {
-	margin-bottom: 1.5rem;
 }
 
 .white {
@@ -649,6 +662,14 @@ blockquote p {
 
 	blockquote p {
 	}
+
+	.secondary-top-row {
+		margin-top: 1.5rem;
+	}
+}
+
+.article-row .info-box:last-child {
+	margin-bottom: 1.5rem !important;
 }
 
 .article-text {

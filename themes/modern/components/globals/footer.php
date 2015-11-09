@@ -26,8 +26,8 @@
     <!-- End of commenting policy -->
 
     <footer>
-      <div class="row full-width" data-equalizer="footer">
-        <div class="small-12 medium-10 columns clearfix small-only-text-center medium-text-left" data-equalizer-watch="footer">
+      <div class="row full-width">
+        <div class="small-12 medium-10 columns clearfix small-only-text-center medium-text-left">
           <a href="#"><img src="logo.png" style="height: 4.8rem;"></a>
           <ul class="footer-links inline-list">
             <li><a href="http://felixonline.co.uk/contact/">Contact</a></li>
@@ -38,7 +38,7 @@
           </li>
         </div>
         <div class="small-12 medium-2 columns">
-          <div class="small-only-text-center medium-text-right" data-equalizer-watch="footer">
+          <div class="small-only-text-center medium-text-right">
             <a href="mailto:felix@imperial.ac.uk"><span class="social social-e-mail"></span></a>
             <a href="http://www.fb.me/FelixImperial"><span class="social social-facebook"></span></a>
             <a href="http://www.twitter.com/FelixImperial"><span class="social social-twitter"></span></a>

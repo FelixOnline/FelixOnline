@@ -32,7 +32,7 @@ $header = array(
 $theme->render('components/globals/header', $header);
 
 ?>
-		<div class="row">
+		<div class="row article-row">
 			<div class="small-12 columns title-row">
 				<div class="article-title-area">
 					<?php $theme->render('components/helpers/breadcrumbs', array('origin' => $article, 'type' => 'article')); ?>
@@ -101,7 +101,7 @@ $theme->render('components/globals/header', $header);
 				<!-- End of content -->
 			</div>
 		</div>
-		<div class="row">
+		<div class="row article-row">
 			<div class="small-12 large-4 large-push-8 columns">
 				<?php $theme->render('components/article/meta_share', array('article' => $article, 'hidetitle' => false)); ?>
 
