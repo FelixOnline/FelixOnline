@@ -5,7 +5,7 @@ try {
 ?>
 
 <a href="<?php echo $issue->getDownloadURL(); ?>" class="thumbLink">
-	<div class="medium-3 columns thumb<?php if($last): ?> end <?php endif; ?>">
+	<div class="small-6 large-3 columns thumb<?php if($last): ?> end <?php endif; ?>">
 		<div class="panel issue-panel">
 			<div class="issue">
 				<?php echo $issue->getIssue(); ?>
@@ -27,7 +27,7 @@ try {
 </a>
 <?php
 } catch(\FelixOnline\Exceptions\InternalException $e) {
-	echo '<div class="medium-3 columns thumb<?php if($last): ?> end <?php endif; ?>">
+	echo '<div class="small-6 large-3 columns thumb<?php if($last): ?> end <?php endif; ?>">
 		<div class="panel issue-panel">
 		<p><b>Sorry, we are having some trouble loading issue '.$issue->getIssue().' ('.$issue->getId().'). Please try again later.</b></p>
 		</div>
