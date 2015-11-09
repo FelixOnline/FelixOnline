@@ -348,7 +348,7 @@
 	margin-left: 0.5rem;
 }
 
-.info-box h1 {
+.info-box h1, .archive-publication-name {
 	margin-top: 0;
 	padding-top: 0;
 	font-size: 2rem;

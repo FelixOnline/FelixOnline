@@ -54,9 +54,7 @@ $theme->render('components/globals/header', $header);
 					if($PubId != 1) {
 						?>
 						<div class="small-12 columns">
-							<div class="info-box">
-								<h1><?php echo $PubName; ?></h1>
-							</div>
+							<h1 class="archive-publication-name"><?php echo $PubName; ?></h1>
 						</div>
 						<br>
 						<?php
