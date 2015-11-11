@@ -376,7 +376,7 @@ function poll_vote($data) {
 		$bottom = false;
 	}
 
-	$theme->render('components/poll', array('poll' => $poll, 'article' => $article, 'bottom' => $bottom));
+	$theme->render('components/article/main_poll', array('poll' => $poll, 'article' => $article, 'bottom' => $bottom));
 
 	$output = ob_get_contents();
 
