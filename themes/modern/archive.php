@@ -3,8 +3,6 @@ $header = array(
 	'title' => 'Issue Archive - '.'Felix Online'
 );
 
-$theme->resources->addCSS(array('archive.less'));
-
 $theme->render('components/globals/header', $header);
 ?>
 
