@@ -130,8 +130,8 @@ $theme->render('components/globals/header', $header);
 				
 				<!-- Comment form -->
 				<?php if ($article->canComment($currentuser)) { ?>
-				<div class="new-comment info-box" id="commentForm">
-					<h1>Submit your comment</h1>
+				<div class="new-comment" id="commentForm">
+					<h4>Submit your comment</h4>
 					<?php if (!$currentuser->isLoggedIn()) { ?>
 						<p>You are not logged in. Logged in users may still remain anonymous.</p>
 					<?php } else { ?>

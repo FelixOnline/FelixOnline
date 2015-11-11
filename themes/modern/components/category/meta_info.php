@@ -12,7 +12,6 @@
 					}
 					?>
 					<?php if($category->getTwitter() || $category->getEmail()): ?>
-					Contact <?php echo $category->getLabel(); ?>
 					<div class="contact-area">
 						<?php if($category->getEmail()): ?>
 						<p><a href="mailto:<?php echo $category->getEmail(); ?>"><span class="social social-e-mail"></span> <?php echo $category->getEmail(); ?></a></p>

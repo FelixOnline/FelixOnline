@@ -40,7 +40,7 @@ $theme->render('components/globals/header', $header);
 	</div>
 
 	<div class="row full-width">
-		<div class="small-12 large-9 columns">
+		<div class="small-12 large-9 columns user-articles">
 			<?php if ($currentuser->getUser() == $user->getUser()): ?>
 				<?php
 					$theme->render('components/user/edit_profile', array('user' => $user));
