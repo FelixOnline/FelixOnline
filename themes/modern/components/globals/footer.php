@@ -28,7 +28,7 @@
     <footer>
       <div class="row full-width">
         <div class="small-12 medium-10 columns clearfix small-only-text-center medium-text-left">
-          <a href="#"><img src="logo.png" style="height: 4.8rem;"></a>
+          <a href="#"><img src="themes/modern/img/logo2.svg" class="svg" style="height: 4.8rem;"></a>
           <ul class="footer-links inline-list">
             <li><a href="http://felixonline.co.uk/contact/">Contact</a></li>
             <li><a href="http://felixonline.co.uk/contribute/">Get Involved</a></li>
