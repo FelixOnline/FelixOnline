@@ -1,0 +1,161 @@
+.article-comment {
+	border-top: 1px solid #DDDDDD;
+	margin-bottom: 1.5rem;
+	padding-top: 0.5rem;
+
+	.comment-header-block {
+		h1 {
+			font-weight: 200;
+		
+			span {
+				vertical-align: -10%;
+			}
+		}
+	}
+
+	.comment-actions {
+		font-size: 1rem;
+		font-weight: 200;
+		margin-bottom: 0.5rem;
+
+		span.glyphicons {
+			vertical-align: -10%;
+			margin-left: 0.5rem;
+		}
+	}
+
+	.comment-meta {
+		margin-bottom: 0.5rem;
+		font-size: 0.75rem;
+
+		span {
+			vertical-align: -5%;
+		}
+
+		.comment-author {
+			font-weight: bold;
+		}
+
+		.comment-date {
+			font-weight: 200;
+		}
+	}
+
+	.comment-actions {
+		a,
+		a:hover {
+			border-bottom: none;
+		}
+
+		.positive-comment {
+			color: #006400;
+		}
+
+		.negative-comment {
+			color: #8B0000;
+		}
+	}
+
+	.comment-like span, .comment-dislike span {
+		color: black;
+	}
+
+	.comment-replies {
+		margin-left: 1rem;
+		margin-top: 1rem;
+		border-left: 3px solid #DDDDDD;
+		padding-left: 1rem;
+	
+		.article-comment:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.blue-thumb {
+		color: @secondary-colour !important;
+	}
+}
+
+.title-row {
+	margin-bottom: 1rem;
+
+	h2 {
+		font-weight: 500;
+		letter-spacing: -2px;
+	}
+
+	h3 {
+		font-weight: 200;
+		letter-spacing: -0.5px;
+	}
+}
+
+@media only screen and (max-width: @medium-max) {
+	.top-row {
+		margin-bottom: @general-margin;
+	}
+}
+
+.article-row {
+	.article-text {
+		p {
+			line-height: 2;
+		}
+	}
+
+	.article-image {
+		margin-bottom: 1rem;
+
+		.article-image-subcaption,
+		#imgCont #imageCaption {
+			background: @grey-colour;
+			padding: 0.75rem;
+			font-weight: 200;
+		}
+
+		.article-image-subcaption span,
+		#imgCont #imageAttr {
+			font-size: x-small;
+			font-weight: 200;
+			display: inline;
+		}
+
+		#imgCont {
+			margin-bottom: 1.5rem;
+			clear: both;
+
+			img {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.tall-image {
+	width: 50%;
+	float: right;
+	margin-left: 1.5rem;
+	margin-top: 1.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.poll h5 {
+	font-weight: 200;
+}
+
+#replyLink {
+	font-size: smaller;
+}
+
+#removeReply span.glyphicons {
+	vertical-align: -10%;
+}
+
+.new-comment {
+	border-top: 1px solid #DDDDDD;
+	padding-top: 0.5rem;
+
+	h4 {
+		font-weight: @light-weight;
+	}
+}

@@ -1,0 +1,174 @@
+.slick-dots {
+	margin-left: 0;
+	margin-top: -2rem;
+}
+
+.editor-icons {
+	padding-top: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	margin-bottom: -1rem;
+
+	img {
+		width: 100%;
+		max-width: 60px;
+		margin-bottom: 0;
+	}
+
+	.authors {
+		padding-left: 1rem;
+		font-weight: @light-weight;
+	}
+
+	img {
+		border-radius: 50%;
+	}
+
+	p {
+		margin-bottom: 0;
+		font-size: 1.2rem;
+		text-align: left;
+		margin-top: 0;
+		margin-left: 1rem;
+		font-weight: @light-weight;
+	}
+
+	span {
+		vertical-align: sub;
+		margin-left: 0.5rem;
+	}
+}
+
+@media not screen and (min-width: @medium-min) and (max-width: @medium-max) {
+	.editor-icons {
+		padding-left: 1rem;
+	}
+}
+
+.trending, .recent-comments {
+	background: white;
+	padding-left: 1rem;
+	margin-left: 0;
+	margin-bottom: 0;
+
+	li {
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+		font-size: 1.5rem;
+		margin-left: 2rem;
+		font-weight: 200;
+		background: white;
+		border-bottom: 1px solid @grey-colour;
+		padding-right: 0.5rem;
+
+		a {
+			font-size: 1rem;
+			font-weight: normal;
+		}
+	}
+
+	li:last-child {
+		border-bottom: 0;
+	}
+}
+
+.recent-comments {
+	list-style-type: none;
+	padding-left: 0;
+
+	li {
+		font-size: 1rem;
+		font-weight: normal;
+		margin-left: 0;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+
+		.comment-meta {
+			font-size: 0.75rem;
+			font-weight: 200;
+		}
+
+		.comment-name,
+		.comment-article {
+			font-weight: bold;
+		}
+	}
+}
+
+.input-help {
+	font-size: 0.75rem;
+	margin-top: 0;
+	padding-top: 0;
+	font-style: italic;
+}
+
+.trending-block {
+	p {
+		margin-top: 1rem;
+	}
+
+	.tabs a {
+		font-size: smaller;
+		font-weight: 200;
+	}
+}
+
+hr.month-divider {
+	margin-bottom: 0;
+	border-color: @secondary-colour-dark;
+}
+
+.date-row {
+	margin: 0 0 1rem 0 !important;
+}
+
+.section-date {
+	font-weight: 200;
+	font-size: 1.25rem;
+	color: @secondary-colour-dark;
+}
+
+.user-articles {
+	hr.month-divider:first-child {
+		margin-top: 0;
+	}
+}
+
+.white {
+	background: white;
+	padding: 0.5rem;
+}
+
+.alert-box {
+	border: none;
+	background: @primary-colour;
+
+	&.secondary {
+		background: @secondary-colour;
+	}
+}
+
+ul.pagination {
+	li.current {
+		a,
+		button,
+		a:focus,
+		a:hover,
+		button:focus,
+		button:hover {
+			background: @secondary-colour;
+		}
+	}
+}
+
+.header-info-icons {
+	margin-bottom: @general-margin;
+}
+
+.progress .meter {
+	background: @secondary-colour;
+}
+
+.tabs .tab-title>a, .tabs dd>a {
+	background: @grey-colour
+}

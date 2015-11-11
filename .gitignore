@@ -45,3 +45,6 @@ admin/
 
 themes/2014/css/*.min.css
 themes/2014/css/archive.css
+
+themes/*/style.css
+themes/*/style.cache

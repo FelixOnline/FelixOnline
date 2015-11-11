@@ -1,0 +1,275 @@
+a,
+.breadcrumbs>* a,
+.side-nav li a:not(.button),
+.side-nav li.active>a:first-child:not(.button) {
+	color: @primary-colour;
+}
+
+.button,
+button {
+	background-color: @primary-colour;
+}
+
+a:hover,
+a:focus,
+.breadcrumbs>* a:hover,
+.breadcrumbs>* a:focus,
+.side-nav li a:not(.button):focus,
+.side-nav li a:not(.button):hover {
+	color: @primary-colour-dark;
+}
+
+.button:focus,
+.button:hover,
+button:focus,
+button:hover {
+	background-color: @primary-colour-dark;
+}
+
+.row.full-width {
+	max-width: 100%;
+}
+
+.advert-area {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+.section-bar {
+	background: @primary-colour;
+	margin-bottom: @general-margin;
+	height: 5rem;
+
+	.top-bar-section ul li,
+	.top-bar-section li:not(.has-form) a:not(.button) {
+		background: @primary-colour;
+	}
+
+	.title-area {
+		height: 5rem;
+
+		.name {
+			img {
+				padding-left: 1rem;
+			}
+
+			h1 {
+				a {
+					padding-left: 0;
+					font-size: 3rem;
+					padding-top: 1rem;
+				}
+			}
+		}
+	}
+
+	.glyphicons {
+		display: inline;
+		vertical-align: -20%;
+		font-size: 1.25rem;
+		text-align: center;
+	}
+
+	.has-tip {
+		border-bottom: none !important;
+	}
+
+	.icon-text-pad {
+		padding-left: 0.5rem;
+	}
+}
+
+.section-bar.expanded {
+	.title-area {
+		background: @primary-colour;
+	}
+
+	.toggle-topbar {
+		a {
+			color: @primary-colour-dark;
+		}
+
+		span::after {
+			box-shadow: 0 0 0 1px @primary-colour-dark,
+				0 7px 0 1px @primary-colour-dark,
+				0 14px 0 1px @primary-colour-dark !important;
+		}
+	}
+}
+
+@media only screen and (min-width: @medium-min) {
+	.section-bar {
+		.top-bar-section {
+			ul.right {
+				margin-top: 1rem;
+			}
+		}
+
+		.right {
+			li:not(.has-form) > a:not(.button):hover,
+			li.active:not(.has-form) > a:not(.button):hover {
+				background: @primary-colour-light !important;
+			}
+
+			li.active:not(.has-form) > a:not(.button) {
+				background: @primary-colour-dark;
+			}
+
+			ul.dropdown {
+				li:not(.has-form) > a:not(.button):hover,
+				li.active:not(.has-form) > a:not(.button):hover {
+					background: #222222 !important;
+				}
+
+				li.active:not(.has-form) > a:not(.button) {
+					background: #4d0013 !important;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: @small-max) {
+	.section-bar {
+		.top-bar-section {
+			ul {
+				border-top: 1px solid white;
+
+				li,
+				li:not(.has-form) a:not(.button) {
+					background: #333333;
+				}
+			}
+		}
+	}
+}
+
+.search-button {
+	padding: 0;
+}
+
+.breadcrumbs {
+	padding: 0;
+	background: none;
+	border: none;
+}
+
+.sub-nav {
+	background-color: @grey-colour;
+	padding: 10px 10px 10px 0;
+
+	dt {
+		color: black;
+	}
+
+	dd a {
+		color: #800020;
+	}
+}
+
+blockquote {
+	font-weight: 200;
+	border-left: 3px solid @dark-grey-colour;
+
+	p {
+		font-size: larger;
+		margin-bottom: 0;
+		font-weight: 200;
+	}
+
+	.factoid {
+		font-weight: 200;
+
+		p {
+			font-weight: bold;
+			color: @primary-colour;
+		}
+	}
+}
+
+@media only screen and (min-width: @large-min) {
+	blockquote {
+		width: 50%;
+		float: left;
+		margin-right: 2rem;
+		font-size: larger;
+		clear: both;
+		border-left: 0;
+		border-right: 3px solid @dark-grey-colour;
+		padding-left: 0;
+
+	}
+}
+
+footer {
+	background: #333333;
+	color: #777777;
+	font-size: smaller;
+	font-weight: 200;
+	margin-top: 1rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+
+	a {
+		color: #e7e7e7;
+	}
+
+	a:hover {
+		color: #888888;
+	}
+
+	img {
+		padding-bottom: 1rem;
+	}
+
+	.footer-links {
+		display: inline-block;
+		font-weight: bold;
+		font-size: 0.875rem;
+		vertical-align: -100%;
+
+		li {
+		}
+	}
+
+	.social {
+		font-size: 1.75rem;
+		vertical-align: -100%;
+	}
+}
+
+@media only screen and (max-width: @small-max) {
+	footer {
+		.social {
+			vertical-align: 0;
+			padding-bottom: 1rem;
+		}
+	}
+}
+
+.breadcrumb-float-top .breadcrumbs {
+	float: left;
+	margin-top: 1rem;
+}
+
+h1.breadcrumb-after {
+	clear: right;
+	margin-top: 0rem;
+}
+
+.header-info-icons {
+	a {
+		margin-right: 1rem;
+	}
+
+	span {
+		vertical-align: -5%
+	}
+}
+
+h1 img.headshot {
+	border-radius: 50%;
+	height: 3rem;
+	vertical-align: -10%;
+	margin-right: 1rem;
+}
