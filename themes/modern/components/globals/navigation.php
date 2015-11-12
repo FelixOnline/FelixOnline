@@ -5,7 +5,7 @@
 	if ($theme->isPage('article')) {
     $parents = $article->getCategory()->getAllParents();
 		$check = $article->getCategory()->getCat();
-	} else if ($theme->isPage('category')) { // if category page
+	} else if ($theme->isPage('category') || $theme->isPage('category_page1')) { // if category page
     $parents = $category->getAllParents();
 		$check = $category->getCat();
 	} else if($theme->isSite('archive')) {
