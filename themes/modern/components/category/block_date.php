@@ -1,6 +1,6 @@
                 <?php $comments = $article->getNumValidatedComments(); ?>
-                <div class="article-block">
-                  <div class="section date <?php echo $article->getCategory()->getCat(); ?>"<?php if($equalizer): ?> data-equalizer-watch="<?php echo $equalizer; ?>"<?php endif; ?>>
+                <div class="article-block section <?php echo $article->getCategory()->getCat(); ?>">
+                  <div class="date"<?php if($equalizer): ?> data-equalizer-watch="<?php echo $equalizer; ?>"<?php endif; ?>>
                     <div class="row" data-equalizer-watch="<?php echo $equalizer; ?>" data-equalizer="date-article-<?php echo $article->getId(); ?>" data-equalizer-mq="medium-only">
                       <div class="small-12 medium-6 large-12 columns">
                         <a href="<?php echo $article->getUrl(); ?>">

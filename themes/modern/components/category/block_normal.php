@@ -1,6 +1,6 @@
                 <?php $comments = $article->getNumValidatedComments(); ?>
-                <div class="article-block">
-                  <div class="section small <?php echo $article->getCategory()->getCat(); ?>"<?php if($equalizer): ?> data-equalizer-watch="<?php echo $equalizer; ?>"<?php endif; ?>>
+                <div class="article-block section <?php echo $article->getCategory()->getCat(); ?>">
+                  <div class="small"<?php if($equalizer): ?> data-equalizer-watch="<?php echo $equalizer; ?>"<?php endif; ?>>
                     <a href="<?php echo $article->getUrl(); ?>">
                     	<div class="article-img" style="background-image: url('<?php if($article->getImage()): echo $article->getImage()->getUrl(); else: echo \FelixOnline\Core\Settings::get('image_url').\FelixOnline\Core\Settings::get('default_img_uri'); endif; ?>');">
                       	<?php if($show_category): ?><div class="article-category <?php echo $article->getCategory()->getCat(); ?> radius"><?php echo $article->getCategory()->getLabel(); ?></div><?php endif; ?>

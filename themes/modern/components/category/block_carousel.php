@@ -1,6 +1,6 @@
               <?php $comments = $article->getNumValidatedComments(); ?>
-              <div class="article-block">
-                <div class="section carousel <?php echo $article->getCategory()->getCat(); ?>" data-equalizer-watch="carousel">
+              <div class="article-block section <?php echo $article->getCategory()->getCat(); ?>">
+                <div class="carousel" data-equalizer-watch="carousel">
                   <div class="row">
                     <div class="medium-12 columns">
                       <a href="<?php echo $article->getUrl(); ?>">
