@@ -1,0 +1,42 @@
+@colors : @section-news, @section-features, @section-comment, @section-science, @section-culture, @section-arts, @section-music, @section-film, @section-fashion, @section-games, @section-tv, @section-books, @section-life, @section-politics, @section-business, @section-tech, @section-travel, @section-food, @section-cands, @section-puzzles, @section-welfare, @section-sport;
+@names  : news, features, comment, science, culture, arts, music, film, fashion, games, tv, books, life, politics, business, tech, travel, food, cands, puzzles, welfare, sport;
+@length : length(@colors);
+
+.colour-iterator(@names, @colors, @length);
+
+// http://webdesign.tutsplus.com/tutorials/understanding-the-less-loop--cms-23827
+
+.colour-iterator(@names, @colors, @index) when (@index > 0) {
+    .colour-iterator(@names, @colors, (@index - 1)); // decrement.
+ 
+  @name  : extract(@names, @index);
+  @color : extract(@colors, @index);
+ 
+  .article-block {
+	  &.@{name} {
+	    border-color: @color;
+
+	    .radius {
+	    	background-color: @color;
+	    }
+	  }
+  }
+
+  .info-box, .month-divider, .section-date {
+	  &.@{name} {
+	    border-color: @color;
+	    color: @color;
+
+	    p {
+	    	color: black;
+	    }
+	}
+  }
+
+  .section-date.@{name}  {
+  	    a {
+	    	color: @color;
+	    }
+  }
+ 
+}
