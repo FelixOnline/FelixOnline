@@ -225,7 +225,7 @@ $(document).ready(function() {
 			// Assess whether to create a new area for articles
 			if($('#month-viewer').data('final-month') != month) {
 				// Create area
-				$('#month-viewer').append('<hr class="month-divider"><div class="row full-width"><div class="small-12 columns"><p class="section-date">'+month.replace('-', ' ')+'</p></div></div><div class="row full-width date-row" data-equalizer="'+month+'" id="'+month+'"></div>');
+				$('#month-viewer').append('<hr class="month-divider '+json.cat+'"><div class="row full-width"><div class="small-12 columns"><p class="section-date '+json.cat+'">'+month.replace('-', ' ')+'</p></div></div><div class="row full-width date-row" data-equalizer="'+month+'" id="'+month+'"></div>');
 
 				$('#month-viewer').data('final-month', month);
 			}

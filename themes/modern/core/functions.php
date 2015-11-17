@@ -54,8 +54,8 @@ function _fetch_articles($data) {
 		$theme->render('components/category/block_date', array(
 			'article' => $article,
 			'equalizer' => date('F-Y', $article->getDate()),
-			'show_category' => $ajaxdata['categories'],
-			'headshot' => $ajaxdata['headshots']));
+			'show_category' => $data['categories'],
+			'headshot' => $data['headshots']));
 
 		$articles[date('F-Y', $article->getDate())][] = ob_get_contents();
 
@@ -257,6 +257,8 @@ function get_category_page($ajaxdata) {
 
 	try {
 		$data = CategoryController::fetch($ajaxdata['key'], $ajaxdata['page']);
+		$data['categories'] = $ajaxdata['categories'];
+		$data['headshots'] = $ajaxdata['headshots'];
 	} catch(\Exception $e) {
 		return (array('error' => true, 'details' => $e->getMessage()));
 	}
@@ -279,15 +281,17 @@ function get_category_page($ajaxdata) {
 
 	ob_end_clean();
 
-	return (array('error' => false, 'paginator' => $paginator, 'articles' => $articles));
+	return (array('error' => false, 'paginator' => $paginator, 'articles' => $articles, 'cat' => $data['category']->getCat()));
 }
 
-function get_user_page($data) {
+function get_user_page($ajaxdata) {
 	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
 	require_once(BASE_DIRECTORY.'/controllers/userController.php');
 
 	try {
-		$data = UserController::fetch($data['key'], $data['page']);
+		$data = UserController::fetch($ajaxdata['key'], $ajaxdata['page']);
+		$data['categories'] = $ajaxdata['categories'];
+		$data['headshots'] = $ajaxdata['headshots'];
 	} catch(\Exception $e) {
 		return (array('error' => true, 'details' => $e->getMessage()));
 	}
@@ -313,12 +317,12 @@ function get_user_page($data) {
 	return (array('error' => false, 'paginator' => $paginator, 'articles' => $articles));
 }
 
-function get_search_page($data) {
+function get_search_page($ajaxdata) {
 	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
 	require_once(BASE_DIRECTORY.'/controllers/searchController.php');
 
 	try {
-		$data = SearchController::fetch($data['key'], $data['page']);
+		$data = SearchController::fetch($ajaxdata['key'], $ajaxdata['page']);
 	} catch(\Exception $e) {
 		return (array('error' => true, 'details' => $e->getMessage()));
 	}
@@ -326,6 +330,9 @@ function get_search_page($data) {
 	$data = array('articles' => $data['articles']['articles'],
 			'page' => $data['page'],
 			'query' => $data['query']);
+
+	$data['categories'] = $ajaxdata['categories'];
+	$data['headshots'] = $ajaxdata['headshots'];
 
 	$theme = _get_theme();
 

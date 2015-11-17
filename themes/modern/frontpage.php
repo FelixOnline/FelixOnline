@@ -131,10 +131,10 @@ if(!$currentuser->isLoggedIn()) {
       </div>
     </div>
 
-    <hr class="month-divider">
+    <hr class="month-divider comment">
     <div class="row full-width" data-equalizer="opinion">
       <div class="small-12 columns">
-        <p class="section-date">Opinion</p>
+        <p class="section-date comment">Opinion</p>
       </div>
 
 	<?php
@@ -170,10 +170,10 @@ if(!$currentuser->isLoggedIn()) {
 		</div>
 	</div>
 
-    <hr class="month-divider">
+    <hr class="month-divider cands">
     <div class="row full-width" data-equalizer="cands">
       <div class="small-12 columns">
-        <p class="section-date">Clubs, Societies, and Sports</p>
+        <p class="section-date cands">Clubs, Societies, and Sports</p>
       </div>
 
 	<?php
@@ -232,10 +232,10 @@ if(!$currentuser->isLoggedIn()) {
 
 	</div>
 
-    <hr class="month-divider">
+    <hr class="month-divider features">
     <div class="row full-width">
       <div class="small-12 columns">
-        <p class="section-date">Best of the paper</p>
+        <p class="section-date features">Best of the paper</p>
       </div>
       	<div class="small-12 large-9 columns" data-equalizer="features-end">
       		<div class="row">

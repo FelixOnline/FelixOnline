@@ -1,4 +1,4 @@
-				<div class="section-info-box info-box">
+				<div class="section-info-box info-box <?php echo $category->getCat(); ?>">
 					<?php $theme->render('components/helpers/breadcrumbs', array('origin' => $category, 'type' => 'category')); ?>
 					<h1><?php echo $category->getLabel(); ?></h1>
 					<?php

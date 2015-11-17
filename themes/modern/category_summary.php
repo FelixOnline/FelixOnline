@@ -25,10 +25,10 @@ $theme->render('components/globals/header', $header);
 		</div>
 	</div>
 <?php foreach($children as $child): ?>
-	<hr class="month-divider">
+	<hr class="month-divider <?php echo $child->getCat(); ?>">
 	<div class="row full-width">
 		<div class="small-12 columns">
-			<p class="section-date"><a href="<?php echo $child->getURL(); ?>"><?php echo $child->getLabel(); ?></a></p>
+			<p class="section-date <?php echo $child->getCat(); ?>"><a href="<?php echo $child->getURL(); ?>"><?php echo $child->getLabel(); ?></a></p>
 		</div>
 	</div>
 	<div class="row full-width" data-equalizer="<?php echo $child->getCat(); ?>">
