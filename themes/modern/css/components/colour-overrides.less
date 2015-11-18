@@ -12,7 +12,7 @@
   @name  : extract(@names, @index);
   @color : extract(@colors, @index);
  
-  .article-block {
+  .article-block, .info-box {
 	  &.@{name} {
 	    border-color: @color;
 
@@ -25,14 +25,14 @@
   .info-box, .month-divider, .section-date {
 	  &.@{name} {
 	    border-color: @color;
-	    color: @color;
-
-	    p {
-	    	color: black;
-	    }
 	}
   }
 
+  .section-date {
+  &.@{name} {
+  	color: @color;
+  }
+}
   .section-date.@{name}  {
   	    a {
 	    	color: @color;

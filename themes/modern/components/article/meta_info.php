@@ -1,4 +1,4 @@
-		<div class="article-info-box info-box">
+		<div class="article-info-box info-box <?php echo $article->getCategory()->getCat(); ?>">
 			<div class="row full-width collapse">
 				<div class="small-12 medium-6 large-12 columns">
 					<?php foreach($article->getAuthors() as $author) {
