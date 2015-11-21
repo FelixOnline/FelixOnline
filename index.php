@@ -8,6 +8,11 @@ use FelixOnline\Core;
 ob_start();
 
 try {
+	if(file_exists('.maintenance')) {
+		require('errors/offline.php');
+		exit;
+	}
+
 	require_once('bootstrap.php');
 
 	/* If the url is on the union servers then redirect to custom url */
