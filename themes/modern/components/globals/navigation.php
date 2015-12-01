@@ -22,7 +22,7 @@
       <nav class="top-bar section-bar" data-topbar role="navigation">
         <ul class="title-area">
           <li class="name">
-            <a href="<?php echo STANDARD_URL; ?>"><img src="themes/modern/img/logo1.svg" class="svg" style="height: 4.8rem;"></a>
+            <a href="<?php echo STANDARD_URL; ?>"><img src="<?php echo STANDARD_URL; ?>themes/modern/img/logo1.svg" class="svg" style="height: 4.8rem;"></a>
           </li>
            <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
           <li class="toggle-topbar menu-icon"><a href="#"><span><?php echo $check; ?></span></a></li>
