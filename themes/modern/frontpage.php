@@ -33,65 +33,76 @@ if(!$currentuser->isLoggedIn()) {
 				?>
 			</div>
           </div>
+          <div class="small-12 large-4 columns" data-equalizer-watch="carousel">
+            <div class="row" data-equalizer-mq="medium-only">
+				<hr class="month-divider news top-divider">
+				<div class="small-12 columns">
+					<p class="section-date top-section-date news">Latest news</p>
+				</div>
+				<div data-equalizer="news-side">
+					<?php
+						$articles = (new \FelixOnline\Core\ArticleManager())
+							->filter('published < NOW()')
+							->filter('category = %i', array(\FelixOnline\Core\Settings::get('news_category_id')))
+							->order(array('published', 'id'), 'DESC')
+							->join($categoryManager, null, 'category')
+							->limit(0, 5)
+							->values();
+
+						foreach($articles as $article) {
+							?>
+							<div class="medium-6 large-12 columns">
+							<?php
+									$theme->render('components/category/block_small', array(
+									'article' => $article,
+									'show_category' => false,
+									'headshot' => false
+								));
+							?>
+							</div>
+							<?php
+						}
+					?>
+				</div>
+            </div>
+          </div>
+        </div>
 		<?php
 			$articles = (new \FelixOnline\Core\ArticleManager())
 			->filter('published < NOW()')
 			->filter('category = %i', array(\FelixOnline\Core\Settings::get('news_category_id')))
-			->order('published', 'DESC')
+			->order(array('published', 'id'), 'DESC')
 			->join($categoryManager, null, 'category')
-			->limit(0, 5)
+			->limit(5, 3)
 			->values();
 		?>
-          <div class="small-12 large-4 columns" data-equalizer-watch="carousel">
-            <div class="row" data-equalizer="news-side" data-equalizer-mq="medium-only">
-              <div class="medium-6 large-12 columns">
-              	<?php
-              		$theme->render('components/category/block_normal', array(
-						'article' => $articles[0],
-						'equalizer' => 'news-side',
-						'show_category' => false,
-						'headshot' => false
-					));
-				?>
-              </div>
-              <div class="medium-6 large-12 columns">
-              	<?php
-              		$theme->render('components/category/block_normal', array(
-						'article' => $articles[1],
-						'equalizer' => 'news-side',
-						'show_category' => false,
-						'headshot' => false
-					));
-				?>
-              </div>
-            </div>
-          </div>
-        </div>
        	<div class="row" data-equalizer="news">
           <div class="small-12 medium-4 columns">
           	<?php
           		$theme->render('components/category/block_normal', array(
+					'article' => $articles[0],
+					'equalizer' => 'news',
+					'show_category' => false,
+					'show_blurb' => false,
+					'headshot' => false
+				));
+			?>
+          </div>
+          <div class="small-12 medium-4 columns">
+          	<?php
+          		$theme->render('components/category/block_normal', array(
+					'article' => $articles[1],
+					'equalizer' => 'news',
+					'show_category' => false,
+					'show_blurb' => false,
+					'headshot' => false
+				));
+			?>
+          </div>
+          <div class="small-12 medium-4 columns">
+          	<?php
+          		$theme->render('components/category/block_normal', array(
 					'article' => $articles[2],
-					'equalizer' => 'news',
-					'show_category' => false,
-					'headshot' => false
-				));
-			?>
-          </div>
-          <div class="small-12 medium-4 columns">
-          	<?php
-          		$theme->render('components/category/block_normal', array(
-					'article' => $articles[3],
-					'equalizer' => 'news',
-					'show_category' => false,
-					'headshot' => false
-				));
-			?>
-          </div>
-          <div class="small-12 medium-4 columns">
-          	<?php
-          		$theme->render('components/category/block_normal', array(
-					'article' => $articles[4],
 					'equalizer' => 'news',
 					'show_category' => false,
 					'headshot' => false
@@ -134,14 +145,14 @@ if(!$currentuser->isLoggedIn()) {
     <hr class="month-divider comment">
     <div class="row full-width" data-equalizer="opinion">
       <div class="small-12 columns">
-        <p class="section-date comment">Opinion</p>
+        <p class="section-date comment">Comment</p>
       </div>
 
 	<?php
 		$articles = (new \FelixOnline\Core\ArticleManager())
 		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('comment_category_id')))
-		->order('published', 'DESC')
+		->order(array('published', 'id'), 'DESC')
 		->join($categoryManager, null, 'category')
 		->limit(0, 3)
 		->values();
@@ -180,7 +191,7 @@ if(!$currentuser->isLoggedIn()) {
 		$articles = (new \FelixOnline\Core\ArticleManager())
 		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('cands_category_id')))
-		->order('published', 'DESC')
+		->order(array('published', 'id'), 'DESC')
 		->join($categoryManager, null, 'category')
 		->limit(0, 2)
 		->values();
@@ -207,7 +218,7 @@ if(!$currentuser->isLoggedIn()) {
 		$articles = (new \FelixOnline\Core\ArticleManager())
 		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('sport_category_id')))
-		->order('published', 'DESC')
+		->order(array('published', 'id'), 'DESC')
 		->join($categoryManager, null, 'category')
 		->limit(0, 2)
 		->values();
