@@ -35,10 +35,10 @@
 		}
 	],
     "require": {
-		"felixonline/exporter": "0.1.*",
-		"felixonline/core": "dev-master",
-		"raven/raven": "0.8.0",
-		"dominicsayers/isemail": "dev-master",
+	"felixonline/exporter": "0.1.*",
+	"felixonline/core": "0.5.*",
+	"raven/raven": "0.8.0",
+	"dominicsayers/isemail": "dev-master",
         "woutersioen/sir-trevor-php": "dev-master",
         "league/html-to-markdown": "~4.0"
     },
