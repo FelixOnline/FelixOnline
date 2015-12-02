@@ -67,10 +67,14 @@ if(!$currentuser->isLoggedIn()) {
             </div>
           </div>
         </div>
+		<hr class="month-divider top-divider features">
+		<div class="small-12 columns">
+			<p class="section-date features">Features</p>
+		</div>
 		<?php
 			$articles = (new \FelixOnline\Core\ArticleManager())
 			->filter('published < NOW()')
-			->filter('category = %i', array(\FelixOnline\Core\Settings::get('news_category_id')))
+			->filter('category = %i', array(\FelixOnline\Core\Settings::get('features_category_id')))
 			->order(array('published', 'id'), 'DESC')
 			->join($categoryManager, null, 'category')
 			->limit(5, 3)
