@@ -3,7 +3,7 @@
  * Give all article authors an Author role
  */
 
-if(php_sapi_name() === 'cli') {
+if(php_sapi_name() !== 'cli') {
 	die('CLI only');
 }
 

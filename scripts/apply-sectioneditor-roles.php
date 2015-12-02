@@ -3,7 +3,7 @@
  * Give all section editors an Editor role
  */
 
-if(php_sapi_name() === 'cli') {
+if(php_sapi_name() !== 'cli') {
 	die('CLI only');
 }
 
