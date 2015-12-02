@@ -43,9 +43,10 @@ class ArchiveController extends BaseController {
 				);
 			}
 
-			$file = BASE_DIRECTORY.'/archive/'.$issueFile->getFilename();
+			$folder = \FelixOnline\Core\Settings::get('archive_location');
+			$file = $folder.$issueFile->getFilename();
 			$filename = $issueFile->getOnlyFilename();
-			
+
 			// Make sure the files exists, otherwise we are wasting our time
 			if (!file_exists($file)) {
 				throw new NotFoundException(
@@ -85,9 +86,10 @@ class ArchiveController extends BaseController {
 				);
 			}
 
-			$file = BASE_DIRECTORY.'/archive/'.$issueFile->getFilename();
+			$folder = \FelixOnline\Core\Settings::get('archive_location');
+			$file = $folder.$issueFile->getFilename();
 			$filename = $issueFile->getOnlyFilename();
-			
+
 			// Make sure the files exists, otherwise we are wasting our time
 			if (!file_exists($file)) {
 				throw new NotFoundException(
