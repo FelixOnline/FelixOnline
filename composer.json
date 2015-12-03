@@ -1,17 +1,17 @@
 {
-    "name": "felixonline/online",
-    "description": "Felix Online",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Jonathan Kim",
-            "email": "jkimbo@gmail.com"
-        },
+	"name": "felixonline/online",
+	"description": "Felix Online",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Jonathan Kim",
+			"email": "jkimbo@gmail.com"
+		},
 		{
 			"name": "Philip Kent",
 			"email": "kentphilip@gmail.com"
 		}
-    ],
+	],
 	"repositories": [
 		{
 			"type": "vcs",
@@ -34,13 +34,13 @@
 			"url": "https://github.com/FelixOnline/ezSQL.git"
 		}
 	],
-    "require": {
-	"felixonline/exporter": "0.1.*",
-	"felixonline/core": "0.5.*",
-	"raven/raven": "0.8.0",
-	"dominicsayers/isemail": "dev-master",
-        "woutersioen/sir-trevor-php": "dev-master",
-        "league/html-to-markdown": "~4.0"
-    },
+	"require": {
+		"felixonline/exporter": "0.1.*",
+		"felixonline/core": "0.5.*",
+		"raven/raven": "0.13.*",
+		"dominicsayers/isemail": "dev-master",
+		"woutersioen/sir-trevor-php": "dev-master",
+		"league/html-to-markdown": "4.*"
+	},
 	"minimum-stability": "dev"
 }
