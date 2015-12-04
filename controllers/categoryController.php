@@ -24,15 +24,17 @@ class CategoryController extends BaseController
 
 		if($pagenum == 1) {
 			$counter = \FelixOnline\Core\Settings::get('articles_per_cat_page');
+			$startat = 0;
 		} else {
 			$counter = \FelixOnline\Core\Settings::get('articles_per_second_cat_page');
+			$startat = \FelixOnline\Core\Settings::get('articles_per_cat_page') + ($pagenum - 1) * \FelixOnline\Core\Settings::get('articles_per_second_cat_page');
 		}
 
 		$manager = (new \FelixOnline\Core\ArticleManager())
 			->filter('published < NOW()')
 			->filter('category = %i', array($category->getId()))
 			->order(array('published', 'id'), 'DESC')
-			->limit(\FelixOnline\Core\Settings::get('articles_per_cat_page') + ($pagenum - 1) * \FelixOnline\Core\Settings::get('articles_per_second_cat_page'), $counter);
+			->limit($startat, $counter);
 
 		$count = $manager->count();
 		$pages = ceil(($count - \FelixOnline\Core\Settings::get('articles_per_cat_page')) / (\FelixOnline\Core\Settings::get('articles_per_second_cat_page'))) + 1;
