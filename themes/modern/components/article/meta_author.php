@@ -5,7 +5,7 @@
 	<div class="small-11 large-10 columns">
 		<p>
 			<a href="<?php echo $user->getURL(); ?>"><?php echo $user->getName(); ?></a>
-			<?php if($user->getTwitter()): echo '<a href="https://twitter.com/'.$user->getTwitter().'"><span class="social social-twitter"></span> @'.$user->getTwitter().'</a>'; endif; ?>
+			<?php if($user->getTwitter()): echo '<a href="https://twitter.com/'.$user->getTwitter().'" class="user-twitter"><span class="social social-twitter"></span> @'.$user->getTwitter().'</a>'; endif; ?>
 		</p>
 	</div>
 </div>
