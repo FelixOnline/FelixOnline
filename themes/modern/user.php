@@ -85,6 +85,7 @@ $theme->render('components/globals/header', $header);
 				<li><b>Course/Title:</b> <?php echo $data[0]; ?></li>
 				<li><b>Department:</b> <?php echo $data[2]; ?></li>
 			</ul>
+			<?php endif; ?>
 		</div>
 		<?php endif; ?>
 		<?php } ?>
