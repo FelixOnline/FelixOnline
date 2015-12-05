@@ -24,6 +24,8 @@ Have a look a our [installation guide](//github.com/FelixOnline/FelixOnline/wiki
 
 You may wish to add the two role scripts in the scripts folder, and the spam cleaning script to a cron task.
 
+If you host Admin on the same server as the main site, you may need to define CACHE_PATH in the configuration file and set it to the same path as the main site for cache resetting to work.
+
 ### Database Migrations
 * Run `./vendor/bin/phinx init` to create a `phinx.yml` file in the root directory and fill it in with your database credentials
 * Run `./vendor/bin/phinx migrate` to run all migrations
