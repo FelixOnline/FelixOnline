@@ -66,11 +66,11 @@ if (LOCAL) { // development connector
 	$app['akismet'] = new \Riv\Service\Akismet\Akismet($connector);
 
 	// Don't cache in local mode
-	$app['cache'] = new \Stash\Pool();
+	$app['cache'] = new \Stash\Pool(new \Stash\Driver\BlackHole());
 }
 
 if (!PRODUCTION_FLAG) {
-	$app['cache'] = new \Stash\Pool();
+	$app['cache'] = new \Stash\Pool(new \Stash\Driver\BlackHole());
 }
 
 // Initialize Sentry
