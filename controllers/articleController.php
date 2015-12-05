@@ -39,22 +39,24 @@ class ArticleController extends BaseController
 
 					if ($comment->getSpam() == 1) {
 						$errors[] = 'We are sorry, your comment has been automatically flagged as spam. Please let us know if you think this is incorrect.';
-					}
 
-					// Create a validation code, if it returns false one is not needed
-					$validationcode = \FelixOnline\Core\EmailValidation::create(strtolower($email));
+						$validationcode = false;
+					} else {
+						// Create a validation code, if it returns false one is not needed
+						$validationcode = \FelixOnline\Core\EmailValidation::create(strtolower($email));
 
-					if(!$validationcode) {
-						// We may still not be validated
-						if(!\FelixOnline\Core\EmailValidation::isEmailValidated(strtolower($email))) {
-							$manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\EmailValidation', 'email_validation');
-							$manager->filter('email = "%s"', array(strtolower($email)));
-							$values = $manager->one();
+						if(!$validationcode) {
+							// We may still not be validated
+							if(!\FelixOnline\Core\EmailValidation::isEmailValidated(strtolower($email))) {
+								$manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\EmailValidation', 'email_validation');
+								$manager->filter('email = "%s"', array(strtolower($email)));
+								$values = $manager->one();
 
-							$validationcode = $values->getCode();
+								$validationcode = $values->getCode();
+							}
+
+							// This will still be false if the user is already validated
 						}
-
-						// This will still be false if the user is already validated
 					}
 
 					// We have a validation code (probably) - now get the user validated
