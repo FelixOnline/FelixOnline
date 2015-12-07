@@ -87,7 +87,6 @@ $theme->render('components/globals/header', $header);
 			</ul>
 			<?php endif; ?>
 		</div>
-		<?php endif; ?>
 		<?php } ?>
 		<?php if ($currentuser->getUser() == $user->getUser()): ?>
 			<center><a href="#" data-reveal-id="editProfileModal" class="button small radius">Update your details</a></center>
