@@ -103,30 +103,31 @@
 		}
 	}
 
-	.article-image {
+	.article-image,
+	#imgCont {
 		margin-bottom: 1rem;
 
 		.article-image-subcaption,
-		#imgCont #imageCaption {
+		#imageCaption {
 			background: @grey-colour;
 			padding: 0.75rem;
 			font-weight: 200;
 		}
 
 		.article-image-subcaption span,
-		#imgCont #imageAttr {
+		#imageAttr {
 			font-size: x-small;
 			font-weight: 200;
 			display: inline;
 		}
+	}
 
-		#imgCont {
-			margin-bottom: 1.5rem;
-			clear: both;
+	#imgCont {
+		margin-bottom: 1.5rem;
+		clear: both;
 
-			img {
-				width: 100%;
-			}
+		img {
+			width: 100%;
 		}
 	}
 }
