@@ -123,8 +123,8 @@ try {
 
 	// Now render image
 	header('HTTP/1.1 200 OK');
-	header("Cache-Control: max-age=86400, public", false);
-	header("Expires: " . gmdate('D, d M Y H:i:s \G\M\T', time() + 86400), false);
+	header("Cache-Control: max-age=8640000, public", false);
+	header("Expires: " . gmdate('D, d M Y H:i:s \G\M\T', time() + 8640000), false);
 	header("ETag: \"".$combiurl."\"", false);
 	header("Content-Length: ".strlen($image), false);
 	header("Content-Type: ".$imageObj->getImageMimeType(), false);
