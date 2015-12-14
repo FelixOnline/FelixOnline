@@ -84,42 +84,91 @@ if(isset($_SERVER['HTTP_IF_NONE_MATCH']) && stripslashes($_SERVER['HTTP_IF_NONE_
 try {
 	$imageObj = new Imagick($filename);
 
-	// We have two jobs. The first of these is to convert the colourspace if appropriate. Then, change the resolution
-	$colorspace = $imageObj->getImageColorspace();
+	switch($imageObj->getImageFormat()) {
+		case 'GIF':
+			// Only resize if needed - as this is computationally expensive
+			if($h || $w) {
+				if(!$h && $w) {
+					$origWidth = $imageObj->getImageWidth();
 
-	if($colorspace != Imagick::COLORSPACE_RGB && $colorspace != Imagick::COLORSPACE_SRGB) { // Some images are uploaded CMYK  -these need conversion
-		$ret = $imageObj->transformImageColorspace(Imagick::COLORSPACE_RGB);
+					$fract = ($w / $origWidth); // Fraction we are changing the width by
 
-		if(!$ret) {
-			throw new Exception('Could not convert colourspace');
-		}
+					$h = $imageObj->getImageHeight() * $fract;
+				}
 
-		// Save for future
-		$ret = $imageObj->writeImage();
+				if($w && $h) {
+					$images = $imageObj->coalesceImages();
+					$newImages = new Imagick();
 
-		if(!$ret) {
-			throw new Exception('Could not save colourspace');
-		}
-	}
+					foreach($images as $image) {
+						$delay = $image->getImageDelay(); // Get delay in case it is lost later
+						$image->adaptiveResizeImage($w, $h);
+						$image->setImageDelay($delay);
 
-	// Now to resize if needed
-	if(!$h && $w) {
-		$origWidth = $imageObj->getImageWidth();
+						$newImages->addImage($image->getImage());
+					}
 
-		$fract = ($w / $origWidth); // Fraction we are changing the width by
+					$imageObj = $newImages;
 
-		$h = $imageObj->getImageHeight() * $fract;
-	}
+					// Optimisation
+					$imageObj->setImageFormat('GIF');
+					$ret = $imageObj->optimizeImageLayers();
 
-	if($w && $h) {
-		$ret = $imageObj->adaptiveResizeImage($w, $h);
+					if($ret !== TRUE) {
+						$imageObj = $ret;
+						unset($ret);
+					}
 
-		if(!$ret) {
-			throw new Exception('Could not resize image');
-		}
+					unset($newImages);
+					unset($image);
+					unset($images);
+				}
+			}
+			break;
+		case 'JPG':
+		case 'JPEG':
+		case 'PNG':
+			// We have two jobs. The first of these is to convert the colourspace if appropriate. Then, change the resolution
+			$colorspace = $imageObj->getImageColorspace();
+
+			if($colorspace != Imagick::COLORSPACE_RGB && $colorspace != Imagick::COLORSPACE_SRGB) { // Some images are uploaded CMYK  -these need conversion
+				$ret = $imageObj->transformImageColorspace(Imagick::COLORSPACE_RGB);
+
+				if(!$ret) {
+					throw new Exception('Could not convert colourspace');
+				}
+
+				// Save for future
+				$ret = $imageObj->writeImage();
+
+				if(!$ret) {
+					throw new Exception('Could not save colourspace');
+				}
+			}
+
+			// Now to resize if needed
+			if(!$h && $w) {
+				$origWidth = $imageObj->getImageWidth();
+
+				$fract = ($w / $origWidth); // Fraction we are changing the width by
+
+				$h = $imageObj->getImageHeight() * $fract;
+			}
+
+			if($w && $h) {
+				$ret = $imageObj->adaptiveResizeImage($w, $h);
+
+				if(!$ret) {
+					throw new Exception('Could not resize image');
+				}
+			}
+			break;
+		default:
+			invalid('Invalid image type');
+			break;
 	}
 	
-	$image = $imageObj->getImageBlob();
+	$image = $imageObj->getImagesBlob();
 
 	// Now render image
 	header('HTTP/1.1 200 OK');
