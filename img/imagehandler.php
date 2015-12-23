@@ -97,6 +97,10 @@ try {
 				}
 
 				if($w && $h) {
+					if(($h / $imageObj->getImageHeight()) >= 1.5 || ($w / $imageObj->getImageWidth()) >= 1.5) {
+						continue; // Don't resize the GIF over 1.5x in either direction as we get giant gifs if we do this (causes OOM errors)
+					}
+
 					$images = $imageObj->coalesceImages();
 					$newImages = new Imagick();
 
