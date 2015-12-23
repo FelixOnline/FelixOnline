@@ -72,6 +72,13 @@ class ArticleController extends BaseController
 						if($values) {
 							$values->setConfirmed(1)->save();
 						}
+
+						if ($comment->getReply()) { // if comment is replying to an internal comment 
+							$comment->emailReply();
+						}
+
+						// email authors of article
+						$comment->emailAuthors();
 					} elseif($validationcode) {
 						// If the user is still not validated, ask them to validate
 
@@ -107,6 +114,13 @@ class ArticleController extends BaseController
 
 						// Send email
 						$app['email']->send($message);
+					} else {
+						if ($comment->getReply()) { // if comment is replying to an internal comment 
+							$comment->emailReply();
+						}
+
+						// email authors of article
+						$comment->emailAuthors();
 					}
 				}
 			}

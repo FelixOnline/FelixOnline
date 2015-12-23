@@ -22,6 +22,25 @@ class ValidationController extends BaseController
 
 		$code->setConfirmed(1)->save();
 
+		try {
+			$comments = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Comment', 'comment')
+				->filter('email = "%s"', array($code->getEmail()))
+				->filter('rejected = 0')
+				->filter('spam = 0')
+				->values();
+
+			foreach($comments as $comment) {
+				if ($comment->getReply()) { // if comment is replying to an internal comment 
+					$comment->emailReply();
+				}
+
+				// email authors of article
+				$comment->emailAuthors();
+			}
+		} catch (\Exception $e) {
+
+		}
+
 		$this->theme->appendData(array(
 			'email' => $code->getEmail()
 		));
