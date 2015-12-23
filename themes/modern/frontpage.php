@@ -77,7 +77,7 @@ if(!$currentuser->isLoggedIn()) {
 			->filter('category = %i', array(\FelixOnline\Core\Settings::get('features_category_id')))
 			->order(array('published', 'id'), 'DESC')
 			->join($categoryManager, null, 'category')
-			->limit(5, 3)
+			->limit(0, 3)
 			->values();
 		?>
        	<div class="row" data-equalizer="news">
