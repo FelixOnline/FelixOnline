@@ -66,10 +66,10 @@ $(document).ready(function() {
 	//Reply to comment
 	$(document).on("click", '.comment-reply', function() {
 		var comment = $(this).parents('.article-comment').attr('id');
-		var name = $(this).parents('.article-comment').find('.comment-author-name').first().text().trim();
-		var date = $(this).parents('.article-comment').find('.comment-date-date').first().text().trim();
+		var name = $('#'+comment+'-meta .comment-author-name').first().text().trim();
+		var date = $('#'+comment+'-meta .comment-date-date').first().text().trim();
 		if ($('#commentReply').length) {
-			$('#commentReply').children('#replyLink').text('@'+name+' at '+date);
+			$('#commentReply').children('#replyLink').html('<b>Replying to:</b> '+name+' at '+date);
 			$('#commentReply').children('#replyComment').attr('value', comment);
 			$('#commentReply').children('#replyDate').attr('value', date);
 		} else {

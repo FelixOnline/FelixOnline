@@ -8,7 +8,7 @@
 <div class="article-comment <?php if($comment->isRejected()) echo ' rejected'; ?>" id="<?php echo $comment->getId();?>">
 	<div class="row">
 		<div class="medium-8 columns<?php if($comment->isRejected()) { ?> end<?php } ?>">
-			<div class="comment-meta" id="<?php echo $comment->getId();?>">
+			<div class="comment-meta" id="<?php echo $comment->getId();?>-meta">
 				<div class="comment-author">
 					<span class="glyphicons glyphicons-user"></span> <span class="comment-author-name"><?php echo $comment->getName(); ?></span>
 				</div>
