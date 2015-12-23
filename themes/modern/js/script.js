@@ -99,7 +99,7 @@ $(document).ready(function() {
 				$('.ajax-comment-error').show();
 			} else {
 				var cid = $('.comment-form input[name="replyComment"]').val();
-				$('#'+cid+' .comment-replies').appendTo(response.content);
+				$('#'+cid+' .comment-replies').append(response.content);
 
 				$('#'+response.comment_id)[0].scrollIntoView();
 			}
