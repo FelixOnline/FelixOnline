@@ -58,6 +58,8 @@ $(document).ready(function() {
 		ajaxHelper(null, 'POST', data, '#likespinner_'+comment+' .loading', ['#comment-'+comment+'-like', '#comment-'+comment+'-dislike'], ['#likespinner_'+comment], null, null, function(data, msg) {
 			$('#'+comment).replaceWith(msg.content);
 			$('#token-rate-'+comment).val(msg.newtoken);
+
+			init_foundation();
 		});
 
 		return false;
