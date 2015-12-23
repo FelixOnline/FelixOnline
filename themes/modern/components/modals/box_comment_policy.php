@@ -9,6 +9,7 @@
 		<li>use excessively foul language</li>
 		<li>are obviously spam</li>
 	</ul>
-	<p>If you submit your comment anonymously then your IP address will be submitted to <a href="http://akismet.com/">Akismet</a> for spam detection purposes.</p>
+	<p>Felix will not modify comments, however we do reserve the right to remove them from our website.</p>
+	<p>If you submit your comment anonymously then your IP address will be submitted to <a href="http://akismet.com/">Akismet</a> for spam detection purposes. You may also be required to validate your email by clicking a link in an email we send you.</p>
 	<a class="close-reveal-modal">&#215;</a>
 </div>
