@@ -207,18 +207,14 @@ $(document).ready(function() {
 		return handlePaginator(item, $("#pag-category").val(), $("#pag-headshot").val(), function(data, json) {
 			$('.paginator-bit').html(json.paginator);
 
-			return handlePaginator(item, $("#pag-category").val(), $("#pag-headshot").val(), function(data, json) {
-				$('.paginator-bit').html(json.paginator);
+			$('#month-viewer').data('final-month', '');
+			$('#month-viewer').html('');
 
-				$('#month-viewer').data('final-month', '');
-				$('#month-viewer').html('');
+			process_dateview(json);
 
-				process_dateview(json);
-
-				$('html, body').animate({
-					scrollTop: $("#month-viewer").offset().top
-				}, 500);
-			});
+			$('html, body').animate({
+				scrollTop: $("#month-viewer").offset().top
+			}, 500);
 		});
 	});
 
