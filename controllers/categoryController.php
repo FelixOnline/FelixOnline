@@ -27,7 +27,7 @@ class CategoryController extends BaseController
 			$startat = 0;
 		} else {
 			$counter = \FelixOnline\Core\Settings::get('articles_per_second_cat_page');
-			$startat = \FelixOnline\Core\Settings::get('articles_per_cat_page') + ($pagenum - 1) * \FelixOnline\Core\Settings::get('articles_per_second_cat_page');
+			$startat = \FelixOnline\Core\Settings::get('articles_per_cat_page') + ($pagenum - 2) * \FelixOnline\Core\Settings::get('articles_per_second_cat_page');
 		}
 
 		$manager = (new \FelixOnline\Core\ArticleManager())
