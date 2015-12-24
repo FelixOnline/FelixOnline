@@ -279,6 +279,9 @@ $(document).ready(function() {
 			case 'search':
 				var action = "get_search_page";
 				break;
+			case 'topic':
+				var action = "get_topic_page";
+				break;
 			default:
 				return true; // not supported yet
 				break;

@@ -11,6 +11,7 @@ $hooks->addAction('poll_vote', 'poll_vote');
 $hooks->addAction('get_category_page', 'get_category_page');
 $hooks->addAction('get_user_page', 'get_user_page');
 $hooks->addAction('get_search_page', 'get_search_page');
+$hooks->addAction('get_topic_page', 'get_topic_page');
 
 $hooks->addAction('contact_us', 'contact_us');
 
@@ -315,6 +316,39 @@ function get_user_page($ajaxdata) {
 	ob_end_clean();
 
 	return (array('error' => false, 'paginator' => $paginator, 'articles' => $articles));
+}
+
+function get_topic_page($ajaxdata) {
+	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
+	require_once(BASE_DIRECTORY.'/controllers/topicController.php');
+
+	try {
+		$data = TopicController::fetch($ajaxdata['key'], $ajaxdata['page']);
+		$data['categories'] = $ajaxdata['categories'];
+		$data['headshots'] = $ajaxdata['headshots'];
+	} catch(\Exception $e) {
+		return (array('error' => true, 'details' => $e->getMessage()));
+	}
+
+	$theme = _get_theme();
+
+	$articles = _fetch_articles($data);
+
+	ob_start();
+
+	$theme->render('components/helpers/pagination', array(
+			'pagenum' => $data['pagenum'],
+			'class' => $data['topic'],
+			'pages' => $data['pages'],
+			'span' => \FelixOnline\Core\Settings::get('number_of_pages_in_page_list'),
+			'type' => 'topic',
+			'key' => $data['topic']->getSlug()));
+
+	$paginator = ob_get_contents();
+
+	ob_end_clean();
+
+	return (array('error' => false, 'paginator' => $paginator, 'articles' => $articles, 'topic' => $data['topic']->getSlug()));
 }
 
 function get_search_page($ajaxdata) {

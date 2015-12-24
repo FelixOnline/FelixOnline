@@ -297,7 +297,8 @@ class ArticleController extends BaseController
 		}
 
 		$this->theme->appendData(array(
-			'polls' => $polls
+			'polls' => $polls,
+			'topics' => $article->getTopics()
 		));
 
 		$this->theme->render('article');

@@ -50,6 +50,8 @@ $theme->render('components/globals/header', $header);
 				<?php $theme->render('components/helpers/block_advert', array('sidebar' => true, 'article' => $article, 'section' => false)); ?>
 
 				<?php $theme->render('components/article/meta_share', array('article' => $article, 'hidetitle' => false)); ?>
+
+				<?php $theme->render('components/article/topics', array('topics' => $topics)); ?>
 			</div>
 			<div class="small-12 large-8 large-pull-4 columns">
 			<!-- Content -->
