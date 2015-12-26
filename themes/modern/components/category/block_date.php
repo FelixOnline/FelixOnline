@@ -16,8 +16,14 @@
                         ?>
                     		<div class="row editor-icons collapse">
                     			<div class="small-1 large-2 columns">
-                    				<?php $author0 = $article->getAuthors()[0]; ?>
+                    				<?php
+                              $author0 = $article->getAuthors()[0];
+                              if($author0 && $author0->getImage()):
+                            ?>
                     				<img src="<?php echo $author0->getImage()->getUrl(200,200); ?>" alt="Headshot">
+                            <?php
+                              endif;
+                            ?>
                     			</div>
                     			<div class="small-11 large-10 columns authors">
                     				<?php echo strip_tags($article->getAuthorsEnglish()); ?>
