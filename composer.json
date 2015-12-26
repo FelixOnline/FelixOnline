@@ -20,10 +20,6 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/FelixOnline/sir-trevor-php.git"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/mrclay/minify.git"
 		}
 	],
 	"require": {
