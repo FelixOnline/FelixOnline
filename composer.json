@@ -23,20 +23,12 @@
 		},
 		{
 			"type": "vcs",
-			"url": "https://github.com/FelixOnline/Service-Akismet.git"
-		},
-		{
-			"type": "vcs",
 			"url": "https://github.com/mrclay/minify.git"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/FelixOnline/ezSQL.git"
 		}
 	],
 	"require": {
 		"felixonline/exporter": "0.1.*",
-		"felixonline/core": "0.5.*",
+		"felixonline/core": "dev-master",
 		"raven/raven": "0.13.*",
 		"dominicsayers/isemail": "dev-master",
 		"woutersioen/sir-trevor-php": "dev-master",
