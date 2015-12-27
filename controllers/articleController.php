@@ -265,7 +265,11 @@ class ArticleController extends BaseController
 	}
 
 	function renderArticle($article, $comment_status = null, $comment_email = false) {
-		$text = Utility::tidyText($article->getContent());
+		try {
+			$text = Utility::tidyText($article->getContent());
+		} catch(\Exception $e) {
+			$text = '<p style="font-weight: bold; color: red; font-size: larger;">Could not load article text. Please let us know so we can fix it.</p>';
+		}
 
 		$this->theme->appendData(array(
 			'article' => $article,
