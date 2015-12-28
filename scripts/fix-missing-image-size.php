@@ -30,7 +30,7 @@ foreach($values as $record) {
 		continue;
 	}
 
-	$sizeInfo = get_image_size('../'.$record->getUri());
+	$sizeInfo = getimagesize('../'.$record->getUri());
 
 	$record->setWidth($sizeInfo['width']);
 	$record->setHeight($sizeInfo['height']);
