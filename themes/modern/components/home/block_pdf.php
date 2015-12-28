@@ -21,7 +21,7 @@
 					</a>
                 </div>
                 <div class="small-8 columns">
-                  <p><span class="issue-no">Issue <?php echo $issue->getIssue(); ?></span><br><span class="issue-date"><?php echo date("l jS F", $issue->getDate()); ?></span></p>
+                  <p><span class="issue-no"><a href="<?php echo $issue->getDownloadURL(); ?>">Issue <?php echo $issue->getIssue(); ?></a></span><br><span class="issue-date"><?php echo date("l jS F", $issue->getDate()); ?></span></p>
                   <a href="<?php echo STANDARD_URL.'issuearchive'; ?>" class="button tiny radius">More Issues</a>
 				</div>
               </div>
