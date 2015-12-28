@@ -48,10 +48,12 @@ if(!$currentuser->isLoggedIn()) {
 							->join($categoryManager, null, 'category')
 							->limit(0, 5)
 							->values();
+						$i = 0;
 
 						foreach($articles as $article) {
+							$i++;
 							?>
-							<div class="medium-6 large-12 columns">
+							<div class="medium-6 large-12 columns <?php if($i == 5): echo 'end'; endif; ?>">
 							<?php
 									$theme->render('components/category/block_small', array(
 									'article' => $article,
@@ -117,30 +119,27 @@ if(!$currentuser->isLoggedIn()) {
       </div>
       <div class="small-12 large-3 columns" data-equalizer-watch="top">
         <div class="row">
-          <div class="small-12 medium-6 large-12 columns info-always-margin">
-          	<?php
-    			$theme->render('components/home/block_pdf');
-			?>
+          <div class="small-12 medium-6 medium-push-6 large-reset-order large-12 columns info-always-margin show-for-large-only">
+            <?php
+            	$theme->render('components/home/block_pdf');
+            ?>
           </div>
-          <div class="small-12 medium-6 large-12 columns info-always-margin">
+          <div class="small-12 medium-6 medium-push-6 large-reset-order large-12 columns info-always-margin">
           	<?php
           		$theme->render('components/helpers/block_popular');
           	?>
           </div>
-          <div class="small-12 medium-6 large-12 columns info-always-margin">
+          <div class="small-12 medium-6 medium-pull-6 large-reset-order large-12 columns info-always-margin">
+            <div class="hide-for-large-up">
             <?php
-            	$theme->render('components/helpers/block_advert', array('sidebar' => true, 'article' => false, 'section' => false));
+            	$theme->render('components/home/block_pdf');
             ?>
-          </div>
-          <div class="small-12 medium-6 large-12 columns info-always-margin">
-            <?php
-            	$theme->render('components/home/block_contribute');
+            </div>
+           	<?php
+            	$theme->render('components/home/block_contribute'); // Includes advert
+
+            	$theme->render('components/home/block_facebook');
             ?>
-          </div>
-          <div class="small-12 medium-6 large-12 columns info-always-margin">
-          	<?php
-          		$theme->render('components/home/block_facebook');
-          	?>
           </div>
         </div>
       </div>
