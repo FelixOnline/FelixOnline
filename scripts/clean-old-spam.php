@@ -22,22 +22,13 @@ if(!$values) {
 	return;
 }
 
+$app = App::getInstance();
+
 foreach($values as $record) {
 	$id = $record->getId();
 
-	// clean akismet log - this actually cascades but we can do it manually to be sure
-	$akManager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\AkismetLog', 'akismet_log');
-	$akManager->filter("comment_id = %i", array($id));
-
-	$akValues = $akManager->values();
-
-	if($akValues) {
-		foreach($akValues as $akRecord) {
-			$akRecord->delete();
-		}
-	}
-
-	$record->delete();
+	$app['db']->query("DELETE FROM akismet_log WHERE comment_id = ".$id);
+	$app['db']->query("DELETE FROM comment WHERE id = ".$id);
 }
 
 echo "All done.\n";
