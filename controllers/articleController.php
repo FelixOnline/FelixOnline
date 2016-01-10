@@ -60,7 +60,7 @@ class ArticleController extends BaseController
 					}
 
 					// We have a validation code (probably) - now get the user validated
-					if($currentuser->isLoggedIn()) {
+					if($currentuser->isLoggedIn() && $comment->getSpam() == 0) {
 						// Auto validate logged in users
 
 						$validationcode = false;
@@ -79,7 +79,7 @@ class ArticleController extends BaseController
 
 						// email authors of article
 						$comment->emailAuthors();
-					} elseif($validationcode) {
+					} elseif($validationcode && $comment->getSpam() == 0) {
 						// If the user is still not validated, ask them to validate
 
 						// Send an email
@@ -114,7 +114,7 @@ class ArticleController extends BaseController
 
 						// Send email
 						$app['email']->send($message);
-					} else {
+					} elseif($comment->getSpam() == 0) {
 						if ($comment->getReply()) { // if comment is replying to an internal comment 
 							$comment->emailReply();
 						}
