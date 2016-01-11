@@ -33,13 +33,34 @@ $theme->render('components/globals/header', $header);
 
 ?>
 		<div class="row article-row">
+			<div class="small-12 columns">
+				<?php $theme->render('components/helpers/breadcrumbs', array('origin' => $article, 'type' => 'article')); ?>
+			</div>
+		</div>
+		<?php if($article->getVideoUrl()): ?>
+			<div class="video-row">
+		<?php endif; ?>
+		<div class="row article-row">
 			<div class="small-12 columns title-row">
 				<div class="article-title-area">
-					<?php $theme->render('components/helpers/breadcrumbs', array('origin' => $article, 'type' => 'article')); ?>
 					<h2><?php echo $article->getTitle(); ?></h2>
 					<h3><?php echo $article->getTeaser(); ?></h3>
 				</div>
+				<?php if($article->getVideoUrl()): ?>
+					<?php
+						try {
+							echo '<div class="video-box">'.$article->getVideo().'</div>';
+						} catch(\FelixOnline\Exceptions\InternalException $e) {
+							echo '<div class="alert-box">Could not load video</div>';
+						}
+					?>
+				<?php endif; ?>
 			</div>
+		</div>
+		<?php if($article->getVideoUrl()): ?>
+			</div>
+		<?php endif; ?>
+		<div class="row article-row">
 			<div class="small-12 large-4 large-push-8 columns">
 				<?php $theme->render('components/article/meta_info', array('article' => $article)); ?>
 
@@ -55,7 +76,7 @@ $theme->render('components/globals/header', $header);
 			</div>
 			<div class="small-12 large-8 large-pull-4 columns">
 			<!-- Content -->
-				<?php if($image = $article->getImage()) { ?>
+				<?php if($image = $article->getImage() && !$article->getVideoUrl()) { ?>
 				<div class="article-image<?php if($image->isTall()) { ?> tall-image<?php } ?>">
 					<div class="article-image-image">
 					<?php if($image->isTall()) { ?>

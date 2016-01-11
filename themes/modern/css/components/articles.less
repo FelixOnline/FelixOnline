@@ -96,6 +96,32 @@
 	}
 }
 
+.video-row {
+	background: black;
+	margin-bottom: @general-margin;
+	padding-top: @general-margin;
+	h2, h3 {
+		color: #DDDDDD;
+	}
+
+	.video-box {
+		position: relative;
+		padding-bottom: 56.25%; /* 16:9 */
+		padding-top: 25px;
+		margin-top: @general-margin;
+		margin-bottom: @general-margin;
+		height: 0;
+
+		iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+
 .article-row {
 	.article-text {
 		p {
