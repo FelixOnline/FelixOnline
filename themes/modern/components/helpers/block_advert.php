@@ -1,9 +1,9 @@
 <?php
 	if(!Utility::isBot()) {
-		if(!$sidebar) {
+		if(!isset($sidebar)) {
 			$sidebar = false;
 		}
-
+		
 		if($article) {
 			$advert = \FelixOnline\Core\Advert::randomPick('articles', $sidebar, $article->getCategory());
 		} elseif($category) {
