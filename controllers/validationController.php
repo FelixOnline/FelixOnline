@@ -9,6 +9,7 @@ class ValidationController extends BaseController
 		try {
 			$code = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\EmailValidation', 'email_validation')
 				->filter('code = "%s"', array($matches['code']))
+				->filter('confirmed = 0')
 				->one();
 		} catch (Exceptions\InternalException $e) {
 			throw new NotFoundException(
