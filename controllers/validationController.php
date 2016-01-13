@@ -25,7 +25,7 @@ class ValidationController extends BaseController
 		try {
 			$comments = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Comment', 'comment')
 				->filter('email = "%s"', array($code->getEmail()))
-				->filter('rejected = 0')
+				->filter('active = 1')
 				->filter('spam = 0')
 				->values();
 
