@@ -22,7 +22,7 @@ if(!$values) {
 	return;
 }
 
-$app = App::getInstance();
+$app = \FelixOnline\Core\App::getInstance();
 
 foreach($values as $record) {
 	$id = $record->getId();
