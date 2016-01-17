@@ -1,8 +1,10 @@
 <?php
 
 $header = array(
-	'title' => $topic->getName().' - '.'Felix Online',
-	'meta' => '<meta property="og:image" content="<?php echo $topic->getImage()->getUrl(); ?>"/>'
+	'title' => $topic->getName().' - '.(\FelixOnline\Core\Settings::get('site_name')),
+	'meta' => '	<meta name="twitter:card" content="summary"/>
+	<meta name="twitter:site" content="@'.(\FelixOnline\Core\Settings::get('app_twitter')).'"/>
+	<meta property="og:image" content="'.$topic->getImage()->getUrl().'"/>'
 );
 
 $theme->render('components/globals/header', $header);

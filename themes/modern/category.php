@@ -1,8 +1,10 @@
 <?php
 
 $header = array(
-	'title' => $category->getLabel().' - '.'Felix Online',
-	'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
+	'title' => $category->getLabel().' - '.(\FelixOnline\Core\Settings::get('site_name')),
+	'meta' => '	<meta name="twitter:card" content="summary"/>
+	<meta name="twitter:site" content="@'.(\FelixOnline\Core\Settings::get('app_twitter')).'"/>
+	<meta property="og:image" content="'.STANDARD_URL . 'img/' . (\FelixOnline\Core\Settings::get('default_img_uri')).'"/>'
 );
 
 $theme->render('components/globals/header', $header);

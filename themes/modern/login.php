@@ -1,6 +1,7 @@
 <?php
 $header = array(
-	'title' => 'Login to Felix Online'
+	'title' => 'Login - '.(\FelixOnline\Core\Settings::get('site_name')),
+	'meta' => '<meta property="og:image" content="'.STANDARD_URL . 'img/' . (\FelixOnline\Core\Settings::get('default_img_uri')).'"/>'
 ); 
 
 $theme->render('components/globals/header', $header);

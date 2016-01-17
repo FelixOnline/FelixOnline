@@ -1,7 +1,7 @@
 <?php
 $meta = '
 	<meta name="twitter:card" content="summary_large_image"/>
-	<meta name="twitter:site" content="@feliximperial"/>
+	<meta name="twitter:site" content="@'.(\FelixOnline\Core\Settings::get('app_twitter')).'"/>
 	<meta property="og:title" content="'.$article->getTitle().'"/>
 	<meta property="og:url" content="'.$article->getURL().'"/>
 	<meta property="og:type" content="article"/>
@@ -20,12 +20,15 @@ foreach ($article->getAuthors() as $author) {
 
 if($article->getImage()) {
 	$meta .= '<meta property="og:image" content="'.$article->getImage()->getURL(600).'"/>';
+} else {
+	$meta .= '<meta property="og:image" content="'.STANDARD_URL . 'img/' . (\FelixOnline\Core\Settings::get('default_img_uri')).'"/>';
 }
+
 if(!$article->getSearchable()) {
 	$meta .= '<meta name="robots" content="noindex">';
 }
 $header = array(
-	'title' => $article->getTitle().' - '.$article->getCategory()->getLabel().' - '.'Felix Online',
+	'title' => $article->getTitle().' - '.$article->getCategory()->getLabel().' - '.(\FelixOnline\Core\Settings::get('site_name')),
 	'meta' => $meta
 );
 
@@ -76,7 +79,7 @@ $theme->render('components/globals/header', $header);
 			</div>
 			<div class="small-12 large-8 large-pull-4 columns">
 			<!-- Content -->
-				<?php if($image = $article->getImage() && !$article->getVideoUrl()) { ?>
+				<?php if($image == $article->getImage() && !$article->getVideoUrl()) { ?>
 				<div class="article-image<?php if($image->isTall()) { ?> tall-image<?php } ?>">
 					<div class="article-image-image">
 					<?php if($image->isTall()) { ?>

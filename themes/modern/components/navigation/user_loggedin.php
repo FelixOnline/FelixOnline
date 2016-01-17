@@ -17,7 +17,7 @@
                 <li class="show-for-medium-up divider"></li>
                 <?php if($currentuser->getRoles() != null): ?>
                 <li>
-                  <a href="<?php echo ADMIN_URL; ?>">
+                  <a href="<?php echo \FelixOnline\Core\Settings::get('app_admin'); ?>">
                     <span class="glyphicons glyphicons-cogwheels"></span>
                     <span>
                       <span class="icon-text-pad">Administration</span>

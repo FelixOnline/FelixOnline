@@ -1,8 +1,7 @@
 <?php
 
 $header = array(
-	'title' => 'Felix Online - The student voice of Imperial College London',
-	'meta' => '<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>'
+	'meta' => '<meta property="og:image" content="'.STANDARD_URL . 'img/' . (\FelixOnline\Core\Settings::get('default_img_uri')).'"/>'
 );
 
 $theme->render('components/globals/header', $header);

@@ -1,8 +1,10 @@
 <?php
 
 $meta = '
+	<meta name="twitter:card" content="summary"/>
+	<meta name="twitter:site" content="@'.(\FelixOnline\Core\Settings::get('app_twitter')).'"/>
 	<meta property="og:title" content="'.$user->getName().'"/>
-	<meta property="og:image" content="http://felixonline.co.uk/img/title.jpg"/>
+	<meta property="og:image" content="'.$user->getImage()->getUrl(400,400).'"/>
 	<meta property="og:url" content="'.$user->getURL().'"/>
 	<meta property="og:type" content="profile"/>
 	<meta property="og:locale" content="en_GB"/>
@@ -11,8 +13,9 @@ $meta = '
 if($user->hasArticlesHiddenFromRobots() && $user->getUser() != "felix" ) {
 	$meta .= '<meta name="robots" content="noindex"/>';
 }
+
 $header = array(
-	'title' => $user->getName().' - '.'Felix Online',
+	'title' => $user->getName().' - '.(\FelixOnline\Core\Settings::get('site_name')),
 	'meta' => $meta
 );
 

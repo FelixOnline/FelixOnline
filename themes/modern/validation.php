@@ -4,7 +4,8 @@ use FelixOnline\Exceptions;
 use FelixOnline\Core\CurrentUser;
 
 $header = array(
-	'title' => 'Email Validation - '.'Felix Online'
+	'title' => 'Email Validation - '.(\FelixOnline\Core\Settings::get('site_name')),
+	'meta' => '<meta property="og:image" content="'.STANDARD_URL . 'img/' . (\FelixOnline\Core\Settings::get('default_img_uri')).'"/>'
 );
 
 $theme->render('components/globals/header', $header); 

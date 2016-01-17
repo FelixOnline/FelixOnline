@@ -4,12 +4,12 @@
 	<!--[if IE 8 ]>	<html lang="en" class="no-js ie8" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
 	<!--[if IE 9 ]>	<html lang="en" class="no-js ie9" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
 	<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
-	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# feliximperial: http://ogp.me/ns/fb/feliximperial#">
+	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="keywords" content="felix, student news, student newspaper, felix online, imperial college union, imperial college, felixonline"/>
-		<meta name="description" content="Felix Online is the online companion to Felix, the student newspaper of Imperial College London.">
-		<meta name="google-site-verification" content="V5LPwqv0BzMHvfMOIZvSjjJ-8tJc4Mi1A-L2AEbby50" />
+		<meta name="keywords" content="<?php echo \FelixOnline\Core\Settings::get('site_keywords'); ?>"/>
+		<meta name="description" content="<?php echo \FelixOnline\Core\Settings::get('site_description'); ?>">
+		<meta name="google-site-verification" content="<?php echo \FelixOnline\Core\Settings::get('app_google'); ?>" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<base href="<?php echo STANDARD_URL; ?>">
@@ -19,10 +19,14 @@
 			if (isset($meta) && $meta) {
 				echo $meta;
 			}
+
+			if($title && (!$meta || strpos($meta, 'og:title') === false)) {
+				echo '<meta property="og:title" content="'.$title.'"/>';
+			}
 		?>
 
-		<meta property="og:site_name" content="Felix Online"/>
-		<meta property="fb:app_id" content="200482590030408" />
+		<meta property="og:site_name" content="<?php echo \FelixOnline\Core\Settings::get('site_name'); ?>"/>
+		<meta property="fb:app_id" content="<?php echo \FelixOnline\Core\Settings::get('app_fb'); ?>" />
 
 		<!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="favicon.ico">
@@ -35,7 +39,7 @@
 			<?php if($title) {
 				echo $title;
 			} else {
-				echo 'Felix Online - The student voice of Imperial College London';
+				echo (\FelixOnline\Core\Settings::get('site_name')).' - '.(\FelixOnline\Core\Settings::get('site_tagline'));
 			} ?> 
 		</title>
 
