@@ -15,7 +15,9 @@ if ($article->getPublished()) {
 }
 
 foreach ($article->getAuthors() as $author) {
-	$meta .= '<meta property="article:author" content="'.$author->getURL().'"/>';
+	if($author->getFacebook()) {
+		$meta .= '<meta property="article:author" content="'.$author->getFacebook().'"/>';
+	}
 }
 
 if($article->getImage()) {

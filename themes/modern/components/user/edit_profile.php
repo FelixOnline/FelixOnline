@@ -24,7 +24,7 @@
 			</div>
 			<div class="small-9 columns">
 				<input type="text" name="facebook" id="facebook" class="profile-facebook" placeholder="" value="<?php echo $user->getFacebook(); ?>"/>
-				<p class="input-help">This can be for your personal profile, a page, a group, anything!</p>
+				<p class="input-help">This should be the Facebook URL to your profile. If you enter this, your name will show up on any articles you write when you share them.</p>
 			</div>
 		</div>
 		<div class="row">
