@@ -24,7 +24,7 @@
 	],
 	"require": {
 		"felixonline/exporter": "0.1.*",
-		"felixonline/core": "0.6.*",
+		"felixonline/core": "0.7.*",
 		"raven/raven": "0.13.*",
 		"dominicsayers/isemail": "dev-master",
 		"woutersioen/sir-trevor-php": "dev-master",
