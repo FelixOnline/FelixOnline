@@ -81,7 +81,8 @@ $theme->render('components/globals/header', $header);
 			</div>
 			<div class="small-12 large-8 large-pull-4 columns">
 			<!-- Content -->
-				<?php if($image == $article->getImage() && !$article->getVideoUrl()) { ?>
+				<?php $image = $article->getImage(); ?>
+				<?php if($image && !$article->getVideoUrl()) { ?>
 				<div class="article-image<?php if($image->isTall()) { ?> tall-image<?php } ?>">
 					<div class="article-image-image">
 					<?php if($image->isTall()) { ?>
