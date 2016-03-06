@@ -49,3 +49,7 @@ themes/2014/css/archive.css
 themes/*/css/style.css
 
 .maintenance
+
+# Glyphicons need licencing
+themes/modern6/fonts/glyphicons*
+themes/modern/fonts/glyphicons*
