@@ -32,6 +32,7 @@ try {
 		'/user/(?P<user>[a-zA-Z0-9_-]+)' => 'UserController',
 		'/user/(?P<user>[a-zA-Z0-9_-]+)/(?P<page>[0-9]+)' => 'UserController',
 		'/search/(.*)' => 'SearchController',
+		'/topic' => 'TopicController',
 		'/topic/(?P<slug>[a-zA-Z0-9]+)' => 'TopicController',
 		'/topic/(?P<slug>[a-zA-Z0-9]+)/(?P<page>[0-9]+)' => 'TopicController',
 		'/(?P<cat>[a-zA-Z]+)' => 'CategoryController',

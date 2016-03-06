@@ -55,6 +55,15 @@ class TopicController extends BaseController
 
 	function GET($matches)
 	{
+		if(!isset($matches['slug'])) {
+			$topics = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Topic', 'topic', 'slug');
+			$topics = $topics->filter('hidden = 0')->all();
+
+			$this->theme->render('topic_overview', array('topics' => $topics));
+
+			return;
+		}
+
 		try {
 			if(!isset($matches['page'])) {
 				$pagenum = 1;
