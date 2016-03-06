@@ -1,0 +1,66 @@
+@colors : @section-news, @section-features, @section-comment, @section-science, @section-culture, @section-arts, @section-music, @section-film, @section-fashion, @section-games, @section-tv, @section-books, @section-life, @section-politics, @section-biz, @section-tech, @section-travel, @section-food, @section-cands, @section-puzzles, @section-welfare, @section-sport, @primary-colour;
+@names  : news, features, comment, science, culture, arts, music, film, fashion, games, tv, books, life, politics, biz, tech, travel, food, cands, puzzles, welfare, sport, felix_default;
+@length : length(@colors);
+
+.colour-iterator(@names, @colors, @length);
+
+// http://webdesign.tutsplus.com/tutorials/understanding-the-less-loop--cms-23827
+
+.colour-iterator(@names, @colors, @index) when (@index > 0) {
+    .colour-iterator(@names, @colors, (@index - 1)); // decrement.
+ 
+  @name  : extract(@names, @index);
+  @color : extract(@colors, @index);
+ 
+  .info-box {
+	  &.@{name} {
+	    border-top-color: @color;
+
+	    .radius {
+	    	background-color: @color;
+	    }
+	  }
+  }
+
+  .article-block {
+    &.@{name} {
+      > div {
+        border-top-color: @color;
+
+        .radius {
+          background-color: @color;
+        }
+      }
+    }
+  }
+
+  .info-box, .month-divider, .section-date {
+	  &.@{name} {
+	    border-color: @color;
+    }
+  }
+
+  .section-date, .category-label {
+    &.@{name} {
+    	color: @color;
+      a {
+        color: @color;
+      }
+    }
+  }
+
+  .row {
+    &.@{name} {
+      background-color: @color;
+      color: white;
+    }
+  }
+
+  .section-date.@{name},
+  .article-inline-comments.@{name}, {
+  	    a {
+	    	color: @color;
+	    }
+  }
+ 
+}

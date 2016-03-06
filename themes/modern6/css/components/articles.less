@@ -1,0 +1,190 @@
+.article-comment {
+	border-top: 1px solid #DDDDDD;
+	margin-bottom: 1.5rem;
+	padding-top: 0.5rem;
+	font-family: Lora, sans;
+
+	.comment-header-block {
+		h1 {
+	
+			span {
+				vertical-align: -10%;
+			}
+		}
+	}
+
+	.comment-actions {
+		font-size: 1rem;
+		margin-bottom: 0.5rem;
+
+		span.glyphicons {
+			vertical-align: -10%;
+			margin-left: 0.5rem;
+		}
+	}
+
+	.comment-meta {
+		margin-bottom: 0.5rem;
+		font-size: 0.75rem;
+
+		span {
+			vertical-align: -5%;
+		}
+
+		.comment-author {
+			font-weight: bold;
+		}
+
+		font-family: Lato, sans-serif;
+	}
+
+	.comment-actions {
+		a,
+		a:hover {
+			border-bottom: none;
+		}
+
+		.positive-comment {
+			color: #006400;
+		}
+
+		.negative-comment {
+			color: #8B0000;
+		}
+	}
+
+	.comment-like span, .comment-dislike span {
+		color: black;
+	}
+
+	.comment-replies {
+		margin-left: 1rem;
+		margin-top: 1rem;
+		border-left: 3px solid #DDDDDD;
+		padding-left: 1rem;
+	
+		.article-comment:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.blue-thumb {
+		color: @secondary-colour !important;
+	}
+}
+
+.title-row {
+	h2 {
+		font-weight: bold;
+		letter-spacing: -1px;
+	}
+
+	h3 {
+		letter-spacing: -0.5px;
+		font-family: Lora, serif;
+		font-size: 1.6rem;
+	}
+}
+
+@media only screen and (max-width: @small-max) {
+	.title-row {
+		h2 {
+			font-size: 1.5rem;
+		}
+
+		h3 {
+			font-size: 1.1rem;
+		}
+	}
+
+	.article-author-box {
+		.authors {
+			img {
+				display: none;
+			}
+		}
+	}
+}
+
+.video-row {
+	background: black;
+	padding-bottom: @general-margin;
+	padding-top: @general-margin;
+	h2, h3 {
+		color: #DDDDDD;
+	}
+
+	.video-box {
+		position: relative;
+		padding-bottom: 56.25%; /* 16:9 */
+		padding-top: 25px;
+		margin-top: @general-margin;
+		margin-bottom: @general-margin;
+		height: 0;
+
+		iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+
+.article-row {
+	.article-text {
+		p {
+			line-height: 1.75;
+			font-family: Lora, serif;
+		}
+		padding-bottom: @general-margin;
+	}
+
+	.article-image,
+	#imgCont {
+		margin-bottom: 1rem;
+
+		.article-image-subcaption,
+		#imageCaption {
+			background: @grey-colour;
+			padding: 0.75rem;
+		}
+
+		.article-image-subcaption span,
+		#imageAttr {
+			font-size: x-small;
+			display: inline;
+		}
+	}
+
+	#imgCont {
+		margin-bottom: 1.5rem;
+		clear: both;
+
+		img {
+			width: 100%;
+		}
+	}
+}
+
+.tall-image {
+	width: 50%;
+	float: right;
+	margin-left: 1.5rem;
+	margin-top: 1.5rem;
+	margin-bottom: 0.5rem;
+}
+
+#replyLink {
+	font-size: smaller;
+}
+
+#removeReply span.glyphicons {
+	vertical-align: -10%;
+}
+
+.new-comment {
+	border-top: 1px solid #DDDDDD;
+	padding-top: 0.5rem;
+}

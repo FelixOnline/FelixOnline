@@ -1,0 +1,92 @@
+/*
+ * Issue archive style
+ */
+
+.archive-years {
+	li {
+		a {
+			font-size: smaller;
+			color: @primary-colour;
+		}
+
+		&.is-active a {
+			background-color: @grey-colour !important;
+		}
+	}
+
+	border-color: @grey-colour;
+}
+
+.side-menu {
+	padding-bottom: @general-margin;
+
+	li a {
+	}
+
+	li.is-active {
+		background-color: @grey-colour;
+
+		a {
+			font-weight: bold !important;
+		}
+	}
+}
+
+.issue-panel {
+	border: none;
+	background: #eeeeee;
+}
+
+.results {
+	margin-bottom: 0;
+}
+
+#archivesearchbar {
+	.search-count {
+		font-weight: bold;
+		font-size: 18px;
+		text-align: right;
+		margin-right: 0px;
+		margin-left: 0px;
+		width: 290px;
+	}
+}
+
+.thumbLink { 
+	text-decoration:none; 
+}
+
+.thumb {
+	.issue {
+		text-align: center;
+		color: #666;
+		font-size: 18px;
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
+	.date,
+	.relevance,
+	.source {
+		text-align: center;
+		font-size: smaller;
+		margin-top: 0.25rem;
+	}
+	img {
+		height: 100px;
+		background: white;
+	}
+
+	padding-bottom: @general-margin !important;
+}
+
+.issue-no {
+	font-weight: bold;
+}
+
+.issue-date {
+}
+
+.issue-pic {
+	width: 100%;
+}
+

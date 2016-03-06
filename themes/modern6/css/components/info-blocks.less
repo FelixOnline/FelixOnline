@@ -1,0 +1,171 @@
+.info-box {
+	background: @grey-colour;
+	padding: 1rem;
+	margin-bottom: @general-margin;
+
+	border-top: 3px solid @secondary-colour;
+
+	h1 {
+		margin-top: 0;
+		padding-top: 0;
+		font-size: 2rem;
+	}
+}
+
+.info-box:last-child {
+	margin-bottom: 0;
+}
+
+.info-always-margin .info-box:last-child,
+.article-row .info-box:last-child {
+	margin-bottom: @general-margin !important;
+}
+
+.tabs-panel {
+	ol {
+		margin-left: 0;
+		margin-bottom: 0;
+	}
+}
+
+.close-button, .close-button:hover {
+	background: transparent;
+}
+
+.section-info-box {
+	img {
+		width: 100%;
+		max-width: 60px;
+	}
+
+	h2 {
+		margin-top: 0;
+		padding-top: 0;
+		font-size: @general-margin;
+	}
+
+	.info {
+		font-size: smaller;
+	}
+
+	.section-social {
+		font-size: 1.5rem;
+
+		span {
+			vertical-align: -25%;
+		}
+	}
+
+	.contact-area {
+		p {
+			margin-bottom: 0;
+			font-size: 1rem;
+			text-align: left;
+			margin-top: 0;
+		}
+
+		span {
+			font-size: 1.5rem;
+		}
+	}
+}
+
+.info-title-only {
+	h1 {
+		margin-bottom: 0;
+	}
+
+	margin-bottom: 0;
+}
+
+.info-secondary-box {
+	border: 1px solid @grey-colour;
+
+	margin-bottom: @general-margin;
+
+	&.pad {
+		padding: 1rem;
+		padding-bottom: 0;
+	}
+
+	a {
+		span {
+			vertical-align: text-bottom !important;
+		}
+	}
+
+	.editor-icons {
+		.user-twitter {
+			display: block;
+			font-size: small;
+
+			span {
+				margin-left: 0;
+				vertical-align: baseline;
+			}
+		}
+	}
+}
+
+.twitter-secondary-box {
+	padding: 1rem;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.article-author-box {
+	.date {
+		color: #555555;
+	}
+
+	.comments {
+		color: #555555;
+	}
+}
+
+.article-topics, .article-share {
+	border-top: 1px solid #555555;
+	color: #555555;
+}
+
+.article-topic {
+	background-size: 100% auto;
+	margin-bottom: @general-margin;
+
+	.article-topic-info {
+		padding: 0.5rem;
+		min-height: 8rem;
+		width: 100%;
+		background: rgba(0,0,0,0.35);
+		color: white;
+
+		.glyphicons {
+			vertical-align: baseline;
+		}
+
+		h2 {
+			color: white;
+			font-size: 1.75rem
+		}
+	}
+}
+
+.topic-info-box {
+	padding: 0;
+	margin-bottom: @general-margin !important;
+
+	.topic-picture {
+		height: 10rem;
+		background-size: 100% auto;
+	}
+
+	.topic-info {
+		padding: 1rem
+	}
+}
+
+.pdf-info-box {
+	img {
+		background: white;
+	}
+}
