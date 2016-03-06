@@ -244,43 +244,10 @@ if(!$currentuser->isLoggedIn()) {
 		<div class="bar-text">Trending stories</div>
 	</div>
 </div>
-<div class="row top-row main-row">
-	<div class="small-12 columns">
-		<?php $theme->render('components/helpers/trending_stories', array('large' => true)); ?>
-	</div>
-</div>
 
-<div class="row features">
-	<div class="small-12 columns">
-		<div class="bar-text">Best of the paper</div>
-	</div>
-</div>
 <div class="row main-row top-row">
 	<div class="small-12 medium-9 columns">
-		<div class="row small-up-1 medium-up-2 large-up-3">
-		<?php
-			$i = 0;
-			foreach($thisweek as $article) {
-				if(!$article->getArticle()->getCategory()->getActive() ||
-					(!$currentuser->isLoggedIn() && $article->getArticle()->getCategory()->getSecret())) {
-					continue;
-				}
-
-				$i++;
-		?>
-				<div class="columns">
-		<?php
-					$theme->render('components/category/block_normal', array(
-						'article' => $article->getArticle(),
-						'show_category' => true,
-						'headshot' => false
-					));
-		?>
-				</div>
-		<?php
-			}
-		?>
-		</div>
+		<?php $theme->render('components/helpers/trending_stories', array('large' => false)); ?>
 	</div>
 	<div class="small-12 medium-3 columns">
 		<?php
