@@ -4,7 +4,7 @@ use FelixOnline\Core;
 
 class Utility extends Core\Utility {
 	// From http://gilbert.pellegrom.me/php-relative-time-function/
-	static function getRelativeTime($date, $postfix = ' ago', $fallback = 'D j M Y, g:ia') {
+	static function getRelativeTime($date, $postfix = ' ago', $fallback = 'D j M') {
 	    $diff = time() - $date;
 	    if($diff < 60)
 	        return $diff . ' second'. ($diff != 1 ? 's' : '') . $postfix;
