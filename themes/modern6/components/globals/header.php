@@ -33,4 +33,6 @@
 	<body>
 	<?php 
 		$theme->render('components/globals/navigation');
+
+		$theme->render('components/helpers/block_notices', array('all_pages' => !$theme->isPage('frontpage')));
 	?>
