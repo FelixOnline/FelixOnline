@@ -47,14 +47,14 @@ if(!$currentuser->isLoggedIn()) {
 							->filter('category = %i', array(\FelixOnline\Core\Settings::get('news_category_id')))
 							->order(array('published', 'id'), 'DESC')
 							->join($categoryManager, null, 'category')
-							->limit(0, 5)
+							->limit(0, 6)
 							->values();
 						$i = 0;
 
 						foreach($articles as $article) {
 							$i++;
 							?>
-							<div class="small-6 medium-12 columns">
+							<div class="small-12 columns">
 							<?php
 									$theme->render('components/category/block_small', array(
 									'article' => $article,
@@ -66,10 +66,6 @@ if(!$currentuser->isLoggedIn()) {
 							<?php
 						}
 					?>
-
-					<div class="small-6 medium-12 columns">
-						<?php $theme->render('components/home/block_facebook'); ?>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -83,7 +79,18 @@ if(!$currentuser->isLoggedIn()) {
 			</div>
 			<div class="small-12 medium-6 large-reset-order large-12 columns info-always-margin">
 				<?php
-					$theme->render('components/helpers/block_popular');
+					$theme->render('components/helpers/block_advert', array('sidebar' => true, 'article' => false, 'section' => false));
+				?>
+			</div>
+			<div class="small-12 medium-6 large-reset-order large-12 columns info-always-margin">
+				<?php
+					$theme->render('components/home/block_contribute');
+				?>
+			</div>
+
+			<div class="small-12 medium-6 large-reset-order large-12 columns info-always-margin">
+				<?php
+					$theme->render('components/home/block_facebook');
 				?>
 			</div>
 		</div>
@@ -102,35 +109,26 @@ if(!$currentuser->isLoggedIn()) {
 	->filter('category = %i', array(\FelixOnline\Core\Settings::get('features_category_id')))
 	->order(array('published', 'id'), 'DESC')
 	->join($categoryManager, null, 'category')
-	->limit(0, 3)
+	->limit(0, 4)
 	->values();
 ?>
-<div class="row main-row top-row">
-	<div class="small-12 large-9 columns">
-		<div class="row small-up-1 medium-up-3 large-up-3">
-			<?php
-				foreach($articles as $article) {
-					$i++;
-					?>
-					<div class="columns">
-					<?php
-							$theme->render('components/category/block_normal', array(
-							'article' => $article,
-							'show_category' => false,
-							'headshot' => false
-						));
-					?>
-					</div>
-					<?php
-				}
+<div class="row main-row top-row small-up-1 medium-up-4">
+	<?php
+		foreach($articles as $article) {
+			$i++;
 			?>
-		</div>
-	</div>
-	<div class="small-12 large-3 columns">
-		<?php
-			$theme->render('components/home/block_contribute'); // Includes advert
-		?>
-	</div>
+			<div class="columns">
+			<?php
+					$theme->render('components/category/block_normal', array(
+					'article' => $article,
+					'show_category' => false,
+					'headshot' => false
+				));
+			?>
+			</div>
+			<?php
+		}
+	?>
 </div>
 
 <div class="row comment">
@@ -168,6 +166,17 @@ if(!$currentuser->isLoggedIn()) {
 		<?php
 			$theme->render('components/home/block_comments');
 		?>
+	</div>
+</div>
+
+<div class="row felix_default">
+	<div class="small-12 columns">
+		<div class="bar-text">Hot discussions</div>
+	</div>
+</div>
+<div class="row top-row main-row">
+	<div class="small-12 columns">
+		<?php $theme->render('components/helpers/commented_stories', array('large' => true)); ?>
 	</div>
 </div>
 
@@ -228,6 +237,17 @@ if(!$currentuser->isLoggedIn()) {
 	<?php
 		}
 	?>
+</div>
+
+<div class="row felix_default">
+	<div class="small-12 columns">
+		<div class="bar-text">Trending stories</div>
+	</div>
+</div>
+<div class="row top-row main-row">
+	<div class="small-12 columns">
+		<?php $theme->render('components/helpers/trending_stories', array('large' => true)); ?>
+	</div>
 </div>
 
 <div class="row features">

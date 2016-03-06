@@ -129,33 +129,7 @@ $theme->render('components/globals/header', $header);
 </div>
 <div class="row top-row main-row">
 	<div class="small-12 medium-9 medium-push-3 large-7 end columns">
-		<div class="row small-up-12 medium-up-2">
-			<?php
-				$viewed_articles = (new \FelixOnline\Core\ArticleManager())->getMostPopular(\FelixOnline\Core\Settings::get('popular_articles'));
-				
-				if (!is_null($viewed_articles)) {
-					foreach($viewed_articles as $article) {
-			?>
-					<div class="columns">
-			<?php
-						$theme->render('components/category/block_normal', array(
-							'article' => $article,
-							'show_category' => true,
-							'headshot' => false
-						));
-			?>
-					</div>
-			<?php
-					}
-				} else {
-			?>
-
-			<p>It doesn't look like any articles have been read recently...</p>
-
-			<?php
-				}
-			?>
-		</div>
+		<?php $theme->render('components/helpers/trending_stories', array('large' => false)); ?>
 	</div>
 </div>
 
