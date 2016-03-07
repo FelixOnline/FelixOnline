@@ -1,10 +1,10 @@
 body {
-	background-color: #f7f7e8;
-	font-family: 'Lato', sans-serif;
+	background-color: @root-colour;
+	font-family: @sans;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Lato', sans-serif;
+	font-family: @sans;
 }
 
 .main-row {
@@ -13,6 +13,24 @@ h1, h2, h3, h4, h5, h6 {
 
 .top-row {
 	padding-top: @general-margin;
+}
+
+.main-row.top-row {
+	h1 {
+		img {
+			vertical-align: text-bottom;
+		}
+	}
+}
+
+@media only screen and (max-width: @small-max) {
+	.main-row.top-row {
+		h1 {
+			img {
+				vertical-align: middle;
+			}
+		}
+	}
 }
 
 a,
@@ -52,157 +70,6 @@ button:hover {
 	padding-bottom: 1rem;
 }
 
-.main-menu {
-	margin-bottom: @general-margin;
-}
-
-.main-menu, .section-bar .menu {
-	background: @primary-colour;
-
-	li a {
-		color: white;
-	}
-
-	.is-drilldown-submenu-parent>a:after {
-		border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(255, 255, 255, 1) !important;
-	}
-
-	.is-dropdown-submenu .is-dropdown-submenu-parent.opens-right>a:after {
-		border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(255, 255, 255, 1) !important;
-	}
-
-	.js-drilldown-back>a:before {
-		border-color: rgba(0, 0, 0, 0) rgba(255, 255, 255, 1) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) !important;
-	}
-}
-
-@media only screen and (min-width: @medium-min) {
-	.main-menu, .section-bar .menu {
-		.is-dropdown-submenu-parent>a:after, .active:hover > a:after {
-			border-color: rgba(255, 255, 255, 1) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) !important;
-		}
-
-		.active>a:after {
-			border-color: rgba(0, 0, 0, 1) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) !important;
-		}
-
-		li > a:hover,
-		li.active > a:hover {
-			background: @primary-colour-light;
-			color: white;
-		}
-
-		li.active > a {
-			background: white;
-			color: black;
-		}
-
-		ul {
-			li > a:hover,
-			li.active > a:hover {
-				background: #222222 !important;
-			}
-
-			li.active > a {
-				background: #555555 !important;
-				color: white !important;
-			}
-
-			.is-submenu-item {
-				background: #333333 !important;
-			}
-		}
-	}
-}
-
-@media only screen and (max-width: @small-max) {
-	.top-bar-left {
-		clear: both;
-		width: 100%;
-	}
-
-	#main-menu .menu {
-		li > a:hover,
-		li.active > a:hover {
-			background: @primary-colour-light !important;
-			color: white !important;
-		}
-
-		li.active > a {
-			background: white !important;
-			color: black !important;
-		}
-
-		li.active > a:after {
-			border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 1) rgba(0, 0, 0, 0) !important;
-		}
-	}
-
-	.top-bar .top-bar-right {
-		width: auto;
-	}
-}
-
-.section-bar {
-	background: @primary-colour;
-
-	border-bottom: 1px solid white;
-
-	.title-area {
-		.name {
-			img {
-				padding-left: 1rem;
-			}
-
-			h1 {
-				a {
-					padding-left: 0;
-					font-size: 3rem;
-					padding-top: 1rem;
-				}
-			}
-		}
-	}
-
-	.glyphicons {
-		display: inline;
-		vertical-align: -20%;
-		font-size: 1.25rem;
-		text-align: center;
-	}
-
-	.has-tip {
-		border-bottom: none !important;
-	}
-
-	.icon-text-pad {
-		padding-left: 0.5rem;
-	}
-}
-
-.search-button {
-	padding: 0;
-}
-
-.breadcrumbs {
-	padding: 0;
-	background: none;
-	border: none;
-}
-
-.sub-nav {
-	background-color: @grey-colour;
-	padding: 10px 10px 10px 0;
-
-	dt {
-		color: black;
-	}
-
-	dd a {
-		color: #800020;
-	}
-}
-
 blockquote {
 	border-left: 3px solid @dark-grey-colour;
 
@@ -210,12 +77,12 @@ blockquote {
 		font-size: larger;
 		margin-bottom: 0;
 		font-style: italic;
-		color: #444444;
+		color: @very-dark-grey-colour;
 	}
 
 	cite {
 		font-style:normal;
-		font-family: "Lato", sans-serif;
+		font-family: @sans;
 		font-size: 1rem;
 	}
 
@@ -288,16 +155,6 @@ footer {
 	}
 }
 
-.breadcrumb-float-top .breadcrumbs {
-	float: left;
-	margin-top: 1rem;
-}
-
-h1.breadcrumb-after {
-	clear: right;
-	margin-top: 0rem;
-}
-
 .header-info-icons {
 	a {
 		margin-right: 1rem;
@@ -322,31 +179,5 @@ h1 img.headshot {
 
 	a {
 		color: white;
-	}
-}
-
-.top-bar-title {
-	float: left;
-}
-
-#main-menu {
-	margin-top: 0.4rem;
-}
-
-.main-row.top-row {
-	h1 {
-		img {
-			vertical-align: text-bottom;
-		}
-	}
-}
-
-@media only screen and (max-width: @small-max) {
-	.main-row.top-row {
-		h1 {
-			img {
-				vertical-align: middle;
-			}
-		}
 	}
 }

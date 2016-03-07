@@ -38,108 +38,11 @@
 	padding-top: 1rem;
 }
 
-.trending, .recent-comments {
-	background: white;
-	padding-left: 1rem;
-	margin-left: 0;
-	margin-bottom: 0;
-
-	li {
-		padding-top: 0.5rem;
-		padding-bottom: 0.5rem;
-		font-size: 1.1rem;
-		margin-left: 2rem;
-		background: white;
-		border-bottom: 1px solid @grey-colour;
-		padding-right: 0.5rem;
-		font-family: Lora, serif;
-		font-weight: bold;
-
-		a {
-			font-size: 1rem;
-			font-weight: normal;
-			font-family: Lato, serif;
-		}
-
-		span {
-			font-family: Lato, sans-serif;
-		}
-	}
-
-	li:last-child {
-		border-bottom: 0;
-	}
-}
-
-.info-secondary-box {
-	.tabs {
-		border: none;
-
-		li {
-			a {
-				font-weight: bold;
-				color: @primary-colour;
-			}
-
-			&.is-active {
-				a {
-					background-color: @grey-colour;
-				}
-			}
-		}
-	}
-}
-
-.recent-comments {
-	list-style-type: none;
-	padding-left: 0;
-
-	li {
-		font-size: 1rem;
-		font-weight: normal;
-		margin-left: 0;
-		padding-left: 0.5rem;
-		padding-right: 0.5rem;
-
-		.comment-meta {
-			font-size: 0.75rem;
-		}
-
-		.comment-name,
-		.comment-article {
-			font-weight: bold;
-		}
-
-		a {
-			font-size: 0.75rem;
-		}
-	}
-}
-
 .input-help {
 	font-size: 0.75rem;
 	margin-top: 0;
 	padding-top: 0;
 	font-style: italic;
-}
-
-.trending-block {
-	p {
-		margin-top: 1rem;
-	}
-
-	.tabs a {
-		font-size: smaller;
-	}
-}
-
-hr.month-divider {
-	margin-bottom: 0;
-	border-color: @secondary-colour-dark;
-
-	&.top-divider {
-		margin-top: 0;
-	}
 }
 
 .section-date {
@@ -160,15 +63,6 @@ hr.month-divider {
 .white {
 	background: white;
 	padding: 0.5rem;
-}
-
-.alert-box {
-	border: none;
-	background: @primary-colour;
-
-	&.secondary {
-		background: @secondary-colour;
-	}
 }
 
 ul.pagination {
@@ -206,4 +100,15 @@ ul.pagination {
 	margin-top: @general-margin;
 
 	margin-bottom: @general-margin;
+}
+
+.close-button, .close-button:hover {
+	background: transparent;
+}
+
+.tabs-panel {
+	ol {
+		margin-left: 0;
+		margin-bottom: 0;
+	}
 }

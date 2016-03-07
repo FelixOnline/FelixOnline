@@ -1,8 +1,8 @@
 .article-comment {
-	border-top: 1px solid #DDDDDD;
+	border-top: 1px solid @very-dark-grey-colour;
 	margin-bottom: 1.5rem;
 	padding-top: 0.5rem;
-	font-family: Lora, sans;
+	font-family: @serif;
 
 	.comment-header-block {
 		h1 {
@@ -35,7 +35,7 @@
 			font-weight: bold;
 		}
 
-		font-family: Lato, sans-serif;
+		font-family: @sans;
 	}
 
 	.comment-actions {
@@ -45,11 +45,11 @@
 		}
 
 		.positive-comment {
-			color: #006400;
+			color: @comment-positive;
 		}
 
 		.negative-comment {
-			color: #8B0000;
+			color: @comment-negative;
 		}
 	}
 
@@ -60,7 +60,7 @@
 	.comment-replies {
 		margin-left: 1rem;
 		margin-top: 1rem;
-		border-left: 3px solid #DDDDDD;
+		border-left: 3px solid @very-dark-grey-colour;
 		padding-left: 1rem;
 	
 		.article-comment:last-child {
@@ -81,7 +81,7 @@
 
 	h3 {
 		letter-spacing: -0.5px;
-		font-family: Lora, serif;
+		font-family: @serif;
 		font-size: 1.6rem;
 	}
 }
@@ -111,7 +111,7 @@
 	padding-bottom: @general-margin;
 	padding-top: @general-margin;
 	h2, h3 {
-		color: #DDDDDD;
+		color: @grey-colour;
 	}
 
 	.video-box {
@@ -136,7 +136,7 @@
 	.article-text {
 		p {
 			line-height: 1.75;
-			font-family: Lora, serif;
+			font-family: @serif;
 		}
 		padding-bottom: @general-margin;
 	}
@@ -185,6 +185,6 @@
 }
 
 .new-comment {
-	border-top: 1px solid #DDDDDD;
+	border-top: 1px solid @very-dark-grey-colour;
 	padding-top: 0.5rem;
 }
