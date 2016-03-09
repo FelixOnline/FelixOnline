@@ -27,13 +27,6 @@ class TopicController extends BaseController
 		$manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Article', 'article', 'id')
 			->join($topicJoiner, 'LEFT', 'id', 'article');
 
-		if(!$currentuser->isLoggedIn()) {
-			$catJoiner = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Category', 'category', 'id')
-				->filter('secret = 0');
-
-			$manager = $manager->join($catJoiner, 'LEFT', 'category', 'id');
-		}
-
 		$manager = $manager->filter('published < NOW()')
 			->order(array('published', 'id'), 'DESC')
 			->limit($startat, $counter);

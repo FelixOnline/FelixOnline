@@ -19,10 +19,6 @@ class UserController extends BaseController {
 		$categoryManager = (new \FelixOnline\Core\CategoryManager())
 			->filter("active = 1");
 
-		if(!$currentuser->isLoggedIn()) {
-			$categoryManager->filter('secret = 0');
-		}
-
 		$manager->join($categoryManager, null, 'category');
 
 		$manager->limit(

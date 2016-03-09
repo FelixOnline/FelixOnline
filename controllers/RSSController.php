@@ -16,10 +16,6 @@ class RSSController extends BaseController {
 					->filter('cat = "%s"', array($matches['cat']))
 					->filter('active = 1');
 
-				if(!$currentuser->isLoggedIn()) {
-					$category->filter('secret = 0');
-				}
-
 				$category = $category->one();
 			} catch (Exceptions\InternalException $e) {
 				throw new Exceptions\NotFoundException(
@@ -73,10 +69,6 @@ class RSSController extends BaseController {
 			$categoryManager = (new \FelixOnline\Core\CategoryManager())
 				->filter("active = 1");
 
-			if(!$currentuser->isLoggedIn()) {
-				$categoryManager->filter('secret = 0');
-			}
-
 			$articleManager->join($categoryManager, null, 'category');
 
 			$articleManager->limit(0, \FelixOnline\Core\Settings::get('rss_articles'));
@@ -89,10 +81,6 @@ class RSSController extends BaseController {
 
 			$categoryManager = (new \FelixOnline\Core\CategoryManager())
 				->filter("active = 1");
-
-			if(!$currentuser->isLoggedIn()) {
-				$categoryManager->filter('secret = 0');
-			}
 
 			$articleManager->join($categoryManager, null, 'category');
 

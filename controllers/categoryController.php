@@ -13,33 +13,28 @@ class CategoryController extends BaseController
 			->filter('active = 1')
 			->one();
 
-		if($category->getSecret() && !$currentuser->isLoggedIn()) {
-			// Cannot see articles in inactive categories
-			throw new NotFoundException(
-				"Category is not accessible",
-				$matches,
-				'CategoryController'
-			);
-		}
+		if($category) {
+			if($pagenum == 1) {
+				$counter = \FelixOnline\Core\Settings::get('articles_per_cat_page');
+				$startat = 0;
+			} else {
+				$counter = \FelixOnline\Core\Settings::get('articles_per_second_cat_page');
+				$startat = \FelixOnline\Core\Settings::get('articles_per_cat_page') + ($pagenum - 2) * \FelixOnline\Core\Settings::get('articles_per_second_cat_page');
+			}
 
-		if($pagenum == 1) {
-			$counter = \FelixOnline\Core\Settings::get('articles_per_cat_page');
-			$startat = 0;
+			$manager = (new \FelixOnline\Core\ArticleManager())
+				->filter('published < NOW()')
+				->filter('category = %i', array($category->getId()))
+				->order(array('published', 'id'), 'DESC')
+				->limit($startat, $counter);
+
+			$count = $manager->count();
+			$pages = ceil(($count - \FelixOnline\Core\Settings::get('articles_per_cat_page')) / (\FelixOnline\Core\Settings::get('articles_per_second_cat_page'))) + 1;
+
+			$articles = $manager->values();
 		} else {
-			$counter = \FelixOnline\Core\Settings::get('articles_per_second_cat_page');
-			$startat = \FelixOnline\Core\Settings::get('articles_per_cat_page') + ($pagenum - 2) * \FelixOnline\Core\Settings::get('articles_per_second_cat_page');
+			throw new Exceptions\InternalException('Category cannot be loaded - perhaps it is secret');
 		}
-
-		$manager = (new \FelixOnline\Core\ArticleManager())
-			->filter('published < NOW()')
-			->filter('category = %i', array($category->getId()))
-			->order(array('published', 'id'), 'DESC')
-			->limit($startat, $counter);
-
-		$count = $manager->count();
-		$pages = ceil(($count - \FelixOnline\Core\Settings::get('articles_per_cat_page')) / (\FelixOnline\Core\Settings::get('articles_per_second_cat_page'))) + 1;
-
-		$articles = $manager->values();
 			
 		if (is_null($articles)) {
 			$articles = [];
@@ -80,10 +75,6 @@ class CategoryController extends BaseController
 			$articles = array();
 
 			foreach($data['category']->getChildren() as $child) {
-				if($child->getSecret() && !$currentuser->isLoggedIn()) {
-					continue;
-				}
-
 				$manager = (new \FelixOnline\Core\ArticleManager())
 					->filter('published < NOW()')
 					->filter('category = %i', array($child->getId()))

@@ -21,8 +21,7 @@ if(!$currentuser->isLoggedIn()) {
 				<div class="carousel-block" data-equalizer="carousel">
 				<?php
 					foreach($spinner as $article) {
-						if(!$article->getArticle()->getCategory()->getActive() ||
-							(!$currentuser->isLoggedIn() && $article->getArticle()->getCategory()->getSecret())) {
+						if(!$article->getArticle()) {
 							continue;
 						}
 
@@ -51,17 +50,25 @@ if(!$currentuser->isLoggedIn()) {
 							->values();
 						$i = 0;
 
-						foreach($articles as $article) {
-							$i++;
+						if($articles) {
+							foreach($articles as $article) {
+								$i++;
+								?>
+								<div class="small-12 columns">
+								<?php
+										$theme->render('components/category/block_small', array(
+										'article' => $article,
+										'show_category' => false,
+										'headshot' => false
+									));
+								?>
+								</div>
+								<?php
+							}
+						} else {
 							?>
 							<div class="small-12 columns">
-							<?php
-									$theme->render('components/category/block_small', array(
-									'article' => $article,
-									'show_category' => false,
-									'headshot' => false
-								));
-							?>
+								<p>No news is good news</p>
 							</div>
 							<?php
 						}
@@ -146,20 +153,22 @@ if(!$currentuser->isLoggedIn()) {
 		->limit(0, 3)
 		->values();
 
-		$i = 0;
-		foreach($articles as $key => $article) {
-			$i++;
+		if($articles) {
+			foreach($articles as $key => $article) {
 	?>
-			<div class="columns">
-				<?php
-					$theme->render('components/category/block_normal', array(
-						'article' => $article,
-						'show_category' => false,
-						'headshot' => true
-					));
-				?>
-			</div>
+				<div class="columns">
+					<?php
+						$theme->render('components/category/block_normal', array(
+							'article' => $article,
+							'show_category' => false,
+							'headshot' => true
+						));
+					?>
+				</div>
 	<?php
+			}
+		} else {
+			echo "<p>Nothing found</p>";
 		}
 	?>
 	<div class="columns">
@@ -195,20 +204,22 @@ if(!$currentuser->isLoggedIn()) {
 		->limit(0, 2)
 		->values();
 
-		$i = 0;
-		foreach($articles as $key => $article) {
-			$i++;
+		if($articles) {
+			foreach($articles as $key => $article) {
 	?>
-			<div class="columns">
-				<?php
-						$theme->render('components/category/block_normal', array(
-							'article' => $article,
-							'show_category' => false,
-							'headshot' => false
-						));
-				?>
-			</div>
+				<div class="columns">
+					<?php
+							$theme->render('components/category/block_normal', array(
+								'article' => $article,
+								'show_category' => false,
+								'headshot' => false
+							));
+					?>
+				</div>
 	<?php
+			}
+		} else {
+			echo "<p>Nothing found</p>";
 		}
 	?>
 
@@ -221,20 +232,22 @@ if(!$currentuser->isLoggedIn()) {
 		->limit(0, 2)
 		->values();
 
-		$i = 0;
-		foreach($articles as $key => $article) {
-			$i++;
+		if($articles) {
+			foreach($articles as $key => $article) {
 	?>
-			<div class="columns">
-				<?php
-						$theme->render('components/category/block_normal', array(
-							'article' => $article,
-							'show_category' => false,
-							'headshot' => false
-						));
-				?>
-			</div>
+				<div class="columns">
+					<?php
+							$theme->render('components/category/block_normal', array(
+								'article' => $article,
+								'show_category' => false,
+								'headshot' => false
+							));
+					?>
+				</div>
 	<?php
+			}
+		} else {
+			echo "<p>Nothing found</p>";
 		}
 	?>
 </div>

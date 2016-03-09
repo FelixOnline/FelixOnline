@@ -253,15 +253,6 @@ class ArticleController extends BaseController
 				'ArticleController'
 			);
 		}
-
-		if($category->getSecret() && !$currentuser->isLoggedIn()) {
-			// Cannot see articles in inactive categories
-			throw new NotFoundException(
-				"Category is not accessible",
-				$matches,
-				'ArticleController'
-			);
-		}
 	}
 
 	function renderArticle($article, $comment_status = null, $comment_email = false) {
