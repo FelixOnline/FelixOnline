@@ -45,10 +45,8 @@ if(!$currentuser->isLoggedIn()) {
 							->filter('published < NOW()')
 							->filter('category = %i', array(\FelixOnline\Core\Settings::get('news_category_id')))
 							->order(array('published', 'id'), 'DESC')
-							->join($categoryManager, null, 'category')
 							->limit(0, 6)
 							->values();
-						$i = 0;
 
 						if($articles) {
 							foreach($articles as $article) {
