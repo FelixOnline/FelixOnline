@@ -10,6 +10,7 @@ $header = array(
 $theme->render('components/globals/header', $header);
 
 ?>
+
 	<div class="row main-row top-row">
 		<div class="small-12 large-8 columns">
 			<h1><?php echo $category->getLabel(); ?></h1>
@@ -28,6 +29,15 @@ $theme->render('components/globals/header', $header);
 			<?php $theme->render('components/helpers/block_advert', array('sidebar' => true, 'article' => false, 'section' => $category)); ?>
 		</div>
 	</div>
+
+<?php if($category->getSecret()): ?>
+	<div class="row main-row top-row">
+		<div class="small-12 columns">
+			<div class="callout alert"><b>Looking for this at home?</b> You can only access <?php echo $category->getLabel(); ?> from the College network or the VPN.</div>
+		</div>
+	</div>
+<?php endif; ?>
+	
 <?php if(count($articles) == 0): ?>
 	<div class="row main-row">
 		<div class="small-12 large-9 columns">

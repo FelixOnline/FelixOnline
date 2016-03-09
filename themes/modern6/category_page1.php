@@ -17,6 +17,13 @@ $theme->render('components/globals/header', $header);
 	</div>
 </div>
 
+<?php if($category->getSecret()): ?>
+	<div class="row main-row top-row">
+		<div class="small-12 columns">
+			<div class="callout alert"><b>Looking for this at home?</b> You can only access <?php echo $category->getLabel(); ?> from the College network or the VPN.</div>
+		</div>
+	</div>
+<?php endif; ?>
 
 <?php if(count($articles) == 0): ?>
 	<div class="row main-row top-row">
