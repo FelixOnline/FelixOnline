@@ -28,30 +28,57 @@ $roleId = $roleV->getId();
 
 echo "I am assuming the sectionEditor role is ".$roleId.".\n";
 
-// Delete old roles
-$uRoleM = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\UserRole', 'user_roles');
-$uRoleM->filter('role = "'.$roleId.'"');
-$uRoles = $uRoleM->values();
-
-if($uRoles) {
-	foreach($uRoles as $uRole) {
-		$uRole->delete(); // Remove old sectionEditor role
-	}
-}
-
 $done = array();
 
 foreach($values as $record) {
+	$toDo = false;
+
 	if(array_search($record->getUser()->getUser(), $done) !== false) {
 		continue;
 	}
 
-	$done[] = $record->getUser()->getUser();
+	$roles = $record->getUser()->getExplicitRoles();
 
-	$roleMap = new \FelixOnline\Core\UserRole();
-	$roleMap->setUser($record->getUser());
-	$roleMap->setRole($roleV);
-	$roleMap->save();
+	if(!$roles) {
+		$toDo = true;
+	} else {
+		$hasRole = false;
+		foreach($roles as $role) {
+			if($role->getName() == 'sectionEditor') {
+				echo "Skipping ".$record->getUser()->getUser()." - has role\n";
+				$hasRole = true;
+
+				continue;
+			}
+		}
+
+		if(!$hasRole) {
+			$toDo = true;
+		}
+	}
+
+	if($toDo) {
+		echo "Adding ".$record->getUser()->getUser()."\n";
+
+		$roleMap = new \FelixOnline\Core\UserRole();
+		$roleMap->setUser($record->getUser());
+		$roleMap->setRole($roleV);
+		$roleMap->save();
+	}
+
+	$done[] = $record->getUser()->getUser();
+}
+
+// Now delete old roles
+$roleM = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\UserRole', 'user_roles');
+$roleM->filter('role = '.$roleId);
+$values = $roleM->values(true);
+
+foreach($values as $value) {
+	if(array_search($value->getUser()->getUser(), $done) === FALSE) {
+		echo $value->getUser()->getUser()." is no longer a section editor - removing role\n";
+		$value->delete();
+	}
 }
 
 echo "All done.\n";
