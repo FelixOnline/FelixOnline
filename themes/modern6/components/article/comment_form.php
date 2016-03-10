@@ -2,7 +2,13 @@
 			if ($article->canComment($currentuser)) {
 		?>
 			<div class="callout secondary article-comments-say">
-				Have something to say? <a href="<?php echo Utility::currentPageURL().'#commentForm';?>"><b>Post your comment now</b></a>.
+				Have something to say? <a href="<?php echo Utility::currentPageURL().'#commentForm';?>"><b>Post your comment now</b></a>.<br><b>New:</b> Now anyone can up or down-vote comments. No need to log in!
+			</div>
+		<?php
+			} else {
+		?>
+			<div class="callout secondary article-comments-say">
+				<b>New:</b> Now anyone can up or down-vote comments. No need to log in!
 			</div>
 		<?php
 			}

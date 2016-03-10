@@ -5,26 +5,6 @@
 $(document).ready(function() {
 	/* Facebook */
 
-
-	/* Comment Binders - logged out */
-	$('.logout-like').bind('click', function() {
-		if ($('#loginForm #commenttype').length){
-			$('#loginForm #commenttype').remove();
-			$('#loginForm #comment').remove();
-		}
-		var comment = $(this).parents('.article-comment').attr('id');
-		$('#loginForm').prepend('<input type="hidden" value="like" name="commenttype" id="commenttype"/><input type="hidden" value="'+comment+'" name="comment" id="comment"/>');
-	});
-	
-	$('.logout-dislike').bind('click', function() {
-		if ($('#loginForm #commenttype').length){
-			$('#loginForm #commenttype').remove();
-			$('#loginForm #comment').remove();
-		}
-		var comment = $(this).parents('.article-comment').attr('id');
-		$('#loginForm').prepend('<input type="hidden" value="dislike" name="commenttype" id="commenttype"/><input type="hidden" value="'+comment+'" name="comment" id="comment"/>');
-	});
-
 	/* Comment Binders - logged in */
 	$(document).on("click", '.login-like', function() {
 		rateComment(this, 'like');
