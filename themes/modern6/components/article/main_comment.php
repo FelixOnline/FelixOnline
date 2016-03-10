@@ -41,7 +41,7 @@
 						</a>
 					<?php elseif ($comment->userDislikedComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT'])): echo ''; ?>
 					<?php else: ?>
-						<a href="<?php echo Utility::currentPageURL();?>#" class="login-like" data-tooltip aria-haspopup="true" class="has-tip" title="Up-vote">
+						<a href="<?php echo Utility::currentPageURL();?>#" class="login-like">
 							<span class="glyphicons glyphicons-thumbs-up"></span>
 						</a>
 					<?php endif; ?>
@@ -54,7 +54,7 @@
 						</a>
 					<?php elseif ($comment->userLikedComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT'])): echo ''; ?>
 					<?php else: ?>
-						<a href="<?php echo Utility::currentPageURL();?>#" class="login-dislike" data-tooltip aria-haspopup="true" class="has-tip" title="Down-vote">
+						<a href="<?php echo Utility::currentPageURL();?>#" class="login-dislike">
 							<span class="glyphicons glyphicons-thumbs-down"></span>
 						</a>
 					<?php endif; ?>
