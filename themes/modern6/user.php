@@ -30,6 +30,10 @@ $theme->render('components/globals/header', $header);
 				<p><?php if($data[1] != ''): echo $data[1].' in '; endif; ?> <?php echo $data[2]; ?> (<?php echo $data[0]; ?>)</p>
 				<?php endif; ?>
 
+				<?php if($user->getDescription()): ?>
+				<p><i><?php echo $user->getDescription(); ?></i></p>
+				<?php endif; ?>
+
 				<?php if($user->getShowEmail()): ?>
 				<a href="mailto:<?php echo $user->getEmail(); ?>"><span class="social social-e-mail"></span>&nbsp;<?php echo $user->getEmail(); ?></a>
 				<?php endif; ?>

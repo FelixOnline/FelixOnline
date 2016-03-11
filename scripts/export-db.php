@@ -88,12 +88,24 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 			}
 		}
 
+		if ($table == 'comment_like') {
+			$row['ip'] = '0.0.0.0';
+			$row['user_agent'] = 'Anonymised';
+		}
+
+		if ($table == 'polls_response') {
+			$row['ip'] = '0.0.0.0';
+			$row['useragent'] = 'Anonymised';
+		}
+
 		if ($table == 'comment') {
 			// Create email_validation record
 			$this->db->query(
 				"INSERT INTO email_validation VALUES(NULL, 'test-".$this->count."@example.com', '', 1)");
 
 			$row['email'] = 'test-'.$this->count.'@example.com';
+			$row['ip'] = '0.0.0.0';
+			$row['useragent'] = 'Anonymised';
 			$this->count++;
 		}
 
