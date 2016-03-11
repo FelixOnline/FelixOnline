@@ -28,16 +28,18 @@
         <div class="info-secondary-box">
           <ul class="recent-comments">
 <?php
-	foreach($comments as $comment):
-		$content = $comment->getComment();
+	if($comments):
+		foreach($comments as $comment):
+			$content = $comment->getComment();
 
-		if(strlen($content) > 70) {
-			$content = substr($content, 0, 70).'...';
-		}
+			if(strlen($content) > 70) {
+				$content = substr($content, 0, 70).'...';
+			}
 ?>
             <li><?php echo $content; ?><br><span class="comment-meta">By <span class="comment-name"><?php echo $comment->getName(); ?></span> on <span class="comment-article"><a href="<?php echo $comment->getArticle()->getUrl(); ?>"><?php echo $comment->getArticle()->getTitle(); ?></a></span>.</span></li>
 <?php
-	endforeach;
+		endforeach;
+	endif;
 ?>
           </ul>
         </div>

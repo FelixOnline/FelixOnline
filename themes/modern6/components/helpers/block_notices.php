@@ -13,7 +13,7 @@
 
 	if (!is_null($notices)) {
 		?>
-		<div class="row full-width">
+		<div class="row main-row top-row">
 			<div class="small-12 columns">
 				<?php
 		foreach($notices as $notice) { ?>
