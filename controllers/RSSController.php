@@ -106,11 +106,15 @@ class RSSController extends BaseController {
 			foreach($articles as $article) {
 				$converter = new \Sioen\Converter();
 
-				$text = $converter->toHTML($article->getContent());
-				$text = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $text); // Some <p>^B</p> tags can get through some times. Should not happen with the current migration script
+				try {
+					$text = $converter->toHTML($article->getContent());
+					$text = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u', '', $text); // Some <p>^B</p> tags can get through some times. Should not happen with the current migration script
 
-				// More text tidying
-				$text = strip_tags($text);
+					// More text tidying
+					$text = strip_tags($text);
+				} catch(\Exception $e) {
+					$text = ''; // If we can't get any text
+				}
 
 				$newsfeed->setItem(
 					$article->getURL(),
