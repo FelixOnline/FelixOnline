@@ -80,7 +80,7 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 		}
 
 		if ($table == 'category') {
-			if ($row['secret'] == 0) {
+			if ($row['secret'] == 1) {
 				return false;
 			}
 		}
@@ -123,14 +123,18 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 				return false;
 			}
 
-			$row['ip'] = NULL;
+			$row['email'] = 'test-'.$this->count.'@example.com';
+			$row['ip'] = '0.0.0.0';
+			$row['referer'] = 'Anonymised';
+			$row['useragent'] = 'Anonymised';
+			$this->count++;
 		}
 
 		if ($table == 'user') {
 			// Check if user has any articles
 			$res = $this->db->query(
 				"SELECT 
-					COUNT(id) 
+					COUNT(article.id) 
 				FROM `article` 
 				INNER JOIN `article_author` 
 					ON (article.id=article_author.article) 
@@ -169,13 +173,6 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 		if ($table == 'polls_response') {
 			$row['ip'] = '0.0.0.0';
 			$row['useragent'] = 'Anonymised';
-		}
-
-		if ($table == 'comment') {
-			$row['email'] = 'test-'.$this->count.'@example.com';
-			$row['ip'] = '0.0.0.0';
-			$row['useragent'] = 'Anonymised';
-			$this->count++;
 		}
 
 		return $row;
