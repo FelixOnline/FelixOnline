@@ -151,6 +151,16 @@ class ArchiveController extends BaseController {
 
 			// get latest issue year TODO: cache
 			$end = $issueManager->filter('inactive = 0')->order('date', 'DESC')->limit(0, 1)->values();
+
+			if(!$end) {
+				// No issues - quit
+				throw new NotFoundException(
+					"There are no published PDFs",
+					$matches,
+					'ArchiveController'
+				);
+			}
+
 			$end = date('Y', $end[0]->getDate());
 
 			$start = 1950;
