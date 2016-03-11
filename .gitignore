@@ -40,7 +40,7 @@ composer.lock
 
 node_modules/
 
-backups/
+backups/*.sql.*
 admin/
 
 themes/2014/css/*.min.css
