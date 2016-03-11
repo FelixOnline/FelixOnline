@@ -3,7 +3,17 @@
  */
 
 $(document).ready(function() {
-	/* Facebook */
+	/* Image Loading */
+	function loadImages() {
+		$('.article-img-inner, #imgCont img, .article-image-image img').waitForImages({
+			each: function() {
+				$(this).addClass('loaded').animate({ opacity: 1 }, 400, "linear");
+			},
+			waitForAll: true
+		});
+	}
+
+	loadImages();
 
 	/* Comment Binders - logged in */
 	$(document).on("click", '.login-like', function() {
@@ -210,6 +220,8 @@ $(document).ready(function() {
 		init_foundation();
 
 		setTimeout(function() { init_foundation(); }, 500); // Wait for end of reflow
+
+		loadImages();
 	}
 
 	//Paginator page - scroll
@@ -423,30 +435,6 @@ $(document).ready(function() {
 		$(this).removeClass('invalidField');
 	});
 
-	/* User Profile */
-
-	$(document).on("click", '#editProfileSubmit', function() {
-		var data = {};
-		data.facebook = $('.profile-facebook').val();
-		data.twitter = $('.profile-twitter').val();
-		if($('.profile-email').is(':checked')) { data.email = 1 } else { data.email = 0 };
-		data.webname = $('.profile-webname').val();
-		data.weburl = $('.profile-weburl').val();
-		data.bio = $('.profile-bio').val();
-		if($('.profile-ldap').is(':checked')) { data.ldap = 1 } else { data.ldap = 0 };
-		data.action = 'profile_change';
-		data.token = $('#edit_profile_token').val();
-		data.check = 'edit_profile';
-
-		ajaxHelper('profileform', 'POST', data, '#profile-spinner', ['#profile-saver'], ['#profile-saver'], null, null, profileAjaxCallback);
-
-		function profileAjaxCallback(data, message) {
-			location.reload();
-		}
-
-		return false;
-	});
-
 	/* Contact Form */
 	$("#contactform").submit(function() {
 		$("#contactform label.error").hide();
@@ -484,6 +472,6 @@ $(document).ready(function() {
 	if(!Modernizr.svg) {
 		$('img[src*="svg"]').attr('src', function() {
 			return $(this).attr('src').replace('.svg', '.png');
-	});
-}
+		});
+	}
 });

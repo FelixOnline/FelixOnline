@@ -45,8 +45,12 @@
 			<script src="<?php echo $value; ?>"></script>
 		<?php } ?>
 		<script>
-			$(document).ready(function(){
+			function init_foundation() {
 				$(document).foundation();
+			}
+
+			$(document).ready(function(){
+				init_foundation();
 
 				$('.carousel-block').slick({
 					slidesToShow: 1,

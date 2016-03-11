@@ -2,7 +2,9 @@
 <div class="article-block section <?php echo $article->getCategory()->getCat(); ?>">
 	<div class="small"<?php if($equalizer): ?> data-equalizer-watch="<?php echo $equalizer; ?>"<?php endif; ?>>
 		<a href="<?php echo $article->getUrl(); ?>">
-			<div class="article-img" style="background-image: url('<?php if($article->getImage()): echo $article->getImage()->getUrl(); else: echo \FelixOnline\Core\Settings::get('image_url').\FelixOnline\Core\Settings::get('default_img_uri'); endif; ?>');">
+			<div class="article-img">
+				<div class="article-img-inner" style="background-image: url('<?php if($article->getImage()): echo $article->getImage()->getUrl(); else: echo \FelixOnline\Core\Settings::get('image_url').\FelixOnline\Core\Settings::get('default_img_uri'); endif; ?>');">
+				</div>
 			</div>
 		</a>
 		<?php
