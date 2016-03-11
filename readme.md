@@ -23,7 +23,7 @@ Have a look a our [installation guide](//github.com/FelixOnline/FelixOnline/wiki
 * Set the self-explanatory settings in the settings database table
 * Go to local site (e.g. http://localhost/felix/)
 
-Grab a copy of the latest database from https://union.ic.ac.uk/media/felix_stage/backup.
+Grab a copy of the latest database from https://union.ic.ac.uk/media/felix_stage/backups.
 
 You may wish to add the two role scripts in the scripts folder, and the spam cleaning script to a cron task.
 
