@@ -122,25 +122,20 @@ function contact_us($data) {
 /* COMMENTS */
 function rate_comment($data) {
 	$app = \FelixOnline\Core\App::getInstance();
-	$currentuser = $app['currentuser'];
 
-	if ($currentuser->isLoggedIn()) {
-		$comment = $data['comment'];
-		$action = $data['type'];
-		$comment = new \FelixOnline\Core\Comment($comment);
-		switch($action) {
-			case 'like':
-				$comment->likeComment($currentuser);
-				break;
-			case 'dislike':
-				$comment->dislikeComment($currentuser);
-				break;
-		}
-
-		return array('content' => _refresh_comment($comment));
-	} else {
-		return (array('error' => true, 'details' => 'Not logged in'));
+	$comment = $data['comment'];
+	$action = $data['type'];
+	$comment = new \FelixOnline\Core\Comment($comment);
+	switch($action) {
+		case 'like':
+			$comment->likeComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT']);
+			break;
+		case 'dislike':
+			$comment->dislikeComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT']);
+			break;
 	}
+
+	return array('content' => _refresh_comment($comment));
 }
 
 function report_abuse($data) {
