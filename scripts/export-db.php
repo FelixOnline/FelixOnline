@@ -22,6 +22,14 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 			return false;
 		}
 
+		if ($table == 'advert') {
+			return false;
+		}
+
+		if ($table == 'advert_category') {
+			return false;
+		}
+
 		if ($table == 'article_visit') {
 			return false;
 		}
@@ -31,6 +39,18 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 		}
 
 		if ($table == 'api_log') {
+			return false;
+		}
+
+		if ($table == 'archive_file') {
+			return false;
+		}
+
+		if ($table == 'archive_issue') {
+			return false;
+		}
+
+		if ($table == 'archive_publication') {
 			return false;
 		}
 
@@ -46,11 +66,58 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 			return false;
 		}
 
+		if ($table == 'audit_log') {
+			return false;
+		}
+
 		return $table;
 	}
 
 	function processRow($row, $table)
 	{
+		if ($row['deleted'] == 1) {
+			return false;
+		}
+
+		if ($table == 'category') {
+			if ($row['secret'] == 0) {
+				return false;
+			}
+		}
+
+		if ($table == 'article') {
+			// Check if in a secret category
+			$res = $this->db->query(
+				"SELECT 
+					secret 
+				FROM `category` 
+				WHERE category='".$row['category']."'");
+
+			if($res) {
+				$secret = $res->fetch_row()[0];
+			} else {
+				$secret = 0;
+			}
+
+			if($secret == 1) {
+				return false;
+			}
+
+			if ($row['hidden'] == 1) {
+				return false;
+			}
+
+			if ($row['published'] == 0) {
+				return false;
+			}
+		}
+
+		if ($table == 'link') {
+			if ($row['active'] == 0) {
+				return false;
+			}
+		}
+
 		if ($table == 'comment') {
 			if ($row['spam'] == 1) {
 				return false;
@@ -69,7 +136,12 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 					ON (article.id=article_author.article) 
 				WHERE article_author.author='".$row['user']."'
 				AND published < NOW()");
-			$count = $res->fetch_row()[0];
+
+			if($res) {
+				$count = $res->fetch_row()[0];
+			} else {
+				$count = 0;
+			}
 
 			if ($count > 0) {
 				$row['ip'] = '0.0.0.0';
@@ -77,6 +149,7 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 				$row['twitter'] = NULL;
 				$row['websitename'] = NULL;
 				$row['websiteurl'] = NULL;
+				$row['info'] = "[]";
 				$row['visits'] = 0;
 
 				if ($row['email'] ) {
@@ -99,10 +172,6 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 		}
 
 		if ($table == 'comment') {
-			// Create email_validation record
-			$this->db->query(
-				"INSERT INTO email_validation VALUES(NULL, 'test-".$this->count."@example.com', '', 1)");
-
 			$row['email'] = 'test-'.$this->count.'@example.com';
 			$row['ip'] = '0.0.0.0';
 			$row['useragent'] = 'Anonymised';
