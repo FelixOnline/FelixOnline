@@ -144,7 +144,9 @@ class AuthController extends BaseController {
 				$username, 
 				$password
 			);
-			set_error_handler('errorhandler', E_ALL & ~E_NOTICE);
+			set_error_handler(function ($errno, $errstr, $errfile, $errline, $errcontext) {
+				throw new \FelixOnline\Exceptions\ErrorHandlerException($errstr, array('errno' => $errno, 'file' => $errfile, 'line' => $errline, 'context' => $errcontext));
+			});
 		} else {
 			if ($username == 'bad' || $password == 'bad') {
 				$check = false; // manual bad case
