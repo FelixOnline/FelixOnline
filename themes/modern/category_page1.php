@@ -92,7 +92,7 @@ $theme->render('components/globals/header', $header);
 	for($i = 3; $i < 7; $i++) {
 		if(!isset($articles[$i])) { continue; }
 ?>
-		<div class="small-12 medium-6 large-3 columns">
+		<div class="small-12 medium-6 large-3 columns <?php if($i == count($articles) -1): echo 'end'; endif; ?>">
 <?php
 	$theme->setHierarchy(array(
 		$category->getCat() // category-{cat}.php

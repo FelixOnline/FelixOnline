@@ -47,7 +47,7 @@ $theme->render('components/globals/header', $header);
 						<?php
 							if(isset($articles[1])) {
 								$theme->setHierarchy(array(
-									$articles[0]->getCategory()->getCat()
+									$articles[1]->getCategory()->getCat()
 								));
 
 								$theme->render('components/category/block_normal', array(
@@ -61,7 +61,7 @@ $theme->render('components/globals/header', $header);
 						<?php
 							if(isset($articles[2])) {
 								$theme->setHierarchy(array(
-									$articles[0]->getCategory()->getCat()
+									$articles[2]->getCategory()->getCat()
 								));
 
 								$theme->render('components/category/block_normal', array(
@@ -84,10 +84,10 @@ $theme->render('components/globals/header', $header);
 	for($i = 3; $i < 7; $i++) {
 		if(!isset($articles[$i])) { continue; }
 ?>
-		<div class="small-12 medium-6 large-3 columns <?php if($i == count($articles): echo 'end'; endif; ?>">
+		<div class="small-12 medium-6 large-3 columns <?php if($i == count($articles) -1): echo 'end'; endif; ?>">
 <?php
 	$theme->setHierarchy(array(
-		$articles[0]->getCategory()->getCat()
+		$articles[$i]->getCategory()->getCat()
 	));
 
 	$theme->render('components/category/block_normal', array(

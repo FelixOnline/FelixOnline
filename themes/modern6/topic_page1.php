@@ -92,7 +92,7 @@ $theme->render('components/globals/header', $header);
 <?php endif; ?>
 	</div>
 
-	<div class="row main-row small-up-1 medium-up-2 large-up-4" >
+	<div class="row main-row small-up-1 medium-up-2 large-up-4">
 <?php
 	for($i = 3; $i < 7; $i++) {
 		if(!isset($articles[$i])) { continue; }
@@ -100,7 +100,7 @@ $theme->render('components/globals/header', $header);
 		<div class="columns">
 <?php
 	$theme->setHierarchy(array(
-		$articles[0]->getCategory()->getCat()
+		$articles[$i]->getCategory()->getCat()
 	));
 
 	$theme->render('components/category/block_normal', array(
