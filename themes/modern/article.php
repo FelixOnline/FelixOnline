@@ -140,7 +140,7 @@ $theme->render('components/globals/header', $header);
 			<div class="small-12 large-8 large-pull-4 columns">
 				<div class="comment-header-block info-box <?php echo $article->getCategory()->getCat(); ?>" id="commentHeader">
 					<h1><span class="glyphicons glyphicons-comments"></span> Have your say</h1>
-					<?php if ($article->canComment($currentuser)) { ?><span class="article-comments-say">Have something to say? <a href="<?php echo Utility::currentPageURL().'#commentForm';?>"><b>Post your comment now</b></a>.</span><?php } ?>
+					<?php if ($article->canComment($currentuser)) { ?><span class="article-comments-say">Have something to say? <a href="<?php echo Utility::currentPageURL().'#commentForm';?>"><b>Post your comment now</b></a>. <b>New:</b> Now anyone can up or down-vote comments. No need to log in!</span><?php } else { ?><span class="article-comments-say"><b>New:</b> Now anyone can up or down-vote comments. No need to log in!</span><?php } ?>
 				</div>
 				<!-- Comments container -->
 				<?php

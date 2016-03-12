@@ -26,6 +26,15 @@ $theme->render('components/globals/header', $header);
 			<?php $theme->render('components/helpers/block_advert', array('sidebar' => true, 'article' => false, 'section' => $category)); ?>
 		</div>
 	</div>
+
+<?php if($category->getSecret()): ?>
+	<div class="row full-width top-row">
+		<div class="small-12 columns">
+			<div class="alert-box notice secondary"><b>Looking for this at home?</b> You can only access <?php echo $category->getLabel(); ?> from the College network or the VPN.</div>
+		</div>
+	</div>
+<?php endif; ?>
+
 <?php foreach($children as $child): ?>
 	<hr class="month-divider <?php echo $child->getCat(); ?>">
 	<div class="row full-width">

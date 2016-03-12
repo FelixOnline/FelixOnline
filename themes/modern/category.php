@@ -17,6 +17,15 @@ $theme->render('components/globals/header', $header);
 		</div>
 	</div>
 <?php endif; ?>
+
+<?php if($category->getSecret()): ?>
+	<div class="row full-width top-row">
+		<div class="small-12 columns">
+			<div class="alert-box notice secondary"><b>Looking for this at home?</b> You can only access <?php echo $category->getLabel(); ?> from the College network or the VPN.</div>
+		</div>
+	</div>
+<?php endif; ?>
+
 	<div class="row full-width">
 		<div class="small-12 large-8 columns breadcrumb-float-top">
 			<?php $theme->render('components/helpers/breadcrumbs', array('origin' => $category, 'type' => 'category')); ?>
