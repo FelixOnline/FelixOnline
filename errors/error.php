@@ -129,7 +129,7 @@
 						$data['File'] = $exception->getFile();
 						$data['Line'] = $exception->getLine();
 					?>
-				<?php if(LOCAL) { ?>
+				<?php if(LOCAL || DEBUG_MODE) { ?>
 					<h2><?php echo $header; ?></h2>
 					<ul>
 						<li><b>Username:</b> <?php echo $username; ?></li>
