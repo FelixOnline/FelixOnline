@@ -47,13 +47,8 @@
 			<?php
 				$cats = (new \FelixOnline\Core\CategoryManager())
 					->filter('hidden = 0')
-					->filter('active = 1');
-
-				if(!$currentuser->isLoggedIn()) {
-					$cats->filter('secret = 0');
-				}
-
-				$cats = $cats->filter('id > 0')
+					->filter('active = 1')
+          ->filter('id > 0')
 					->filter('parent IS NULL')
 					->order('order', 'ASC')
 					->values();

@@ -6,12 +6,6 @@ $header = array(
 
 $theme->render('components/globals/header', $header);
 
-$categoryManager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Category', 'category');
-
-if(!$currentuser->isLoggedIn()) {
-	$categoryManager = $categoryManager->filter('secret = 0');
-}
-
 ?>
     <div class="row full-width top-row" data-equalizer="top">
       <div class="small-12 large-9 columns">
@@ -20,11 +14,6 @@ if(!$currentuser->isLoggedIn()) {
             <div class="carousel-block" data-equalizer="carousel">
 				<?php
 					foreach($spinner as $article) {
-						if(!$article->getArticle()->getCategory()->getActive() ||
-							(!$currentuser->isLoggedIn() && $article->getArticle()->getCategory()->getSecret())) {
-							continue;
-						}
-
 						$theme->render('components/category/block_carousel', array(
 							'article' => $article->getArticle()
 						));
@@ -44,22 +33,29 @@ if(!$currentuser->isLoggedIn()) {
 							->filter('published < NOW()')
 							->filter('category = %i', array(\FelixOnline\Core\Settings::get('news_category_id')))
 							->order(array('published', 'id'), 'DESC')
-							->join($categoryManager, null, 'category')
 							->limit(0, 5)
 							->values();
 						$i = 0;
 
-						foreach($articles as $article) {
-							$i++;
+						if($articles) {
+							foreach($articles as $article) {
+								$i++;
+								?>
+								<div class="medium-6 large-12 columns <?php if($i == 5): echo 'end'; endif; ?>">
+								<?php
+										$theme->render('components/category/block_small', array(
+										'article' => $article,
+										'show_category' => false,
+										'headshot' => false
+									));
+								?>
+								</div>
+								<?php
+							}
+						} else {
 							?>
-							<div class="medium-6 large-12 columns <?php if($i == 5): echo 'end'; endif; ?>">
-							<?php
-									$theme->render('components/category/block_small', array(
-									'article' => $article,
-									'show_category' => false,
-									'headshot' => false
-								));
-							?>
+							<div class="small-12 columns">
+								<p>No news is good news</p>
 							</div>
 							<?php
 						}
@@ -77,11 +73,13 @@ if(!$currentuser->isLoggedIn()) {
 			->filter('published < NOW()')
 			->filter('category = %i', array(\FelixOnline\Core\Settings::get('features_category_id')))
 			->order(array('published', 'id'), 'DESC')
-			->join($categoryManager, null, 'category')
 			->limit(0, 3)
 			->values();
 		?>
        	<div class="row" data-equalizer="news">
+       	<?php
+       		if($articles):
+       	?>
           <div class="small-12 medium-4 columns">
           	<?php
           		$theme->render('components/category/block_normal', array(
@@ -114,6 +112,11 @@ if(!$currentuser->isLoggedIn()) {
 				));
 			?>
           </div>
+        <?php
+        	else:
+        		echo '<p>Nothing found</p>';
+        	endif;
+        ?>
         </div>
       </div>
       <div class="small-12 large-3 columns" data-equalizer-watch="top">
@@ -155,25 +158,28 @@ if(!$currentuser->isLoggedIn()) {
 		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('comment_category_id')))
 		->order(array('published', 'id'), 'DESC')
-		->join($categoryManager, null, 'category')
 		->limit(0, 3)
 		->values();
 
 		$i = 0;
-		foreach($articles as $key => $article) {
-			$i++;
-	?>
-      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>">
-    <?php
-      	$theme->render('components/category/block_normal', array(
-			'article' => $article,
-			'equalizer' => 'opinion',
-			'show_category' => false,
-			'headshot' => true
-		));
-    ?>
-      </div>
-    <?php
+		if($articles) {
+			foreach($articles as $key => $article) {
+				$i++;
+		?>
+	      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>">
+	    <?php
+	      	$theme->render('components/category/block_normal', array(
+				'article' => $article,
+				'equalizer' => 'opinion',
+				'show_category' => false,
+				'headshot' => true
+			));
+	    ?>
+	      </div>
+	    <?php
+			}
+		} else {
+			echo "<p>Nothing found</p>";
 		}
 	?>
 		<div class="small-12 medium-6 large-3 columns" data-equalizer-watch="opinion">
@@ -194,25 +200,29 @@ if(!$currentuser->isLoggedIn()) {
 		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('cands_category_id')))
 		->order(array('published', 'id'), 'DESC')
-		->join($categoryManager, null, 'category')
 		->limit(0, 2)
 		->values();
 
 		$i = 0;
-		foreach($articles as $key => $article) {
-			$i++;
-	?>
-      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>">
-    <?php
-      	$theme->render('components/category/block_normal', array(
-			'article' => $article,
-			'equalizer' => 'cands',
-			'show_category' => false,
-			'headshot' => false
-		));
-    ?>
-      </div>
-    <?php
+
+		if($articles) {
+			foreach($articles as $key => $article) {
+				$i++;
+		?>
+	      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>">
+	    <?php
+	      	$theme->render('components/category/block_normal', array(
+				'article' => $article,
+				'equalizer' => 'cands',
+				'show_category' => false,
+				'headshot' => false
+			));
+	    ?>
+	      </div>
+	    <?php
+			}
+		} else {
+			echo "<p>Nothing found</p>";
 		}
 	?>
 
@@ -221,25 +231,29 @@ if(!$currentuser->isLoggedIn()) {
 		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('sport_category_id')))
 		->order(array('published', 'id'), 'DESC')
-		->join($categoryManager, null, 'category')
 		->limit(0, 2)
 		->values();
 
 		$i = 0;
-		foreach($articles as $key => $article) {
-			$i++;
-	?>
-      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>">
-    <?php
-      	$theme->render('components/category/block_normal', array(
-			'article' => $article,
-			'equalizer' => 'cands',
-			'show_category' => false,
-			'headshot' => false
-		));
-    ?>
-      </div>
-    <?php
+
+		if($articles) {
+			foreach($articles as $key => $article) {
+				$i++;
+		?>
+	      <div class="small-12 medium-6 large-3 columns<?php if($i == count($articles)): ?> end<?php endif; ?>">
+	    <?php
+	      	$theme->render('components/category/block_normal', array(
+				'article' => $article,
+				'equalizer' => 'cands',
+				'show_category' => false,
+				'headshot' => false
+			));
+	    ?>
+	      </div>
+	    <?php
+			}
+		} else {
+			echo "<p>Nothing found</p>";
 		}
 	?>
 
@@ -254,33 +268,33 @@ if(!$currentuser->isLoggedIn()) {
       		<div class="row">
 		<?php
 			$i = 0;
-			foreach($thisweek as $article) {
-				if(!$article->getArticle()->getCategory()->getActive() ||
-					(!$currentuser->isLoggedIn() && $article->getArticle()->getCategory()->getSecret())) {
-					continue;
+
+			if($thisweek) {
+				foreach($thisweek as $article) {
+					$i++;
+
+					if($i == count($thisweek)) {
+						$end = ' end';
+					} else {
+						$end = '';
+					}
+
+			?>
+					<div class="small-12 medium-6 large-4 columns<?php echo $end; ?>">
+			<?php
+			      	$theme->render('components/category/block_normal', array(
+						'article' => $article->getArticle(),
+						'equalizer' => 'features-end',
+						'show_category' => true,
+						'headshot' => false
+					));
+			?>
+					</div>
+			<?php
+
 				}
-
-				$i++;
-
-				if($i == count($thisweek)) {
-					$end = ' end';
-				} else {
-					$end = '';
-				}
-
-		?>
-				<div class="small-12 medium-6 large-4 columns<?php echo $end; ?>">
-		<?php
-		      	$theme->render('components/category/block_normal', array(
-					'article' => $article->getArticle(),
-					'equalizer' => 'features-end',
-					'show_category' => true,
-					'headshot' => false
-				));
-		?>
-				</div>
-		<?php
-
+			} else {
+				echo "<p>Nothing found</p>";
 			}
 		?>
 			</div>

@@ -2,10 +2,12 @@
               <div class="article-block section <?php echo $article->getCategory()->getCat(); ?>">
                 <div class="large"<?php if($equalizer): ?> data-equalizer-watch="<?php echo $equalizer; ?>"<?php endif; ?>>
                   <a href="<?php echo $article->getUrl(); ?>">
-                    <div class="article-img" style="background-image: url('<?php if($article->getImage()): echo $article->getImage()->getUrl(); else: echo \FelixOnline\Core\Settings::get('image_url').\FelixOnline\Core\Settings::get('default_img_uri'); endif; ?>');">
-                      <?php if(!$show_category && $article->getVideoUrl()): ?><div class="article-video radius"><span class="glyphicons glyphicons-facetime-video"></span></div><?php endif; ?>
-                      <?php if($show_category): ?><div class="article-category <?php echo $article->getCategory()->getCat(); ?> radius"><?php if($article->getVideoUrl()): ?><span class="glyphicons glyphicons-facetime-video"></span><?php endif; ?><?php echo $article->getCategory()->getLabel(); ?></div><?php endif; ?>
-                      <?php if($comments > 0): ?><div class="article-comments radius"><span class="glyphicons glyphicons-comments"></span>&nbsp;<?php echo $comments; ?></div><?php endif; ?>
+                    <div class="article-img">
+                      <div class="article-img-inner" style="background-image: url('<?php if($article->getImage()): echo $article->getImage()->getUrl(); else: echo \FelixOnline\Core\Settings::get('image_url').\FelixOnline\Core\Settings::get('default_img_uri'); endif; ?>');">
+                        <?php if(!$show_category && $article->getVideoUrl()): ?><div class="article-video radius"><span class="glyphicons glyphicons-facetime-video"></span></div><?php endif; ?>
+                        <?php if($show_category): ?><div class="article-category <?php echo $article->getCategory()->getCat(); ?> radius"><?php if($article->getVideoUrl()): ?><span class="glyphicons glyphicons-facetime-video"></span><?php endif; ?><?php echo $article->getCategory()->getLabel(); ?></div><?php endif; ?>
+                        <?php if($comments > 0): ?><div class="article-comments radius"><span class="glyphicons glyphicons-comments"></span>&nbsp;<?php echo $comments; ?></div><?php endif; ?>
+                      </div>
                     </div>
                   </a>
                   <?php

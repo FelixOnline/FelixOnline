@@ -33,6 +33,7 @@
             <li><a href="<?php echo STANDARD_URL; ?>/contact/">Contact</a></li>
             <li><a href="<?php echo STANDARD_URL; ?>/contribute/">Get Involved</a></li>
             <li><a href="<?php echo STANDARD_URL; ?>/policies/">Complaints and Policies</a></li>
+            <li><a href="<?php echo STANDARD_URL; ?>topic">All Topics</a></li>
             <li><a href="<?php echo \FelixOnline\Core\Settings::get('app_api'); ?>">API</a></li>
             <li><a href="http://www.github.com/FelixOnline">GitHub</a></li>
           </li>

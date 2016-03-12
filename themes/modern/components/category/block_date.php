@@ -4,11 +4,13 @@
                     <div class="row" data-equalizer-watch="<?php echo $equalizer; ?>" data-equalizer="date-article-<?php echo $article->getId(); ?>" data-equalizer-mq="medium-only">
                       <div class="small-12 medium-6 large-12 columns">
                         <a href="<?php echo $article->getUrl(); ?>">
-                        	<div class="article-img" style="background-image: url('<?php if($article->getImage()): echo $article->getImage()->getUrl(); else: echo \FelixOnline\Core\Settings::get('image_url').\FelixOnline\Core\Settings::get('default_img_uri'); endif; ?>');" data-equalizer-watch="date-article-<?php echo $article->getId(); ?>">
-                          	<?php if(!$show_category && $article->getVideoUrl()): ?><div class="article-video radius"><span class="glyphicons glyphicons-facetime-video"></span></div><?php endif; ?>
-                            <?php if($show_category): ?><div class="article-category <?php echo $article->getCategory()->getCat(); ?> radius"><?php if($article->getVideoUrl()): ?><span class="glyphicons glyphicons-facetime-video"></span><?php endif; ?><?php echo $article->getCategory()->getLabel(); ?></div><?php endif; ?>
-                          	<?php if($comments > 0): ?><div class="article-comments radius"><span class="glyphicons glyphicons-comments"></span>&nbsp;<?php echo $comments; ?></div><?php endif; ?>
-                        	</div>
+                          <div class="article-img">
+                            <div class="article-img-inner" style="background-image: url('<?php if($article->getImage()): echo $article->getImage()->getUrl(); else: echo \FelixOnline\Core\Settings::get('image_url').\FelixOnline\Core\Settings::get('default_img_uri'); endif; ?>');">
+                            	<?php if(!$show_category && $article->getVideoUrl()): ?><div class="article-video radius"><span class="glyphicons glyphicons-facetime-video"></span></div><?php endif; ?>
+                              <?php if($show_category): ?><div class="article-category <?php echo $article->getCategory()->getCat(); ?> radius"><?php if($article->getVideoUrl()): ?><span class="glyphicons glyphicons-facetime-video"></span><?php endif; ?><?php echo $article->getCategory()->getLabel(); ?></div><?php endif; ?>
+                            	<?php if($comments > 0): ?><div class="article-comments radius"><span class="glyphicons glyphicons-comments"></span>&nbsp;<?php echo $comments; ?></div><?php endif; ?>
+                          	</div>
+                          </div>
                         </a>
                       </div>
                       <div class="small-12 medium-6 large-12 columns" data-equalizer-watch="date-article-<?php echo $article->getId(); ?>">

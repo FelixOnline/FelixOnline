@@ -3,27 +3,17 @@
  */
 
 $(document).ready(function() {
-	/* Facebook */
+	/* Image Loading */
+	function loadImages() {
+		$('.article-img-inner, #imgCont img, .article-image-image img').waitForImages({
+			each: function() {
+				$(this).addClass('loaded').animate({ opacity: 1 }, 400, "linear");
+			},
+			waitForAll: true
+		});
+	}
 
-
-	/* Comment Binders - logged out */
-	$('.logout-like').bind('click', function() {
-		if ($('#loginForm #commenttype').length){
-			$('#loginForm #commenttype').remove();
-			$('#loginForm #comment').remove();
-		}
-		var comment = $(this).parents('.article-comment').attr('id');
-		$('#loginForm').prepend('<input type="hidden" value="like" name="commenttype" id="commenttype"/><input type="hidden" value="'+comment+'" name="comment" id="comment"/>');
-	});
-	
-	$('.logout-dislike').bind('click', function() {
-		if ($('#loginForm #commenttype').length){
-			$('#loginForm #commenttype').remove();
-			$('#loginForm #comment').remove();
-		}
-		var comment = $(this).parents('.article-comment').attr('id');
-		$('#loginForm').prepend('<input type="hidden" value="dislike" name="commenttype" id="commenttype"/><input type="hidden" value="'+comment+'" name="comment" id="comment"/>');
-	});
+	loadImages();
 
 	/* Comment Binders - logged in */
 	$(document).on("click", '.login-like', function() {
@@ -216,7 +206,7 @@ $(document).ready(function() {
 			// Assess whether to create a new area for articles
 			if($('#month-viewer').data('final-month') != month) {
 				// Create area
-				$('#month-viewer').append('<hr class="month-divider '+json.cat+'"><div class="row full-width"><div class="small-12 columns"><p class="section-date '+json.cat+'">'+month.replace('-', ' ')+'</p></div></div><div class="row full-width date-row" data-equalizer="'+month+'" id="'+month+'"></div>');
+				$('#month-viewer').append('<hr class="month-divider fade '+json.cat+'"><div class="row fade full-width"><div class="small-12 columns"><p class="section-date '+json.cat+'">'+month.replace('-', ' ')+'</p></div></div><div class="row full-width date-row" data-equalizer="'+month+'" id="'+month+'"></div>');
 
 				$('#month-viewer').data('final-month', month);
 			}
@@ -226,7 +216,7 @@ $(document).ready(function() {
 
 			// Add articles
 			json.articles[month].forEach(function(article) {
-				$('#'+month).append('<div class="small-12 large-4 columns date-article">'+article+'</div>');
+				$('#'+month).append('<div class="small-12 large-4 columns fade date-article">'+article+'</div>');
 			});
 
 			// Add end tag

@@ -34,7 +34,7 @@
 				?>
 				<span class="comment-rating <?php echo $class; ?>"><?php echo $rating; ?></span>
 
-				<span class="comment-like">
+				<span class="comment-like" id="comment-<?php echo $comment->getId(); ?>-like">
 					<?php if ($comment->userLikedComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT'])): ?>
 						<a data-tooltip aria-haspopup="true" class="has-tip" title="You have up-voted this">
 							<span class="glyphicons glyphicons-thumbs-up blue-thumb"></span>
@@ -47,7 +47,7 @@
 					<?php endif; ?>
 				</span>
 
-				<span class="comment-dislike">
+				<span class="comment-dislike" id="comment-<?php echo $comment->getId(); ?>-dislike">
 					<?php if ($comment->userDislikedComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT'])): ?>
 						<a data-tooltip aria-haspopup="true" class="has-tip" title="You have down-voted this">
 							<span class="glyphicons glyphicons-thumbs-down blue-thumb"></span>
@@ -60,7 +60,7 @@
 					<?php endif; ?>
 				</span>
 
-				<span class="comment-spin" style="display: none;">
+				<span class="comment-spin" style="display: none;" id="likespinner_<?php echo $comment->getId(); ?>">
 					<img src="<?php echo STANDARD_URL; ?>/img/loading.gif" alt="Loading">
 				</span>
 

@@ -2,13 +2,8 @@
 	// Get sub-categories
 	$cats2 = (new \FelixOnline\Core\CategoryManager())
 		->filter('hidden = 0')
-		->filter('active = 1');
-
-	if(!$currentuser->isLoggedIn()) {
-		$cats2->filter('secret = 0');
-	}
-
-	$cats2 = $cats2->filter('id > 0')
+		->filter('active = 1')
+	    ->filter('id > 0')
 		->filter('parent = %i', array($item->getId()))
 		->order('order', 'ASC')
 		->values();
