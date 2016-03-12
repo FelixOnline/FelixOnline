@@ -20,13 +20,21 @@ $theme->render('components/globals/header', $header);
 	</div>
 	<div class="row main-row small-up-1 medium-up-4">
 
-<?php foreach($topics as $topic): ?>
+<?php
+	if(isset($topics)) {
+		foreach($topics as $topic):
+?>
 		<div class="columns">
 		<?php
 			$theme->render('components/article/topic_block', array('topic' => $topic));
 		?>
 		</div>
-<?php endforeach; ?>
+<?php
+		endforeach;
+	} else {
+		echo "<p>No topics found.</p>";
+	}
+?>
 	</div>
 <?php
 $theme->render('components/globals/footer');
