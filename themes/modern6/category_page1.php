@@ -100,12 +100,12 @@ $theme->render('components/globals/header', $header);
 <?php endif; ?>
 	</div>
 
-	<div class="row main-row" data-equalizer="master2">
+	<div class="row main-row small-up-1 medium-up-2 large-up-3">
 <?php
 	for($i = 3; $i < 7; $i++) {
 		if(!isset($articles[$i])) { continue; }
 ?>
-		<div class="small-12 medium-6 large-3 columns">
+		<div class="columns">
 <?php
 	$theme->setHierarchy(array(
 		$category->getCat() // category-{cat}.php
@@ -113,7 +113,6 @@ $theme->render('components/globals/header', $header);
 
 	$theme->render('components/category/block_normal', array(
 		'article' => $articles[$i],
-		'equalizer' => 'master2',
 		'show_category' => false,
 		'headshot' => false
 	));
