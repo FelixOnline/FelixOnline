@@ -6,12 +6,6 @@ $header = array(
 
 $theme->render('components/globals/header', $header);
 
-$categoryManager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Category', 'category');
-
-if(!$currentuser->isLoggedIn()) {
-	$categoryManager = $categoryManager->filter('secret = 0');
-}
-
 ?>
 
 <div class="row main-row top-row" data-equalizer="top">
@@ -113,25 +107,28 @@ if(!$currentuser->isLoggedIn()) {
 	->filter('published < NOW()')
 	->filter('category = %i', array(\FelixOnline\Core\Settings::get('features_category_id')))
 	->order(array('published', 'id'), 'DESC')
-	->join($categoryManager, null, 'category')
 	->limit(0, 4)
 	->values();
 ?>
 <div class="row main-row top-row small-up-1 medium-up-4">
 	<?php
-		foreach($articles as $article) {
-			$i++;
-			?>
-			<div class="columns">
-			<?php
-					$theme->render('components/category/block_normal', array(
-					'article' => $article,
-					'show_category' => false,
-					'headshot' => false
-				));
-			?>
-			</div>
-			<?php
+		if($articles) {
+			foreach($articles as $article) {
+				$i++;
+				?>
+				<div class="columns">
+				<?php
+						$theme->render('components/category/block_normal', array(
+						'article' => $article,
+						'show_category' => false,
+						'headshot' => false
+					));
+				?>
+				</div>
+				<?php
+			}
+		} else {
+			echo "<p>Nothing found</p>";
 		}
 	?>
 </div>
@@ -147,7 +144,6 @@ if(!$currentuser->isLoggedIn()) {
 		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('comment_category_id')))
 		->order(array('published', 'id'), 'DESC')
-		->join($categoryManager, null, 'category')
 		->limit(0, 3)
 		->values();
 
@@ -198,7 +194,6 @@ if(!$currentuser->isLoggedIn()) {
 		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('cands_category_id')))
 		->order(array('published', 'id'), 'DESC')
-		->join($categoryManager, null, 'category')
 		->limit(0, 2)
 		->values();
 
@@ -226,7 +221,6 @@ if(!$currentuser->isLoggedIn()) {
 		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('sport_category_id')))
 		->order(array('published', 'id'), 'DESC')
-		->join($categoryManager, null, 'category')
 		->limit(0, 2)
 		->values();
 
