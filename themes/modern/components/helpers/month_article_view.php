@@ -19,11 +19,9 @@
 ?>
 				<div class="small-12 large-4 date-article columns<?php echo $end; ?>">
 <?php
-	if($category) {
-		$theme->setHierarchy(array(
-			$category->getCat() // category-{cat}.php
-		));
-	}
+	$theme->setHierarchy(array(
+		$articles[$i]->getCat() // category-{cat}.php
+	));
 
 	$theme->render('components/category/block_date', array(
 		'article' => $articles[$i],
