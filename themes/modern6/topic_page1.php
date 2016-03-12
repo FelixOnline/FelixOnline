@@ -28,7 +28,7 @@ $theme->render('components/globals/header', $header);
 			<?php
 				if(isset($articles[0])) {
 					$theme->setHierarchy(array(
-						$topic->getSlug()
+						$articles[0]->getCategory()->getCat()
 					));
 
 					$theme->render('components/category/block_large', array(
@@ -92,20 +92,19 @@ $theme->render('components/globals/header', $header);
 <?php endif; ?>
 	</div>
 
-	<div class="row main-row" data-equalizer="master2">
+	<div class="row main-row small-up-1 medium-up-2 large-up-4" >
 <?php
 	for($i = 3; $i < 7; $i++) {
 		if(!isset($articles[$i])) { continue; }
 ?>
-		<div class="small-12 medium-6 large-3 columns">
+		<div class="columns">
 <?php
 	$theme->setHierarchy(array(
-		$topic->getSlug()
+		$articles[0]->getCategory()->getCat()
 	));
 
 	$theme->render('components/category/block_normal', array(
 		'article' => $articles[$i],
-		'equalizer' => 'master2',
 		'show_category' => true,
 		'headshot' => false
 	));
