@@ -88,6 +88,8 @@ class AuthController extends BaseController {
 					}
 				}
 				$hash = $comment->getId();
+			} else {
+				$hash = '';
 			}
 
 			$currentuser->syncLdap(); // Update email etc.
