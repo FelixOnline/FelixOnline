@@ -1,3 +1,3 @@
 <?php if($well): ?><div class="panel"><?php endif; ?>
-	<div class="fb-like-box" style="height: 70px !important;" data-href="http://www.facebook.com/FelixImperial" data-width="300px" data-colorscheme="light" data-show-faces="false" data-header="false" data-stream="false" data-show-border="false"></div>
+	<div class="fb-page" data-href="https://www.facebook.com/feliximperial" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/feliximperial"><a href="https://www.facebook.com/feliximperial">Felix</a></blockquote></div></div>
 <?php if($well): ?></div><?php endif; ?>
