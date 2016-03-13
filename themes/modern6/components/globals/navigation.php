@@ -38,7 +38,7 @@
 						<span class="glyphicons glyphicons-newspaper"></span>
 					</a>
 				</li>
-				<li>
+				<li class="show-for-medium">
 					<a href="<?php echo STANDARD_URL.'contribute'; ?>" data-tooltip aria-haspopup="true" data-options="show_on:medium;disable_for_touch:true" class="has-tip" title="Contribute">
 						<span class="glyphicons glyphicons-edit"></span>
 					</a>
@@ -46,25 +46,25 @@
 			</ul>
 		</div>
 		<div class="top-bar-left">
-		<div id="main-menu">
-			<ul class="vertical medium-horizontal menu" data-responsive-menu="drilldown medium-dropdown">
-				<?php
-					$cats = (new \FelixOnline\Core\CategoryManager())
-						->filter('hidden = 0')
-						->filter('active = 1')
-						->filter('id > 0')
-						->filter('parent IS NULL')
-						->order('order', 'ASC')
-						->values();
+			<div id="main-menu">
+				<ul class="vertical medium-horizontal menu" data-responsive-menu="drilldown medium-dropdown">
+					<?php
+						$cats = (new \FelixOnline\Core\CategoryManager())
+							->filter('hidden = 0')
+							->filter('active = 1')
+							->filter('id > 0')
+							->filter('parent IS NULL')
+							->order('order', 'ASC')
+							->values();
 
-					if (!is_null($cats)) {
-						foreach($cats as $key => $cat) {
-							$theme->render('components/navigation/nav_item', array('item' => $cat, 'parents' => $parents, 'check' => $check)); 
+						if (!is_null($cats)) {
+							foreach($cats as $key => $cat) {
+								$theme->render('components/navigation/nav_item', array('item' => $cat, 'parents' => $parents, 'check' => $check)); 
+							}
 						}
-					}
-				?>
-			</ul>
-		</div>
+					?>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

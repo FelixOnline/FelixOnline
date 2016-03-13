@@ -10,23 +10,27 @@
 		</div>
 
 		<footer>
-			<div class="row">
-				<div class="small-12 medium-10 columns clearfix small-only-text-center medium-text-left">
-					<a href="#"><img src="<?php echo STANDARD_URL; ?>themes/modern/img/logo1.svg" class="svg" style="height: 4.0rem;"></a>
-					<ul class="footer-links menu">
-						<li><a href="<?php echo STANDARD_URL; ?>contact/">Contact</a></li>
-						<li><a href="<?php echo STANDARD_URL; ?>contribute/">Get Involved</a></li>
-						<li><a href="<?php echo STANDARD_URL; ?>policies/">Complaints and Policies</a></li>
-						<li><a href="<?php echo STANDARD_URL; ?>topic">All Topics</a></li>
-						<li><a href="<?php echo \FelixOnline\Core\Settings::get('app_api'); ?>">API</a></li>
-						<li><a href="http://www.github.com/FelixOnline">GitHub</a></li>
-					</ul>
-				</div>
-				<div class="small-12 medium-2 columns">
-					<div class="small-only-text-center medium-text-right">
-						<a href="<?php echo \FelixOnline\Core\Settings::get('contact_email'); ?>"><span class="social social-e-mail"></span></a>
-						<a href="<?php echo \FelixOnline\Core\Settings::get('contact_fb'); ?>"><span class="social social-facebook"></span></a>
-						<a href="<?php echo \FelixOnline\Core\Settings::get('contact_twitter'); ?>"><span class="social social-twitter"></span></a>
+			<div class="top-bar">
+				<div class="row">
+					<div class="top-bar-title small-only-text-center medium-text-left">
+						<a href="<?php echo STANDARD_URL; ?>"><img src="<?php echo STANDARD_URL; ?>themes/modern/img/logo1.svg" class="svg" style="height: 4rem;"></a>
+					</div>
+					<div class="top-bar-right">
+						<div class="small-only-text-center medium-text-right">
+							<a href="<?php echo \FelixOnline\Core\Settings::get('contact_email'); ?>"><span class="social social-e-mail"></span></a>
+							<a href="<?php echo \FelixOnline\Core\Settings::get('contact_fb'); ?>"><span class="social social-facebook"></span></a>
+							<a href="<?php echo \FelixOnline\Core\Settings::get('contact_twitter'); ?>"><span class="social social-twitter"></span></a>
+						</div>
+					</div>
+					<div class="top-bar-left">
+						<ul class="footer-links menu vertical medium-horizontal">
+							<li><a href="<?php echo STANDARD_URL; ?>contact/">Contact</a></li>
+							<li><a href="<?php echo STANDARD_URL; ?>contribute/">Get Involved</a></li>
+							<li><a href="<?php echo STANDARD_URL; ?>policies/">Complaints and Policies</a></li>
+							<li><a href="<?php echo STANDARD_URL; ?>topic">All Topics</a></li>
+							<li><a href="<?php echo \FelixOnline\Core\Settings::get('app_api'); ?>">API</a></li>
+							<li><a href="http://www.github.com/FelixOnline">GitHub</a></li>
+						</ul>
 					</div>
 				</div>
 			</div>

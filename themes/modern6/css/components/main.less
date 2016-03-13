@@ -127,31 +127,47 @@ footer {
 		padding-bottom: 1rem;
 	}
 
+	.top-bar, .top-bar ul {
+		background: transparent;
+	}
+
 	.footer-links {
-		display: inline-block;
+		margin-top: 0.5rem;
 		font-weight: bold;
-		font-size: 0.875rem;
-
-		vertical-align: -50%;
-
-		li {
-		}
 	}
 
 	.social {
 		font-size: 1.75rem;
-		vertical-align: -100%;
+		vertical-align: -75%;
 	}
 }
 
 @media only screen and (max-width: @small-max) {
 	footer {
 		.social {
-			vertical-align: 0;
+			vertical-align: -85%;
 			padding-bottom: 1rem;
 		}
 
 		text-align: center;
+	}
+
+	.section-bar .top-bar-title {
+		margin-right: 0;
+
+		img {
+			height: 2.5rem !important;
+		}
+	}
+
+	footer .top-bar-title img {
+		text-align: center;
+	}
+}
+
+@media only screen and (min-width: @small-max) and (max-width: @medium-max) {
+	.top-bar-left {
+		clear: both;
 	}
 }
 
