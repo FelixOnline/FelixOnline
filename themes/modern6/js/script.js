@@ -15,15 +15,6 @@ $(document).ready(function() {
 
 	loadImages();
 
-	/* Comment Binders - logged in */
-	$(document).on("click", '.login-like', function() {
-		rateComment(this, 'like');
-		return false;
-	});
-	
-	$(document).on("click", '.login-dislike', function() {
-		rateComment(this, 'dislike');
-		return false;
 	$('.sizey-image').each(function() {
 		width = $(this).width();
 		targetWidth = $(this).attr('data-width');

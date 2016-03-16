@@ -14,7 +14,7 @@
 		<div class="date-article columns">
 <?php
 	$theme->setHierarchy(array(
-		$articles[$i]->getCat() // category-{cat}.php
+		$articles[$i]->getCategory()->getCat() // category-{cat}.php
 	));
 
 	$theme->render('components/category/block_normal', array(

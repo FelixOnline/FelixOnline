@@ -20,7 +20,7 @@
 				<div class="small-12 large-4 date-article columns<?php echo $end; ?>">
 <?php
 	$theme->setHierarchy(array(
-		$articles[$i]->getCat() // category-{cat}.php
+		$articles[$i]->getCategory()->getCat() // category-{cat}.php
 	));
 
 	$theme->render('components/category/block_date', array(
