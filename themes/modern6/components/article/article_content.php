@@ -1,7 +1,7 @@
 <?php $image = $article->getImage(); ?>
 <?php if($image && !$article->getVideoUrl()) { ?>
 	<div class="article-image<?php if($image->isTall()) { ?> tall-image<?php } ?>">
-		<div class="article-image-image">
+		<div class="article-image-image sizey-image" data-width="<?php echo $image->getWidth(); ?>" data-height="<?php echo $image->getHeight(); ?>">
 		<?php if($image->isTall()) { ?>
 			<img class="vertical" alt="<?php echo $image->getTitle();?>" src="<?php echo $image->getURL(750);?>">
 		<?php } else { ?>

@@ -24,6 +24,15 @@ $(document).ready(function() {
 	$(document).on("click", '.login-dislike', function() {
 		rateComment(this, 'dislike');
 		return false;
+	$('.sizey-image').each(function() {
+		width = $(this).width();
+		targetWidth = $(this).attr('data-width');
+
+		factor = width / targetWidth;
+
+		height = factor * $(this).attr('data-height');
+
+		$(this).height(height);
 	});
 	
 	function rateComment(cobj, action) {
