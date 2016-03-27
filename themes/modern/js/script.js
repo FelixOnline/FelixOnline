@@ -4,7 +4,7 @@
 
 $(document).ready(function() {
 	/* Image Loading */
-	function loadImages() {
+	var loadImages = function() {
 		$('.article-img-inner, #imgCont img, .article-image-image img').waitForImages({
 			each: function() {
 				$(this).addClass('loaded').animate({ opacity: 1 }, 400, "linear");
@@ -13,7 +13,24 @@ $(document).ready(function() {
 		});
 	}
 
-	loadImages();
+	var doSizeyImage = function() {
+		$('.sizey-image').each(function() {
+			width = $(this).width();
+			targetWidth = $(this).attr('data-width');
+
+			factor = width / targetWidth;
+
+			height = factor * $(this).attr('data-height');
+
+			$(this).height(height);
+		});
+	}
+
+	window.loadImages = loadImages;
+	window.doSizeyImage = doSizeyImage;
+
+	window.loadImages();
+	window.doSizeyImage();
 
 	/* Comment Binders - logged in */
 	$(document).on("click", '.login-like', function() {
@@ -26,17 +43,6 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('.sizey-image').each(function() {
-		width = $(this).width();
-		targetWidth = $(this).attr('data-width');
-
-		factor = width / targetWidth;
-
-		height = factor * $(this).attr('data-height');
-
-		$(this).height(height);
-	});
-	
 	function rateComment(cobj, action) {
 		var comment = $(cobj).parents('.article-comment').attr('id');
 		var token = $('#token-rate-'+comment).val();
@@ -217,7 +223,13 @@ $(document).ready(function() {
 			// Assess whether to create a new area for articles
 			if($('#month-viewer').data('final-month') != month) {
 				// Create area
-				$('#month-viewer').append('<hr class="month-divider fade '+json.cat+'"><div class="row fade full-width"><div class="small-12 columns"><p class="section-date '+json.cat+'">'+month.replace('-', ' ')+'</p></div></div><div class="row full-width date-row" data-equalizer="'+month+'" id="'+month+'"></div>');
+				monthinfo = month.split('-');
+
+				months = {'01': 'January', '02': 'February', '03': 'March', '04': 'April', '05': 'May', '06': 'June', '07': 'July', '08': 'August', '09': 'September', '10': 'October', '11': 'November', '12': 'December'};
+
+				monthname = months[monthinfo[1]] + ' ' + monthinfo[0];
+
+				$('#month-viewer').append('<hr class="month-divider fade '+json.cat+'"><div class="row fade full-width"><div class="small-12 columns"><p class="section-date '+json.cat+'">'+monthname+'</p></div></div><div class="row full-width date-row" data-equalizer="'+month+'" id="'+month+'"></div>');
 
 				$('#month-viewer').data('final-month', month);
 			}
@@ -232,6 +244,9 @@ $(document).ready(function() {
 
 			// Add end tag
 			$('#'+month).find('.date-article').last().addClass('end');
+
+			window.loadImages();
+			window.doSizeyImage();
 		}
 
 		init_foundation();

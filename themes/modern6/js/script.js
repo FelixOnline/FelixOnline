@@ -206,7 +206,13 @@ $(document).ready(function() {
 			// Assess whether to create a new area for articles
 			if($('#month-viewer').data('final-month') != month) {
 				// Create area
-				$('#month-viewer').append('<div class="row '+json.cat+' fade"><div class="small-12 columns"><div class="bar-text">'+month.replace('-', ' ')+'</div></div></div><div class="row main-row top-row small-up-1 medium-up-2 large-up-3" id="'+month+'"></div>');
+				monthinfo = month.split('-');
+
+				months = {'01': 'January', '02': 'February', '03': 'March', '04': 'April', '05': 'May', '06': 'June', '07': 'July', '08': 'August', '09': 'September', '10': 'October', '11': 'November', '12': 'December'};
+
+				monthname = months[monthinfo[1]] + ' ' + monthinfo[0];
+
+				$('#month-viewer').append('<div class="row '+json.cat+' fade"><div class="small-12 columns"><div class="bar-text">'+monthname+'</div></div></div><div class="row main-row top-row small-up-1 medium-up-2 large-up-3" id="'+month+'"></div>');
 
 				$('#month-viewer').data('final-month', month);
 			}

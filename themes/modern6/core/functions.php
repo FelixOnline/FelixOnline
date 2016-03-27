@@ -37,8 +37,8 @@ function _fetch_articles($data) {
 	$articles = array();
 
 	foreach($data['articles'] as $article) {
-		if(!array_key_exists(date('F-Y', $article->getDate()), $articles)) {
-			$articles[date('F-Y', $article->getDate())] = array();
+		if(!array_key_exists(date('Y-m', $article->getDate()), $articles)) {
+			$articles[date('Y-m', $article->getDate())] = array();
 		}
 
 		$theme = _get_theme();
@@ -54,11 +54,12 @@ function _fetch_articles($data) {
 
 		$theme->render('components/category/block_normal', array(
 			'article' => $article,
-			'equalizer' => date('F-Y', $article->getDate()),
 			'show_category' => $data['categories'],
 			'headshot' => $data['headshots']));
 
-		$articles[date('F-Y', $article->getDate())][] = ob_get_contents();
+		$articles[date('Y-m', $article->getDate())][] = ob_get_contents();
+
+		krsort($articles);
 
 		ob_end_clean();
 	}
