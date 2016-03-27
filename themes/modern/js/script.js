@@ -32,6 +32,20 @@ $(document).ready(function() {
 	window.loadImages();
 	window.doSizeyImage();
 
+	/* Live blogs */
+	blogIndicator = $('[data-liveblog]');
+
+	if(blogIndicator.length > 0) {
+		LiveBlog.init($(blogIndicator[0]).attr('data-liveblog-url'), $(blogIndicator[0]).attr('data-liveblog-id'));
+
+		$('#loadPosts').text('Load older posts');
+
+		$('#loadPosts').click(function() {
+			LiveBlog.fetchMorePosts(1);
+			return false;
+		})
+	}
+
 	/* Comment Binders - logged in */
 	$(document).on("click", '.login-like', function() {
 		rateComment(this, 'like');
