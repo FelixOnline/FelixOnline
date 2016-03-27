@@ -1,0 +1,19 @@
+<div class="post picture{{#breaking}} breaking{{/breaking}}" data-post-id="{{{id}}}">
+    <div class="row">
+        <div class="time small-2 medium-1 columns">{{time}}</div>
+        <div class="content small-10 medium-11 columns">
+            <h5>{{#breaking}}<span class="label radius alert">BREAKING</span>&nbsp;{{/breaking}}{{{title}}}</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="article-row piccont small-10 medium-11 columns small-offset-2 medium-offset-1">
+            <div id="imgCont" data-width="{{{data.data.picWidth}}}" data-height="{{{data.data.picHeight}}}" class="sizey-image {{#data.data.picTall}}tall-image{{/data.data.picTall}}">
+                <img src="{{data.data.picUrl}}"/>
+            </div>
+            <small>{{#showLink}}<a href="{{{data.data.attributionLink}}}">{{/showLink}}{{{data.data.attribution}}}{{#showLink}}</a>{{/showLink}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="content small-10 medium-11 columns small-offset-2 medium-offset-1">{{{data.data.caption}}}</div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="post{{#breaking}} breaking{{/breaking}}" data-post-id="{{{id}}}">
+    <div class="row">
+        <div class="time small-2 medium-1 columns">{{time}}</div>
+        <div class="content small-10 medium-11 columns">
+            <h5>{{#breaking}}<span class="label radius alert">BREAKING</span>&nbsp;{{/breaking}}{{{title}}}</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="content small-10 medium-11 columns small-offset-2 medium-offset-1">
+            {{{data.data.text}}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,154 @@
+#connection-error {
+    background: black;
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    display: none;
+    padding: 1rem;
+}
+
+.liveblog {
+#main {
+    .masthead {
+        border-bottom: 1px solid #BEBEBE;
+        .info {
+            margin-bottom: 10px;
+            p {
+                font-style: italic;
+            }
+        }
+    }
+
+    .socket-info {
+        /*padding: 0px 10px;*/
+        margin-top: 10px;
+        margin-bottom: 10px;
+        p {
+            margin: 0px;
+        }
+        #status {
+            margin-bottom: 5px;
+        }
+    }
+
+    .sticky {
+        padding: 10px;
+        border-bottom: 1px solid #BEBEBE;
+        background: #F2F2F2;
+        font-size: 16px;
+    }
+    .feed {
+        margin-top: 20px;
+        min-height: 300px;
+        &.loading {
+            background: url('../themes/modern/img/liveblog/ajax-loader.gif') center center no-repeat;
+
+            .inner-feed {
+                display: none;
+            }
+        }
+
+        #loadPosts {
+            width: 100%;
+            display: none;
+        }
+
+        .post {
+            padding: 0px 10px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #BEBEBE;
+
+            h5 {
+                font-weight: bold;
+
+                span {
+                    vertical-align: 2px;
+                    margin-right: 10px;
+                }
+            }
+
+            p {
+                margin-top: 3px;
+                margin-bottom: 10px;
+            }
+            .time {
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .content {
+                font-size: 16px;
+                overflow: hidden;
+            }
+            .piccont {
+                margin-bottom: 10px;
+            }
+            #twittericon {
+                height: 35px;
+                width: 35px;
+                background: url('../themes/modern/img/liveblog/twitter_newbird_blue-50.png') center center no-repeat;
+            }
+            &.quotecont {
+                .quote {
+                    font-size: 24px;
+                    background: url('../themes/modern/img/liveblog/quote-35.png') 20px 0 no-repeat;
+                    padding-left: 80px;
+                    min-height: 35px;
+                    font-style: italic;
+                }
+                .content {
+                    margin-top: 10px;
+                    color: gray;
+                }
+            }
+            .tall-image {
+                float: none;
+                margin: 0;
+            }
+        }
+    }
+
+    .sidebar {
+        h3 {
+            font-weight: bold;
+            font-size: 25px;
+            margin-bottom: 5px;
+            margin-top: 10px;
+            letter-spacing: -1px;
+        }
+    }
+}
+
+/* ============================== */
+/* ! Layout for desktop version   */
+/* ============================== */
+body {
+    
+}
+
+/* ============================= */
+/* ! Layout for mobile version   */
+/* ============================= */
+
+@media handheld, only screen and (max-width: 767px) {
+	body {
+		
+	}
+    #main {
+        #bg {
+            background: url('../img/banner.png') center no-repeat;
+            background-size: 100%;
+            height: 150px;
+            width: 100%;
+            background-color: black;
+        }
+    }
+    
+    .picture {
+        img {
+            width: 300px !important;
+        }
+    }
+}
+}

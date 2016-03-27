@@ -1,65 +1,64 @@
 window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 	"use strict";
 
-	var addPost = function(post, animate, reverse) {
-		function prefixNumber(number) {
-			if(number < 10) {
-				number = '0'+number;
-			}
-			return number;
-		}
+	function getImageDetails(imageId, blogId) {
+		var data = {};
+		data.action = 'liveblog_image';
+		data.imageId = imageId;
+		data.check = 'liveblog-' + blogId + '-token';
+		data.token = $('#liveblog-' + blogId + '-token').val();
 
-		var time = new Date(post.timestamp*1000);
-		post.time = prefixNumber(time.getHours())+':'+prefixNumber(time.getMinutes());
-		var render;
+		return $.ajax({
+			url: 'ajax.php',
+			type: 'post',
+			data: data,
+			async: true,
+			success: function(msg){
+				try {
+					var message = msg;
+				} catch(err) {
+					var message = {};
+					message.error = err;
+					message.reload = false;
+				}
+				if(message.error) {
+					$('#liveblog-' + blogId + '-token').val(message.newtoken);
+
+					if(message.reload) {
+						location.reload();
+					}
+
+					return false;
+				}
+				
+				// Set new token
+				$('#liveblog-' + blogId + '-token').val(message.newtoken);
+
+				return true;
+			},
+			error: function(msg){
+				try {
+					var message = JSON.parse(msg.responseText);
+				} catch(err) {
+					var message = {};
+					message.error = err;
+					message.reload = false;
+				}
+				if(message.error) {
+					$('#liveblog-' + blogId + '-token').val(message.newtoken);
+
+					if(message.reload) {
+						location.reload();
+					}
+				}
+
+				return false;
+			}
+		});
+	}
+
+	function renderPost(render, animate, reverse) {
 		var postsinnercont = $('.inner-feed');
-
-		if(postsinnercont.data('oldest-post') == null || postsinnercont.data('oldest-post') > post.id) {
-			postsinnercont.data('oldest-post') = post.id;
-		}
-
-		if(!post.data.type) {
-			render = $(template.normal.render(post));
-		} else {
-			switch(post.data.type) {
-				case 'feliximage':
-					// TODO: Get image details from AJAX
-					post.data.data.picWidth = 0;
-					post.data.data.picHeight = 0;
-					post.data.data.picTall = '';
-					post.data.data.picUrl = '';
-					post.data.data.showLink = true;
-
-					if(post.data.data.attattributionLink == '') {
-						post.data.data.showLink = false;
-					}
-
-					render = $(template.picture.render(post));
-					break;
-				case 'video':
-					// Mustache does not have If support, so we must set some booleans
-					if(post.data.data.source == "youtube") {
-						post.youtube = true;
-						post.vimeo = false;
-					} else {
-						post.youtube = false;
-						post.vimeo = true;
-					}
-					render = $(template.video.render(post));
-					break;   
-				case 'quote':
-				case 'video':
-					render = $(template[post.data.type].render(post));
-					break;
-				case 'tweet':
-					render = $(template.twitter.render(post));
-					break;
-				default:
-					post.data.data.text = micromarkdown.parse(post.data.data.text); // Convert markdown
-					render = $(template.normal.render(post));
-					break;
-			}
-		}
 
 		if(animate) {
 			if(reverse) {
@@ -77,10 +76,94 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 			}
 		}
 
+		window.loadImages();
+		window.doSizeyImage();
+	}
+
+	var addPost = function(post, animate, reverse, blogId) {
+		function prefixNumber(number) {
+			if(number < 10) {
+				number = '0'+number;
+			}
+			return number;
+		}
+
+		var time = new Date(post.timestamp*1000);
+		post.time = prefixNumber(time.getHours())+':'+prefixNumber(time.getMinutes());
+		var render;
+		var postsinnercont = $('.inner-feed');
+		var template = {
+			normal: new Hogan.Template(T.post),
+			twitter: new Hogan.Template(T.posttwitter),
+			picture: new Hogan.Template(T.postpicture),
+			quote: new Hogan.Template(T.postquote),
+			video: new Hogan.Template(T.postvideo)
+		}
+
+		if(postsinnercont.data('oldest-post') == null || postsinnercont.data('oldest-post') > post.id) {
+			postsinnercont.data('oldest-post', post.id);
+		}
+
+		var render;
+
+		if(!post.data.type) {
+			render = $(template.normal.render(post));
+		} else {
+			switch(post.data.type) {
+				case 'feliximage':
+					// TODO: Get image details from AJA
+					var picData = getImageDetails(post.data.data.image, blogId);
+
+					picData.success(function (picData) {
+						post.data.data.picWidth = picData.width;
+						post.data.data.picHeight = picData.height;
+						post.data.data.picTall = picData.tall;
+						post.data.data.picUrl = picData.url;
+						post.data.data.showLink = true;
+
+						if(post.data.data.attattributionLink == '') {
+							post.data.data.showLink = false;
+						}
+
+						render = $(template.picture.render(post));
+						renderPost(render, animate, reverse);
+					});
+
+					break;
+				case 'video':
+					// Mustache does not have If support, so we must set some booleans
+					if(post.data.data.source == "youtube") {
+						post.youtube = true;
+						post.vimeo = false;
+					} else {
+						post.youtube = false;
+						post.vimeo = true;
+					}
+					render = $(template.video.render(post));
+					renderPost(render, animate, reverse);
+					break;   
+				case 'quote':
+				case 'video':
+					render = $(template[post.data.type].render(post));
+					renderPost(render, animate, reverse);
+					break;
+				case 'tweet':
+					render = $(template.twitter.render(post));
+					renderPost(render, animate, reverse);
+					break;
+				default:
+					post.data.data.text = micromarkdown.parse(post.data.data.text); // Convert markdown
+					render = $(template.normal.render(post));
+					renderPost(render, animate, reverse);
+					break;
+			}
+		}
+
 		return post;
 	}
 
 	var getPosts = function(blogId, startAt) {
+		var fetchButton = $('#loadPosts');
 		var data = {};
 		data.action = 'liveblog_archive';
 		data.blogId = blogId;
@@ -105,7 +188,7 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 					message.reload = false;
 				}
 				if(message.error) {
-					$('#token').val(message.newtoken);
+					$('#liveblog-' + blogId + '-token').val(message.newtoken);
 
 					if(message.reload) {
 						location.reload();
@@ -115,10 +198,10 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 				}
 				
 				// Set new token
-				$('#token').val(message.newtoken);
+				$('#liveblog-' + blogId + '-token').val(message.newtoken);
 
 				message.posts.forEach(function(post) {
-					addPost(post.post, true, true);
+					addPost(post.post, true, true, blogId);
 				});
 
 				fetchButton.text("Load older posts");
@@ -135,15 +218,19 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 					message.reload = false;
 				}
 				if(message.error) {
-					$('#token').val(message.newtoken);
+					$('#liveblog-' + blogId + '-token').val(message.newtoken);
 
 					if(message.reload) {
 						location.reload();
 					}
 				}
 
-				fetchButton.text("Load older posts");
-				fetchButton.attr('disabled', false);
+				if(message.noposts) {
+					fetchButton.text("There are no more posts");
+				} else {
+					fetchButton.text("Load older posts");
+					fetchButton.attr('disabled', false);
+				}
 
 				return false;
 			}
@@ -157,7 +244,6 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 
 	 // Still to do:
 	 // AJAX for images
-	 // Key Facts box? maybe
 	 // NOTe: need to make article content OPTIONAL
 
 		var template = {
@@ -192,15 +278,15 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 						case 'post':
 							// data.posts = array of all posts
 							// need to determine whether post is already displayed
-							if($('[data-post-id="' + data.post.id + '"]').length() > 0);
-								addPost(data.post, true);
+							if($('[data-post-id="' + data.post.id + '"]').length == 0) {
+								addPost(data.post, true, false, blogId);
 							}
 							break;
 						case 'delete':
 							$('[data-post-id="' + data.delete + '"]').remove();
 
 							if (postsinnercont.data('oldest-post') == data.delete) { // If oldest post deleted
-								oldestPost++; // Reflect that the oldest post is now newer
+								postsinnercont.data('oldest-post', postsinnercont.data('oldest-post') + 1); // Reflect that the oldest post is now newer
 							}
 							break;
 						default:
@@ -231,6 +317,8 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 		fetchButton.attr('disabled', true);
 
 		getPosts(blogId, $('.inner-feed').data('oldest-post'));
+
+		return false;
 	}
 
 	LiveBlog.init = init;
