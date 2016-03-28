@@ -43,7 +43,10 @@ $theme->render('components/globals/header', $header);
 		<div class="row article-row">
 			<div class="small-12 columns title-row">
 				<div class="article-title-area">
-					<h2><?php echo $article->getTitle(); ?></h2>
+					<h2>
+						<?php if ($article->getIsLive()): ?><span class="live-label">LIVE</span><?php endif; ?>
+						<?php echo $article->getTitle(); ?>
+					</h2>
 					<h3><?php echo $article->getTeaser(); ?></h3>
 				</div>
 				<?php
@@ -59,7 +62,10 @@ $theme->render('components/globals/header', $header);
 <?php else: ?>
 	<div class="row main-row top-row title-row article-row">
 		<div class="small-12 medium-9 medium-push-3 end columns">
-			<h2><?php echo $article->getTitle(); ?></h2>
+			<h2>
+				<?php if ($article->getIsLive()): ?><span class="live-label">LIVE</span><?php endif; ?>
+				<?php echo $article->getTitle(); ?>
+			</h2>
 			<h3><?php echo $article->getTeaser(); ?></h3>
 		</div>
 	</div>
@@ -82,6 +88,14 @@ $theme->render('components/globals/header', $header);
 	<?php $theme->render('components/article/article_content'); ?>
 	</div>
 </div>
+
+<?php if($article->getBlog()): ?>
+<div class="row main-row article-row live-blog">
+	<div class="small-12 medium-12 large-push-2 large-9 end columns">
+	<?php $theme->render('components/article/live_blog', array('blog_id' => $article->getBlog()->getId(), 'sprinkler_prefix' => $article->getBlog()->getSprinklerPrefix(), 'active' => $article->getIsLive())); ?>
+	</div>
+</div>
+<?php endif; ?>
 
 <div class="row <?php echo $article->getCategory()->getCat(); ?>">
 	<div class="small-12 medium-9 medium-push-3 large-7 end columns">

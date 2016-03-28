@@ -29,11 +29,20 @@
 		<?php
 			endif;
 		?>
-			<div class="article-title"><a href="<?php echo $article->getUrl(); ?>"><?php echo $article->getTitle(); ?></a></div>
-			<div class="article-byline"><?php if($article->getVideoUrl()): ?><span class="glyphicons glyphicons-facetime-video"></span> <b>WATCH:</b> <?php endif; ?><?php echo $article->getTeaser(); ?></div>
+			<div class="article-title">
+				<a href="<?php echo $article->getUrl(); ?>">
+					<?php if ($article->getIsLive()): ?><span class="live-label">LIVE</span><?php endif; ?>
+					<?php echo $article->getTitle(); ?></a>
+				</div>
+			<div class="article-byline">
+				<?php if($article->getVideoUrl()): ?><span class="glyphicons glyphicons-facetime-video"></span> <b>WATCH:</b> <?php endif; ?>
+				<?php echo $article->getTeaser(); ?>
+			</div>
 			<div class="article-time">
-					<span class="glyphicons glyphicons-clock"></span><?php echo Utility::getRelativeTime($article->getPublished()); ?>
-					<?php if($show_category): ?><b class="category-label <?php echo $article->getCategory()->getCat(); ?>"><?php echo $article->getCategory()->getLabel(); ?></b><?php endif; ?>
+				<span class="glyphicons glyphicons-clock"></span><?php echo Utility::getRelativeTime($article->getPublished()); ?>
+				<?php if($show_category): ?>
+					<b class="category-label <?php echo $article->getCategory()->getCat(); ?>"><?php echo $article->getCategory()->getLabel(); ?></b>
+				<?php endif; ?>
 			</div>
 	</div>
 </div>

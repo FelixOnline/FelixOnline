@@ -15,6 +15,9 @@ $hooks->addAction('get_topic_page', 'get_topic_page');
 
 $hooks->addAction('contact_us', 'contact_us');
 
+$hooks->addAction('liveblog_archive', 'liveblog_archive');
+$hooks->addAction('liveblog_image', 'liveblog_image');
+
 /* HELPERS */
 function _get_theme() {
 	return new \FelixOnline\Core\Theme('modern6');
@@ -421,3 +424,47 @@ function poll_vote($data) {
 
 	return (array('error' => false, 'content' => $output));
 }
+
+/* LIVEBLOG */
+function liveblog_archive($data) {
+	// Get historic posts
+
+	$return = array();
+
+	require_once(BASE_DIRECTORY.'/controllers/baseController.php');
+
+	$manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\BlogPost', 'blog_post');
+
+	$manager = $manager->filter('blog = %i', array($data['blogId']));
+
+	if($data['startAt']) {
+		$manager= $manager->filter('id < %i', array($data['startAt']));
+	}
+
+	$results = $manager->order('timestamp', 'DESC')->limit(0, 15)->values();
+
+	if(is_null($results)) {
+		return(array('error' => true, 'details' => 'There are no more posts.', 'noposts' => true));
+	}
+
+	foreach($results as $result) {
+		$return[] = array('type' => 'post', 'post' => array('id' => $result->getId(), 'breaking' => $result->getBreaking(), 'title' => $result->getTitle(), 'timestamp' => $result->getTimestamp(), 'data' => json_decode($result->getContent())));
+	}
+
+	return (array('error' => false, 'posts' => $return));
+}
+
+function liveblog_image($data) {
+	// Get picture info
+
+	$return = array();
+
+	try {
+		$image = new \FelixOnline\Core\Image($data['imageId']);
+	} catch(\Exception $e) {
+		return(array('error' => true, 'details' => 'The image does not exist'));
+	}
+
+	return (array('error' => false, 'width' => $image->getWidth(), 'height' => $image->getHeight(), 'tall' => $image->isTall(), 'url' => $image->getUrl()));
+}
+

@@ -1,0 +1,27 @@
+<div class="post video {{#breaking}} breaking{{/breaking}}" data-post-id="{{{id}}}">
+    <div class="row">
+        <div class="time small-2 medium-1 columns">
+            <div class="time">{{time}}</div>
+        </div>
+        <div class="content small-10 medium-11 columns">
+            <h5>{{#breaking}}<span class="label radius alert">BREAKING</span>&nbsp;{{/breaking}}{{{title}}}</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-2 medium-1 columns">
+            <div class="texticon">
+                <span class="glyphicons glyphicons-facetime-video"></span>
+            </div>
+        </div>
+        <div class="videocont small-10 medium-11 columns">
+            <div class="videocontainer">
+                {{#vimeo}}
+                    <iframe src="//player.vimeo.com/video/{{{data.data.remote_id}}}?title=0&amp;byline=0" frameborder="0" class="blog-video blog-video-{{{id}}}"></iframe>
+                {{/vimeo}}
+                {{#youtube}}
+                    <iframe src="//www.youtube.com/embed/{{{data.data.remote_id}}}?rel=0" frameborder="0" allowfullscreen class="blog-video blog-video-{{{id}}}"></iframe>
+                {{/youtube}}
+            </div>
+        </div>
+    </div>
+</div>

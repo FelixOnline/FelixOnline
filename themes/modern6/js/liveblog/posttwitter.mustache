@@ -1,0 +1,23 @@
+<div class="post twitter{{#breaking}} breaking{{/breaking}}" data-post-id="{{{id}}}">
+    <div class="row">
+        <div class="time small-2 medium-1 columns">
+            <div class="time">{{time}}</div>
+        </div>
+        <div class="small-10 medium-11 columns content">
+            <h5>{{#breaking}}<span class="label radius alert">BREAKING</span>&nbsp;{{/breaking}}{{{title}}}</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-2 medium-1 columns">
+            <div class="texticon">
+                <span class="social social-twitter"></span>
+            </div>
+        </div>
+        <div class="small-10 medium-11 columns tweet">
+            <blockquote class="twitter-tweet" align="center">
+                <p>{{{data.data.text}}}</p> &mdash; {{{data.data.user.name}}} (@{{{data.data.user.screen_name}}})
+                <a href="{{{data.data.status_url}}}" data-datetime="{{{data.data.created_at}}}">{{{data.data.created_at}}}</a>
+            </blockquote>
+        </div>
+    </div>
+</div>

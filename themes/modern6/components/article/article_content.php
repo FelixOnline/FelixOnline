@@ -48,5 +48,8 @@
 	<?php endforeach; ?>
 <?php endif; ?>
 
-<?php $theme->render('components/article/meta_share', array('article' => $article, 'hidetitle' => false)); ?>
+<?php if(!$article->getBlog()): ?>
+	<?php $theme->render('components/article/meta_share', array('article' => $article, 'hidetitle' => false)); ?>
+<?php endif; ?>
+
 <br>

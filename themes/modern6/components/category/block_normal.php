@@ -30,7 +30,10 @@
 		?>
 
 		<div class="article-title">
-			<a href="<?php echo $article->getUrl(); ?>"><?php echo $article->getTitle(); ?></a>
+			<a href="<?php echo $article->getUrl(); ?>">
+				<?php if ($article->getIsLive()): ?><span class="live-label">LIVE</span><?php endif; ?>
+				<?php echo $article->getTitle(); ?>
+			</a>
 		</div>
 		
 		<div class="article-byline">

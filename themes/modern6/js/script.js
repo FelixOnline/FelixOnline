@@ -4,7 +4,7 @@
 
 $(document).ready(function() {
 	/* Image Loading */
-	function loadImages() {
+	var loadImages = function() {
 		$('.article-img-inner, #imgCont img, .article-image-image img').waitForImages({
 			each: function() {
 				$(this).addClass('loaded').animate({ opacity: 1 }, 400, "linear");
@@ -13,18 +13,38 @@ $(document).ready(function() {
 		});
 	}
 
-	loadImages();
+	var doSizeyImage = function() {
+		$('.sizey-image').each(function() {
+			width = $(this).width();
+			targetWidth = $(this).attr('data-width');
 
-	$('.sizey-image').each(function() {
-		width = $(this).width();
-		targetWidth = $(this).attr('data-width');
+			factor = width / targetWidth;
 
-		factor = width / targetWidth;
+			height = factor * $(this).attr('data-height');
 
-		height = factor * $(this).attr('data-height');
+			$(this).height(height);
+		});
+	}
 
-		$(this).height(height);
-	});
+	window.loadImages = loadImages;
+	window.doSizeyImage = doSizeyImage;
+
+	window.loadImages();
+	window.doSizeyImage();
+
+	/* Live blogs */
+	blogIndicator = $('[data-liveblog]');
+
+	if(blogIndicator.length > 0) {
+		LiveBlog.init($(blogIndicator[0]).attr('data-liveblog-url'), $(blogIndicator[0]).attr('data-liveblog-id'));
+
+		$('#loadPosts').text('Load older posts');
+
+		$('#loadPosts').click(function() {
+			LiveBlog.fetchMorePosts(1);
+			return false;
+		})
+	}
 	
 	function rateComment(cobj, action) {
 		var comment = $(cobj).parents('.article-comment').attr('id');
@@ -227,7 +247,8 @@ $(document).ready(function() {
 
 		setTimeout(function() { init_foundation(); }, 500); // Wait for end of reflow
 
-		loadImages();
+		window.loadImages();
+		window.doSizeyImage();
 	}
 
 	//Paginator page - scroll
