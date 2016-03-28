@@ -48,7 +48,7 @@ $theme->render('components/globals/header', $header);
 		<div class="row article-row">
 			<div class="small-12 columns title-row">
 				<div class="article-title-area">
-					<h2><?php echo $article->getTitle(); ?></h2>
+					<h2><?php if ($article->getIsLive()): ?><span class="live-label">LIVE</span><?php endif; ?><?php echo $article->getTitle(); ?></h2>
 					<h3><?php echo $article->getTeaser(); ?></h3>
 				</div>
 				<?php if($article->getVideoUrl()): ?>
@@ -130,6 +130,15 @@ $theme->render('components/globals/header', $header);
 				<!-- End of content -->
 			</div>
 		</div>
+
+		<?php if($article->getBlog()): ?>
+		<div class="row article-row live-blog">
+			<div class="small-12 columns">
+			<?php $theme->render('components/article/live_blog', array('blog_id' => $article->getBlog()->getId(), 'sprinkler_prefix' => $article->getBlog()->getSprinklerPrefix(), 'active' => $article->getIsLive())); ?>
+			</div>
+		</div>
+		<?php endif; ?>
+
 		<div class="row article-row">
 			<div class="small-12 large-4 large-push-8 columns">
 				<?php $theme->render('components/article/meta_share', array('article' => $article, 'hidetitle' => false)); ?>

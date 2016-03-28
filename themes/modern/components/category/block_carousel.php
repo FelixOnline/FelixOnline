@@ -13,7 +13,7 @@
                       </a>
                     </div>
                     <div class="medium-12 columns">
-                      <div class="article-title"><a href="<?php echo $article->getUrl(); ?>"><?php echo $article->getTitle(); ?></a></div>
+                      <div class="article-title"><?php if ($article->getIsLive()): ?><span class="live-label">LIVE</span><?php endif; ?><a href="<?php echo $article->getUrl(); ?>"><?php echo $article->getTitle(); ?></a></div>
                       <div class="article-byline"><?php echo $article->getTeaser(); ?></div>
                     </div>
                   </div>
