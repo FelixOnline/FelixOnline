@@ -1,5 +1,5 @@
 <div id="connection-error">
-<b>Uh oh!</b> We can't connect to the blog. Is your internet connection working?
+<b>Uh oh!</b> We can't connect to the live blog. Is your internet connection working?
 </div>
 
 <div class="liveblog" data-liveblog data-liveblog-url="http://<?php echo \FelixOnline\Core\Settings::get('sprinkler_host'); ?>:<?php echo \FelixOnline\Core\Settings::get('sprinkler_port'); ?>/<?php echo $sprinkler_prefix; ?>" data-liveblog-id="<?php echo $blog_id; ?>">

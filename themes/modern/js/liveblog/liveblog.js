@@ -243,7 +243,6 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 		var postsinnercont = $('.inner-feed');
 
 	 // Still to do:
-	 // AJAX for images
 	 // NOTe: need to make article content OPTIONAL
 
 		var template = {
@@ -261,14 +260,21 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 		function socketRunner() {
 			socket = new SockJS(url);
 
+			socket.stopReconnecting = false;
+
 			socket.onopen = function() {
 				sockettrouble.fadeOut(1000);
 				postscont.removeClass('loading');
 				loadposts.css('display', 'block');
 			};
 
-			socket.onclose = function() {
-				sockettrouble.fadeIn(1000);
+			socket.onclose = function(e) {
+				if(e.code == 999) {
+					// Socket shutdown
+					socket.stopReconnecting = true;
+				} else {
+					sockettrouble.fadeIn(1000);
+				}
 			};
 
 			socket.onmessage = function(data) {
@@ -298,7 +304,7 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 		}
 
 		function checkAlive(){
-			if(!socket || socket.readyState == 3) {
+			if(!socket || (socket.readyState == 3 && socket.stopReconnecting == false)) {
 				socketRunner();
 			}
 
