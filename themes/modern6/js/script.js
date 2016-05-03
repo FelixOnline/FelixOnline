@@ -13,24 +13,9 @@ $(document).ready(function() {
 		});
 	}
 
-	var doSizeyImage = function() {
-		$('.sizey-image').each(function() {
-			width = $(this).width();
-			targetWidth = $(this).attr('data-width');
-
-			factor = width / targetWidth;
-
-			height = factor * $(this).attr('data-height');
-
-			$(this).height(height);
-		});
-	}
-
 	window.loadImages = loadImages;
-	window.doSizeyImage = doSizeyImage;
 
 	window.loadImages();
-	window.doSizeyImage();
 
 	/* Live blogs */
 	blogIndicator = $('[data-liveblog]');
@@ -41,7 +26,7 @@ $(document).ready(function() {
 		$('#loadPosts').text('Load older posts');
 
 		$('#loadPosts').click(function() {
-			LiveBlog.fetchMorePosts(1);
+			LiveBlog.fetchMorePosts($(blogIndicator[0]).attr('data-liveblog-id'));
 			return false;
 		})
 	}
@@ -248,7 +233,6 @@ $(document).ready(function() {
 		setTimeout(function() { init_foundation(); }, 500); // Wait for end of reflow
 
 		window.loadImages();
-		window.doSizeyImage();
 	}
 
 	//Paginator page - scroll
