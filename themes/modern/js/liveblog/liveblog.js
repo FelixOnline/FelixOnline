@@ -5,35 +5,23 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 		var data = {};
 		data.action = 'liveblog_image';
 		data.imageId = imageId;
-		data.check = 'liveblog-' + blogId + '-token';
-		data.token = $('#liveblog-' + blogId + '-token').val();
 
 		return $.ajax({
 			url: 'ajax.php',
 			type: 'post',
 			data: data,
-			async: true,
+			async: false,
 			success: function(msg){
 				try {
 					var message = msg;
 				} catch(err) {
 					var message = {};
 					message.error = err;
-					message.reload = false;
 				}
 				if(message.error) {
-					$('#liveblog-' + blogId + '-token').val(message.newtoken);
-
-					if(message.reload) {
-						location.reload();
-					}
-
 					return false;
 				}
 				
-				// Set new token
-				$('#liveblog-' + blogId + '-token').val(message.newtoken);
-
 				return true;
 			},
 			error: function(msg){
@@ -42,14 +30,6 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 				} catch(err) {
 					var message = {};
 					message.error = err;
-					message.reload = false;
-				}
-				if(message.error) {
-					$('#liveblog-' + blogId + '-token').val(message.newtoken);
-
-					if(message.reload) {
-						location.reload();
-					}
 				}
 
 				return false;
@@ -77,7 +57,6 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 		}
 
 		window.loadImages();
-		window.doSizeyImage();
 	}
 
 	var addPost = function(post, animate, reverse, blogId) {
@@ -111,10 +90,9 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 		} else {
 			switch(post.data.type) {
 				case 'feliximage':
-					// TODO: Get image details from AJA
 					var picData = getImageDetails(post.data.data.image, blogId);
 
-					picData.success(function (picData) {
+					picData.then(function (picData) {
 						post.data.data.picWidth = picData.width;
 						post.data.data.picHeight = picData.height;
 						post.data.data.picTall = picData.tall;
@@ -128,7 +106,6 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 						render = $(template.picture.render(post));
 						renderPost(render, animate, reverse);
 					});
-
 					break;
 				case 'video':
 					// Mustache does not have If support, so we must set some booleans
@@ -167,8 +144,6 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 		var data = {};
 		data.action = 'liveblog_archive';
 		data.blogId = blogId;
-		data.check = 'liveblog-' + blogId + '-token';
-		data.token = $('#liveblog-' + blogId + '-token').val();
 
 		if(startAt) {
 			data.startAt = startAt;
@@ -188,17 +163,8 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 					message.reload = false;
 				}
 				if(message.error) {
-					$('#liveblog-' + blogId + '-token').val(message.newtoken);
-
-					if(message.reload) {
-						location.reload();
-					}
-
 					return false;
 				}
-				
-				// Set new token
-				$('#liveblog-' + blogId + '-token').val(message.newtoken);
 
 				message.posts.forEach(function(post) {
 					addPost(post.post, true, true, blogId);
@@ -206,7 +172,7 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 
 				fetchButton.text("Load older posts");
 				fetchButton.attr('disabled', false);
-		
+
 				return true;
 			},
 			error: function(msg){
@@ -215,18 +181,11 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 				} catch(err) {
 					var message = {};
 					message.error = err;
-					message.reload = false;
-				}
-				if(message.error) {
-					$('#liveblog-' + blogId + '-token').val(message.newtoken);
-
-					if(message.reload) {
-						location.reload();
-					}
 				}
 
 				if(message.noposts) {
 					fetchButton.text("There are no more posts");
+					fetchButton.attr('disabled', true);
 				} else {
 					fetchButton.text("Load older posts");
 					fetchButton.attr('disabled', false);

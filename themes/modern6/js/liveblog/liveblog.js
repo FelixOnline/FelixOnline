@@ -5,14 +5,12 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 		var data = {};
 		data.action = 'liveblog_image';
 		data.imageId = imageId;
-		data.check = 'liveblog-' + blogId + '-token';
-		data.token = $('#liveblog-' + blogId + '-token').val();
 
 		return $.ajax({
 			url: 'ajax.php',
 			type: 'post',
 			data: data,
-			async: true,
+			async: false,
 			success: function(msg){
 				try {
 					var message = msg;
@@ -22,17 +20,8 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 					message.reload = false;
 				}
 				if(message.error) {
-					$('#liveblog-' + blogId + '-token').val(message.newtoken);
-
-					if(message.reload) {
-						location.reload();
-					}
-
 					return false;
 				}
-				
-				// Set new token
-				$('#liveblog-' + blogId + '-token').val(message.newtoken);
 
 				return true;
 			},
@@ -42,14 +31,6 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 				} catch(err) {
 					var message = {};
 					message.error = err;
-					message.reload = false;
-				}
-				if(message.error) {
-					$('#liveblog-' + blogId + '-token').val(message.newtoken);
-
-					if(message.reload) {
-						location.reload();
-					}
 				}
 
 				return false;
@@ -77,7 +58,6 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 		}
 
 		window.loadImages();
-		window.doSizeyImage();
 	}
 
 	var addPost = function(post, animate, reverse, blogId) {
@@ -108,10 +88,10 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 
 		if(!post.data.type) {
 			render = $(template.normal.render(post));
+			renderPost(render, animate, reverse);
 		} else {
 			switch(post.data.type) {
 				case 'feliximage':
-					// TODO: Get image details from AJA
 					var picData = getImageDetails(post.data.data.image, blogId);
 
 					picData.success(function (picData) {
@@ -167,8 +147,6 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 		var data = {};
 		data.action = 'liveblog_archive';
 		data.blogId = blogId;
-		data.check = 'liveblog-' + blogId + '-token';
-		data.token = $('#liveblog-' + blogId + '-token').val();
 
 		if(startAt) {
 			data.startAt = startAt;
@@ -178,27 +156,17 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 			url: 'ajax.php',
 			type: 'post',
 			data: data,
-			async: true,
+			async: false,
 			success: function(msg){
 				try {
 					var message = msg;
 				} catch(err) {
 					var message = {};
 					message.error = err;
-					message.reload = false;
 				}
 				if(message.error) {
-					$('#liveblog-' + blogId + '-token').val(message.newtoken);
-
-					if(message.reload) {
-						location.reload();
-					}
-
 					return false;
 				}
-				
-				// Set new token
-				$('#liveblog-' + blogId + '-token').val(message.newtoken);
 
 				message.posts.forEach(function(post) {
 					addPost(post.post, true, true, blogId);
@@ -215,18 +183,11 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 				} catch(err) {
 					var message = {};
 					message.error = err;
-					message.reload = false;
-				}
-				if(message.error) {
-					$('#liveblog-' + blogId + '-token').val(message.newtoken);
-
-					if(message.reload) {
-						location.reload();
-					}
 				}
 
 				if(message.noposts) {
 					fetchButton.text("There are no more posts");
+					fetchButton.attr('disabled', true);
 				} else {
 					fetchButton.text("Load older posts");
 					fetchButton.attr('disabled', false);
@@ -282,7 +243,6 @@ window.LiveBlog = (function(LiveBlog, $, SockJS, templates) {
 				if(data.type) {
 					switch(data.type) {
 						case 'post':
-							// data.posts = array of all posts
 							// need to determine whether post is already displayed
 							if($('[data-post-id="' + data.post.id + '"]').length == 0) {
 								addPost(data.post, true, false, blogId);
