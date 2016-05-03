@@ -149,7 +149,7 @@ $theme->render('components/globals/header', $header);
 			<div class="small-12 large-8 large-pull-4 columns">
 				<div class="comment-header-block info-box <?php echo $article->getCategory()->getCat(); ?>" id="commentHeader">
 					<h1><span class="glyphicons glyphicons-comments"></span> Have your say</h1>
-					<?php if ($article->canComment($currentuser)) { ?><span class="article-comments-say">Have something to say? <a href="<?php echo Utility::currentPageURL().'#commentForm';?>"><b>Post your comment now</b></a>. <b>New:</b> Now anyone can up or down-vote comments. No need to log in!</span><?php } else { ?><span class="article-comments-say"><b>New:</b> Now anyone can up or down-vote comments. No need to log in!</span><?php } ?>
+					<?php if ($article->getCommentStatus()->getId() != \FelixOnline\Core\ArticleCommentStatus::ARTICLE_COMMENTS_OFF) { ?><span class="article-comments-say">Have something to say? <a href="<?php echo Utility::currentPageURL().'#commentForm';?>"><b>Post your comment now</b></a>. <b>New:</b> Now anyone can up or down-vote comments. No need to log in!</span><?php } else { ?><span class="article-comments-say"><b>New:</b> Now anyone can up or down-vote comments. No need to log in!</span><?php } ?>
 				</div>
 				<!-- Comments container -->
 				<?php
@@ -258,9 +258,13 @@ $theme->render('components/globals/header', $header);
 
 					<input type="hidden" name="new-token" id="new-token" value="<?php echo Utility::generateCSRFToken('new_comment'); ?>"/>
 				</div>
+				<?php } elseif($article->getCommentStatus()->getId() == \FelixOnline\Core\ArticleCommentStatus::ARTICLE_COMMENTS_INTERNAL) { ?>
+					<div class="alert-box">
+						<b>Please log in to comment on this article!</b>
+					</div>
 				<?php } else { ?>
 					<div class="alert-box">
-						<b>This article is now closed for new comments. Logged in users may still be able to comment.</b>
+						<b>This article is now closed for new comments.</b>
 					</div>
 				<?php } ?>
 				<!-- End of comment form -->

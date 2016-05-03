@@ -1,5 +1,5 @@
 		<?php
-			if ($article->canComment($currentuser)) {
+			if ($article->getCommentStatus()->getId() != \FelixOnline\Core\ArticleCommentStatus::ARTICLE_COMMENTS_OFF) {
 		?>
 			<div class="callout secondary article-comments-say">
 				Have something to say? <a href="<?php echo Utility::currentPageURL().'#commentForm';?>"><b>Post your comment now</b></a>.<br><b>New:</b> Now anyone can up or down-vote comments. No need to log in!
@@ -111,9 +111,13 @@
 
 			<input type="hidden" name="new-token" id="new-token" value="<?php echo Utility::generateCSRFToken('new_comment'); ?>"/>
 		</div>
+		<?php } elseif($article->getCommentStatus()->getId() == \FelixOnline\Core\ArticleCommentStatus::ARTICLE_COMMENTS_INTERNAL) { ?>
+			<div class="callout secondary">
+				<b>Please log in to comment on this article!</b>
+			</div>
 		<?php } else { ?>
 			<div class="callout secondary">
-				<i>This article is now closed for new comments.</i>
+				<b>This article is now closed for new comments.</b>
 			</div>
 		<?php } ?>
 		<!-- End of comment form -->

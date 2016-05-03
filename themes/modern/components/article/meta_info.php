@@ -14,20 +14,10 @@
 						<a href="<?php echo Utility::currentPageURL().'#commentHeader';?>">
 							<b><?php echo $article->getNumValidatedComments() ?></b>
 						</a> comment<?php echo ($article->getNumValidatedComments() != 1 ? 's' : '');?>. 
-						<?php if ($article->canComment($currentuser)) { ?>
+						<?php if ($article->getCommentStatus()->getId() != \FelixOnline\Core\ArticleCommentStatus::ARTICLE_COMMENTS_OFF) { ?>
 							<a href="<?php echo Utility::currentPageURL().'#commentForm';?>">Post your own</a>
 						<?php } ?>
 					</p>
-					<?php
-						$isSectionEditor = false;
-						if($article->getCategory()->getEditors() != null) {
-							foreach($article->getCategory()->getEditors() as $user) {
-								if($currentuser->getUser() == $user->getUser()) {
-									$isSectionEditor = true;
-								}
-							}
-						}
-					?>
 				</div>
 			</div>
 		</div>
