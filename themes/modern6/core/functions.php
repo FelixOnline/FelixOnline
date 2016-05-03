@@ -15,8 +15,8 @@ $hooks->addAction('get_topic_page', 'get_topic_page');
 
 $hooks->addAction('contact_us', 'contact_us');
 
-$hooks->addAction('liveblog_archive', 'liveblog_archive');
-$hooks->addAction('liveblog_image', 'liveblog_image');
+$hooks->addAction('liveblog_archive', 'liveblog_archive', false);
+$hooks->addAction('liveblog_image', 'liveblog_image', false);
 
 /* HELPERS */
 function _get_theme() {
@@ -448,7 +448,7 @@ function liveblog_archive($data) {
 	}
 
 	foreach($results as $result) {
-		$return[] = array('type' => 'post', 'post' => array('id' => $result->getId(), 'breaking' => $result->getBreaking(), 'title' => $result->getTitle(), 'timestamp' => $result->getTimestamp(), 'data' => json_decode($result->getContent())));
+		$return[] = array('type' => 'post', 'post' => array('id' => $result->getId(), 'breaking' => $result->getBreaking(), 'title' => $result->getTitle(), 'timestamp' => $result->getTimestamp(), 'data' => json_decode($result->getContent())->data[0]));
 	}
 
 	return (array('error' => false, 'posts' => $return));

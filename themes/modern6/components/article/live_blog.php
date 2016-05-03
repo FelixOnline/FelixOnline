@@ -35,5 +35,3 @@
 		</div>
 	</div>
 </div>
-
-<input type="hidden" name="liveblog-<?php echo $blog_id; ?>-token" id="liveblog-<?php echo $blog_id; ?>-token" value="<?php echo Utility::generateCSRFToken('liveblog-'.$blog_id.'-token'); ?>"/>

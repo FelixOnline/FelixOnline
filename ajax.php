@@ -24,26 +24,33 @@ foreach($_POST as $key => $val) {
 $action = $clean_request['action'];
 
 if($action = $hooks->getAction($action)) {
-	// check csrf
-	$check = $clean_request['check'];
-	$token = $clean_request['token'];
-	try {
-		Validator::Check(
-			array('csrf' => $token), 
-			array('csrf' => 
-				array(
-					'val_1007' => $check
+	if($hooks->isProtected($clean_request['action'])) { 
+		// check csrf
+		$check = $clean_request['check'];
+		$token = $clean_request['token'];
+		try {
+			Validator::Check(
+				array('csrf' => $token), 
+				array('csrf' => 
+					array(
+						'val_1007' => $check
+					)
 				)
-			)
-		); 
-		$return = call_user_func($action, $clean_request);
-	} catch (ValidatorException $e) {
-		if($e->getMessage() == 1 && key($e->getData()) == 'csrf') {
-			$return = array("error" => true, "details" => 'A security error has occured, this page will now be reloaded', "reload" => true);
-		} else {
-			$return = array("error" => true, "details" => $e->getMessage().' '.json_encode($e->getData()));
+			); 
+			$return = call_user_func($action, $clean_request);
+		} catch (ValidatorException $e) {
+			if($e->getMessage() == 1 && key($e->getData()) == 'csrf') {
+				$return = array("error" => true, "details" => 'A security error has occured, this page will now be reloaded', "reload" => true);
+			} else {
+				$return = array("error" => true, "details" => $e->getMessage().' '.json_encode($e->getData()));
+			}
 		}
+
+		$return['newtoken'] = Utility::generateCSRFToken($check);
+	} else {
+		$return = call_user_func($action, $clean_request);
 	}
+
 	// Check if it is an ajax request
 	if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 		if(isset($return['error']) && $return['error']) {
@@ -56,7 +63,6 @@ if($action = $hooks->getAction($action)) {
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT", false);
 		header("Content-Type: text/json", false);
 
-		$return['newtoken'] = Utility::generateCSRFToken($check);
 		$return = json_encode($return);
 		echo $return;
 	} else {
