@@ -9,11 +9,12 @@
 					<p class="date">
 						<span class="glyphicons glyphicons-clock"></span> <?php echo $article->getPublished() ? date('l M j, Y \a\t H:i', $article->getPublished()) : "<strong>Not Published</strong>";?>
 					</p>
+					<?php $numC = $article->getNumValidatedComments(); ?>
 					<p class="comments">
 						<span class="glyphicons glyphicons-comments"></span> 
 						<a href="<?php echo Utility::currentPageURL().'#commentHeader';?>">
-							<b><?php echo $article->getNumValidatedComments() ?></b>
-						</a> comment<?php echo ($article->getNumValidatedComments() != 1 ? 's' : '');?>. 
+							<b><?php echo $numC ?></b>
+						</a> comment<?php echo ($numC != 1 ? 's' : '');?>. 
 						<?php if ($article->getCommentStatus()->getId() != \FelixOnline\Core\ArticleCommentStatus::ARTICLE_COMMENTS_OFF) { ?>
 							<a href="<?php echo Utility::currentPageURL().'#commentForm';?>">Post your own</a>
 						<?php } ?>

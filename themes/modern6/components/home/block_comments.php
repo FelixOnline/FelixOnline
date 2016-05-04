@@ -1,10 +1,6 @@
 <?php
 	$categoryManager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Category', 'category');
 
-	if(!$currentuser->isLoggedIn()) {
-		$categoryManager = $categoryManager->filter('secret = 0');
-	}
-
 	$articleManager = (new \FelixOnline\Core\ArticleManager())
 		->filter('published < NOW()')
 		->join($categoryManager, null, 'category');
@@ -30,6 +26,16 @@
 <?php
 	if($comments):
 		foreach($comments as $comment):
+			try {
+				$comment->getArticle(); // Secret categories
+			} catch(\Exception $e) {
+				continue;
+			}
+
+			if(!$comment->isAccessible()) {
+				continue;
+			}
+
 			$content = $comment->getComment();
 
 			if(strlen($content) > 70) {
