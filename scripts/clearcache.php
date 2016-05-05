@@ -16,3 +16,4 @@ $app = \FelixOnline\Core\App::getInstance();
 $app['cache']->flush();
 
 echo "All done.\n";
+exit(0);

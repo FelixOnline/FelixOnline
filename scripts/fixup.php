@@ -171,3 +171,4 @@ function query($sql) {
 $app['cache']->flush();
 
 echo "All done.\n";
+exit(0);

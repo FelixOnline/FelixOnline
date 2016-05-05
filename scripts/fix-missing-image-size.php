@@ -18,6 +18,7 @@ $values = $manager->values();
 
 if(!$values) {
 	echo "Nothing to do.\n";
+	exit(1);
 	return;
 }
 
@@ -40,3 +41,4 @@ foreach($values as $record) {
 }
 
 echo "All done.\n";
+exit(0);

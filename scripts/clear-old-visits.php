@@ -16,3 +16,4 @@ $app = \FelixOnline\Core\App::getInstance();
 $app['db']->query("DELETE FROM article_visit WHERE < DATE_SUB(NOW(), INTERVAL 3 MONTH)");
 
 echo "All done.\n";
+exit(0);

@@ -38,3 +38,4 @@ foreach($res as $row) {
 }
 
 echo "All done.\n";
+exit(0);

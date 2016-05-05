@@ -17,6 +17,7 @@ $values = $manager->values(true);
 
 if(!$values) {
 	echo "Nothing to do.\n";
+	exit(1);
 	return;
 }
 
@@ -82,3 +83,4 @@ foreach($values as $value) {
 }
 
 echo "All done.\n";
+exit(0);
