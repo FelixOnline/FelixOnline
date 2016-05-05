@@ -18,6 +18,8 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 	protected $count = 1;
 	function processTable($table)
 	{
+		echo "Working on: $table\n";
+
 		if ($table == 'akismet_log') {
 			return false;
 		}
@@ -209,6 +211,8 @@ $exporter = new FelixExporter(array(
 
 $exporter->run();
 
+echo "Compressing...\n";
+
 // Zip file
 exec(sprintf("zip %s %s", $db_file . '.zip', $db_file), $output, $return);
 
@@ -229,3 +233,6 @@ symlink($db_file . '.zip', $symlink);
 
 // Move back to original directory
 chdir($orig_directory);
+
+echo "Completed: ".realpath(dirname(__FILE__)) . '/../backups/'.$db_file.".zip\n";
+exit(0);
