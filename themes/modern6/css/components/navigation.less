@@ -67,14 +67,14 @@
 	.js-drilldown-back>a:before {
 		border-color: rgba(0, 0, 0, 0) rgba(255, 255, 255, 1) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) !important;
 	}
+
+	.is-dropdown-submenu-parent>a:after, .active:hover > a:after {
+		border-color: rgba(255, 255, 255, 1) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) !important;
+	}
 }
 
 @media only screen and (min-width: @medium-min) {
 	.main-menu, .section-bar .menu {
-		.is-dropdown-submenu-parent>a:after, .active:hover > a:after {
-			border-color: rgba(255, 255, 255, 1) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) !important;
-		}
-
 		.active>a:after {
 			border-color: rgba(0, 0, 0, 1) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) !important;
 		}

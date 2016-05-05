@@ -38,11 +38,13 @@
 						<span class="glyphicons glyphicons-newspaper"></span>
 					</a>
 				</li>
-				<li class="show-for-medium">
-					<a href="<?php echo STANDARD_URL.'contribute'; ?>" data-tooltip aria-haspopup="true" data-options="show_on:medium;disable_for_touch:true" class="has-tip" title="Contribute">
-						<span class="glyphicons glyphicons-edit"></span>
-					</a>
-				</li>
+				<?php
+					if(!$currentuser->isLoggedIn()) {
+						$theme->render('components/navigation/user_loggedout', array('check' => '', 'parents' => $parents));
+					} else {
+						$theme->render('components/navigation/user_loggedin', array('check' => $user, 'parents' => $parents));
+					}
+				?>
 			</ul>
 		</div>
 		<div class="top-bar-left">

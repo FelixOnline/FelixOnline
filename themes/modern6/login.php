@@ -10,10 +10,13 @@ $theme->render('components/globals/header', $header);
 <!-- Page wrapper -->
 	<div class="row main-row top-row">
 		<div class="small-12 columns">
-			<h1>You don't need to log in any more</h1>
-			<p>Everything you could do whilst logged in is now available to logged out users.</p>
-			<p>That includes posting, liking, and disliking comments.</p>
-			<p><a href="<?php echo STANDARD_URL; ?>">Back to the home page</a></p>
+			<?php if($failed) { ?>
+				<div class="callout alert">
+					Login failed. Please try again.
+				</div>
+			<?php }
+				$theme->render('components/modals/box_login', array('location' => STANDARD_URL, 'nomodal' => true));
+			?>
 		</div>
 	<!-- End of page container -->
 	</div>
