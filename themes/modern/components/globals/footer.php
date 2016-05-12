@@ -30,9 +30,9 @@
         <div class="small-12 medium-10 columns clearfix small-only-text-center medium-text-left">
           <a href="#"><img src="<?php echo STANDARD_URL; ?>themes/modern/img/logo1.svg" class="svg" style="height: 4.0rem;"></a>
           <ul class="footer-links inline-list">
-            <li><a href="<?php echo STANDARD_URL; ?>/contact/">Contact</a></li>
-            <li><a href="<?php echo STANDARD_URL; ?>/contribute/">Get Involved</a></li>
-            <li><a href="<?php echo STANDARD_URL; ?>/policies/">Complaints and Policies</a></li>
+            <li><a href="<?php echo STANDARD_URL; ?>contact/">Contact</a></li>
+            <li><a href="<?php echo STANDARD_URL; ?>contribute/">Get Involved</a></li>
+            <li><a href="<?php echo STANDARD_URL; ?>policies/">Complaints and Policies</a></li>
             <li><a href="<?php echo STANDARD_URL; ?>topic">All Topics</a></li>
             <li><a href="<?php echo \FelixOnline\Core\Settings::get('app_api'); ?>">API</a></li>
             <li><a href="http://www.github.com/FelixOnline">GitHub</a></li>
