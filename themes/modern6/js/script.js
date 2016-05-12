@@ -30,6 +30,17 @@ $(document).ready(function() {
 			return false;
 		})
 	}
+
+	/* Comment Binders */
+	$(document).on("click", '.login-like', function() {
+		rateComment(this, 'like');
+		return false;
+	});
+	
+	$(document).on("click", '.login-dislike', function() {
+		rateComment(this, 'dislike');
+		return false;
+	});
 	
 	function rateComment(cobj, action) {
 		var comment = $(cobj).parents('.article-comment').attr('id');
