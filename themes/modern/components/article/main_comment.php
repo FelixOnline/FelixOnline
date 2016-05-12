@@ -35,11 +35,11 @@
 				<span class="comment-rating <?php echo $class; ?>"><?php echo $rating; ?></span>
 
 				<span class="comment-like" id="comment-<?php echo $comment->getId(); ?>-like">
-					<?php if ($comment->userLikedComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT'])): ?>
+					<?php if ($comment->userLikedComment($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'])): ?>
 						<a data-tooltip aria-haspopup="true" class="has-tip" title="You have up-voted this">
 							<span class="glyphicons glyphicons-thumbs-up blue-thumb"></span>
 						</a>
-					<?php elseif ($comment->userDislikedComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT'])): echo ''; ?>
+					<?php elseif ($comment->userDislikedComment($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'])): echo ''; ?>
 					<?php else: ?>
 						<a href="<?php echo Utility::currentPageURL();?>#" class="login-like">
 							<span class="glyphicons glyphicons-thumbs-up"></span>
@@ -48,11 +48,11 @@
 				</span>
 
 				<span class="comment-dislike" id="comment-<?php echo $comment->getId(); ?>-dislike">
-					<?php if ($comment->userDislikedComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT'])): ?>
+					<?php if ($comment->userDislikedComment($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'])): ?>
 						<a data-tooltip aria-haspopup="true" class="has-tip" title="You have down-voted this">
 							<span class="glyphicons glyphicons-thumbs-down blue-thumb"></span>
 						</a>
-					<?php elseif ($comment->userLikedComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT'])): echo ''; ?>
+					<?php elseif ($comment->userLikedComment($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'])): echo ''; ?>
 					<?php else: ?>
 						<a href="<?php echo Utility::currentPageURL();?>#" class="login-dislike">
 							<span class="glyphicons glyphicons-thumbs-down"></span>

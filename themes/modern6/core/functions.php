@@ -132,10 +132,10 @@ function rate_comment($data) {
 	$comment = new \FelixOnline\Core\Comment($comment);
 	switch($action) {
 		case 'like':
-			$comment->likeComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT']);
+			$comment->likeComment($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']);
 			break;
 		case 'dislike':
-			$comment->dislikeComment($_SERVER['SERVER_ADDR'], $_SERVER['HTTP_USER_AGENT']);
+			$comment->dislikeComment($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']);
 			break;
 	}
 
