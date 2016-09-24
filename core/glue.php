@@ -46,6 +46,10 @@
 			$method = strtoupper($_SERVER['REQUEST_METHOD']);
 			$path = $_SERVER['REQUEST_URI'];
 
+			// Trim any manual GET parameters off.
+			$path = explode('?', $path);
+			$path = $path[0];
+
 			if($base != NULL) {
 				$path = substr($path, strpos($path, $base)+strlen($base));
 			}
@@ -57,6 +61,7 @@
 			foreach ($urls as $regex => $class) {
 				$regex = str_replace('/', '\/', $regex);
 				$regex = '^' . $regex . '\/?$';
+
 				if (preg_match("/$regex/i", $path, $matches)) {
 					$found = true;
 					if (class_exists($class)) {
