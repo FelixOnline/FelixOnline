@@ -27,8 +27,7 @@ class TopicController extends BaseController
 		$manager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Article', 'article', 'id')
 			->join($topicJoiner, 'LEFT', 'id', 'article');
 
-		$manager = $manager->filter('published < NOW()')
-			->order(array('published', 'id'), 'DESC')
+		$manager = $manager->enablePublishedFilter()
 			->limit($startat, $counter);
 
 		$count = $manager->count();

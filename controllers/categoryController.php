@@ -23,9 +23,8 @@ class CategoryController extends BaseController
 			}
 
 			$manager = (new \FelixOnline\Core\ArticleManager())
-				->filter('published < NOW()')
+				->enablePublishedFilter()
 				->filter('category = %i', array($category->getId()))
-				->order(array('published', 'id'), 'DESC')
 				->limit($startat, $counter);
 
 			$count = $manager->count();
@@ -76,9 +75,8 @@ class CategoryController extends BaseController
 
 			foreach($data['category']->getChildren() as $child) {
 				$manager = (new \FelixOnline\Core\ArticleManager())
-					->filter('published < NOW()')
+					->enablePublishedFilter()
 					->filter('category = %i', array($child->getId()))
-					->order(array('published', 'id'), 'DESC')
 					->limit(0, \FelixOnline\Core\Settings::get('articles_per_summary_section'))
 					->values();
 

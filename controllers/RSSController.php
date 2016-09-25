@@ -32,10 +32,9 @@ class RSSController extends BaseController {
 			$name = $category->getLabel().' - '.\FelixOnline\Core\Settings::get('rss_name');
 
 			$articleManager->filter('published IS NOT NULL')
-				->filter('published < NOW()')
+				->enablePublishedFilter()
 				->filter('category = %i', array($category->getId()))
-				->limit(0, \FelixOnline\Core\Settings::get('rss_articles'))
-				->order('published', 'DESC');
+				->limit(0, \FelixOnline\Core\Settings::get('rss_articles'));
 
 		} elseif (array_key_exists('user', $matches)) {
 			try {
@@ -59,7 +58,7 @@ class RSSController extends BaseController {
 			$name = $user->getName().' - '.\FelixOnline\Core\Settings::get('rss_name');
 
 			$articleManager = (new \FelixOnline\Core\ArticleManager())
-				->filter('published < NOW()')
+				->enablePublishedFilter()
 				->order('date', 'DESC');
 
 			$authorManager = (new \FelixOnline\Core\ArticleAuthorManager())
@@ -75,9 +74,8 @@ class RSSController extends BaseController {
 
 		} else {
 			$articleManager->filter('published IS NOT NULL')
-				->filter('published < NOW()')
-				->limit(0, \FelixOnline\Core\Settings::get('rss_articles'))
-				->order('published', 'DESC');
+				->enablePublishedFilter()
+				->limit(0, \FelixOnline\Core\Settings::get('rss_articles'));
 
 			$categoryManager = (new \FelixOnline\Core\CategoryManager())
 				->filter("active = 1");

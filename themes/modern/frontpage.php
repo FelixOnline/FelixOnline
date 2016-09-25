@@ -30,9 +30,8 @@ $theme->render('components/globals/header', $header);
 				<div data-equalizer="news-side">
 					<?php
 						$articles = (new \FelixOnline\Core\ArticleManager())
-							->filter('published < NOW()')
 							->filter('category = %i', array(\FelixOnline\Core\Settings::get('news_category_id')))
-							->order(array('published', 'id'), 'DESC')
+							->enablePublishedFilter()
 							->limit(0, 5)
 							->values();
 						$i = 0;
@@ -70,9 +69,8 @@ $theme->render('components/globals/header', $header);
 		</div>
 		<?php
 			$articles = (new \FelixOnline\Core\ArticleManager())
-			->filter('published < NOW()')
 			->filter('category = %i', array(\FelixOnline\Core\Settings::get('features_category_id')))
-			->order(array('published', 'id'), 'DESC')
+			->enablePublishedFilter()
 			->limit(0, 3)
 			->values();
 		?>
@@ -155,9 +153,8 @@ $theme->render('components/globals/header', $header);
 
 	<?php
 		$articles = (new \FelixOnline\Core\ArticleManager())
-		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('comment_category_id')))
-		->order(array('published', 'id'), 'DESC')
+		->enablePublishedFilter()
 		->limit(0, 3)
 		->values();
 
@@ -197,9 +194,8 @@ $theme->render('components/globals/header', $header);
 
 	<?php
 		$articles = (new \FelixOnline\Core\ArticleManager())
-		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('cands_category_id')))
-		->order(array('published', 'id'), 'DESC')
+		->enablePublishedFilter()
 		->limit(0, 2)
 		->values();
 
@@ -228,9 +224,8 @@ $theme->render('components/globals/header', $header);
 
 	<?php
 		$articles = (new \FelixOnline\Core\ArticleManager())
-		->filter('published < NOW()')
 		->filter('category = %i', array(\FelixOnline\Core\Settings::get('sport_category_id')))
-		->order(array('published', 'id'), 'DESC')
+		->enablePublishedFilter()
 		->limit(0, 2)
 		->values();
 

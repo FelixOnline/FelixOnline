@@ -140,8 +140,10 @@ class FelixExporter extends \FelixOnline\Exporter\MySQLExporter
 				FROM `article` 
 				INNER JOIN `article_author` 
 					ON (article.id=article_author.article) 
-				WHERE article_author.author='".$row['user']."'
-				AND published < NOW()");
+				INNER JOIN `article_publication`
+					ON (article.id=article_publication.article)
+					AND article_publication.republished = 0
+				WHERE article_author.author='".$row['user']."'");
 
 			if($res) {
 				$count = $res->fetch_row()[0];

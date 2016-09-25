@@ -1,6 +1,6 @@
 <?php
 	$articleManager = (new \FelixOnline\Core\ArticleManager())
-		->filter('published < NOW()');
+		->enablePublishedFilter();
 
 	$emailManager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\EmailValidation', 'email_validation');
 	$emailManager->filter('confirmed = 1');

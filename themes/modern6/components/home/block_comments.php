@@ -2,7 +2,7 @@
 	$categoryManager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\Category', 'category');
 
 	$articleManager = (new \FelixOnline\Core\ArticleManager())
-		->filter('published < NOW()')
+		->enablePublishedFilter()
 		->join($categoryManager, null, 'category');
 
 	$emailManager = \FelixOnline\Core\BaseManager::build('FelixOnline\Core\EmailValidation', 'email_validation');

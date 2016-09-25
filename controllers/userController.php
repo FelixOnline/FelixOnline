@@ -9,7 +9,7 @@ class UserController extends BaseController {
 
 		// Articles
 		$manager = (new \FelixOnline\Core\ArticleManager())
-			->filter('published < NOW()')
+			->enablePublishedFilter()
 			->order('date', 'DESC');
 
 		$authorManager = (new \FelixOnline\Core\ArticleAuthorManager())
@@ -65,7 +65,7 @@ class UserController extends BaseController {
 		$user = $data['user'];
 
 		// Popular articles
-		$artManager = (new \FelixOnline\Core\ArticleManager())->filter('published < NOW()')->group('id');
+		$artManager = (new \FelixOnline\Core\ArticleManager())->enablePublishedFilter()->group('id');
 
 		$autManager = (new \FelixOnline\Core\ArticleAuthorManager())
 			->filter("author = '%s'", array($user->getUser()));
