@@ -53,3 +53,5 @@ themes/*/css/style.css
 # Glyphicons need licencing
 themes/modern6/fonts/glyphicons*
 themes/modern/fonts/glyphicons*
+
+themes/*/css/*.min.css
