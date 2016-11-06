@@ -97,29 +97,23 @@ $theme->render('components/globals/header', $header);
 
 <div class="row features">
 	<div class="small-12 columns">
-		<div class="bar-text">Features</div>
+		<div class="bar-text">Editor's Picks</div>
 	</div>
 </div>
 
-<?php
-	$articles = (new \FelixOnline\Core\ArticleManager())
-	->filter('category = %i', array(\FelixOnline\Core\Settings::get('features_category_id')))
-	->enablePublishedFilter()
-	->limit(0, 4)
-	->values();
-?>
 <div class="row main-row top-row small-up-1 medium-up-4">
 	<?php
-		if($articles) {
-			foreach($articles as $article) {
-				$i++;
+		if($thisweek) {
+			foreach($thisweek as $article) {
+				$article = $article->getArticle();
 				?>
 				<div class="columns">
 				<?php
 						$theme->render('components/category/block_normal', array(
 						'article' => $article,
-						'show_category' => false,
-						'headshot' => false
+						'show_category' => true,
+						'headshot' => false,
+						'hide_teaser' => true
 					));
 				?>
 				</div>
@@ -152,7 +146,8 @@ $theme->render('components/globals/header', $header);
 						$theme->render('components/category/block_normal', array(
 							'article' => $article,
 							'show_category' => false,
-							'headshot' => true
+							'headshot' => true,
+							'hide_teaser' => false
 						));
 					?>
 				</div>
@@ -201,7 +196,8 @@ $theme->render('components/globals/header', $header);
 							$theme->render('components/category/block_normal', array(
 								'article' => $article,
 								'show_category' => false,
-								'headshot' => false
+								'headshot' => false,
+								'hide_teaser' => false
 							));
 					?>
 				</div>
@@ -227,7 +223,8 @@ $theme->render('components/globals/header', $header);
 							$theme->render('components/category/block_normal', array(
 								'article' => $article,
 								'show_category' => false,
-								'headshot' => false
+								'headshot' => false,
+								'hide_teaser' => false
 							));
 					?>
 				</div>
@@ -246,10 +243,10 @@ $theme->render('components/globals/header', $header);
 </div>
 
 <div class="row main-row top-row">
-	<div class="small-12 medium-9 columns">
+	<div class="small-12 medium-8 columns">
 		<?php $theme->render('components/helpers/trending_stories', array('large' => false)); ?>
 	</div>
-	<div class="small-12 medium-3 columns">
+	<div class="small-12 medium-4 columns">
 		<?php
 			$theme->render('components/home/block_twitter');
 		?>
