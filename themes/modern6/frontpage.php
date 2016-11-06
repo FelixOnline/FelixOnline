@@ -125,9 +125,12 @@ $theme->render('components/globals/header', $header);
 	?>
 </div>
 
-<div class="row comment">
+<?php
+	$thisSection = new \FelixOnline\Core\Category(\FelixOnline\Core\Settings::get('comment_category_id'));
+?>
+<div class="row <?php echo $thisSection->getCat(); ?>">
 	<div class="small-12 columns">
-		<div class="bar-text">Comment</div>
+		<div class="bar-text"><?php echo $thisSection->getLabel(); ?></div>
 	</div>
 </div>
 <div class="row main-row top-row small-up-1 medium-up-2 large-up-4">
@@ -175,9 +178,13 @@ $theme->render('components/globals/header', $header);
 	</div>
 </div>
 
-<div class="row cands">
+<?php
+	$thisSection = new \FelixOnline\Core\Category(\FelixOnline\Core\Settings::get('cands_category_id'));
+	$thisSection2 = new \FelixOnline\Core\Category(\FelixOnline\Core\Settings::get('sport_category_id'));
+?>
+<div class="row <?php echo $thisSection->getCat(); ?>">
 	<div class="small-12 columns">
-		<div class="bar-text">Clubs, Societies, and Sports</div>
+		<div class="bar-text"><?php echo $thisSection->getLabel(); ?>, and <?php echo $thisSection2->getLabel(); ?></div>
 	</div>
 </div>
 <div class="row main-row top-row small-up-1 medium-up-2 large-up-4">
@@ -204,7 +211,7 @@ $theme->render('components/globals/header', $header);
 	<?php
 			}
 		} else {
-			echo "<p>Nothing found</p>";
+			echo "<p>Nothing found in ".$thisSection->getLabel()."</p>";
 		}
 	?>
 
@@ -231,7 +238,7 @@ $theme->render('components/globals/header', $header);
 	<?php
 			}
 		} else {
-			echo "<p>Nothing found</p>";
+			echo "<p>Nothing found in ".$thisSection2->getLabel()."</p>";
 		}
 	?>
 </div>
