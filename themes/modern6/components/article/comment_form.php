@@ -112,12 +112,8 @@
 			<input type="hidden" name="new-token" id="new-token" value="<?php echo Utility::generateCSRFToken('new_comment'); ?>"/>
 		</div>
 		<?php } elseif($article->getCommentStatus()->getId() == \FelixOnline\Core\ArticleCommentStatus::ARTICLE_COMMENTS_INTERNAL) { ?>
-			<div class="callout secondary">
-				<b>Please log in to comment on this article!</b>
-			</div>
+			<p>Please log in to comment on this article!</p>
 		<?php } else { ?>
-			<div class="callout secondary">
-				<b>This article is now closed for new comments.</b>
-			</div>
+			<p>This article is now closed for new comments.</p>
 		<?php } ?>
 		<!-- End of comment form -->

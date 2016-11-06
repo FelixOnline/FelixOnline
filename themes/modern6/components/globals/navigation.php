@@ -18,8 +18,8 @@
 	}
 ?>
 
-<div class="top-bar section-bar" style="width: 100%">
-	<div class="row">
+<div class="">
+	<div class="row top-bar section-bar">
 		<div class="top-bar-title">
 			<span data-responsive-toggle="main-menu" data-hide-for="medium">
 				<span class="menu-icon light" data-toggle></span>

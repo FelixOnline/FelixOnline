@@ -97,9 +97,9 @@ $theme->render('components/globals/header', $header);
 </div>
 <?php endif; ?>
 
-<div class="row <?php echo $article->getCategory()->getCat(); ?>">
+<div class="row main-row">
 	<div class="small-12 medium-9 medium-push-3 large-7 end columns">
-		<div class="bar-text" id="commentHeader">Have your say</div>
+		<div class="header-text <?php echo $article->getCategory()->getCat(); ?>" id="commentHeader">Have your say</div>
 	</div>
 </div>
 <div class="row top-row main-row">
@@ -114,9 +114,9 @@ $theme->render('components/globals/header', $header);
 </div>
 
 <?php if(count($topics) > 0): ?>
-<div class="row <?php echo $article->getCategory()->getCat(); ?>">
+<div class="row main-row">
 	<div class="small-12 medium-9 medium-push-3 large-7 end columns">
-		<div class="bar-text">More on this</div>
+		<div class="header-text <?php echo $article->getCategory()->getCat(); ?>">More on this</div>
 	</div>
 </div>
 <div class="row top-row main-row">
@@ -136,9 +136,9 @@ $theme->render('components/globals/header', $header);
 </div>
 <?php endif; ?>
 
-<div class="row <?php echo $article->getCategory()->getCat(); ?>">
+<div class="row main-row">
 	<div class="small-12 medium-9 medium-push-3 large-7 end columns">
-		<div class="bar-text">Trending stories</div>
+		<div class="header-text <?php echo $article->getCategory()->getCat(); ?>">Trending stories</div>
 	</div>
 </div>
 <div class="row top-row main-row">

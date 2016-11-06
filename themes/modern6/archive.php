@@ -17,7 +17,7 @@ $theme->render('components/globals/header', $header);
 		<?php $theme->render('components/issuearchive/block_search', array('back' => false)); ?>
 		
 		<div id="archivebrowser" class="info-box info-title-only">
-			<h3>Browser</h3>
+			<h1>Browser</h1>
 		</div>
 		<div class="info-secondary-box pad">
 			<ul class="menu vertical side-menu">

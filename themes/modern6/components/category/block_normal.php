@@ -40,7 +40,9 @@
 			<?php if($article->getVideoUrl()): ?>
 				<span class="glyphicons glyphicons-facetime-video"></span> <b>WATCH:</b>&nbsp;
 			<?php endif; ?>
-			<?php echo $article->getTeaser(); ?>
+			<?php if(!$hide_teaser): ?>
+				<?php echo $article->getTeaser(); ?>
+			<?php endif; ?>
 		</div>
 
 		<div class="article-time">

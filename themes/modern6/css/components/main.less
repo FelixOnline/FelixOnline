@@ -5,6 +5,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: @sans;
+	font-weight: bold;
 }
 
 .main-row {
@@ -108,15 +109,14 @@ blockquote {
 	}
 }
 
-footer {
-	background: #333333;
-	color: #777777;
+.footer, .footer2 {
+	border-top: 1px solid #888888;
+	background: white;
 	font-size: smaller;
 	padding-top: 1rem;
-	padding-bottom: 1rem;
 
 	a {
-		color: #e7e7e7;
+		color: #333333;
 	}
 
 	a:hover {
@@ -140,6 +140,12 @@ footer {
 		font-size: 1.75rem;
 		vertical-align: -75%;
 	}
+}
+
+.footer2 {
+	border-top: 0px;
+	padding-top: 0px;
+	padding-bottom: 1rem;
 }
 
 @media only screen and (max-width: @small-max) {
