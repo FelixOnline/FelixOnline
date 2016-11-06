@@ -24,11 +24,11 @@
 	],
 	"require": {
 		"felixonline/exporter": "0.1.*",
-		"felixonline/core": "0.8.*",
-		"raven/raven": "0.13.*",
+		"felixonline/core": "dev-master",
+		"sentry/sentry": "1.5.*",
 		"dominicsayers/isemail": "dev-master",
 		"woutersioen/sir-trevor-php": "dev-master",
-		"league/html-to-markdown": "4.*"
-	},
-	"minimum-stability": "dev"
+		"league/html-to-markdown": "4.*",
+		"jv2222/ezsql": "@dev"
+	}
 }
