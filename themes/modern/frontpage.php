@@ -63,9 +63,12 @@ $theme->render('components/globals/header', $header);
             </div>
           </div>
         </div>
-		<hr class="month-divider top-divider features">
+		<?php
+			$thisSection = new \FelixOnline\Core\Category(\FelixOnline\Core\Settings::get('features_category_id'));
+		?>
+		<hr class="month-divider top-divider <?php echo $thisSection->getCat(); ?>">
 		<div class="small-12 columns">
-			<p class="section-date features">Features</p>
+			<p class="section-date <?php echo $thisSection->getCat(); ?>"><?php echo $thisSection->getLabel(); ?></p>
 		</div>
 		<?php
 			$articles = (new \FelixOnline\Core\ArticleManager())
@@ -119,7 +122,7 @@ $theme->render('components/globals/header', $header);
       </div>
       <div class="small-12 large-3 columns" data-equalizer-watch="top">
         <div class="row">
-          <div class="small-12 medium-6 medium-push-6 large-reset-order large-12 columns info-always-margin show-for-large-only">
+          <div class="small-12 medium-6 medium-push-6 large-reset-order large-12 columns info-always-margin show-for-large-up">
             <?php
             	$theme->render('components/home/block_pdf');
             ?>
@@ -145,10 +148,13 @@ $theme->render('components/globals/header', $header);
       </div>
     </div>
 
-    <hr class="month-divider comment">
+	<?php
+		$thisSection = new \FelixOnline\Core\Category(\FelixOnline\Core\Settings::get('comment_category_id'));
+	?>
+    <hr class="month-divider <?php echo $thisSection->getCat(); ?>">
     <div class="row full-width" data-equalizer="opinion">
       <div class="small-12 columns">
-        <p class="section-date comment">Comment</p>
+        <p class="section-date <?php echo $thisSection->getCat(); ?>"><?php echo $thisSection->getLabel(); ?></p>
       </div>
 
 	<?php
@@ -186,10 +192,14 @@ $theme->render('components/globals/header', $header);
 		</div>
 	</div>
 
-    <hr class="month-divider cands">
+	<?php
+		$thisSection = new \FelixOnline\Core\Category(\FelixOnline\Core\Settings::get('cands_category_id'));
+		$thisSection2 = new \FelixOnline\Core\Category(\FelixOnline\Core\Settings::get('sport_category_id'));
+	?>
+    <hr class="month-divider <?php echo $thisSection->getCat(); ?>">
     <div class="row full-width" data-equalizer="cands">
       <div class="small-12 columns">
-        <p class="section-date cands">Clubs, Societies, and Sports</p>
+        <p class="section-date <?php echo $thisSection->getCat(); ?>"><?php echo $thisSection->getLabel(); ?>, and <?php echo $thisSection2->getLabel(); ?></p>
       </div>
 
 	<?php
@@ -218,7 +228,7 @@ $theme->render('components/globals/header', $header);
 	    <?php
 			}
 		} else {
-			echo "<p>Nothing found</p>";
+			echo "<p>Nothing found in ".$thisSection->getLabel()."</p>";
 		}
 	?>
 
@@ -248,7 +258,7 @@ $theme->render('components/globals/header', $header);
 	    <?php
 			}
 		} else {
-			echo "<p>Nothing found</p>";
+			echo "<p>Nothing found in ".$thisSection2->getLabel()."</p>";
 		}
 	?>
 
