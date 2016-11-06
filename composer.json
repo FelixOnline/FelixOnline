@@ -24,7 +24,7 @@
 	],
 	"require": {
 		"felixonline/exporter": "0.1.*",
-		"felixonline/core": "dev-master",
+		"felixonline/core": "0.9.*",
 		"sentry/sentry": "1.5.*",
 		"dominicsayers/isemail": "dev-master",
 		"woutersioen/sir-trevor-php": "dev-master",
