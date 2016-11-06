@@ -211,7 +211,7 @@ class ArticleController extends BaseController
 		$app = \FelixOnline\Core\App::getInstance();
 		$currentuser = $app['currentuser'];
 
-		if(!$article->getPublished()) {
+		if(!$article->getPublished() || $article->getPublished() > time()) {
 			$authors = $article->getAuthors();
 
 			$isAuthorised = false;
@@ -235,7 +235,7 @@ class ArticleController extends BaseController
 			if(!$isAuthorised) {
 				// Cannot see unpublished articles
 				throw new NotFoundException(
-					"Article not found",
+					"Article not found - unpublished",
 					$matches,
 					'ArticleController'
 				);
