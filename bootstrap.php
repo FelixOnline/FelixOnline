@@ -9,6 +9,13 @@ date_default_timezone_set('Europe/London');
 if(!defined('BASE_DIRECTORY')) define('BASE_DIRECTORY', dirname(__FILE__));
 if(!defined('CACHE_DIRECTORY')) define('CACHE_DIRECTORY', BASE_DIRECTORY.'/cache/');
 
+if(!file_exists(BASE_DIRECTORY.'/vendor/autoload.php')) {
+	die('Please run <code>composer install</code>');
+}
+if(!file_exists(BASE_DIRECTORY.'/inc/config.inc.php')) {
+	die('Please setup the configuration file');
+}
+
 // Composer
 require BASE_DIRECTORY.'/vendor/autoload.php';
 
