@@ -9,10 +9,8 @@ Maintained by Philip Kent (pk1811@imperial.ac.uk) and, previously, Jonathan Kim 
 
 ## Getting started:
 ###Requirements:
-* Local LAMP stack (Apache, PHP and MySQL)
+* Local LAMP stack (Apache, PHP and MySQL) - use of mod_rewrite and mod_deflate is required
 * [Git](http://git-scm.com/)
-* 
-Have a look a our [installation guide](//github.com/FelixOnline/FelixOnline/wiki/Installation) if you are unsure how to get the above. 
 
 ###Setup:
 * Clone the repo into the folder your local web server hosts from
@@ -29,8 +27,9 @@ You may wish to add the two role scripts in the scripts folder, and the spam cle
 
 If you host Admin on the same server as the main site, you may need to define CACHE_PATH in the configuration file and set it to the same path as the main site for cache resetting to work.
 
-Note that the current theme requires use of Glyphicons Pro, which is not included for licensing reasons.
+Note that the current theme requires use of Glyphicons Pro and Social, which is not included for licensing reasons. When you purchase Glyphicons, copy the files from the `web/html_css` directory to the fonts directory in the `modern6` theme for both Glyphicons Pro and Glyphicons Social.
 
 ### Database Migrations
 * Run `./vendor/bin/phinx init` to create a `phinx.yml` file in the root directory and fill it in with your database credentials
+* Set the `migrations` setting to "vendor/felixonline/core/migrations"
 * Run `./vendor/bin/phinx migrate` to run all migrations
