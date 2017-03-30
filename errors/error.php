@@ -116,7 +116,7 @@
 								break;
 							case Exceptions\UniversalException::EXCEPTION_SQL:
 								$header = 'SQL Error';
-								$data['Query'] = $exception->getQuery();
+								$data['Query'] = $exception->getQuery()[0]['query'];
 								break;
 							case Exceptions\UniversalException::EXCEPTION_INTERNAL:
 								$header = 'Internal Exception';
